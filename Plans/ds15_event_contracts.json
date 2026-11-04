@@ -134,5 +134,243 @@
       "degradation_revision"
     ],
     "scope_policy": "project_only"
+  },
+  {
+    "event_type": "browser.context_captured",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310",
+    "storage_owner": "Plans/storage-plan.md#SP-647",
+    "payload_owner": "Plans/Contracts_V0.md#CV-667",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-327",
+    "payload_schema_ref": "Plans/ds15_browser_context_captured.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_browser_context_captured_checkpoint.schema.json",
+    "consumer": "reader.ds15.browser_context_captured.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.browser_context_captured:{scope_key}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"browser.context_captured\", \"1.0.0\", actual scope map with UTF-8 sorted keys, thread_id, chip_id])",
+    "identity_fields": [
+      "thread_id",
+      "chip_id"
+    ],
+    "scope_policy": "project_or_app_actual_browser_namespace",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/browser_context_captured-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/assistant-chat-design.md:508,894-900",
+      "Plans/storage-plan.md:1154-1166",
+      "Plans/Section15_MVP_Promoted_Features_Spec.md:757",
+      "Plans/UI_Command_Catalog.md:824-846"
+    ]
+  },
+  {
+    "event_type": "dev.session.started",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311",
+    "storage_owner": "Plans/storage-plan.md#SP-648",
+    "payload_owner": "Plans/Contracts_V0.md#CV-668",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-328",
+    "payload_schema_ref": "Plans/ds15_dev_session_started.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_dev_session_started_checkpoint.schema.json",
+    "consumer": "reader.ds15.dev_session_started.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.dev_session_started:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"dev.session.started\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision])",
+    "identity_fields": [
+      "dev_session_id",
+      "workflow_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_started-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433",
+      "Plans/storage-plan.md:1071,18287,18343",
+      "Plans/Shared_Integration_Runtime.md:259",
+      "Plans/UI_Command_Catalog.md:919-921"
+    ]
+  },
+  {
+    "event_type": "dev.session.stopping",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312",
+    "storage_owner": "Plans/storage-plan.md#SP-649",
+    "payload_owner": "Plans/Contracts_V0.md#CV-669",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-328",
+    "payload_schema_ref": "Plans/ds15_dev_session_stopping.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_dev_session_stopping_checkpoint.schema.json",
+    "consumer": "reader.ds15.dev_session_stopping.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.dev_session_stopping:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"dev.session.stopping\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision])",
+    "identity_fields": [
+      "dev_session_id",
+      "workflow_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_stopping-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433",
+      "Plans/storage-plan.md:1071,18287,18343",
+      "Plans/Shared_Integration_Runtime.md:259",
+      "Plans/UI_Command_Catalog.md:919-921"
+    ]
+  },
+  {
+    "event_type": "dev.session.stopped",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313",
+    "storage_owner": "Plans/storage-plan.md#SP-650",
+    "payload_owner": "Plans/Contracts_V0.md#CV-670",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-328",
+    "payload_schema_ref": "Plans/ds15_dev_session_stopped.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_dev_session_stopped_checkpoint.schema.json",
+    "consumer": "reader.ds15.dev_session_stopped.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.dev_session_stopped:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"dev.session.stopped\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision])",
+    "identity_fields": [
+      "dev_session_id",
+      "workflow_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_stopped-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433",
+      "Plans/storage-plan.md:1071,18287,18343",
+      "Plans/Shared_Integration_Runtime.md:259",
+      "Plans/UI_Command_Catalog.md:919-921"
+    ]
+  },
+  {
+    "event_type": "dev.session.restarting",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314",
+    "storage_owner": "Plans/storage-plan.md#SP-651",
+    "payload_owner": "Plans/Contracts_V0.md#CV-671",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-328",
+    "payload_schema_ref": "Plans/ds15_dev_session_restarting.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_dev_session_restarting_checkpoint.schema.json",
+    "consumer": "reader.ds15.dev_session_restarting.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.dev_session_restarting:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"dev.session.restarting\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision])",
+    "identity_fields": [
+      "dev_session_id",
+      "workflow_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_restarting-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433",
+      "Plans/storage-plan.md:1071,18287,18343",
+      "Plans/Shared_Integration_Runtime.md:259",
+      "Plans/UI_Command_Catalog.md:919-921"
+    ]
+  },
+  {
+    "event_type": "preview.session.started",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315",
+    "storage_owner": "Plans/storage-plan.md#SP-652",
+    "payload_owner": "Plans/Contracts_V0.md#CV-672",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_preview_session_started.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_preview_session_started_checkpoint.schema.json",
+    "consumer": "reader.ds15.preview_session_started.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.preview_session_started:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"preview.session.started\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision])",
+    "identity_fields": [
+      "preview_subject_id",
+      "preview_session_id",
+      "preview_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_started-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/rewrite-tie-in-memo.md:231-302",
+      "Plans/FinalGUISpec.md:3584",
+      "Plans/storage-plan.md:1180-1187",
+      "Plans/FileManager.md:616-626",
+      "Plans/UI_Command_Catalog.md:463-464,9570-9588"
+    ]
+  },
+  {
+    "event_type": "preview.session.refreshed",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316",
+    "storage_owner": "Plans/storage-plan.md#SP-653",
+    "payload_owner": "Plans/Contracts_V0.md#CV-673",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_preview_session_refreshed.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_preview_session_refreshed_checkpoint.schema.json",
+    "consumer": "reader.ds15.preview_session_refreshed.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.preview_session_refreshed:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"preview.session.refreshed\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision])",
+    "identity_fields": [
+      "preview_subject_id",
+      "preview_session_id",
+      "preview_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_refreshed-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/rewrite-tie-in-memo.md:231-302",
+      "Plans/FinalGUISpec.md:3584",
+      "Plans/storage-plan.md:1180-1187",
+      "Plans/FileManager.md:616-626",
+      "Plans/UI_Command_Catalog.md:463-464,9570-9588"
+    ]
+  },
+  {
+    "event_type": "preview.session.stopped",
+    "family_revision": "1.0.0",
+    "preparation_status": "prepared_without_admission",
+    "semantic_owner": "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317",
+    "storage_owner": "Plans/storage-plan.md#SP-654",
+    "payload_owner": "Plans/Contracts_V0.md#CV-674",
+    "oracle_owner": "Plans/Automated_Testing_System.md#ATS-329",
+    "payload_schema_ref": "Plans/ds15_preview_session_stopped.schema.json",
+    "checkpoint_schema_ref": "Plans/ds15_preview_session_stopped_checkpoint.schema.json",
+    "consumer": "reader.ds15.preview_session_stopped.v1@1.0.0",
+    "checkpoint_key": "projector.checkpoint.ds15.preview_session_stopped:{project_id}",
+    "idempotency_recipe": "sha256(canonical MessagePack array [\"preview.session.stopped\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision])",
+    "identity_fields": [
+      "preview_subject_id",
+      "preview_session_id",
+      "preview_revision"
+    ],
+    "scope_policy": "project_only",
+    "retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "checkpoint_retention_policy_ref": "PENDING_RETENTION_DECISION",
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_stopped-search.json",
+    "negative_search_result": "Existing commands/semantic owners reused; no exact closed event/checkpoint/replay/withdrawal binding in pre-fix branch; narrow legacy value codecs need versioned closure.",
+    "reused_current_sources": [
+      "Plans/rewrite-tie-in-memo.md:231-302",
+      "Plans/FinalGUISpec.md:3584",
+      "Plans/storage-plan.md:1180-1187",
+      "Plans/FileManager.md:616-626",
+      "Plans/UI_Command_Catalog.md:463-464,9570-9588"
+    ]
   }
 ]

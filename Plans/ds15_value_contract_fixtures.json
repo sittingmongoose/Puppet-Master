@@ -1,0 +1,707 @@
+[
+  {
+    "schema_ref": "Plans/ds15_dev_session_record_v2.schema.json",
+    "positive": {
+      "schema_id": "pm.storage_value.dev_session_record.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:1",
+      "dev_session_id": "dev:1",
+      "workflow": {
+        "state": "running",
+        "revision": 1,
+        "operation_id": "operation:1",
+        "outcome_ref": "dev:outcome:1",
+        "run_id": null,
+        "thread_id": null,
+        "workspace_tab_id": "workspace:1",
+        "terminal_session_id": null,
+        "target_ref": null,
+        "artifact_refs": [],
+        "live_verification": "verified"
+      },
+      "dap": null
+    },
+    "cases": [
+      {
+        "id": "non-debug-workflow-no-dap",
+        "changes": {},
+        "valid": true
+      },
+      {
+        "id": "no-workflow-or-dap",
+        "changes": {
+          "workflow": null
+        },
+        "valid": false
+      },
+      {
+        "id": "no-flat-dap-id",
+        "changes": {
+          "dap_session_id": "invented"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-workflow-debug-state-alias",
+        "changes": {
+          "workflow/state": "paused"
+        },
+        "valid": false
+      },
+      {
+        "id": "missing-outcome",
+        "changes": {
+          "workflow/outcome_ref": {
+            "$delete": true
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "unknown-version",
+        "changes": {
+          "schema_version": "9.0.0"
+        },
+        "valid": false
+      },
+      {
+        "id": "workflow-and-real-subordinate-dap",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": true
+      },
+      {
+        "id": "dap-root-mismatch",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:other",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-topology-mismatch",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:other",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-waiter-required",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": null,
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-trigger-after-waiter",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:00Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "dap-terminal-truth",
+        "changes": {
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "terminated",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        },
+        "valid": false
+      }
+    ],
+    "migration_base": {
+      "kind": "dap_v1",
+      "source": {
+        "schema_id": "pm.storage_value.dev_session_record.v1",
+        "schema_version": "1.0.0",
+        "project_id": "project:1",
+        "dev_session_id": "dev:1",
+        "dap_session_id": "dap:1",
+        "topology": {
+          "project_id": "project:1",
+          "project_home_server_id": "server:1",
+          "execution_host_id": "host:1",
+          "execution_environment_id": "environment:1",
+          "source_location_id": null,
+          "topology_generation": 1
+        },
+        "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+        "owner_ref": "owner:1",
+        "lease_ref": "lease:1",
+        "session_generation": 1,
+        "permission_grant_ref": "permission:1",
+        "policy_ref": "policy:1",
+        "state": "paused",
+        "waiter_arm_ref": "waiter:1",
+        "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+        "triggered_at_utc": "2026-11-04T00:00:02Z",
+        "log_refs": [],
+        "artifact_refs": [],
+        "cleanup_ref": null,
+        "created_at_utc": "2026-11-04T00:00:00Z",
+        "updated_at_utc": "2026-11-04T00:00:02Z",
+        "terminal_at_utc": null
+      },
+      "evidence": {
+        "verified": true,
+        "backup_verified": true,
+        "project_id": "project:1",
+        "dev_session_id": "dev:1"
+      }
+    },
+    "migration_cases": [
+      {
+        "id": "preserve-complete-dap-no-workflow-inference",
+        "changes": {},
+        "expected": {
+          "schema_id": "pm.storage_value.dev_session_record.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project:1",
+          "dev_session_id": "dev:1",
+          "workflow": null,
+          "dap": {
+            "schema_id": "pm.storage_value.dev_session_record.v1",
+            "schema_version": "1.0.0",
+            "project_id": "project:1",
+            "dev_session_id": "dev:1",
+            "dap_session_id": "dap:1",
+            "topology": {
+              "project_id": "project:1",
+              "project_home_server_id": "server:1",
+              "execution_host_id": "host:1",
+              "execution_environment_id": "environment:1",
+              "source_location_id": null,
+              "topology_generation": 1
+            },
+            "adapter_capability_snapshot_ref": "adapter:capabilities:1",
+            "owner_ref": "owner:1",
+            "lease_ref": "lease:1",
+            "session_generation": 1,
+            "permission_grant_ref": "permission:1",
+            "policy_ref": "policy:1",
+            "state": "paused",
+            "waiter_arm_ref": "waiter:1",
+            "waiter_armed_at_utc": "2026-11-04T00:00:01Z",
+            "triggered_at_utc": "2026-11-04T00:00:02Z",
+            "log_refs": [],
+            "artifact_refs": [],
+            "cleanup_ref": null,
+            "created_at_utc": "2026-11-04T00:00:00Z",
+            "updated_at_utc": "2026-11-04T00:00:02Z",
+            "terminal_at_utc": null
+          }
+        }
+      },
+      {
+        "id": "reject-bad-legacy-waiter",
+        "changes": {
+          "source/waiter_arm_ref": null
+        },
+        "expected": null
+      },
+      {
+        "id": "reject-ambiguous-root",
+        "changes": {
+          "evidence/dev_session_id": "dev:other"
+        },
+        "expected": null
+      },
+      {
+        "id": "reject-unbacked-migration",
+        "changes": {
+          "evidence/backup_verified": false
+        },
+        "expected": null
+      }
+    ]
+  },
+  {
+    "schema_ref": "Plans/ds15_preview_state_v2.schema.json",
+    "positive": {
+      "schema_id": "pm.ds15.preview_state.v2",
+      "schema_version": "2.0.0",
+      "project_id": "project:1",
+      "preview_subject_id": "subject:1",
+      "source_ref": "source:1",
+      "restore_intent": "split",
+      "attached_surface": "editor_preview",
+      "export_prefs_ref": null,
+      "scroll_sync": true,
+      "last_error_ref": null,
+      "last_preview_session_id": null,
+      "runtime_verification": "unverified",
+      "last_source_revision": null,
+      "last_preview_revision": null,
+      "legacy_status": "running"
+    },
+    "cases": [
+      {
+        "id": "subject-ui-historical-running",
+        "changes": {},
+        "valid": true
+      },
+      {
+        "id": "no-live-restore",
+        "changes": {
+          "runtime_verification": "verified"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-session-as-subject",
+        "changes": {
+          "preview_session_id": "preview:1"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-source-body",
+        "changes": {
+          "raw_dom": "<secret>"
+        },
+        "valid": false
+      },
+      {
+        "id": "unknown-version",
+        "changes": {
+          "schema_version": "9.0.0"
+        },
+        "valid": false
+      }
+    ],
+    "migration_base": {
+      "kind": "preview_v1",
+      "source": {
+        "preview_id": "legacy:1",
+        "preview_type": "web",
+        "source_file": "src/app.html",
+        "status": "running",
+        "last_refresh": "2026-11-04T00:00:00Z"
+      },
+      "evidence": {
+        "verified": true,
+        "backup_verified": true,
+        "mappings": [
+          {
+            "preview_id": "legacy:1",
+            "source_file": "src/app.html",
+            "saved_subject_ui": {
+              "schema_id": "pm.ds15.preview_state.v2",
+              "schema_version": "2.0.0",
+              "project_id": "project:1",
+              "preview_subject_id": "subject:1",
+              "source_ref": "source:1",
+              "restore_intent": "split",
+              "attached_surface": "editor_preview",
+              "export_prefs_ref": null,
+              "scroll_sync": true,
+              "last_error_ref": null,
+              "last_preview_session_id": null,
+              "runtime_verification": "unverified",
+              "last_source_revision": null,
+              "last_preview_revision": null,
+              "legacy_status": "running"
+            }
+          }
+        ]
+      }
+    },
+    "migration_cases": [
+      {
+        "id": "legacy-running-is-not-live",
+        "changes": {},
+        "expected": {
+          "schema_id": "pm.ds15.preview_state.v2",
+          "schema_version": "2.0.0",
+          "project_id": "project:1",
+          "preview_subject_id": "subject:1",
+          "source_ref": "source:1",
+          "restore_intent": "split",
+          "attached_surface": "editor_preview",
+          "export_prefs_ref": null,
+          "scroll_sync": true,
+          "last_error_ref": null,
+          "last_preview_session_id": null,
+          "runtime_verification": "unverified",
+          "last_source_revision": null,
+          "last_preview_revision": null,
+          "legacy_status": "running"
+        }
+      },
+      {
+        "id": "no-guessed-subject",
+        "changes": {
+          "evidence/mappings": []
+        },
+        "expected": null
+      },
+      {
+        "id": "no-ambiguous-subject",
+        "changes": {
+          "evidence/mappings": [
+            {
+              "preview_id": "legacy:1",
+              "source_file": "src/app.html",
+              "saved_subject_ui": {
+                "schema_id": "pm.ds15.preview_state.v2",
+                "schema_version": "2.0.0",
+                "project_id": "project:1",
+                "preview_subject_id": "subject:1",
+                "source_ref": "source:1",
+                "restore_intent": "split",
+                "attached_surface": "editor_preview",
+                "export_prefs_ref": null,
+                "scroll_sync": true,
+                "last_error_ref": null,
+                "last_preview_session_id": null,
+                "runtime_verification": "unverified",
+                "last_source_revision": null,
+                "last_preview_revision": null,
+                "legacy_status": "running"
+              }
+            },
+            {
+              "preview_id": "legacy:1",
+              "source_file": "src/app.html",
+              "saved_subject_ui": {
+                "schema_id": "pm.ds15.preview_state.v2",
+                "schema_version": "2.0.0",
+                "project_id": "project:1",
+                "preview_subject_id": "subject:1",
+                "source_ref": "source:1",
+                "restore_intent": "split",
+                "attached_surface": "editor_preview",
+                "export_prefs_ref": null,
+                "scroll_sync": true,
+                "last_error_ref": null,
+                "last_preview_session_id": null,
+                "runtime_verification": "unverified",
+                "last_source_revision": null,
+                "last_preview_revision": null,
+                "legacy_status": "running"
+              }
+            }
+          ]
+        },
+        "expected": null
+      },
+      {
+        "id": "no-unverified-source-map",
+        "changes": {
+          "evidence/verified": false
+        },
+        "expected": null
+      },
+      {
+        "id": "no-source-path-guess",
+        "changes": {
+          "source/source_file": "src/other.html"
+        },
+        "expected": null
+      }
+    ]
+  },
+  {
+    "schema_ref": "Plans/ds15_browser_capture_chip_v2.schema.json",
+    "positive": {
+      "schema_id": "pm.ds15.browser_capture_chip.v2",
+      "schema_version": "2.0.0",
+      "thread_id": "thread:app1",
+      "chip_id": "chip:1",
+      "browser_session_id": "browser:1",
+      "attachment_type": "browser_selection_context",
+      "capture_status": "captured",
+      "source_ref": "capture:source:1",
+      "provenance_ref": "capture:provenance:1",
+      "summary_ref": "capture:summary:1",
+      "scope": {
+        "kind": "app",
+        "project_id": null,
+        "user_id": "user:1",
+        "computer_id": "computer:1",
+        "profile_id": "profile:1"
+      }
+    },
+    "cases": [
+      {
+        "id": "app-thread-owned-chip",
+        "changes": {},
+        "valid": true
+      },
+      {
+        "id": "no-ownerless-chip",
+        "changes": {
+          "thread_id": {
+            "$delete": true
+          }
+        },
+        "valid": false
+      },
+      {
+        "id": "no-fake-project-in-app",
+        "changes": {
+          "scope/project_id": "fake"
+        },
+        "valid": false
+      },
+      {
+        "id": "no-raw-page",
+        "changes": {
+          "page_body": "raw"
+        },
+        "valid": false
+      }
+    ],
+    "migration_base": {
+      "kind": "capture_chip",
+      "source": {
+        "thread_id": "thread:app1",
+        "chip_id": "chip:1",
+        "browser_session_id": "browser:1",
+        "attachment_type": "browser_selection_context",
+        "capture_status": "captured",
+        "source_ref": "capture:source:1",
+        "provenance_ref": "capture:provenance:1",
+        "summary_ref": "capture:summary:1",
+        "scope": {
+          "kind": "app",
+          "project_id": null,
+          "user_id": "user:1",
+          "computer_id": "computer:1",
+          "profile_id": "profile:1"
+        }
+      },
+      "evidence": {
+        "verified": true,
+        "backup_verified": true,
+        "thread_id": "thread:app1",
+        "scope": {
+          "kind": "app",
+          "project_id": null,
+          "user_id": "user:1",
+          "computer_id": "computer:1",
+          "profile_id": "profile:1"
+        }
+      }
+    },
+    "migration_cases": [
+      {
+        "id": "keep-real-app-thread",
+        "changes": {},
+        "expected": {
+          "schema_id": "pm.ds15.browser_capture_chip.v2",
+          "schema_version": "2.0.0",
+          "thread_id": "thread:app1",
+          "chip_id": "chip:1",
+          "browser_session_id": "browser:1",
+          "attachment_type": "browser_selection_context",
+          "capture_status": "captured",
+          "source_ref": "capture:source:1",
+          "provenance_ref": "capture:provenance:1",
+          "summary_ref": "capture:summary:1",
+          "scope": {
+            "kind": "app",
+            "project_id": null,
+            "user_id": "user:1",
+            "computer_id": "computer:1",
+            "profile_id": "profile:1"
+          }
+        }
+      },
+      {
+        "id": "ownerless-legacy-chip-unavailable",
+        "changes": {
+          "source/thread_id": {
+            "$delete": true
+          }
+        },
+        "expected": null
+      },
+      {
+        "id": "no-cross-thread-migration",
+        "changes": {
+          "evidence/thread_id": "thread:other"
+        },
+        "expected": null
+      }
+    ]
+  }
+]

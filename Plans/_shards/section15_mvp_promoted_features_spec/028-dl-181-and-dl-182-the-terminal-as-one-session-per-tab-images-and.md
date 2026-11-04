@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12645-L13361
+Source lines: L12645-L13745
 
-Source SHA256: `29202993e8ede84b3d108d6e5a58ee6bfd886eb3e27a06e2ea6c27fb51968c5c`
+Source SHA256: `929fa9379a99322b78bdad43a7019bc817cda90ef386c8475b97a8e502bbd09c`
 
 ---
 
@@ -725,3 +725,387 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-139
+
+
+### SMPFS-310 — browser.context_captured owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-310",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "browser.context_captured 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/browser_context_captured-search.json. Reused sources: Plans/assistant-chat-design.md:508,894-900, Plans/storage-plan.md:1154-1166, Plans/Section15_MVP_Promoted_Features_Spec.md:757, Plans/UI_Command_Catalog.md:824-846. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: Assistant chat capture handoff for cmd.browser.pick_element_for_chat, cmd.browser.add_selection_to_chat and the two selection+screenshot commands (UCC-064). Resolve the explicitly selected thread first, else the owning chat surface (including hidden chat), else require visible explicit new-thread creation. Never automatically create a thread, choose a focused unrelated thread, or send. Only after the resolved composer has committed its typed pending chip may the capture outcome append. A missing writable target stays an explicit unresolved interaction with no chip/event success. Screenshot variants additionally require RAP-054 admission, real Project/run/attempt and original artifact custody; otherwise handler_unavailable without capture/append/checkpoint. Protected auth content refuses before capture.\nScope: actual ordinary browser namespace = kind(project/app), project_id(real or null only for app), user_id, computer_id, profile_id; all scope fields are required. EventRecord.project_id equals scope.project_id; never fabricate a Project for app chat. scope_key is SHA-256 of canonical MessagePack scope map, sorted by UTF-8 keys. A resolved thread must belong to that actual namespace; optional command thread_id becomes required resolved thread_id in the successful durable capture. AuthBrowserSession is forbidden.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"browser.context_captured\", \"1.0.0\", actual scope map with UTF-8 sorted keys, thread_id, chip_id]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_browser_context_captured.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.browser_context_captured.v1@1.0.0, operating as Assistant chat browser capture history reader, reads only browser.context_captured@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.browser_context_captured:{scope_key}, value Plans/ds15_browser_context_captured_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nChip value binding: Plans/ds15_browser_capture_chip_v2.schema.json governs the typed browser entry inside composer_prep_state.v1:{thread_id}. No browser-owned composer or separate chip storage family. Migration validates actual thread/namespace and preserves sibling entries and draft bytes; unresolved legacy chip stays visibly unavailable, never silently reassigned. Append/passive replay cannot recreate a chip that the user sent or removed. Read/serialization rechecks current permissions, source deletion and chip blocked/expired/scrubbed/revoked state; unavailable chips may remain visible but never serialize as successful attachments.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-327 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": true,
+  "gui_classification_reason": "Pending composer or preview UI state.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-310"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-311 — dev.session.started owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-311",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "dev.session.started 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_started-search.json. Reused sources: Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433, Plans/storage-plan.md:1071,18287,18343, Plans/Shared_Integration_Runtime.md:259, Plans/UI_Command_Catalog.md:919-921. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: Section15 managed developer-workflow service handles cmd.dev.start_session and successful replacement launch under cmd.dev.restart_session. After actual managed workflow launch/attachment succeeds, commit running workflow outcome with the same aggregate dev_session_id and next workflow_revision. previous_state is created or restarting; workflow_state is running. No event on failed launch and no fabricated dap_session_id for a non-debug workflow.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"dev.session.started\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_dev_session_started.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.dev_session_started.v1@1.0.0, operating as Developer workflow history reader, reads only dev.session.started@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.dev_session_started:{project_id}, value Plans/ds15_dev_session_started_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-328 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-311"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-312 — dev.session.stopping owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-312",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "dev.session.stopping 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_stopping-search.json. Reused sources: Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433, Plans/storage-plan.md:1071,18287,18343, Plans/Shared_Integration_Runtime.md:259, Plans/UI_Command_Catalog.md:919-921. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: Section15 managed developer-workflow service accepts cmd.dev.stop_session. Commit the accepted stopping intent from running or restarting with workflow_state stopping and next workflow_revision before terminal stop publication. This is managed workflow intent, not proof a PTY or DAP process terminated.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"dev.session.stopping\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_dev_session_stopping.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.dev_session_stopping.v1@1.0.0, operating as Developer workflow history reader, reads only dev.session.stopping@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.dev_session_stopping:{project_id}, value Plans/ds15_dev_session_stopping_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-328 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-312"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-313 — dev.session.stopped owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-313",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "dev.session.stopped 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_stopped-search.json. Reused sources: Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433, Plans/storage-plan.md:1071,18287,18343, Plans/Shared_Integration_Runtime.md:259, Plans/UI_Command_Catalog.md:919-921. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: Section15 managed developer-workflow service records the actual stop/detach outcome after cmd.dev.stop_session or cmd.browser.stop_agent_keep_browser. Managed resources must be settled under their own owners before workflow_state stopped; previous_state may be stopping, running or restarting for the already specified direct browser keep-open path. The BrowserSession may remain open. Never turn a workflow stop into a fabricated terminal exit or DAP termination.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"dev.session.stopped\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_dev_session_stopped.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.dev_session_stopped.v1@1.0.0, operating as Developer workflow history reader, reads only dev.session.stopped@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.dev_session_stopped:{project_id}, value Plans/ds15_dev_session_stopped_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-328 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-313"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-314 — dev.session.restarting owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-314",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "dev.session.restarting 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/dev_session_restarting-search.json. Reused sources: Plans/Section15_MVP_Promoted_Features_Spec.md:209,244-247,9433, Plans/storage-plan.md:1071,18287,18343, Plans/Shared_Integration_Runtime.md:259, Plans/UI_Command_Catalog.md:919-921. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: Section15 managed developer-workflow service accepts cmd.dev.restart_session from running or stopped. Commit workflow_state restarting and next workflow_revision for the accepted operation before replacement launch. Preserve dev_session_id aggregate continuity; a concrete replacement PTY/DAP gets its owner-resolved identity. Restart intent is not successful replacement launch; dev.session.started records that later outcome separately.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"dev.session.restarting\", \"1.0.0\", actual project_id, dev_session_id, workflow_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_dev_session_restarting.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.dev_session_restarting.v1@1.0.0, operating as Developer workflow history reader, reads only dev.session.restarting@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.dev_session_restarting:{project_id}, value Plans/ds15_dev_session_restarting_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-328 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-314"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-315 — preview.session.started owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-315",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "preview.session.started 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_started-search.json. Reused sources: Plans/rewrite-tie-in-memo.md:231-302, Plans/FinalGUISpec.md:3584, Plans/storage-plan.md:1180-1187, Plans/FileManager.md:616-626, Plans/UI_Command_Catalog.md:463-464,9570-9588. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: PreviewSession owner consumes cmd.orchestrator.preview_open after resolving the document/artifact subject and actually creating/loading the runtime. Commit runtime_state loading with actual preview_session_id and revisions before publication. A reveal or placement change of an existing live session emits no new start. Restore reconstructs a fresh verified runtime, never treats cached running as liveness.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"preview.session.started\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_preview_session_started.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.preview_session_started.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.started@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.preview_session_started:{project_id}, value Plans/ds15_preview_session_started_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": true,
+  "gui_classification_reason": "Pending composer or preview UI state.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-315"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-316 — preview.session.refreshed owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-316",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "preview.session.refreshed 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_refreshed-search.json. Reused sources: Plans/rewrite-tie-in-memo.md:231-302, Plans/FinalGUISpec.md:3584, Plans/storage-plan.md:1180-1187, Plans/FileManager.md:616-626, Plans/UI_Command_Catalog.md:463-464,9570-9588. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: PreviewSession owner commits an actual refresh/hot-reload outcome for a refreshable visible subject (FileManager sections 13/14.6). A browser-backed ordinary session uses production cmd.browser.reload (UCC-117), preserving BrowserSession identity/class and recovery identity. Non-browser refresh uses the existing FileManager subject refresh/hot-reload action, producer hook filemanager.preview_refresh; this is an internal producer label, not a new public command. Never dispatch a browser command without a browser subject. Emit only after the owner commits the new preview_revision and ready output, not watcher notification or queue acceptance. Preserve or replace preview_session_id according to the existing continuity tuple; resolve actual runtime after source changes, never guess from the old tab.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"preview.session.refreshed\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_preview_session_refreshed.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.preview_session_refreshed.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.refreshed@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.preview_session_refreshed:{project_id}, value Plans/ds15_preview_session_refreshed_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": true,
+  "gui_classification_reason": "Pending composer or preview UI state.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-316"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```
+
+
+### SMPFS-317 — preview.session.stopped owner contract
+
+```yaml
+{
+  "plan_unit_id": "SMPFS-317",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "canonical_text": "preview.session.stopped 1.0.0 \u2014 newly authored owner contract, prepared without admission.\nSearch: independently searched top-level Plans/*.md, Plans/*.json and scripts/*.py at e237aebb940767dbb323010fcf029a4df25391a5, excluding ledgers and generated artifacts; per-family exact results and negative binding search are pinned in /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/preview_session_stopped-search.json. Reused sources: Plans/rewrite-tie-in-memo.md:231-302, Plans/FinalGUISpec.md:3584, Plans/storage-plan.md:1180-1187, Plans/FileManager.md:616-626, Plans/UI_Command_Catalog.md:463-464,9570-9588. DL-045 explicitly includes this family. Missing technical bindings are newly authored here for existing behavior; no sibling contract substitutes.\nProducer: PreviewSession owner consumes cmd.orchestrator.preview_stop and records actual runtime closure as runtime_state closed after managed resources settle. UI restore intent stays subject-owned; stop does not change build/run state. A closed/historical session cannot stop again on replay; browser overlay closure, where required, remains BrowserRuntimeService-owned.\nScope: project_only; EventRecord.project_id equals actual payload.project_id; EventRecord.run_id equals payload.run_id when linked and is null when no actual Run is linked. Optional thread/terminal/DAP/browser ids are actual owner joins, never guessed or invented.\nIdentity: stable original event_id allocated once; Idempotency key is sha256(canonical MessagePack array [\"preview.session.stopped\", \"1.0.0\", actual project_id, preview_subject_id, preview_session_id, preview_revision]). Changed bytes at the same identity refuse. Revisions track actual committed owner transitions, never delivery attempts. Resolve cross-owner identity and current permission at admission and again at final publication.\nPayload: Plans/ds15_preview_session_stopped.schema.json is the exact closed 1.0.0 payload. Only bounded identifiers and opaque owner-resolved non-secret refs: no page/DOM, local absolute paths, cookies, config bodies, credentials, screenshot bytes, command arguments or raw output.\nOrdering and custody: explicitly adopt SP-286 / CV-339 full-value v2 successor and Case L-2/SP-026/SP-236 ordinary SeglogFrameV2 append/read. Check current exact family admission/producer/codec/source and original input custody before work; registry absence fences production today. Commit the authentic owner outcome first, freeze its complete immutable result/event identity, append through the single writer, retain original first AppendReceipt and frozen full value under SP-286, then publish success or terminal result. An interrupted owner outcome is not reconstructed from current UI state. Missing or ambiguous original outcome stays fenced.\nReplay: lost acknowledgement returns original receipt, event_id and frozen payload; retry uses original outcome custody without repeating capture, thread creation, launch, stop, restart or refresh. If original outcome exists but append/receipt is unresolved, inspect single-writer dedupe and recover append using original identity; no new effect. SP-286 stores frozen transition outcome/receipt, not a new DS15 receipt family.\nConsumer: reader.ds15.preview_session_stopped.v1@1.0.0, operating as Preview subject history reader, reads only preview.session.stopped@1.0.0. It adopts SP-278 by name and DL-076 nine-field durable token. Checkpoint key projector.checkpoint.ds15.preview_session_stopped:{project_id}, value Plans/ds15_preview_session_stopped_checkpoint.schema.json. Capture CURRENT-selected complete generic-index coverage, scan the whole selected global sequence range in order with exact family and actual scope filter, and CAS complete prior checkpoint plus new value in one redb transaction. through_sequence_id is last globally scanned sequence, last_event_id last matching event; no checkpoint until first match. Gaps, omitted matches, partial scan, changed source/token/live snapshot/access/deletion/reader or stale full previous value preserve prior checkpoint. Rejoin live redb_snapshot_id at each read/advance/recovery; never persist it. Rebuild captures fresh complete retained source; missing prefix is unavailable, never reset to zero or claimed current. Resolve original event refs for history; replay never replays user actions.\nRedaction/custody: original seglog/first-receipt owner keeps original event bytes; source owners keep original composer/workflow/preview outcomes and refs with verified coherent backup/restore of the full original source/log/receipt closure. Checkpoints are derived and grant no access. Every read rechecks current subject/thread/Project permissions and source deletion/tombstones before disclosure; denied/deleted sources return unavailable without copying content into history.\nValue binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.\nRetention: retention_policy_ref = PENDING_RETENTION_DECISION for event and checkpoint. RT candidates are Case L-3 chat content for capture, Runtime/run/node/attempt only when an actual Run exists, approval/receipt/audit authority, or ordinary telemetry; no assignment/expiry/deletion is selected. Do not admit until RT resolves both. Existing value policies remain where unchanged; a broadened schema is held for RT rather than extending a DAP policy to workflow content.\nCompatibility and withdrawal: exact 1.0.0 event/reader only; refuse unknown fields/version before effects or checkpoint. No alias or deployed event predecessor is assumed. Value migrations are explicit coordinator transactions with source backup, validation, owner joins, complete codec verification and store version written last, never lazy rewrite-on-read. Withdrawal fences new writer admissions at committed source frontier under coordinator exclusion, drains original admitted results/receipts, then fences reader/checkpoint advance. In-flight old-reader CAS fails. Mark existing checkpoint withdrawn; preserve canonical originals under their owner policies. Reinstall requires current owner authorization and a fresh SP-278 complete rebuild, never old permission/publication authority.\nOracles: ATS-329 and exact family cases in Plans/ds15_event_contract_fixtures.json execute via scripts/pm-ds15-event-contracts.py: valid/invalid transition, scope joins, original receipt/outcome recovery, no repeat effect, full coverage/CAS, permission/deletion, rebuild and writer/reader withdrawal. Versioned value cases use Plans/ds15_value_contract_fixtures.json. Static reference models prove no native behavior; native execution NOT_RUN.",
+  "gui_related": true,
+  "gui_classification_reason": "Pending composer or preview UI state.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "SMPFS-317"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Section15_MVP_Promoted_Features_Spec.md"
+  ]
+}
+```

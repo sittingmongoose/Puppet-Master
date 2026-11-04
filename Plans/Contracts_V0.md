@@ -24517,7 +24517,7 @@ The selected app request union accepts only an authenticated user actor. A malfo
 ```
 
 
-### CV-661 — tool.custom_headless.skipped closed payload.
+### CV-661 — tool.custom_headless.skipped — withdrawn DS15 draft; DT question reference
 
 ```yaml
 {
@@ -24794,6 +24794,486 @@ The selected app request union accepts only an authenticated user actor. A malfo
   ],
   "preserved_exact_tokens": [
     "CV-666"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-667 — browser.context_captured closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-667",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "browser.context_captured@1.0.0 uses exact closed Plans/ds15_browser_context_captured.schema.json and checkpoint Plans/ds15_browser_context_captured_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310 and Plans/storage-plan.md#SP-647 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Chip value binding: Plans/ds15_browser_capture_chip_v2.schema.json governs the typed browser entry inside composer_prep_state.v1:{thread_id}. No browser-owned composer or separate chip storage family. Migration validates actual thread/namespace and preserves sibling entries and draft bytes; unresolved legacy chip stays visibly unavailable, never silently reassigned. Append/passive replay cannot recreate a chip that the user sent or removed. Read/serialization rechecks current permissions, source deletion and chip blocked/expired/scrubbed/revoked state; unavailable chips may remain visible but never serialize as successful attachments.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-667"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-668 — dev.session.started closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-668",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "dev.session.started@1.0.0 uses exact closed Plans/ds15_dev_session_started.schema.json and checkpoint Plans/ds15_dev_session_started_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-311 and Plans/storage-plan.md#SP-648 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-668"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-669 — dev.session.stopping closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-669",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "dev.session.stopping@1.0.0 uses exact closed Plans/ds15_dev_session_stopping.schema.json and checkpoint Plans/ds15_dev_session_stopping_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-312 and Plans/storage-plan.md#SP-649 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-669"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-670 — dev.session.stopped closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-670",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "dev.session.stopped@1.0.0 uses exact closed Plans/ds15_dev_session_stopped.schema.json and checkpoint Plans/ds15_dev_session_stopped_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-313 and Plans/storage-plan.md#SP-650 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-670"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-671 — dev.session.restarting closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-671",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "dev.session.restarting@1.0.0 uses exact closed Plans/ds15_dev_session_restarting.schema.json and checkpoint Plans/ds15_dev_session_restarting_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-314 and Plans/storage-plan.md#SP-651 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-655/CV-675 and Plans/ds15_dev_session_record_v2.schema.json version the existing dev_session_record.v1 key; workflow and subordinate DAP state are distinct, with explicit legacy DAP-only migration. Stop/restart never rewrites terminal history. DAP transitions require their own verified DebugSessionBroker outcome, not a workflow-state alias.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-671"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-672 — preview.session.started closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-672",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "preview.session.started@1.0.0 uses exact closed Plans/ds15_preview_session_started.schema.json and checkpoint Plans/ds15_preview_session_started_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-315 and Plans/storage-plan.md#SP-652 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-672"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-673 — preview.session.refreshed closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-673",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "preview.session.refreshed@1.0.0 uses exact closed Plans/ds15_preview_session_refreshed.schema.json and checkpoint Plans/ds15_preview_session_refreshed_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-316 and Plans/storage-plan.md#SP-653 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-673"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-674 — preview.session.stopped closed payload
+
+```yaml
+{
+  "plan_unit_id": "CV-674",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "preview.session.stopped@1.0.0 uses exact closed Plans/ds15_preview_session_stopped.schema.json and checkpoint Plans/ds15_preview_session_stopped_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-317 and Plans/storage-plan.md#SP-654 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Value binding: SP-656/CV-676 and Plans/ds15_preview_state_v2.schema.json bind subject-keyed UI/restore state separately from live preview_session_id and optional browser_session_id. No cached running value is liveness proof. Legacy preview_id mapping requires owner-verified subject identity and keeps historical runtime state; ambiguous identity refuses migration. Restore intent is reconstructed through existing owner policy; it grants no automation resume or browser launch authority.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-674"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-675 — Developer workflow/DAP versioned codec
+
+```yaml
+{
+  "plan_unit_id": "CV-675",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "dev_session_record.v1 versioned aggregate value binding (newly authored technical closure, DL-045). Section15 owns the developer workflow (209,244-247,9433); Shared Runtime 10.1 owns subordinate DebugSessionBroker mechanics. The physical key remains dev_session_record.v1:{project_id}:{dev_session_id}, value version 2.0.0, schema pm.storage_value.dev_session_record.v2 at Plans/ds15_dev_session_record_v2.schema.json#/$defs/dev_session_record. No parallel root identity or fabricated DAP id. workflow carries its state/revision/operation/outcome and actual optional run/thread/workspace/terminal links; dap is null for non-debug work, else the unchanged complete DAP v1 value with its independent generation/state/waiter evidence. Outer and nested project_id/dev_session_id and DAP topology.project_id must agree. Workflow state is never used as DAP state or PTY liveness. A DAP state change needs its own verified DebugSessionBroker outcome and existing waiter/trigger checks; workflow stop alone authorizes none.\nMigration: keep the original exact closed shared_runtime_contracts.schema.json DAP v1 codec for read-only import. Validate its schema AND existing pm-shared-runtime-contracts.py semantic rules first; copy every DAP field byte-equivalently to dap under the same outer root ids, set workflow=null when no verified workflow source exists, and never infer workflow state from DAP state. A verified legacy Section15 workflow source may populate workflow without DAP; validate exact links/outcome. Ambiguous root joins or missing original outcome refuse. StorageMigrationCoordinator makes a backed-up transaction, verifies canonical MessagePack codec roundtrip and full-value SP-286 outcome/first-receipt custody, then writes the schema/store version last. No lazy rewrite. Original per-transition outcomes remain immutable in adopted SP-286/CV-339 full-value v2 custody; the mutable latest workflow row cannot substitute for an earlier outcome on retry.\nRecovery: this existing canonical_non_rebuildable family retains mandatory backup and disclosure on absent/corrupt bytes; do not rebuild from events or infer live PTY/DAP state. After restart verify runtime owners before any mutation. Writer/reader withdrawal follows each event contract. SP-339/SP-340 existing canonical projects_and_sources profile and 16384-byte encoded ceiling remain. Retention for the expanded v2 workflow/DAP combination is PENDING_RETENTION_DECISION for RT; existing DAP-only v1 remains RP-DEBUG-30D under its unchanged scope, never extended to workflow by inference. No retention/deletion ruling. Static codec/schema/migration vectors in Plans/ds15_value_contract_fixtures.json run through scripts/pm-ds15-event-contracts.py; native execution NOT_RUN.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event/runtime contract.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-675"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Contracts_V0.md"
+  ]
+}
+```
+
+
+### CV-676 — Preview subject UI versioned value
+
+```yaml
+{
+  "plan_unit_id": "CV-676",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Contracts_V0.md",
+  "canonical_text": "preview_state subject/UI v2 technical binding (DL-045). FinalGUISpec:3584 and rewrite-tie-in-memo:231-302 establish subject-owned UI restore intent distinct from runtime PreviewSession and BrowserSession. Canonical write key preview_state.v1:{project_id}:{preview_subject_id}; a legacy preview_id key is read-only input, never a second subject identity. Plans/ds15_preview_state_v2.schema.json closes value version 2.0.0 with actual subject/source ref, restore intent, attachment target, export-prefs ref, scroll sync, last error and historical runtime/revision refs. runtime_verification is always unverified in persisted UI state. Runtime state created/loading/ready/stale/degraded/error/closed belongs to the actual live PreviewSession, not this UI cache. Opening/revealing preserves runtime identity when the existing subject/source_revision/surface-kind/transport tuple is unchanged; source changes use owner-resolved identity, never a guessed old live session. Optional BrowserSession overlay stays independent. No DOM/browser-storage/live instance serialization or automatic automation resume.\nMigration: old preview_state.v1:{project_id}:{preview_id} with legacy starting/running/stopped/error is accepted only with an owner-verified exact mapping of legacy preview_id/source_file to preview_subject_id/source ref, and authoritative saved intent/attachment/export/scroll/error state. Never equate preview_id with preview_session_id. Missing or multiple mappings are unavailable; do not guess a subject, invent UI preferences or a live session. Preserve legacy status for diagnostics, set runtime_verification=unverified and last_preview_session_id=null when no verified historical identity exists. Explicit StorageMigrationCoordinator backup/copy-forward/codec verification writes the new key/version last and records the old key read-only; fail closed on ambiguous migration. Preserve all existing UI preferences and owned refs. Restore uses subject intent and creates a new live runtime as needed through existing commands, never deserializes old running.\nThe materialized ds15_preview_subject_ui_state family is canonical UI intent with mandatory backup, bounded to SP-339/SP-340 16384 encoded bytes in canonical redb settings_and_layout; original transition outcomes are held by SP-286/CV-339 full-value v2, not reconstructed from latest UI state. Grouped deferred inventory is lineage only and excludes this now-materialized key. No retention/deletion policy is selected: its new exact policy is PENDING_RETENTION_DECISION for RT. Existing refresh/hot-reload actions bind independently in SMPFS-316; ordinary browser reload uses UCC-117, non-browser refresh never dispatches browser commands. Versioned schema/migration plus runtime/subject mismatch oracles run via scripts/pm-ds15-event-contracts.py; native execution NOT_RUN.",
+  "gui_related": true,
+  "gui_classification_reason": "Pending composer or preview UI state.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Contracts_V0.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "CV-676"
   ],
   "negative_constraints": [
     "No admission, retention decision, native proof, WorkNodes or NodeSeeds."

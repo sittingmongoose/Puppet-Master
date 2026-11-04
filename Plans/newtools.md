@@ -9156,7 +9156,7 @@ Q22 appearance amendment (Jared, 2026-10-30; Plans/Decision_Log.md#DL-257): curr
 ```
 
 
-### N2-218 — tool.custom_headless.skipped 1.0.0 — newly authored owner contract, prepared without admission.
+### N2-218 — tool.custom_headless.skipped — withdrawn DS15 draft; DT question reference
 
 ```yaml
 {

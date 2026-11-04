@@ -786,16 +786,19 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # Re-pinned 2026-11-04 for the full-review fixes (finding 14): dev_session_record_application and
 # eval_session_record_application add two materialized later_gui_or_feature_projection families, the app
 # DebugSessionRecord/EvalSessionRecord editions (SMPFS-139/140) that replace the browser records named before.
-STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 344
+# Re-pinned 2026-11-04 for DS15 SP-640..656: 14 independent event checkpoints plus
+# subject-owned preview UI add 15 materialized later-feature values. The skipped
+# family is withdrawn to DT; no retention policy is added or inferred.
+STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 359
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
-    "materialized": 320,
+    "materialized": 335,
     "deferred_not_build_blocking": 23,
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
     "tier_0_launch_critical": 61,
-    "later_gui_or_feature_projection": 273,
+    "later_gui_or_feature_projection": 288,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [

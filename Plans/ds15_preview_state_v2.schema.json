@@ -1,0 +1,131 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "preview_subject_id",
+    "source_ref",
+    "restore_intent",
+    "attached_surface",
+    "export_prefs_ref",
+    "scroll_sync",
+    "last_error_ref",
+    "last_preview_session_id",
+    "runtime_verification",
+    "last_source_revision",
+    "last_preview_revision",
+    "legacy_status"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.ds15.preview_state.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "preview_subject_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "source_ref": {
+      "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    },
+    "restore_intent": {
+      "enum": [
+        "none",
+        "inline",
+        "split",
+        "browser_tab",
+        "detached"
+      ]
+    },
+    "attached_surface": {
+      "enum": [
+        "chat_card",
+        "editor_preview",
+        "embedded_doc_pane",
+        "editor_browser_tab",
+        "detached_window"
+      ]
+    },
+    "export_prefs_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "scroll_sync": {
+      "type": "boolean"
+    },
+    "last_error_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/non_secret_ref"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "last_preview_session_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "runtime_verification": {
+      "const": "unverified"
+    },
+    "last_source_revision": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "last_preview_revision": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "legacy_status": {
+      "enum": [
+        "starting",
+        "running",
+        "stopped",
+        "error",
+        null
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.ds15.preview_state.v2",
+  "$defs": {
+    "non_secret_ref": {
+      "description": "Stable non-secret reference. Raw credentials, tokens, auth values, credential paths, file contents, and provider-visible bytes are forbidden.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+    }
+  }
+}
