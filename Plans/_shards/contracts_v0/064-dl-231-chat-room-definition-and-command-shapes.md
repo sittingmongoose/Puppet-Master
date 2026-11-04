@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L23953-L24833
 
-Source SHA256: `6ae862941688efcf00af787942fc79d0661a461f612e6d35a58f975594c32f46`
+Source SHA256: `b75673ba8e1b71873bd2f0d614ac29868e04851935e1ec135f62484732ff3e64`
 
 ---
 
@@ -542,8 +542,8 @@ canonical_text: Newly authored closed payload owner contract for exactly memory.
   hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
   occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
   payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
-  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
-  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
   bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-630, not borrowed
   from another event.
 gui_related: false
@@ -633,8 +633,8 @@ canonical_text: Newly authored closed payload owner contract for exactly memory.
   hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
   occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
   payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
-  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
-  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
   bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-632, not borrowed
   from another event.
 gui_related: false
@@ -724,8 +724,8 @@ canonical_text: Newly authored closed payload owner contract for exactly memory.
   hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
   occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
   payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
-  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
-  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
   bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-634, not borrowed
   from another event.
 gui_related: false
@@ -815,8 +815,8 @@ canonical_text: Newly authored closed payload owner contract for exactly memory.
   hash of the frozen canonical corpus revision selected at acceptance; a current snapshot substituted on retry fails.
   occurred_at_utc is strict UTC and is frozen at first logical publication, not retry time. Inline payload only;
   payload_ref=null. The producer validates root, dates, permission, joins and no-secret metadata before append.
-  Completed result_ref/hash resolve the immutable original outcome under authorized custody and never imply body
-  access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
+  Completed result_ref/hash use this family's SP-bound memresult_ identity and immutable operation outcome;
+  status/ref/hash and frozen time must exactly equal the operation and retained original full value. The ref never grants body access. Reject terminal-before-start, mismatched Project/operation/source revision, missing receipt, changed request
   bytes or unsupported version. Event identity and ordered recovery are defined for this family by SP-636, not borrowed
   from another event.
 gui_related: false

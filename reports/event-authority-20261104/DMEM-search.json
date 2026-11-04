@@ -20,7 +20,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-100",
+        "Plans/storage-plan.md#SP-630",
+        "Plans/Contracts_V0.md#CV-650",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.dedup_sweep.started",
@@ -43,7 +56,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-101",
+        "Plans/storage-plan.md#SP-631",
+        "Plans/Contracts_V0.md#CV-651",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.index.lexical.rebuild.completed",
@@ -66,7 +92,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-102",
+        "Plans/storage-plan.md#SP-632",
+        "Plans/Contracts_V0.md#CV-652",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.index.lexical.rebuild.started",
@@ -89,7 +128,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-103",
+        "Plans/storage-plan.md#SP-633",
+        "Plans/Contracts_V0.md#CV-653",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.index.semantic.rebuild.completed",
@@ -112,7 +164,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-104",
+        "Plans/storage-plan.md#SP-634",
+        "Plans/Contracts_V0.md#CV-654",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.index.semantic.rebuild.started",
@@ -135,7 +200,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-105",
+        "Plans/storage-plan.md#SP-635",
+        "Plans/Contracts_V0.md#CV-655",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.monthly_summary.completed",
@@ -240,7 +318,20 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-106",
+        "Plans/storage-plan.md#SP-636",
+        "Plans/Contracts_V0.md#CV-656",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   },
   {
     "event_type": "memory.verification_sweep.started",
@@ -263,6 +354,19 @@
         "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
       }
     ],
-    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
+    "review_round_1": {
+      "head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+      "scope": "Exact event name and target/shadow/generation/swap/manifest with Tantivy/USearch across live Plans Markdown/JSON; excludes ledgers, audits, evidence, migration, shards and indexes. Re-read own AMS/SP/CV units.",
+      "reused": [
+        "Plans/assistant-memory-subsystem.md#AMS-107",
+        "Plans/storage-plan.md#SP-637",
+        "Plans/Contracts_V0.md#CV-657",
+        "SP-286/CV-339 full-value custody",
+        "SP-278 history checkpoint"
+      ],
+      "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
+      "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    }
   }
 ]

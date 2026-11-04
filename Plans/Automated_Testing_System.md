@@ -7237,15 +7237,12 @@ plan_unit_id: ATS-315
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: Newly authored static oracles for the eight exact families in Plans/memory_maintenance_contracts.json,
-  each independently schema-checked using Plans/memory_maintenance_event_payloads.schema.json and Plans/memory_maintenance_event_fixtures.json.
-  Run python3 scripts/pm_memory_maintenance_events.py. Every family has valid payload, unknown field, missing operation,
-  wrong version, Project mismatch, retry identity, receipt-before-effect, source-fence, terminal-before-start, replay-without-effect
-  and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,
-  SeglogFrameV2 bytes, CURRENT fencing, crash recovery before/after effect and terminal publication, no duplicate
-  gist merge, stale index swap, backup/restore and read-time deletion/permission races remain native NOT_RUN obligations.
-  These fixtures confer no Event Authority admission or deletion policy. Monthly summary/prune rows are blocked
-  on Jared and have no executable payload definition.
+canonical_text: |-
+  Newly authored static oracles for the eight exact families in Plans/memory_maintenance_contracts.json. Run python3 scripts/pm_memory_maintenance_events.py against Plans/memory_maintenance_event_fixtures.json, payload/operation schemas and Plans/memory_maintenance_rebuild_target.schema.json. Boundary cases retain all original schema/admission/permission/source/withdrawal checks and additionally supply concrete phase-valid operation rows and retained synthetic full event values. They compare the complete original payload, including frozen timestamp, status/ref/hash, not asserted proof Booleans. Invalid completed rows with null start/terminal/outcome are rejected by the closed operation schemas.
+
+  Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement, settled effect, terminal append and terminal-row advancement, lost acknowledgement, retry and replay. Trace expectations are separately authored full operation snapshots, retained originals and effect/selector counters; the checker computes transitions and rejects repeated effect attempts, conflicting original outcomes and repeated swaps. Lexical and semantic traces separately interrupt durable target preparation and selector publication and compare the complete prepared descriptor/selected target, including post-swap/pre-effect recovery. Negative descriptors cover wrong target identity/manifest/source/prior selector, unsafe or mismatched artifacts and unprepared publication. A mutated succeeded/failed result with unchanged original custody must fail for every completed family.
+
+  These are a static contract model and adversarial fixtures. They do not execute MemoryMaintenance, authenticate real SP-286 receipts, validate physical SeglogFrameV2 bytes or prove redb/filesystem atomicity/flush, native crash recovery, backup/restore or read-time deletion/permission races. Those native obligations remain NOT_RUN. Static success confers no Event Authority, retention assignment or deletion policy. Monthly summary/prune rows remain held for Jared and have no executable payload definition.
 gui_related: false
 gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
 depends_on:
