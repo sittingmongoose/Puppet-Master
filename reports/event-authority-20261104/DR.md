@@ -92,7 +92,6 @@ Start checks: **20 GB available memory and 123 GB free disk**, above 6 GB / 50 G
 | `schema-check` | 0 / pass | `e91678590ca2759016a7e269bb72ffb0430c2c5d0c1b3bb7a63352040c7a6059` |
 | `shard-check` | 0 / pass | `10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85` |
 | `shard-generate` | 0 / pass | `fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2` |
-
 | `delivery-audit` | 0 / pass; 480 exact quotes; all 19 actual Project custody partitions encoded | `6c8f2cd2ce5d0511e1b214f930f8a0bbe5a7d21af277c9bf8edf30210b75651e` |
 
 Each log and result is under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/`; `DR.checks.json` records exact commands, source hashes and evidence paths with SHA-256. Index statuses were parsed from the top-level JSON. The copied cycle-2 review driver retains every test unchanged; only provenance fields identify the fixed input bytes. It now records **931 family assertions and 26 observation assertions with zero failed expectations**. Its B1 input mutation retains the expected checker failure. Separate in-memory guard-removal tests run the full current checker and fail for B5/B6 as expected; repository rules are never changed for those mutations.
