@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DG6A-FIX2-20261104",
+  "assessment_id": "EA-W2-DG6A-FIX3-20261104",
   "assessment_kind": "self_grade_preparation",
   "source_base": "be4766513ff71776346fc73b84f2542990f955af",
   "rubric": {
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -84,11 +84,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -111,11 +111,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -145,11 +145,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -172,11 +172,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -206,11 +206,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -226,11 +226,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -253,11 +253,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -273,11 +273,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -307,11 +307,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -334,16 +334,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -361,11 +361,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
-            "status": "PASS"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "upgraded",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -374,9 +374,10 @@
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
       ],
       "static_checks_seen": [
-        "scripts/pm-alert-event-contracts-check.py"
+        "scripts/pm-alert-event-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN."
     },
     {
       "event_type": "alert.dismissed",
@@ -414,11 +415,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -441,11 +442,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -468,11 +469,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -502,11 +503,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -529,11 +530,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -563,11 +564,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -583,11 +584,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -610,11 +611,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -630,11 +631,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -664,11 +665,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -691,16 +692,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -718,11 +719,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
-            "status": "PASS"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "upgraded",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -731,9 +732,10 @@
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
       ],
       "static_checks_seen": [
-        "scripts/pm-alert-event-contracts-check.py"
+        "scripts/pm-alert-event-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN."
     },
     {
       "event_type": "alert.rule_muted",
@@ -771,11 +773,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -798,11 +800,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -825,11 +827,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -859,11 +861,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -886,11 +888,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -920,11 +922,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -940,11 +942,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -967,11 +969,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -987,11 +989,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1021,11 +1023,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1048,16 +1050,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1075,11 +1077,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
-            "status": "PASS"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "upgraded",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -1088,9 +1090,10 @@
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
       ],
       "static_checks_seen": [
-        "scripts/pm-alert-event-contracts-check.py"
+        "scripts/pm-alert-event-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN."
     },
     {
       "event_type": "alert.snoozed",
@@ -1128,11 +1131,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1155,11 +1158,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -1182,11 +1185,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1216,11 +1219,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1243,11 +1246,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1277,11 +1280,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1297,11 +1300,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1324,11 +1327,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -1344,11 +1347,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1378,11 +1381,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1405,16 +1408,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1432,11 +1435,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
-            "status": "PASS"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "upgraded",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -1445,9 +1448,10 @@
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
       ],
       "static_checks_seen": [
-        "scripts/pm-alert-event-contracts-check.py"
+        "scripts/pm-alert-event-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN."
     },
     {
       "event_type": "bundle.annotation_state_changed",
@@ -3317,11 +3321,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3344,11 +3348,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -3371,11 +3375,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3405,11 +3409,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3432,11 +3436,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3466,11 +3470,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3486,11 +3490,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3513,11 +3517,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -3533,11 +3537,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3567,11 +3571,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3594,16 +3598,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3621,11 +3625,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -3634,9 +3638,10 @@
         "Native execution NOT_RUN; no sibling action or extra direct creator is authorized."
       ],
       "static_checks_seen": [
-        "scripts/pm-concern-created-contracts-check.py"
+        "scripts/pm-concern-created-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "The authorized creator set is already decided. Optional extra direct creators remain a separate unapplied proposal, never a preparation blocker.",
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN.",
       "separate_proposal": {
         "question": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
         "review_recommendation_unapplied": "Keep the already specified canonical creators. Worker, User and External Resource input is nomination until accepted by an authorized owner. Record creator separately from accountable owner. Do not re-ask whether the listed runtime creators may create.",
@@ -5954,11 +5959,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5981,11 +5986,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -6008,11 +6013,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6042,11 +6047,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6069,11 +6074,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6103,11 +6108,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6123,11 +6128,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6150,11 +6155,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -6170,11 +6175,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6204,11 +6209,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6231,16 +6236,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6258,11 +6263,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -6271,9 +6276,10 @@
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
       ],
       "static_checks_seen": [
-        "scripts/pm-panel-event-contracts-check.py"
+        "scripts/pm-panel-event-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN."
     },
     {
       "event_type": "panel.undocked",
@@ -6311,11 +6317,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6338,11 +6344,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "producer": {
           "status": "PASS",
@@ -6365,11 +6371,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6399,11 +6405,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6426,11 +6432,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6460,11 +6466,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change": "carried",
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "retention": {
           "status": "PARTIAL",
@@ -6480,11 +6486,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -6507,11 +6513,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "transitions": {
           "status": "PASS",
@@ -6527,11 +6533,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6561,11 +6567,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6588,16 +6594,16 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
+          "finding": "The exact family now rejects foreign checkpoint contexts and unresolved references. Complete operation/checkpoint/History bounds, replay-only, scope, LF and semantic-digest cases pass, with earlier review mutations rerun through full CLIs. Native source authentication, append and durability remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6615,11 +6621,11 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "source": "DG6A-sol/REGRADES-cycle3.json@b6ddf461659e979362f9f58d8781733a23737a42",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+          "change_reason": "Re-read current owner citations; repair original-event checkpoint joins, complete operation bounds and schema-reference resolution; rerun all standing and prior-review mutations through the full checker."
         }
       },
       "remaining_gaps": [
@@ -6628,11 +6634,12 @@
         "Native execution, actual OS/storage recovery and source/receipt authentication NOT_RUN."
       ],
       "static_checks_seen": [
-        "scripts/pm-panel-event-contracts-check.py"
+        "scripts/pm-panel-event-contracts-check.py",
+        "scripts/pm-dg6a-final-regression-check.py"
       ],
-      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
+      "notes": "Prepared without admission. Round 3 closes the foreign-checkpoint join, alert operation bounds and unresolved-reference gaps; every standing check and earlier review mutation is rerun. Native execution remains NOT_RUN."
     }
   ],
-  "reviewed_head": "257c2af1af6c3fbb324594664cb09a1ebf26475e",
-  "revision_binding": "Final report commit is self-inclusive; contract head and exact source evidence are in DG6A.md. Normative self-grades only; no admission or native proof."
+  "reviewed_head": "b6ddf461659e979362f9f58d8781733a23737a42",
+  "revision_binding": "This file is assessed at the final report commit containing it. Contract/checker changes are identified in DG6A.md; no self-referential commit hash is embedded."
 }
