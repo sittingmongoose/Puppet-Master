@@ -1135,7 +1135,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -1295,7 +1296,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -1550,7 +1552,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -1764,7 +1767,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -2019,7 +2023,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -2274,7 +2279,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -2529,7 +2535,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -2784,7 +2791,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -3039,7 +3047,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -3294,7 +3303,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -3549,7 +3559,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -3804,7 +3815,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -4059,7 +4071,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -4314,7 +4327,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -4569,7 +4583,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -4824,7 +4839,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -5079,7 +5095,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -5334,7 +5351,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -5589,7 +5607,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -5844,7 +5863,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -6099,7 +6119,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -6354,7 +6375,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -6609,7 +6631,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -6865,7 +6888,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -7120,7 +7144,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -7375,7 +7400,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -7630,7 +7656,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -7885,7 +7912,8 @@
               "row_count": 2,
               "first_sequence_id": 1,
               "through_sequence_id": 2
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -8318,6 +8346,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -9497,7 +9596,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -9657,7 +9757,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -9912,7 +10013,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -10126,7 +10228,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -10381,7 +10484,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -10636,7 +10740,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -10891,7 +10996,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -11146,7 +11252,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -11401,7 +11508,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -11656,7 +11764,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -11911,7 +12020,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -12166,7 +12276,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -12421,7 +12532,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -12676,7 +12788,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -12931,7 +13044,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -13186,7 +13300,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -13441,7 +13556,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -13696,7 +13812,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -13951,7 +14068,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -14206,7 +14324,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -14461,7 +14580,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -14716,7 +14836,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -14971,7 +15092,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -15227,7 +15349,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -15482,7 +15605,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -15737,7 +15861,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -15992,7 +16117,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -16247,7 +16373,8 @@
               "row_count": 2,
               "first_sequence_id": 2,
               "through_sequence_id": 3
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -16679,6 +16806,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -17767,7 +17965,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -17927,7 +18126,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -18182,7 +18382,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -18396,7 +18597,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -18651,7 +18853,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -18906,7 +19109,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -19161,7 +19365,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -19416,7 +19621,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -19671,7 +19877,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -19926,7 +20133,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -20181,7 +20389,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -20436,7 +20645,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -20691,7 +20901,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -20946,7 +21157,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -21201,7 +21413,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -21456,7 +21669,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -21711,7 +21925,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -21966,7 +22181,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -22221,7 +22437,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -22476,7 +22693,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -22731,7 +22949,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -22986,7 +23205,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -23241,7 +23461,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -23497,7 +23718,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -23752,7 +23974,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -24007,7 +24230,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -24262,7 +24486,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -24517,7 +24742,8 @@
               "row_count": 2,
               "first_sequence_id": 3,
               "through_sequence_id": 4
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -24947,6 +25173,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -26040,7 +26337,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -26200,7 +26498,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -26455,7 +26754,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -26669,7 +26969,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -26924,7 +27225,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -27179,7 +27481,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -27434,7 +27737,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -27689,7 +27993,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -27944,7 +28249,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -28199,7 +28505,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -28454,7 +28761,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -28709,7 +29017,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -28964,7 +29273,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -29219,7 +29529,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -29474,7 +29785,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -29729,7 +30041,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -29984,7 +30297,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -30239,7 +30553,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -30494,7 +30809,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -30749,7 +31065,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -31004,7 +31321,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -31259,7 +31577,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -31514,7 +31833,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -31770,7 +32090,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -32025,7 +32346,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -32280,7 +32602,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -32535,7 +32858,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -32790,7 +33114,8 @@
               "row_count": 2,
               "first_sequence_id": 4,
               "through_sequence_id": 5
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -33219,6 +33544,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -34621,7 +35017,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -34781,7 +35178,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -35036,7 +35434,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -35250,7 +35649,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -35505,7 +35905,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -35760,7 +36161,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -36015,7 +36417,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -36270,7 +36673,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -36525,7 +36929,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -36780,7 +37185,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -37035,7 +37441,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -37290,7 +37697,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -37545,7 +37953,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -37800,7 +38209,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -38055,7 +38465,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -38310,7 +38721,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -38565,7 +38977,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -38820,7 +39233,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -39075,7 +39489,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -39330,7 +39745,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -39585,7 +40001,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -39840,7 +40257,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -40095,7 +40513,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -40351,7 +40770,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -40606,7 +41026,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -40861,7 +41282,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -41116,7 +41538,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -41371,7 +41794,8 @@
               "row_count": 2,
               "first_sequence_id": 5,
               "through_sequence_id": 6
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -41846,6 +42270,87 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -43140,7 +43645,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -43300,7 +43806,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -43555,7 +44062,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -43769,7 +44277,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -44024,7 +44533,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -44279,7 +44789,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -44534,7 +45045,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -44789,7 +45301,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -45044,7 +45557,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -45299,7 +45813,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -45554,7 +46069,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -45809,7 +46325,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -46064,7 +46581,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -46319,7 +46837,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -46574,7 +47093,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -46829,7 +47349,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -47084,7 +47605,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -47339,7 +47861,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -47594,7 +48117,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -47849,7 +48373,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -48104,7 +48629,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -48359,7 +48885,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -48614,7 +49141,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -48870,7 +49398,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -49125,7 +49654,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -49380,7 +49910,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -49635,7 +50166,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -49890,7 +50422,8 @@
               "row_count": 2,
               "first_sequence_id": 6,
               "through_sequence_id": 7
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -51556,6 +52089,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -52921,7 +53525,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -53081,7 +53686,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -53336,7 +53942,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -53550,7 +54157,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -53805,7 +54413,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -54060,7 +54669,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -54315,7 +54925,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -54570,7 +55181,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -54825,7 +55437,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -55080,7 +55693,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -55335,7 +55949,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -55590,7 +56205,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -55845,7 +56461,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -56100,7 +56717,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -56355,7 +56973,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -56610,7 +57229,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -56865,7 +57485,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -57120,7 +57741,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -57375,7 +57997,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -57630,7 +58253,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -57885,7 +58509,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -58140,7 +58765,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -58395,7 +59021,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -58651,7 +59278,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -58906,7 +59534,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -59161,7 +59790,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -59416,7 +60046,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -59671,7 +60302,8 @@
               "row_count": 2,
               "first_sequence_id": 7,
               "through_sequence_id": 8
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -61432,6 +62064,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -62797,7 +63500,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -62957,7 +63661,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -63212,7 +63917,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -63426,7 +64132,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -63681,7 +64388,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -63936,7 +64644,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -64191,7 +64900,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -64446,7 +65156,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -64701,7 +65412,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -64956,7 +65668,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -65211,7 +65924,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -65466,7 +66180,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -65721,7 +66436,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -65976,7 +66692,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -66231,7 +66948,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -66486,7 +67204,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -66741,7 +67460,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -66996,7 +67716,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -67251,7 +67972,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -67506,7 +68228,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -67761,7 +68484,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -68016,7 +68740,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -68271,7 +68996,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -68527,7 +69253,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -68782,7 +69509,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -69037,7 +69765,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -69292,7 +70021,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -69547,7 +70277,8 @@
               "row_count": 2,
               "first_sequence_id": 8,
               "through_sequence_id": 9
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -71293,6 +72024,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -72268,7 +73070,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -72428,7 +73231,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -72683,7 +73487,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -72897,7 +73702,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -73152,7 +73958,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -73407,7 +74214,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -73662,7 +74470,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -73917,7 +74726,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -74172,7 +74982,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -74427,7 +75238,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -74682,7 +75494,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -74937,7 +75750,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -75192,7 +76006,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -75447,7 +76262,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -75702,7 +76518,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -75957,7 +76774,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -76212,7 +77030,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -76467,7 +77286,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -76722,7 +77542,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -76977,7 +77798,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -77232,7 +78054,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -77487,7 +78310,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -77742,7 +78566,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -77998,7 +78823,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -78253,7 +79079,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -78508,7 +79335,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -78763,7 +79591,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -79018,7 +79847,8 @@
               "row_count": 2,
               "first_sequence_id": 9,
               "through_sequence_id": 10
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -79449,6 +80279,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -80586,7 +81487,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -80746,7 +81648,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -81001,7 +81904,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -81215,7 +82119,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -81470,7 +82375,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -81725,7 +82631,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -81980,7 +82887,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -82235,7 +83143,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -82490,7 +83399,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -82745,7 +83655,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -83000,7 +83911,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -83255,7 +84167,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -83510,7 +84423,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -83765,7 +84679,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -84020,7 +84935,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -84275,7 +85191,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -84530,7 +85447,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -84785,7 +85703,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -85040,7 +85959,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -85295,7 +86215,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -85550,7 +86471,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -85805,7 +86727,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -86060,7 +86983,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -86316,7 +87240,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -86571,7 +87496,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -86826,7 +87752,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -87081,7 +88008,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -87336,7 +88264,8 @@
               "row_count": 2,
               "first_sequence_id": 10,
               "through_sequence_id": 11
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -87804,6 +88733,87 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -89570,7 +90580,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -89730,7 +90741,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -89985,7 +90997,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -90199,7 +91212,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -90454,7 +91468,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -90709,7 +91724,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -90964,7 +91980,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -91219,7 +92236,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -91474,7 +92492,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -91729,7 +92748,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -91984,7 +93004,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -92239,7 +93260,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -92494,7 +93516,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -92749,7 +93772,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -93004,7 +94028,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -93259,7 +94284,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -93514,7 +94540,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -93769,7 +94796,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -94024,7 +95052,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -94279,7 +95308,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -94534,7 +95564,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -94789,7 +95820,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -95044,7 +96076,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -95300,7 +96333,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -95555,7 +96589,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -95810,7 +96845,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -96065,7 +97101,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -96320,7 +97357,8 @@
               "row_count": 2,
               "first_sequence_id": 11,
               "through_sequence_id": 12
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -99745,6 +100783,87 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -101292,7 +102411,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -101452,7 +102572,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -101707,7 +102828,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -101921,7 +103043,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -102176,7 +103299,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -102431,7 +103555,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -102686,7 +103811,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -102941,7 +104067,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -103196,7 +104323,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -103451,7 +104579,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -103706,7 +104835,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -103961,7 +105091,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -104216,7 +105347,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -104471,7 +105603,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -104726,7 +105859,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -104981,7 +106115,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -105236,7 +106371,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -105491,7 +106627,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -105746,7 +106883,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -106001,7 +107139,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -106256,7 +107395,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -106511,7 +107651,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -106766,7 +107907,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -107022,7 +108164,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -107277,7 +108420,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -107532,7 +108676,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -107787,7 +108932,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -108042,7 +109188,8 @@
               "row_count": 2,
               "first_sequence_id": 12,
               "through_sequence_id": 13
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -108510,6 +109657,87 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -109619,7 +110847,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -109779,7 +111008,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -110034,7 +111264,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -110248,7 +111479,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -110503,7 +111735,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -110758,7 +111991,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -111013,7 +112247,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -111268,7 +112503,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -111523,7 +112759,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -111778,7 +113015,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -112033,7 +113271,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -112288,7 +113527,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -112543,7 +113783,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -112798,7 +114039,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -113053,7 +114295,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -113308,7 +114551,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -113563,7 +114807,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -113818,7 +115063,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -114073,7 +115319,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -114328,7 +115575,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -114583,7 +115831,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -114838,7 +116087,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -115093,7 +116343,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -115349,7 +116600,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -115604,7 +116856,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -115859,7 +117112,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -116114,7 +117368,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -116369,7 +117624,8 @@
               "row_count": 2,
               "first_sequence_id": 13,
               "through_sequence_id": 14
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -116834,6 +118090,87 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -119809,7 +121146,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -119969,7 +121307,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -120224,7 +121563,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -120438,7 +121778,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -120693,7 +122034,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -120948,7 +122290,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -121203,7 +122546,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -121458,7 +122802,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -121713,7 +123058,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -121968,7 +123314,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -122223,7 +123570,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -122478,7 +123826,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -122733,7 +124082,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -122988,7 +124338,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -123243,7 +124594,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -123498,7 +124850,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -123753,7 +125106,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -124008,7 +125362,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -124263,7 +125618,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -124518,7 +125874,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -124773,7 +126130,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -125028,7 +126386,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -125283,7 +126642,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -125539,7 +126899,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -125794,7 +127155,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -126049,7 +127411,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -126304,7 +127667,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -126559,7 +127923,8 @@
               "row_count": 2,
               "first_sequence_id": 14,
               "through_sequence_id": 15
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -130818,6 +132183,87 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -141066,7 +142512,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -141226,7 +142673,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -141481,7 +142929,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -141695,7 +143144,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -141950,7 +143400,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -142205,7 +143656,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -142460,7 +143912,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -142715,7 +144168,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -142970,7 +144424,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -143225,7 +144680,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -143480,7 +144936,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -143735,7 +145192,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -143990,7 +145448,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -144245,7 +145704,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -144500,7 +145960,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -144755,7 +146216,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -145010,7 +146472,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -145265,7 +146728,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -145520,7 +146984,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -145775,7 +147240,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -146030,7 +147496,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -146285,7 +147752,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -146540,7 +148008,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -146796,7 +148265,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -147051,7 +148521,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -147306,7 +148777,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -147561,7 +149033,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -147816,7 +149289,8 @@
               "row_count": 2,
               "first_sequence_id": 15,
               "through_sequence_id": 16
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -151760,6 +153234,97 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [
+            {
+              "case": "authenticated_application_source",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            },
+            {
+              "case": "application_absent_provider_account",
+              "exact_key": true,
+              "positive": "accepted",
+              "bad_keys": [
+                "identity_refused",
+                "identity_refused",
+                "identity_refused"
+              ]
+            }
+          ]
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -152745,7 +154310,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -152905,7 +154471,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -153160,7 +154727,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -153374,7 +154942,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -153629,7 +155198,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -153884,7 +155454,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -154139,7 +155710,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -154394,7 +155966,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -154649,7 +156222,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -154904,7 +156478,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -155159,7 +156734,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -155414,7 +156990,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -155669,7 +157246,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -155924,7 +157502,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -156179,7 +157758,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -156434,7 +158014,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -156689,7 +158270,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -156944,7 +158526,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -157199,7 +158782,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -157454,7 +159038,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -157709,7 +159294,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -157964,7 +159550,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -158219,7 +159806,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -158475,7 +160063,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -158730,7 +160319,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -158985,7 +160575,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -159240,7 +160831,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -159495,7 +161087,8 @@
               "row_count": 2,
               "first_sequence_id": 16,
               "through_sequence_id": 17
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -159927,6 +161520,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     },
     {
@@ -161001,7 +162665,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -161161,7 +162826,8 @@
               "row_count": 0,
               "first_sequence_id": null,
               "through_sequence_id": null
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -161416,7 +163082,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -161630,7 +163297,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -161885,7 +163553,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "cas_lost",
           "expected_stored": {
@@ -162140,7 +163809,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -162395,7 +164065,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -162650,7 +164321,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -162905,7 +164577,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -163160,7 +164833,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -163415,7 +165089,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -163670,7 +165345,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -163925,7 +165601,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -164180,7 +165857,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -164435,7 +166113,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -164690,7 +166369,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -164945,7 +166625,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -165200,7 +166881,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -165455,7 +167137,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -165710,7 +167393,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "source_changed",
           "expected_stored": {
@@ -165965,7 +167649,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -166220,7 +167905,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -166475,7 +168161,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "coverage_refused",
           "expected_stored": {
@@ -166731,7 +168418,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -166986,7 +168674,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "schema_refused",
           "expected_stored": {
@@ -167241,7 +168930,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -167496,7 +169186,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "published",
           "expected_stored": {
@@ -167751,7 +169442,8 @@
               "row_count": 2,
               "first_sequence_id": 17,
               "through_sequence_id": 18
-            }
+            },
+            "source_storage_instance_id": "11111111-1111-4111-8111-111111111111"
           },
           "expected": "unavailable",
           "expected_stored": {
@@ -168186,6 +169878,77 @@
             "expected": "idempotency_conflict"
           }
         ]
+      },
+      "standing_check_oracles": {
+        "1": {
+          "writer": "replay_only_not_appendable",
+          "retry": {
+            "result": "replay_only_not_appendable",
+            "external_effects": 0,
+            "append_count": 0,
+            "value": null
+          }
+        },
+        "2": {
+          "application_cases": [],
+          "forbidden_application_scope": "scope_refused"
+        },
+        "3": {
+          "encoded_positives": true,
+          "raw_id": "scope_refused"
+        },
+        "4": {
+          "oversized_inline": "payload_ref_required",
+          "verified_ref": "accepted",
+          "unverified_ref": "payload_unavailable",
+          "changed_ref": "payload_unavailable"
+        },
+        "5": {
+          "coherent_trailing_lf": "schema_refused"
+        },
+        "6": {
+          "metadata_original": [
+            true,
+            true,
+            true
+          ],
+          "producer_conflicts": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "7": {
+          "positive_matches_event": true,
+          "mismatches": [
+            "source_changed",
+            "source_changed",
+            "source_changed",
+            "source_changed"
+          ]
+        },
+        "8": {
+          "clean_exit": 0,
+          "failure_exit": 1
+        }
       }
     }
   ],

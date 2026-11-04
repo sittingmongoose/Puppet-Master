@@ -441,6 +441,8 @@ def checkpoint_result(c, old, proposed, context, schema):
     if proposed['index_read_token'] != context['current_token']:
         return 'source_changed'
     t = proposed['index_read_token']
+    if t['storage_instance_id'] != context['source_storage_instance_id']:
+        return 'source_changed'
     if proposed['storage_instance_id'] != t['storage_instance_id'] or t['source_selection']['storage_instance_id'] != t['storage_instance_id']:
         return 'source_changed'
     if t['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + t['storage_instance_id'] or t['checkpoint_ref'] != t['checkpoint_key'] + '#/generations/' + t['generation_id'] or t['index_dataset_name'] != 'event_record_index.v2@' + t['generation_id']:
@@ -466,6 +468,85 @@ def checkpoint_result(c, old, proposed, context, schema):
     return 'published'
 
 
+def checker_exit_code(failures):
+    return int(bool(failures))
+
+
+def standing_results(c, f, schemas):
+    """Eight independent, per-family standing oracles; no admission/native proof."""
+    name = c['event_type']; slug = name.replace('.', '_')
+    a, b, e = (copy.deepcopy(f[k]) for k in ['prepared_source', 'completed_source', 'event_record'])
+    replay = dict(e, replay_policy='projector_replay_only')
+    results = {'1': {'writer': source_valid(c, a, b, replay, schemas),
+                     'retry': recovery(c, f, dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only'))}}
+    app = [v for v in f['positive_variants'] if v['event']['scope_kind'] == 'application']
+    app_results = []
+    for variant in app:
+        x, y, z = (copy.deepcopy(variant[k]) for k in ['prepared', 'completed', 'event'])
+        sid = y['application_scope']['server_id']; oid = y['owner_operation_id']
+        expected = 'application@1:' + sid.encode().hex() + ':' + oid.encode().hex()
+        negatives = []
+        for key in ['application@1:' + sid + ':' + oid,
+                    'application@1:' + 'other-server'.encode().hex() + ':' + oid.encode().hex(),
+                    expected.replace('application@1:', 'application:')]:
+            aa, bb, ee = copy.deepcopy((x, y, z))
+            ee['idempotency_key'] = key; ee['event_id'] = 'evt_dt_' + hashlib.sha256(key.encode()).hexdigest()
+            for item in [aa, bb]:
+                item['idempotency_key'] = key; item['event_id'] = ee['event_id']
+            if name == 'usage.event':
+                bb['payload']['usage_event_ref'] = ee['event_id']; ee['payload']['usage_event_ref'] = ee['event_id']
+            bb['prepared_sha256'] = hashlib.sha256(source_bytes(aa)).hexdigest()
+            negatives.append(source_valid(c, aa, bb, ee, schemas))
+        app_results.append({'case': variant['case'], 'exact_key': z['idempotency_key'] == expected,
+                            'positive': source_valid(c, x, y, z, schemas), 'bad_keys': negatives})
+    results['2'] = {'application_cases': app_results}
+    if not app:
+        results['2']['forbidden_application_scope'] = source_valid(c, a, b, dict(e, scope_kind='application', project_id=None), schemas)
+    aa, bb = copy.deepcopy((a, b)); aa['scope_partition'] = bb['scope_partition'] = e['project_id']
+    bb['prepared_sha256'] = hashlib.sha256(source_bytes(aa)).hexdigest()
+    project_cases = [(b, e)] + [(v['completed'], v['event']) for v in f['positive_variants'] if v['event']['scope_kind'] == 'project']
+    results['3'] = {'encoded_positives': all(done['scope_partition'] == partition_for(event) for done, event in project_cases),
+                    'raw_id': source_valid(c, aa, bb, e, schemas)}
+    ref = dict(e, payload={}, payload_ref='payload:fixture-verified-pack-body')
+    results['4'] = {'oversized_inline': source_valid(c, a, b, dict(e, payload={'body': 'x' * 16385}), schemas),
+                    'verified_ref': source_valid(c, a, b, ref, schemas, b['payload'], True),
+                    'unverified_ref': source_valid(c, a, b, ref, schemas, b['payload'], False),
+                    'changed_ref': source_valid(c, a, b, ref, schemas, {}, True)}
+    case = copy.deepcopy(f['checkpoint_cases'][0]); cp = schemas[slug + '_checkpoint']
+    case['proposed']['index_read_token']['generation_anchor_sha256'] += '\n'
+    for token_owner in [case['context'], case['context']['verified_prefix']]:
+        token_owner['current_token' if token_owner is case['context'] else 'index_read_token'] = copy.deepcopy(case['proposed']['index_read_token'])
+    results['5'] = {'coherent_trailing_lf': checkpoint_result(c, case['previous'], case['proposed'], case['context'], cp)}
+    key = e['idempotency_key']; seen = {}; original = {'event': e, 'receipt': f['first_append_receipt']}
+    append_model(seen, key, producer_semantic_digest(e), original)
+    metadata = []; producer = []
+    for mutation in f['retry_oracle']['storage_metadata_mutations']:
+        changed = dict(e, **{mutation['field']: mutation['value']})
+        metadata.append(append_model(seen, key, producer_semantic_digest(changed), None) == ('original', original) and len(seen) == 1)
+    for mutation in f['retry_oracle']['producer_mutations']:
+        changed = dict(e, **{mutation['field']: mutation['value']})
+        producer.append(append_model(seen, key, producer_semantic_digest(changed), None) == ('idempotency_conflict', None) and len(seen) == 1)
+    results['6'] = {'metadata_original': metadata, 'producer_conflicts': producer}
+    mismatches = []
+    for path in [('storage_instance_id',), ('index_read_token', 'storage_instance_id'),
+                 ('index_read_token', 'source_selection', 'storage_instance_id')]:
+        case = copy.deepcopy(f['checkpoint_cases'][0])
+        set_path(case['proposed'], path, '22222222-2222-4222-8222-222222222222')
+        mismatches.append(checkpoint_result(c, case['previous'], case['proposed'], case['context'], cp))
+    case = copy.deepcopy(f['checkpoint_cases'][0]); proposed = case['proposed']; token = proposed['index_read_token']
+    foreign = '22222222-2222-4222-8222-222222222222'
+    proposed['storage_instance_id'] = token['storage_instance_id'] = token['source_selection']['storage_instance_id'] = foreign
+    token['checkpoint_key'] = 'event_record_index_checkpoint.v1:' + foreign
+    token['checkpoint_ref'] = token['checkpoint_key'] + '#/generations/' + token['generation_id']
+    case['context']['current_token'] = copy.deepcopy(token)
+    case['context']['verified_prefix']['index_read_token'] = copy.deepcopy(token)
+    mismatches.append(checkpoint_result(c, case['previous'], proposed, case['context'], cp))
+    results['7'] = {'positive_matches_event': all(v['proposed']['storage_instance_id'] == v['proposed']['index_read_token']['storage_instance_id'] == v['proposed']['index_read_token']['source_selection']['storage_instance_id'] == b['storage_instance_id'] for v in f['checkpoint_cases'] if v['expected'] == 'published'),
+                    'mismatches': mismatches}
+    results['8'] = {'clean_exit': checker_exit_code([]), 'failure_exit': checker_exit_code([name + ': negative case'])}
+    return results
+
+
 def main():
     contracts = load('Plans/dt_event_contracts.json')['families']
     schemas = load('Plans/dt_event_contracts.schema.json')['$defs']
@@ -475,6 +556,7 @@ def main():
     checks = 0
     failures = []
     counts = {}
+    standing = {}
     def check(ok, message):
         nonlocal checks
         checks += 1
@@ -489,6 +571,9 @@ def main():
                 ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + definition
                 check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
         identifier_checks(c, f, schemas, check)
+        standing[name] = standing_results(c, f, schemas)
+        for number in map(str, range(1, 9)):
+            check(standing[name][number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
         validator = Draft202012Validator(schemas[slug], format_checker=FormatChecker())
         check(not list(validator.iter_errors(p)), name + ': positive payload')
         check(name not in registered, name + ': no registry admission')
@@ -644,9 +729,9 @@ def main():
         known = [v for v in contributions.values() if v is not None]
         check(sum(known) == case['expected_known_cost_microdollars'] and len(contributions) == case['expected_records'], 'usage replacement: ' + case['case'])
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(contracts), 'checks': checks,
-                      'per_family_checks': counts, 'failures': failures, 'native_execution': 'NOT_RUN',
+                      'per_family_checks': counts, 'standing_checks': standing, 'failures': failures, 'native_execution': 'NOT_RUN',
                       'boundary': 'original-owner and SP-278 authentication are assumed adapters; no native proof'}, indent=2))
-    return bool(failures)
+    return checker_exit_code(failures)
 
 if __name__ == '__main__':
     raise SystemExit(main())
