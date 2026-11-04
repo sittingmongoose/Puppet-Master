@@ -1,480 +1,199 @@
 {
-  "assessment": "EA-W2-DX-FIX2-20261104",
-  "starting_head": "3a6b219abbdabfafe74865ba2d8a9cd6f934256f",
-  "graded_source_head": "6d27e68d4e2821e17f0cb4b76996b18cf5af133c",
+  "assessment": "EA-W2-DX-FIX3-20261104",
+  "starting_head": "16015f1c49a72a67589085fcd7894b9b54b15ca8",
+  "graded_source_head": "6083110e8e8315bf2340082aa5290020279073bd",
   "checks": [
     {
-      "label": "F5-green-contracts",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_contracts.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F5-green-contracts.txt",
-      "sha256": "4689788b90d67a7dd50689e290279cd3c23d89bd48f0359c8207769149e0b359",
-      "at_utc": "2026-11-04T19:40:07.963175+00:00"
-    },
-    {
-      "label": "F5-green-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F5-green-semantics.txt",
-      "sha256": "1cd7307421a8827e2da747c524bfb2d491303eb082f563ce23ba3f0529013922",
-      "at_utc": "2026-11-04T19:40:19.931363+00:00"
-    },
-    {
-      "label": "F5-index-generate",
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F5-index-generate.txt",
-      "sha256": "85f267ca9ac61a7fcd71f00c766c97ffc05e52d6c7eb1355d4a261429523f56b",
-      "at_utc": "2026-11-04T19:41:14.467316+00:00"
-    },
-    {
-      "label": "F5-red-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F5-red-semantics.txt",
-      "sha256": "97d4915a1b3eddd66a9250a32b43ba190bc673ca11dad0ee0acfcf6bdf5f5465",
-      "at_utc": "2026-11-04T19:39:49.511765+00:00"
-    },
-    {
-      "label": "F5-shards-check",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F5-shards-check.txt",
-      "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53",
-      "at_utc": "2026-11-04T19:41:39.119879+00:00"
-    },
-    {
-      "label": "F5-shards-generate",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F5-shards-generate.txt",
-      "sha256": "7c402e79b75330851d3bf3a867d74ea90582022879515094474c74c5aa6d9387",
-      "at_utc": "2026-11-04T19:40:23.198439+00:00"
-    },
-    {
-      "label": "F6-green-contracts",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_contracts.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F6-green-contracts.txt",
-      "sha256": "f1c2de65995a4060cfd584bd612367ea8c919309cfeb27348aaeefaae9592bcc",
-      "at_utc": "2026-11-04T19:44:11.419502+00:00"
-    },
-    {
-      "label": "F6-green-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F6-green-semantics.txt",
-      "sha256": "329b81a3192e2884b134b18e230f3fcf8bc4a44aae673cf3e90015fcddb37e54",
-      "at_utc": "2026-11-04T19:43:48.267507+00:00"
-    },
-    {
-      "label": "F6-index-generate",
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F6-index-generate.txt",
-      "sha256": "bb46944902c804b6477884fcac17268bb921d6e05b5ee400f1ea56392a4474fd",
-      "at_utc": "2026-11-04T19:45:00.153185+00:00"
-    },
-    {
-      "label": "F6-red-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F6-red-semantics.txt",
-      "sha256": "a209f57a37c2ab4252ebf7d11a85df2e6b68108dce6efe16bc8af8a60267d5b3",
-      "at_utc": "2026-11-04T19:42:50.396163+00:00"
-    },
-    {
-      "label": "F6-shards-check",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F6-shards-check.txt",
-      "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53",
-      "at_utc": "2026-11-04T19:45:34.295733+00:00"
-    },
-    {
-      "label": "F6-shards-generate",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F6-shards-generate.txt",
-      "sha256": "7c402e79b75330851d3bf3a867d74ea90582022879515094474c74c5aa6d9387",
-      "at_utc": "2026-11-04T19:44:14.781023+00:00"
-    },
-    {
-      "label": "F7-green-contracts",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_contracts.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-green-contracts.txt",
-      "sha256": "c7f805b95bb352bd81173da3ac7ee39f1ecf65e4e55155a5821a0beaecff928a",
-      "at_utc": "2026-11-04T19:46:59.581779+00:00"
-    },
-    {
-      "label": "F7-green-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-green-semantics.txt",
-      "sha256": "758139e55517c8343e5bae9aafdabd1f6925751a0b75b0dea3863a0e69107b44",
-      "at_utc": "2026-11-04T19:48:45.733620+00:00"
-    },
-    {
-      "label": "F7-index-generate",
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-index-generate.txt",
-      "sha256": "ac30e5c76376a1fd88055b04c0cec53bf90be38575fcd16ae71b1979e2f2aae9",
-      "at_utc": "2026-11-04T19:48:45.454684+00:00"
-    },
-    {
-      "label": "F7-red-contracts",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_contracts.py"
-      ],
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-red-contracts.txt",
-      "sha256": "df3f60db01717d607261cf96ea1d2a962acaae649bf9e4e819bbb3ef951e3ed4",
-      "at_utc": "2026-11-04T19:46:08.803277+00:00"
-    },
-    {
-      "label": "F7-red-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-red-semantics.txt",
-      "sha256": "17e68bb4247344c5b6da1f1881cf973a9de9fc5d1e5005187713a515f4ad21c8",
-      "at_utc": "2026-11-04T19:46:07.698498+00:00"
-    },
-    {
-      "label": "F7-shards-check",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-shards-check.txt",
-      "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53",
-      "at_utc": "2026-11-04T19:49:10.553086+00:00"
-    },
-    {
-      "label": "F7-shards-generate",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-shards-generate.txt",
-      "sha256": "7c402e79b75330851d3bf3a867d74ea90582022879515094474c74c5aa6d9387",
-      "at_utc": "2026-11-04T19:47:19.513941+00:00"
-    },
-    {
-      "label": "F7-trace-red",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 1,
-      "top_level_status": "fail",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/F7-trace-red.txt",
-      "sha256": "56841cc5629e92e824c1e723ff7ef85aaafe1622869cb9ff2b3b2ef6a9076a21",
-      "at_utc": "2026-11-04T19:59:28.126487+00:00"
-    },
-    {
-      "label": "compact-contracts",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_contracts.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/compact-contracts.txt",
-      "sha256": "c7f805b95bb352bd81173da3ac7ee39f1ecf65e4e55155a5821a0beaecff928a",
-      "at_utc": "2026-11-04T19:49:54.681270+00:00"
-    },
-    {
-      "label": "compact-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/compact-semantics.txt",
-      "sha256": "758139e55517c8343e5bae9aafdabd1f6925751a0b75b0dea3863a0e69107b44",
-      "at_utc": "2026-11-04T19:49:54.012664+00:00"
-    },
-    {
-      "label": "event-index-tests",
-      "command": [
-        "python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_event_index_binding.py"
-      ],
-      "exit_code": 0,
-      "top_level_status": null,
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/event-index-tests.txt",
-      "sha256": "0cf0e0968a64361498e069a767f03bcc3d02ad73e0d0b2286a9ced7d478c2005",
-      "at_utc": "2026-11-04T19:51:07.740343+00:00"
-    },
-    {
       "label": "final-contracts",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_contracts.py"
-      ],
+      "command": "python3 scripts/pm_executor_event_contracts.py",
       "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/final-contracts.txt",
-      "sha256": "c7f805b95bb352bd81173da3ac7ee39f1ecf65e4e55155a5821a0beaecff928a",
-      "at_utc": "2026-11-04T19:51:01.436170+00:00"
-    },
-    {
-      "label": "final-index-validate",
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/final-index-validate.txt",
-      "sha256": "08c9c3f3833f181de5d6cfec1171af6cd0bd844c18c101be4ca3c8abd09c092d",
-      "at_utc": "2026-11-04T19:52:04.855024+00:00"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/final-pm_executor_event_contracts.json",
+      "sha256": "8ae64ea71069c7cc77885a00405e9980ccc0bb21ed87fdc5ed4d27c8803a6aa9",
+      "executed_source_head": "6083110e8e8315bf2340082aa5290020279073bd",
+      "top_level_status": "pass"
     },
     {
       "label": "final-semantics",
-      "command": [
-        "python3",
-        "scripts/pm_executor_event_semantics.py"
-      ],
+      "command": "python3 scripts/pm_executor_event_semantics.py",
       "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/final-semantics.txt",
-      "sha256": "1113dfd4fd5f114278b9aad6be4f185c673ba192abcc9a48c81259c70189b69d",
-      "at_utc": "2026-11-04T19:59:42.981737+00:00"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/final-pm_executor_event_semantics.json",
+      "sha256": "0e2619e73e5ba695e9ca3ad1cdd571a6cdc162ec1dbe2285d7e6cd2ba7cb443f",
+      "executed_source_head": "6083110e8e8315bf2340082aa5290020279073bd",
+      "top_level_status": "pass"
     },
     {
-      "label": "independent-probes-full-cli",
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/inject_529_probes.py"
-      ],
+      "label": "independent-F1-F7-probes",
+      "command": "python3 PROBES-cycle3.py <worktree>",
       "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/independent-probes-full-cli.txt",
-      "sha256": "6e2eecc1b87670bce9de1c00027acea8e446bbf9da83d7b88024c015aec6c763",
-      "at_utc": "2026-11-04T20:01:33.162423+00:00"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/probes-cycle3.json",
+      "sha256": "a460d22f96adcd598b3e8bf08da0cc4b082f541414ce1d09d962310ecac11784",
+      "executed_source_head": "0b4cf74f5224cd11833269cead8c845605f2d318",
+      "top_level_status": "complete"
+    },
+    {
+      "label": "independent-full-CLI-injection",
+      "command": "python3 INJECT-cycle3.py <worktree>",
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/injected-check-cycle3.json",
+      "sha256": "fd66a8c47ad4320d079088c15bc101434aa6df2b5c68fb140cd9e24b4ba56d77",
+      "executed_source_head": "0b4cf74f5224cd11833269cead8c845605f2d318",
+      "top_level_status": "pass"
+    },
+    {
+      "label": "full-CLI-schema-mutations",
+      "command": "python3 reference-regression.py <worktree> <evidence>",
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/reference-regression.json",
+      "sha256": "5f708c7c83d41a1f40f118ae755e80f677bc3831db1630491f274e0ec0e973e3",
+      "executed_source_head": "0b4cf74f5224cd11833269cead8c845605f2d318",
+      "top_level_status": "pass"
+    },
+    {
+      "label": "old-checker-resource-proof-cache-controls",
+      "command": "python3 before-and-resource-controls.py <worktree> <evidence>",
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/before-and-resource-controls.json",
+      "sha256": "b4fc99cc35863ea794646ab5d5b1bf6a6dca6d8ee22d90d5e4cf64055486c91b",
+      "executed_source_head": "6083110e8e8315bf2340082aa5290020279073bd",
+      "top_level_status": "pass"
+    },
+    {
+      "label": "all-ten-standing-scope",
+      "command": "python3 scope-and-standing.py <worktree> <evidence>",
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/standing-checks.json",
+      "sha256": "f5f43f2299f42d6361b33ea6445abb7ea3fbcfaa60ffe52caf5396d4db74c953",
+      "executed_source_head": "6083110e8e8315bf2340082aa5290020279073bd",
+      "top_level_status": "pass"
+    },
+    {
+      "label": "event-index-tests",
+      "command": "python3 -m unittest discover -s tests -p test_pm_event_index_binding.py",
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/event-index-tests.txt",
+      "sha256": "5489fba4b980fbb7461d25f5b6889bec59dfdb2ebcf2cffbf79f2aecbf060b41",
+      "executed_source_head": "16015f1c49a72a67589085fcd7894b9b54b15ca8 plus DX oracle fixes; owner/test/index inputs unchanged"
     },
     {
       "label": "runtime-vocabulary-tests",
-      "command": [
-        "python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_runtime_vocabulary_migration.py"
-      ],
+      "command": "python3 -m unittest discover -s tests -p test_pm_runtime_vocabulary_migration.py",
       "exit_code": 1,
-      "top_level_status": null,
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/runtime-vocabulary-tests.txt",
-      "sha256": "1292c968a890cc722a5969d4f6b825868a5da27f12e664d6291192c47919473f",
-      "at_utc": "2026-11-04T19:51:20.211578+00:00"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/runtime-vocabulary-tests.txt",
+      "sha256": "d98afc19c053d26f03b1c822d67dd4b36d80c6a4457c48431fbd83dde5cad384",
+      "executed_source_head": "16015f1c49a72a67589085fcd7894b9b54b15ca8 plus DX oracle fixes; owner/test/index inputs unchanged"
     },
     {
-      "label": "scope-regression",
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/scope_regression.py"
-      ],
+      "label": "shard-check",
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/scope-regression.txt",
-      "sha256": "f099da5b44001ace2902f244046a67b97bed882387f63c7f4c4af59f2095ced9",
-      "at_utc": "2026-11-04T20:01:36.102405+00:00"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/shard-check.json",
+      "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53",
+      "executed_source_head": "16015f1c49a72a67589085fcd7894b9b54b15ca8 plus DX oracle fixes; owner/test/index inputs unchanged",
+      "top_level_status": "pass"
     },
     {
-      "label": "standing-audit",
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/standing_audit.py"
-      ],
+      "label": "index-validate",
+      "command": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
-      "top_level_status": "pass",
-      "output_path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/standing-audit.txt",
-      "sha256": "cb228b02733a544a55d7ce4387b648b0fafad813ec2d159bf64c0b4d33b79f3b",
-      "at_utc": "2026-11-04T20:01:34.242808+00:00"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/index-validate.json",
+      "sha256": "d422e28b689c6decc51cf59d70433e13116f50c6ac4fc33bea70bcfea64085cc",
+      "executed_source_head": "16015f1c49a72a67589085fcd7894b9b54b15ca8 plus DX oracle fixes; owner/test/index inputs unchanged",
+      "top_level_status": "pass"
     }
   ],
   "evidence": [
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/currentness-copy.json",
-      "sha256": "33018360253cbe5b8674855aa6579c5ff09afc9cb5e6191f7cf0f443dd32317c"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/INJECT-cycle3.py",
+      "sha256": "5c18e9f5d957d1ca52b36326b8881b711a15519daf314f5bf318b68d6e1e575d"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/fixture-compaction-initial.json",
-      "sha256": "c114fef2381dcc410d3babbfa6a812ad8901e7c98f6fb15e4d04b68322d342dd"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/PROBES-cycle3.py",
+      "sha256": "209b84cdeab6cc27fc2e9fe99f5219b668ac173a3a93fe4c2392dba065ca0b75"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/fixture-compaction.json",
-      "sha256": "dc3ce864096fb03a4c0a5e34544987dc6d81a3c6690e3c84057b5a05d38aee24"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/before-and-resource-controls.json",
+      "sha256": "b4fc99cc35863ea794646ab5d5b1bf6a6dca6d8ee22d90d5e4cf64055486c91b"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/scope-and-regression.json",
-      "sha256": "5168a1d951970ff60ba9ddebc69f080ea075c6afd8c245d9714b982ca24fa1fb"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/before-and-resource-controls.py",
+      "sha256": "7290f6edb8cb4a94e9b1940caa845ad972da0743e49e90f91e945e3aaba85e75"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/runtime-baseline.json",
-      "sha256": "28f152d812b62355797412e7b7d1b07469c681f5f93652bac8c85f07abacbdf3"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/currentness-copy.json",
+      "sha256": "ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/probes-cycle2.json",
-      "sha256": "a2877531ec38decc89307915643a44ab0fc14ee05d56d3388e0210ac288a15bb"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/event-index-tests.txt",
+      "sha256": "5489fba4b980fbb7461d25f5b6889bec59dfdb2ebcf2cffbf79f2aecbf060b41"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/independent-injected-check.json",
-      "sha256": "d0f52a08f8a5dea637e42524607fc3f7f807de1031edf9eb38527a6f7c26a585"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/final-pm_executor_event_contracts.json",
+      "sha256": "8ae64ea71069c7cc77885a00405e9980ccc0bb21ed87fdc5ed4d27c8803a6aa9"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/standing-checks.json",
-      "sha256": "b836a470aa465cd79399640161c6894b8fc366662baa459fb8feea2878ccbf14"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/final-pm_executor_event_semantics.json",
+      "sha256": "0e2619e73e5ba695e9ca3ad1cdd571a6cdc162ec1dbe2285d7e6cd2ba7cb443f"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/independent_529_probes.py",
-      "sha256": "37365272b826e86759aaeed6791d0a388e694a69c02e63aa3ca8144c60062fde"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/historical-read-cases.json",
+      "sha256": "571a5a13c9a3cc2fc9732fe33a0c4fabb2b2804e2874593f1e52c282b443e2c6"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/inject_529_probes.py",
-      "sha256": "d377958f5a9a2653ab1422bf9da730f01b80f708abad885b07bc86defb4b101c"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/index-validate.json",
+      "sha256": "d422e28b689c6decc51cf59d70433e13116f50c6ac4fc33bea70bcfea64085cc"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/scope_regression.py",
-      "sha256": "141104141f3d2cc1d3728e133b74d6aece0e0657390cc07f449daf00eb83ca8c"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/injected-check-cycle3.json",
+      "sha256": "fd66a8c47ad4320d079088c15bc101434aa6df2b5c68fb140cd9e24b4ba56d77"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/standing_audit.py",
-      "sha256": "ca1447b5866e59d79aab1f69c7ea19e0210e13ba3d6f7a9afe45371b196a74c6"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/probes-cycle3.json",
+      "sha256": "a460d22f96adcd598b3e8bf08da0cc4b082f541414ce1d09d962310ecac11784"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/compact_fixture_literals.py",
-      "sha256": "281334b979c2b25847b549c05fc7211a05ace00f3ac7e32263730310a77b2e73"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/reference-regression.json",
+      "sha256": "5f708c7c83d41a1f40f118ae755e80f677bc3831db1630491f274e0ec0e973e3"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/fixture_tools.py",
-      "sha256": "ad8309c2dc14a8ce17277b502aa732abcac5857facae2a93ae99c861aea34065"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/reference-regression.py",
+      "sha256": "1ca83d6f44827783d596ad6edb8450966ec5b474541f4ad59d72d1da6a19913a"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/run_check.py",
-      "sha256": "f576548dfe5a100f089d5f46bc2ed3846f9b945aa7725efeeb6d64342a2ead62"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/runtime-vocabulary-tests.txt",
+      "sha256": "d98afc19c053d26f03b1c822d67dd4b36d80c6a4457c48431fbd83dde5cad384"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/write_deliverables.py",
-      "sha256": "fc52e02d251b5438b5f71c263a901a5500f9c685843ac1723b7b7ba9cd5d6bef"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/scope-and-regression.json",
+      "sha256": "2ae30d6fbce86cddd68dacdc1f12b1f62242a41ce4d7b26ef308e8e60fe766a5"
     },
     {
-      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/verify_deliverables.py",
-      "sha256": "b52d7e82b43d65d7053e8fff4cb3c949d11b64e1f71d7da57aca5a772156665f"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/scope-and-standing.py",
+      "sha256": "5b5d9420dc204b92583c06417c4c5cb2da96993862ce761050511d11a360359f"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/deliverable-verification.json",
-      "sha256": "ba801a2204e58fd288d6babba4d9fb8be8cf387f9f199f006539fcc2bce8e161"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/shard-check.json",
+      "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/shared-schema-integration.json",
+      "sha256": "caea5f1d16075b7179a947e8cbc3dffdf2583d06011ba6389a3350ebe1c42315"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/standing-checks.json",
+      "sha256": "f5f43f2299f42d6361b33ea6445abb7ea3fbcfaa60ffe52caf5396d4db74c953"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/test-baseline.json",
+      "sha256": "14346de7705d640f2a20f4262dd0407256d5db42061440499c5dc4af74a9d30a"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix3/update-deliverables.py",
+      "sha256": "3ae7cc4ebd2a28e2b902e1395933519e6b7a2d12187787c8951b36b18a005196"
     }
   ],
   "prior_review": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/REVIEW-cycle2.md",
-    "sha256": "c88627d8b61a576e7e6c663b2c5d5b120d5c2389559cbc0176ff493fcca12083"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/REVIEW-cycle3.md",
+    "sha256": "25784ec16b8898bcfda220c9d133958a037f07176e90e92ae27ab3dd789afeed"
   },
   "native_execution": "NOT_RUN"
 }

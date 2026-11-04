@@ -1,930 +1,5126 @@
 {
   "status": "pass",
   "families": 16,
-  "standing_cells_checked": 128,
-  "graded_source_head": "6d27e68d4e2821e17f0cb4b76996b18cf5af133c",
+  "standing_cells_checked": 160,
   "rows": [
     {
       "event_type": "attempt.completed",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 4,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 7,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
             },
             {
-              "path": "/properties/backoff_until_utc",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S5",
+              "mutation": "whole-source LF backoff_until_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF backoff_until_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append backoff_until_utc",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 2,
-          "isolated_schema_LF_cases": 2,
-          "append_trace_LF_cases": 2,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "attempt.started",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 4,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "node.blocked",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 4,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "node.completed",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 4,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "node.started",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 3,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "node.unblocked",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 5,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "plan.decomposition_degraded",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 3,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "remediation.resolved",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 7,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "remediation.spawned",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 4,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "run.completed",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 3,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "run.graph_integrity_failed",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 3,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "run.node_backoff_expired",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 12,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "run.node_backoff_started",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 12,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 7,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
             },
             {
-              "path": "/properties/backoff_until_utc",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S5",
+              "mutation": "whole-source LF backoff_until_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF backoff_until_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append backoff_until_utc",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 2,
-          "isolated_schema_LF_cases": 2,
-          "append_trace_LF_cases": 2,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "run.node_ready",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 3,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 7,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
             },
             {
-              "path": "/properties/ready_since_utc",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S5",
+              "mutation": "whole-source LF ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ready_since_utc",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 2,
-          "isolated_schema_LF_cases": 2,
-          "append_trace_LF_cases": 2,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "run.node_retry_scheduled",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 20,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 19,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 18,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 4,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 1,
-          "isolated_schema_LF_cases": 1,
-          "append_trace_LF_cases": 1,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     },
     {
       "event_type": "scheduler.pass",
-      "all_eight_checked": true,
+      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
-          "capture": "F5-compatibility-policy-current-append",
-          "trace_negatives": 3
+          "probe_count": 5,
+          "negative_cases": [
+            {
+              "check": "S1",
+              "mutation": "compatibility policy capture",
+              "actual": "reject"
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "fresh compatibility append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility retry cannot return receipt",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "replay_only_not_appendable"
+                ],
+                "effects": 1
+              }
+            },
+            {
+              "check": "S1-trace",
+              "mutation": "compatibility replay cannot append",
+              "actual": {
+                "outputs": [
+                  "replay_only_not_appendable"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S1-shape",
+              "mutation": "shape compatibility policy refusal",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "2": {
-          "status": "NOT_APPLICABLE",
-          "reason": "Project-only; null Project rejected. No application idempotency recipe introduced."
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S2",
+              "mutation": "application scope with valid CV-366 spelling cannot enter project-only family",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Project-only; application keys are not selectable. Valid CV-366 application scope is rejected, no application recipe claimed."
         },
         "3": {
           "status": "PASS",
-          "encoded_positive_captures": 7,
-          "raw_partition_negative": "S3-raw-project-partition"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S3",
+              "mutation": "raw Project partition rejected",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "4": {
           "status": "PASS",
-          "source_cases": 21,
-          "append_traces": 3,
-          "limit_bytes": 16384
+          "probe_count": 20,
+          "negative_cases": [
+            {
+              "check": "S4",
+              "mutation": "16385 exact uncompressed MessagePack bytes inline",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor BLAKE3",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor byte size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "descriptor media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "missing pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "corrupt pack bytes",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack size",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack media type",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Project custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack Storage custody",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "pack not durable",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "deleted pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "unauthorized pack",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-corrupt",
+              "mutation": "valid pack fingerprint over different logical source",
+              "actual": "reject"
+            },
+            {
+              "check": "S4-trace",
+              "mutation": "oversized-inline model",
+              "actual": {
+                "outputs": [
+                  "oversized_inline_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S4-natural",
+              "mutation": "252 ready nodes left inline",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "5": {
           "status": "PASS",
-          "schema_patterns": [
+          "probe_count": 13,
+          "negative_cases": [
             {
-              "path": "/properties/ts",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5",
+              "mutation": "whole-source LF ts",
+              "actual": "reject"
             },
             {
-              "path": "/properties/ready_nodes/items/properties/ready_since_utc",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5-schema",
+              "mutation": "isolated LF ts",
+              "actual": "reject"
             },
             {
-              "path": "/properties/selected_nodes/items/properties/score_tuple/properties/ready_since_utc",
-              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])",
-              "format": "date-time"
+              "check": "S5-trace",
+              "mutation": "LF before append ts",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S5",
+              "mutation": "whole-source LF ready_nodes/0/ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ready_nodes/0/ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ready_nodes/0/ready_since_utc",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S5",
+              "mutation": "whole-source LF ready_nodes/1/ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF ready_nodes/1/ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append ready_nodes/1/ready_since_utc",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
+            },
+            {
+              "check": "S5",
+              "mutation": "whole-source LF selected_nodes/0/score_tuple/ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-schema",
+              "mutation": "isolated LF selected_nodes/0/score_tuple/ready_since_utc",
+              "actual": "reject"
+            },
+            {
+              "check": "S5-trace",
+              "mutation": "LF before append selected_nodes/0/score_tuple/ready_since_utc",
+              "actual": {
+                "outputs": [
+                  "invalid_payload"
+                ],
+                "effects": 0
+              }
             }
           ],
-          "source_LF_cases": 4,
-          "isolated_schema_LF_cases": 4,
-          "append_trace_LF_cases": 4,
-          "identifier_patterns": 0
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "6": {
           "status": "PASS",
-          "trace": "S6-only-storage-metadata-changes",
-          "boundary": "caller logical payload only; not full native EventRecord digest certification"
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S6-semantic",
+              "mutation": "original caller timestamp remains semantic",
+              "actual": {
+                "outputs": [
+                  "first-receipt-001",
+                  "idempotency_conflict"
+                ],
+                "effects": 1
+              }
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched"
         },
         "7": {
-          "status": "PASS_CAPTURE_JOINS",
-          "negative": "S7-foreign-storage",
-          "persisted_checkpoint_execution": "NOT_RUN",
-          "persisted_checkpoint_positive_claimed": false
+          "status": "PASS",
+          "probe_count": 1,
+          "negative_cases": [
+            {
+              "check": "S7",
+              "mutation": "event and source Storage instance mismatch",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "Source/event Storage joins verified; no persisted checkpoint positive, native SP-278/CAS NOT_RUN."
         },
         "8": {
-          "status": "NOT_PROCESS_EXIT_FAMILY",
-          "undeclared_exit_code_zero_rejected": true
+          "status": "PASS",
+          "probe_count": 2,
+          "negative_cases": [
+            {
+              "check": "S8",
+              "mutation": "success exit status cannot enter failure or any other closed body",
+              "actual": "reject"
+            }
+          ],
+          "full_checker": "independent full CLI injection: pass, each expected rejection matched",
+          "boundary": "No process-exit family. Each closed schema rejects injected exit_code=0; no subprocess-exit claim."
+        },
+        "9": {
+          "status": "FIXED",
+          "finding": "F8",
+          "full_cli_rejections": 14,
+          "permanent_reference_cases": 13,
+          "negative_cases": [
+            "non_schema_target",
+            "unresolved_anchor",
+            "unresolved_nested_resource",
+            "unresolved_reachable",
+            "unresolved_resource",
+            "unresolved_unvisited_branch",
+            "unresolved_unvisited_definition"
+          ],
+          "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+        },
+        "10": {
+          "status": "FIXED",
+          "positive_case": "S10-history-valid-after-live-transition",
+          "negative_cases": [
+            {
+              "case": "S10-withdrawn-reader",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "reader_withdrawn"
+            },
+            {
+              "case": "S10-missing-retained-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "source_unavailable"
+            },
+            {
+              "case": "S10-deleted-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event_deleted"
+            },
+            {
+              "case": "S10-unauthorized-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "event access"
+            },
+            {
+              "case": "S10-foreign-Project",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Project"
+            },
+            {
+              "case": "S10-foreign-Storage",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "history Storage root"
+            },
+            {
+              "case": "S10-forged-event",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "inline logical payload join"
+            },
+            {
+              "case": "S10-coherently-forged-original-source",
+              "expected": "reject",
+              "actual": "reject",
+              "reason": "retained original source custody"
+            }
+          ],
+          "full_checker": "144 history cases + 144 later-live writer controls pass",
+          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
         }
       },
       "native_execution": "NOT_RUN"
     }
   ],
-  "native_execution": "NOT_RUN"
+  "native_execution": "NOT_RUN",
+  "graded_source_head": "6083110e8e8315bf2340082aa5290020279073bd"
 }
