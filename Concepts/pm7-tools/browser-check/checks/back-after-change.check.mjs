@@ -451,7 +451,7 @@ const pickOther = async (A, which = 'first') => {
     if (which === 'last' && all.length < 2) return null;
     const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
     if (which === 'last') return null;
-    const f = [...(l || document).querySelectorAll('input[type="text"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
+    const f = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
     return f ? { field: f.id, value: f.value } : null; }, which);
   if (!c) return null;
   if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
@@ -477,6 +477,13 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
 const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+/* NO_PICK only after completion: these owner screens replace their form with a success banner.
+   Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm. */
+const NO_PICK_DONE = (screen) => {
+  const done = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-key="done"]');
+  return !!done && ((screen === 'c-review' && !!O55.S.sess.drafts.connect.server_trust_confirmed)
+    || (screen === 's-confirm' && !!O55.S.sess.server.claimed));
+};
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
    links: the restore source and place, the NAS device, method and folder, the service, the computer kind, the files
@@ -486,7 +493,7 @@ async function pickBackWalk(A, bad, label) {
   for (let i = 0; i < 40; i++) {
     seq.push(s.screen); if (!s.back) break;
     const before = await A.frame().evaluate(ANSWERS); let did = null;
-    if (!NO_PICK.includes(s.screen)) {
+    if (!NO_PICK.includes(s.screen) && !await A.frame().evaluate(NO_PICK_DONE, s.screen)) {
       const sheetOpen = () => A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {});
       if (s.screen === 'name' && await A.has('change')) { await A.click('change'); await sheetOpen(); await A.sleep(400); }
       if (s.screen === 'safe' && await A.has('backup')) { await A.click('backup'); await sheetOpen(); await A.sleep(400); }
@@ -1090,7 +1097,7 @@ export const tests = {
           const before = await A.frame().evaluate(SNAP20);
           await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL);
           const did = await pickOther(A, which);
-          if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
+          if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen) || await A.frame().evaluate(NO_PICK_DONE, sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
             for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); } continue; }
           if ((await A.snap()).screen !== sel0.screen) { bad.push(`21 ${kind} Edit ${tg}: ${did} left ${sel0.screen} for ${(await A.snap()).screen} without Continue`); break; }
           for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); }
