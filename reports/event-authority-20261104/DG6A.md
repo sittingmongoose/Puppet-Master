@@ -10,18 +10,18 @@ Four register (prepared) outcomes; twelve blocked on Jared. No exclusions. Membe
 | `alert.dismissed` | register (prepared) | 10 PASS; retention PARTIAL; membership ABSENT |
 | `alert.rule_muted` | register (prepared) | 10 PASS; retention PARTIAL; membership ABSENT |
 | `alert.snoozed` | register (prepared) | 10 PASS; retention PARTIAL; membership ABSENT |
-| `bundle.annotation_state_changed` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `bundle.note_created` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `bundle.note_status_changed` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.assigned` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.created` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.evidence_linked` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.promoted` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.reopened` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.resolved` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `concern.updated` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `panel.redocked` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
-| `panel.undocked` | blocked on Jared | Blocked: owner/producer/transitions CONFLICT; membership ABSENT; remaining cells as JSON |
+| `bundle.annotation_state_changed` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `bundle.note_created` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `bundle.note_status_changed` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.assigned` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.created` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.evidence_linked` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.promoted` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.reopened` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.resolved` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `concern.updated` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `panel.redocked` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
+| `panel.undocked` | blocked on Jared | Blocked; membership ABSENT; unresolved owner cells PARTIAL (panel conflict CONFLICT); per-cell grades in JSON |
 
 ## Newly authored bindings and source search
 
