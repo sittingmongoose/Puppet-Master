@@ -503,7 +503,7 @@
     {
       "id": "general.visual.basic-color-scheme",
       "label": "Light Or Dark (Basic Theme)",
-      "desc": "Retired visible control by Jared on 2026-11-04 (SW-04): never offer a second scheme menu, including in advanced Basic settings. Retain saved values for compatibility; general.visual.theme-mode is the single Light / Dark / Auto choice for every family.",
+      "desc": "Retired visible control by Jared on 2026-11-04 (SW-04): never offer a second scheme menu, including in advanced Basic settings. Retain saved values for compatibility; general.visual.theme-mode is the single Light / Dark / Auto choice for every family. (Superseded by general.visual.theme-mode)",
       "type": "select",
       "options": [
         "Light",
