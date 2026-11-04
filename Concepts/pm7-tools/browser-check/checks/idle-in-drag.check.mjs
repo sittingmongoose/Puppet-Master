@@ -1,5 +1,5 @@
 // SW-17 (F3-3 remainder): no idle job runs inside a held drag. PLAN's performance rule: "no idle job runs inside a drag".
-// Basic Dark at 1390: a Home panel divider held for 3 s right after boot, then the Usage page's edge held for 3 s right
+// Basic Dark at 1390: a Home divider (chat edge in NieR) held for 3 s right after boot, then the Usage page's edge held for 3 s right
 // after a look change (both moments with idle work queued: Usage's warm build, its prewarm, the look covers' paint and
 // warm, the hover census). requestIdleCallback and setTimeout are wrapped before the page loads, each request keeping
 // its caller's stack; a callback counts as inside the drag when a drag class is on the body as it fires.
@@ -60,9 +60,12 @@ async function holdDrag(t, f, sel, label) {
 	const began = await f.evaluate(() => performance.now());
 	const dragOn = await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag()) || document.body.classList.contains('pm-resizing'));
 	await t.check(`${label}: the drag class is on while held`, dragOn, 'body classes ' + (await f.evaluate(() => document.body.className)));
+	await t.mark(label + ' held');
 	// held: the hand rests on the bar, with the small moves a held hand makes
 	for (let k = 0; k < HOLD_MS / 100; k++) { await t.page.mouse.move(...at(-32 + (k % 2 ? 1 : -1))); await t.page.waitForTimeout(100); }
 	const ended = await f.evaluate(() => performance.now());
+	await t.check(`${label}: drag remains held`, await f.evaluate(() => !!(window.PM_BUSY && PM_BUSY.drag && PM_BUSY.drag())), 'the whole measurement must be a held drag');
+	await t.mark(label + ' released');
 	await t.page.mouse.up();
 	return { began, ended };
 }
@@ -85,23 +88,31 @@ async function judge(t, f, label, win) {
 
 export const tests = {
 	async 'idle work waits out a held drag (SW-17)'(t) {
+		const cdp = await t.page.context().newCDPSession(t.page);
+		await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+		if(t.args.motion === 'reduce') await t.emulate({ reducedMotion: 'reduce' });
 		await t.page.addInitScript(RECORDER);
 		if (!t.args.film) await t.viewport(Number(t.args.width || 1390), Number(t.args.height || 900));
 		const f = await t.app.open({ settleMs: 200 });
 		await t.app.resetLayout();
 		await t.check('recorder installed in the app frame', await f.evaluate(() => !!window.__pmIdleRec), '');
-		await t.app.look('basic-dark');
+		for (const look of String(t.args.looks || 'basic-dark').split(',')) {
+		await t.app.resetLayout();
+		await t.app.look(look);
 		// Home, right after boot and a look change: a panel divider (row, else column)
-		if (await f.locator('.page-tab[data-page="home"]:not(.active)').count()) await f.locator('.page-tab[data-page="home"]').click();
+		if (await f.locator('.page-tab[data-page="dashboard"]:not(.active)').count()) await f.locator('.page-tab[data-page="dashboard"]').click();
 		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
-		const home = await holdDrag(t, f, '.pmw-divider[data-dir="row"]|.pmw-divider[data-dir="col"]', 'Home');
+		await f.waitForFunction(() => document.querySelector('#panel-dashboard.active') && !document.documentElement.hasAttribute('data-pm-page-transition'), null, {timeout:20000});
+		const homeHandle = look.startsWith('nier-') ? '#chatResizer' : '.pmw-divider[data-dir="row"]|.pmw-divider[data-dir="col"]';
+			const home = await holdDrag(t, f, homeHandle, 'Home');
 		if (home) await judge(t, f, 'Home', home);
 		// Usage, right after a look change and back (the covers repaint, the board's prewarm and hold start a fresh round)
 		await f.locator('.page-tab[data-page="usage"]').click();
 		await t.until('Usage shown', () => !!document.querySelector('.page-tab[data-page="usage"].active') || !!(window.PM_PAGES && PM_PAGES.current === 'usage'), null, { timeout: 15000 });
+		await f.waitForFunction(() => !document.documentElement.hasAttribute('data-pm-page-transition'), null, {timeout:20000});
 		await t.page.waitForTimeout(1500);
-		await t.app.look('basic-light');
-		await t.app.look('basic-dark');
+		await t.app.look(look.replace(/-(dark|light)$/, look.endsWith('-dark') ? '-light' : '-dark'));
+		await t.app.look(look);
 		await f.waitForFunction(() => !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
 		const usage = await holdDrag(t, f, '#leftPanelResizer|#chatResizer', 'Usage');
 		if (usage) {
@@ -113,5 +124,7 @@ export const tests = {
 			const ours = ran.filter((s) => OWNERS.some(([, re]) => re.test(s)));
 			await t.check('after the release, parked idle work runs again', ours.length > 0, `${ours.length} of ${ran.length} idle callbacks in 6 s are those callers'`);
 		}
+		}
+		await cdp.detach();
 	}
 };

@@ -19,6 +19,7 @@ export default async function(t) {
  await t.app.look('basic-dark');
  const cdp = await t.page.context().newCDPSession(t.page);
  await cdp.send('Tracing.start', {categories:'devtools.timeline,v8.execute,blink.user_timing,disabled-by-default-devtools.timeline.stack', transferMode:'ReturnAsStream'});
+ await cdp.send('Emulation.setFocusEmulationEnabled',{enabled:true});
  const metrics=[];
  async function sample(name, action, ms=1200) {
   await f.evaluate(name=>{window.__perfSample={name,start:performance.now(),gaps:[],times:[],last:performance.now(),on:true}; const s=window.__perfSample; performance.mark(name); function tick(now){if(!s.on)return; s.gaps.push(now-s.last);s.times.push([now,now-s.last]);s.last=now;requestAnimationFrame(tick);}requestAnimationFrame(tick);},name);
@@ -38,8 +39,34 @@ export default async function(t) {
   }
   for(let i=0;i<3;i++) {
    await t.app.look('basic-dark');
-   await sample('glass-'+i,()=>t.app.look('glass-dark'),1500);
+   await f.locator('#themeSelect').click();
+   await sample('glass-'+i,()=>f.locator('.pm6-tt-family[data-family="glass"]').click(),4500);
   }
+  for(let i=0;i<3;i++) {
+   await t.app.look('nier-dark');
+   await f.locator('#themeSelect').click();
+   await sample('nier-glass-'+i,()=>f.locator('.pm6-tt-family[data-family="glass"]').click(),6000);
+  }
+  }
+  if(t.args.only==='look') {
+   for(const from of ['basic-dark','nier-dark']) for(let i=0;i<3;i++) {
+    await t.app.look(from);
+    await f.waitForFunction(()=>!(window.PM_THEME_TRANSITION?.busy()||window.PM_LOOK_COVERED?.()||window.PM_NIER?.wanted?.()!==window.PM_NIER?.on?.()),null,{timeout:20000});
+    await f.locator('#themeSelect').click();
+    await sample(from+'-glass-'+i, async()=>{
+     await f.locator('.pm6-tt-family[data-family="glass"]').click();
+     await f.waitForFunction(()=>!(window.PM_THEME_TRANSITION?.busy()||window.PM_LOOK_COVERED?.()),null,{timeout:20000});
+    },1500);
+   }
+  }
+  if(t.args.only==='bell') {
+   for(const look of ['basic-dark','glass-dark']) {
+    await t.app.look(look);
+    for(let i=0;i<3;i++) {
+     await sample(look+'-bell-'+i,async()=>{await f.locator('#pmnStack').click();await t.check('inbox opened',await f.evaluate(()=>PM_TITLEBAR_NOTIFY.isOpen()));});
+     await t.page.keyboard.press('Escape');
+    }
+   }
   }
   if(t.args.only==='crew') {
    for(let i=0;i<3;i++) {
@@ -59,21 +86,24 @@ export default async function(t) {
   if(t.args.only==='drag') {
   await t.app.look('glass-dark');
   await cdp.send('Input.setInterceptDrags',{enabled:true});
-  for(let i=0;i<5;i++) {
+  if(t.args.debug)await f.evaluate(()=>{window.__widthWrites=[];const set=CSSStyleDeclaration.prototype.setProperty;CSSStyleDeclaration.prototype.setProperty=function(n,v,...args){if(n==='--pmw-chat-w')window.__widthWrites.push({v,stack:new Error().stack});return set.call(this,n,v,...args);};});
+  for(let i=0;i<Number(t.args.reps || 5);i++) {
    const b=await f.locator('#chatResizer').boundingBox();
+   const edge=(await f.locator('#chatPanel').boundingBox()).x;
    await sample('chat-drag-'+i, async()=>{
     await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2); await t.page.mouse.down();
     await t.check('drag admission set',await f.evaluate(()=>document.body.classList.contains('pm-resizing')));
-    await f.evaluate(()=>{window.__perfSample.movingStart=performance.now()});
-    for(let j=0;j<60;j++) {await t.page.mouse.move(b.x+b.width/2-160*Math.sin(j/59*Math.PI),b.y+b.height/2);await t.page.waitForTimeout(16);}
+    await f.evaluate(()=>{window.__perfSample.movingStart=performance.now();window.__dragEvents=[];window.addEventListener('pointermove',e=>{if(e.buttons)window.__dragEvents.push([e.clientX,e.buttons,e.target.id]);},{capture:true});});
+    for(let j=0;j<Number(t.args.steps||60);j++) {await t.page.mouse.move(b.x+b.width/2-160*Math.sin(j/(Number(t.args.steps||60)-1)*Math.PI),b.y+b.height/2);await t.page.waitForTimeout(16);if(j===Math.floor(Number(t.args.steps||60)/2)){if(t.args.debug)metrics.push({dragDebug:await f.evaluate(()=>({pages:[...document.querySelectorAll('.page.active')].map(e=>({id:e.id,cls:e.className})),home:document.querySelector('#panel-dashboard')?.className,writes:window.__widthWrites,body:document.body.className,frozen:PMW.narrow.frozen}))});const x=(await f.locator('#chatPanel').boundingBox()).x;await t.check('chat edge follows pointer',Math.abs(x-(edge-160*Math.sin(j/(Number(t.args.steps||60)-1)*Math.PI)))<=1,JSON.stringify({actual:x,start:edge,expected:edge-160*Math.sin(j/(Number(t.args.steps||60)-1)*Math.PI),state:await f.evaluate(()=>({inline:document.querySelector('#chatPanel').style.cssText,centre:document.querySelector('#pmw-centre')?.clientWidth,pmw:PMW.narrow.state,evt:window.__dragEvents.slice(-2),writes:window.__widthWrites?.slice(-3)}))}));}}
+    t.log(JSON.stringify(await f.evaluate(()=>({inline:document.querySelector('#chatPanel').style.getPropertyValue('--pmw-chat-w'),width:document.querySelector('#chatPanel').getBoundingClientRect().width,events:window.__dragEvents.slice(-3)}))));
     await f.evaluate(()=>{window.__perfSample.movingEnd=performance.now()});
-    await t.page.waitForTimeout(3000); await t.page.mouse.up();
+    await t.page.waitForTimeout(Number(t.args.hold||3000)); await t.page.mouse.up();
    },400);
   }
   await cdp.send('Input.setInterceptDrags',{enabled:false});
   }
   if(t.args.idleProbe)metrics.push({idleDuringDrag:await f.evaluate(()=>window.__idleDuringDrag)});
-  t.log(JSON.stringify(metrics.map(m=>m.idleDuringDrag?{idleCallbacksDuringDrag:m.idleDuringDrag.length}:m)));
+  t.log(JSON.stringify(metrics.map(m=>m.idleDuringDrag?{idleCallbacksDuringDrag:m.idleDuringDrag.length}:m.dragDebug?{dragDebug:true}:m)));
  } finally {
   const complete=new Promise(resolve=>cdp.once('Tracing.tracingComplete',resolve));
   await cdp.send('Tracing.end'); const {stream}=await complete;

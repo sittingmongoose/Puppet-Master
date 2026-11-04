@@ -121,7 +121,7 @@ function glLit(s) {
 }
 function glWake(s) {
   if (glLive.indexOf(s) < 0) glLive.push(s);
-  if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+  if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glFrame); }
 }
 
 function glActive(el) {
@@ -302,9 +302,9 @@ function glProbe(e) {
   clearTimeout(glPtr.restT);
   glPtr.restT = setTimeout(function () {
     glPtr.rest = true; glPtr.dirty = true;
-    if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+    if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glFrame); }
   }, GL_REST_MS);
-  if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+  if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glFrame); }
 }
 function glNearPass(now) {
   glPtr.dirty = false;
@@ -481,6 +481,13 @@ function glGhosts(s) {
   try { g._a = g.animate([{ opacity: 0.62 }, { opacity: 0.3, offset: 0.4 }, { opacity: 0 }], { duration: 420, easing: 'steps(6, end)' }); } catch (_) {}
 }
 
+/* The resize handler has written the widths before this frame. Read the bar after the browser lays those
+   widths out, then paint its light in this same frame; measuring in rAF forced an extra layout mid-frame. */
+function glFrame(now) {
+  if (window.PM_AFTER_LAYOUT) window.PM_AFTER_LAYOUT(function () { glTick(now); });
+  else glTick(now);
+}
+
 function glTick(now) {
   var dt = clamp((now - glLast) / 1000, 0.001, 0.034);
   glLast = now;
@@ -493,7 +500,7 @@ function glTick(now) {
     if (glStep(s, now, dt)) keep.push(s);
   }
   glLive = keep;
-  if (glLive.length || glPtr.dirty) glRaf = requestAnimationFrame(glTick);
+  if (glLive.length || glPtr.dirty) glRaf = requestAnimationFrame(glFrame);
 }
 
 /* the shell's two resizers, once the page is there; and the idle hint's feed */
@@ -506,7 +513,7 @@ light.bindShell = function () {
     doc.addEventListener('pointerout', function (e) {
       if (e.relatedTarget) return;
       glPtr.on = false; glPtr.dirty = true;
-      if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glTick); }
+      if (!glRaf) { glLast = performance.now(); glRaf = requestAnimationFrame(glFrame); }
     });
     window.addEventListener('blur', function () { glPtr.on = false; glPtr.dirty = true; });
   }
