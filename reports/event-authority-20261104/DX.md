@@ -1,3 +1,90 @@
+# DX-FIX2 — Event Authority review round 2 (final fix round)
+
+Branch: `plans/ea-w2-executor-20261104`. Starting head: `3a6b219abbdabfafe74865ba2d8a9cd6f934256f`. Graded source/checker head: `6d27e68d4e2821e17f0cb4b76996b18cf5af133c`. The following report-only commit preserves these source bytes; `drafts/DX/head.txt` records the final pushed head. Sparse detached worktree `/home/sittingmongoose/pm-worktrees/DX-fix2` from the VM local clone; removed after push. No landing or admission is authorized.
+
+**Outcome:** **0/16 → 15/16 PASS AS PREPARED**, with `plan.decomposition_degraded` held only for Jared's existing retention choice. Cycle-2 review totals **159 PASS / 17 PARTIAL / 16 ABSENT** become **175 PASS / 1 PARTIAL / 16 ABSENT**. All sixteen oracle cells upgrade PARTIAL → PASS. Membership remains ABSENT for every family. Native execution remains **NOT_RUN**. The review cap is exhausted; no additional review cycle or admission is claimed.
+
+Grades below are PASS / PARTIAL / ABSENT against the independent cycle-2 review, not the superseded prior self-grade.
+
+| Family | Cycle-2 review before | Self-grade after | Verdict |
+|---|---|---|---|
+| `attempt.completed` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `attempt.started` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.blocked` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.completed` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.started` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.unblocked` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `plan.decomposition_degraded` | 9 / 2 / 1 | 10 / 1 / 1 | HOLD — RETENTION DECISION |
+| `remediation.resolved` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `remediation.spawned` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.completed` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.graph_integrity_failed` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_backoff_expired` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_backoff_started` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_ready` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_retry_scheduled` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `scheduler.pass` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+
+## Review round 2: findings and responses
+
+- **F1 — resolved, carried and independently reverified** (prior `bca9fb92c6`, `b139ae2b27`). Complete original observation/presence and episode-attempt guards remain unchanged. All 37 review F1 probes match; the original source-case facts are preserved exactly.
+- **F2 — resolved, carried and independently reverified** (prior `b5a8fefab6`). Both actual/normalized remediation generations and the actual ceiling remain bound. All eight review probes match.
+- **F3 — resolved, carried and independently reverified** (prior `25fde70fad`, `4aec2b4801`). Exact original classified retry limits/clocks/attempts remain. Six original counterexamples and all 239 classified-policy cases match.
+- **F4 — resolved, carried and independently reverified** (prior `43e7f77452`). Both independent schema bounds and original score bounds remain. Seven coherent score probes and four isolated schema probes match.
+- **F5 — fixed** (`6abe1d5e6a`). **Where:** scripts/pm_executor_event_semantics.py:77; family-local policy paragraphs SP-500..515 at Plans/storage-plan.md:29481. **Cause:** current capture and retry models ignored envelope replay policy. **Fix:** require the exact dedupe policy and refuse compatibility-only `projector_replay_only` as `replay_only_not_appendable` before admission, dedupe receipt return or effects. Preserve separate read/rebuild behavior. Every family has capture and shape negatives plus fresh-append, retry and existing-dedupe trace refusals. The full pre-fix checker exposed 64 mismatches; both repaired full checkers pass.
+- **F6 — fixed** (`0b9588eb01`, equivalent compact-fixture/standing follow-up `d2e5ac703e`). **Where:** scripts/pm_executor_event_semantics.py:101; separate SP-337 adoption paragraphs in every SP-500..515. **Cause:** the oracle accepted oversized inline logical bodies without transport admission. **Fix:** test uncompressed canonical MessagePack body bytes, allow exactly 16,384 inline bytes, refuse 16,385 and larger inline bodies, and retain larger logical bodies through a verified SP-337 payload reference. Check BLAKE3/size/media type, exact source body, actual Project/Storage custody, durable pack, reader authorization and deletion state. A detail/evidence ref never substitutes. Each family has boundary/source positives, independent corruption negatives, shape cases and three append traces. The natural 252-node scheduler body rejects inline and accepts referenced. The pre-fix full checker exposed 272 mismatches. Descriptor/pack captures are normalized test observations, not a new EventRecord wire schema or semantic-digest recipe.
+- **F7 — fixed** (`c3ba5ef160`, append-model follow-up `6d27e68d4e`). **Where:** scripts/pm_executor_event_semantics.py:72; all sixteen payload schemas and CV-500..515 at Plans/Contracts_V0.md:24472. **Cause:** Python suffix/format checks accepted a final LF. **Fix:** full-string date-time validation without trimming, exact-end schema guards and strict original score/source clocks. Add 22 coherent timestamp-field negatives, 22 isolated default-validator schema negatives, two isolated source-score negatives and per-family shape negatives. The old full checkers falsely accepted 20 semantic/source-score and 15 shape cases. A final append-model audit exposed 22 additional LF trace writes; its payload dispatch now validates the schema before any effect and returns invalid_payload with zero effects. All 22 added trace negatives and both repaired full checkers pass.
+- **Retention — stopped for Jared; unchanged.** **Should `plan.decomposition_degraded` be kept for seven years as non-authority operational degradation history under RP-OPERATIONAL-2555D@1.0.0, with terminal_transition explicitly anchored to the original durably committed decomposition/degradation result, or indefinitely as audit authority/source lineage under RP-AUTHORITY-INDEFINITE@1.0.0?** SP-506 and the companion keep `PENDING_RETENTION_DECISION`; no candidate, proposed anchor or expiry is applied. Scheduler's previously verified exact runtime assignment remains unchanged.
+
+## All eight standing checks across all sixteen families
+
+`DX.standing-checks.json` records all **128 family/check cells**, exact fixture labels and applicability. The full semantic CLI executes the permanent cases; the independent adapted review suite separately matches **529/529 probes**. Its original 110 source/transition cases and 16 append traces were injected into the unchanged full checker: **2,217 source/transition + 246 traces + 16 source-score + 22 isolated-schema cases**, exit 0, no mismatches; original fixture bytes were restored.
+
+| Check | Result |
+|---|---|
+| **1. Compatibility replay policy** | All sixteen reject current capture, append and retry uses; refusal precedes receipt/effect. |
+| **2. CV-366 application keys** | Not applicable: every contract is Project-only. All sixteen null-Project mutations reject; no application recipe is introduced. |
+| **3. Project partition** | Every declared positive source capture has exact `project~` + unpadded base64url(UTF-8 Project ID); all sixteen raw-partition negatives reject. |
+| **4. SP-337 transport** | Every family passes exact-inline-boundary and verified larger-reference positives, and refuses oversized inline and independent descriptor/byte/custody negatives. |
+| **5. Trailing LF / regexes** | Every source timestamp and nested scheduler timestamp is covered; isolated schemas use the ordinary Python format checker so custom enforcement cannot mask a missing schema guard. No identifier patterns exist in these sixteen schemas. |
+| **6. Semantic retry body** | Every family varies only sequence_id, observed_at_utc and persisted_at_utc on retry and receives the original receipt with one effect. Comparison remains caller logical body only; this finite model does not certify the complete native EventRecord digest. |
+| **7. Storage identity / checkpoint** | Every actual source/envelope root joins and every mismatched-root negative rejects. Captures are unpersisted; no persisted checkpoint positive is claimed. Actual SP-278 token/CAS execution remains NOT_RUN. |
+| **8. Failure exit status** | None is a process-exit family; all sixteen reject injected payload exit_code=0 as undeclared. No unrelated nonzero-exit requirement is invented. |
+
+## Verification, scope and custody
+
+| Check | Exit/result |
+|---|---|
+| Permanent full semantic checker | 0 / pass; 2,107 source/transition + 230 receipt/replay/withdrawal traces + 16 source-score + 22 isolated-schema cases |
+| Full shape/identity checker | 0 / pass; 659 fixtures + 80 identity/replay cases |
+| Independent review probes and full-CLI injection | 0 / pass; 529 probes; all original F1–F4 results preserved; zero mismatches |
+| Standing audit | 0 / pass; all 128 cells checked with applicability boundaries |
+| Event-index tests | 0 / 14 tests pass |
+| Runtime-vocabulary tests | 1 / 9 tests, only pre-existing missing GUI phrase `Skia compiled in and selected by default`; no errors |
+| Derived generation and shard checks after each owner markdown change | 0 / pass; only storage-plan and contracts_v0 derived owner directories change |
+| Plan-index validate | 0 / parsed top-level pass; 7,477 PlanUnits and 29,988 acceptance units; runtime readiness remains blocked |
+| Scope/original-fact regression | pass; all 1,699 original semantic cases, 96 traces, 563 shape cases and 14 source-score cases retain their original facts and expectations |
+
+Changed owner hunks are confined to the existing SP-500..515 append-policy/SP-337 paragraphs and CV-500..515 exact timestamp paragraphs. No new technical binding, PlanUnit ID, consumer, projector, checkpoint, policy, persisted family, feature or admission is authored. The already current EventRecord append rule and SP-337 govern; no obsolete retention answer is generalized. Existing per-family search and premise evidence follows in the historical section. EP-210..225 and ATS-250..257 are unchanged.
+
+**IDs reused:** EP-210..225, CV-500..515, SP-500..515, ATS-250..257: **56 existing IDs, zero minted**. Registry, policy catalog, Decision Log, frozen validator, Spec Lock, evidence/governance paths, .gitignore and all test files are unchanged. Only scoped source files and generated outputs are committed; raw check evidence stays outside the repository. Fixture-only repetition notation reduces repeated literal test bodies from about 88 MB to about 11.4 MB while exact expanded-value equivalence is proved; no direct capture/schema/append validator expands user input.
+
+Initial resources: **18 GB available RAM / 110 GB free disk**, above 6 GB/50 GB hard stops; later check: 13 GB / 116 GB. The worktree stayed sparse. All fifteen copied ignored currentness files matched source SHA-256 before generation and again at final scope verification. There was one read-only mailbox inbox check before the no-mail brief was read; no registration, send, reply or further mailbox use followed. No subagent, landing lock, main push, admission or reseal occurred. Native complete owner reads, append/receipt codec, flush/crash, actual SP-278 transactions/CAS, backup/restore, payload-pack durability and deletion/withdrawal concurrency remain NOT_RUN.
+
+`DX.checks.json` pins every check output and evidence script by absolute custody path and SHA-256. Main round-2 evidence receipts:
+
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/scope-and-regression.json` — SHA-256 `5168a1d951970ff60ba9ddebc69f080ea075c6afd8c245d9714b982ca24fa1fb`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/standing-checks.json` — SHA-256 `b836a470aa465cd79399640161c6894b8fc366662baa459fb8feea2878ccbf14`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/probes-cycle2.json` — SHA-256 `a2877531ec38decc89307915643a44ab0fc14ee05d56d3388e0210ac288a15bb`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/independent-injected-check.json` — SHA-256 `d0f52a08f8a5dea637e42524607fc3f7f807de1031edf9eb38527a6f7c26a585`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/fixture-compaction-initial.json` — SHA-256 `c114fef2381dcc410d3babbfa6a812ad8901e7c98f6fb15e4d04b68322d342dd`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/fixture-compaction.json` — SHA-256 `dc3ce864096fb03a4c0a5e34544987dc6d81a3c6690e3c84057b5a05d38aee24`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix2/runtime-baseline.json` — SHA-256 `28f152d812b62355797412e7b7d1b07469c681f5f93652bac8c85f07abacbdf3`.
+
+## Prior round-1 report and source-search lineage (historical)
+
+The following records the previous round at its own named source heads; the round-2 assessment and receipts above supersede its grades and check counts.
+
 # DX-FIX1 — Event Authority review round 1
 
 Branch: `plans/ea-w2-executor-20261104`. Reviewed starting head: `9906491aa0e99271ae8fc4c3139f261ee6d46f38`. Graded canonical/checker head: `4aec2b48014b9faf7c783f3142d9a811c9c0ad75`. The subsequent report-only commit has the exact same graded source bytes; `drafts/DX/head.txt` is the final pushed head receipt. Worktree: `/home/sittingmongoose/pm-worktrees/DX-fix1`, detached and sparse (`Plans scripts reports tests`), from the VM local clone. No landing is authorized.
