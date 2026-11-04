@@ -29585,3 +29585,366 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+### SP-575 - Bundle Revision Requested Custody And History
+
+```yaml
+plan_unit_id: SP-575
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '`bundle.revision_requested` explicitly adopts SP-286 and CV-339 including strict full-value v2
+  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract
+  under DL-045: producer emitter.bundle_revision_requested@1.0.0 is the document review request handler governed
+  by ACD-571. Before any append, require individual family admission and schema support, current project/thread/bundle
+  permissions, exact source evidence and CV-590 identity. Freeze the prepared complete EventRecord after original
+  source evidence is committed; append through Storage, then resolve the original full-value AppendReceipt before
+  publishing the phase as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness
+  token or partially delivered receipt establishes success. Missing original after confirmed older restore stays
+  unavailable; no replacement receipt or re-execution is inferred. An uncertain start/completion is reconciled with
+  existing revision_run and FileSafe recovery evidence, never restarted by this history reader. A single started
+  phase cannot settle both completed and interrupted; duplicate delivery returns the original immutable result,
+  conflicting semantics fence.
+
+
+  NEW passive consumer reader.bundle_revision_requested_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-590, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection,
+  dedupe row or copied body, so adds no storage value registry row. No stored read token is added; any future durable
+  token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable
+  authorized history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild a
+  document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source
+  lineage versus Chat content for this Deep Plan review history; no exact family assignment is established. Event
+  lifetime and original source bodies are independent. No TTL/count deletion or indefinite class selection is authorized
+  by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_requested_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own schema, identity, joins and transition predicates. Native append, lost acknowledgement, effect-unknown reconciliation,
+  backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary obligations
+  are authored NOT_RUN, and must be exercised on real adapters before native claims.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-571
+- CV-590
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_requested
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### SP-576 - Bundle Revision Started Custody And History
+
+```yaml
+plan_unit_id: SP-576
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '`bundle.revision_started` explicitly adopts SP-286 and CV-339 including strict full-value v2 resolution,
+  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:
+  producer emitter.bundle_revision_started@1.0.0 is the targeted revision runner governed by ACD-572. Before any
+  append, require individual family admission and schema support, current project/thread/bundle permissions, exact
+  source evidence and CV-591 identity. Freeze the prepared complete EventRecord after original source evidence is
+  committed; append through Storage, then resolve the original full-value AppendReceipt before publishing the phase
+  as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness token or partially
+  delivered receipt establishes success. Missing original after confirmed older restore stays unavailable; no replacement
+  receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing revision_run and
+  FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot settle both
+  completed and interrupted; duplicate delivery returns the original immutable result, conflicting semantics fence.
+
+
+  NEW passive consumer reader.bundle_revision_started_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-591, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection,
+  dedupe row or copied body, so adds no storage value registry row. No stored read token is added; any future durable
+  token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable
+  authorized history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild a
+  document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source
+  lineage versus Chat content for this Deep Plan review history; no exact family assignment is established. Event
+  lifetime and original source bodies are independent. No TTL/count deletion or indefinite class selection is authorized
+  by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_started; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_started_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own schema, identity, joins and transition predicates. Native append, lost acknowledgement, effect-unknown reconciliation,
+  backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary obligations
+  are authored NOT_RUN, and must be exercised on real adapters before native claims.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-572
+- CV-591
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_started
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### SP-577 - Bundle Revision Completed Custody And History
+
+```yaml
+plan_unit_id: SP-577
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '`bundle.revision_completed` explicitly adopts SP-286 and CV-339 including strict full-value v2
+  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract
+  under DL-045: producer emitter.bundle_revision_completed@1.0.0 is the targeted revision runner governed by ACD-573.
+  Before any append, require individual family admission and schema support, current project/thread/bundle permissions,
+  exact source evidence and CV-592 identity. Freeze the prepared complete EventRecord after original source evidence
+  is committed; append through Storage, then resolve the original full-value AppendReceipt before publishing the
+  phase as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness token
+  or partially delivered receipt establishes success. Missing original after confirmed older restore stays unavailable;
+  no replacement receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing
+  revision_run and FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot
+  settle both completed and interrupted; duplicate delivery returns the original immutable result, conflicting semantics
+  fence.
+
+
+  NEW passive consumer reader.bundle_revision_completed_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-592, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection,
+  dedupe row or copied body, so adds no storage value registry row. No stored read token is added; any future durable
+  token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable
+  authorized history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild a
+  document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source
+  lineage versus Chat content for this Deep Plan review history; no exact family assignment is established. Event
+  lifetime and original source bodies are independent. No TTL/count deletion or indefinite class selection is authorized
+  by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_completed; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_completed_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own schema, identity, joins and transition predicates. Native append, lost acknowledgement, effect-unknown reconciliation,
+  backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary obligations
+  are authored NOT_RUN, and must be exercised on real adapters before native claims.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-573
+- CV-592
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_completed
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### SP-578 - Bundle Revision Interrupted Custody And History
+
+```yaml
+plan_unit_id: SP-578
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '`bundle.revision_interrupted` explicitly adopts SP-286 and CV-339 including strict full-value v2
+  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract
+  under DL-045: producer emitter.bundle_revision_interrupted@1.0.0 is the targeted revision runner governed by ACD-574.
+  Before any append, require individual family admission and schema support, current project/thread/bundle permissions,
+  exact source evidence and CV-593 identity. Freeze the prepared complete EventRecord after original source evidence
+  is committed; append through Storage, then resolve the original full-value AppendReceipt before publishing the
+  phase as recorded or starting dependent work. No in-memory notification, caller hash, stale currentness token
+  or partially delivered receipt establishes success. Missing original after confirmed older restore stays unavailable;
+  no replacement receipt or re-execution is inferred. An uncertain start/completion is reconciled with existing
+  revision_run and FileSafe recovery evidence, never restarted by this history reader. A single started phase cannot
+  settle both completed and interrupted; duplicate delivery returns the original immutable result, conflicting semantics
+  fence.
+
+
+  NEW passive consumer reader.bundle_revision_interrupted_history@1.0.0 queries only this exact event_type, schema_id/version
+  from CV-593, and the authorized project/thread/bundle/revision. It explicitly adopts SP-278 and reuses the existing
+  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint
+  is event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,
+  and lookup rows are event_record_index.v2 in the current selected generation. Complete source coverage, exact
+  root/generation/frontier and actual live ten-field read token must be verified in one read transaction. The generic
+  projector alone advances its existing checkpoint and index rows atomically by predecessor CAS, including nonmatching
+  source rows; max matching sequence is never coverage. This family owns no filtered durable checkpoint, projection,
+  dedupe row or copied body, so adds no storage value registry row. No stored read token is added; any future durable
+  token must use DL-076''s nine-field projection with no persisted redb_snapshot_id. Consumer output is disposable
+  authorized history, not runner state. Source expiry/deletion is a truthful unavailable result; never rebuild a
+  document or grant access from history.
+
+
+  Original document, annotation and revision evidence remain with ACD-049/050, Storage revision_run.v1 and FileSafe.
+  Reads recheck current permissions and actual deletion/availability of every reference. Event bodies contain identifiers,
+  capability metadata and refs only; no annotations, prompt, secret or document text. Coherent backup includes source
+  evidence, original full-value receipt custody and seglog at the same admitted restore boundary; unresolved source/receipt
+  skew fences dependent success. Redaction never grants reference access or rewrites original identity.
+
+
+  retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source
+  lineage versus Chat content for this Deep Plan review history; no exact family assignment is established. Event
+  lifetime and original source bodies are independent. No TTL/count deletion or indefinite class selection is authorized
+  by this draft. Existing generic index/checkpoint retains RP-EVENT-INDEX-SOURCE/RP-PROJECTION-3GEN unchanged.
+
+
+  Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain or fence its pending append
+  work under the original receipt gate, then withdraw reader.bundle_revision_interrupted_history@1.0.0 from dispatch.
+  No history read or rebuild triggers revision, mutation or Multi-Pass Review. A replacement reader must explicitly
+  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does
+  not delete original events or reset the generic shared checkpoint, and does not withdraw siblings. Unsupported
+  historical versions remain unavailable with evidence, never rewritten on read. Positive/negative static cases
+  live in Plans/bundle_revision_event_fixtures.json; scripts/pm_bundle_revision_events.py checks this family''s
+  own schema, identity, joins and transition predicates. Native append, lost acknowledgement, effect-unknown reconciliation,
+  backup/restore, access/deletion, concurrent CAS, source gaps, cutoff/rebuild and retention-boundary obligations
+  are authored NOT_RUN, and must be exercised on real adapters before native claims.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-574
+- CV-593
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_interrupted
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```

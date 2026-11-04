@@ -24480,3 +24480,267 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+### CV-590 - Bundle Revision Requested Closed Event Contract
+
+```yaml
+plan_unit_id: CV-590
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payloads/bundle_revision/revision_requested.schema.json,
+  schema_id pm.event_payload.bundle.revision_requested.v1, schema_version 1.0.0. All listed properties are required-present;
+  safe_point_id is nullable and predecessor_event_id follows ACD-571. additionalProperties is false. annotation_ids
+  is an ordered, unique, nonempty list of eligible durable annotations; preserve request order through every phase.
+  requested_revision_capability is the actual non-secret capability identifier, never rewritten to the effective
+  enum. ts is the original UTC instant of this phase, reused verbatim on retry. source_ref is an authorized immutable
+  evidence reference; it never contains body text, a URL credential or a local absolute path. project_id/thread_id/bundle_id/revision_id
+  and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
+  scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
+  focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  replay_policy=projector_replay_only.
+
+
+  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_requested",project_id,thread_id,bundle_id,revision_id,phase_sequence]
+  with ensure_ascii=false and separators comma/colon; digest=SHA-256 of those bytes. event_id="evt_bundle_revision_"+digest
+  and idempotency_key="bundle.revision_requested:"+digest. Original timestamp, ordered annotations, capability fields,
+  permission snapshot and source evidence are frozen at preparation. Retry uses the same full EventRecord and producer
+  semantic digest; same identity with any changed semantic value is a conflict. A distinct new request gets a fresh
+  revision_id with existing source-owned lineage. Interrupted revision recovery preserves revision_id and uses the
+  next phase_sequence; completed revisions never reopen by replay. NEW technical phase_sequence is a nonnegative
+  integer: request is zero; every later phase is exactly predecessor.phase_sequence+1. Under the existing revision
+  recovery writer fence, predecessor must be the latest committed event for this exact revision, not an arbitrary
+  older start. An interrupted revision may start again with the same revision_id, a new phase_sequence and the interrupted
+  event as predecessor; completed never starts again. Every retry preserves the prepared sequence; unresolved source/receipt
+  custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation order, capabilities and
+  snapshot joins must hold before append. ACD-571 defines this family''s phase predicate; SP-575 defines the exact
+  receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce or alias sibling payloads.
+  The schema is prepared without registry admission.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-571
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_requested
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### CV-591 - Bundle Revision Started Closed Event Contract
+
+```yaml
+plan_unit_id: CV-591
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloads/bundle_revision/revision_started.schema.json,
+  schema_id pm.event_payload.bundle.revision_started.v1, schema_version 1.0.0. All listed properties are required-present;
+  safe_point_id is nullable and predecessor_event_id follows ACD-572. additionalProperties is false. annotation_ids
+  is an ordered, unique, nonempty list of eligible durable annotations; preserve request order through every phase.
+  requested_revision_capability is the actual non-secret capability identifier, never rewritten to the effective
+  enum. ts is the original UTC instant of this phase, reused verbatim on retry. source_ref is an authorized immutable
+  evidence reference; it never contains body text, a URL credential or a local absolute path. project_id/thread_id/bundle_id/revision_id
+  and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
+  scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
+  focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  replay_policy=projector_replay_only.
+
+
+  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_started",project_id,thread_id,bundle_id,revision_id,phase_sequence]
+  with ensure_ascii=false and separators comma/colon; digest=SHA-256 of those bytes. event_id="evt_bundle_revision_"+digest
+  and idempotency_key="bundle.revision_started:"+digest. Original timestamp, ordered annotations, capability fields,
+  permission snapshot and source evidence are frozen at preparation. Retry uses the same full EventRecord and producer
+  semantic digest; same identity with any changed semantic value is a conflict. A distinct new request gets a fresh
+  revision_id with existing source-owned lineage. Interrupted revision recovery preserves revision_id and uses the
+  next phase_sequence; completed revisions never reopen by replay. NEW technical phase_sequence is a nonnegative
+  integer: request is zero; every later phase is exactly predecessor.phase_sequence+1. Under the existing revision
+  recovery writer fence, predecessor must be the latest committed event for this exact revision, not an arbitrary
+  older start. An interrupted revision may start again with the same revision_id, a new phase_sequence and the interrupted
+  event as predecessor; completed never starts again. Every retry preserves the prepared sequence; unresolved source/receipt
+  custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation order, capabilities and
+  snapshot joins must hold before append. ACD-572 defines this family''s phase predicate; SP-576 defines the exact
+  receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce or alias sibling payloads.
+  The schema is prepared without registry admission.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-572
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_started
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### CV-592 - Bundle Revision Completed Closed Event Contract
+
+```yaml
+plan_unit_id: CV-592
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payloads/bundle_revision/revision_completed.schema.json,
+  schema_id pm.event_payload.bundle.revision_completed.v1, schema_version 1.0.0. All listed properties are required-present;
+  safe_point_id is nullable and predecessor_event_id follows ACD-573. additionalProperties is false. annotation_ids
+  is an ordered, unique, nonempty list of eligible durable annotations; preserve request order through every phase.
+  requested_revision_capability is the actual non-secret capability identifier, never rewritten to the effective
+  enum. ts is the original UTC instant of this phase, reused verbatim on retry. source_ref is an authorized immutable
+  evidence reference; it never contains body text, a URL credential or a local absolute path. project_id/thread_id/bundle_id/revision_id
+  and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
+  scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
+  focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  replay_policy=projector_replay_only.
+
+
+  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_completed",project_id,thread_id,bundle_id,revision_id,phase_sequence]
+  with ensure_ascii=false and separators comma/colon; digest=SHA-256 of those bytes. event_id="evt_bundle_revision_"+digest
+  and idempotency_key="bundle.revision_completed:"+digest. Original timestamp, ordered annotations, capability fields,
+  permission snapshot and source evidence are frozen at preparation. Retry uses the same full EventRecord and producer
+  semantic digest; same identity with any changed semantic value is a conflict. A distinct new request gets a fresh
+  revision_id with existing source-owned lineage. Interrupted revision recovery preserves revision_id and uses the
+  next phase_sequence; completed revisions never reopen by replay. NEW technical phase_sequence is a nonnegative
+  integer: request is zero; every later phase is exactly predecessor.phase_sequence+1. Under the existing revision
+  recovery writer fence, predecessor must be the latest committed event for this exact revision, not an arbitrary
+  older start. An interrupted revision may start again with the same revision_id, a new phase_sequence and the interrupted
+  event as predecessor; completed never starts again. Every retry preserves the prepared sequence; unresolved source/receipt
+  custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation order, capabilities and
+  snapshot joins must hold before append. ACD-573 defines this family''s phase predicate; SP-577 defines the exact
+  receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce or alias sibling payloads.
+  The schema is prepared without registry admission.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-573
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_completed
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+### CV-593 - Bundle Revision Interrupted Closed Event Contract
+
+```yaml
+plan_unit_id: CV-593
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_payloads/bundle_revision/revision_interrupted.schema.json,
+  schema_id pm.event_payload.bundle.revision_interrupted.v1, schema_version 1.0.0. All listed properties are required-present;
+  safe_point_id is nullable and predecessor_event_id follows ACD-574. additionalProperties is false. annotation_ids
+  is an ordered, unique, nonempty list of eligible durable annotations; preserve request order through every phase.
+  requested_revision_capability is the actual non-secret capability identifier, never rewritten to the effective
+  enum. ts is the original UTC instant of this phase, reused verbatim on retry. source_ref is an authorized immutable
+  evidence reference; it never contains body text, a URL credential or a local absolute path. project_id/thread_id/bundle_id/revision_id
+  and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
+  scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
+  focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  replay_policy=projector_replay_only.
+
+
+  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_interrupted",project_id,thread_id,bundle_id,revision_id,phase_sequence]
+  with ensure_ascii=false and separators comma/colon; digest=SHA-256 of those bytes. event_id="evt_bundle_revision_"+digest
+  and idempotency_key="bundle.revision_interrupted:"+digest. Original timestamp, ordered annotations, capability
+  fields, permission snapshot and source evidence are frozen at preparation. Retry uses the same full EventRecord
+  and producer semantic digest; same identity with any changed semantic value is a conflict. A distinct new request
+  gets a fresh revision_id with existing source-owned lineage. Interrupted revision recovery preserves revision_id
+  and uses the next phase_sequence; completed revisions never reopen by replay. NEW technical phase_sequence is
+  a nonnegative integer: request is zero; every later phase is exactly predecessor.phase_sequence+1. Under the existing
+  revision recovery writer fence, predecessor must be the latest committed event for this exact revision, not an
+  arbitrary older start. An interrupted revision may start again with the same revision_id, a new phase_sequence
+  and the interrupted event as predecessor; completed never starts again. Every retry preserves the prepared sequence;
+  unresolved source/receipt custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation
+  order, capabilities and snapshot joins must hold before append. ACD-574 defines this family''s phase predicate;
+  SP-578 defines the exact receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce
+  or alias sibling payloads. The schema is prepared without registry admission.'
+gui_related: false
+gui_classification_reason: Defines event semantics and persistence, without changing presentation.
+depends_on:
+- ACD-574
+unblocks: []
+acceptance_criteria:
+- This exact family remains unadmitted until individual admission; no sibling inference.
+- Static contract fixtures pass; native execution remains NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/assistant-chat-design.md#ACD-049
+- Plans/assistant-chat-design.md#ACD-050
+preserved_exact_tokens:
+- bundle.revision_interrupted
+negative_constraints:
+- No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```

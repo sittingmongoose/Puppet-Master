@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/bundle_revision/revision_interrupted.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_id",
+    "thread_id",
+    "bundle_id",
+    "revision_id",
+    "requested_revision_capability",
+    "permission_snapshot_id",
+    "schema_id",
+    "schema_version",
+    "event_type",
+    "annotation_ids",
+    "effective_revision_capability",
+    "ts",
+    "safe_point_id",
+    "predecessor_event_id",
+    "source_ref",
+    "phase_sequence"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "bundle_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "revision_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "requested_revision_capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "permission_snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "schema_id": {
+      "const": "pm.event_payload.bundle.revision_interrupted.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_type": {
+      "const": "bundle.revision_interrupted"
+    },
+    "annotation_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      }
+    },
+    "effective_revision_capability": {
+      "enum": [
+        "schema_enforced_structured_revision",
+        "validated_structured_revision",
+        "chat_handoff_only"
+      ]
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "safe_point_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "predecessor_event_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "phase_sequence": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}
