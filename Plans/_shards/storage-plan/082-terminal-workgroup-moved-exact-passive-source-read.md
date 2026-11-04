@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26901-L27098
+Source lines: L26901-L27101
 
-Source SHA256: `b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db`
+Source SHA256: `1446fb94b80770bee96e1d1f5ba89c17b14b214bde53879aa443909ea6c0bdd7`
 
 ---
 
@@ -171,7 +171,10 @@ canonical_text: The new storage.terminal_workgroup_move.inspect_current.v1 bindi
   and its family checkpoint disposition is none_required. Original move validation separately requires
   actual terminal owner and shared append/full-value custody; unavailable original evidence is never rebuilt.
   The binding stores no read token, and any stored copy of its token is the nine-field durable token
-  without redb_snapshot_id (DL-076).
+  without redb_snapshot_id (DL-076). No consumer operates on terminal.workgroup_moved, because its producer
+  never activated and no operation was ever admitted (SMPFS-170's withdrawal rule, applied by DL-181; CV-361);
+  terminal.workgroup_move_history_read.v1@1.0.0 survives only in SMPFS-170's lineage text, and this reader
+  stays only for a 1.0.0 event already recorded, if any.
 gui_related: false
 gui_classification_reason: Defines source authority and passive historical validation, not presentation.
 depends_on: [SMPFS-170, CV-323, CV-339, SP-278, SP-286, DL-045, DL-076]
