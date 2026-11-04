@@ -20,6 +20,9 @@ def semantic(name, payload, scope_key, event_id, original=None):
         raise ValueError('identity')
     if original is not None and original != payload:
         raise ValueError('original_payload_conflict')
+    if name == 'plugin.hook.blocked' and payload['hook_name'] not in (
+            'pre_tool_invoke', 'pre_attempt_start', 'pre_node_dispatch'):
+        raise ValueError('observation_only_hook')
     if name == 'auth.github.token.polling':
         previous = payload['previous_interval_seconds']
         expected = previous + 5 if payload['outcome'] == 'slow_down' else previous
@@ -68,6 +71,15 @@ def run():
             bad = {**p, 'poll_interval_seconds': p['previous_interval_seconds']}
             validator.validate(bad)  # schema-valid relational negative
             probes.append(('cadence', lambda: semantic(name, bad, 'application', eid)))
+        if name == 'plugin.hook.blocked':
+            for hook in ('pre_tool_invoke', 'pre_attempt_start', 'pre_node_dispatch'):
+                valid_hook = {**p, 'hook_name': hook}
+                validator.validate(valid_hook)
+                semantic(name, valid_hook, 'application', eid)
+            for hook in ('post_tool_invoke', 'post_attempt_complete'):
+                observation = {**p, 'hook_name': hook}
+                probes.append(('observation_only_hook',
+                               lambda bad=observation: semantic(name, bad, 'application', eid)))
         for reason, call in probes:
             try:
                 call()

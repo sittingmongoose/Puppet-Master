@@ -1289,9 +1289,11 @@
           "maxLength": 512
         },
         "hook_name": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
+          "enum": [
+            "pre_tool_invoke",
+            "pre_attempt_start",
+            "pre_node_dispatch"
+          ]
         },
         "invocation_ref": {
           "type": "string",
@@ -1386,9 +1388,11 @@
               "maxLength": 512
             },
             "hook_name": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
+              "enum": [
+                "pre_tool_invoke",
+                "pre_attempt_start",
+                "pre_node_dispatch"
+              ]
             },
             "invocation_ref": {
               "type": "string",

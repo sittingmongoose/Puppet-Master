@@ -868,7 +868,7 @@
         "redaction_profile": "refs_only",
         "plugin_id": "example-plugin",
         "plugin_receipt_ref": "ref:receipt/plugin",
-        "hook_name": "tool.before",
+        "hook_name": "pre_tool_invoke",
         "invocation_ref": "ref:invocation/one",
         "reason_ref": "ref:reason/block"
       },
@@ -883,7 +883,7 @@
           "redaction_profile": "refs_only",
           "plugin_id": "example-plugin",
           "plugin_receipt_ref": "ref:receipt/plugin",
-          "hook_name": "tool.before",
+          "hook_name": "pre_tool_invoke",
           "invocation_ref": "ref:invocation/one",
           "reason_ref": "ref:reason/block",
           "token": "must-reject"
@@ -897,7 +897,7 @@
           "redaction_profile": "refs_only",
           "plugin_id": "example-plugin",
           "plugin_receipt_ref": "ref:receipt/plugin",
-          "hook_name": "tool.before",
+          "hook_name": "pre_tool_invoke",
           "invocation_ref": "ref:invocation/one",
           "reason_ref": "ref:reason/block"
         },
@@ -911,7 +911,7 @@
           "redaction_profile": "refs_only",
           "plugin_id": "example-plugin",
           "plugin_receipt_ref": "ref:receipt/plugin",
-          "hook_name": "tool.before",
+          "hook_name": "pre_tool_invoke",
           "invocation_ref": "ref:invocation/one",
           "reason_ref": "ref:reason/block"
         },
@@ -925,7 +925,7 @@
           "redaction_profile": "refs_only",
           "plugin_id": "example-plugin",
           "plugin_receipt_ref": "ref:receipt/plugin",
-          "hook_name": "tool.before",
+          "hook_name": "pre_tool_invoke",
           "invocation_ref": "ref:invocation/one",
           "reason_ref": "ref:reason/block"
         },
@@ -939,7 +939,7 @@
           "redaction_profile": "raw",
           "plugin_id": "example-plugin",
           "plugin_receipt_ref": "ref:receipt/plugin",
-          "hook_name": "tool.before",
+          "hook_name": "pre_tool_invoke",
           "invocation_ref": "ref:invocation/one",
           "reason_ref": "ref:reason/block"
         },
@@ -950,6 +950,48 @@
           "subject_ref": "ref:subject/one",
           "revision": 1,
           "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "pre_tool_invoke",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "post_tool_invoke",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "post_attempt_complete",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
           "redaction_profile": "refs_only",
           "plugin_id": "example-plugin",
           "plugin_receipt_ref": "ref:receipt/plugin",
@@ -995,6 +1037,12 @@
           "case_id": "plugin.hook.blocked.deleted_body",
           "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
           "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.blocked.observation_only",
+          "input": "post_tool_invoke or post_attempt_complete produces a Block-shaped observation.",
+          "expected": "No plugin.hook.blocked event or runtime block; observation cannot become an execution blocker.",
           "execution": "NOT_RUN"
         }
       ]
