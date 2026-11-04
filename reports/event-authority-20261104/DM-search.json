@@ -76,9 +76,27 @@
           "line_start": 1131,
           "line_end": 1131,
           "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
+          "file_sha256": "1e1137eede2e6e732168145fe3b419f09221f233e22577f68f8f575109de3215"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"format.applied\" Plans/*.md Plans/*.json; inspect FS-075 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing FS-075 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Formatters_System.md",
+          "unit": "FS-075",
+          "line_start": 1132,
+          "line_end": 1132,
+          "quote": "Checkpoint identity for format.applied: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "1e1137eede2e6e732168145fe3b419f09221f233e22577f68f8f575109de3215"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -123,9 +141,27 @@
           "line_start": 2164,
           "line_end": 2164,
           "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
+          "file_sha256": "b1bbb04d7b7780813223e79def07752da5fb20ac7bfc2f22dc37b3a74328f4f3"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"git.clone.completed\" Plans/*.md Plans/*.json; inspect SCS-085 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing SCS-085 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "unit": "SCS-085",
+          "line_start": 2165,
+          "line_end": 2165,
+          "quote": "Checkpoint identity for git.clone.completed: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "b1bbb04d7b7780813223e79def07752da5fb20ac7bfc2f22dc37b3a74328f4f3"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -205,9 +241,27 @@
           "line_start": 7270,
           "line_end": 7270,
           "quote": "lsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
+          "file_sha256": "fcc933158055321626fb1064b5b0d8996f18fd196a64ac7472c2a851d12403b2"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"lsp.server.lifecycle_changed\" Plans/*.md Plans/*.json; inspect LSPS-173 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing LSPS-173 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "unit": "LSPS-173",
+          "line_start": 7271,
+          "line_end": 7271,
+          "quote": "Checkpoint identity for lsp.server.lifecycle_changed: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "fcc933158055321626fb1064b5b0d8996f18fd196a64ac7472c2a851d12403b2"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -272,7 +326,7 @@
           "line_start": 9929,
           "line_end": 9929,
           "quote": "model.catalog_refreshed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
+          "file_sha256": "c6cd41c46c03d7b614f9e8f5abec217df68ee9031d92810a853e903f3e4562ee"
         },
         {
           "path": "Plans/Contracts_V0.md",
@@ -280,7 +334,7 @@
           "line_start": 24099,
           "line_end": 24099,
           "quote": "App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}",
-          "file_sha256": "901a704b499b0f1cd2ca9e4067299b9658c00d15fb6c36ce70b242e6e16cbb06"
+          "file_sha256": "78c13cdf19844d6b22c40cb549ea9d76cc5bf055dfe00f8d60f570c7fd49f25c"
         },
         {
           "path": "Plans/storage-plan.md",
@@ -288,9 +342,27 @@
           "line_start": 28245,
           "line_end": 28245,
           "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
-          "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+          "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"model.catalog_refreshed\" Plans/*.md Plans/*.json; inspect MS-199 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing MS-199 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "unit": "MS-199",
+          "line_start": 9930,
+          "line_end": 9930,
+          "quote": "Checkpoint identity for model.catalog_refreshed: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "c6cd41c46c03d7b614f9e8f5abec217df68ee9031d92810a853e903f3e4562ee"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -335,9 +407,27 @@
           "line_start": 1006,
           "line_end": 1006,
           "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
+          "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"project.added\" Plans/*.md Plans/*.json; inspect PJCT-072 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing PJCT-072 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Project_System.md",
+          "unit": "PJCT-072",
+          "line_start": 1007,
+          "line_end": 1007,
+          "quote": "Checkpoint identity for project.added: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -379,12 +469,30 @@
         {
           "path": "Plans/Project_System.md",
           "unit": "PJCT-073",
-          "line_start": 1057,
-          "line_end": 1057,
+          "line_start": 1058,
+          "line_end": 1058,
           "quote": "project.created append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
+          "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"project.created\" Plans/*.md Plans/*.json; inspect PJCT-073 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing PJCT-073 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Project_System.md",
+          "unit": "PJCT-073",
+          "line_start": 1059,
+          "line_end": 1059,
+          "quote": "Checkpoint identity for project.created: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -662,7 +770,7 @@
           "line_start": 6064,
           "line_end": 6064,
           "quote": "subagent.context_rehydrated append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+          "file_sha256": "58341e5737539893ca9fab26cc61998197d257bc380cf2bf040fd07a99b13076"
         },
         {
           "path": "Plans/Contracts_V0.md",
@@ -670,7 +778,7 @@
           "line_start": 24099,
           "line_end": 24099,
           "quote": "App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}",
-          "file_sha256": "901a704b499b0f1cd2ca9e4067299b9658c00d15fb6c36ce70b242e6e16cbb06"
+          "file_sha256": "78c13cdf19844d6b22c40cb549ea9d76cc5bf055dfe00f8d60f570c7fd49f25c"
         },
         {
           "path": "Plans/storage-plan.md",
@@ -678,9 +786,27 @@
           "line_start": 28245,
           "line_end": 28245,
           "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
-          "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+          "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"subagent.context_rehydrated\" Plans/*.md Plans/*.json; inspect PP-151 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing PP-151 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "unit": "PP-151",
+          "line_start": 6065,
+          "line_end": 6065,
+          "quote": "Checkpoint identity for subagent.context_rehydrated: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "58341e5737539893ca9fab26cc61998197d257bc380cf2bf040fd07a99b13076"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   },
   {
@@ -742,10 +868,10 @@
         {
           "path": "Plans/Prompt_Pipeline.md",
           "unit": "PP-152",
-          "line_start": 6115,
-          "line_end": 6115,
+          "line_start": 6116,
+          "line_end": 6116,
           "quote": "subagent.context_shrunk append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
-          "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+          "file_sha256": "58341e5737539893ca9fab26cc61998197d257bc380cf2bf040fd07a99b13076"
         },
         {
           "path": "Plans/Contracts_V0.md",
@@ -753,7 +879,7 @@
           "line_start": 24099,
           "line_end": 24099,
           "quote": "App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}",
-          "file_sha256": "901a704b499b0f1cd2ca9e4067299b9658c00d15fb6c36ce70b242e6e16cbb06"
+          "file_sha256": "78c13cdf19844d6b22c40cb549ea9d76cc5bf055dfe00f8d60f570c7fd49f25c"
         },
         {
           "path": "Plans/storage-plan.md",
@@ -761,9 +887,27 @@
           "line_start": 28245,
           "line_end": 28245,
           "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
-          "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+          "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
         }
       ]
+    },
+    "review_round_3": {
+      "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
+      "scope": "This exact family owner unit, its CV/SP copies and ATS paragraph; SP-278 and DL-076 read-token schema; current exact-family fixture/checker and the cycle-2 review. Existing operating consumer/checkpoint names reused independently for this family; no sibling credited.",
+      "command": "rg -n -F \"subagent.context_shrunk\" Plans/*.md Plans/*.json; inspect PP-152 and scripts/pm-small-owner-events.py:rebuild_publication",
+      "negative_evidence": "The owner already requires the CURRENT-selected SP-278 frontier, but the input adapter copies new_checkpoint without validating any token identity. A single foreign durable storage_instance_id is accepted at the pinned input head. No alternate exact-family checkpoint exists or is needed.",
+      "newly_authored_owner_contract": "Existing PP-152 now explicitly binds original Storage/source/key/generation and whole selected-token equality before publication, with malformed/foreign/LF refusal. This refines the existing SP-278 adoption and creates no stored value, consumer or checkpoint identifier.",
+      "current_evidence": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "unit": "PP-152",
+          "line_start": 6117,
+          "line_end": 6117,
+          "quote": "Checkpoint identity for subagent.context_shrunk: before atomic rebuild publication, validate the nine-field durable token",
+          "file_sha256": "58341e5737539893ca9fab26cc61998197d257bc380cf2bf040fd07a99b13076"
+        }
+      ],
+      "native_execution": "NOT_RUN"
     }
   }
 ]
