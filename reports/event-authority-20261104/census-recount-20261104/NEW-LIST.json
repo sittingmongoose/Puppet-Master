@@ -1618,9 +1618,15 @@
     "owner_document": "Plans/orchestrator-subagent-integration.md",
     "owner_section": "Continuity Record Family",
     "recommendation": {
-      "action": "merge into an existing family",
-      "reason": "Overlapping continuity concepts exist in Contracts_V0:20541-20549; ask the two owners to reconcile exact meaning before choosing a single family. This is a proposed merge, not a declared alias.",
-      "target": "runtime_continuity.actor_bound"
+      "action": "conditional merge proposal",
+      "citations": [
+        "Plans/orchestrator-subagent-integration.md:31726-31733",
+        "Plans/Contracts_V0.md:20541-20549"
+      ],
+      "condition": "Jared resolves the owner semantics and owners document equivalence; target still needs its complete contract and admission.",
+      "reason": "Plausible actor/redaction/replay pairing only. The target is an unadmitted August row, not a registered family or a proved alias; this source spelling remains counted in bucket (e).",
+      "target": "runtime_continuity.actor_bound",
+      "target_status": "August quarantined_not_admitted; absent from live registry"
     },
     "records": "Records the actor identity used for audit continuity.",
     "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:69-69",
@@ -1641,9 +1647,14 @@
     "owner_document": "Plans/orchestrator-subagent-integration.md",
     "owner_section": "Continuity Record Family",
     "recommendation": {
-      "action": "merge into an existing family",
-      "reason": "Overlapping continuity concepts exist in Contracts_V0:20541-20549; ask the two owners to reconcile exact meaning before choosing a single family. This is a proposed merge, not a declared alias.",
-      "target": "runtime_continuity.route_resolved"
+      "action": "stopped for Jared: semantic question",
+      "citations": [
+        "Plans/orchestrator-subagent-integration.md:31726-31733",
+        "Plans/Contracts_V0.md:20541-20549",
+        "Plans/Contracts_V0.md:17769-17815"
+      ],
+      "question": "Does recording source provenance (`source_event_id` and `provenance_ref`) describe the same saved fact as resolving a navigation route (`surface_id`, `route_kind`, and `target_ref`), or must those remain separate event semantics? Orchestration and Contracts/Storage must supply equivalence evidence; any choice between conflicting owners returns to Jared.",
+      "reason": "Source provenance is required by Orchestration (source_event_id/provenance_ref); Contracts describes navigation route resolution (surface_id/route_kind/target_ref). No cited equivalence subsumes provenance into route resolution."
     },
     "records": "Records source provenance for audit continuity.",
     "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:69-69",
@@ -1664,9 +1675,15 @@
     "owner_document": "Plans/orchestrator-subagent-integration.md",
     "owner_section": "Continuity Record Family",
     "recommendation": {
-      "action": "merge into an existing family",
-      "reason": "Overlapping continuity concepts exist in Contracts_V0:20541-20549; ask the two owners to reconcile exact meaning before choosing a single family. This is a proposed merge, not a declared alias.",
-      "target": "runtime_continuity.redaction_applied"
+      "action": "conditional merge proposal",
+      "citations": [
+        "Plans/orchestrator-subagent-integration.md:31726-31733",
+        "Plans/Contracts_V0.md:20541-20549"
+      ],
+      "condition": "Jared resolves the owner semantics and owners document equivalence; target still needs its complete contract and admission.",
+      "reason": "Plausible actor/redaction/replay pairing only. The target is an unadmitted August row, not a registered family or a proved alias; this source spelling remains counted in bucket (e).",
+      "target": "runtime_continuity.redaction_applied",
+      "target_status": "August quarantined_not_admitted; absent from live registry"
     },
     "records": "Records the redaction decision for a continuity record.",
     "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:69-69",
@@ -1687,9 +1704,15 @@
     "owner_document": "Plans/orchestrator-subagent-integration.md",
     "owner_section": "Continuity Record Family",
     "recommendation": {
-      "action": "merge into an existing family",
-      "reason": "Overlapping continuity concepts exist in Contracts_V0:20541-20549; ask the two owners to reconcile exact meaning before choosing a single family. This is a proposed merge, not a declared alias.",
-      "target": "runtime_continuity.replay_checkpointed"
+      "action": "conditional merge proposal",
+      "citations": [
+        "Plans/orchestrator-subagent-integration.md:31726-31733",
+        "Plans/Contracts_V0.md:20541-20549"
+      ],
+      "condition": "Jared resolves the owner semantics and owners document equivalence; target still needs its complete contract and admission.",
+      "reason": "Plausible actor/redaction/replay pairing only. The target is an unadmitted August row, not a registered family or a proved alias; this source spelling remains counted in bucket (e).",
+      "target": "runtime_continuity.replay_checkpointed",
+      "target_status": "August quarantined_not_admitted; absent from live registry"
     },
     "records": "Records the audit-continuity replay checkpoint.",
     "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:69-69",
@@ -1978,29 +2001,6 @@
     "owner_document": "Plans/Scheduling_and_Quota_Resume.md",
     "owner_section": "Events",
     "technical_authority": "DL-411, exactly the Card 4b list"
-  },
-  {
-    "bucket": "e",
-    "citations": [
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10",
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:230-230"
-    ],
-    "classification": "persisted_event_candidate",
-    "closest_card1_retention_group": "G23",
-    "closest_card1_retention_rule": "One year after the real run finishes; 1000000 per run and 5000000 per project, then a linked successor.",
-    "in_august_ledger": false,
-    "in_live_registry": false,
-    "name": "executor.intake_report.recorded",
-    "owner_document": "Plans/Executor_Protocol.md",
-    "owner_section": "Executor intake; inherited event_payload_contract_registry at non_executable_closure_evidence.json:230-239, adoption pending",
-    "recommendation": {
-      "action": "register",
-      "reason": "Exact machine event_type/producer/consumer binding exists, but live owner adoption and complete depth are still required; its non-executable evidence is not admission."
-    },
-    "records": "Names an Executor intake report and its activation or certification consumers in inherited readiness metadata.",
-    "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:87-87",
-    "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
-    "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
   },
   {
     "bucket": "e",
@@ -2923,30 +2923,6 @@
   {
     "bucket": "e",
     "citations": [
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10",
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:264-264"
-    ],
-    "classification": "persisted_event_candidate",
-    "closest_card1_retention_group": "G29",
-    "closest_card1_retention_rule": "Kept with the Goal chat under its existing text rule, with no count cap.",
-    "in_august_ledger": false,
-    "in_live_registry": false,
-    "name": "goal.receipt.recorded",
-    "owner_document": "Plans/Goal_Runtime_System.md",
-    "owner_section": "Goal V2 events",
-    "recommendation": {
-      "action": "merge into an existing family",
-      "reason": "Reconcile the dotted readiness label with the canonical underscore family and DL-409 history-only rule; do not revive an unused Goal receipt writer.",
-      "target": "goal.receipt_recorded"
-    },
-    "records": "Names a Goal completion receipt and its artifact or Orchestrator consumers in inherited readiness metadata.",
-    "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:93-93",
-    "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
-    "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
-  },
-  {
-    "bucket": "e",
-    "citations": [
       "Plans/Goal_Runtime_System.md:270-272",
       "Plans/Goal_Runtime_System.md:6862-6862"
     ],
@@ -3158,29 +3134,6 @@
   {
     "bucket": "e",
     "citations": [
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10",
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:219-219"
-    ],
-    "classification": "persisted_event_candidate",
-    "closest_card1_retention_group": "G23",
-    "closest_card1_retention_rule": "One year after the real run finishes; 1000000 per run and 5000000 per project, then a linked successor.",
-    "in_august_ledger": false,
-    "in_live_registry": false,
-    "name": "plan_compile.stage_receipt.recorded",
-    "owner_document": "Plans/Plan_To_Node_Compilation.md",
-    "owner_section": "PNC-007; inherited event_payload_contract_registry at non_executable_closure_evidence.json:219-228, adoption pending",
-    "recommendation": {
-      "action": "register",
-      "reason": "Exact machine event_type/producer/consumer binding exists, but live owner adoption and complete depth are still required; its non-executable evidence is not admission."
-    },
-    "records": "Names a Plan Compile stage receipt and its resume or audit consumers in inherited readiness metadata.",
-    "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:87-87",
-    "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
-    "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
-  },
-  {
-    "bucket": "e",
-    "citations": [
       "Plans/Contracts_V0.md:21402-21408"
     ],
     "classification": "persisted_event_candidate",
@@ -3193,33 +3146,11 @@
     "owner_section": "Typed results added to existing error enumerations",
     "recommendation": {
       "action": "exclude",
-      "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion."
+      "reason": "CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.",
+      "status": "recommendation only; Jared has not excluded the name; remains counted"
     },
     "records": "Optionally records exhaustion of the planning question allowance while the run continues to synthesis.",
     "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:81-81",
-    "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
-    "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
-  },
-  {
-    "bucket": "e",
-    "citations": [
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10",
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:241-241"
-    ],
-    "classification": "persisted_event_candidate",
-    "closest_card1_retention_group": "G23",
-    "closest_card1_retention_rule": "One year after the real run finishes; 1000000 per run and 5000000 per project, then a linked successor.",
-    "in_august_ledger": false,
-    "in_live_registry": false,
-    "name": "provider.stream.event_recorded",
-    "owner_document": "Plans/CLI_Bridged_Providers.md",
-    "owner_section": "Provider facade normalized stream; inherited event_payload_contract_registry at non_executable_closure_evidence.json:241-251, adoption pending",
-    "recommendation": {
-      "action": "register",
-      "reason": "Exact machine event_type/producer/consumer binding exists, but live owner adoption and complete depth are still required; its non-executable evidence is not admission."
-    },
-    "records": "Names a provider stream record and its stage, usage and audit consumers in inherited readiness metadata.",
-    "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:87-87",
     "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
     "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
   },
@@ -4695,29 +4626,6 @@
     },
     "records": "Records a capture target change with its lineage.",
     "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:77-77",
-    "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
-    "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
-  },
-  {
-    "bucket": "e",
-    "citations": [
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10",
-      "Plans/.implementation_readiness/non_executable_closure_evidence.json:253-253"
-    ],
-    "classification": "persisted_event_candidate",
-    "closest_card1_retention_group": "G23",
-    "closest_card1_retention_rule": "One year after the real run finishes; 1000000 per run and 5000000 per project, then a linked successor.",
-    "in_august_ledger": false,
-    "in_live_registry": false,
-    "name": "testing.receipt.recorded",
-    "owner_document": "Plans/Automated_Testing_System.md",
-    "owner_section": "TestRunReceipt; inherited event_payload_contract_registry at non_executable_closure_evidence.json:253-262, adoption pending",
-    "recommendation": {
-      "action": "register",
-      "reason": "Exact machine event_type/producer/consumer binding exists, but live owner adoption and complete depth are still required; its non-executable evidence is not admission."
-    },
-    "records": "Names a testing receipt and its certification or visible testing consumers in inherited readiness metadata.",
-    "retention_citation": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md:87-87",
     "retention_status": "Analogy/proposal only; exact counting scope and any real-run anchor still require owner/Jared adjudication",
     "technical_authority": "Returns to Jared under DL-411; no extension of technical authority or retention inferred"
   },
