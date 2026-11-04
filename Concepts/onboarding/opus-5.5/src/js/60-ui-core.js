@@ -549,7 +549,9 @@
     const owner = !cheer || !sp ? null : won && lastSuccess.key ? sp.screen + '|' + lastSuccess.key + '|done' : sp.id;
     if (cheer && owner && owner !== sp.id) cheer = null;
     if (cheer) { cheering = { text: O55.pipOops.cheer(cheer.key), until: performance.now() + 2600, screen: S.sess.screen, owner }; spec.sayNow = true; cheerLog.push({ at: Math.round(performance.now()), key: cheer.key, text: cheering.text, screen: S.sess.screen }); if (cheerLog.length > 40) cheerLog.shift(); }
-    if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until || (cheering.owner && cheering.owner !== (sp && sp.id)))) cheering = null;
+    if (cheering && (oops || cheering.screen !== S.sess.screen || performance.now() > cheering.until)) cheering = null;
+    /* (its happy face goes with it: the step it was for is no longer on show) */
+    if (cheering && cheering.owner && cheering.owner !== (sp && sp.id)) { cheering = null; st.moodOverride = null; }
     if (cheering) { spec.say = cheering.text; spec.sayOwner = cheering.owner; spec.pip.mood = 'happy'; }
     /* Pick a look: hovering a look has Pip watch it and say its line, silently; the look itself (the window and Pip's
        world) changes only when it is picked (Jared, O6, 2026-10-30: "it shouldnt change the themes on hover, it should
