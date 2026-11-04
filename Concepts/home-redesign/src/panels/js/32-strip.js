@@ -233,12 +233,19 @@ strip.prepare = function (panelEl, p, l, opts) {
       // The inset itself is look-constant: measure it once per host instead of two layout reads per panel per paint
       // (the cache clears with the look, like the label widths).
       var tr = opts.rects && opts.rects.panels && opts.rects.panels[p.id];
-      var stripW = host.clientWidth;
-      if (tr && panelEl.offsetWidth) {
-        if (s.insetGen !== insetGen) { s.inset = panelEl.offsetWidth - host.clientWidth; s.insetGen = insetGen; }
+      var stripW;
+      if (tr && s.insetGen === insetGen) {
+        // The target rect and same-look inset already give the exact fit width.
+        // Reading live geometry here merely flushes all pending width layout.
         stripW = Math.max(0, tr.w - s.inset);
+      } else {
+        stripW = host.clientWidth;
+        var panelW = tr ? panelEl.offsetWidth : 0;
+        if (tr && panelW) {
+          s.inset = panelW - stripW; s.insetGen = insetGen;
+          stripW = Math.max(0, tr.w - s.inset);
+        } else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
       }
-      else if (!stripW) stripW = render.rects() && render.rects().panels[p.id] ? render.rects().panels[p.id].w : 0;
       s.fitW = stripW;
       // a panel collapsed beside another (a row split) is a 35 px column: its tabs stand as icons, one above the other
       column = p.collapsed && panelEl.getAttribute('data-collapsed') === 'row';

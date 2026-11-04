@@ -16,6 +16,13 @@ export default async function(t) {
    };
   }
  });
+ if(t.args.stripProbe) await t.page.addInitScript(()=>{
+  window.__stripReads=[];
+  for(const [proto,name] of [[Element.prototype,'clientWidth'],[HTMLElement.prototype,'offsetWidth']]){
+   const d=Object.getOwnPropertyDescriptor(proto,name);if(!d?.get)continue;
+   Object.defineProperty(proto,name,{...d,get(){if(document.body?.classList.contains('pm-resizing')){const stack=new Error().stack;if(/at (?:Object\.)?measure\b/.test(stack))window.__stripReads.push({name,stack});}return d.get.call(this);}});
+  }
+ });
  if(t.args.audioProbe) await t.page.addInitScript(()=>{
   window.__audioCosts=[];
   for(const [type,names] of [[window.BaseAudioContext,['createGain','createOscillator','createBuffer','createBufferSource','createBiquadFilter','createConvolver','createStereoPanner','createDynamicsCompressor']], [window.AudioNode,['connect']], [window.AudioScheduledSourceNode,['start']]]){
@@ -47,6 +54,7 @@ export default async function(t) {
     for(let j=0;j<Number(t.args.steps||60);j++) {await t.page.mouse.move(b.x+b.width/2-160*Math.sin(j/(Number(t.args.steps||60)-1)*Math.PI),b.y+b.height/2);await t.page.waitForTimeout(16);if(j===Math.floor(Number(t.args.steps||60)/2)){if(t.args.debug)metrics.push({dragDebug:await f.evaluate(()=>({pages:[...document.querySelectorAll('.page.active')].map(e=>({id:e.id,cls:e.className})),home:document.querySelector('#panel-dashboard')?.className,writes:window.__widthWrites,body:document.body.className,frozen:PMW.narrow.frozen}))});const x=(await f.locator('#chatPanel').boundingBox()).x;await t.check('chat edge follows pointer',Math.abs(x-(edge-160*Math.sin(j/(Number(t.args.steps||60)-1)*Math.PI)))<=1,JSON.stringify({actual:x,start:edge,expected:edge-160*Math.sin(j/(Number(t.args.steps||60)-1)*Math.PI),state:await f.evaluate(()=>({inline:document.querySelector('#chatPanel').style.cssText,centre:document.querySelector('#pmw-centre')?.clientWidth,pmw:PMW.narrow.state,evt:window.__dragEvents.slice(-2),writes:window.__widthWrites?.slice(-3)}))}));}}
     t.log(JSON.stringify(await f.evaluate(()=>({inline:document.querySelector('#chatPanel').style.getPropertyValue('--pmw-chat-w'),width:document.querySelector('#chatPanel').getBoundingClientRect().width,events:window.__dragEvents.slice(-3)}))));
     await f.evaluate(()=>{window.__perfSample.movingEnd=performance.now()});
+    if(t.args.stripProbe){const reads=await f.evaluate(()=>window.__stripReads);await t.check('strip target fits reuse cached geometry during drag',reads.length===0,JSON.stringify(reads.slice(0,2)));}
     await t.check('drag remains admitted after moving',await f.evaluate(()=>document.body.classList.contains('pm-resizing')));
     await t.page.waitForTimeout(Number(t.args.hold||3000)); await t.page.mouse.up();
    },400);
