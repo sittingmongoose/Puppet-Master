@@ -1,4 +1,82 @@
-# DCH — Event Authority wave 2, review round 2
+# DCH-APPLY — card 2b A / DL-406, 2026-11-04
+
+Branch: `plans/ea-w2-chat-20261104`. Inspected head: `bdc257cc0852fdd094570f2d8390216a4487821c`. This is a report-only condition audit; all owner, schema, fixture, checker, registry and derived content stays at that head.
+
+**Outcome: Stop is blocked on Jared; nothing for Stop is prepared or retired.** No existing authoritative chat run or turn record, with existing fields, can be named for cancellation-versus-timeout and its outcome time. Seventeen previously prepared families retain their self-grades (10 PASS / 1 PARTIAL retention / 1 ABSENT membership). Stop's separate twelve-cell assessment is **0 PASS / 5 PARTIAL / 7 ABSENT**, UNDISPOSITIONED, not prepared, unregistered; native execution NOT_RUN.
+
+## Exact question for Jared
+
+Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop.
+
+## Current-source evidence and DL-406 premise check
+
+Card 2b A is read from `decision-answers/E-CARDS-1.as-presented-578a6774.md`, SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`. DL-406 is read from `origin/plans/ea-cards1-answers-20261104` at `b6332f391a7870bad5f01a29a7e9d080050dac27`, `Plans/Decision_Log.md:4566` and its PlanUnit at `:5176`. It explicitly requires an existing record and outcome fields before retirement; if none can be named, return to Jared. No Decision Log bytes are imported or edited. The approved action is accepted; its existing-record condition fails on today's inspected canon.
+
+| Candidate / owner | Current finding |
+|---|---|
+| Chat section 4, `Plans/assistant-chat-design.md:275` | Names all three `chat_run.*` records and `cancel_grace_ms = 3000`, then a saved outcome before queued messages may advance. It names no durable run/turn record or outcome fields. These exact bytes remain unchanged. |
+| Streaming reply ACD-470, `Plans/assistant-chat-design.md:26479` | Terminal reply states are `complete`, `stopped`, `steered`, `error`; the partial transcript is for display (`:26483`). `stopped` records that the user pressed Stop, without distinguishing cancellation completion versus timeout or naming an outcome timestamp. It cannot be used as proof of cancellation success. |
+| Queue ACD-471, `Plans/assistant-chat-design.md:26556` | After Stop or error, the queue waits for a user Send / Send now / Edit / Remove; no automatic advance. This stricter existing rule and the saved-outcome barrier are preserved together. |
+| Run baseline, `Plans/storage-plan.md:596`, `:16966`; `Plans/storage_value_registry.json:7591` | `run:<run_id>` is a retired compatibility alias. The row's only required field is `schema_version`; optional fields are `created_at_utc`, `updated_at_utc`. Its value schema is deferred; replay is explicitly migration-read-only (`:7615`). No cancellation outcome field exists, and `updated_at_utc` alone cannot preserve that outcome. Writes to aliases are forbidden (`Plans/storage-plan.md:16968`). |
+| Attempt / thread inventories, `Plans/storage_value_registry.json:7851` and `worktree_lane_thread_families` | Deferred Executor attempt identity and thread/worktree/persona binding inventory; no chat stop-outcome fields. Neither provides an existing writable chat run/turn outcome record. |
+| Focused thread detail, `Plans/shared_runtime_contracts.schema.json:1208`; `Plans/storage_value_registry.json:29156` | Closed derived projection: state is `cached`, `synchronizing`, `replaying`, `current`, `stale`, `failed`. Its timestamp is projection update time. Registry expressly forbids treating the projection as authority (`:29196`). Transcript refs do not create the missing original outcome. |
+| Outbox, `Plans/shared_runtime_contracts.schema.json:1006`; `Plans/storage_value_registry.json:27895` | `state`, `terminal_reason_ref`, `terminal_at_utc` describe command delivery, not the model/tool/subagent stop result on a run/turn record. `cancelled` is an outbox state; `expired` / `terminal_unknown` cannot silently mean the 3-second cancellation timeout. Reclassifying it would violate the approved record condition. |
+| ObservableWork, `Plans/full_thread_runtime_contracts.schema.json:728` and registry `observable_work_projection` | Current object is a projection with `work_state`, `result_receipt_ref`, `error_ref`, `observed_at`; no authoritative chat stop-outcome/time fields. Its old physical row is migration/import-only. A derived status cannot replace the missing original. |
+| Executor run control, `Plans/storage_value_registry.json:108591` | Key binds storage instance / Project / Goal / Goal run. It is not an ordinary chat run/turn record; adopting it would invent a Goal binding and cannot cover ordinary or application chat turns. |
+| Stop catalog, `Plans/UI_Command_Catalog.md:8581` | `cmd.chat.stop` accepts `thread_id`, optional `run_id` / `assistant_turn_id`, `stop_reason_code`, `idempotency_key`; result has optional `stopped_ref` and `resumable`. It names `chat.response_stop_requested`, but neither defines the referenced outcome record nor its fields. |
+
+Search scope: the complete chat and Storage owners and storage value registry; chat, shared runtime, current Full Thread, runtime expansion and native Executor control schemas; the Stop catalog; a live Plans-wide exact-name/field search excluding generated shards/indexes, ledgers, migration/evidence outputs and copied historical workflow inputs. The receipt records all eight candidate registry rows, exact field rosters, five schema inventories, the command and its four hits, and SHA-256 pins for every primary owner/schema inspected. No sibling contract is borrowed. No new technical binding, record, field, feature, retention/deletion choice, ID, or owner conflict resolution is authored.
+
+## Checks and scope
+
+**Owner passages changed: none.** `chat_run.cancel_requested`, `chat_run.cancelled`, `chat_run.cancel_timeout`, the catalog request spelling, the 3-second wait and both queue constraints remain byte-identical. No registry append, admission, validator/checker edit, Spec Lock, `.evidence`, `.gitignore`, `auto_decisions.jsonl`, Decision Log, landing lock or `main` push. No pm-mail, subagents or test edits. Initial capacity: 109 GB disk free, 19 GB available RAM, above the 50 GB / 6 GB limits. The absent requested worktree was recreated detached/sparse at the supplied head from the local clone, after fetching origin.
+
+Fifteen ignored currentness-edition files were copied from the shared checkout and SHA-256 matched before generation. Shard regeneration changed no bytes. Index regeneration changed only `generated_at_utc` in four aggregate reports; normalized objects were identical and those self-generated timestamp-only diffs were discarded. No document-specific derived file changed. All source and derived content remains at the inspected head. The pushed worktree is removed at completion.
+
+| Check | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm_dch_events.py` | 0 | 6,012 checks, 17 prepared families, no failures; Stop is not covered or prepared. |
+| All eight standing checks | 0 | Fresh full-suite run: replay-only append/retry refusal; exact CV-366 application keys; encoded Project partitions; SP-337 payload size/reference path; exact-end regex/LF negatives; producer-only semantic retry; checkpoint/source joins; actual failure exit-code rejection. All 17 family counters match the recorded evidence. No Stop pass is claimed. |
+| `pm-shard-plans.py --generate` / `--check` | 0 / 0 | Regeneration and shard/path verification passed, no shard changes. |
+| `pm-plan-index.py generate` / `validate` | 0 / 0 | Both parsed top-level statuses: generate=pass, validate=pass. |
+| Schema audit | 0 | 34 closed payload/checkpoint schema documents validated. |
+| Grade/citation audit | 0 | 18 rows, 216 cells, 374 exact citations; Stop is graded blocked/unprepared. |
+| Scope / derived-content audit | 0 | All source, protected and derived content identical; no new IDs. |
+| `pm-storage-profile-check.py` | 1 | Byte-identical round-2 baseline, 41 pre-existing errors. |
+| `pm-assistant-contract-check.py` | 1 | JSON exactly equals round-2 baseline, status `gaps_found`. |
+| `git diff --check` | 0 | Pass. |
+
+No new broader failure is introduced; no aggregate governance/native pass is claimed. This conditional task's remaining item is Jared's answer to the exact record question. Retention assignment, independent review and family admission for the original seventeen remain separate integration work.
+
+## Apply-2b evidence
+
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/apply-2b/`. Report, self-grade and check summary are also copied to the parent DCH draft directory. All pins below are SHA-256; logs and structured search receipts are retained because this report cites them.
+
+| Evidence | SHA-256 |
+|---|---|
+| `QUESTION.md` | `2080266ecf7aabda0699a50a383a95984d4063faa44522d4e07713257612a925` |
+| `DL-406.as-read.md` | `53434e4a2b34c1683840669e9bf9d3f4be827f193a3193f58b88966f39cd9850` |
+| `stop-record-search.json` | `753ac840e836ca7d98a64f1379a7117042310fd0c694cb632a49da38d0613028` |
+| `stop-record-search.log` | `259e103c2786ee780127eaa2b79c4006cc2960801bb0234e3029657ba644a9bb` |
+| `currentness-sha256.json` | `c79bd5656ad4f994a7b47fe9e534b0dac085e530b38eceb5d7cceb80b69e9e3d` |
+| `dch-static.json` | `9ba6198821b7671c7e21e0e1b36bf776baecb56c64570993351a18557b4aaebe` |
+| `standing-checks.json` | `200f7c88f294616e4533cd7e0f90200533406164ed6308117d36b917f9b8dee7` |
+| `shard-generate.log` | `a860c43269caab92d401c4ed0955268da735a36aee6a0f1d26608e7f426ade81` |
+| `shard-check.log` | `6749d1671ce42bb36b5a4b623875e0db779efaf197186095421986d7d5490039` |
+| `index-generate.json` | `37329fc1cf0abb5247e108a730befb26d7bdebf81213879729e171a7d52e665b` |
+| `index-validate.json` | `9cf97f52f4c33b5783ddb4d5bbd1adc4a8af81ca8852864a859e37138fffe54a` |
+| `schema-check.json` | `a6615af61412c4cbef0f504acf081e546172457e028dc1d562cb4e02cb547ec3` |
+| `grade-citation-check.json` | `20081a4c0c64003dece089f34be8b8937905268e000c1a9e546434bf1184e030` |
+| `scope-integrity.json` | `55ed67531f80466d523feb66f18054585d45c2923b5290238fd65aad804f3bfe` |
+| `derived-scope.json` | `2d732dab92f476b62d0ff897cc02968d3097a9108fa6ac3c202b747d03258ae9` |
+| `base-comparison.json` | `ad9f4374691f5fe6a1d41014e1d31d5c1e61aa6d2c83aae90d898f29a2ac1ac9` |
+| `storage-profile.log` | `61b57de32ef976006a497d80df135d0ecd3a6841e3efb447572a6c3e3543c8e2` |
+| `assistant-contract.log` | `f991664b790faccb2674235e82f79c764c72b1df96432ae8e9307eaa01b80220` |
+| `exit-codes.json` | `3dbea088b15f4958840c47be0cf94840a2d0eccf32b41ef414642fe460d732f7` |
+
+---
+
+# Prior DCH round 2 record (unchanged contract history)
 
 Branch: `plans/ea-w2-chat-20261104`. Astra-reviewed head: `b3b8f054e169dc929789a4db9857885f7a2cf28c`. Fix contract commit: `1ef01512c78701cd9aae1b0d877115f2d80e0e4c`. The following report-only commit preserves those assessed contract bytes.
 

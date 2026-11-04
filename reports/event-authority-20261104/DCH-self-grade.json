@@ -19,12 +19,12 @@
     ]
   },
   "native_execution": "NOT_RUN",
-  "assessment_id": "EA-W2-DCH-FIX2-SELF-20261104",
+  "assessment_id": "EA-W2-DCH-APPLY-2B-SELF-20261104",
   "assessed_tree": {
     "branch": "plans/ea-w2-chat-20261104",
-    "commit": "1ef01512c78701cd9aae1b0d877115f2d80e0e4c",
+    "commit": "bdc257cc0852fdd094570f2d8390216a4487821c",
     "reviewed_head": "b3b8f054e169dc929789a4db9857885f7a2cf28c",
-    "final_edition": "Assessment of this contract commit; a following report-only commit preserves all assessed owner/schema/fixture/checker bytes."
+    "final_edition": "Report-only DL-406 condition audit. All assessed owner/schema/fixture/checker bytes remain exactly at this commit; no Stop contract is authored."
   },
   "rows": [
     {
@@ -5863,6 +5863,248 @@
         "PASS": 9,
         "PARTIAL": 2
       }
+    },
+    {
+      "event_type": "chat.response_stop_requested",
+      "family_id": null,
+      "family_revision": null,
+      "outcome": "blocked_on_jared",
+      "disposition": "UNDISPOSITIONED",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "section 4",
+          "line_start": 275,
+          "line_end": 275,
+          "quote": "waits up to `cancel_grace_ms = 3000`"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "unit": "#/families/run_record_legacy_baseline",
+          "line_start": 7615,
+          "line_end": 7615,
+          "quote": "Migration-read only until a current run-record owner materializes a v1 value schema."
+        }
+      ],
+      "current_owner_units": [
+        "section 4",
+        "ACD-470",
+        "ACD-471",
+        "catalog Stop command"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No Stop row is registered and no family revision/schema is prepared.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Stop command contract",
+              "line_start": 8581,
+              "line_end": 8581,
+              "quote": "`chat.response_stop_requested`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "owner_doc": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Section 4 and the catalog describe Stop under different event names; DL-406 retirement remains conditional on a missing record binding.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "section 4",
+              "line_start": 275,
+              "line_end": 275,
+              "quote": "waits up to `cancel_grace_ms = 3000`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "The Stop handler and cancellation wait are specified, but no complete exact-family append/receipt contract is prepared.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "section 4",
+              "line_start": 275,
+              "line_end": 275,
+              "quote": "waits up to `cancel_grace_ms = 3000`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No closed Stop event payload schema is prepared; command arguments do not constitute an EventRecord schema.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Stop command contract",
+              "line_start": 8581,
+              "line_end": 8581,
+              "quote": "`chat.response_stop_requested`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "The catalog lists thread_id, optional run_id and assistant_turn_id; exact event scope joins and identity recipe remain undefined.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Stop command contract",
+              "line_start": 8581,
+              "line_end": 8581,
+              "quote": "`chat.response_stop_requested`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "replay_idempotency": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "The command lists idempotency_key; it has no exact Stop event dedupe/replay and original-result custody contract.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Stop command contract",
+              "line_start": 8581,
+              "line_end": 8581,
+              "quote": "`chat.response_stop_requested`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "retention": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No exact Stop family/record retention assignment is authored in this conditional task.",
+          "evidence": [
+            {
+              "path": "Plans/storage_value_registry.json",
+              "unit": "#/families/run_record_legacy_baseline",
+              "line_start": 7615,
+              "line_end": 7615,
+              "quote": "Migration-read only until a current run-record owner materializes a v1 value schema."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "redaction_custody": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No authoritative chat run/turn stop-outcome custody binding exists; the legacy run row is migration-read only.",
+          "evidence": [
+            {
+              "path": "Plans/storage_value_registry.json",
+              "unit": "#/families/run_record_legacy_baseline",
+              "line_start": 7615,
+              "line_end": 7615,
+              "quote": "Migration-read only until a current run-record owner materializes a v1 value schema."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Section 4 keeps the 3000 ms wait and saved-outcome barrier; ACD-470 partial transcript terminal states do not distinguish cancellation completion from timeout.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-470",
+              "line_start": 26479,
+              "line_end": 26479,
+              "quote": "A reply ends in exactly one terminal state: complete; stopped, when the user pressed Stop, which"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No exact Stop consumer/projector/checkpoint is prepared; no sibling adoption is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Stop command contract",
+              "line_start": 8581,
+              "line_end": 8581,
+              "quote": "`chat.response_stop_requested`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "The three chat_run spellings are unchanged; DL-406 forbids their retirement until a usable existing record and fields are named.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "section 4",
+              "line_start": 275,
+              "line_end": 275,
+              "quote": "waits up to `cancel_grace_ms = 3000`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No Stop fixtures/oracles are prepared; the seventeen-family lane suite does not cover or admit Stop.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Stop command contract",
+              "line_start": 8581,
+              "line_end": 8581,
+              "quote": "`chat.response_stop_requested`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First Stop-specific assessment after card 2b A; no implementation bindings are authorized while the existing-record condition is unmet."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_dch_events.py covers only the existing seventeen prepared families; Stop is not included."
+      ],
+      "notes": "0 PASS / 5 PARTIAL / 7 ABSENT. The DL-406 record condition is unmet. This row is a blocker assessment, not a prepared family or admission. No IDs minted."
     }
   ],
   "review_round": 2,
@@ -5880,5 +6122,16 @@
     "independent_re_review": "PENDING",
     "all_standing_checks": "PASS across all seventeen families",
     "full_checker_checks": 6012
+  },
+  "apply_2b": {
+    "decision": "DL-406 / 2b A",
+    "condition": "UNMET",
+    "question": "Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop.",
+    "stop_grade": "0 PASS / 5 PARTIAL / 7 ABSENT",
+    "prepared_families": 17,
+    "stopped_families": 1,
+    "owner_passages_changed": [],
+    "new_ids": [],
+    "search_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/apply-2b/stop-record-search.json"
   }
 }
