@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L5762-L6069
+Source lines: L5782-L6089
 
-Source SHA256: `328030c2670761871b6898ab1d66211f4d376308d4ea5b132a87582d68a70dc0`
+Source SHA256: `83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948`
 
 ---
 

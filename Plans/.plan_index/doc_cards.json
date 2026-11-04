@@ -4210,6 +4210,7 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/newtools.md",
         "Plans/orchestrator-subagent-integration.md",
+        "Plans/settings_inventory.json",
         "Plans/storage-plan.md",
         "Plans/wsl_execution_contract_fixtures.json",
         "Plans/wsl_execution_contracts.schema.json",
@@ -4221,7 +4222,7 @@
         "future RuntimeHostFamilyProfile and Kubernetes capability probes",
         "future RuntimeHostFamilyProfile capability and governor consumers"
       ],
-      "line_count": 6956,
+      "line_count": 6976,
       "path": "Plans/Containers_Registry_and_Unraid.md",
       "plan_unit_count": 104,
       "plan_unit_ids": [
@@ -4435,7 +4436,7 @@
         "unsafe_url_guess",
         "xml_shape_drift"
       ],
-      "sha256": "328030c2670761871b6898ab1d66211f4d376308d4ea5b132a87582d68a70dc0",
+      "sha256": "83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 104
@@ -21535,7 +21536,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T21:57:41Z",
+  "generated_at_utc": "2026-11-04T23:02:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

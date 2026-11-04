@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L975-L5760
+Source lines: L975-L5780
 
-Source SHA256: `328030c2670761871b6898ab1d66211f4d376308d4ea5b132a87582d68a70dc0`
+Source SHA256: `83d52b9829ddf4e27e648894a87b3945fe97a4e8ce9249be5cbb9f5d92c95948`
 
 ---
 
@@ -1680,7 +1680,19 @@ canonical_text: >-
   needed for first publish; Docker CLI and Buildx own local build, run, login,
   and push behavior, Docker Hub API owns app-managed namespace/repository
   discovery and creation, and image registry push is not conflated with template
-  distribution.
+  distribution. The code.execution.dockerhub-repository setting (Publish to)
+  uses owner-sourced options: its repository choices come only from this Docker
+  registry owner's discovered repositories for the selected account and
+  namespace. Refresh and account/namespace changes update that scoped choice
+  set without carrying repository choices over from another account/namespace.
+  Plans/settings_inventory.json contributes only custom… (Other…) for manual
+  entry, with no unconditional repository-name preset. An empty discovery result
+  offers only Other…; a repository named puppet-master may appear when returned
+  by the owner for the selected account/namespace or typed by the user. Manual
+  entry accepts a repository name outside the discovered list for existing owner
+  validation; discovery, selection, and typing do not create a repository or
+  authorize a push. Existing capability gates, target validation, and protected
+  creation/push authority remain with their current owners.
 gui_related: true
 gui_classification_reason: Repository discovery, selectors, refresh, existing-repository choice, and create action are visible repository-management controls.
 split_recommended: false
@@ -1691,6 +1703,10 @@ acceptance_criteria:
   - Docker CLI and Buildx handle local build, run, login, and push behavior.
   - Docker Hub API handles namespace/repository discovery and repository creation when app-managed listing/creation is needed.
   - Image registry push is not conflated with template distribution.
+  - The code.execution.dockerhub-repository inventory row retains only custom… in options, labelled Other…, with its existing empty default and Project layering unchanged.
+  - With only service-api returned for the selected account/namespace, choices are service-api and Other…; no fixed repository name is added. The name in this case is example input, not a preset.
+  - With an empty repository result, only Other… is offered; typing release-image still reaches the existing owner validation without requiring any fixed repository name or bypassing creation/push gates. The typed name is example input, not a preset.
+  - Refresh and switching the selected account or namespace replace discovered choices with that owner's scoped result; a real returned puppet-master repository is handled like any other repository.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1700,6 +1716,7 @@ context_scope: dockerhub_repository_selection_api_boundary
 implementation_surfaces:
   - Plans/Containers_Registry_and_Unraid.md
   - Plans/newtools.md
+  - Plans/settings_inventory.json
 node_compile_hint:
   mode: repository_management_contract
   create_worknodes: false
@@ -1709,6 +1726,9 @@ preserved_exact_tokens:
   - "DockerHub API behavior"
   - "Docker CLI / Buildx"
   - "Docker Hub API"
+  - "code.execution.dockerhub-repository"
+  - "custom…"
+  - "Other…"
 negative_constraints:
   - "Image registry push must not be conflated with template distribution."
 owner_hints:
