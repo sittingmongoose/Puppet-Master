@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "storage_instance_id",
+    "project_id",
+    "operation_digest",
+    "event_id",
+    "idempotency_key",
+    "request_digest",
+    "state",
+    "payload",
+    "owner_commit_ref",
+    "result_ref",
+    "dispatch_receipt_ref",
+    "original_append_result_ref",
+    "prior_owner_state",
+    "candidate_owner_state"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.storage_value.alert_rule_muted_operation.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "storage_instance_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operation_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_digest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "prepared",
+        "committed",
+        "settled"
+      ]
+    },
+    "payload": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "Static payload shape only. The owner/runtime must prove the rule revision is current, result_revision is its successor, and any expiry is applied by policy. This schema grants no append or dispatch authority.",
+      "title": "alert.rule_muted payload",
+      "description": "Closed project-scoped payload for muting one alert rule, distinct from dismissing a single alert occurrence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "alert_rule_id",
+        "alert_rule_ref",
+        "actor_ref",
+        "prior_revision",
+        "result_revision",
+        "currentness_basis_ref",
+        "prior_mute_state",
+        "result_mute_state",
+        "mute_scope",
+        "mute_reason_code",
+        "origin",
+        "handler_target",
+        "command_id",
+        "correlation_id",
+        "idempotency_key",
+        "ts"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.attention_event.alert_rule_muted.schema.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "alert_rule_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "alert_rule_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "prior_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "result_revision": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "currentness_basis_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "prior_mute_state": {
+          "enum": [
+            "unmuted",
+            "expired"
+          ]
+        },
+        "result_mute_state": {
+          "const": "muted"
+        },
+        "mute_scope": {
+          "const": "project"
+        },
+        "mute_reason_code": {
+          "$ref": "#/$defs/payload_reason_code"
+        },
+        "mute_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "origin": {
+          "$ref": "#/$defs/payload_origin"
+        },
+        "handler_target": {
+          "const": "handlers::alert::mute_rule"
+        },
+        "command_id": {
+          "const": "cmd.alert.mute_rule"
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "owner_commit_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "result_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dispatch_receipt_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "original_append_result_ref": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "prior_owner_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "alert_rule_id",
+        "revision",
+        "source_record_ref",
+        "root_cause_ref",
+        "mute_state",
+        "mute_expires_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.shared_alert_rule_state.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alert_rule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_cause_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mute_state": {
+          "enum": [
+            "unmuted",
+            "muted",
+            "expired"
+          ]
+        },
+        "mute_expires_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "candidate_owner_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "alert_rule_id",
+        "revision",
+        "source_record_ref",
+        "root_cause_ref",
+        "mute_state",
+        "mute_expires_at"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.shared_alert_rule_state.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alert_rule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_record_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_cause_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mute_state": {
+          "enum": [
+            "unmuted",
+            "muted",
+            "expired"
+          ]
+        },
+        "mute_expires_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "$defs": {
+    "payload_non_empty_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "payload_non_secret_ref": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 320,
+      "pattern": "^pmref:[a-z][a-z0-9_.-]{0,63}:[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "payload_reason_code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "payload_origin": {
+      "enum": [
+        "orchestrator",
+        "attention_center",
+        "dashboard",
+        "notification_center",
+        "api"
+      ]
+    },
+    "payload_ref_array": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_secret_ref"
+      },
+      "maxItems": 32,
+      "uniqueItems": true
+    }
+  },
+  "$id": "pm.storage_value.alert_rule_muted_operation.v1",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "prepared"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "null"
+          },
+          "result_ref": {
+            "type": "null"
+          },
+          "dispatch_receipt_ref": {
+            "type": "null"
+          },
+          "original_append_result_ref": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "committed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dispatch_receipt_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "original_append_result_ref": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "settled"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "owner_commit_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dispatch_receipt_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "original_append_result_ref": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
+}

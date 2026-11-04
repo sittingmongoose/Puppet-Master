@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32260-L32916
+Source lines: L32431-L33087
 
-Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
+Source SHA256: `d52da0f27c4c122cbfcd1ec6c7b5d605f6a18b4bb0bcb3802884a20abfd7cf81`
 
 ---
 
@@ -85,14 +85,15 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover
-  targets: their shared presentation role enrolls them in the F3-465 merged hover system, which owns their whole hover look and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
+  targets: the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look
+  and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
   border and glow) are retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or
   glow of its own. Hover is driven by event delegation from a shared pointer handler and executed through
   compositor-friendly writes rather than per-frame style writes. Amended 2026-10-16 (SSYS-054/SP-333): the
   former glass depth background mode and its pointer parallax obligation are retired compatibility/source
   lineage; no current Wallpaper selection enables that old mode or revives its sampler. All active
   document-level pointer-move work, including the F3-465 hover driver, remains merged into a single shared
-  document pointer-move handler that every consumer hooks into rather
+  document pointer-move handler (`window.PM7_PMOVE` in the concept) that every consumer hooks into rather
   than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
   sets the active hover's reduced-motion form.
 gui_related: true
@@ -150,7 +151,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: 'All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency
-  levels share this staging owner: Quiet confirmations last 3.4s and leave no alert-store entry; Notice lasts 3.4 s,
+  levels share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice lasts 3.4 s,
   Attention 5.2 s and Blocking 6.8 s before joining F3-453''s lasting inbox. Reading timers are not shortened by Animation
   speed; hovering any toast or focusing within one holds every staged timer, with a visible remaining-time line. Newest
   is on top and at most five stage together; overflow retires the oldest quiet notice or moves the oldest lasting notice
@@ -164,12 +165,12 @@ canonical_text: 'All staged notices appear beneath the title-bar bell/stack on e
   prompt may arrive again. Tour page notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier
   Jared #19 control-clearance rule: on every page the notice stage hangs tight below the title bar at the bell. The first
   card starts at the theme selector menu''s resting top while the inbox is closed, not at a fixed distance below the
-  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to the resting bottom of the theme selector control plus the shared 6 px menu gap; selector
+  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to #themeMenuWrap''s bottom plus MENU_GAP (6 px); selector
   height varies by look, so title-bar-bottom plus 6 px is not equivalent. Placement may lift the stage with a negative
   drop to match the resting top. If no selector is drawn, preserve the title-bar-based nonnegative-drop fallback. Native
   components use equivalent owner geometry, not a new persisted DOM or placement field. Home panel strips and the chat
   head add no vertical clearance or page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared''s
-  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the shared inbox owner’s measured stage offset;
+  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset;
   the inbox itself hangs from the bell. This open-inbox state exception is the lead''s interpretation, separate from
   Jared''s quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar
   geometry changes recompute the bell anchor, never reuse another page''s coordinates. The stage remains inside the viewport;
@@ -198,7 +199,7 @@ canonical_text: 'All staged notices appear beneath the title-bar bell/stack on e
   (A4, D9, G10; PM7): D9 Notify me uses the alert owner once per item with coalescing; no view-local notification store.
   OS Pip faces follow A4; new OS badge/flow implementation is deferred under G10 and later reads the shared needs-you
   projection. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell
-  inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
+  inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
   resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
@@ -229,11 +230,11 @@ acceptance_criteria:
   placement/removal instantly; pending placement is still guarded. Settled cards keep their existing source/owner actions
   and read semantics.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "scripts/pm-plan-migration.py"
-- "scripts/pm-plan-index.py"
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -243,7 +244,6 @@ node_compile_hint:
   mode: toast_stack_contract
   create_worknodes: false
 source_lineage:
-- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Plans/FinalGUISpec.md:1484
 - Plans/FinalGUISpec.md:1918
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)

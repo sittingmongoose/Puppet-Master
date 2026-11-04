@@ -24483,3 +24483,172 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+### CV-680 - alert.acknowledged exact payload and storage route
+
+```yaml
+plan_unit_id: CV-680
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.acknowledged 1.0.0 uses only Plans/event_payloads/attention/alert_acknowledged.schema.json,
+  schema id pm.attention_event.alert_acknowledged.schema.v1. Root and nested field closure, required fields and
+  enums are binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original
+  retry, SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-660;
+  Plans/FinalGUISpec.md#F3-700 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-681 - alert.dismissed exact payload and storage route
+
+```yaml
+plan_unit_id: CV-681
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.dismissed 1.0.0 uses only Plans/event_payloads/attention/alert_dismissed.schema.json, schema
+  id pm.attention_event.alert_dismissed.schema.v1. Root and nested field closure, required fields and enums are
+  binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry,
+  SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-661;
+  Plans/FinalGUISpec.md#F3-701 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-682 - alert.rule_muted exact payload and storage route
+
+```yaml
+plan_unit_id: CV-682
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.rule_muted 1.0.0 uses only Plans/event_payloads/attention/alert_rule_muted.schema.json, schema
+  id pm.attention_event.alert_rule_muted.schema.v1. Root and nested field closure, required fields and enums are
+  binding. Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry,
+  SP-286/CV-339 full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-662;
+  Plans/FinalGUISpec.md#F3-702 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### CV-683 - alert.snoozed exact payload and storage route
+
+```yaml
+plan_unit_id: CV-683
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: alert.snoozed 1.0.0 uses only Plans/event_payloads/attention/alert_snoozed.schema.json, schema id
+  pm.attention_event.alert_snoozed.schema.v1. Root and nested field closure, required fields and enums are binding.
+  Semantic currentness, Project/actor/identity joins, result revision succession, exact original retry, SP-286/CV-339
+  full-value custody, SP-278/DL-076 history and withdrawal are individually specified in Plans/storage-plan.md#SP-663;
+  Plans/FinalGUISpec.md#F3-703 owns the visible action. These routes grant no admission; retention_policy_ref PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```

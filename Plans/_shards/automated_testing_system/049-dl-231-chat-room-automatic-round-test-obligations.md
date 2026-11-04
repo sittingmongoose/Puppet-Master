@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7236
+Source lines: L6715-L7399
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `52de2dc3bb45db9a285627ef81c7b3cb4151048e6b8c09beda8429ca82ae3d55`
 
 ---
 
@@ -116,13 +116,13 @@ unit_type: acceptance_gate
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
 canonical_text: |-
-  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use their final canonical IDs in Plans/settings_inventory.json; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
+  Acceptance checks every live inventory row against SSYS-059's reviewed classification, offered-level/key/combine/atomic/not_offered contract and the actual census. Seven approved additions use the final F-d/A/D spelling map; 1010 is only the starting count, 12 categories and 38 managers remain. Test host paths versus Project-relative paths, no Computer+Device combination, declared scalar careful_order versus per_item maps, custom profile fallback, Computer ceilings, Managed limits, atomic theme_pair and Reduce motion plus OS. An Everywhere default may be loosened only where the owners allow it; a Computer safety answer/cap and parent mandatory ceiling still hold.
 
   Test the single writer/home/mirror and per-setting CAS: independent edits succeed, same-setting/stale preview fails, offline writes queue nothing, join shows alternatives and supports 30-day Undo, home transfer requires old-writer fencing, and same raw IDs from different key domains never collide. Stale indexes disclose as-of rather than fabricating Varies. No credential/content leakage in mirrors/index/history/events/exports. Q5 keeps general.interaction.thread-archive-days zero as non-offered compatibility only, never an auto-archive offer. Retired Goal worker/verifier rows stay non-offered pending their explicit owner retirement. The five already missing branching.plan/deep-plan subgroup declarations are reported as a pre-existing census defect, not repaired by inventing another category or silently changing the denominator. Human origin edits, agent narrowest/mode handling and protected Always/source acceptance remain distinct.
 
   Detached own_values/effective_values copy tests exact disjoint selectors, owner things/readback/eligible compensation, chosen account readiness and no install/trust/keys/paths/live-body transfer. New-registry draft rebind/listing and Later/connect-only exclusions use real owner joins. Same-Computer unchosen account never reuses sign-in. App auth keeps protected pre-identity and exact Client/Host/return.
 
-  Model acceptance uses Plans/Models_System.md's accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
+  Model acceptance uses A's lead-accepted scoped-owner chain and explicit tier edition: explicit, scoped owner, Persona, surface/stage, Project own, Computer own, Everywhere/factory, permitted last-used, provider. Standard uses 1–7, Aggressive 1–9, Conservative 1,2,5,6,7,9, explicitly excluding Persona and stage. Preserve historical audit tiers/bytes, account/capability clamps and owner merge semantics; no new model router follows.
 gui_related: false
 gui_classification_reason: This unit defines decision history, vocabulary, owner boundaries or data-contract acceptance,
   not visual implementation.
@@ -136,10 +136,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -203,11 +203,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-assistant-contract-check.py
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -276,11 +275,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-assistant-contract-check.py
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -344,11 +342,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plans-verify.py
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -413,11 +410,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plans-verify.py
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -474,7 +470,7 @@ canonical_text: |-
 
   Scenario evidence covers all changed Settings rows/panel/managers/copy; Split Projects/New Project and owner recovery; No project/draft/folder/Computer/offline; explicit read coverage/incoming requests; both conversions/report/Undo; app Goal/Crew/Plan/Deep Plan/Build At/Schedule Manager/pause; grant review/live targets/Stop/Undo; and allowed computer-use strip/Stop. Check all ten look variants, effective Reduced Motion, narrow/long-content reflow, accessible labels/reasons, keyboard/pointer equivalence, stale/late returns and stable focus. Keep the one Assistant node, board/rail/menu/hover/overlay/sound/loader owners, all PM7 Glass/FO-22/service-refusal rules and native source/composer capture-return fences. Cached/partial/offline/unknown data never presents healthy/zero/none or completed effects.
 
-  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Run the adopted static contract, Settings, wiring and touch checks against the current owner and companion editions; these checks provide no new runtime proof, and no raw capture, baseline excuse or governance reseal is introduced here.
+  Report exact card/register row → owner unit → companion → command/touch → check/evidence mapping, plus each omitted/not_run/native gap. TCME-007 owns exact subject/configuration/artifact hashes, delivered frames, review findings/repair/replacement and raw/derived distinction. Static schema/semantic fixtures, source checks, browser concept review, native runtime/custody, rendering/motion, actual providers/media/WAN/hardware and assistive technology have separate verdicts. A passing contract or concept never proves native handler/Event Authority/readiness. Phase 2 runs focused checks after interface/companion freeze, serial derived-file generation and authorized full-tree aggregates; no raw capture, baseline excuse or governance reseal is introduced here.
 gui_related: true
 gui_classification_reason: This unit governs visible controls, context, feedback, accessibility or visual acceptance.
 depends_on:
@@ -492,14 +488,10 @@ acceptance_criteria:
   fixtures unchanged.
 - Coverage reports distinguish missing/blocked/not_run and static/concept/native evidence instead of treating omitted
   scenarios as pass.
-- Run the adopted static contract checks against the current owner and companion editions;
-  no new runtime proof follows from these checks.
+- All code changes and repository checks are phase-2 work after the actual PM7 landing and owner/interface freeze;
+  no new runtime proof follows here.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-settings-layering-check.py
-- scripts/pm-plans-verify.py
-- scripts/pm7-build-check.py
-- scripts/pm7-canon-check.py
+- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
 risk_class: missing_scope_semantics_or_false_certification
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -532,3 +524,172 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-330 - alert.acknowledged contract oracles
+
+```yaml
+plan_unit_id: ATS-330
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.acknowledged is checked independently by python3 scripts/pm-alert-event-contracts-check.py
+  with Plans/alert_event_contracts/alert_acknowledged.fixtures.json. Positive closed payload/current successor and
+  negative added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered
+  retry payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain
+  NOT_RUN and must prove every SP-660 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-331 - alert.dismissed contract oracles
+
+```yaml
+plan_unit_id: ATS-331
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.dismissed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_dismissed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-661 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-332 - alert.rule_muted contract oracles
+
+```yaml
+plan_unit_id: ATS-332
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.rule_muted is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_rule_muted.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-662 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-333 - alert.snoozed contract oracles
+
+```yaml
+plan_unit_id: ATS-333
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.snoozed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_snoozed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-663 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```

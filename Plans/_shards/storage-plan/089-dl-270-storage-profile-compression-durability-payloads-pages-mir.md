@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28166-L29587
+Source lines: L28057-L29946
 
-Source SHA256: `46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e`
+Source SHA256: `7c22390842745638f5fc5b12cfa099b25239ac08bcbab99448fcbe92386afc69`
 
 ---
 
@@ -909,8 +909,8 @@ acceptance_criteria:
 - Sparse row/head/snapshot/mirror/index storage has one value authority and same-key revision maps.
 - Join Undo/backup/retention is explicit and contains no secrets or offline writes.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -962,7 +962,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: |-
   Application work uses the same seglog, two redb files, payload packs, render pages/index engines and storage lock/maintenance/backup owners as Project counterparts, under SP-345’s app-data root and actual Server. App scope is not a Project Vault and holds no project_home_server_id before conversion. The attached table is the exclusive physical app key map for ordinary chat/root/recovery/UI/notebook/browser/runtime records; version/schema/source selection is CV-366. Raw missing Project interpolation, main-root fallback, per-thread infinite app buckets and new live JSON are forbidden. Source/context authority uses exact Host/Environment/roots, not the configured display path alone.
   Place/folder records bind actual Server/Host/Environment and canonical path identity/currentness, draft_id before first message and thread_id thereafter. Concurrent first save/command adopts one folder exactly once. Visible chat folders live outside PM data in the Computer’s configured no-project chat root; no talk-only folder, rename relocation or implicit delete. Disconnected chat metadata remains named/read-only; continuation needs the real current writer. Request/outbox continuity remains the existing thread owner; facade preview is local and does not create its own storage family. Client close does not stop the Server’s admitted work.
-  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart must resolve through Plans/storage_value_registry.json to the existing named policy/anchor, never a new policy ID or a production registration.
+  One app Server-wide counterpart bucket per family supplies the same limits, budget/TTL/retention/holds and backup classification as the Project bucket, not a reset per chat. An app family with a Project counterpart takes that counterpart's storage tier (Jared, 2026-11-04). Restore points share one 2,048 cap with the exact 7,776,000-second reference-release threshold, oldest eligible pressure and every descendant/application/preserve/legal/source/rollback/maintenance/backup hold; states/results remain available|expired|deleted|corrupt and branched|refused|failed. Web cache shares the 500 MB default with owner TTL/LRU. No other numeric cap is invented. Families whose counterpart has no hard cap retain that explicit disposition plus mandatory disk budget; unknown policy cannot be treated as unlimited. A table token owner_*_counterpart is a required F-d resolution to the existing named policy/anchor, never a new policy ID or a production registration.
   One app index builder/publication slot and source token/checkpoint domain preserve exact Server/thread/root/generation. Source read, compaction, restore/revert and FileSafe use actual absolute Host/root and all canonical source/currentness/permission/writer/Stop/recovery gates; replay rebuilds only derived views, never canonical authority. App notebook keeps its five existing parent kinds and 16 KiB inline/64 KiB request, 512-token/2 KiB capsule, 1,024-token/4 KiB combined injection limits. Memory stays thread-private with 350-token capsule and existing verification/evidence; public_safe taught rules remain distinct. Cross-read grants never authorize notebook/private-memory access.
   Browser creation/reset, Eval, terminal and layout adopt their whole app CV-366 source graphs or remain unavailable. Protected auth is not app browser automation, capture, restore or export content. Live PTY/process/kernel/controller/ports remain on original Computer through conversion; future sessions re-resolve. App Home/panels/boards use exact Server/app/workspace keys, named layouts/presets stay per person, board snapshots match saved scope/Server only, and converted Project UI loads independently. Canonical app records/held payloads join coherent Full Server Backup, derived pages/indexes rebuild; counterpart source/dedupe/rollback/retention and deletion deadlines remain. Chat Undo expiry cannot purge independently retained notebook/checkpoint/task/audit authority.
   Developer-session application families are dev_session_record_application and eval_session_record_application, using DebugSessionRecordStorageApplicationV1 and EvalSessionRecordStorageApplicationV1 in Plans/developer_session_application_contracts.schema.json. They inherit the Project counterpart tier later_gui_or_feature_projection, RP-DEBUG-30D, mandatory canonical backup/restore and independent holds. The source graph selects the actual debugger/evaluator broker for lifecycle, source/lease/generation, read/checkpoint and retention. BRS-033 restores exact history/session metadata as stopped or reconciliation-required, never a live adapter/kernel/lease or current permission grant. No browser family is their custody and no second engine is introduced.
@@ -981,8 +981,8 @@ acceptance_criteria:
 - App buckets match counterpart bounds; held canonical source never evicts as a cache.
 - No root/Host/thread aliasing, canonical reconstruction or unsupported native-source fallback.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1107,8 +1107,8 @@ acceptance_criteria:
 - Failure/restart/resume/cancel/Undo preserve settled effects, original source and target authority.
 - Backups and retention avoid dual-live restoration or early independent authority purge.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1182,8 +1182,8 @@ acceptance_criteria:
 - Original Project/historical/certified graph remains unchanged and ordinary bindings immutable.
 - Canonical task/audit and Stop survive moves, restore and chat Undo expiry with counterpart limits.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1257,9 +1257,9 @@ Every application key begins with its distinct versioned family prefix and actua
 | `goal_receipt` → `goal_receipt_application` | `goal_receipt.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}:{hex(operation_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `goal_runtime_lineage_record` → `goal_runtime_lineage_record_application` | `goal_runtime_lineage_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(goal_id)}` | canonical; `RP-AUTHORITY-INDEFINITE` |
 | `collaboration_definition` → `collaboration_definition_application` | `collaboration_definition.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(definition_id)}` | canonical; `RP-CONFIG-CURRENT` |
-| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
-| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
-| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404; was `RP-RUNTIME-365D`) |
+| `collaboration_run` → `collaboration_run_application` | `collaboration_run.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(collaboration_run_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_participant` → `collaboration_participant_application` | `collaboration_participant.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}` | canonical; `RP-RUNTIME-365D` |
+| `collaboration_transcript` → `collaboration_transcript_application` | `collaboration_transcript.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(collaboration_run_id)}:{hex(participant_id)}:{hex(item_id)}` | canonical; `RP-RUNTIME-365D` |
 | `crew_auto` → `crew_auto_application` | `crew_auto.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}` | canonical; `RP-CONFIG-CURRENT` |
 | `crew_board_message` → `crew_board_message_application` | `crew_board_message.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}` | canonical; `RP-COORDINATION-180D` |
 | `coordination_agent` → `coordination_agent_application` | `coordination_agent.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(agent_id)}` | derived; `RP-PROJECTION-3GEN` |
@@ -1299,8 +1299,8 @@ acceptance_criteria:
 - Pause physical birth/key/wrapper/CAS/epochs/read/backup/refusal are coherent and separate from Project.
 - Stop/conversion/timer/restore races cannot double-run or clear a newer latch.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1388,8 +1388,8 @@ acceptance_criteria:
 - Restore/conversion preserves old evidence without transferring authority or clearing Stop/holds.
 - Action list reads existing receipts and no new live JSON/event engine.
 validation_surfaces:
-- scripts/pm-projects-refresh-contracts.py
-- scripts/pm-plan-index.py
+- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
+- 'Phase 2: python3 scripts/pm-plan-index.py validate'
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -1430,3 +1430,471 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+### SP-660 - alert.acknowledged original custody and history
+
+```yaml
+plan_unit_id: SP-660
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\
+  \ Only cmd.alert.acknowledge, handled by handlers::alert::acknowledge, produces this exact family. Existing closed\
+  \ payload is Plans/event_payloads/attention/alert_acknowledged.schema.json (pm.attention_event.alert_acknowledged.schema.v1);\
+  \ no sibling admission. Semantic owner is F3-700, payload route CV-680, storage route SP-660. Transition: unacknowledged\
+  \ or snoozed -> acknowledged; clear unread only; never resolve the underlying condition. Current owner must prove\
+  \ the action is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze\
+  \ cannot suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal,\
+  \ stale result, no change, rollback or failed persistence produces no event.\n\nIdentity is Project-scoped EventRecord\
+  \ v2, scope_partition project~base64url_no_pad(UTF8(project_id)); envelope project_id equals payload project_id,\
+  \ actor_ref/correlation_id/idempotency_key/occurred_at_utc equal the payload fields (ts for occurrence); thread/run/node/attempt\
+  \ and parent/causation refs are null unless an authentic caller supplies the corresponding original linkage, never\
+  \ ambient defaults. Let H be lowercase SHA-256 of canonical MessagePack of the array [storage_instance_id, project_id,\
+  \ \"alert.acknowledged\", idempotency_key]. event_id is evt_alert_acknowledged_ followed by H; operation_digest\
+  \ is H. The idempotency key is the original accepted command key, not reminted on recovery. Request digest covers\
+  \ the full admitted command, subject alert_id, actor, current revision and exact candidate payload. Same key with\
+  \ unequal digest fails conflict before effects. The command's original revision and subject ref must equal the\
+  \ independently read owner record, and result_revision equals prior_revision + 1. Server-side secret screening\
+  \ rejects secret-bearing strings even if the lexical schema accepts them.\n\nOrdering: under the original Project\
+  \ permission/currentness/owner mutation fence, validate exact registry membership FIRST; currently absent means\
+  \ deny before journal/body/effect/checkpoint. On future admission, freeze original payload and identity in alert_acknowledged_operation.v1:{project_id}:{operation_digest}\
+  \ before mutation. State prepared has all four result/commit/receipt refs null. CAS the exact subject revision\
+  \ and commit its candidate owner state together with the committed operation in one owner-coordinated transaction;\
+  \ committed has original owner_commit_ref, result_ref and dispatch_receipt_ref, with original_append_result_ref\
+  \ null. If that atomic boundary cannot be established, the action remains unavailable. The shared alert store\
+  \ stays F3-453's one store, with no per-surface copy. Append only after authenticated owner commit/readback. Explicitly\
+  \ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\
+  \ eleven-field first AppendReceipt, retained four-field original_append_result and actual original EventRecord.\
+  \ Exact identity, semantic payload, Storage instance, sequence, segment/offset and durability must all join independently.\
+  \ Only then set settled with all four refs nonnull and publish terminal success. An uncertain append fences later\
+  \ writes to that subject; recovery resolves the ORIGINAL identity, never reruns the command or fabricates a receipt.\
+  \ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\
+  \ recover append with frozen semantics; settled retries return original result/receipt. No wall clock renewal.\n\
+  \nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_acknowledged_operation.schema.json.\
+  \ The owner commit ref resolves original shared alert state, never a current replacement with the same revision.\
+  \ Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\
+  \ receipt custody and source/deletion dependencies under one verified recovery boundary. Missing/mixed instances\
+  \ or missing original evidence fence mutation and disclose unavailable. History cannot recreate deleted source\
+  \ bodies. Reads authenticate current Project membership, source access and deletion tombstones at disclosure,\
+  \ including after every returning helper; IDs/hashes/refs confer no access. No raw alert text, private rationale\
+  \ or source content is copied into the event or custody.\n\nNewly authored projector.alert_acknowledged.history@1.0.0\
+  \ and reader.alert_acknowledged.history@1.0.0 expose this family's passive History audit refs; GUI inbox state\
+  \ is independently read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_acknowledged_checkpoint.v1:{project_id}:{storage_instance_id},\
+  \ schema Plans/alert_event_contracts/alert_acknowledged_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
+  \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
+  \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
+  \ sequence through the captured frontier, filter exact Project and alert.acknowledged, append only authenticated\
+  \ event refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE\
+  \ redb transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
+  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
+  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
+  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
+  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
+  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
+  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
+  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
+  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
+  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
+  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
+  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
+  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
+  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
+  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
+  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
+  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.acknowledged\
+  \ in a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
+  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
+  \ Original shared state for this family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
+  \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
+  \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
+  \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
+  \ revision is prior + 1; source_record_ref is unchanged. CAS compares the full prior value, not revision alone,\
+  \ and atomically writes candidate plus committed operation before append. No prepared operation may authorize\
+  \ mutation without exact family admission. Acknowledge clears unread and preserves presentation/source truth;\
+  \ dismiss clears inbox_visible only and preserves source truth; snooze sets original snooze_until and hides until\
+  \ the deadline without deleting; mute changes only exact rule state/deadline. Fields unrelated to the exact action\
+  \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
+  \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
+  \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
+  \ source record."
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### SP-661 - alert.dismissed original custody and history
+
+```yaml
+plan_unit_id: SP-661
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\
+  \ Only cmd.alert.dismiss, handled by handlers::alert::dismiss, produces this exact family. Existing closed payload\
+  \ is Plans/event_payloads/attention/alert_dismissed.schema.json (pm.attention_event.alert_dismissed.schema.v1);\
+  \ no sibling admission. Semantic owner is F3-701, payload route CV-681, storage route SP-661. Transition: unacknowledged,\
+  \ acknowledged or snoozed -> dismissed; rationale required; remove inbox presentation only; no approval, denial,\
+  \ resolution or source deletion. Current owner must prove the action is allowed, including permission, current\
+  \ subject revision and currentness_basis_ref. Mute/snooze cannot suppress blocking confirmations or security-sensitive\
+  \ failures; dismissal cannot clear a blocker. A refusal, stale result, no change, rollback or failed persistence\
+  \ produces no event.\n\nIdentity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\
+  \ envelope project_id equals payload project_id, actor_ref/correlation_id/idempotency_key/occurred_at_utc equal\
+  \ the payload fields (ts for occurrence); thread/run/node/attempt and parent/causation refs are null unless an\
+  \ authentic caller supplies the corresponding original linkage, never ambient defaults. Let H be lowercase SHA-256\
+  \ of canonical MessagePack of the array [storage_instance_id, project_id, \"alert.dismissed\", idempotency_key].\
+  \ event_id is evt_alert_dismissed_ followed by H; operation_digest is H. The idempotency key is the original accepted\
+  \ command key, not reminted on recovery. Request digest covers the full admitted command, subject alert_id, actor,\
+  \ current revision and exact candidate payload. Same key with unequal digest fails conflict before effects. The\
+  \ command's original revision and subject ref must equal the independently read owner record, and result_revision\
+  \ equals prior_revision + 1. Server-side secret screening rejects secret-bearing strings even if the lexical schema\
+  \ accepts them.\n\nOrdering: under the original Project permission/currentness/owner mutation fence, validate\
+  \ exact registry membership FIRST; currently absent means deny before journal/body/effect/checkpoint. On future\
+  \ admission, freeze original payload and identity in alert_dismissed_operation.v1:{project_id}:{operation_digest}\
+  \ before mutation. State prepared has all four result/commit/receipt refs null. CAS the exact subject revision\
+  \ and commit its candidate owner state together with the committed operation in one owner-coordinated transaction;\
+  \ committed has original owner_commit_ref, result_ref and dispatch_receipt_ref, with original_append_result_ref\
+  \ null. If that atomic boundary cannot be established, the action remains unavailable. The shared alert store\
+  \ stays F3-453's one store, with no per-surface copy. Append only after authenticated owner commit/readback. Explicitly\
+  \ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\
+  \ eleven-field first AppendReceipt, retained four-field original_append_result and actual original EventRecord.\
+  \ Exact identity, semantic payload, Storage instance, sequence, segment/offset and durability must all join independently.\
+  \ Only then set settled with all four refs nonnull and publish terminal success. An uncertain append fences later\
+  \ writes to that subject; recovery resolves the ORIGINAL identity, never reruns the command or fabricates a receipt.\
+  \ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\
+  \ recover append with frozen semantics; settled retries return original result/receipt. No wall clock renewal.\n\
+  \nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.\
+  \ The owner commit ref resolves original shared alert state, never a current replacement with the same revision.\
+  \ Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\
+  \ receipt custody and source/deletion dependencies under one verified recovery boundary. Missing/mixed instances\
+  \ or missing original evidence fence mutation and disclose unavailable. History cannot recreate deleted source\
+  \ bodies. Reads authenticate current Project membership, source access and deletion tombstones at disclosure,\
+  \ including after every returning helper; IDs/hashes/refs confer no access. No raw alert text, private rationale\
+  \ or source content is copied into the event or custody.\n\nNewly authored projector.alert_dismissed.history@1.0.0\
+  \ and reader.alert_dismissed.history@1.0.0 expose this family's passive History audit refs; GUI inbox state is\
+  \ independently read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_dismissed_checkpoint.v1:{project_id}:{storage_instance_id},\
+  \ schema Plans/alert_event_contracts/alert_dismissed_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
+  \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
+  \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
+  \ sequence through the captured frontier, filter exact Project and alert.dismissed, append only authenticated\
+  \ event refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE\
+  \ redb transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
+  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
+  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
+  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
+  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
+  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
+  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
+  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
+  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
+  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
+  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
+  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
+  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
+  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
+  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
+  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
+  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.dismissed\
+  \ in a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
+  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
+  \ Original shared state for this family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
+  \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
+  \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
+  \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
+  \ revision is prior + 1; source_record_ref is unchanged. CAS compares the full prior value, not revision alone,\
+  \ and atomically writes candidate plus committed operation before append. No prepared operation may authorize\
+  \ mutation without exact family admission. Acknowledge clears unread and preserves presentation/source truth;\
+  \ dismiss clears inbox_visible only and preserves source truth; snooze sets original snooze_until and hides until\
+  \ the deadline without deleting; mute changes only exact rule state/deadline. Fields unrelated to the exact action\
+  \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
+  \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
+  \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
+  \ source record."
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### SP-662 - alert.rule_muted original custody and history
+
+```yaml
+plan_unit_id: SP-662
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\
+  \ Only cmd.alert.mute_rule, handled by handlers::alert::mute_rule, produces this exact family. Existing closed\
+  \ payload is Plans/event_payloads/attention/alert_rule_muted.schema.json (pm.attention_event.alert_rule_muted.schema.v1);\
+  \ no sibling admission. Semantic owner is F3-702, payload route CV-682, storage route SP-662. Transition: unmuted\
+  \ or expired -> muted for the exact Project rule; keep the issue visible in its owning surface; expiry follows\
+  \ the original explicit deadline, never retry time. Current owner must prove the action is allowed, including\
+  \ permission, current subject revision and currentness_basis_ref. Mute/snooze cannot suppress blocking confirmations\
+  \ or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale result, no change, rollback\
+  \ or failed persistence produces no event.\n\nIdentity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\
+  \ envelope project_id equals payload project_id, actor_ref/correlation_id/idempotency_key/occurred_at_utc equal\
+  \ the payload fields (ts for occurrence); thread/run/node/attempt and parent/causation refs are null unless an\
+  \ authentic caller supplies the corresponding original linkage, never ambient defaults. Let H be lowercase SHA-256\
+  \ of canonical MessagePack of the array [storage_instance_id, project_id, \"alert.rule_muted\", idempotency_key].\
+  \ event_id is evt_alert_rule_muted_ followed by H; operation_digest is H. The idempotency key is the original\
+  \ accepted command key, not reminted on recovery. Request digest covers the full admitted command, subject alert_rule_id,\
+  \ actor, current revision and exact candidate payload. Same key with unequal digest fails conflict before effects.\
+  \ The command's original revision and subject ref must equal the independently read owner record, and result_revision\
+  \ equals prior_revision + 1. Server-side secret screening rejects secret-bearing strings even if the lexical schema\
+  \ accepts them.\n\nOrdering: under the original Project permission/currentness/owner mutation fence, validate\
+  \ exact registry membership FIRST; currently absent means deny before journal/body/effect/checkpoint. On future\
+  \ admission, freeze original payload and identity in alert_rule_muted_operation.v1:{project_id}:{operation_digest}\
+  \ before mutation. State prepared has all four result/commit/receipt refs null. CAS the exact subject revision\
+  \ and commit its candidate owner state together with the committed operation in one owner-coordinated transaction;\
+  \ committed has original owner_commit_ref, result_ref and dispatch_receipt_ref, with original_append_result_ref\
+  \ null. If that atomic boundary cannot be established, the action remains unavailable. The shared alert store\
+  \ stays F3-453's one store, with no per-surface copy. Append only after authenticated owner commit/readback. Explicitly\
+  \ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\
+  \ eleven-field first AppendReceipt, retained four-field original_append_result and actual original EventRecord.\
+  \ Exact identity, semantic payload, Storage instance, sequence, segment/offset and durability must all join independently.\
+  \ Only then set settled with all four refs nonnull and publish terminal success. An uncertain append fences later\
+  \ writes to that subject; recovery resolves the ORIGINAL identity, never reruns the command or fabricates a receipt.\
+  \ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\
+  \ recover append with frozen semantics; settled retries return original result/receipt. No wall clock renewal.\n\
+  \nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_rule_muted_operation.schema.json.\
+  \ The owner commit ref resolves original shared alert state, never a current replacement with the same revision.\
+  \ Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\
+  \ receipt custody and source/deletion dependencies under one verified recovery boundary. Missing/mixed instances\
+  \ or missing original evidence fence mutation and disclose unavailable. History cannot recreate deleted source\
+  \ bodies. Reads authenticate current Project membership, source access and deletion tombstones at disclosure,\
+  \ including after every returning helper; IDs/hashes/refs confer no access. No raw alert text, private rationale\
+  \ or source content is copied into the event or custody.\n\nNewly authored projector.alert_rule_muted.history@1.0.0\
+  \ and reader.alert_rule_muted.history@1.0.0 expose this family's passive History audit refs; GUI inbox state is\
+  \ independently read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_rule_muted_checkpoint.v1:{project_id}:{storage_instance_id},\
+  \ schema Plans/alert_event_contracts/alert_rule_muted_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
+  \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
+  \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
+  \ sequence through the captured frontier, filter exact Project and alert.rule_muted, append only authenticated\
+  \ event refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE\
+  \ redb transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
+  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
+  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
+  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
+  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
+  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
+  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
+  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
+  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
+  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
+  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
+  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
+  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
+  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
+  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
+  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
+  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.rule_muted\
+  \ in a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
+  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
+  \ Original shared state for this family is shared_alert_rule_state.v1:{project_id}:{alert_rule_id}, closed schema\
+  \ Plans/alert_event_contracts/shared_alert_rule_state.schema.json. This is a newly authored technical representation\
+  \ of F3-453 existing behavior, reused by each exact handler, not another UI store. prior_owner_state and candidate_owner_state\
+  \ are complete frozen original bytes in this family operation; exact key/Project/subject/source identity must\
+  \ agree with payload and both snapshots. Candidate revision is prior + 1; source_record_ref is unchanged. CAS\
+  \ compares the full prior value, not revision alone, and atomically writes candidate plus committed operation\
+  \ before append. No prepared operation may authorize mutation without exact family admission. Acknowledge clears\
+  \ unread and preserves presentation/source truth; dismiss clears inbox_visible only and preserves source truth;\
+  \ snooze sets original snooze_until and hides until the deadline without deleting; mute changes only exact rule\
+  \ state/deadline. Fields unrelated to the exact action remain byte-equal. Expiry/read projection is the existing\
+  \ owner behavior and creates no fabricated action event. Original immutable owner_commit_ref resolves the operation\
+  \ candidate snapshot even after later revisions. Shared state backup is canonical and mandatory; its retention\
+  \ remains PENDING_RETENTION_DECISION independently of the source record."
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### SP-663 - alert.snoozed original custody and history
+
+```yaml
+plan_unit_id: SP-663
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\
+  \ Only cmd.alert.snooze, handled by handlers::alert::snooze, produces this exact family. Existing closed payload\
+  \ is Plans/event_payloads/attention/alert_snoozed.schema.json (pm.attention_event.alert_snoozed.schema.v1); no\
+  \ sibling admission. Semantic owner is F3-703, payload route CV-683, storage route SP-663. Transition: unacknowledged\
+  \ or acknowledged -> snoozed until snooze_until, strictly after ts; keep original deadline on replay; never suppress\
+  \ blocking confirmations or security-sensitive failures. Current owner must prove the action is allowed, including\
+  \ permission, current subject revision and currentness_basis_ref. Mute/snooze cannot suppress blocking confirmations\
+  \ or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale result, no change, rollback\
+  \ or failed persistence produces no event.\n\nIdentity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\
+  \ envelope project_id equals payload project_id, actor_ref/correlation_id/idempotency_key/occurred_at_utc equal\
+  \ the payload fields (ts for occurrence); thread/run/node/attempt and parent/causation refs are null unless an\
+  \ authentic caller supplies the corresponding original linkage, never ambient defaults. Let H be lowercase SHA-256\
+  \ of canonical MessagePack of the array [storage_instance_id, project_id, \"alert.snoozed\", idempotency_key].\
+  \ event_id is evt_alert_snoozed_ followed by H; operation_digest is H. The idempotency key is the original accepted\
+  \ command key, not reminted on recovery. Request digest covers the full admitted command, subject alert_id, actor,\
+  \ current revision and exact candidate payload. Same key with unequal digest fails conflict before effects. The\
+  \ command's original revision and subject ref must equal the independently read owner record, and result_revision\
+  \ equals prior_revision + 1. Server-side secret screening rejects secret-bearing strings even if the lexical schema\
+  \ accepts them.\n\nOrdering: under the original Project permission/currentness/owner mutation fence, validate\
+  \ exact registry membership FIRST; currently absent means deny before journal/body/effect/checkpoint. On future\
+  \ admission, freeze original payload and identity in alert_snoozed_operation.v1:{project_id}:{operation_digest}\
+  \ before mutation. State prepared has all four result/commit/receipt refs null. CAS the exact subject revision\
+  \ and commit its candidate owner state together with the committed operation in one owner-coordinated transaction;\
+  \ committed has original owner_commit_ref, result_ref and dispatch_receipt_ref, with original_append_result_ref\
+  \ null. If that atomic boundary cannot be established, the action remains unavailable. The shared alert store\
+  \ stays F3-453's one store, with no per-surface copy. Append only after authenticated owner commit/readback. Explicitly\
+  \ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\
+  \ eleven-field first AppendReceipt, retained four-field original_append_result and actual original EventRecord.\
+  \ Exact identity, semantic payload, Storage instance, sequence, segment/offset and durability must all join independently.\
+  \ Only then set settled with all four refs nonnull and publish terminal success. An uncertain append fences later\
+  \ writes to that subject; recovery resolves the ORIGINAL identity, never reruns the command or fabricates a receipt.\
+  \ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\
+  \ recover append with frozen semantics; settled retries return original result/receipt. No wall clock renewal.\n\
+  \nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_snoozed_operation.schema.json.\
+  \ The owner commit ref resolves original shared alert state, never a current replacement with the same revision.\
+  \ Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\
+  \ receipt custody and source/deletion dependencies under one verified recovery boundary. Missing/mixed instances\
+  \ or missing original evidence fence mutation and disclose unavailable. History cannot recreate deleted source\
+  \ bodies. Reads authenticate current Project membership, source access and deletion tombstones at disclosure,\
+  \ including after every returning helper; IDs/hashes/refs confer no access. No raw alert text, private rationale\
+  \ or source content is copied into the event or custody.\n\nNewly authored projector.alert_snoozed.history@1.0.0\
+  \ and reader.alert_snoozed.history@1.0.0 expose this family's passive History audit refs; GUI inbox state is independently\
+  \ read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_snoozed_checkpoint.v1:{project_id}:{storage_instance_id},\
+  \ schema Plans/alert_event_contracts/alert_snoozed_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
+  \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
+  \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
+  \ sequence through the captured frontier, filter exact Project and alert.snoozed, append only authenticated event\
+  \ refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE redb\
+  \ transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
+  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
+  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
+  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
+  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
+  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
+  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
+  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
+  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
+  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
+  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
+  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
+  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
+  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
+  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
+  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
+  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.snoozed in\
+  \ a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
+  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
+  \ Original shared state for this family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
+  \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
+  \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
+  \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
+  \ revision is prior + 1; source_record_ref is unchanged. CAS compares the full prior value, not revision alone,\
+  \ and atomically writes candidate plus committed operation before append. No prepared operation may authorize\
+  \ mutation without exact family admission. Acknowledge clears unread and preserves presentation/source truth;\
+  \ dismiss clears inbox_visible only and preserves source truth; snooze sets original snooze_until and hides until\
+  \ the deadline without deleting; mute changes only exact rule state/deadline. Fields unrelated to the exact action\
+  \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
+  \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
+  \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
+  \ source record."
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```

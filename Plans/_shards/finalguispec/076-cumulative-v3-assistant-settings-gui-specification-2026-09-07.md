@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38483-L39193
+Source lines: L38675-L39387
 
-Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
+Source SHA256: `d52da0f27c4c122cbfcd1ec6c7b5d605f6a18b4bb0bcb3802884a20abfd7cf81`
 
 ---
 
@@ -172,7 +172,9 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   the run view (ACD-480). The remaining families keep the native presentation above, with Processes governed by ACD-505.
   Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
   To-Do hover preview, inside the native panel (F3-593).
-- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
+- **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
+  render findings, diagnostics, and code views without interactive mutation controls or misleading
+  active buttons, clearly labeling the static or demo nature of the content.
 
 ### 25. Settings Manager Presentation Grammar Across All 38 Managers and Projections
 
@@ -230,7 +232,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   29. `server-backup-restore` (Server-level disaster recovery)
   30. `project-backup` (Project-level archive and backup)
   31. `updates` (Application update channels and policies)
-  32. `project-defaults-templates` (Saved setups: detached configuration; Project-owned Starters are a separate child)
+  32. `project-defaults-templates` (Project scaffolding templates)
   33. `onboarding-guided-tour` (Run Onboarding Again, Guided Tour resume and replay, onboarding flags)
   34. `doctor` (System health checks, diagnostics)
   35. `usage-budgets` (Spend limits, token quotas)
@@ -475,7 +477,7 @@ canonical_text: 'The Assistant wand menu structures commands into compact, organ
   command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
   attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
-gui_classification_reason: Governs wand menu grouping and the composer browser boundary.
+gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
 depends_on:
 - F3-531
 unblocks: []
@@ -617,7 +619,7 @@ canonical_text: >-
   USER-REFERENCE-LAYOUT-ROLLBACK-20260908, apart from the scoped exceptions of F3-580 (DL-122) and the
   To-Do rows of F3-593 (DL-147), superseding the reference-video flat-row and forced single-column layout
   while preserving concise hierarchy, clear progress/state grouping, and quiet action rows. Read-only
-  inspection views present findings and code evidence without interactive mutation controls.
+  inspection fixtures present findings and code evidence without interactive mutation controls.
 gui_related: true
 gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review
   invariant, and all ten Activity Detail families.
@@ -631,7 +633,7 @@ acceptance_criteria:
 - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
 - All ten Activity Detail families apply the native card and grid presentation grammar with concise hierarchy,
   superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
-- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
+- Read-only inspection demos render findings without interactive mutation controls.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: collaboration_popup_or_activity_family_grammar_drift
@@ -672,7 +674,7 @@ unit_type: gui_requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches obey F3-513, built-in sounds preview their selected available asset or admitted synthesized recipe with F3-405’s shared player, provenance, explicit-gesture, playback/Stop/replacement/cleanup and unavailable/decode-failure rules; preview never claims notification delivery, and All Settings scrolls with the page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. The unchanged project-defaults-templates manager route shows separate Saved setups and Starters / My starters children. Saved setups are detached configuration, Starters are Project-owned file sets (PJCT-011); no 39th manager. Home/reach/project switches/whole Project versions use SSYS-061 and domain owners; library reach Every project includes No project, Project-owned things do not. Persona management remains the existing Settings Agent Config realization, with no second editor.
+  Under USER-SETTINGS-MANAGER-REFRESH-20260908 the Settings manager presentation grammar gains four principles beyond the six restored native ones: no header-level action strip, at most six tabs, exactly one labeled Advanced disclosure per manager view, and one side-panel anatomy shared by manager drawers and the setting Details inspector (identity header, sectioned body, quiet footer, spring open and material close, no decorative accent bars, inspector width tokens unchanged). Manager workspaces of the published concept are presentation groupings over the unchanged 38-key registry: separate Code & Tools workspaces for Skills, Plugins, MCP Servers, and Commands & Shortcuts; one System workspace Server & Project Location; Single Owners and Browser & SCM governance as Advanced disclosures; Back Seat Driver as its own kit manager. Domain switches obey F3-513, built-in sounds are labelled demonstration tones per F3-405, and All Settings scrolls with the page while remaining virtualized per SSYS-005. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. The unchanged project-defaults-templates manager route shows separate Saved setups and Starters / My starters children. Saved setups are detached configuration, Starters are Project-owned file sets (PJCT-011); no 39th manager. Home/reach/project switches/whole Project versions use SSYS-061 and domain owners; library reach Every project includes No project, Project-owned things do not. Persona management remains the existing Settings Agent Config realization, with no second editor.
 gui_related: true
 gui_classification_reason: Owns the visible manager presentation grammar, workspace grouping, and side-panel anatomy of every Settings manager in the published concept.
 split_recommended: false
@@ -685,8 +687,8 @@ acceptance_criteria:
   - "Ten themes at 760, 960, and 1440 px render the key managers with zero horizontal overflow."
   - "(USER-SETTINGS-MANAGER-REFRESH-20260909) Status tokens instead of pills, concept-drawn listboxes and menus with the shared popout motion, independently scrolling rosters, a two-column sound grid, ordered account and route lists with inline priority controls, and inline manager-topic settings rendered exactly once (F3-551)."
 validation_surfaces:
-- "future Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
-- "scripts/pm-plans-verify.py"
+  - "Verify F3-543's manager presentation, status tokens, menus, scrolling, row placement and motion against the current Settings owner."
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: manager_presentation_regression_or_motion_flash
 reasoning_tier: high
 context_scope: settings_manager_presentation
@@ -705,10 +707,10 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F03,B-F01,B-F13,E-F05
 preserved_exact_tokens:
-- "header-level action strip"
-- "six tabs"
-- "Advanced disclosure"
-- "side-panel anatomy"
+  - "No Top Action Bar"
+  - "Bounded Tabs"
+  - "Exactly One Advanced Disclosure"
+  - "Side Panel Anatomy"
 negative_constraints:
   - Do not reintroduce a per-manager top action bar or more than six tabs.
   - Do not give the Details inspector or a drawer a decorative accent bar.

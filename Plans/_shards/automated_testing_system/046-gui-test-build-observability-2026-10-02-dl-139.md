@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6040-L6095
+Source lines: L6040-L6097
 
-Source SHA256: `76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647`
+Source SHA256: `52de2dc3bb45db9a285627ef81c7b3cb4151048e6b8c09beda8429ca82ae3d55`
 
 ---
 
@@ -19,22 +19,25 @@ plan_unit_id: ATS-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: |-
-  Test-build observability: development and test builds of both the Slint desktop and the Leptos web GUI (DL-139, F3-583) expose to test agents the active screen, the focused control, the text selection, the scroll position, every dispatched command with its result, frame timing, redraw activity, memory growth, and the requested and effective renderer with any fallback reason (F3-033). Production builds of either interface never include this surface, and no production configuration can enable it. Fixture-mode observations are labelled developer/test evidence only: they neither admit fixture data into production nor confer readiness, production receipt or real-work credit. No prototype scenario picker or product run-mode switch is included.
+canonical_text: >-
+  Test-build observability: development and test builds of both the Slint desktop and the Leptos web GUI
+  (DL-139, F3-583) expose to test agents the active screen, the focused control, the text selection, the scroll
+  position, every dispatched command with its result, frame timing, redraw activity, memory growth, and the
+  requested and effective renderer with any fallback reason (F3-033). Production builds of either interface never
+  include this surface, and no production configuration can enable it.
 gui_related: true
 gui_classification_reason: "Defines what test agents can observe of the visible desktop and web interfaces in development and test builds."
 split_recommended: false
 depends_on: [DL-139, ATS-023, F3-033, F3-583]
 unblocks: []
 acceptance_criteria:
-- "In a development or test build of each interface, a test agent can read every listed item for the current window or page."
-- "The renderer report names the requested renderer, the effective renderer and the fallback reason, including a software GPU adapter routed to the Skia CPU raster."
-- "A production build of either interface contains no part of this surface, and no configuration enables it there."
-- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-- "Fixture-mode observations distinguish test inputs/results from real owner state and confer no production admission, readiness, production receipt or real-work credit."
+  - "In a development or test build of each interface, a test agent can read every listed item for the current window or page."
+  - "The renderer report names the requested renderer, the effective renderer and the fallback reason, including a software GPU adapter routed to the Skia CPU raster."
+  - "A production build of either interface contains no part of this surface, and no configuration enables it there."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
-- "scripts/pm-shard-plans.py"
-- "scripts/pm-plan-index.py"
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
 risk_class: test_observability_gap_or_production_leak
 reasoning_tier: high
 context_scope: gui_stack_skia_leptos
@@ -53,9 +56,8 @@ preserved_exact_tokens:
   - "requested and effective renderer"
   - "fallback reason"
 negative_constraints:
-- "Do not ship this surface in production builds or let a production configuration enable it."
-- "Do not treat observability output by itself as runtime, visual or performance acceptance."
-- "Do not turn fixture-mode observability into a prototype scenario picker, product run-mode switch or production-evidence path."
+  - "Do not ship this surface in production builds or let a production configuration enable it."
+  - "Do not treat observability output by itself as runtime, visual or performance acceptance."
 owner_boundary_notes:
   - "ATS-023's production-configuration exception for dev/test controls does not extend to this surface."
 owner_hints:

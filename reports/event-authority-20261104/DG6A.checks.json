@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "name": "alert-check",
+      "command": [
+        "python3",
+        "scripts/pm-alert-event-contracts-check.py"
+      ],
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/alert-check.log",
+      "sha256": "4eb9bbe8c202be0bb03f92b761cd8710acc762ba156c9ec3880e04d9308b598f"
+    },
+    {
+      "name": "shard-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/shard-check.log",
+      "sha256": "23594fa75c651d0f58da0d1c722dbbc8fc490781399ad5b2c0d20f769bf54a9e"
+    },
+    {
+      "name": "registry-json-schema",
+      "exit_code": 0,
+      "error_count": 0
+    },
+    {
+      "name": "plan-index-validate",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/index-validate.json"
+    },
+    {
+      "name": "assistant-contract-check",
+      "exit_code": 1,
+      "top_level_status": "gaps_found",
+      "errors": [],
+      "note": "Browser pending admissions; no alert-native proof."
+    },
+    {
+      "name": "assistant-tests-baseline",
+      "exit_code": 1,
+      "run": 41,
+      "failures": 3,
+      "note": "Original HEAD registry overridden in-process; unchanged schema inputs; full original three failures reproduced."
+    },
+    {
+      "name": "assistant-tests-final",
+      "exit_code": 1,
+      "run": 41,
+      "failures": 2,
+      "errors": 0,
+      "note": "Both remaining failures reproduced with base registry; stale global count updated 342 -> 354 for ten-row addition (base already had 344). Explicit .gitignore ! rule confirmed."
+    }
+  ]
+}

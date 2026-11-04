@@ -7234,3 +7234,172 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-330 - alert.acknowledged contract oracles
+
+```yaml
+plan_unit_id: ATS-330
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.acknowledged is checked independently by python3 scripts/pm-alert-event-contracts-check.py
+  with Plans/alert_event_contracts/alert_acknowledged.fixtures.json. Positive closed payload/current successor and
+  negative added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered
+  retry payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain
+  NOT_RUN and must prove every SP-660 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-331 - alert.dismissed contract oracles
+
+```yaml
+plan_unit_id: ATS-331
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.dismissed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_dismissed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-661 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-332 - alert.rule_muted contract oracles
+
+```yaml
+plan_unit_id: ATS-332
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.rule_muted is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_rule_muted.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-662 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### ATS-333 - alert.snoozed contract oracles
+
+```yaml
+plan_unit_id: ATS-333
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: alert.snoozed is checked independently by python3 scripts/pm-alert-event-contracts-check.py with
+  Plans/alert_event_contracts/alert_snoozed.fixtures.json. Positive closed payload/current successor and negative
+  added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
+  payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
+  and must prove every SP-663 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Storage/event contract, no new UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```

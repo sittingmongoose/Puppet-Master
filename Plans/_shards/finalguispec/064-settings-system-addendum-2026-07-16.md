@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31348-L32258
+Source lines: L31515-L32429
 
-Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
+Source SHA256: `d52da0f27c4c122cbfcd1ec6c7b5d605f6a18b4bb0bcb3802884a20abfd7cf81`
 
 ---
 
@@ -573,7 +573,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives the shared Glass transparency scalar within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
@@ -587,8 +587,8 @@ acceptance_criteria:
 - The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "scripts/pm-plan-migration.py"
-- "scripts/pm-plan-index.py"
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -598,7 +598,6 @@ node_compile_hint:
   mode: settings_live_apply_wiring_map
   create_worknodes: false
 source_lineage:
-- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - Plans/FinalGUISpec.md:1329
 - Plans/FinalGUISpec.md:2291
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
@@ -608,6 +607,7 @@ preserved_exact_tokens:
 - "theme:v1"
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
+- "--glass-alpha"
 negative_constraints:
 - "Do not promote the concept's interface-density hook into the live-apply wiring map; it had no consumer and is demo residue."
 compatibility_only_notes:
@@ -629,7 +629,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. The seven canonical inventory additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
+  `Plans/settings_inventory.json` is the canonical inventory registry of the live settings across 12 categories; 1010 is the pre-pass starting census. Its shape is owned by `Plans/settings_inventory.schema.json` with schema_id `pm.settings_inventory.v1`; layering metadata is owner-validated before use. Registry rows carry id, label, desc, type, options, default, scope, tier, recommended, curated, search, badges, and related_features, where related_features is the sparse mapping vocabulary consumed by the curation service usage-signal layer (F3-437). The demo runtime fields value, status, and src are dropped and excluded by the schema: setting values live in real settings storage, status is derived live per F3-435, and src was concept scaffolding. Registry provenance pins the concept sidecar extraction `Concepts/pm6-build/sidecar/pm_settings_data.json` at sha256 9b24e5bcf7f3dae8f0251215eb113c357d1a0ee22f185ac035e8969fd76b5c8d as source-lineage-only. Settings surfaces, including search, category chips, bloom modals, shelves, row renderers, and the Project Settings Modal, bind to this registry rather than hardcoding inventory rows. Amended 2026-10-17 (DL-228): each row's label, desc and option words in this inventory are the one wording the product renders for it, on every surface that draws the row: Settings, hosted controls (SSYS-044) and the Customize screens (DR-068). A concept's own row wording, such as the onboarding Settings kit's plain-language rows.d labels and help, is a proposal until adopted here. Amended 2026-10-17 (DL-230, Jared): the concept's plain-language labels and help are adopted for the rows it rewrote (for example Theme Mode as "Light or dark", UI Scale as "Size of everything", Reduce Animations as "Reduce motion") in one wording pass: a row's label and desc are its rows.d label and help, its old label stays one of its search aliases, and its option words are option_labels, display words for stored option values that never change what is stored (a value without an entry shows as stored). The Customize words (Fill and Fit for Picture Fit, Still for Background Motion's Off, the materials' "plastic", "Less colour", "Grain", "Text drawing") are adopted the same way (DR-068). Retired rows keep their words. The rows carry option_labels beside options; the schema admits it. Amended 2026-10-29 (S1–S9, D5; PM7): Admit general.visual.pip-parts and general.interaction.status-bar-words, historically taking the inventory from 1009 to 1011; Q22 retires one row, yielding 1010. SSYS-056/057 own their defaults/placement; Parts is one multiselect, not a Pip master or sound row. Amended Q22, Jared 2026-10-30 (DL-257): the current family/variant and inventory census supersede earlier counts. Historical census token 1011 is retained solely as pre-Q22 lineage. Every live row carries reviewed layering metadata; legacy scope remains lineage and does not determine the offered level menu. F-d’s seven canonical additions preserve the twelve category prefixes and the unchanged 38 manager keys; recompute the actual census after collision checks, never display an invented fixed count. F3-670 consumes canonical code.execution.projects-folder, code.execution.no-project-chats-folder, general.interaction.no-project-default-computer, safety.rules.cross-project-read-policy, safety.rules.allow-project-reading, safety.rules.incoming-chat-messages and safety.rules.computer-use. The earlier assistant.* proposal spellings are source-lineage only and accept no write alias.
 gui_related: true
 gui_classification_reason: This unit binds the visible settings surfaces to their canonical inventory registry.
 split_recommended: false
@@ -908,6 +908,10 @@ preserved_exact_tokens:
 - "settings_suggestions_dismissed:v1"
 - "theme:v1"
 - "activity_bar_order:v1"
+- "pm.theme"
+- "pm.glassBg"
+- "pm.glassAlpha"
+- "pm.activity_bar_order:v2"
 negative_constraints:
 - "Do not register any new storage keys in this addendum other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1; canonical keys remain theme:v1 and activity_bar_order:v1."
 - "Do not promote the concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, or pm.activity_bar_order:v2 as canonical keys; they are demo shims preserved as lineage only."

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L278-L1245
+Source lines: L278-L1373
 
-Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
+Source SHA256: `d52da0f27c4c122cbfcd1ec6c7b5d605f6a18b4bb0bcb3802884a20abfd7cf81`
 
 ---
 
@@ -675,11 +675,124 @@ plan_unit_id: F3-503
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: |-
-  Panel and tab drag, drop, insertion, reflow and resize use DR-066’s one draft-model pointer transaction and F3-630’s split-tree targets. Pointer movement is preview-only; one changed valid release commits once, without a full re-render or settle flash. An unchanged release dispatches no mutation. Escape, pointercancel, lostpointercapture and an invalid_target window exit cancel and restore the exact earlier layout. A lost pointer capture never commits (lead ruling L13, 2026-10-10).
-  Keep the shared diamond resizers and recovery, four-edge scroll dissolve, change-gated target-footprint landing preview, one reflow wave per changed host or insertion index, geometric latch-based targeting and hysteresis. A pickup that never leaves its source resolves to its original placement; preview growth and moving transforms must not capture the hit-test. Auto-scroll reapplies only when scrolling or pointer movement changes it. Shared scroll-dissolve geometry defers during a held move or resize and catches up once after the gesture.
-  F3-630 owns panel edge bands, tab strips, centre outer-edge and overflow-list targets, thresholds, dwell, hysteresis and motion. Adjacent-panel resize transfers size between the actual pair, respects F3-635’s panel minimum and leaves no dead space; no pairless divider starts a resize. The centre never scrolls sideways, empty or hidden regions create no decorative overflow, pane-internal vertical scrolling remains usable, and narrow windows follow F3-636’s ladder. Reduced Motion retains accurate previews and final geometry without travelling reflow.
-  DL-180 retires the old five-host Home model, per-host surface caps and host_full, host-specific fair-share minimums/clamp bands, floating surfaces and corner handle, row-dock size.cross_basis_px track and the below-1320 px horizontal-scroll exception. Their browser selector, cascade, scroll-band and layout-function repairs are source history, not product implementation requirements.
+canonical_text: >-
+  Home surface drag, drop, insertion, reflow, float, dock, and resize use one draft-model
+  Pointer Events transaction, shared diamond resizers, and shared four-edge scroll dissolve;
+  pointermove is preview-only and one changed end commits once. Amended 2026-08-13 - drop
+  preview is footprint-true and change-gated (the placeholder carries the pickup-time
+  footprint at the correct flex order and re-seats only on a host or insertion-index change,
+  one FLIP reflow wave per change with a 16 ms stagger); window exit is invalid_target and
+  floating is explicit-only; hosts carry visible-surface caps (left/right 3, top/bottom 2,
+  floating 4, home_main uncapped) with overflow spilling to home_main; resize is
+  adjacent-pair pixel transfer against pixel-frozen sibling bases with fair-share minimum
+  degradation (effective min = min(nominal, container/visibleCount)), unified host clamp
+  bands, a floating bottom-right corner handle driving both axes, commit without a full
+  re-render (no settle flash), and a render-time no-dead-space invariant that re-sums
+  visible home_main bases to the host width so degenerate persisted layouts self-heal.
+  Amended 2026-08-13 (tweak wave) - the drop preview projects the TARGET geometry (fair
+  share of the destination host; full width plus track thickness for row-axis docks),
+  retiring the same-day pickup-footprint preview; a pickup that never left the source
+  surface's rect resolves to the source placement and a preview-expanded host never
+  captures the hit-test for its preview growth. Row-axis docks add a full-width track
+  handle driving the dock's thickness through the persisted size.cross_basis_px field
+  (host-max semantics, host-band clamped, migrated from basis_px), alongside within-row
+  pair width transfer on the column dividers. Amended 2026-08-13 (wave 3) - target
+  adoption has a two-frame hysteresis, mid-FLIP surfaces are excluded from hit-testing
+  (data-pm-home-flip), drag auto-scroll re-applies only on actual scroll or pointer
+  movement, the placeholder previews the dragged surface's proportional projected width
+  (mirroring the normalizeMainRowBases re-sum), and the PM_EDGE band geometry defers
+  during all Home gestures (move and workgroup join resize in the
+  pm-resizing/PM_DRAGEND deferral). Amended 2026-08-14 (wave 7) - Home screen scroll
+  lock: every host locks horizontal travel via overflow-x clip, overflow-y auto, and
+  overscroll-behavior none on the attribute-doubled selector
+  .pm-home-host[data-pm-home-host]. The doubled specificity is REQUIRED, not
+  decorative: the scroll-frost enrolment stamps pm6-bottom-scroll (a base
+  overflow auto rule later in the cascade) onto every host at runtime, and a
+  single-class rule loses that fight silently. A horizontal wheel over the
+  dashboard, editors, or terminal moves zero scrollLeft anywhere in the workspace,
+  no scrollbar gutters render, and vertical scrolling stays intact. Amended
+  2026-08-13 (wave 4) - host targeting is
+  latch-based and purely geometric: buildDockLatch freezes per-dock entry and exit
+  bands at pickup (entry = the committed dock rect unioned with the 28 px edge strip;
+  exit = the anticipated opened track plus a 44 px slack), and elementsFromPoint is
+  fully retired from drop-target resolution; the wave-3 two-frame hysteresis remains
+  for slot flapping within a host. Amended 2026-08-15 (wave 8) - HOME SCROLL KILL,
+  corrected mechanism. The wave-7 claim that "overflow-x: clip" beside
+  "overflow-y: auto" forbids programmatic scrollLeft is FALSE and is retired with this
+  dated disposition: per CSS Overflow 3 section 3.1, when one axis is clip and the
+  other is neither visible nor clip, the clip value COMPUTES TO HIDDEN, so the hosts
+  remained scroll containers - programmatic scrollLeft still moved 12 px, reachable by
+  focus, scrollIntoView and find - and on Safari 15 and earlier the clip declaration is
+  dropped outright, leaving true overflow-x: auto scrollers. Wave 8 removes the
+  overflow at its three measured sources instead (all measured on the 1920 by 1080
+  default layout). (a) EMPTY DOCK BOX, 8 px: .pm-home-host.pm-home-host-empty now also
+  sets "padding: 0", because the runtime scroll-frost enrolment stamps
+  pm6-bottom-scroll on every host and that base rule carries padding var(--sm), which
+  floored an empty dock's border-box at 8 px on a 0 px grid track and laid it past the
+  grid's content edge; the (0,2,0) selector beats the stamped (0,1,0) rule regardless
+  of block order. Drop previews are unaffected - syncHostGeometry drops the empty class
+  as soon as a draft places a surface there, and the dock latch uses frozen screen
+  bands. (b) FROST BANDS, 22 px: PM_EDGE builds four 30 px .pm-edge-band divs per
+  enrolled scrollport and appends them to the host grid, including for the zero-width
+  empty dock, whose band reached 30 px past the grid edge; layoutBands() now sets
+  display none on all four bands (write-if-changed) and returns whenever the scrollport
+  measures clientWidth <= 0 or clientHeight <= 0, and the existing per-element
+  ResizeObserver revives them the moment the dock gains real size. (c) PAIRLESS LAST
+  DIVIDER, 12 px: home_main emitted a resize divider on its LAST visible surface, which
+  had no right-hand partner - beginResize found no nextId, gesture.pair stayed null and
+  updateResize fell back to the diluted single-basis path that the pair-transfer
+  rebuild retired - and its decorative 16 by 56 grab-glow pseudo overhung the host's
+  right edge by about 11 px. The row-dock last-sibling divider suppression therefore
+  extends to home_main (pairRow = rowDock || surface.host === "home_main"), so a
+  home_main with N visible surfaces renders exactly N-1 dividers; dock_left and
+  dock_right KEEP their last-surface dividers with this dated disposition, because on
+  the column docks that handle drives the dock track itself through previewResize. The
+  wave-7 diagnosis that blamed the tab silhouette for the residue is also retired: the
+  silhouette's flare box overhangs the START edge, which does not count toward
+  scrollWidth in LTR, so it contributes ZERO horizontal overflow. BELT: overflow clip
+  on BOTH axes for #pm-home-workspace, .pm-home-host-grid and
+  #panel-dashboard.pm-home-owned - none of the three needs auto on either axis, so clip
+  legally destroys them as scroll containers in Chromium and Safari 16+;
+  #panel-dashboard was previously overflow hidden and silently held 26 px of scrollable
+  overflow. SCROLLBARS: the wave-7 host declaration "scrollbar-color: var(--border-light)
+  transparent" is REMOVED with this dated disposition - it beat the scrollbar opt-in
+  list's transparent idle ink and produced an always-visible thumb - and hosts get
+  ID-anchored zeroing instead, "#pm-home-workspace .pm-home-host { scrollbar-width:
+  none; }" plus "#pm-home-workspace .pm-home-host::-webkit-scrollbar { width: 0;
+  height: 0; }". Every host had been opted into the 10 px webkit scrollbar list by the
+  same pm6-bottom-scroll stamp, and on Safari 16 and 17 scrollbar-width is unsupported,
+  so those webkit bars were exactly the space-stealing bars the user reported; the
+  (1,1,x) selectors win by specificity on every engine, order-independent, and are
+  scoped to the HOST element only, so pane-internal scrollers (.pm6-dash-scroll,
+  .pm-home-terminal-body, chat streams, bottom-panel content, and .editor-code's
+  minimap-only policy) keep their existing behaviour. The wave-7 observation that the
+  doubled attribute specificity is REQUIRED against the pm6-bottom-scroll stamp
+  SURVIVES and is reused by the empty-dock padding rule. DELIBERATE DOCUMENTED
+  EXCEPTION: inside the max-width 1320 px media block, home_main returns to
+  overflow-x auto - below that width the min-width floors intentionally stop shrinking
+  surfaces past a readable size, and without the auto about 23 px or more of pane
+  content would be clipped unreachable at 880 px and below; the zero-width scrollbar
+  rules keep even that scroll bar invisible. Verified live at 1920 by 1080:
+  #pm-home-workspace, .pm-home-host-grid, #panel-dashboard and all five hosts report
+  scrollWidth == clientWidth and scrollHeight == clientHeight; forcing scrollLeft = 50
+  on each leaves it at 0; a wheel storm of 8 horizontal plus 8 vertical wheels over the
+  dashboard, the editor tab strip and the terminal produced zero scrollLeft anywhere
+  and the workspace's x stayed 279; the empty right dock measures 0 px wide and its
+  four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible
+  surfaces. At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter,
+  and returns to the clip path at 1920.
+  Amended 2026-10-09 (DL-180): the transaction, the shared resizer glow and recovery, the four-edge scroll dissolve, the
+  change-gated landing preview, the hysteresis, the latch-based geometric targeting, the invalid_target window exit and
+  the scroll lock now serve panels and tabs in the split tree (F3-630): what moves is a whole panel or a tab, the
+  targets are panel edge bands, strips, the centre's outer edge and the "+N" list, and F3-630 owns the edge bands,
+  thresholds, dwell, hysteresis and motion. Retired with this dated disposition: the five hosts, the host caps (left and
+  right 3, top and bottom 2, floating 4) and host_full, the per-kind fair-share minimums and the host clamp bands (a
+  panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
+  the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
+  follow F3-636's ladder.
+  Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel, as DR-066's cancel set says: it commits
+  nothing and restores the exact earlier layout. The 2026-08-12 rule that loss of pointer capture alone is not a
+  cancellation vector is retired.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -692,7 +805,7 @@ acceptance_criteria:
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
 - "Every split resizes by adjacent-pair transfer on its own dividers and keeps its own proportions; the row-dock size.cross_basis_px track is retired (amended 2026-10-09, DL-180; F3-630)."
-- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; moving or reflowing surfaces are excluded from the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed geometry equals the destination geometry computed by F3-630's current layout owner (two-frame stability retained from wave 3, 2026-08-13; DL-180).
+- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
 - "Drop targeting reads only latched geometry: every panel's edge bands and strip and the centre's outer edge band freeze at pickup, and no drop-target resolution reads the painted element stack, so approaching a panel edge produces exactly one target transition and one landing preview per approach (wave 4, 2026-08-13; amended 2026-10-09, DL-180; F3-630)."
 - "A divider drag transfers pixels between the two panels it separates only (+N/-N exactly), other panels are untouched, and commit produces no settle flash; each panel stops at its own minimum (F3-635, never less than 280 x 120 px) and a panel dragged below half its minimum collapses to its strip, and no Home surface floats (amended 2026-10-09, DL-180; F3-630)."
 - "At render, boot, and window resize the split tree's proportions fill the centre with no dead space and a degenerate persisted layout self-heals on normalization; host caps and host_full are retired (amended 2026-10-09, DL-180; F3-630)."
@@ -701,8 +814,8 @@ acceptance_criteria:
 - "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
 - "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
-- "future Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
-- "future Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- "Verify transactional panel/tab gestures: no dispatch during preview, one changed-release command, exact cancel restoration, stable identity and reduced-motion behavior."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
 risk_class: home_gesture_regression
 reasoning_tier: standard
 context_scope: pmconcept7_home_gestures
@@ -711,9 +824,7 @@ node_compile_hint:
   mode: home_gesture_transaction
   create_worknodes: false
 source_lineage:
-- "DL-260 source lineage only (no product API or implementation obligation): --pm-home-pad-y and --pm-home-gap-y were prototype spacing properties; the retained workspace uses semantic spacing with 2 px vertical padding, not those custom-property spellings."
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
-- "DL-260 source lineage only (no product API or implementation obligation): The retired Home prototype used PM_EDGE, PM_DRAGEND, pm-resizing, data-pm-home-flip, normalizeMainRowBases, buildDockLatch, syncHostGeometry, layoutBands and .pm-home-host/pm6-bottom-scroll/.pm-edge-band selectors. The August 2026 browser fixes and measured scroll values document that retired implementation only; F3-630/635/636 and DR-066 govern current panel/tab behavior."
 preserved_exact_tokens: [pointercancel, lostpointercapture, four-edge scroll dissolve]
 negative_constraints:
 - Do not dispatch commands, events, or persistence writes on pointermove.
@@ -743,7 +854,7 @@ canonical_text: >-
   docks and in-canvas floating only, treats popup presentation as direct-user-activation
   optional degradation, and falls back honestly when blocked. Amended 2026-08-13 - PM7
   retires the base full-screen chat overlay; every non-docked chat mode routes to the
-  single in-canvas float system (retired concept implementation), which shows no scrim,
+  single in-canvas float system (PM_HOME_WORKSPACE.popOutChat), which shows no scrim,
   cannot cover the title bar, and cannot produce a second chat surface. Floating is never
   a boot state; persisted floating surfaces demote to last_docked_host at boot with a
   storage.boot_demote_floating receipt.
@@ -775,9 +886,9 @@ acceptance_criteria:
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 - "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
-- "future Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
-- "future Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
-- "scripts/pm-plan-index.py"
+- "Verify the native pop-out and web-client boundaries of F3-504/F3-637, including one chat instance and no web-client Chat Pop out."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- python3 scripts/pm-plan-index.py validate
 risk_class: home_platform_claim_drift
 reasoning_tier: standard
 context_scope: pmconcept7_home_platform
@@ -788,7 +899,6 @@ node_compile_hint:
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/06_WEB_SLINT_FEASIBILITY.md
 - "Plans/Decision_Log.md#DL-187"
-- "DL-260 source lineage only (no product API or implementation obligation): PM_HOME_WORKSPACE.popOutChat was the old concept chat float adapter, superseded by DL-180/F3-637."
 preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canvas floating]
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
@@ -826,40 +936,39 @@ canonical_text: >-
   firm low-bounce spring while the canvas stays stationary and the connected shape visibly travels rather than
   crossfading. The shape recomputes stable target bounds on window resize, tab-width change, theme or motion
   change, and fonts-ready. Reduced motion removes the spring travel and retains immediate state changes. Amended
-  2026-08-13 - the tab rail is a translucent plate with separate opaque and translucent fill roles, at 72 percent alpha,
+  2026-08-13 - the tab rail is a translucent plate (--ed-rail-solid split from --ed-rail-bg at 72 percent alpha)
   over the existing backdrop blur so scrolled code ghosts under the strip; the concave shoulders are masked
   cutouts through which the frosted rail shows while the active tab and the canvas keep the shared opaque fill;
-  the silhouette layer appears only after a successful measure and draws above the strip without competing with
-  its grip or tab controls; fitters are mutation-free in steady state. Amended 2026-08-13 (tweak wave) - the
-  silhouette geometry is redesigned: the strip is 40 px tall (36 px
+  the silhouette layer mounts only after a successful measure and mounts as the strip's last child (slot 0 is
+  uncontested: the grip moved out of the strip to the surface corner); fitters are mutation-free in steady
+  state. Amended 2026-08-13 (tweak wave) - the silhouette geometry is redesigned: the strip is 40 px tall (36 px
   on the dashboard) with a near-full-height active tab, a 13 px squircle crown that is theme-tunable through
-  the shared crown-radius token (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
-  canvas / 8 px cutout maxima; the shared tab renderer derives per-theme radii from independent contact progress
-  (0..1 per side, same 20 px threshold); corner caps render
+  --ed-top-radius (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
+  canvas / 8 px cutout maxima; the JS now writes only the contact PROGRESS custom properties --ed-lp and --ed-rp
+  (0..1 per side, same 20 px threshold) and the CSS derives the per-theme radii from them; corner caps render
   the canvas-corner morph at the visible rail boundary; tabs start flush at the panel's left edge; per-theme
   skins apply (friendly mint canvas with lime active label, glass plate with edge highlight, retro sharp corners
   with lime). The dashboard tab strip (Main/Metrics/Monitoring) enrolls in the same connected-surface system -
-  the shared tab presentation owner updates that strip, and the dashboard header plate uses the shared rail
-  recipe at the same alpha -
+  EDSHAPE syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at the same alpha -
   while the title-bar page tabs keep their sliding ink (the F3-464 boundary is unchanged). The editor scrollbar
   is excluded from the frosted rail band via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the
-  silhouette gains shared theme tokens for its outline, crown material and height, and inactive-tab ring and
-  radius. Retro draws its signature hard outline with square inactive-tab
+  silhouette gains theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
+  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline with square inactive-tab
   rings; basic draws a 2 px accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
   and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired with this dated
   disposition). Wave-3 follow-up (2026-08-13): the retro outline lives on the ACTIVE TAB as a three-edge inset
   ring that snaps on arrival, not on the travelling connected shape - the outline-on-the-travelling-shape
   rendering is retired with this dated disposition. Amended 2026-08-14 (wave 6) - silhouette construction canon:
-  the connected shape is one shared geometric path per frame. The crown corners are
+  the connected shape is ONE JS-composed clip-path path() per frame. The crown corners are
   superellipse-approximating cubic beziers with a handle factor of 0.5523 + 0.35 x progress, and each side
   descends through an ogee - a concave flare of radius shoulder-max x progress into a convex neck of radius
   canvas-max x progress landing tangent on the canvas line. This renders identically in Safari and Chromium,
   which is the explicit motivation: the corner-shape/superellipse enhancement path was engine-split
-  (Chromium-only). The glass bevel becomes a 1 px crown strip using the shared Glass edge token, clipped by the same path. Morph gap
+  (Chromium-only). The glass bevel becomes a 1 px --glass-edge crown strip clipped by the same path. Morph gap
   canon (measured against the reference explainer's debug HUD): progress = clamp(gap / 20 px, 0, 1) LINEAR; the
   canvas(neck) to shoulder(flare) radii ratio is 10:8; each side's gap is the distance to the NEAREST CONTACT -
   the static strip content-box edge or the adjacent tab's transform-free layout edge - and the strip-end caps
-  key off the strip box edges only. Glass-dark deepens the opaque rail fill via a 55 percent black canvas-bg mix so
+  key off the strip box edges only. Glass-dark deepens --ed-rail-solid via a 55 percent black canvas-bg mix so
   the silhouette is visible (measured: about 1 sRGB channel level before, 16 levels after). Wave-6 follow-up
   (2026-08-14, defect-fix refinement of the path canon): the ogee construction is height-clamped - flare and
   neck scale together to fit below the crown (the unclamped first cut inverted the wall segment into a visible
@@ -876,32 +985,55 @@ canonical_text: >-
   matching the reference explainer's two-corner model (tab cutout r and canvas r are separate corners). Both
   ogee constructions - the height-clamped 0.55-handle form and the 0.9/0.18 asymmetric-handle retune - are
   retired with this dated disposition as a misreading of the reference. Fourth follow-up (2026-08-14, the second
-  corner made literal): the CANVAS surface's own top corners round on the editor area (per-side contact progress
-  times the maximum canvas-corner radius), driven by the same per-side edge progress as the tab, so
+  corner made literal): the CANVAS surface's own top corners round via real animated border-radius on the editor
+  area (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge progress as the tab, so
   the panel corner and the tab cutout JOIN when flush (both flat = one continuous surface) and the corner blooms
   back as the tab moves away. The masked wedge caps for editor panes are retired with this dated disposition -
   they painted rail-coloured overlays at the strip ends and were invisible at panel scale; the dashboard header
   caps are unchanged this round. Radii retuned for legibility: shoulder-rx-max 14 px default / 16 friendly / 8
   retro, canvas-rx-max 16 px default / 18 friendly / 10 retro. Fifth follow-up (2026-08-14): corner-notch
-  CONTRAST canon - the editor pane behind the measured silhouette uses the rail-over-canvas composite fill, so
+  CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the rail-over-canvas composite), so
   the rounded-away canvas corner reveals a visibly darker backdrop; a corner exposing a same-tone backdrop reads
   as no corner (user-reported: the radius was applying at 18 px yet invisible). Strip heights re-tune with this
-  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
+  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (--ed-strip-h, --pm6-editor-tabs-h,
+  --pm6-dash-head-h; the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
   intact under the new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the fourth
   follow-up's animated border-radius canvas corner is RETIRED with cause - the canvas slides UNDER the
   translucent rail (the scroll frost), so the area's true box corner is invisible and a border-radius there
   rounds nothing a user can see. The masked wedge caps are RESTORED as the canonical frost-preserving
-  construction for the VISIBLE emergence line, now filled with the opaque rail fill - the old rail-over-canvas
+  construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg
   composite fill was the invisibility cause, not the wedge architecture - at 18 px (20 friendly) width by 16 px
-  height (the vertical corner-radius token 12 to 16; the maximum canvas-corner radius 18 default / 20 friendly), and the pane
-  background behind the measured silhouette stays the opaque rail fill. The shared tab presentation owner keeps the Retro phosphor block, DOS full inversion and CRT scanline wipe visible on dashboard and editor tabs. Neutralizing the ordinary tab plate must not suppress an effect’s foreground, fill or background. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
+  height (--ed-corner-ry 12 to 16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane
+  background stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses
+  !important, and important declarations beat CSS animations, so all background-based retro effects were dead on
+  dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background
+  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via :not() and receive a
+  normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up
+  (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the
+  effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the
+  assembled cascade, won the tie for plain background declarations (phosphor survived only through its
+  keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on,
+  weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
+  disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all
+  paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
   - and the minimap band aligns with the frosted rail via margin rather than padding, retiring the wave-2
   scrollbar-track-margin exclusion with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
   CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the pointer and corner values are
   derived from the tab position in the same frame with no independent easing") and its negative constraint
   against easing corner values independently of the tab position were being VIOLATED by the shipped build, and
-  are restored rather than retired. Picking up a non-active tab first updates the shared active-tab state. During any live reorder, its carried label, silhouette position and width, and contact corners resolve from the same current pointer position in the activating frame, without independent selection easing. Activation cancels any in-flight selection animation, zeros residual velocities and snaps the plate to its target; even sub-0.5 px moves cannot preserve an old spring or leave the underlying tab exposed. Click, snap and keyboard selection springs remain unchanged, as does the reorder owner’s release settle. Also with this dated disposition, a per-theme
-  silhouette SKIN is added under the wave-6 skin family: Glass uses 0.92 silhouette opacity during the drag only, slightly see-through but never
+  are restored rather than retired. The violation was structural, not decorative: grabbing a NON-ACTIVE tab
+  flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and
+  sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
+  pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract
+  with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP -
+  draggingLive is computed immediately after the lastActive update, it forces animate = false, and the
+  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch cancels the in-flight rAF,
+  jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard
+  SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured:
+  worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct
+  monotonic intermediates on a click-to-select, no overshoot. Also with this dated disposition, a per-theme
+  silhouette SKIN is added under the wave-6 skin family: glass gains a drag-scoped frost, [data-theme^="glass"]
+  .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } - slightly see-through but never
   legible, honouring the user's "like a blur" request. The drag plate adds no independent backdrop blur; F3-652
   owns its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap. The
   steady-state plate remains fully opaque in all ten themes; measured live at .92 mid-drag in glass-dark and 1
@@ -925,10 +1057,10 @@ unblocks: []
 acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
-- "Only the horizontal extent of a corner animates, driven by the per-side contact progress against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
+- "Only the horizontal extent of a corner animates, driven by the per-side contact progress --ed-lp/--ed-rp against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
 - "Every panel's strip, a dashboard tab's panel included, participates in the same connected-surface system, and tabs start flush at the panel's left edge (amended 2026-10-09, DL-180; F3-631, F3-638)."
 - "Per-look silhouette skins follow F3-631 and F3-647: no look draws an accent crown strip, an underline or a separately coloured plate on the active tab; Glass keeps its 1 px glass rim along the fused shape's crown as part of its material, never in an accent colour (amended 2026-10-09, DL-180)."
-- "The silhouette is one shared geometric path per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
+- "The silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
@@ -936,12 +1068,12 @@ acceptance_criteria:
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
 - "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); Glass consumes F3-652's Liquid Glass material and optics budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
-- "The shared tab presentation owner reveals the silhouette only after a successful measure, with its position and width valid in the first visible frame; layer ordering never displaces the strip’s grip or tab controls."
+- "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "future contact-aware tab silhouette acceptance: drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
-- "future replacement executable cases under ATS-075/076; cases for the retired four-panel Home model do not prove this row."
-- scripts/pm-plan-index.py
+- "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
+- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
+- python3 scripts/pm-plan-index.py validate
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -950,12 +1082,8 @@ node_compile_hint:
   mode: contact_aware_editor_tab_silhouette
   create_worknodes: false
 source_lineage:
-- "DL-260/DL-280 source lineage only (no product DOM, CSS, JavaScript or exact-token obligation): .dashboard-tabs, EDSHAPE, clip-path path(), strip last-child/slot-0 mounting, shape-on classes, --ed-lp/--ed-rp, --ed-shape-x/--ed-shape-w, --ed-rail-solid/--ed-rail-bg, --ed-top-radius, --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, --ed-tab-inactive-ring, --ed-canvas-rx-max, --ed-cap-bg, --ed-corner-ry and --glass-edge were the concept silhouette renderer’s selectors and paint bridges. Product geometry, materials and synchronization stay with F3-505/F3-631/F3-647."
-- "DL-260 source lineage only (no product API or implementation obligation): The browser’s drag-scoped Glass selector was an adapter to the retained 0.92 drag opacity: glass gains a drag-scoped frost, [data-theme^=\"glass\"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } -"
-- "DL-260 source lineage only (no product API or implementation obligation): The prototype snap-while-dragging repair and measured samples below are source evidence, not a required EDSHAPE/sync/draggingLive/animation-frame API: The violation was structural, not decorative: grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP - draggingLive is computed immediately after the lastActive update, it forces animate = false, and the spring-preservation guard is qualified by \"&& !draggingLive\" so the snap branch cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured: worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot."
-- "DL-260 source lineage only (no product API or implementation obligation): The historical browser repair used --pm6-editor-tabs-h/--pm6-dash-head-h and the following CSS precedence changes; these are not native product code requirements: Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses !important, and important declarations beat CSS animations, so all background-based retro effects were dead on dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background lost); effect-classed tabs ([class*=\"pm-retro\"]) now escape the important rule via :not() and receive a normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the assembled cascade, won the tie for plain background declarations (phosphor survived only through its keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all paint on dashboard tabs."
 - "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle"]
+preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle", "--ed-lp", "--ed-rp"]
 negative_constraints:
 - "Do not render the active-editor-tab treatment as a pill or an underline sliding between labels."
 - "Do not retain a decorative notch where the tab and the canvas are flush."

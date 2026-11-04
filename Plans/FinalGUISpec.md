@@ -50368,3 +50368,188 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+### F3-700 - alert.acknowledged event boundary
+
+```yaml
+plan_unit_id: F3-700
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.acknowledged: unacknowledged or snoozed -> acknowledged; clear unread only; never resolve
+  the underlying condition. Current owner must prove the action is allowed, including permission, current subject
+  revision and currentness_basis_ref. Mute/snooze cannot suppress blocking confirmations or security-sensitive failures;
+  dismissal cannot clear a blocker. A refusal, stale result, no change, rollback or failed persistence produces
+  no event. F3-453 remains the one shared alert store; visible read is not domain acknowledgement; source access
+  and existing confirmation owners still apply. The complete newly authored per-family owner contract is Plans/storage-plan.md#SP-660,
+  payload Plans/event_payloads/attention/alert_acknowledged.schema.json. Its producer explicitly adopts SP-286/CV-339
+  full-value v2; its history consumer explicitly adopts SP-278/DL-076. Retention PENDING_RETENTION_DECISION; prepared
+  without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.acknowledged is denied until its own admission; exact identity, custody, recovery and negative paths are
+  checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_acknowledged
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_acknowledged.schema.json
+- Plans/storage-plan.md#SP-660
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.acknowledged
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-701 - alert.dismissed event boundary
+
+```yaml
+plan_unit_id: F3-701
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.dismissed: unacknowledged, acknowledged or snoozed -> dismissed; rationale required; remove
+  inbox presentation only; no approval, denial, resolution or source deletion. Current owner must prove the action
+  is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze cannot suppress
+  blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale result,
+  no change, rollback or failed persistence produces no event. F3-453 remains the one shared alert store; visible
+  read is not domain acknowledgement; source access and existing confirmation owners still apply. The complete newly
+  authored per-family owner contract is Plans/storage-plan.md#SP-661, payload Plans/event_payloads/attention/alert_dismissed.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.dismissed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_dismissed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_dismissed.schema.json
+- Plans/storage-plan.md#SP-661
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.dismissed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-702 - alert.rule_muted event boundary
+
+```yaml
+plan_unit_id: F3-702
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.rule_muted: unmuted or expired -> muted for the exact Project rule; keep the issue visible
+  in its owning surface; expiry follows the original explicit deadline, never retry time. Current owner must prove
+  the action is allowed, including permission, current subject revision and currentness_basis_ref. Mute/snooze cannot
+  suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker. A refusal, stale
+  result, no change, rollback or failed persistence produces no event. F3-453 remains the one shared alert store;
+  visible read is not domain acknowledgement; source access and existing confirmation owners still apply. The complete
+  newly authored per-family owner contract is Plans/storage-plan.md#SP-662, payload Plans/event_payloads/attention/alert_rule_muted.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.rule_muted is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_rule_muted
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_rule_muted.schema.json
+- Plans/storage-plan.md#SP-662
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.rule_muted
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
+
+### F3-703 - alert.snoozed event boundary
+
+```yaml
+plan_unit_id: F3-703
+unit_type: interaction_contract
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: 'alert.snoozed: unacknowledged or acknowledged -> snoozed until snooze_until, strictly after ts;
+  keep original deadline on replay; never suppress blocking confirmations or security-sensitive failures. Current
+  owner must prove the action is allowed, including permission, current subject revision and currentness_basis_ref.
+  Mute/snooze cannot suppress blocking confirmations or security-sensitive failures; dismissal cannot clear a blocker.
+  A refusal, stale result, no change, rollback or failed persistence produces no event. F3-453 remains the one shared
+  alert store; visible read is not domain acknowledgement; source access and existing confirmation owners still
+  apply. The complete newly authored per-family owner contract is Plans/storage-plan.md#SP-663, payload Plans/event_payloads/attention/alert_snoozed.schema.json.
+  Its producer explicitly adopts SP-286/CV-339 full-value v2; its history consumer explicitly adopts SP-278/DL-076.
+  Retention PENDING_RETENTION_DECISION; prepared without admission.'
+gui_related: true
+gui_classification_reason: Governs visible alert action semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- alert.snoozed is denied until its own admission; exact identity, custody, recovery and negative paths are checked.
+- Retention remains PENDING_RETENTION_DECISION; native execution NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-alert-event-contracts-check.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: alert_snoozed
+implementation_surfaces:
+- Plans/event_payloads/attention/alert_snoozed.schema.json
+- Plans/storage-plan.md#SP-663
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/FinalGUISpec.md#F3-453
+preserved_exact_tokens:
+- alert.snoozed
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No append, native activation, checkpoint advance or admission from this preparation.
+```
