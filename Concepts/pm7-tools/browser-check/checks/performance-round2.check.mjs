@@ -1,6 +1,6 @@
 // One resident GPU browser for trace accounting and final control/fix films.
 import perf from './performance-stalls.check.mjs';
-import projection from './work-projection.check.mjs';
+import { tests as projection } from './work-projection.check.mjs';
 import sound from './sound-prime.check.mjs';
 export default async function(t){
  const saved={...t.args};
@@ -16,7 +16,7 @@ export default async function(t){
    await t.mark(label+' '+only+' end');
   }
   if(label==='fixed'&&saved.functional){
-   await projection.tests['Studio work changes preserve the conversation (SW-10)'](t);
+   await projection['Studio work changes preserve the conversation (SW-10)'](t);
    await sound(t);
   }
  }
