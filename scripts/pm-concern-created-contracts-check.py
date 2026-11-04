@@ -5,6 +5,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 
@@ -108,6 +109,7 @@ def historical_concern_page(request, expected, payload_schema, cp_schema):
 def main():
     fixture = load('Plans/concern_created_contracts/concern_created.fixtures.json')
     family = load('Plans/concern_created_contracts/manifest.json')['families'][0]
+    isolated_count = shared.isolated_cases('concern', sys.modules[__name__], family, fixture)
     payload_schema = load(family['payload_schema'])
     op_schema = load('Plans/concern_created_contracts/concern_created_operation.schema.json')
     cp_schema = load('Plans/concern_created_contracts/concern_created_checkpoint.schema.json')
@@ -116,7 +118,7 @@ def main():
         shared.check_schema(schema)
     original = fixture['settled_operation']
     assert not operation_errors(original, op_schema, payload_schema)
-    count = 1
+    count = 1 + isolated_count
     count += shared.producer_cases(fixture, 'concern.created', original['payload'])
     for schema in (payload_schema, op_schema, cp_schema, record_schema):
         count += shared.pattern_leaf_cases(schema)
@@ -151,6 +153,7 @@ def main():
         value['candidate_record']['created_by_kind'] = creator
         value['request_digest'] = digest(value)
         proof['authority']['creator_kind'] = creator
+        proof['retry_digest'] = value['request_digest']
         assert operation_errors(value, op_schema, payload_schema)
         assert protocol_errors(proof, value)
         count += 1
@@ -181,6 +184,15 @@ def main():
                                 ('candidate_record', 'created_by_ref', 'pmref:foreign:creator')]:
         value = copy.deepcopy(original)
         value[section][field] = bad
+        if section == 'payload' and field == 'ts':
+            value['original_command']['ts'] = bad
+            value['candidate_record'].update(created_at=bad, updated_at=bad)
+        elif section == 'payload' and field == 'origin':
+            value['original_command']['origin'] = bad
+        elif section == 'original_command' and field == 'title_ref':
+            value['candidate_record']['summary'] = bad
+        else:
+            value['request_digest'] = digest(value)
         assert operation_errors(value, op_schema, payload_schema), (section, field)
         count += 1
     for state in ('prepared', 'committed'):

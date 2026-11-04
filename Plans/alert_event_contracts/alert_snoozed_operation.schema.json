@@ -18,7 +18,8 @@
     "dispatch_receipt_ref",
     "original_append_result_ref",
     "prior_owner_state",
-    "candidate_owner_state"
+    "candidate_owner_state",
+    "original_command"
   ],
   "properties": {
     "schema_id": {
@@ -330,6 +331,90 @@
               "type": "null"
             }
           ]
+        }
+      }
+    },
+    "original_command": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "Static payload shape only. The owner/runtime must prove current revision, successor revision, and that snooze_until is later than ts. This schema grants no append or dispatch authority.",
+      "title": "alert.snoozed payload",
+      "description": "Closed project-scoped payload for temporarily snoozing one durable alert occurrence until an explicit UTC deadline.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "alert_id",
+        "alert_record_ref",
+        "actor_ref",
+        "prior_revision",
+        "currentness_basis_ref",
+        "prior_alert_state",
+        "snooze_until",
+        "snooze_reason_code",
+        "origin",
+        "handler_target",
+        "command_id",
+        "correlation_id",
+        "idempotency_key",
+        "ts"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "alert_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "alert_record_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "prior_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_basis_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "prior_alert_state": {
+          "enum": [
+            "unacknowledged",
+            "acknowledged"
+          ]
+        },
+        "snooze_until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "snooze_reason_code": {
+          "$ref": "#/$defs/payload_reason_code"
+        },
+        "origin": {
+          "$ref": "#/$defs/payload_origin"
+        },
+        "handler_target": {
+          "const": "handlers::alert::snooze"
+        },
+        "command_id": {
+          "const": "cmd.alert.snooze"
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     }

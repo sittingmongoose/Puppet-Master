@@ -18,7 +18,8 @@
     "dispatch_receipt_ref",
     "original_append_result_ref",
     "prior_owner_state",
-    "candidate_owner_state"
+    "candidate_owner_state",
+    "original_command"
   ],
   "properties": {
     "schema_id": {
@@ -325,6 +326,93 @@
               "type": "null"
             }
           ]
+        }
+      }
+    },
+    "original_command": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$comment": "Static payload shape only. The owner/runtime must prove the rule revision is current, result_revision is its successor, and any expiry is applied by policy. This schema grants no append or dispatch authority.",
+      "title": "alert.rule_muted payload",
+      "description": "Closed project-scoped payload for muting one alert rule, distinct from dismissing a single alert occurrence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "alert_rule_id",
+        "alert_rule_ref",
+        "actor_ref",
+        "prior_revision",
+        "currentness_basis_ref",
+        "prior_mute_state",
+        "mute_scope",
+        "mute_reason_code",
+        "origin",
+        "handler_target",
+        "command_id",
+        "correlation_id",
+        "idempotency_key",
+        "ts"
+      ],
+      "properties": {
+        "project_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "alert_rule_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "alert_rule_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "actor_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "prior_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "currentness_basis_ref": {
+          "$ref": "#/$defs/payload_non_secret_ref"
+        },
+        "prior_mute_state": {
+          "enum": [
+            "unmuted",
+            "expired"
+          ]
+        },
+        "mute_scope": {
+          "const": "project"
+        },
+        "mute_reason_code": {
+          "$ref": "#/$defs/payload_reason_code"
+        },
+        "mute_expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "origin": {
+          "$ref": "#/$defs/payload_origin"
+        },
+        "handler_target": {
+          "const": "handlers::alert::mute_rule"
+        },
+        "command_id": {
+          "const": "cmd.alert.mute_rule"
+        },
+        "correlation_id": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "idempotency_key": {
+          "$ref": "#/$defs/payload_non_empty_id"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/payload_ref_array"
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     }

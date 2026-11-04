@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L28057-L30588
 
-Source SHA256: `5dce931ce85647c27fde3e5cb2bf9a9ce8aa03bf16f2e92379950260df2bc680`
+Source SHA256: `7c617767338b5d1043e6b1162392292f6e30e8dca30e9a83e7cde79fc1906627`
 
 ---
 
@@ -1438,7 +1438,7 @@ plan_unit_id: SP-660
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\
+canonical_text: "Newly authored technical custody binding: original_command is the complete closed normalized accepted command context with every candidate payload field except schema_id, schema_version and result_* fields. It retains the original subject/source reference, actor, prior revision/state, currentness, options, correlation, idempotency key and original ts; optional fields retain original presence. This private snapshot does not expand the public command signature. request_digest is lowercase SHA-256 of canonical MessagePack {original_command: operation.original_command, candidate_payload: operation.payload}; every field and optional presence participates, with no Storage-assigned metadata. Both owner snapshots join Project, subject, immutable source, revision and lifecycle state to the frozen command/payload; unchanged fields agree with the prior snapshot and only the specified action effects differ. No supplied digest or snapshot copy grants authority. Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\
   \ Only cmd.alert.acknowledge, handled by handlers::alert::acknowledge, produces this exact family. Existing closed\
   \ payload is Plans/event_payloads/attention/alert_acknowledged.schema.json (pm.attention_event.alert_acknowledged.schema.v1);\
   \ no sibling admission. Semantic owner is F3-700, payload route CV-680, storage route SP-660. Transition: unacknowledged\
@@ -1585,7 +1585,7 @@ plan_unit_id: SP-661
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\
+canonical_text: "Newly authored technical custody binding: original_command is the complete closed normalized accepted command context with every candidate payload field except schema_id, schema_version and result_* fields. It retains the original subject/source reference, actor, prior revision/state, currentness, options, correlation, idempotency key and original ts; optional fields retain original presence. This private snapshot does not expand the public command signature. request_digest is lowercase SHA-256 of canonical MessagePack {original_command: operation.original_command, candidate_payload: operation.payload}; every field and optional presence participates, with no Storage-assigned metadata. Both owner snapshots join Project, subject, immutable source, revision and lifecycle state to the frozen command/payload; unchanged fields agree with the prior snapshot and only the specified action effects differ. No supplied digest or snapshot copy grants authority. Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\
   \ Only cmd.alert.dismiss, handled by handlers::alert::dismiss, produces this exact family. Existing closed payload\
   \ is Plans/event_payloads/attention/alert_dismissed.schema.json (pm.attention_event.alert_dismissed.schema.v1);\
   \ no sibling admission. Semantic owner is F3-701, payload route CV-681, storage route SP-661. Transition: unacknowledged,\
@@ -1732,7 +1732,7 @@ plan_unit_id: SP-662
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\
+canonical_text: "Newly authored technical custody binding: original_command is the complete closed normalized accepted command context with every candidate payload field except schema_id, schema_version and result_* fields. It retains the original subject/source reference, actor, prior revision/state, currentness, options, correlation, idempotency key and original ts; optional fields retain original presence. This private snapshot does not expand the public command signature. request_digest is lowercase SHA-256 of canonical MessagePack {original_command: operation.original_command, candidate_payload: operation.payload}; every field and optional presence participates, with no Storage-assigned metadata. Both owner snapshots join Project, subject, immutable source, revision and lifecycle state to the frozen command/payload; unchanged fields agree with the prior snapshot and only the specified action effects differ. No supplied digest or snapshot copy grants authority. Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\
   \ Only cmd.alert.mute_rule, handled by handlers::alert::mute_rule, produces this exact family. Existing closed\
   \ payload is Plans/event_payloads/attention/alert_rule_muted.schema.json (pm.attention_event.alert_rule_muted.schema.v1);\
   \ no sibling admission. Semantic owner is F3-702, payload route CV-682, storage route SP-662. Transition: unmuted\
@@ -1879,7 +1879,7 @@ plan_unit_id: SP-663
 unit_type: contract
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\
+canonical_text: "Newly authored technical custody binding: original_command is the complete closed normalized accepted command context with every candidate payload field except schema_id, schema_version and result_* fields. It retains the original subject/source reference, actor, prior revision/state, currentness, options, correlation, idempotency key and original ts; optional fields retain original presence. This private snapshot does not expand the public command signature. request_digest is lowercase SHA-256 of canonical MessagePack {original_command: operation.original_command, candidate_payload: operation.payload}; every field and optional presence participates, with no Storage-assigned metadata. Both owner snapshots join Project, subject, immutable source, revision and lifecycle state to the frozen command/payload; unchanged fields agree with the prior snapshot and only the specified action effects differ. No supplied digest or snapshot copy grants authority. Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\
   \ Only cmd.alert.snooze, handled by handlers::alert::snooze, produces this exact family. Existing closed payload\
   \ is Plans/event_payloads/attention/alert_snoozed.schema.json (pm.attention_event.alert_snoozed.schema.v1); no\
   \ sibling admission. Semantic owner is F3-703, payload route CV-683, storage route SP-663. Transition: unacknowledged\

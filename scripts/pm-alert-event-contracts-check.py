@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Static DG6A payload/custody oracle; grants no admission or native proof."""
 import copy
+import hashlib
 import importlib.util
 import json
 import re
@@ -69,23 +70,93 @@ def operation_errors(value, schema):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
     if len(packed(value)) > 16384:
         found.append('operation exceeds 16384 encoded bytes')
+    if found:
+        return found
+    payload, command = value['payload'], value['original_command']
+    event_type = schema['properties']['schema_id']['const'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('alert_', 'alert.', 1)
+    h = hashlib.sha256(packed([value['storage_instance_id'], value['project_id'], event_type,
+                               value['idempotency_key']])).hexdigest()
+    if value['operation_digest'] != h:
+        found.append('operation identity digest mismatch')
+    if value['event_id'] != 'evt_' + event_type.replace('.', '_') + '_' + h:
+        found.append('event identity mismatch')
+    if value['request_digest'] != request_digest(command, payload):
+        found.append('frozen command digest mismatch')
+    for key in command:
+        if command[key] != payload.get(key):
+            found.append('original command/payload ' + key)
+    for key in ('project_id', 'idempotency_key'):
+        if value[key] != payload[key]:
+            found.append('operation/payload ' + key)
+    if payload['result_revision'] != payload['prior_revision'] + 1:
+        found.append('non-successor')
+    prior, candidate = value['prior_owner_state'], value['candidate_owner_state']
+    rule = event_type == 'alert.rule_muted'
+    subject, source = ('alert_rule_id', 'alert_rule_ref') if rule else ('alert_id', 'alert_record_ref')
+    state_key = 'mute_state' if rule else 'acknowledgement_state'
+    prefix = 'mute_state' if rule else ('acknowledgement_state' if event_type == 'alert.acknowledged' else 'alert_state')
+    for name, snapshot, revision, state in [('prior', prior, 'prior_revision', 'prior_' + prefix),
+                                             ('candidate', candidate, 'result_revision', 'result_' + prefix)]:
+        for field, expected in [('project_id', payload['project_id']), (subject, payload[subject]),
+                                 ('source_record_ref', payload[source]), ('revision', payload[revision]),
+                                 (state_key, payload[state])]:
+            if snapshot[field] != expected:
+                found.append(name + ' owner ' + field)
+    if rule:
+        if candidate['root_cause_ref'] != prior['root_cause_ref']:
+            found.append('candidate owner root_cause_ref')
+        if candidate['mute_expires_at'] != payload.get('mute_expires_at'):
+            found.append('candidate owner mute_expires_at')
+    else:
+        expected_unread = False if event_type == 'alert.acknowledged' else prior['unread']
+        expected_visible = prior['inbox_visible'] if event_type == 'alert.acknowledged' else False
+        expected_snooze = payload['snooze_until'] if event_type == 'alert.snoozed' else prior['snooze_until']
+        for field, expected in [('unread', expected_unread), ('inbox_visible', expected_visible), ('snooze_until', expected_snooze)]:
+            if candidate[field] != expected:
+                found.append('candidate owner ' + field)
+    if payload.get('snooze_until', '9999') <= payload['ts']:
+        found.append('expired snooze')
+    return found
+
+
+def request_digest(command, payload):
+    return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
+
+
+def isolated_cases(kind, owner, family, fixture):
+    spec = importlib.util.spec_from_file_location('dg6a_guard_vectors', ROOT / 'scripts/pm-dg6a-guard-check.py')
+    helper = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(helper)
+    return helper.vectors(kind, owner, family, fixture)
+
+
+def protocol_errors(context, original):
+    """Current retry evidence; the retained historical reader never calls this."""
+    found = writer_policy_errors(context['replay_policy'])
+    for field in ('admitted', 'allowed', 'current', 'source_verified'):
+        if not context[field]:
+            found.append(field)
+    if context['receipt_event_id'] != original['event_id']:
+        found.append('wrong original receipt')
+    if request_digest(context['retry_command'], context['retry_payload']) != original['request_digest']:
+        found.append('idempotency_conflict')
     return found
 
 def operation_size_cases(original, schema, cases):
     for case in cases:
         value = copy.deepcopy(original)
+        value.update(state='committed', owner_commit_ref='x', result_ref='original', dispatch_receipt_ref='original')
         target = case['encoded_bytes']
         for _ in range(4):
-            ref = value['prior_owner_state']['source_record_ref']
+            ref = value['owner_commit_ref']
             delta = target - len(packed(value))
-            value['prior_owner_state']['source_record_ref'] = ref + 'x' * delta if delta >= 0 else ref[:delta]
+            value['owner_commit_ref'] = ref + 'x' * delta if delta >= 0 else ref[:delta]
         assert len(packed(value)) == target
         # Ensure an oversized negative reaches the physical guard with a valid shape.
         assert not list(Draft202012Validator(schema).iter_errors(value))
         assert (not operation_errors(value, schema)) == case['valid'], case['name']
     value = copy.deepcopy(original)
-    for key in ('prior_owner_state', 'candidate_owner_state'):
-        value[key]['source_record_ref'] = 'pmref:source:' + 'x' * 17000
+    value.update(state='committed', owner_commit_ref='x' * 17000, result_ref='original', dispatch_receipt_ref='original')
     assert not list(Draft202012Validator(schema).iter_errors(value))
     assert operation_errors(value, schema), 'oversized owner snapshots accepted'
     return len(cases) + 1
@@ -482,6 +553,7 @@ def main():
         schema = load(family['payload_schema'])
         check_schema(schema)
         fixtures = load(f"Plans/alert_event_contracts/{family['slug']}.fixtures.json")
+        count += isolated_cases('alert', sys.modules[__name__], family, fixtures)
         original_context = fixtures['operation_cases'][0]['value']
         count += producer_cases(fixtures, family['event_type'], original_context['payload'])
         for case in fixtures['writer_policy_cases']:

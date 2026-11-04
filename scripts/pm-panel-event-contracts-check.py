@@ -5,6 +5,7 @@ import copy
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
 
@@ -107,6 +108,8 @@ def protocol_errors(context, original_operation):
         errors.append('unverified source')
     if context['receipt_event_id'] != context['original_event_id']:
         errors.append('wrong original receipt')
+    if context['original_event_id'] != original_operation['event_id']:
+        errors.append('forged original event identity')
     if context['session'] != original_payload['app_session_id']:
         errors.append('prior session cannot act')
     if context['window'] != original_payload['window_id']:
@@ -133,6 +136,7 @@ def main():
         slug, event = family['slug'], family['event_type']
         assert event not in admitted
         fixture = load(f'Plans/panel_event_contracts/{slug}.fixtures.json')
+        count += shared.isolated_cases('panel', sys.modules[__name__], family, fixture)
         schema = load(family['payload_schema'])
         shared.check_schema(schema)
         for case in fixture['writer_policy_cases']:

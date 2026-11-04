@@ -134,8 +134,8 @@ def run_suite(output):
             def oversize(v):
                 op = operation(v, kind)
                 if kind == 'alert':
-                    for field in ('prior_owner_state', 'candidate_owner_state'):
-                        op[field]['source_record_ref'] = 'pmref:source:' + 'x' * 17000
+                    op.update(state='committed', owner_commit_ref='x' * 17000,
+                              result_ref='original', dispatch_receipt_ref='original')
                 elif kind == 'panel':
                     op['original_command']['actor_ref'] = op['payload']['actor_ref'] = 'a' * 17000
                     op['request_digest'] = panel.request_digest(op['original_command'], op['payload'])
@@ -179,8 +179,12 @@ def run_suite(output):
             cli(event, '9', 'unresolved embedded registry reference', script, 'Plans/storage_value_registry.json', broken_embedded)
             if kind == 'alert':
                 for field in ('source_refs', 'evidence_refs'):
+                    def optional(v, field=field):
+                        op = operation(v, kind)
+                        op['payload'][field] = op['original_command'][field] = ['pmref:source:fixture']
+                        op['request_digest'] = shared.request_digest(op['original_command'], op['payload'])
                     fixture_case('9', 'valid nonempty optional ' + field,
-                                 lambda v, field=field: operation(v, kind)['payload'].update({field: ['pmref:source:fixture']}), 0)
+                                 optional, 0)
 
             # Mutate the actual traversed checkpoint or candidate original, keeping
             # independently expected publication/payload/receipt/source untouched.
