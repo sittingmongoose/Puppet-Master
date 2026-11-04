@@ -79,6 +79,33 @@ const primary = (f) => f.evaluate((L) => { const p = document.querySelector(L + 
 export default async function (t) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	if (t.args.motion === 'on') await t.emulate({ reducedMotion: 'no-preference' });
+    await t.step('drive checking · both wordings', async () => {
+        for (let mode = 0; mode < 2; mode++) {
+            const f = await t.app.open();
+            await t.app.look('friendly-light');
+            if (t.args.motion === 'on') await t.emulate({ reducedMotion: 'no-preference' });
+            await openAt(t, f, 'begin'); await settled(f, 'begin');
+            if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
+            await clickIn(f, '[data-o55-do="pick"][data-arg="existing"]');
+            await clickIn(f, '[data-o55-do="sub"][data-arg="device"]');
+            await clickIn(f, '.o55-primary'); await settled(f, 'nas-find');
+            await clickIn(f, '[data-o55-do="method"][data-arg="mounted"]');
+            await clickIn(f, '[data-o55-do="volume"]');
+            await record(f); await t.mark('drive selected ' + mode);
+            await clickIn(f, '.o55-primary');
+            const ran = await checkIs(f, 'nas-mounted', 'running', 4000);
+            const p = await f.evaluate(PIP, ROOT);
+            await t.check(`drive checking wording ${mode}: stage follows running check`, ran && p.lineId === 'checking', show(p));
+            await t.check('drive check completes', await checkIs(f, 'nas-mounted', 'done'), '');
+            const done = await line(f, 'nas-mounted', 'done'), checking = await line(f, 'nas-mounted', 'checking');
+            await says(t, f, [done]);
+            const seq = await played(f);
+            await t.check(`drive checking wording ${mode}: bubble starts checking then done, no drive question`, seq.includes(checking) && seq.indexOf(done) > seq.indexOf(checking) && !seq.includes(await line(f, 'nas-mounted', 'enter')), seq.join(' > '));
+            await t.mark('drive complete ' + mode);
+        }
+    });
+    if (t.args.driveOnly) return;
+
 	for (const [i, look] of looks.entries()) {
 		await t.step(`${look} · smb`, async () => {
 			const f = await t.app.open();
