@@ -959,7 +959,7 @@ acceptance_criteria:
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
 - "Every split resizes by adjacent-pair transfer on its own dividers and keeps its own proportions; the row-dock size.cross_basis_px track is retired (amended 2026-10-09, DL-180; F3-630)."
-- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
+- A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; moving or reflowing surfaces are excluded from the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed geometry equals the destination geometry computed by F3-630's current layout owner (two-frame stability retained from wave 3, 2026-08-13; DL-180).
 - "Drop targeting reads only latched geometry: every panel's edge bands and strip and the centre's outer edge band freeze at pickup, and no drop-target resolution reads the painted element stack, so approaching a panel edge produces exactly one target transition and one landing preview per approach (wave 4, 2026-08-13; amended 2026-10-09, DL-180; F3-630)."
 - "A divider drag transfers pixels between the two panels it separates only (+N/-N exactly), other panels are untouched, and commit produces no settle flash; each panel stops at its own minimum (F3-635, never less than 280 x 120 px) and a panel dragged below half its minimum collapses to its strip, and no Home surface floats (amended 2026-10-09, DL-180; F3-630)."
 - "At render, boot, and window resize the split tree's proportions fill the centre with no dead space and a degenerate persisted layout self-heals on normalization; host caps and host_full are retired (amended 2026-10-09, DL-180; F3-630)."
@@ -978,6 +978,7 @@ node_compile_hint:
   mode: home_gesture_transaction
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm-home-pad-y and --pm-home-gap-y were prototype spacing properties; the retained workspace uses semantic spacing with 2 px vertical padding, not those custom-property spellings."
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/01_REQUIREMENTS.jsonl
 - "DL-260 source lineage only (no product API or implementation obligation): The retired Home prototype used PM_EDGE, PM_DRAGEND, pm-resizing, data-pm-home-flip, normalizeMainRowBases, buildDockLatch, syncHostGeometry, layoutBands and .pm-home-host/pm6-bottom-scroll/.pm-edge-band selectors. The August 2026 browser fixes and measured scroll values document that retired implementation only; F3-630/635/636 and DR-066 govern current panel/tab behavior."
 preserved_exact_tokens: [pointercancel, lostpointercapture, four-edge scroll dissolve]
@@ -1151,8 +1152,7 @@ canonical_text: >-
   CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the rail-over-canvas composite), so
   the rounded-away canvas corner reveals a visibly darker backdrop; a corner exposing a same-tone backdrop reads
   as no corner (user-reported: the radius was applying at 18 px yet invisible). Strip heights re-tune with this
-  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (--ed-strip-h, --pm6-editor-tabs-h,
-  --pm6-dash-head-h; the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
+  dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
   intact under the new tokens. Sixth follow-up (2026-08-14, both found by watched inspection): the fourth
   follow-up's animated border-radius canvas corner is RETIRED with cause - the canvas slides UNDER the
   translucent rail (the scroll frost), so the area's true box corner is invisible and a border-radius there
@@ -1160,36 +1160,14 @@ canonical_text: >-
   construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg
   composite fill was the invisibility cause, not the wedge architecture - at 18 px (20 friendly) width by 16 px
   height (--ed-corner-ry 12 to 16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane
-  background stays --ed-rail-solid. Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses
-  !important, and important declarations beat CSS animations, so all background-based retro effects were dead on
-  dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background
-  lost); effect-classed tabs ([class*="pm-retro"]) now escape the important rule via :not() and receive a
-  normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up
-  (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the
-  effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the
-  assembled cascade, won the tie for plain background declarations (phosphor survived only through its
-  keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on,
-  weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated
-  disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all
-  paint on dashboard tabs. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
+  background stays --ed-rail-solid. The shared tab presentation owner keeps the Retro phosphor block, DOS full inversion and CRT scanline wipe visible on dashboard and editor tabs. Neutralizing the ordinary tab plate must not suppress an effect’s foreground, fill or background. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
   - and the minimap band aligns with the frosted rail via margin rather than padding, retiring the wave-2
   scrollbar-track-margin exclusion with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
   CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the pointer and corner values are
   derived from the tab position in the same frame with no independent easing") and its negative constraint
   against easing corner values independently of the tab position were being VIOLATED by the shipped build, and
-  are restored rather than retired. The violation was structural, not decorative: grabbing a NON-ACTIVE tab
-  flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and
-  sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px
-  pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract
-  with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP -
-  draggingLive is computed immediately after the lastActive update, it forces animate = false, and the
-  spring-preservation guard is qualified by "&& !draggingLive" so the snap branch cancels the in-flight rAF,
-  jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard
-  SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured:
-  worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct
-  monotonic intermediates on a click-to-select, no overshoot. Also with this dated disposition, a per-theme
-  silhouette SKIN is added under the wave-6 skin family: glass gains a drag-scoped frost, [data-theme^="glass"]
-  .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } - slightly see-through but never
+  are restored rather than retired. Picking up a non-active tab first updates the shared active-tab state. During any live reorder, its carried label, silhouette position and width, and contact corners resolve from the same current pointer position in the activating frame, without independent selection easing. Activation cancels any in-flight selection animation, zeros residual velocities and snaps the plate to its target; even sub-0.5 px moves cannot preserve an old spring or leave the underlying tab exposed. Click, snap and keyboard selection springs remain unchanged, as does the reorder owner’s release settle. Also with this dated disposition, a per-theme
+  silhouette SKIN is added under the wave-6 skin family: Glass uses 0.92 silhouette opacity during the drag only, slightly see-through but never
   legible, honouring the user's "like a blur" request. The drag plate adds no independent backdrop blur; F3-652
   owns its Liquid Glass material and optics budget, superseding the former one-blur-per-pane cap. The
   steady-state plate remains fully opaque in all ten themes; measured live at .92 mid-drag in glass-dark and 1
@@ -1238,6 +1216,9 @@ node_compile_hint:
   mode: contact_aware_editor_tab_silhouette
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): The browser’s drag-scoped Glass selector was an adapter to the retained 0.92 drag opacity: glass gains a drag-scoped frost, [data-theme^=\"glass\"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } -"
+- "DL-260 source lineage only (no product API or implementation obligation): The prototype snap-while-dragging repair and measured samples below are source evidence, not a required EDSHAPE/sync/draggingLive/animation-frame API: The violation was structural, not decorative: grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP - draggingLive is computed immediately after the lastActive update, it forces animate = false, and the spring-preservation guard is qualified by \"&& !draggingLive\" so the snap branch cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured: worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot."
+- "DL-260 source lineage only (no product API or implementation obligation): The historical browser repair used --pm6-editor-tabs-h/--pm6-dash-head-h and the following CSS precedence changes; these are not native product code requirements: Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses !important, and important declarations beat CSS animations, so all background-based retro effects were dead on dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background lost); effect-classed tabs ([class*=\"pm-retro\"]) now escape the important rule via :not() and receive a normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the assembled cascade, won the tie for plain background declarations (phosphor survived only through its keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all paint on dashboard tabs."
 - "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle", "--ed-lp", "--ed-rp"]
 negative_constraints:
@@ -1581,7 +1562,7 @@ the trimmed F3-448 inventory with no notifications item or bell. The generated
 concept may use `footer.pm7-statusbar`; production Slint consumes the semantic
 zone rather than that DOM selector. Spacing otherwise remains 4 px between
 zones and at the outer sides with no Home page gutter; the Home workspace's
-vertical padding remains 2 px through `--pm-home-pad-y`/`--pm-home-gap-y`.
+vertical padding remains 2 px through the native workspace spacing tokens.
 
 PM7 amendment 2026-10-29 (A1, B1–B6, D5, G3/G4): the title bar is 40 px, 46 px in Glass; Pip + wordmark precede project box A. The status group is agents/questions and processes/needs-input, folding Orchestrator into Agents. Resources is a third panel tab and has no CPU/RAM status item. The current F3-034/F3-035 requirements supersede the retained lineage diagram.
 
@@ -3221,7 +3202,7 @@ Activity bar remains at 48px at all breakpoints. At < 720px, it becomes the prim
 
 The shared `/binder` and document-review surfaces use the same responsive rule: left binder rail owns document switching/status, right binder rail or drawer owns annotation management, selection actions stay in the inline `AnnotationActionMenu`, ephemeral send-to-chat state stays in `ContextChipStrip`, and chat itself remains a separate panel rather than embedded inside the binder review surface.
 
-The concept lineage from `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) narrows the binder placement without making the concept file a live owner. Wizard review uses a binder-style layout: the left document list `/sidebar` contains `wizard-doc-pill`, the central document content area is `wizard-binder-view`, and the top binder toolbar is `wizard-binder-toolbar`. Annotation UI belongs in a right-side drawer, `/rail`, or overlay inside binder content, not in the left document rail and not in a browser-style `annotation-review` modal. Chat remains the separate `#chatPanel` / `chatPanel` side panel with its own thread list, composer, `queued-intervention` strip, footer, and context-usage display; `send-to-chat` chips live in that chat composer through `ContextChipStrip`.
+Wizard review uses the shared binder layout of F3-199: the left document rail owns switching/status, the centre owns document content, and the top toolbar owns review controls. Annotation management uses the right rail, drawer or content overlay, with selection actions in AnnotationActionMenu. Assistant Chat stays in its separate side panel with its own thread list, composer, queued-intervention strip, footer and context-usage display; ContextChipStrip supplies the composer’s send-to-chat chips. Prototype DOM spellings are bounded source lineage in F3-199.
 
 ---
 
@@ -16448,11 +16429,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Concept lineage from `Concepts/PuppetMasterDashComp.html` narrows wizard binder placement
-  without making that concept file a live owner: the left rail contains `wizard-doc-pill`,
-  central content is `wizard-binder-view`, the top toolbar is `wizard-binder-toolbar`,
-  annotation UI is right-side/drawer/overlay, and chat remains the separate `#chatPanel` /
-  `chatPanel` side panel with `ContextChipStrip` send-to-chat chips.
+  The shared binder review surface keeps document switching and status in the left rail, document content in the centre, and review controls in the top toolbar. Annotation management uses a right-side rail, drawer or content overlay; the left document rail and a separate browser-style annotation modal cannot host it. Assistant Chat remains a separate side panel with its own thread list, composer, queued-intervention strip, footer and context-usage display; ContextChipStrip supplies the composer’s ephemeral send-to-chat chips.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves concept-lineage placement constraints without making the concept file a
@@ -16477,21 +16454,13 @@ node_compile_hint:
   mode: binder_review_placement_and_chat_separation
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): Concepts/PuppetMasterDashComp.html used /PuppetMasterDashComp.html, wizard-doc-pill, wizard-binder-view, wizard-binder-toolbar, annotation-review, #chatPanel/chatPanel and queued-intervention markup. F3-199 retains placement and chat separation without those DOM identities."
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0133"
 preserved_exact_tokens:
-- "Concepts/PuppetMasterDashComp.html"
-- "/PuppetMasterDashComp.html"
-- "wizard-doc-pill"
-- "wizard-binder-view"
-- "wizard-binder-toolbar"
-- "annotation-review"
-- "#chatPanel"
-- "chatPanel"
-- "queued-intervention"
 - "send-to-chat"
 - "ContextChipStrip"
 negative_constraints:
-- "Annotation UI must not live in the left document rail or in a browser-style `annotation-review` modal."
+- "Annotation UI must not live in the left document rail or in a separate browser-style annotation modal."
 - "Chat must remain a separate side panel, not embedded inside the binder review surface."
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -29930,7 +29899,7 @@ canonical_text: >-
   chrome-reduced to the message stream, composer, and quick-reply chips with gated send.
   Stream and footer content resolve per thread, and context boxes are
   thread-scoped. The unified component is consumed by wizard embedding and promoted surfaces,
-  and the separate `#chatPanel` side panel mount remains canonical.
+  and the separate Assistant Chat side panel remains canonical.
 gui_related: true
 gui_classification_reason: This unit defines visible chat component mounts and per-instance chrome presentation.
 split_recommended: false
@@ -29939,7 +29908,7 @@ unblocks: []
 acceptance_criteria:
 - "Docked panel, floating window, and wizard-embedded chat instances render from one chat component, template, and state source distinguished only by chrome flags."
 - "Embedded mode keeps the message stream, composer, quick-reply chips, and gated send while omitting thread rail, thread search, issues and worktree indicators, persona and model selectors, mode strip, and panel toggles."
-- "The separate #chatPanel side panel mount remains canonical and is not replaced by embedded instances."
+- "The separate Assistant Chat side panel remains canonical and is not replaced by embedded instances."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -29954,16 +29923,16 @@ node_compile_hint:
   mode: chat_component_unification_and_embedded_chrome_flags
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): #chatPanel was the browser concept’s docked chat mount selector. F3-420 requires a separate Assistant Chat side panel rendered by the shared component, not that mount identity."
 - "Plans/FinalGUISpec.md:2092"
 - "Plans/assistant-chat-design.md"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "#chatPanel"
 - "quick-reply chips"
 - "embedded"
 - "floating"
 negative_constraints:
-- "Chat must remain available as the separate side panel; embedded instances must not replace the #chatPanel mount."
+- "Chat must remain available as the separate side panel; embedded instances must not replace the Assistant Chat side panel."
 compatibility_only_notes:
 - "Slint portability: per-instance chrome flags map to conditional widget composition; embedded chat chrome requires no arbitrary-content backdrop blur or SVG filters, color styling is precomputed, and any glass treatment uses a single blur over a known wallpaper as a pre-blurred asset."
 stale_retired_dispositions:
@@ -29989,11 +29958,7 @@ canonical_text: >-
   visible. When the tab strip overflows its width, a width-aware "+N more" overflow chip
   collects non-active tabs into a picker with per-item close, keeping the active tab visible.
   Non-file tabs, including thread context detail tabs and browser preview tabs, participate in
-  the same close and overflow behavior. Amended 2026-08-13 - tab drag-reorder is canonical
-  and persists on all four editor panes: pane 1 through the open-tab model, panes 2 through 4
-  through strip-owned order lists reasserted by every fitter and mirrored to the Home
-  overlay's buffer order via the pm6:ed-tab-order event; a newly opened tab inserts at its
-  model index. The +N more chip and its picker render in the shared app portal-menu family
+  the same close and overflow behavior. Tab drag-reorder persists through the shared panel/tab layout owner, and every strip projection and overflow fitter respects that committed order; a newly opened tab inserts at its model index (F3-630/F3-631). The +N more chip and its picker render in the shared app portal-menu family
   (portal recipe, sprout-in opening, neutral chip treatment) rather than as a bespoke pill.
   Amended 2026-08-13 (tweak wave) - the dedicated per-pane close glyph on editor panels is
   retired; the kebab menu's Close Panel row is the single pane-close affordance. Pane-close
@@ -30011,10 +29976,7 @@ canonical_text: >-
   CONTENT box, so padding reserve can never be occupied by tabs; the actions-cluster
   reserve has a 44 px floor covering the kebab column and grip lane even when the
   cluster is empty. Extended (final wave-3 build): the overflow condition itself is
-  content-box child-edge measurement at all three fitter sites
-  (edStripContentOverflows: rightmost in-flow child edge vs clientWidth minus the
-  padding-right reserve, skipping the actions span, the shape layer, and
-  display:none children) - the naive scrollWidth comparison is retired with this
+  content-box child-edge measurement at every shared overflow-fitting site (the rightmost visible in-flow tab edge against the available content width after the trailing actions/grip reserve, excluding controls, decorative shape layers and hidden children) - the naive scrollWidth comparison is retired with this
   dated disposition because scrollWidth equals clientWidth on a non-overflowing
   strip, which collapsed all tabs into the picker. Amended 2026-08-13 (wave 4) - the
   HTML5 drag-and-drop reorder mechanism is retired (and with it the wave-3
@@ -30031,21 +29993,7 @@ canonical_text: >-
   Amended 2026-08-15 (wave 8) - the wave-7 drag-cover fix stands (opacity 1 and
   the z 39 / z 40 sandwich are unchanged) but was INCOMPLETE: it addressed the
   plate's opacity and stacking, not the mechanism that still exposed the tab
-  underneath. That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab
-  flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change
-  as a selection event, set animate = true and SPRUNG the travelling plate
-  across the strip over roughly 12 frames while the carried tab itself paints
-  nothing (its background is transparent under .ed-shape-on) - the tab beneath
-  showed through for the whole flight. Worse, pointermoves smaller than 0.5 px
-  landed in the spring-preservation early-return guard, which held that hole
-  open indefinitely on slow, careful drags. It was also a live violation of the
-  1:1-no-independent-easing canon this unit shares with F3-505. The fix, with
-  this dated disposition: sync() computes
-  draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after
-  the lastActive update and forces animate = false whenever it is true, and the
-  spring-preservation guard gains "&& !draggingLive" so the snap branch runs -
-  cancelling the in-flight rAF, jumping x and w to target, zeroing both
-  velocities and painting - in the same frame the gesture activates. Selection
+  underneath. The shared tab owner must treat pickup as a live drag before resolving a selection change. In the activating frame it cancels any in-flight selection spring, snaps the plate’s position and width to the carried tab, zeros both residual velocities and paints the fused silhouette without independent easing. Sub-0.5 px pointer moves cannot retain a stale spring or expose the tab underneath. Selection
   springs are untouched, release settle is untouched (the reorder gesture still
   owns the 160 ms settle transition plus its per-frame snap ride), and retro
   themes already forced animate = false. Verified live: worst plate-versus-tab
@@ -30071,7 +30019,7 @@ acceptance_criteria:
 - "The \"+N\" list opens in the one overlay root with no bespoke accent glow (F3-633, DR-067; amended 2026-10-09, DL-180)."
 - "\"+N\" follows F3-631's width cascade and F3-633, fitting live on tab add and remove, and a newly opened tab stays visible (amended 2026-10-09, DL-180; the chip-left-of-actions placement is lineage)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
-- "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
+- "Grabbing a non-active tab cancels selection easing and snaps the fused plate to its current position and width in the activating frame, with zero residual velocities and zero plate-versus-tab lag, even on sub-0.5 px moves; click-to-select still travels monotonically with no overshoot and the reorder release settle remains unchanged (F3-505/F3-631)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -30085,6 +30033,7 @@ node_compile_hint:
   mode: editor_tab_close_pane_close_and_tab_overflow
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): edStripContentOverflows was a concept content-box measurement helper and pm6:ed-tab-order its local synchronization event. Neither is a product API/event obligation. The old EDSHAPE/sync/draggingLive spring repair was: That mechanism was the GRAB-SPRING. Grabbing a NON-ACTIVE tab flips the strip's active key, so EDSHAPE.sync() consumed the lastActive change as a selection event, set animate = true and SPRUNG the travelling plate across the strip over roughly 12 frames while the carried tab itself paints nothing (its background is transparent under .ed-shape-on) - the tab beneath showed through for the whole flight. Worse, pointermoves smaller than 0.5 px landed in the spring-preservation early-return guard, which held that hole open indefinitely on slow, careful drags. It was also a live violation of the 1:1-no-independent-easing canon this unit shares with F3-505. The fix, with this dated disposition: sync() computes draggingLive = Boolean(strip.querySelector('.tab.dragging')) immediately after the lastActive update and forces animate = false whenever it is true, and the spring-preservation guard gains \"&& !draggingLive\" so the snap branch runs - cancelling the in-flight rAF, jumping x and w to target, zeroing both velocities and painting - in the same frame the gesture activates."
 - "Plans/FinalGUISpec.md:1653-1656"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
@@ -30191,11 +30140,7 @@ canonical_text: >-
   The chat composer lays out with attach plus the ELI5, YOLO, and CREW toggles on the left
   rail, and the rewind FAB followed by icon-only send and stop controls (inline SVG glyphs)
   on the right with an extra gap between rewind and send. The header selector row renders
-  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The
-  floating chat window enforces a minimum and default width floor of 380px via
-  max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
-  open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
-  from the shared chat template of the unified component.
+  Persona, Model, and Mode as equal-shrink slots whose labels ellipsize when narrow. The desktop app’s popped-out chat window enforces a minimum and default width floor of 380px so the selector row is not clipped on first open. The docked Assistant Chat side panel and the popped-out window render both layouts from the unified chat component’s shared template (F3-420/F3-637).
   Amended 2026-10-09 (DL-180): the chat no longer floats inside the window or the page. This 380px floor now holds only
   for the chat's popped-out window in the desktop app (F3-504, F3-637), which the user sizes and places above it; the
   chat column's own width is F3-637's.
@@ -30221,15 +30166,13 @@ node_compile_hint:
   mode: composer_selector_row_and_floating_width_floor
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): #chatPanel and #floatingChat were browser concept mount selectors; max(380px, min(var(--floating-chat-w), 40vw)) was its retired in-page width expression. Native presentation retains the 380px desktop-window floor and the shared chat component."
 - "Plans/FinalGUISpec.md:10800"
 - "Plans/FinalGUISpec.md:10582"
 - "Plans/assistant-chat-design.md:186"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
 - "380px"
-- "40vw"
-- "#chatPanel"
-- "#floatingChat"
 - "ELI5"
 - "YOLO"
 - "CREW"
@@ -30403,16 +30346,12 @@ node_compile_hint:
   mode: per_family_theme_token_contract
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): --pm6-rb-shadow-hard was the concept CSS alias for the Retro hard offset shadow in the Theme Token Tables. The per-variant shadow values remain spec data, with no CSS-property-name obligation."
 - "Plans/FinalGUISpec.md:978"
 - "Plans/FinalGUISpec.md:7491"
 - "Plans/FinalGUISpec.md:7699"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens:
-- "--accent-primary"
-- "--accent-primary-rgb"
-- "--graph-pending"
-- "--diff-added-bg"
-- "--ease-default"
+preserved_exact_tokens: []
 negative_constraints:
 - "Do not derive theme token values at runtime; per-variant tables carry precomputed constants."
 compatibility_only_notes:
@@ -30705,6 +30644,7 @@ node_compile_hint:
   mode: friendly_family_ingredients_and_font_rules
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): The former Friendly cozy CSS hooks were --pm6-cozy-mint, --pm6-cozy-sky, --pm6-cozy-coral, --pm6-cozy-lav, --pm6-cozy-butter, --pm6-cozy-card-base, --pm6-cozy-mix, --pm6-cozy-border-mix, --pm6-cozy-chrome, --pm6-cozy-chrome-border, --pm6-cozy-field, --pm6-cozy-dot, --pm6-cozy-glow-mint, --pm6-cozy-glow-lav, --pm6-cozy-glow-sky. Their colors, surface/border mix ratios, dot geometry and static corner glows remain product design values; these browser aliases and color-mix/gradient implementations are not product API or custom-property obligations."
 - Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)
 - Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)
 - 'Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)'
@@ -30898,7 +30838,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-dark, `Concepts/PMConcept7.
 | Graph | `--graph-planning` | `#9db4d0` |
 | Graph | `--graph-gating` | `#d8b93c` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(107,118,84,.55)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(107,118,84,.55)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(107,118,84,.55)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(74,83,58,.68)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(107,118,84,.56)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(107,118,84,.5)` |
@@ -30954,7 +30894,7 @@ Source since 2026-10-08 (DL-151): PMConcept7's retro-light, `Concepts/PMConcept7
 | Graph | `--graph-planning` | `#42A5F5` |
 | Graph | `--graph-gating` | `#AB47BC` |
 | Elevation | `--shadow` | `3px 3px 0 rgba(26,26,26,.30)` |
-| Elevation | `--pm6-rb-shadow-hard` | `3px 3px 0 rgba(26,26,26,.30)` |
+| Elevation | Hard offset shadow | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-1` | `2px 2px 0 rgba(26,26,26,.22)` |
 | Elevation | `--elev-2` | `3px 3px 0 rgba(26,26,26,.30)` |
 | Elevation | `--elev-3` | `5px 5px 0 rgba(26,26,26,.30)` |
@@ -31369,27 +31309,27 @@ Mesh/Depth/Minimal, including the former mesh default below, are historical sour
 | `depth` | Container carries the base sky plus blur; two parallax wrappers `.pm6-par-far` and `.pm6-par-near` (inset `-8%`); far wrapper `::before` billow layer; six cloud puffs `.pm6-gbg-shape` (three far, three near) | `blur(14px) saturate(1.15)` dark, `blur(14px) saturate(1.12)` light (on the container) | Far billow drift `pm-sky-drift 160s`; puff float `pm-float` with per-shape `--float-dur` of `100s`, `84s`, `72s` (far) and `68s`, `76s`, `64s` (near); pointer parallax `translate3d(calc(var(--par-x, 0) * 4px), calc(var(--par-y, 0) * 2px), 0)` far and `translate3d(calc(var(--par-x, 0) * 10px), calc(var(--par-y, 0) * 6px), 0)` near; all killed under reduced motion | Base sky, far billow layer, and near puff layer baked as separate pre-blurred bitmaps so `--par-x`/`--par-y` offsets still apply per layer |
 | `minimal` | Base gradient sky only (`.pm6-gbg-minimal`), no billow layers | none (static gradients, no filter) | none (static) | One flat gradient bitmap per variant |
 
-#### Friendly cozy pastel hooks (02-css-tokens.part.html:477-492, 536-551)
+#### Friendly category palette and material values (F3-426/F3-430)
 
-| Token | friendly-dark | friendly-light |
+| Presentation role | friendly-dark | friendly-light |
 |---|---|---|
-| `--pm6-cozy-mint` | `#6FDABC` | `#5FD0B0` |
-| `--pm6-cozy-sky` | `#6FC6E8` | `#5AB9E0` |
-| `--pm6-cozy-coral` | `#FFAD93` | `#FF9E80` |
-| `--pm6-cozy-lav` | `#C3B1E4` | `#B39DDB` |
-| `--pm6-cozy-butter` | `#FFD97F` | `#FFD166` |
-| `--pm6-cozy-card-base` | `#2A2731` | `#FFFFFF` |
-| `--pm6-cozy-mix` | `14%` | `11%` |
-| `--pm6-cozy-border-mix` | `34%` | `30%` |
-| `--pm6-cozy-chrome` | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
-| `--pm6-cozy-chrome-border` | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
-| `--pm6-cozy-field` | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
-| `--pm6-cozy-dot` | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
-| `--pm6-cozy-glow-mint` | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
-| `--pm6-cozy-glow-lav` | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
-| `--pm6-cozy-glow-sky` | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
+| Mint category pastel | `#6FDABC` | `#5FD0B0` |
+| Sky category pastel | `#6FC6E8` | `#5AB9E0` |
+| Coral category pastel | `#FFAD93` | `#FF9E80` |
+| Lavender category pastel | `#C3B1E4` | `#B39DDB` |
+| Butter category pastel | `#FFD97F` | `#FFD166` |
+| Category surface base | `#2A2731` | `#FFFFFF` |
+| Category surface mix | `14%` | `11%` |
+| Category border mix | `34%` | `30%` |
+| Frosted chrome fill | `rgba(40,36,48,.60)` | `rgba(255,255,255,.65)` |
+| Frosted chrome border | `rgba(255,255,255,.08)` | `rgba(255,255,255,.85)` |
+| Field fill | `rgba(255,255,255,.06)` | `rgba(255,255,255,.70)` |
+| Dot-grid ink | `rgba(190,180,210,.06)` | `rgba(122,109,140,.10)` |
+| Mint corner glow | `rgba(95,208,176,.10)` | `rgba(95,208,176,.16)` |
+| Lavender corner glow | `rgba(179,157,219,.12)` | `rgba(179,157,219,.18)` |
+| Sky corner glow | `rgba(90,185,224,.09)` | `rgba(90,185,224,.14)` |
 
-The friendly ground (10x-pm6-css-global.part.html:139-147) composes the dot grid as `radial-gradient(var(--pm6-cozy-dot) 1px, transparent 1.5px) 0 0 / 18px 18px` over three pastel corner glows and `var(--background)`; the dot-grid tile size `18px` is the F3-430 preserved token. Category pastels are consumed via `color-mix()` against `--pm6-cozy-card-base` with `--pm6-cozy-mix` and `--pm6-cozy-border-mix` ratios (runtime-derived in concept; precompute per F3-431).
+The Friendly ground has 1 px ink dots fading to transparent by 1.5 px, repeated on an 18px by 18px grid over three static pastel corner glows and the background. The dot-grid tile size `18px` remains F3-430's preserved token. Category surfaces and borders combine the category pastel with the surface base using the table's surface and border mix percentages. All resulting per-variant colors are precomputed through F3-431; the native theme owner chooses its implementation tokens.
 
 ## Settings System Addendum - 2026-07-16
 
@@ -32291,10 +32231,6 @@ preserved_exact_tokens:
 - "settings_suggestions_dismissed:v1"
 - "theme:v1"
 - "activity_bar_order:v1"
-- "pm.theme"
-- "pm.glassBg"
-- "pm.glassAlpha"
-- "pm.activity_bar_order:v2"
 negative_constraints:
 - "Do not register any new storage keys in this addendum other than glass_background_mode:v1, glass_alpha:v1, settings_recents:v1, and settings_suggestions_dismissed:v1; canonical keys remain theme:v1 and activity_bar_order:v1."
 - "Do not promote the concept localStorage names pm.theme, pm.glassBg, pm.glassAlpha, or pm.activity_bar_order:v2 as canonical keys; they are demo shims preserved as lineage only."
@@ -32384,8 +32320,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Shell elements carrying the sheen treatment, approximately 40 shell elements, keep their place as hover
-  targets: the sheen class marks them into the F3-465 merged hover system, which owns their whole hover look
-  and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
+  targets: their shared presentation role enrolls them in the F3-465 merged hover system, which owns their whole hover look and motion. The former sheen hover-lift and its glow (the base, Friendly and Glass `.pm-sheen:hover` lift,
   border and glow) are retired in favour of F3-465 (DL-171), and no sheen element carries a hover-lift or
   glow of its own. Hover is driven by event delegation from a shared pointer handler and executed through
   compositor-friendly writes rather than per-frame style writes. Amended 2026-10-16 (SSYS-054/SP-333): the
@@ -33382,18 +33317,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Every hoverable card, row, tile and icon in PMConcept7, the Usage plates included, runs one merged magnet and
+  Every hoverable product card, row, tile and icon, the Usage plates included, runs one merged magnet and
   spotlight hover system (PMH, DL-171). It replaces both the PM8 magnet, ring, wash and bloom and the Usage
   page's own plate lift and pointer sheen, and DR-072 makes it the single owner of the hover grammar. One shared
   self-suspending animation driver rides the single merged document pointer-move handler that F3-446 owns; no element has a pointer-move listener of its own. The driver runs only
   while a spring is unsettled, the NieR reticle travels, or a pointer or scroll change is pending, so it stops
   once a pointer resting on a box has settled, and nothing animates at idle except the explicitly approved
   Friendly breathing ring while a control is hovered. Box rects are read when the hover enters a scope and after
-  a scroll, a resize or a change inside that scope, never for every box on every frame. Targets are the
-  outermost match of the set: markup that opts in with `data-pmh` (its value names the kind, card, row, tile or
-  icon, and an empty value means card), every sheen-treated element, and the listed card, row, tile and icon
-  classes. `data-pmh="off"` takes an element out of the set even when its class matches, and nothing inside
-  `[data-pm-hover-exempt]` is a target or hovers one. Nested targets resolve to the outer box, and overlaying
+  a scroll, a resize or a change inside that scope, never for every box on every frame. DR-072's shared hover owner enrolls targets by semantic kind: card, row, tile, icon or small control; an enrolled target with no explicit kind uses card. Shared presentation roles, including sheen-treated surfaces, may enroll eligible targets, but an explicit opt-out overrides role enrollment. An exempt subtree admits no hover targets and cannot activate an ancestor target. Resolve the outermost eligible target through this owner, without requiring DOM attributes or CSS classes. Nested targets resolve to the outer box, and overlaying
   panels do not light boxes beneath them (occlusion). Intensity is one continuous field: 0 at the bleed distance
   outside a box, partial at its edge and full a short ramp inside, with no snap at edges, so a neighbour inside
   the bleed catches the light on its near edge and gets no magnet and no plate. In Basic, Friendly and Glass the
@@ -33458,7 +33389,7 @@ split_recommended: false
 depends_on: [F3-446, DL-171]
 unblocks: [DR-072]
 acceptance_criteria:
-  - "Every card, row, tile and icon target in PMConcept7, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
+  - "Every product card, row, tile and icon target, the Usage plates included, takes its hover from this one system; no surface keeps a second hover engine, a `.pm-sheen:hover` lift or glow, or a pointer sheen of its own."
   - "One shared driver services every target through the single merged document pointer-move handler and adds no pointer-move listener; two seconds after the pointer leaves there is no hover-owned animation frame or running hover animation, and a pointer resting still adds no hover work after settling except the approved Friendly control ring, which stops on leave or hide."
   - "In Basic, Friendly and Glass the magnet moves a hovered card at most about 2.5 px at an edge, through the standalone translate channel only; icons and the Usage plates never move."
   - "The pointer light is a small soft pool, about 90 to 100 px in radius on cards, revealing a pre-painted sheen and hairline under the content; the emitted glow is restrained as in the current PMH reference, pre-painted, opacity-only, and stays at the box's rest rect while the box leans."
@@ -33466,7 +33397,7 @@ acceptance_criteria:
   - "Retro shows Raise (a 2 px hard-cut rise on a 3 to 5 px hard shadow whose far edge stays put, then a 1 px phosphor rule one 33 ms tick later, released in the reverse order) and NieR shows Lock-on (four 8 px ink corners stepping closed in two steps over 90 ms, then an ink line at .6, cutting between cards), gated by the brackets part with the ink-line fallback; neither shows a soft light, glow, blur, lean or neighbour light."
   - "Under Reduced Motion there is no magnet, travel, pointer-following light or neighbour light, and every family shows its hover state instantly; on a software-rendered path the field, light and plate are off and the magnet stops."
   - "A hover writes no inherited custom property and restyles no subtree beyond the hovered box and its lit neighbours, and no box-shadow or filter animates on a large element."
-  - "`data-pmh` opts markup in with a kind, `data-pmh=\"off\"` opts it out, nothing inside `[data-pm-hover-exempt]` hovers, and editor/terminal text has no card magnet; strip/header small controls use the shared control marker and resize dividers use F3-657."
+  - "DR-072/F3-465 enrolls targets by semantic kind, defaults unspecified enrolled kinds to card, honors explicit opt-out over role enrollment, and exempts a subtree from targeting or activating an ancestor; editor/terminal text has no card magnet, strip/header small controls use the shared control marker, and resize dividers use F3-657."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
   - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q20: Glass has only the F3-465/PMH shared hover light on registered edge-glow objects, including Usage/Home widgets, cards, tiles and rows. Remove the independent sheet-wide lg-shine/light, pointer listener and stale data-lg-lit. Its central sheen is at Basic’s level (Glass Dark white 4.5 percent, Glass Light accent 4.5 percent); edge glow is unchanged. Plain panels, bars and dialog ground do not light merely because the pointer crosses them. Retro and NieR retain their non-soft-light forms and existing Reduced Motion, software and gesture holds."
 validation_surfaces:
@@ -33481,6 +33412,7 @@ node_compile_hint:
   mode: magnet_spotlight_hover_system
   create_worknodes: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): data-pmh (including its empty/default-card and off forms), data-pm-hover-exempt, and the concept class selector list were browser enrollment hooks. Product kind enrollment, opt-out and subtree exemptions belong to DR-072/F3-465."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - Concepts/onboarding/opus-5.5/src/js/18-hover.js and src/css/22-hover.css (the PMH engine and its look; concept
@@ -36405,7 +36337,7 @@ canonical_text: |-
   DL-273, Jared 2026-11-01: Consume the Forge owner’s narrowed provider admission. Forgejo and Gitea are self-managed only; Cursor Origin source control and its native/mirror profiles and inspector are retired. Cursor AI is unchanged. generic_git and generic_host remain transport-only, never aliases that restore retired provider, review, CI, auth or mirror authority.
   DL-273, Jared 2026-11-01: Saved onboarding selections follow PWIZ-024 retirement invalidation on entry and resume. The wizard returns to explicit admitted service/address/account selection and never presents the retired selection or its authorization and Review as current.
   DL-273, Jared 2026-11-01: Source Control service controls and their activation consume the same current admission rule from PWIZ-024. A restored card choice cannot expose an eligible service action or open sign-in merely because the main online-service draft is unpicked; the person must select an admitted choice again.
-  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters, Standard backup and detached Your usual settings are owner-driven. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
+  FO-22, 2026-11-02: The visible step and typed Back control consume PWIZ-021’s current-answer navigation and PWIZ-024’s source-step entry/resume rules. Abandoned steps do not reappear through Back or subsequent Continue; fresh Review and a resumed service chooser keep their valid Back destination. Missing service identity is shown as a choice to make, never as an empty service name, raw enum or unresolved placeholder. F3-669/PWIZ-037 consume the same reviewed setup draft for New Project; all six entry ways, inspected full paths and retained spaces, Settings-only JJ object format, typed Starters and Standard backup are owner-driven. Your usual settings follows the resolved Everywhere ladder without copying; detached copies from Saved setups or source Projects remain separate owner-driven choices. Only Planning Wizard, PRD Builder and Orchestrator retain the no-project workflow gate; Goals/Crew/Plan/Deep Plan/scheduled tasks remain available. This supersedes only earlier Later/provider-deferred and universal no-Project Settings wording; current-answer FO-22 Back/Edit/Review, current DL-273 admission, all protected-auth/Recovery Kit gates, quiet Almost ready and O12 phases remain.
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
@@ -36801,56 +36733,52 @@ source_lineage:
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F06,A-F09,C-F02,C-F11,E-F07,E-F08
 preserved_exact_tokens:
-- welcome
-- simple_path
-- first_project
-- source_control_setup
-- server_storage_client
-- remote_access_setup
-- review_setup_plan
-- automatic_preparation
-- ready
-- connect_existing
-- Get Started
-- Begin setup
-- Confirm and prepare
-- Continue Setup
-- Open Repository
-- Delete Repository
-- Do this later
-- Run setup wizard
-- Reset Layout
-- ui.onboarding.start
-- home_menu
-- Start a new project
-- Open a folder here
-- Bring one from online
-- Restore a backup
-- Safe History
-- FileSafe
-- Local or VPN
-- You can connect through a VPN too
-- Reverse proxy
-- Puppet Master Remote Link
-- SSH/SFTP
-- 1.2-1.5 seconds
-- 420-560 ms
-- 60-80 ms
-- 120-220 ms
-- 700 ms
-- puppet_master
-- cmd.client.pair.start
-- source_access_authorization_refs
-- Source Location
-- Change the look
-- Sound on — click to mute
-- Sound off — click to turn on
-- general.visual.theme
-- general.visual.theme-mode
-- general.interaction.sound-effects
-- NieR Mode
-- Adjust NieR look
-- menuitemcheckbox
+- "welcome"
+- "simple_path"
+- "first_project"
+- "source_control_setup"
+- "server_storage_client"
+- "remote_access_setup"
+- "review_setup_plan"
+- "automatic_preparation"
+- "ready"
+- "connect_existing"
+- "Get Started"
+- "Begin setup"
+- "Confirm and prepare"
+- "Continue Setup"
+- "Open Repository"
+- "Delete Repository"
+- "Do this later"
+- "Run setup wizard"
+- "Reset Layout"
+- "ui.onboarding.start"
+- "home_menu"
+- "Open a folder here"
+- "Restore a backup"
+- "Safe History"
+- "FileSafe"
+- "Local or VPN"
+- "You can connect through a VPN too"
+- "Reverse proxy"
+- "Puppet Master Remote Link"
+- "SSH/SFTP"
+- "1.2-1.5 seconds"
+- "420-560 ms"
+- "60-80 ms"
+- "120-220 ms"
+- "700 ms"
+- "puppet_master"
+- "cmd.client.pair.start"
+- "source_access_authorization_refs"
+- "Source Location"
+- "Change the look"
+- "Sound off — click to turn on"
+- "general.visual.theme"
+- "general.visual.theme-mode"
+- "general.interaction.sound-effects"
+- "NieR Mode"
+- "Adjust NieR look"
 negative_constraints:
 - Do not render Product Onboarding as a full-page route or replacement application experience.
 - Do not restore F3-411's four-screen/provider-first choreography.
@@ -36990,7 +36918,7 @@ acceptance_criteria:
   work. Late local-stream callbacks are fenced to their original session and conversation, and missing usage telemetry
   is not zero-use proof. Ordinary conversations keep their normal behavior.
 - Every automatic non-interaction scene transition puts programmatic focus on the current h2 scene heading with tabindex=-1
-  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual PMHoverTag,
+  and the documented programmatic-focus-landmark exemption; it never auto-focuses an action or opens a visual shared hover-help overlay,
   while exact coached interactions wait for the person to focus or activate the real target.
 - Teacher practice uses the exact novice composer placeholder `Ask Teacher anything about Puppet Master…`; Skip reinstates
   the exact pre-tour placeholder and pre-tour layout rather than leaving Teacher copy or a partial tour arrangement behind.
@@ -37187,7 +37115,7 @@ owner_boundary_notes:
 owner_hints: [Plans/FinalGUISpec.md, Plans/newtools.md, Plans/Settings_System.md]
 ```
 
-### F3-523 - Global PMHoverTag Overlay And Accessibility
+### F3-523 - Global Hover Help Overlay And Accessibility
 
 ```yaml
 plan_unit_id: F3-523
@@ -37195,7 +37123,7 @@ unit_type: interaction_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  One shared PMHoverTag and HoverTagController renders theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
+  One shared hover-help overlay and controller render theme-native hover/focus help in a shared overlay root for every actionable or focusable control, truncated value, technical identifier, status, badge, chart mark, disabled control, and dynamic state such as pin/unpin, unless a documented static-copy or decorative exemption applies. A one-line tag has at least 24 px height, 8 px horizontal padding, and compact 12 px text; detailed tags emphasize line one and use 11 px explanatory text. Tags are at most 280 px wide, keep an 8 px anchor gap and 8 px viewport margin, center above, flip below, and clamp to every edge. Persistent accessible descriptions bind immediately, while the visible tag waits for deliberate intent: at least 1600 ms of pointer residence and 1100 ms of stationary intent within a 5 px radius, or 1000 ms of continuous keyboard focus. Pointer movement beyond that radius, target movement, pointer press, a scroll that moves the anchor, or departure before the thresholds resets or cancels the pending opening; pointer departure after opening uses a 160 ms grace period; Escape closes. A pointer press on an anchor closes its open tag, and that anchor's tag stays closed until the pointer leaves it (amended 2026-10-08, DL-145; scroll narrowed 2026-10-23, DL-232). Copy is concise, human, contextual, and consequence-first. It explains what the control does, its current state, shortcut, full value, consequence, or human disabled reason without falling back to raw command IDs, schema/route IDs, DOM labels, machine tokens, or developer jargon; dynamic pin/unpin and other changing states remain current. While Product Onboarding or Guided Tour is open, only anchors inside the active overlay may open tags. Pending or open tags outside it close, outside description nodes temporarily lose tooltip semantics and accessibility exposure, and their stable relationships restore when the overlay closes. Non-Retro entrance is the reference 240 ms translate/scale/fade; Retro uses 140 ms stepped motion with no scale; Reduced Motion is immediate. Glass follows live transparency while maintaining readable contrast. Initial and live census work is frame-bounded, performs one startup pass, and ignores exact old/current attribute reassertions while retaining every real semantic change, so unrelated application reconciliation cannot create a perpetual tooltip invalidation loop or steal Onboarding or Guided Tour's animation budget. Amended 2026-10-17 (DL-228): a tag never covers a primary action such as the chat's Send: it slides along its side or flips, and with no clear place it stays shut while its accessible description is still read. File references and tabs keep their path or name literally (a reference's tag is its path and line), the one exception to replacing paths, file names and host:port text with generic words. Focus the application moves, by an open, a reveal, a panel focus change or F6, opens no tag until the pointer reaches that control or focus moves on; the 1000 ms keyboard-focus tag is for focus the person moves with Tab or the arrows. Documented exemptions also include a picker plate (`menu`: its rows without their own label, Back and the search field already show their names; a row given its own hover label keeps its tag) and a Settings field whose label and help line sit beside it (`labelled-field`). DL-259 QA2 M2, 2026-10-31: technical-identifier candidacy requires a small element that actually presents the identifier, or an explicit technical-identifier declaration. Transcript, whole-message and card containers do not qualify merely because they carry internal identity, render, sort or scroll keys; such internal keys never create a technical tooltip target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently qualify it under this same shared controller. The origin word opens F3-670’s Details panel; it is visible and keyboard reachable without waiting for a hover tag. Hover help, labels, accessible descriptions and exact full paths keep the existing shared controller rules and FO-20 material. No new tooltip system or automatic theme write is introduced.
 gui_related: true
 gui_classification_reason: This unit owns the global tooltip overlay's paint, geometry, timing, and accessible attachment.
 split_recommended: false
@@ -37236,17 +37164,19 @@ acceptance_criteria:
   target. An explicit technical declaration remains eligible, and a container’s own semantic control label may independently
   qualify it under this same shared controller.'
 validation_surfaces:
-  - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
-  - "Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance."
+  - Plans/final_gui_interaction_contracts.schema.json
+  - Plans/final_gui_interaction_contract_fixtures.json
+  - future Verify the F3-523 hover-tag census and pointer, keyboard, Escape, grace, collision, zoom, theme, transparency and reduced-motion acceptance.
   - future hover census, pointer/keyboard/Escape/grace/collision/zoom/theme/transparency/reduced-motion tests
 risk_class: hover_overlay_accessibility_or_census_drift
 reasoning_tier: high
 context_scope: global_pm_hover_tag
 implementation_surfaces:
   - Plans/FinalGUISpec.md
-  - future native Slint PMHoverTag and HoverTagController components
+  - future native Slint shared hover-help overlay and controller components
 node_compile_hint: {mode: global_hover_tag_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): PMHoverTag and HoverTagController were concept hover-help component/controller names; attributeOldValue was browser observer plumbing. F3-523 specifies the shared overlay and controller by role, with typed anchors, accessibility bindings, dwell/cancellation and bounded work, not an implementation symbol."
 - Concepts/chat-assistant-concepts/5.6 Pro/PM_Chat_Assistant_5.6_Pro_Standalone.html
 - Concepts/pm7-tools/global_hover_tags_source.py
 - /mnt/Cursor/share/puppet-master/2026-10-29-pm7-build/lanes/chatpip/REPORT.md — F5 candidate rule, 2026-10-31;
@@ -37254,7 +37184,22 @@ source_lineage:
   only.
 - /mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#3-lane-work-packages;
   /mnt/Cursor/share/puppet-master/2026-11-02-projects-pass2/README.md; A-F10
-preserved_exact_tokens: [PMHoverTag, HoverTagController, 24px, 8px, 12px, 11px, 280px, 1600 ms, 1100 ms, 5 px, 1000 ms, 160 ms, 240 ms, 140 ms, role=tooltip, aria-describedby, general.interaction.show-tooltips, attributeOldValue]
+preserved_exact_tokens:
+- "24 px"
+- "8 px"
+- "12 px"
+- "11 px"
+- "280 px"
+- "1600 ms"
+- "1100 ms"
+- "5 px"
+- "1000 ms"
+- "160 ms"
+- "240 ms"
+- "140 ms"
+- "role=tooltip"
+- "aria-describedby"
+- "general.interaction.show-tooltips"
 negative_constraints:
   - "Do not invent domain commands for opening, closing, or repositioning a hover tag; these are typed local UI actions."
   - "Do not remove accessible explanatory text when visual tooltips are disabled."
@@ -37276,10 +37221,10 @@ unit_type: acceptance_contract
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Settings, Doctor, Product Onboarding, Guided Tour, and PMHoverTag target Rust stable plus Slint 1.17.1.
+  Settings, Doctor, Product Onboarding, Guided Tour, and the shared hover-help overlay target Rust stable plus Slint 1.17.1.
   Settings binds the owner inventory and manager projections through stable typed models and variable-height
   virtualization; Doctor binds stable normalized finding IDs; Onboarding and Tour bind their owner state
-  machines; PMHoverTag binds typed anchor geometry, timers, hover/focus state, accessible description identity,
+  machines; the shared hover-help overlay binds typed anchor geometry, timers, hover/focus state, accessible description identity,
   and theme tokens. Essential behavior uses native properties, models, transforms, opacity, scale,
   clipping/masking, vector shapes, bounded timelines, and precomputed tokens/assets. PMConcept7
   HTML/JavaScript/localStorage, DOM selectors, CSS viewport logic, browser physics, Canvas/WebGL, arbitrary
@@ -37343,7 +37288,7 @@ canonical_text: >-
   roster/detail geometry, document/index/detail continuity, or responsive host behavior. Its detail uses calm
   progressive tabs for overview, update review, access/runtime bounds, and integrity/evidence. Compact cards
   show Plugins System owner facts rather than a copied runtime reducer. Every exact cmd.agent_plugin.* action is
-  focusable, PMHoverTag-described, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
+  focusable, described by F3-523’s shared hover help, theme-native across Basic, Friendly, Glass, and Retro light/dark, and visibly
   handler_unavailable until a native owner handler exists. Invoking an unavailable action opens one truthful
   bounded explanation without changing plugin fixture state, fabricating success, issuing a production receipt,
   or emitting an EventRecord. The Doctor projects eight separate Plugins System findings and returns to the
@@ -37358,7 +37303,7 @@ acceptance_criteria:
   - "K3 geometry remains within the frozen manifest; only plugin detail content, owner-action chrome, theme paint, hover overlay, and named mild chrome adaptations differ."
   - "Overview separates package/plugin identities, three generations, manifest lane, required/optional component state, adapter round trips, conformance, and freshness."
   - "Update, Access, and Integrity tabs progressively disclose complete diff/reapproval/rollback, permissions/containment/runtime bounds, and supply-chain/bounded-evidence facts without a dense configuration wall."
-  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and PMHoverTag consequence text."
+  - "The exact twelve command controls expose handler_unavailable, a human disabled reason, typed PluginCommandResult, receipt-only/no-EventRecord policy, stable accessible name, and shared hover-help consequence text."
   - "Legacy generic Add/Edit/Test/More, Permissions, Discover, and Remove paths fail closed for plugins and cannot mutate the concept fixture."
   - "Pointer, keyboard, narrow widths, all ten themes, full/Reduced Motion, hover/focus help, Doctor routing, and no-state-change assertions pass in the browser concept; results remain non-native evidence."
   - "The consolidated final film includes the Plugins owner projection, all four progressive detail tabs, one truthful handler-unavailable command path, and an exact Doctor-to-Plugins return route without promoting the recording to native or runtime proof."
@@ -37383,7 +37328,18 @@ source_lineage:
   - Plans/Plugins_System.md#PLUG-070
   - Plans/Settings_System.md#SSYS-024
   - Plans/newtools.md#N2-154
-preserved_exact_tokens: [250 px, 62 px, plugin.json, pm-plugin.json, cmd.agent_plugin, handler_unavailable, PluginCommandResult, EventRecord, PMHoverTag, Basic, Friendly, Glass, Retro, Reduced Motion]
+preserved_exact_tokens:
+- "250 px"
+- "62 px"
+- "cmd.agent_plugin"
+- "handler_unavailable"
+- "PluginCommandResult"
+- "EventRecord"
+- "Basic"
+- "Friendly"
+- "Glass"
+- "Retro"
+- "Reduced Motion"
 negative_constraints:
   - "Do not create a second Plugins System owner, package reducer, permission reducer, update engine, runtime manager, or Doctor repair path in the GUI."
   - "Do not replace K3 geometry with cards, a new sidebar, a full-page plugin surface, Back chrome, or breadcrumbs."
@@ -42480,7 +42436,7 @@ plan_unit_id: F3-590
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: 'Every icon control in the assistant chat names itself through the shared PMHoverTag of F3-523, never
+canonical_text: 'Every icon control in the assistant chat names itself through the shared hover-help overlay of F3-523, never
   through a native title (DL-145). This includes the controls the concept used to title natively: the editor''s Return
   to chat and its tabs, the model picker''s provider rail and favourite stars, the history drawer''s status marks and
   resize handle, thread-search result actions, the thread-operation dialog''s close, the Schedule Message send-time track,
@@ -42536,10 +42492,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/LEAD-RULINGS-20261008.txt, SHA-256 546fa6cc210c40b50a6a5db5f4d6e436af82c2e3d9541796b214bb27061d80c7"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
-  - "PMHoverTag"
-  - "native title"
-  - "deliberate dwell"
-  - "Previews are the one exception"
+- "native title"
+- "deliberate dwell"
+- "Previews are the one exception"
 negative_constraints:
   - "Do not restate or change F3-523's thresholds in this unit."
   - "Do not open a hover tag inside an open activity bar domain preview, and do not extend the preview exception to any other surface."
@@ -42830,8 +42785,7 @@ canonical_text: >-
   product implementation. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone,
   head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings,
   holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the
-  plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast
-  plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
+  plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing
   meaning.
 gui_related: true
 gui_classification_reason: Defines how every agent is drawn in the assistant chat and the wand module sheets.
@@ -42852,7 +42806,7 @@ acceptance_criteria:
   - "Every role prop is distinguishable in grayscale at the sizes the surfaces use."
   - "Optional sheet Pip motion uses the shared bounded rig and parts; run cards/views retain their scoped one-shot/live-work budget, and Reduced Motion keeps state feedback with no nonessential travel."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
 - "scripts/pm-shard-plans.py"
 - "scripts/pm-plan-index.py"
@@ -42866,6 +42820,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
 - Plans/Decision_Log.md#DL-218
 - Plans/Decision_Log.md#DL-149
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
@@ -42932,7 +42887,7 @@ canonical_text: 'One cast plate grammar draws every collaboration graph, in the 
   crown/hat. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in
   each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection
   to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings.
-  The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
+  The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings
   and the single Pip primitive retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus
   emphasis begins only at an actual control in its affects region, including an embedded plate control; plain text, empty
   space and the picture alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow
@@ -42962,8 +42917,7 @@ acceptance_criteria:
   by this unit.
 - 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s
   materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross,
-  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou
-  drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
+  and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive
   retain their existing meaning. DL-259 FS-1, 2026-10-31, supersedes Q17’s dimming: hover/focus emphasis begins only
   at an actual control in its affects region, including an embedded plate control; plain text, empty space and the picture
   alone trigger none. Affected marks take a one-pixel theme accent ring, with the shared soft glow in Glass and ink in
@@ -42992,6 +42946,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
 - Plans/Decision_Log.md#DL-218
 - Plans/Decision_Log.md#DL-149
 - /mnt/Cursor/PuppetMaster-Evidence/scratch/chat56-tweaks-20261007/JARED_REQUEST.md, SHA-256 acf112cbd082a46daddb57044df694fb780ebbf938bc2bd7cf20dd6a96ba02fe
@@ -43507,8 +43462,7 @@ canonical_text: >-
   round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each
   family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or
   connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology,
-  not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and
-  rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
+  not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning.
 gui_related: true
 gui_classification_reason: Defines how the collaboration cast plates stay visible as rosters grow in setup sheets and run views.
 split_recommended: false
@@ -43519,7 +43473,7 @@ acceptance_criteria:
   - "A roster scrolls in its own region only while its slot shows its floor drawing."
   - "The wrap's strings are straight, and its fork and join connect every row to the lead and to You."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one ppYou/PX_YOU/pnYou drawer serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q16: You is the person alone, head and shoulders in each family’s materials and small-size maps. It carries no marionette cross, strings, holding arm/control or connection to a cross, and is never an agent Pip. Diagram edges to You express the plate’s result/topology, not puppet strings. The one shared person-silhouette renderer, owned by F3-594, serves crew diagrams, cast plates, run cards and rosters. Optional agent strings and the single Pip primitive retain their existing meaning."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43533,6 +43487,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "DL-260 source lineage only (no product API or implementation obligation): ppYou, PX_YOU and pnYou were concept person-drawing adapters and small-size maps, not native product API or primitive identities. F3-594 owns the shared person-silhouette renderer."
   - "Plans/Decision_Log.md#DL-154"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/JARED_REQUEST.md, SHA-256 46723a8829ea87fc5e01a261d81e92e32f3f1bc2e8a428af6704b1e3a91229e2"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-popup-graphs-20261009/SURVEY-BEFORE.md, SHA-256 b4036f1bffdf0bfb65f40fa5062540f60960b072bb46c667a7bcb00f26e0ac5f"

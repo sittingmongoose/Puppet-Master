@@ -348,8 +348,8 @@
       {
         "contract_kind": "hover_tag",
         "plan_unit_ref": "F3-523",
-        "component": "PMHoverTag",
-        "controller": "HoverTagController",
+        "component": "shared hover-help overlay",
+        "controller": "shared hover-help controller",
         "min_height_px": 24,
         "horizontal_padding_px": 8,
         "single_line_text_px": 12,

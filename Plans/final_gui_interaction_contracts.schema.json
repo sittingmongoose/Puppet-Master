@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/final_gui_interaction_contracts.schema.json",
   "title": "Final GUI reconciled interaction presentation contracts",
-  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, PMHoverTag, reusable reference-only security controls, post-integration DRY reconciliation, and evidence separation. Validation is not runtime or native Slint proof.",
+  "description": "Strict static presentation contracts for K3 Settings/Doctor, Product Onboarding, Guided Tour, shared hover-help overlay, reusable reference-only security controls, post-integration DRY reconciliation, and evidence separation. Validation is not runtime or native Slint proof.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -1370,10 +1370,10 @@
           "const": "F3-523"
         },
         "component": {
-          "const": "PMHoverTag"
+          "const": "shared hover-help overlay"
         },
         "controller": {
-          "const": "HoverTagController"
+          "const": "shared hover-help controller"
         },
         "min_height_px": {
           "const": 24
