@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4420-L14846
+Source lines: L4718-L16063
 
-Source SHA256: `fd2f8100a04224caa4a4e56ae9ffa356563ea03154e36b925bacfb80e74e9d85`
+Source SHA256: `ce34da29a4f2170606b56f11199d5aa629269d2aebb209f9efa68c636568665f`
 
 ---
 
@@ -73,6 +73,925 @@ negative_constraints:
 owner_hints:
 - Plans/Decision_Log.md
 - Plans/storage-plan.md
+```
+
+### DL-401 - Retention assignments for the surviving candidate names
+
+```yaml
+plan_unit_id: DL-401
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: "Jared answered \"approve all except 4c B\" on 2026-11-04. Card 1, G01–G29: **What each rule means\
+  \ for you**\n\n| Rule | What it means | Limits that come with it |\n|---|---|---|\n| **Keep** | Never expires\
+  \ by age or by count. For a project's records, only \"Delete Puppet Master project data\" removes them (\"Remove\
+  \ project from list\" does not). It outlives the file, persona or chat it describes: deleting a chat purges the\
+  \ chat's content, not these records. | No count limit. If storage runs short, new records are refused rather than\
+  \ old ones dropped. Disk budgets still apply. |\n| **7 years** | 2,555 days. | At most 2,000,000 per project.\
+  \ Past that, new records are **refused**; old ones are not dropped. Records that belong to no project need a counting\
+  \ bucket of their own (see **G05**). |\n| **Run year** | One year after the run finishes. | 1,000,000 per run\
+  \ and 5,000,000 per project, then the history continues in a linked successor. Needs a real run. |\n| **Chat**\
+  \ | Kept as long as its chat exists. | 250,000 per chat, then a linked continuation; nothing is dropped. Deleting\
+  \ the chat hides the history at once, purges it within 24 hours and from backups within 30 days. A hold delays\
+  \ the purge but never makes it visible again. The policy is written only on the unlanded Storage retention branch\
+  \ so far. |\n| **Coordination** | 180 days after the run finishes. | 1,000,000 per project; past that, the oldest\
+  \ are dropped first. |\n| **90 days** | 90 days. | 2,000,000 per project. Only expired records that no hold protects\
+  \ are removed; nothing is dropped early to make room. If the cap is reached before anything has expired, new records\
+  \ are **refused**, as with 7 years. No policy object exists yet; choosing it means Storage creates one with exactly\
+  \ these terms. |\n| **Debug 30** | 30 days (only offered as an alternative below). | 10,000 per project; past\
+  \ that, the oldest are dropped first. |\n| **Worktree year** | One year after the worktree is released (only **G24**).\
+  \ | 100,000 per project; past that, the oldest are dropped first. |\n\nFor every rule: legal holds, recovery anchors,\
+  \ the automatic keep on each project's latest 25 runs, live references and backups override expiry. In Settings,\
+  \ Advanced > Storage & Retention lets you lengthen history and diagnostic windows, never shorten them below these.\n\
+  \n**Already decided, not asked (156 of the 341)**\n\n- **88 because the plans name their kind.** For example:\
+  \ run, node and attempt history (Run year); the scheduler's per-pass record `scheduler.pass` (Run year: the plans\
+  \ call it a canonical runtime event, and a review on November 4 confirmed it needs no new choice); approvals and\
+  \ FileSafe overrides (Keep); FileSafe denials (7 years); detailed usage records (your Usage setting, DL-270).\
+  \ Two of the 88 are retired and need no rule (`coordination.debug_mirror_exported`, `dashboard.widget_added`).\n\
+  \  - The 51 Browser names are among the 88: Storage already splits them 28 Keep (metadata only) and 23 Run year\
+  \ (SP-262). The Storage owner wrote that split with the Browser work; you never ruled on Browser retention on\
+  \ a card. If you want to, say so in your reply.\n- **68 because an answer of yours decides them**, all re-checked\
+  \ against today's plans:\n  - 19 runtime-artifact histories: Keep (DL-075);\n  - 19 subagent histories: Chat (DL-084);\n\
+  \  - 18 Crew, BrainStorm, Review and Chat Room events: Chat (DL-092);\n  - 3 crew board events: Coordination (DL-085);\n\
+  \  - 3 orchestrator diagnostics: Run year (DL-086);\n  - 4 registered Storage and platform families: 7 years in\
+  \ an app-wide bucket (DL-083, DL-089);\n  - chat messages: Chat (PD-L005-02); the chat deletion tombstone: Keep,\
+  \ content-free (PD-L015-04).\n\n**The 185 still open**\n\nThese are candidate\
+  \ names, counted before the naming choices on Card 2. A rule applies only to names that survive. If you approve\
+  \ Card 2 as recommended, 11 names leave this table (7 memory names in **G03**, two Browser names in **G10** and\
+  \ two Settings names in **G22**), leaving 174. The raw survey's original split (87 named, 68 answered, 186 open)\
+  \ is kept in the evidence; `scheduler.pass` moved from open to named after the review.\n\nThe recommendations\
+  \ follow one pattern:\n- history that belongs to a chat goes with the chat (as you chose in DL-084 and DL-092);\n\
+  - machine history of a run lasts a year after the run (as DL-086);\n- your own actions and edits on lasting project\
+  \ objects are kept, holding names, IDs and references only, never file, document, persona or memory bodies. This\
+  \ applies to these 185 names only; it changes no earlier answer (DL-075's runtime-artifact histories, for example,\
+  \ keep their summaries and titles);\n- machine signals that belong to no run are bounded: 7 years when they explain\
+  \ a security or recovery outcome, 90 days when they are routine.\n\n| ID | What it records | Names | Recommended\
+  \ | Why, and what you would notice |\n|---|---|---:|---|---|\n| **G01** | File and folder actions in the file\
+  \ tree: create, rename, move, copy, delete, export. Paths only, no file contents. | 12 | Keep | You can still\
+  \ see who deleted a file and when, after the file is gone. The FileSafe override history for the same files is\
+  \ already Keep. |\n| **G02** | Debug investigations: phases, target, notes, verification. Carries short summaries\
+  \ that may quote code or logs. | 9 | 7 years | The text argues for a limit. Debug 30 would empty investigations\
+  \ that the Runtime Artifacts panel still lists. |\n| **G03** | Changes to the assistant's memory notes: edited,\
+  \ pinned, verified, discarded. Refers to the note, never copies its text. | 8 | Keep | The memory plan says a\
+  \ correction never destroys audit history. |\n| **G04** | Memory maintenance runs: index rebuilds, verification\
+  \ and duplicate sweeps, monthly summary, prune. Counts and outcomes, no memory text. | 12 | 7 years | Low volume;\
+  \ explains how memory reached its current state. |\n| **G05** | GitHub sign-in: device code issued, waiting, signed\
+  \ in, failed, disconnected. Belongs to no project. | 5 | 7 years, counted in **one app-wide bucket** with the\
+  \ same 2,000,000 cap (new records refused past it) | Security history with a limit. The bucket is needed because\
+  \ these records have no project to count against, as you decided for Storage records (DL-083) and platform checks\
+  \ (DL-089). Alternatives: Keep (no bucket needed, kept forever); 90 days (counted in the same app-wide bucket).\
+  \ The \"waiting\" record repeats every few seconds during sign-in. |\n| **G06** | Your response to an alert: acknowledged,\
+  \ dismissed, snoozed, muted (with reason and expiry). | 4 | Keep | Your decisions, low volume. |\n| **G07** |\
+  \ Personas: created, updated, deleted, selected, imported, exported. | 6 | Keep, references only | Never the persona's\
+  \ instructions, so deleting a persona leaves only its name and IDs in history. |\n| **G08** | Plugins: loaded,\
+  \ failed to load, tool registered, tool name collision, permission override, and every hook call, error and block.\
+  \ | 8 | The 3 hook records 90 days; the other 5 (including permission override) 7 years | Hook calls can fire\
+  \ on every tool call and would reach the 7-year cap, after which new records are refused. |\n| **G09** | Concerns\
+  \ on the Orchestrator page: created, updated, assigned, resolved, reopened, evidence linked, promoted. | 7 | Keep\
+  \ | The concern record itself is already Keep. |\n| **G10** | Older browser sessions, and page content shared\
+  \ into a chat: context captured, shared, share revoked; session created, state changed, closed, promoted, take-over\
+  \ changed, navigated, resized. | 10 | Shared context (3): Chat. Session events (5): Keep, metadata only. Navigated\
+  \ and resized (2): 90 days, if **2a** keeps them. | Shared context can hold page excerpts tied to a chat. \"Navigated\"\
+  \ would be a list of visited addresses, which is browsing history. |\n| **G11** | Catalog items installed, updated,\
+  \ removed (item, version, when). | 6 | Keep | No count cap, so no bucket question if installs are app-wide. |\n\
+  | **G12** | Dev server and preview sessions started, stopping, stopped, restarting, refreshed. | 7 | 90 days |\
+  \ Routine and frequent; no content. |\n| **G13** | Live computer-use or browser sessions inside a run, including\
+  \ each step. | 5 | Run year | Each has a run; the per-run cap and successor absorb the step volume. |\n| **G14**\
+  \ | Doctor's check of a custom headless browser setting, and its one-time \"skipped\" notice. | 2 | 7 years |\
+  \ Small, explains a check's outcome. |\n| **G15** | Chat thread actions: created, archived, **Stop pressed**,\
+  \ and 11 worktree actions (bound, unbound, renamed, create failed, merged, merge failed, PR created, PR failed,\
+  \ pre-merge tests started, passed, failed). Holds branch names, paths, PR links, test commands and error text.\
+  \ | 14 | Chat | Deleted with the chat, as a user who deletes a chat expects. The chat's worktree link is rebuilt\
+  \ from these records, so they must last as long as the chat. |\n| **G16** | Notes on planning documents and their\
+  \ status; targeted revisions; selections sent to chat. | 9 | Keep | Review history of planning documents. |\n\
+  | **G17** | Planning Wizard opened, a deferred step loaded, wizard blocked and unblocked; requirement questions\
+  \ put to you. | 5 | Keep | Some of these names may not survive (a drafting lane has stopped on them, see the end\
+  \ of this file); the rule applies to those that do. |\n| **G18** | Scheduling: scheduled sends and builds, execution\
+  \ windows, quota waits and your resume consent, \"Pause all automations\", a Plan's schedule invalidated by a\
+  \ new version. | 14 | Keep | The records these change are all Keep already. Message text stays in the schedule\
+  \ record, referenced. |\n| **G19** | Named Plans: created, renamed, archived, restored, priority changed, child\
+  \ plans changed. | 6 | Keep | The Plan record is Keep. |\n| **G20** | To-Do list changes in a chat (item text\
+  \ may appear). | 7 | Chat | The list belongs to a chat. |\n| **G21** | Saved Docker Compose scenarios: saved,\
+  \ edited, run, deleted. | 4 | Keep | Your actions on a lasting object. |\n| **G22** | A panel popped out or put\
+  \ back; a setting or the theme changed. | 4 | Keep | What the registered siblings (layout changes, `settings.layer.changed`)\
+  \ use. Card **2d** decides which Settings names survive. |\n| **G23** | Each tool call in a run (name, outcome,\
+  \ duration, error), tool denials with reason, and progression gate checks with scores. | 7 | Run year | The run's\
+  \ history and graph read them. |\n| **G24** | Worktree created and deleted (branch, path, cleanup reason). | 2\
+  \ | Worktree year | The policy the worktree records already use. A run is optional here, so Run year cannot anchor\
+  \ them. |\n| **G25** | Project created, existing folder added as a project, repository cloned. | 3 | Keep | Project\
+  \ origin history. |\n| **G26** | Formatter applied, language server state changes, model catalog refreshed. |\
+  \ 3 | 90 days | Routine signals, the kind the \"ordinary telemetry\" class describes. |\n| **G27** | A subagent's\
+  \ working context shrunk or restored. | 2 | Chat | The lifetime of the subagent history it annotates (DL-084 named\
+  \ 19 subagent events, not these two). |\n| **G28** | Restore points inside a run (a restore point created or used),\
+  \ and one record when a plan's work breakdown fell back to a simpler one before it was locked. | 3 | The 2 restore-point\
+  \ records: Run year. The fallback record: 7 years, kept as operational history and counted from when the fallback\
+  \ result was committed. | The fallback has no run, so Run year cannot anchor it. A restore point's own files keep\
+  \ their 90-days-after-release rule. |\n| **G29** | Checks deciding whether a Goal should keep working: each time,\
+  \ the result, your latest stop and the evidence used. | 1 | Kept with the Goal's chat (the existing Goal text\
+  \ rule, no count cap) | Frequent, and meaningful only while the Goal's chat exists. |\n\n**What it costs.** \"\
+  Chat\" and \"90 days\" need two policy objects (the Chat one is written on the unlanded Storage retention branch;\
+  \ 90 days is new). Keep groups never expire by age or count; they hold names and references, so they stay small,\
+  \ but they count against disk budgets and refuse new records under storage pressure. 7-year groups refuse new\
+  \ records past 2,000,000 per project. If an owner finds that another 7-year group also belongs to no project,\
+  \ it comes back to you with the same counting question as **G05**: DL-083 and DL-089 each covered only the families\
+  \ they named.\n\n**Recommendation:** approve the table as written. Reason: one pattern decides all 29 groups,\
+  \ and it is the pattern you already chose for subagent, collaborative and orchestrator history.\n\nCoordinator\
+  \ pm7-build’s reading, not Jared’s words: Approves every Recommended cell as written, with the legend and its\
+  \ limits. The already-decided assignments remain in place, including scheduler.pass Run year. Browser retention\
+  \ was not put to a ruling: SP-262’s split stands. DL-414 records the later separate answer on registration scope."
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-039
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- 'Approves every Recommended cell as written, with the legend and its limits. The already-decided assignments remain
+  in place, including scheduler.pass Run year. Browser retention was not put to a ruling: SP-262’s split stands.
+  DL-414 records the later separate answer on registration scope.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-402 - Monthly summary and prune archive memories only
+
+```yaml
+plan_unit_id: DL-402
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 1b-i: - **A (recommended):** monthly summary
+  and prune only archive. A memory is deleted only when you delete it. The monthly summary keeps its originals archived,
+  with all their evidence references. Neither job archives or merges a pinned memory. Pins do not stop verification,
+  index rebuilds or "out of date" marking, which the plan requires for every memory.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Resolves archive versus deletion for monthly summary and prune
+  only. The duplicate sweep’s survivor and disposition policy remains open; pins still allow verification, index
+  rebuilds and out-of-date marking.'
+gui_related: true
+gui_classification_reason: Records Memory-panel button availability or memory presentation behavior.
+split_recommended: false
+depends_on:
+- DL-401
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Resolves archive versus deletion for monthly summary and prune only. The duplicate sweep’s survivor and disposition
+  policy remains open; pins still allow verification, index rebuilds and out-of-date marking.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-403 - Memory maintenance waits for approved cutoffs
+
+```yaml
+plan_unit_id: DL-403
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 1b-ii: - **A (recommended):** neither job
+  runs until cutoffs exist, automatically or from the Memory panel: the two maintenance buttons show as unavailable
+  with the reason, because pressing one would need the same cutoffs to know which memories to touch. The memory
+  owner proposes exact cutoffs (an age, and a score) and they come back to you. Until then, memory is not tidied,
+  and nothing is lost.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Neither automatic nor Memory-panel execution of the two jobs
+  is available until cutoffs exist. No age or score cutoff is selected here; the memory owner’s proposal returns
+  to Jared.'
+gui_related: true
+gui_classification_reason: Records Memory-panel button availability or memory presentation behavior.
+split_recommended: false
+depends_on:
+- DL-402
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Neither automatic nor Memory-panel execution of the two jobs is available until cutoffs exist. No age or score
+  cutoff is selected here; the memory owner’s proposal returns to Jared.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-404 - Collaborative run records live as long as their chat
+
+```yaml
+plan_unit_id: DL-404
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 1c: - **A (recommended):** as long as the
+  chat exists, in projects and in no-project chats, for the run, participant, transcript, proposal and finding records,
+  with the same holds and deletion deadlines as chat history. This replaces the one-year rule on the app-scope records.
+  Shared artifacts, original receipts and other records kept on their own keep their own rules; deleting a collaborative
+  card or message never deletes a shared artifact.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Replaces SP-351’s one-year rule for application-scope collaborative
+  run, participant and transcript records. Covers run, participant, transcript, proposal and finding records in
+  both scopes. DL-092’s event retention remains; separately retained shared artifacts and original receipts keep
+  their rules.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-092
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Replaces SP-351’s one-year rule for application-scope collaborative run, participant and transcript records. Covers
+  run, participant, transcript, proposal and finding records in both scopes. DL-092’s event retention remains; separately
+  retained shared artifacts and original receipts keep their rules.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-405 - Manual Browser sessions name their workspace without duplicate history
+
+```yaml
+plan_unit_id: DL-405
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 2a: - **A (recommended):** keep the five
+  session events as the history of manual browsing. The plans state the relationship: each manual session is the
+  manual face of one Browser workspace, the session''s record names that workspace, and one action never records
+  the same change as both a session event and a workspace event. Retire navigated and resized. What you would notice:
+  browser history shows sessions opened, closed, promoted and taken over; no per-page browsing list is saved beyond
+  what Browser Program records.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Keeps five manual session events, relates each session to
+  one Browser workspace and prevents duplicate recording of the same change. Retires navigated and resized; DL-046’s
+  Browser Program remains.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-046
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Keeps five manual session events, relates each session to one Browser workspace and prevents duplicate recording
+  of the same change. Retires navigated and resized; DL-046’s Browser Program remains.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-406 - Stop uses one request event and a saved run or turn outcome
+
+```yaml
+plan_unit_id: DL-406
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 2b: - **A (recommended):** one request
+  event under the catalog name. Whether the stop succeeded or timed out is saved on the chat run''s or turn''s own
+  record. The 3-second wait and the rule that queued messages wait for a saved outcome stay. Condition: before the
+  two outcome names are retired, the chat owner names the existing run or turn record, and its fields, that keep
+  the outcome. If no record can, this comes back to you rather than dropping outcome history.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: The request name is chat.response_stop_requested. The 3-second
+  wait and queued-message rule stay. Retirement of the two outcome names is conditional on the chat owner naming
+  the existing record and outcome fields; otherwise the question returns to Jared.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-039
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- The request name is chat.response_stop_requested. The 3-second wait and queued-message rule stay. Retirement of
+  the two outcome names is conditional on the chat owner naming the existing record and outcome fields; otherwise
+  the question returns to Jared.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-407 - Memory changes use one complete state-change contract
+
+```yaml
+plan_unit_id: DL-407
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 2c: - **A (recommended):** one history.
+  Keep `memory.gist_state_changed` and retire the seven. Each successful verify, edit, pin or unpin, discard, and
+  each automatic change, saves one event. A verification that is only requested, or that fails, saves no history
+  event of its own: you see the result when it happens, and only the command''s own result remains. The seven are
+  retired only after the one event''s full contract covers successful edits, pins, discards and automatic changes.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Keeps memory.gist_state_changed; retires the seven command
+  names only after its full contract covers the successful and automatic changes specified. Requested or failed
+  verification leaves only the command result, with no history event of its own.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-039
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Keeps memory.gist_state_changed; retires the seven command names only after its full contract covers the successful
+  and automatic changes specified. Requested or failed verification leaves only the command result, with no history
+  event of its own.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-408 - Every Settings change uses settings.layer.changed
+
+```yaml
+plan_unit_id: DL-408
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 2d: - **A (recommended):** one name. Every
+  Settings change, including the DRY guard, the memory switch and theme changes, is recorded only as `settings.layer.changed`.
+  `settings.updated` and `settings.theme.updated` are retired as superseded; records already written under the older
+  dedicated DRY-guard spelling stay readable. This replaces DL-041''s naming answer and does not enable the DRY
+  guard.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Replaces DL-041’s naming answer. Retires settings.updated
+  and settings.theme.updated as superseded; historical dedicated DRY-guard records stay readable. DL-300’s registration
+  stands. The DRY guard stays disabled pending its owner’s key proof.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-300
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Replaces DL-041’s naming answer. Retires settings.updated and settings.theme.updated as superseded; historical
+  dedicated DRY-guard records stay readable. DL-300’s registration stands. The DRY guard stays disabled pending
+  its owner’s key proof.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-409 - DL-079 stands in both scopes for three historical Goal events
+
+```yaml
+plan_unit_id: DL-409
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. Card 3: - **A (recommended):** DL-079 stands
+  in both scopes. The Goal owner writes the read-only contracts, the Contracts table marks the three history-only,
+  and the next registry checkpoint withdraws their three unused app editions. Old project records, their schemas
+  and their retention are unchanged. Nothing changes for you in the app.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Confirms DL-079 for goal.evidence_captured, goal.receipt_recorded
+  and goal.tool_check_recorded in both scopes. Supersedes DL-300 only as to retaining their three unused app editions:
+  the next registry checkpoint withdraws them. Existing project records, schemas and retention stay unchanged; no
+  new writer is authorized.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-079
+- DL-300
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- 'Confirms DL-079 for goal.evidence_captured, goal.receipt_recorded and goal.tool_check_recorded in both scopes.
+  Supersedes DL-300 only as to retaining their three unused app editions: the next registry checkpoint withdraws
+  them. Existing project records, schemas and retention stay unchanged; no new writer is authorized.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-410 - Recount today’s event names without changing the frozen seal check
+
+```yaml
+plan_unit_id: DL-410
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: "Jared answered \"approve all except 4c B\" on 2026-11-04. 4a: - **A (recommended):** count again\
+  \ on today's plans, settle every new name (register, exclude with evidence, or bring it to you), then freeze the\
+  \ new list with its own recorded receipt. The August list stays as history. This approves a recount and its receipt\
+  \ only: no change to the seal check, no re-stamping of August fingerprints, and no seal before the depth checks\
+  \ pass.\n  - **Open consequence:** the frozen seal check reads the August list's files and fingerprint directly.\
+  \ Nobody has yet shown how a new list can be recorded where that check reads it without re-stamping the August\
+  \ fingerprint (which you forbade) or changing the check (which needs you). If it needs either, that comes back\
+  \ to you as its own question.\n\nCoordinator pm7-build’s reading, not Jared’s words: The open consequence above\
+  \ is part of the approval: recording a new list where the frozen check reads it returns to Jared if it needs a\
+  \ fingerprint re-stamp or check change. The August list remains history, DL-039’s depth and no-re-stamping conditions\
+  \ stand, and this recount approval grants no check change. DL-412 separately records the narrowly approved third\
+  \ change."
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-039
+- DL-077
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- 'The open consequence above is part of the approval: recording a new list where the frozen check reads it returns
+  to Jared if it needs a fingerprint re-stamp or check change. The August list remains history, DL-039’s depth and
+  no-re-stamping conditions stand, and this recount approval grants no check change. DL-412 separately records the
+  narrowly approved third change.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-411 - Technical-binding permission covers exactly the 35 listed names
+
+```yaml
+plan_unit_id: DL-411
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 4b: - **A (recommended):** grant it for
+  exactly these 35 names. Any name the recount in **4a** finds beyond them comes back to you as a list.
+
+
+  **What the permission is (the same terms as DL-045):** for behavior the plans already specify, owners may write
+  a missing technical part only after a documented search for each name, reusing any existing owner definition first
+  and labeling anything new as new. It chooses no feature, no retention or deletion rule and no winner between owners;
+  it admits no event; it waives no review or depth check.
+
+
+  The 35 names:
+
+  `assistant_plan.schedule_invalidated`; `docker.compose.scenario.saved`, `.edited`, `.run`, `.deleted`; `execution_window.created`,
+  `.updated`, `.invalidated`; `goal.continuation_evaluated`; `named_plan.created`, `.renamed`, `.archived`, `.restored`,
+  `.priority_changed`, `.child_refs_changed`; `runtime.automation_pause_changed`, `runtime.quota_wait_started`,
+  `runtime.quota_resume_consent_changed`, `runtime.quota_resume_attempted`; `scheduled_dispatch.created`, `.updated`,
+  `.cancelled`, `.dispatched`, `.held`, `.failed`; `todo.created`, `.updated`, `.work_bound`, `.status_changed`,
+  `.dependency_changed`, `.reordered`, `.removed_from_current_list`; `settings.layer.changed`; `approval.chat_tool_requested`;
+  `approval.chat_tool_resolved`.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Extends DL-045-terms technical drafting permission only to
+  these 35 names. Existing owner definitions must be searched per name and reused first; newly authored parts are
+  labeled new. No feature, retention/deletion choice, owner conflict, admission, review waiver or depth pass is
+  granted. Every further recount name returns to Jared as a list.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- Extends DL-045-terms technical drafting permission only to these 35 names. Existing owner definitions must be
+  searched per name and reused first; newly authored parts are labeled new. No feature, retention/deletion choice,
+  owner conflict, admission, review waiver or depth pass is granted. Every further recount name returns to Jared
+  as a list.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-412 - Third recorded seal-check change accepts truthful multi-family steps
+
+```yaml
+plan_unit_id: DL-412
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. 4c, option B: - **B:** a third recorded
+  change to the frozen check, so it accepts a truthful step that added several families at once. Each family still
+  needs its own record. DL-077 allowed exactly one more change, so this needs your new approval.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Coordinator pm7-build’s relayed reading, not Jared’s words:
+  Jared chose B, which pm7-build suggested to him; it was not stream E’s recommendation. Make this third change
+  openly, with the same before and after reviews, and record what it does and does not relax. No other change to
+  the seal check is approved. Each family still needs its own record, full contract and current 12-of-12 assessment.
+  This choice grants no depth pass and turns on no writer. DL-300 must also be written in the entry form the check
+  reads, recording the existing answer. DL-077’s earlier change limit is superseded only for this third recorded
+  change; DL-400’s reviews and other protections remain.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-077
+- DL-300
+- DL-400
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- 'Coordinator pm7-build’s relayed reading, not Jared’s words: Jared chose B, which pm7-build suggested to him;
+  it was not stream E’s recommendation. Make this third change openly, with the same before and after reviews, and
+  record what it does and does not relax. No other change to the seal check is approved. Each family still needs
+  its own record, full contract and current 12-of-12 assessment. This choice grants no depth pass and turns on no
+  writer. DL-300 must also be written in the entry form the check reads, recording the existing answer. DL-077’s
+  earlier change limit is superseded only for this third recorded change; DL-400’s reviews and other protections
+  remain.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-413 - Batch 1 may add exactly two test-file gitignore lines
+
+```yaml
+plan_unit_id: DL-413
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared answered "approve all except 4c B" on 2026-11-04. Card 5: - **A (recommended):** yes. Exactly
+  these two `.gitignore` lines are added, as their own commit in batch 1. Any other new Event Authority test file
+  comes to you with its exact path.
+
+
+  Coordinator pm7-build’s reading, not Jared’s words: Replaces the obsolete coordinating-thread/standing-Plans-agent
+  arrangement for these two lines only: tests/test_event_authority_holding_bucket.py and tests/test_pm_coordination_events.py.
+  They are added as their own batch-1 commit. Every other new Event Authority test path returns to Jared. This entry
+  records permission; this branch edits no .gitignore or test file.'
+gui_related: false
+gui_classification_reason: Records event authority, retention or governance without visual presentation.
+split_recommended: false
+depends_on:
+- DL-400
+unblocks: []
+acceptance_criteria:
+- The answer and approved option text match the cited as-presented cards.
+- Coordinator readings are attributed separately from Jared’s verbatim answer.
+- 'Replaces the obsolete coordinating-thread/standing-Plans-agent arrangement for these two lines only: tests/test_event_authority_holding_bucket.py
+  and tests/test_pm_coordination_events.py. They are added as their own batch-1 commit. Every other new Event Authority
+  test path returns to Jared. This entry records permission; this branch edits no .gitignore or test file.'
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04T19:14:49Z, relayed to stream E by pm7-build.
+  Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`.
+  Cards as presented: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`,
+  SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`.'
+preserved_exact_tokens:
+- approve all except 4c B
+- 578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696
+negative_constraints:
+- Do not treat the coordinator reading as Jared’s quoted words.
+- This record itself changes no owner contract, registry, validator, admission record or governance seal.
+owner_hints:
+- Plans/Decision_Log.md
+```
+
+### DL-414 - All event rows must be finalized under DL-039
+
+```yaml
+plan_unit_id: DL-414
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'Jared’s verbatim answer: "all of them, we are getting close to building soon so it all needs to
+  be finalized." Coordinator pm7-build’s reading, not Jared’s words: The "register only what the first build needs"
+  option is closed; every row goes to its one outcome, as DL-039 says (register, exclude with evidence, or a decision
+  of his).'
+gui_related: false
+gui_classification_reason: Records the scope of event finalization, not visual presentation.
+split_recommended: false
+depends_on:
+- DL-039
+unblocks: []
+acceptance_criteria:
+- Every row receives one DL-039 outcome; the first-build-only option is closed.
+- Preserve Jared’s exact answer and attribute the reading to pm7-build.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- Frozen validator decision_section_bytes extraction
+risk_class: owner_decision_fidelity
+reasoning_tier: high
+context_scope: event_authority_cards1_20261104
+implementation_surfaces:
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04, relayed by pm7-build. Answer file: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/ANSWERS_E-CARDS-1_20261104.md`,
+  second answer, same day. No exact timestamp was supplied for this later answer.'
+preserved_exact_tokens:
+- all of them, we are getting close to building soon so it all needs to be finalized.
+negative_constraints:
+- Do not treat pm7-build’s reading as Jared’s words.
+- Do not grant automatic registration or waive depth, reviews or seal protections.
+owner_hints:
+- Plans/Decision_Log.md
 ```
 
 ### DL-002 - Decision Log Human-Authored Ledger Boundary

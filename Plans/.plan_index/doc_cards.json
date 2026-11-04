@@ -5743,10 +5743,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 61,
-        "True": 206
+        "False": 73,
+        "True": 208
       },
-      "heading_count": 443,
+      "heading_count": 471,
       "implementation_surfaces": [
         ".claude/CLAUDE.md",
         ".gitignore",
@@ -5866,11 +5866,25 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 21385,
+      "line_count": 22602,
       "path": "Plans/Decision_Log.md",
-      "plan_unit_count": 267,
+      "plan_unit_count": 281,
       "plan_unit_ids": [
         "DL-400",
+        "DL-401",
+        "DL-402",
+        "DL-403",
+        "DL-404",
+        "DL-405",
+        "DL-406",
+        "DL-407",
+        "DL-408",
+        "DL-409",
+        "DL-410",
+        "DL-411",
+        "DL-412",
+        "DL-413",
+        "DL-414",
         "DL-002",
         "DL-003",
         "DL-004",
@@ -6245,6 +6259,7 @@
         "orchestrator_diagnostic_retention_drift",
         "owner_answer_loss_or_unapproved_event_admission",
         "owner_decision_drift",
+        "owner_decision_fidelity",
         "owner_drift",
         "owner_identity_and_truthful_feedback",
         "permanent_repository_format_chosen_without_evidence",
@@ -6312,15 +6327,15 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "fd2f8100a04224caa4a4e56ae9ffa356563ea03154e36b925bacfb80e74e9d85",
+      "sha256": "ce34da29a4f2170606b56f11199d5aa629269d2aebb209f9efa68c636568665f",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 267
+        "accepted": 281
       },
       "title": "Decision Log",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "decision": 151,
+        "decision": 165,
         "decision_record": 24,
         "requirement": 91
       },
@@ -6336,6 +6351,7 @@
         "Exact approved card, quotation and supersession coverage review.",
         "Exact response SHA-256 and scope-name comparison",
         "Exact response-byte preservation and source SHA-256 checks",
+        "Frozen validator decision_section_bytes extraction",
         "Frozen validator decision_section_bytes hash comparison for DL-077 and DL-094",
         "Manual AGENTS.md and .claude/CLAUDE.md landing-procedure review.",
         "Manual review of Plans/Planning_Wizard.md PWIZ-006, PWIZ-011, and PWIZ-028 against this record.",
@@ -21513,7 +21529,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T18:36:24Z",
+  "generated_at_utc": "2026-11-04T19:24:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21521,13 +21537,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3633,
-      "True": 3791
+      "False": 3645,
+      "True": 3793
     },
-    "plan_unit_count": 7424,
+    "plan_unit_count": 7438,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7207,
+      "accepted": 7221,
       "retired": 194,
       "superseded": 23
     },
@@ -21560,7 +21576,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 174,
+      "decision": 188,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
