@@ -198,11 +198,22 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 14px; width: 100%; padding: 14px 16px; text-align: left; border-radius: var(--o55-card-r); cursor: pointer;
   border: 1px solid var(--o55-line); background: var(--o55-card-bg); color: var(--text-primary); font: inherit; transition: border-color 180ms ease, background 180ms ease, transform 180ms ease, box-shadow 200ms ease; }
 .o55-card:hover { border-color: color-mix(in srgb, var(--o55-accent) 55%, var(--o55-line)); transform: translateY(-1px); }
-/* A card or tile lifted on hover keeps its hover: a hover-only strip under it covers the pixels it rose, so the area that
-   holds the hover never leaves a pointer resting at its bottom edge (FO-49: the edge rose past the pointer, the hover
-   dropped, the card came back under it, and it trembled; under Reduce Motion it flipped every frame). Nothing is drawn. */
+/* FO-49: only the transparent, counter-moving face receives pointer input. Its border box is
+   exactly the button's resting border box, including each look's border width/radius. Matching
+   transform transitions cancel the visual lift throughout the transition, not just at its end.
+   Children are paint only; keyboard focus and activation remain on the native button. */
 .o55-card { position: relative; }
-:is(.o55-card, .o55-tile):hover::before { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 4px; }
+:is(.o55-card, .o55-tile), :is(.o55-card, .o55-tile) * { pointer-events: none; }
+:is(.o55-card, .o55-tile)::before {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 100%; height: 100%;
+  box-sizing: content-box; border: inherit; border-color: transparent; border-radius: inherit;
+  pointer-events: auto; transform: translate(-50%, -50%) translateY(0); transition: inherit;
+}
+.o55-card:hover::before { transform: translate(-50%, -50%) translateY(1px); }
+.o55-tile:hover::before { transform: translate(-50%, -50%) translateY(2px); }
+#pm-o55-onboarding[data-family="retro"] .o55-card:hover::before,
+html[data-o55-nier="on"] #pm-o55-onboarding :is(.o55-card, .o55-tile):hover::before,
+.o55-card.o55-card-parent:hover::before { transform: translate(-50%, -50%) translateY(0); }
 .o55-card.o55-on { border-color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 11%, var(--o55-card-bg)); box-shadow: inset 0 0 0 1px var(--o55-accent); }
 .o55-card[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
 .o55-glyph { display: grid; place-items: center; width: 42px; height: 42px; border-radius: calc(var(--o55-card-r) * 0.8); color: var(--o55-accent); background: color-mix(in srgb, var(--o55-accent) 13%, transparent); flex: none; }
