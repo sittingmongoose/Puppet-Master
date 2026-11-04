@@ -45,7 +45,7 @@
       {
         "contract_kind": "onboarding_motion",
         "plan_unit_ref": "F3-520",
-        "setup_model": "draft_then_explicit_project_commit_then_provider_setup",
+        "setup_model": "draft_then_reviewed_project_or_application_setup",
         "stage_count": 11,
         "stages": [
           "welcome",
@@ -184,7 +184,7 @@
         "interruptible": true,
         "input_blocking": false,
         "reduced_motion": "immediate_or_short_opacity",
-        "contract_revision": "draft-copy-late-project-paid-then-free-2026-09-03",
+        "contract_revision": "draft-review-project-or-app-ai-2026-11-04",
         "project_choices_effect": "uncreated_project_draft",
         "settings_choice_owner": "Plans/Settings_System.md#SSYS-036",
         "copy_settings_explicit_opt_in": true,
@@ -194,7 +194,7 @@
         "project_commit_owner": "Plans/Project_System.md#PJCT-007",
         "paid_provider_stage": "provider_setup",
         "free_models_stage": "free_models_setup",
-        "provider_setup_requires_actual_project_commit": true,
+        "provider_setup_requires_actual_project_commit": false,
         "free_models_after_paid_ready_or_explicit_skip": true,
         "free_models_underlying_provider_owner_setup": true,
         "project_later_supported": true,
@@ -209,8 +209,11 @@
           "remote_access_setup",
           "review_setup_plan",
           "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
           "ready"
-        ]
+        ],
+        "provider_setup_scope": "application_on_named_computer"
       },
       {
         "contract_kind": "guided_tour",
@@ -2125,8 +2128,180 @@
     },
     {
       "case_id": "onboarding_provider_setup_before_real_project",
-      "json_pointer": "/contracts/1/provider_setup_requires_actual_project_commit",
-      "replacement": false,
+      "json_pointer": "/contracts/1",
+      "replacement": {
+        "contract_kind": "onboarding_motion",
+        "plan_unit_ref": "F3-520",
+        "setup_model": "draft_then_reviewed_project_or_application_setup",
+        "stage_count": 11,
+        "stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
+          "ready"
+        ],
+        "journey_mode": "dynamic_path_with_reversible_visited_stages",
+        "connect_existing_stage_count": 6,
+        "connect_existing_stages": [
+          "welcome",
+          "simple_path",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "ready"
+        ],
+        "connect_existing_skips": [
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "provider_setup",
+          "free_models_setup"
+        ],
+        "reverse_back_contract": {
+          "action_label": "Back",
+          "traversal": "previous_visited_stage",
+          "available_before_apply": true,
+          "preserves_queued_selections": true
+        },
+        "navigation_before_apply": "back_and_forward_reversible",
+        "selection_effect": "draft_only_with_owner_authorized_read_preflight_or_selected_source_auth",
+        "first_choice_stage": "simple_path",
+        "first_choice_options": [
+          "start_new_setup",
+          "connect_existing_puppet_master"
+        ],
+        "independent_roles": [
+          "Server",
+          "Storage",
+          "Client"
+        ],
+        "roles_visible": true,
+        "role_choice_stage": "server_storage_client",
+        "theme_choice_stage": "welcome",
+        "theme_choice_timing": "early_before_project_and_infrastructure",
+        "theme_picker": {
+          "themes": [
+            "Basic Dark",
+            "Basic Light",
+            "Friendly Dark",
+            "Friendly Light",
+            "Glass Dark",
+            "Glass Light",
+            "Retro Dark",
+            "Retro Light",
+            "NieR Dark",
+            "NieR Light"
+          ],
+          "presentation": "modal",
+          "bounded": true
+        },
+        "safe_history": {
+          "local_history_required": true,
+          "source_control_backends": [
+            "Git",
+            "Jujutsu"
+          ],
+          "git_role": "local_source_control_backend",
+          "jujutsu_role": "local_source_control_backend",
+          "filesafe_role": "independent_local_recovery_history",
+          "filesafe_is_source_control_backend": false,
+          "forge_role": "optional_remote_collaboration",
+          "forge_optional": true,
+          "forge_does_not_replace_local_history": true
+        },
+        "remote_access": {
+          "local_group": "Local_or_VPN",
+          "remote_options": [
+            "Tailscale_or_Headscale",
+            "reverse_proxy",
+            "Remote_Link"
+          ],
+          "remote_link_label": "Remote Link",
+          "remote_link_placement": "always_visible_remote_choice"
+        },
+        "choice_help": {
+          "component": "shared_anchored_explainer",
+          "max_visible": 1,
+          "control_relation": "aria-controls",
+          "active_description_relation": "aria-describedby",
+          "replaces_previous": true,
+          "expands_peer_sections": false,
+          "target_binding": "single_current_option_note"
+        },
+        "review_apply": {
+          "review_stage": "review_setup_plan",
+          "apply_progress_stage": "automatic_preparation",
+          "review_required": true,
+          "back_available_before_apply": true,
+          "apply_is_user_initiated": true,
+          "apply_executes_queued_actions": true,
+          "ready_requires_apply_settlement": true
+        },
+        "owner_action_identity": "canonical_owner_command_or_typed_local_ui_action",
+        "owner_projection_only": true,
+        "private_owner_mutations": false,
+        "synthetic_onboarding_commands": false,
+        "max_prominent_choices": 2,
+        "first_project_prominent_choice_exception": 4,
+        "dominant_primary_actions": 1,
+        "hero_ms": {
+          "min": 1200,
+          "max": 1500
+        },
+        "step_transition_ms": {
+          "min": 420,
+          "max": 560
+        },
+        "stagger_ms": {
+          "min": 60,
+          "max": 80
+        },
+        "microinteraction_ms": {
+          "min": 120,
+          "max": 220
+        },
+        "success_ms": 700,
+        "interruptible": true,
+        "input_blocking": false,
+        "reduced_motion": "immediate_or_short_opacity",
+        "contract_revision": "draft-review-project-or-app-ai-2026-11-04",
+        "project_choices_effect": "uncreated_project_draft",
+        "settings_choice_owner": "Plans/Settings_System.md#SSYS-036",
+        "copy_settings_explicit_opt_in": true,
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind": true,
+        "precommit_access_owner": "Plans/Planning_Wizard.md#PWIZ-021",
+        "precommit_mutations_except_necessary_selected_source_auth": false,
+        "project_commit_owner": "Plans/Project_System.md#PJCT-007",
+        "paid_provider_stage": "provider_setup",
+        "free_models_stage": "free_models_setup",
+        "provider_setup_requires_actual_project_commit": false,
+        "free_models_after_paid_ready_or_explicit_skip": true,
+        "free_models_underlying_provider_owner_setup": true,
+        "project_later_supported": true,
+        "close_retains_existing_project_and_exact_phase": true,
+        "back_replays_commit_or_returns_to_uncreated_draft": false,
+        "deferred_project_stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
+          "ready"
+        ],
+        "provider_setup_scope": "project_after_commit"
+      },
       "expected": "rejected"
     },
     {
@@ -2166,7 +2341,7 @@
       "expected": "rejected"
     },
     {
-      "case_id": "onboarding_deferred_project_requires_provider_setup",
+      "case_id": "onboarding_deferred_project_omits_provider_setup",
       "json_pointer": "/contracts/1/deferred_project_stages",
       "replacement": [
         "welcome",
@@ -2177,8 +2352,6 @@
         "remote_access_setup",
         "review_setup_plan",
         "automatic_preparation",
-        "provider_setup",
-        "free_models_setup",
         "ready"
       ],
       "expected": "rejected"
@@ -2195,6 +2368,371 @@
         "diverged"
       ],
       "expected": "rejected"
+    },
+    {
+      "case_id": "sweep.onboarding_app_ai_wrongly_requires_project",
+      "json_pointer": "/contracts/1/provider_setup_requires_actual_project_commit",
+      "replacement": true,
+      "expected": "rejected"
+    },
+    {
+      "case_id": "sweep.onboarding_unknown_provider_target_scope",
+      "json_pointer": "/contracts/1/provider_setup_scope",
+      "replacement": "unspecified",
+      "expected": "rejected"
+    }
+  ],
+  "valid": [
+    {
+      "name": "sweep.onboarding_project_provider_still_requires_commit",
+      "definition": "onboarding_motion",
+      "value": {
+        "contract_kind": "onboarding_motion",
+        "plan_unit_ref": "F3-520",
+        "setup_model": "draft_then_reviewed_project_or_application_setup",
+        "stage_count": 11,
+        "stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
+          "ready"
+        ],
+        "journey_mode": "dynamic_path_with_reversible_visited_stages",
+        "connect_existing_stage_count": 6,
+        "connect_existing_stages": [
+          "welcome",
+          "simple_path",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "ready"
+        ],
+        "connect_existing_skips": [
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "provider_setup",
+          "free_models_setup"
+        ],
+        "reverse_back_contract": {
+          "action_label": "Back",
+          "traversal": "previous_visited_stage",
+          "available_before_apply": true,
+          "preserves_queued_selections": true
+        },
+        "navigation_before_apply": "back_and_forward_reversible",
+        "selection_effect": "draft_only_with_owner_authorized_read_preflight_or_selected_source_auth",
+        "first_choice_stage": "simple_path",
+        "first_choice_options": [
+          "start_new_setup",
+          "connect_existing_puppet_master"
+        ],
+        "independent_roles": [
+          "Server",
+          "Storage",
+          "Client"
+        ],
+        "roles_visible": true,
+        "role_choice_stage": "server_storage_client",
+        "theme_choice_stage": "welcome",
+        "theme_choice_timing": "early_before_project_and_infrastructure",
+        "theme_picker": {
+          "themes": [
+            "Basic Dark",
+            "Basic Light",
+            "Friendly Dark",
+            "Friendly Light",
+            "Glass Dark",
+            "Glass Light",
+            "Retro Dark",
+            "Retro Light",
+            "NieR Dark",
+            "NieR Light"
+          ],
+          "presentation": "modal",
+          "bounded": true
+        },
+        "safe_history": {
+          "local_history_required": true,
+          "source_control_backends": [
+            "Git",
+            "Jujutsu"
+          ],
+          "git_role": "local_source_control_backend",
+          "jujutsu_role": "local_source_control_backend",
+          "filesafe_role": "independent_local_recovery_history",
+          "filesafe_is_source_control_backend": false,
+          "forge_role": "optional_remote_collaboration",
+          "forge_optional": true,
+          "forge_does_not_replace_local_history": true
+        },
+        "remote_access": {
+          "local_group": "Local_or_VPN",
+          "remote_options": [
+            "Tailscale_or_Headscale",
+            "reverse_proxy",
+            "Remote_Link"
+          ],
+          "remote_link_label": "Remote Link",
+          "remote_link_placement": "always_visible_remote_choice"
+        },
+        "choice_help": {
+          "component": "shared_anchored_explainer",
+          "max_visible": 1,
+          "control_relation": "aria-controls",
+          "active_description_relation": "aria-describedby",
+          "replaces_previous": true,
+          "expands_peer_sections": false,
+          "target_binding": "single_current_option_note"
+        },
+        "review_apply": {
+          "review_stage": "review_setup_plan",
+          "apply_progress_stage": "automatic_preparation",
+          "review_required": true,
+          "back_available_before_apply": true,
+          "apply_is_user_initiated": true,
+          "apply_executes_queued_actions": true,
+          "ready_requires_apply_settlement": true
+        },
+        "owner_action_identity": "canonical_owner_command_or_typed_local_ui_action",
+        "owner_projection_only": true,
+        "private_owner_mutations": false,
+        "synthetic_onboarding_commands": false,
+        "max_prominent_choices": 2,
+        "first_project_prominent_choice_exception": 4,
+        "dominant_primary_actions": 1,
+        "hero_ms": {
+          "min": 1200,
+          "max": 1500
+        },
+        "step_transition_ms": {
+          "min": 420,
+          "max": 560
+        },
+        "stagger_ms": {
+          "min": 60,
+          "max": 80
+        },
+        "microinteraction_ms": {
+          "min": 120,
+          "max": 220
+        },
+        "success_ms": 700,
+        "interruptible": true,
+        "input_blocking": false,
+        "reduced_motion": "immediate_or_short_opacity",
+        "contract_revision": "draft-review-project-or-app-ai-2026-11-04",
+        "project_choices_effect": "uncreated_project_draft",
+        "settings_choice_owner": "Plans/Settings_System.md#SSYS-036",
+        "copy_settings_explicit_opt_in": true,
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind": true,
+        "precommit_access_owner": "Plans/Planning_Wizard.md#PWIZ-021",
+        "precommit_mutations_except_necessary_selected_source_auth": false,
+        "project_commit_owner": "Plans/Project_System.md#PJCT-007",
+        "paid_provider_stage": "provider_setup",
+        "free_models_stage": "free_models_setup",
+        "provider_setup_requires_actual_project_commit": true,
+        "free_models_after_paid_ready_or_explicit_skip": true,
+        "free_models_underlying_provider_owner_setup": true,
+        "project_later_supported": true,
+        "close_retains_existing_project_and_exact_phase": true,
+        "back_replays_commit_or_returns_to_uncreated_draft": false,
+        "deferred_project_stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
+          "ready"
+        ],
+        "provider_setup_scope": "project_after_commit"
+      }
+    },
+    {
+      "name": "sweep.onboarding_historical_project_shape_preserved",
+      "definition": "onboarding_motion_project_v1",
+      "value": {
+        "contract_kind": "onboarding_motion",
+        "plan_unit_ref": "F3-520",
+        "setup_model": "draft_then_explicit_project_commit_then_provider_setup",
+        "stage_count": 11,
+        "stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "provider_setup",
+          "free_models_setup",
+          "ready"
+        ],
+        "journey_mode": "dynamic_path_with_reversible_visited_stages",
+        "connect_existing_stage_count": 6,
+        "connect_existing_stages": [
+          "welcome",
+          "simple_path",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "ready"
+        ],
+        "connect_existing_skips": [
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "provider_setup",
+          "free_models_setup"
+        ],
+        "reverse_back_contract": {
+          "action_label": "Back",
+          "traversal": "previous_visited_stage",
+          "available_before_apply": true,
+          "preserves_queued_selections": true
+        },
+        "navigation_before_apply": "back_and_forward_reversible",
+        "selection_effect": "draft_only_with_owner_authorized_read_preflight_or_selected_source_auth",
+        "first_choice_stage": "simple_path",
+        "first_choice_options": [
+          "start_new_setup",
+          "connect_existing_puppet_master"
+        ],
+        "independent_roles": [
+          "Server",
+          "Storage",
+          "Client"
+        ],
+        "roles_visible": true,
+        "role_choice_stage": "server_storage_client",
+        "theme_choice_stage": "welcome",
+        "theme_choice_timing": "early_before_project_and_infrastructure",
+        "theme_picker": {
+          "themes": [
+            "Basic Dark",
+            "Basic Light",
+            "Friendly Dark",
+            "Friendly Light",
+            "Glass Dark",
+            "Glass Light",
+            "Retro Dark",
+            "Retro Light",
+            "NieR Dark",
+            "NieR Light"
+          ],
+          "presentation": "modal",
+          "bounded": true
+        },
+        "safe_history": {
+          "local_history_required": true,
+          "source_control_backends": [
+            "Git",
+            "Jujutsu"
+          ],
+          "git_role": "local_source_control_backend",
+          "jujutsu_role": "local_source_control_backend",
+          "filesafe_role": "independent_local_recovery_history",
+          "filesafe_is_source_control_backend": false,
+          "forge_role": "optional_remote_collaboration",
+          "forge_optional": true,
+          "forge_does_not_replace_local_history": true
+        },
+        "remote_access": {
+          "local_group": "Local_or_VPN",
+          "remote_options": [
+            "Tailscale_or_Headscale",
+            "reverse_proxy",
+            "Remote_Link"
+          ],
+          "remote_link_label": "Remote Link",
+          "remote_link_placement": "always_visible_remote_choice"
+        },
+        "choice_help": {
+          "component": "shared_anchored_explainer",
+          "max_visible": 1,
+          "control_relation": "aria-controls",
+          "active_description_relation": "aria-describedby",
+          "replaces_previous": true,
+          "expands_peer_sections": false,
+          "target_binding": "single_current_option_note"
+        },
+        "review_apply": {
+          "review_stage": "review_setup_plan",
+          "apply_progress_stage": "automatic_preparation",
+          "review_required": true,
+          "back_available_before_apply": true,
+          "apply_is_user_initiated": true,
+          "apply_executes_queued_actions": true,
+          "ready_requires_apply_settlement": true
+        },
+        "owner_action_identity": "canonical_owner_command_or_typed_local_ui_action",
+        "owner_projection_only": true,
+        "private_owner_mutations": false,
+        "synthetic_onboarding_commands": false,
+        "max_prominent_choices": 2,
+        "first_project_prominent_choice_exception": 4,
+        "dominant_primary_actions": 1,
+        "hero_ms": {
+          "min": 1200,
+          "max": 1500
+        },
+        "step_transition_ms": {
+          "min": 420,
+          "max": 560
+        },
+        "stagger_ms": {
+          "min": 60,
+          "max": 80
+        },
+        "microinteraction_ms": {
+          "min": 120,
+          "max": 220
+        },
+        "success_ms": 700,
+        "interruptible": true,
+        "input_blocking": false,
+        "reduced_motion": "immediate_or_short_opacity",
+        "contract_revision": "draft-copy-late-project-paid-then-free-2026-09-03",
+        "project_choices_effect": "uncreated_project_draft",
+        "settings_choice_owner": "Plans/Settings_System.md#SSYS-036",
+        "copy_settings_explicit_opt_in": true,
+        "copy_settings_requires_precommit_preview_and_postcommit_rebind": true,
+        "precommit_access_owner": "Plans/Planning_Wizard.md#PWIZ-021",
+        "precommit_mutations_except_necessary_selected_source_auth": false,
+        "project_commit_owner": "Plans/Project_System.md#PJCT-007",
+        "paid_provider_stage": "provider_setup",
+        "free_models_stage": "free_models_setup",
+        "provider_setup_requires_actual_project_commit": true,
+        "free_models_after_paid_ready_or_explicit_skip": true,
+        "free_models_underlying_provider_owner_setup": true,
+        "project_later_supported": true,
+        "close_retains_existing_project_and_exact_phase": true,
+        "back_replays_commit_or_returns_to_uncreated_draft": false,
+        "deferred_project_stages": [
+          "welcome",
+          "simple_path",
+          "first_project",
+          "source_control_setup",
+          "server_storage_client",
+          "remote_access_setup",
+          "review_setup_plan",
+          "automatic_preparation",
+          "ready"
+        ]
+      }
     }
   ]
 }
