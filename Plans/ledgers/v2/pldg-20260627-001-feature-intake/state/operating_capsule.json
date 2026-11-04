@@ -29,9 +29,9 @@
   "current_phase": "compiled_to_plans_governance_sealed",
   "current_status": "repair_validated",
   "cursor": {
-    "last_event_id": "evt-0031",
+    "last_event_id": "evt-0032",
     "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
-    "next_event_id": "evt-0032"
+    "next_event_id": "evt-0033"
   },
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
@@ -48,7 +48,7 @@
   ],
   "governance_status": "sealed",
   "last_completed_action": "Closed-world semantic audit repair certified with dependency, Runtime Artifacts receipt projection, ledger projection, closure registry, and diff hygiene repairs.",
-  "last_event_id": "evt-0031",
+  "last_event_id": "evt-0032",
   "last_known_good_state": "Canonical Plans and ledger projections are repaired and ready for final governance/index validation; node readiness remains intentionally blocked_compiler_contract_incomplete.",
   "latest_audit_status": "repair_validated",
   "latest_objective_gate_spot_check": {
@@ -125,7 +125,7 @@
   ],
   "schema_id": "pm.operating_capsule.v1",
   "source_compile_readiness_status": "compiled_to_canonical_plans__readiness_repaired__migration_metadata_refreshed__governance_sealed__node_compiler_boundary_remaining",
-  "updated_at_utc": "2026-11-04T18:35:42Z",
+  "updated_at_utc": "2026-11-04T19:41:40Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "git_diff_check": "pass",
