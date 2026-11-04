@@ -55,7 +55,7 @@ SCHEMAS = tuple('Plans/' + name + '.schema.json' for name in (
     'jujutsu_integration_contracts', 'multi_account_contracts', 'plugin_contracts',
     'plugin_package_contracts', 'pm7_build_contracts', 'pm7_control_bindings',
     'product_onboarding_contracts', 'project_sync_backbone_contracts', 'project_system_contracts',
-    'projects_refresh_command_bindings', 'protected_auth_browser_contracts',
+    'projects_refresh_command_bindings', 'projects_refresh_fix_contracts', 'protected_auth_browser_contracts',
     'remote_access_system_contracts', 'requested_effective_runtime',
     'runtime_artifact_context_snapshot', 'runtime_artifact_cost_usage', 'runtime_artifact_envelope',
     'runtime_artifact_restore_point', 'scheduling_and_quota_resume_contracts',
@@ -659,6 +659,14 @@ def pause_transition(before, desired, *, server_id, actor_ref, actor_kind, chang
 
 def semantic_outcome(predicate, record, corpus, pack, case):
     """Evaluate static cases. The returned outcome never admits native sources."""
+    if predicate in ('bindings.selected_request', 'bindings.selected_result'):
+        rule = next(r for r in case['semantic_checks'] if r['predicate_id'] == predicate)['expected']
+        row = next(r for r in corpus.document('Plans/projects_refresh_command_bindings.json')['commands']
+                   if r['command_id'] == rule['command_id'])
+        field = 'request_schema_ref' if predicate.endswith('request') else 'result_schema_ref'
+        return {'command_id': rule['command_id'],
+                'schema_valid': (case['schema_ref'] == row[field]
+                                 and corpus.validator(row[field]).is_valid(record))}
     if predicate.startswith('settings.') or predicate.startswith('models.'):
         from pm_settings_layering import settings_predicate
         rows = {r['id']: r for r in corpus.document('Plans/settings_inventory.json')['settings']}

@@ -918,6 +918,4491 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCreateV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+      "record": {
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "privacy": "private",
+        "command_id": "cmd.docker.create_repository",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCreateV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+      "record": {
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "privacy": "private",
+        "command_id": "cmd.docker.create_repository",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCreateV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request",
+      "record": {
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "privacy": "private",
+        "command_id": "cmd.docker.create_repository",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCreateV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result",
+      "record": {
+        "command_id": "cmd.docker.create_repository",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": null,
+        "namespace": null,
+        "repository_name": null,
+        "privacy": null,
+        "creation_request_id": null,
+        "repository_uid": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.create_repository",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCreateV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result",
+      "record": {
+        "command_id": "cmd.docker.create_repository",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": null,
+        "namespace": null,
+        "repository_name": null,
+        "privacy": null,
+        "creation_request_id": null,
+        "repository_uid": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.create_repository",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryConfirmV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+      "record": {
+        "creation_request_id": "creation_request_id-a",
+        "preview_ref": "preview_ref-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_decision_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "privacy": "private",
+        "command_id": "cmd.docker.create_repository.confirm",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.confirm",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryConfirmV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+      "record": {
+        "preview_ref": "preview_ref-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_decision_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "privacy": "private",
+        "command_id": "cmd.docker.create_repository.confirm",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.confirm",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryConfirmV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request",
+      "record": {
+        "creation_request_id": "creation_request_id-a",
+        "preview_ref": "preview_ref-a",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_decision_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "privacy": "private",
+        "command_id": "cmd.docker.create_repository.confirm",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "human",
+          "human_confirmed": true,
+          "decision": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "person_id": "person-a",
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.confirm",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryConfirmV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result",
+      "record": {
+        "command_id": "cmd.docker.create_repository.confirm",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": null,
+        "namespace": null,
+        "repository_name": null,
+        "privacy": null,
+        "creation_request_id": null,
+        "repository_uid": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.confirm",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryConfirmV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result",
+      "record": {
+        "command_id": "cmd.docker.create_repository.confirm",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": null,
+        "namespace": null,
+        "repository_name": null,
+        "privacy": null,
+        "creation_request_id": null,
+        "repository_uid": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.confirm",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCancelV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+      "record": {
+        "creation_request_id": "creation_request_id-a",
+        "expected_request_revision": 1,
+        "command_id": "cmd.docker.create_repository.cancel",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.cancel",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCancelV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+      "record": {
+        "expected_request_revision": 1,
+        "command_id": "cmd.docker.create_repository.cancel",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.cancel",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCancelV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request",
+      "record": {
+        "creation_request_id": "creation_request_id-a",
+        "expected_request_revision": 1,
+        "command_id": "cmd.docker.create_repository.cancel",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.cancel",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCancelV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result",
+      "record": {
+        "command_id": "cmd.docker.create_repository.cancel",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": null,
+        "namespace": null,
+        "repository_name": null,
+        "privacy": null,
+        "creation_request_id": null,
+        "repository_uid": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.cancel",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerRepositoryCancelV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result",
+      "record": {
+        "command_id": "cmd.docker.create_repository.cancel",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": null,
+        "namespace": null,
+        "repository_name": null,
+        "privacy": null,
+        "creation_request_id": null,
+        "repository_uid": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.create_repository.cancel",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerImagePushV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+      "record": {
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.docker.image.push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.image.push",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerImagePushV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+      "record": {
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.docker.image.push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.image.push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerImagePushV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request",
+      "record": {
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.docker.image.push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.image.push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerImagePushV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result",
+      "record": {
+        "command_id": "cmd.docker.image.push",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": "registry_id-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.image.push",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerImagePushV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result",
+      "record": {
+        "command_id": "cmd.docker.image.push",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": "registry_id-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.image.push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTagPushV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+      "record": {
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.docker.registry.tag_push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.registry.tag_push",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTagPushV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+      "record": {
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.docker.registry.tag_push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.registry.tag_push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTagPushV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request",
+      "record": {
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.docker.registry.tag_push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.registry.tag_push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTagPushV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result",
+      "record": {
+        "command_id": "cmd.docker.registry.tag_push",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": "registry_id-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.registry.tag_push",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTagPushV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result",
+      "record": {
+        "command_id": "cmd.docker.registry.tag_push",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": "registry_id-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.registry.tag_push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTemplatePushV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+      "record": {
+        "template_ref": "template_ref-a",
+        "template_revision": 1,
+        "template_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "repository_ref": "repository_ref-a",
+        "commit_oid": "commit_oid-a",
+        "publication": {
+          "authority": {
+            "authority_kind": "mode",
+            "human_confirmed": false,
+            "mode": "yolo",
+            "task_ref": "task-a",
+            "mode_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "repository_ref": "repository_ref-a",
+          "remote_ref": "remote_ref-a",
+          "branch_ref": "branch_ref-a",
+          "expected_remote_head": "expected_remote_head-a",
+          "current_remote_head": "current_remote_head-a",
+          "lease_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "pm_created_for_this_work_receipt": null,
+          "is_main_or_default": false,
+          "is_protected": false,
+          "force_with_lease": false,
+          "filesafe_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "stop_epoch": 1
+        },
+        "command_id": "cmd.docker.template.push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.template.push",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTemplatePushV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+      "record": {
+        "template_revision": 1,
+        "template_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "repository_ref": "repository_ref-a",
+        "commit_oid": "commit_oid-a",
+        "publication": {
+          "authority": {
+            "authority_kind": "mode",
+            "human_confirmed": false,
+            "mode": "yolo",
+            "task_ref": "task-a",
+            "mode_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "repository_ref": "repository_ref-a",
+          "remote_ref": "remote_ref-a",
+          "branch_ref": "branch_ref-a",
+          "expected_remote_head": "expected_remote_head-a",
+          "current_remote_head": "current_remote_head-a",
+          "lease_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "pm_created_for_this_work_receipt": null,
+          "is_main_or_default": false,
+          "is_protected": false,
+          "force_with_lease": false,
+          "filesafe_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "stop_epoch": 1
+        },
+        "command_id": "cmd.docker.template.push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.template.push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTemplatePushV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Request",
+      "record": {
+        "template_ref": "template_ref-a",
+        "template_revision": 1,
+        "template_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "repository_ref": "repository_ref-a",
+        "commit_oid": "commit_oid-a",
+        "publication": {
+          "authority": {
+            "authority_kind": "mode",
+            "human_confirmed": false,
+            "mode": "yolo",
+            "task_ref": "task-a",
+            "mode_evidence": {
+              "schema_id": "pm.owner.evidence.v1",
+              "schema_version": "1.0.0",
+              "owner_ref": "owner-a",
+              "source_ref": "ref:source-a",
+              "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "revision": 1,
+              "generation": 1
+            },
+            "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "repository_ref": "repository_ref-a",
+          "remote_ref": "remote_ref-a",
+          "branch_ref": "branch_ref-a",
+          "expected_remote_head": "expected_remote_head-a",
+          "current_remote_head": "current_remote_head-a",
+          "lease_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "pm_created_for_this_work_receipt": null,
+          "is_main_or_default": false,
+          "is_protected": false,
+          "force_with_lease": false,
+          "filesafe_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "stop_epoch": 1
+        },
+        "command_id": "cmd.docker.template.push",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.docker.template.push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTemplatePushV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Result",
+      "record": {
+        "command_id": "cmd.docker.template.push",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "template_ref": "template_ref-a",
+        "repository_ref": "repository_ref-a",
+        "pushed_commit_oid": null
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.template.push",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-DockerTemplatePushV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTemplatePushV3Result",
+      "record": {
+        "command_id": "cmd.docker.template.push",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "template_ref": "template_ref-a",
+        "repository_ref": "repository_ref-a",
+        "pushed_commit_oid": null
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.docker.template.push",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorLocalBuildV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+      "record": {
+        "run_id": "run_id-a",
+        "build_profile_ref": "build_profile_ref-a",
+        "build_input_ref": "build_input_ref-a",
+        "build_input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_target_ref": "build_target_ref-a",
+        "command_id": "cmd.orchestrator.build_run",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.orchestrator.build_run",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorLocalBuildV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+      "record": {
+        "build_profile_ref": "build_profile_ref-a",
+        "build_input_ref": "build_input_ref-a",
+        "build_input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_target_ref": "build_target_ref-a",
+        "command_id": "cmd.orchestrator.build_run",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.orchestrator.build_run",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorLocalBuildV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Request",
+      "record": {
+        "run_id": "run_id-a",
+        "build_profile_ref": "build_profile_ref-a",
+        "build_input_ref": "build_input_ref-a",
+        "build_input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "build_target_ref": "build_target_ref-a",
+        "command_id": "cmd.orchestrator.build_run",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "scope_partition": "project~cHJvamVjdC1h",
+            "project_id": "project-a",
+            "project_home_server_id": "server-a",
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.orchestrator.build_run",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorLocalBuildV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Result",
+      "record": {
+        "command_id": "cmd.orchestrator.build_run",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "build_result_ref": null,
+        "local_artifact_ref": null,
+        "build_input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "remote_effect_performed": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.orchestrator.build_run",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorLocalBuildV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorLocalBuildV3Result",
+      "record": {
+        "command_id": "cmd.orchestrator.build_run",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "build_result_ref": null,
+        "local_artifact_ref": null,
+        "build_input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "remote_effect_performed": false
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.orchestrator.build_run",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorImagePushV3-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+      "record": {
+        "run_id": "run_id-a",
+        "build_result_ref": "build_result_ref-a",
+        "build_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.orchestrator.push_image",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.orchestrator.push_image",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorImagePushV3-reject-missing-input",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+      "record": {
+        "build_result_ref": "build_result_ref-a",
+        "build_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.orchestrator.push_image",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.orchestrator.push_image",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorImagePushV3-reject-git-supplement",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request",
+      "record": {
+        "run_id": "run_id-a",
+        "build_result_ref": "build_result_ref-a",
+        "build_result_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "registry_id": "registry_id-a",
+        "account_ref": "account_ref-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a",
+        "command_id": "cmd.orchestrator.push_image",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": null,
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin_kind": "owner_surface"
+        },
+        "authority": {
+          "authority_kind": "mode",
+          "human_confirmed": false,
+          "mode": "yolo",
+          "task_ref": "task-a",
+          "mode_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "expected_target_generation": 1,
+        "filesafe_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "trust_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "capability_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "branch_ref": "fabricated-git-branch"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.orchestrator.push_image",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorImagePushV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result",
+      "record": {
+        "command_id": "cmd.orchestrator.push_image",
+        "operation_id": "operation_id-a",
+        "status": "done",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": "registry_id-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.orchestrator.push_image",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-OrchestratorImagePushV3-reject-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result",
+      "record": {
+        "command_id": "cmd.orchestrator.push_image",
+        "operation_id": "operation_id-a",
+        "status": "added",
+        "owner_receipt_ref": "owner_receipt_ref-a",
+        "return_context_ref": "return_context_ref-a",
+        "authority_kind": "human",
+        "no_safe_undo": true,
+        "registry_id": "registry_id-a",
+        "namespace": "namespace-a",
+        "repository_name": "repository_name-a",
+        "image_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "tags": [
+          "latest"
+        ],
+        "platforms": [
+          "linux/amd64"
+        ],
+        "local_artifact_ref": "local_artifact_ref-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.orchestrator.push_image",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-legacy-node",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-current-node",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": "attempt-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-app-tool",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "approved",
+        "expires_at_utc": "2026-11-04T23:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-reject-tool-with-node",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "approved",
+        "expires_at_utc": "2026-11-04T23:00:00Z",
+        "node_id": "node-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-reject-node-with-tool",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": "attempt-a",
+        "approval_id": "approval-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-reject-wrong-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "declined",
+        "expires_at_utc": "2026-11-04T23:00:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-reject-missing-currentness",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.approve",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "approved",
+        "expires_at_utc": "2026-11-04T23:00:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-node-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "approved",
+        "status": "done",
+        "event_types": [
+          "node.unblocked"
+        ],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-tool-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.approve",
+        "resolution": {
+          "schema_id": "pm.chat_tool_approval_result.v1",
+          "schema_version": "1.0.0",
+          "approval_id": "approval-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "decision": "approved",
+          "person_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "result_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "return_context_ref": "return-a"
+        },
+        "event_types": [
+          "approval.chat_tool_resolved"
+        ],
+        "producer_admission": "requires_owner_adoption",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-approve-reject-tool-node-effect",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.approve",
+        "resolution": {
+          "schema_id": "pm.chat_tool_approval_result.v1",
+          "schema_version": "1.0.0",
+          "approval_id": "approval-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "decision": "approved",
+          "person_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "result_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "return_context_ref": "return-a"
+        },
+        "event_types": [
+          "node.unblocked"
+        ],
+        "producer_admission": "requires_owner_adoption",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-legacy-node",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-current-node",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": "attempt-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-app-tool",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.decline",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "declined",
+        "expires_at_utc": "2026-11-04T23:00:00Z"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-reject-tool-with-node",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.decline",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "declined",
+        "expires_at_utc": "2026-11-04T23:00:00Z",
+        "node_id": "node-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-reject-node-with-tool",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": "attempt-a",
+        "approval_id": "approval-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-reject-wrong-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.decline",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "approved",
+        "expires_at_utc": "2026-11-04T23:00:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-reject-missing-currentness",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Request",
+      "record": {
+        "schema_id": "pm.runtime.chat_tool_decision.v3",
+        "schema_version": "3.0.0",
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.decline",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "approval_id": "approval-a",
+        "run_id": "run-a",
+        "tool_id": "tool-a",
+        "normalized_target_ref": "target-a",
+        "target_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_request_revision": 1,
+        "request_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "person_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "decision": "declined",
+        "expires_at_utc": "2026-11-04T23:00:00Z"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-node-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.decline",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "declined",
+        "status": "done",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-tool-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.decline",
+        "resolution": {
+          "schema_id": "pm.chat_tool_approval_result.v1",
+          "schema_version": "1.0.0",
+          "approval_id": "approval-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "decision": "declined",
+          "person_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "result_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "return_context_ref": "return-a"
+        },
+        "event_types": [
+          "approval.chat_tool_resolved"
+        ],
+        "producer_admission": "requires_owner_adoption",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-runtime-decline-reject-tool-node-effect",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "chat_tool",
+        "command_id": "cmd.runtime.decline",
+        "resolution": {
+          "schema_id": "pm.chat_tool_approval_result.v1",
+          "schema_version": "1.0.0",
+          "approval_id": "approval-a",
+          "request_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "decision": "declined",
+          "person_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "result_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "return_context_ref": "return-a"
+        },
+        "event_types": [
+          "node.unblocked"
+        ],
+        "producer_admission": "requires_owner_adoption",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }

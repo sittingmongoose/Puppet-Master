@@ -15,6 +15,2171 @@
           "maxLength": 256
         }
       }
+    },
+    "PublicationOperationContextV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "storage_instance_id",
+        "thread_id",
+        "execution_host_id",
+        "execution_environment_id",
+        "roots",
+        "command_instance_id",
+        "idempotency_key",
+        "actor_ref",
+        "permission_evidence",
+        "writer_evidence",
+        "scope_stop_epoch",
+        "task_stop_epoch",
+        "expected_generation",
+        "return_context_ref",
+        "origin_kind"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "execution_host_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "execution_environment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowRootRefV1"
+          },
+          "uniqueItems": true
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "scope_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "task_stop_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "origin_kind": {
+          "enum": [
+            "owner_surface",
+            "thread"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin_kind": {
+                "const": "thread"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "thread_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "thread_id": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DockerRepositoryCreateV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "registry_id",
+        "account_ref",
+        "namespace",
+        "repository_name",
+        "privacy"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.create_repository"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "privacy": {
+          "enum": [
+            "private",
+            "public"
+          ]
+        }
+      }
+    },
+    "DockerRepositoryCreateV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "registry_id",
+        "namespace",
+        "repository_name",
+        "privacy",
+        "creation_request_id",
+        "repository_uid"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.create_repository"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "registry_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "privacy": {
+          "anyOf": [
+            {
+              "enum": [
+                "private",
+                "public"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "creation_request_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_uid": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DockerRepositoryConfirmV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "creation_request_id",
+        "preview_ref",
+        "preview_sha256",
+        "person_decision_evidence",
+        "registry_id",
+        "account_ref",
+        "namespace",
+        "repository_name",
+        "privacy"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.create_repository.confirm"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+            },
+            {
+              "properties": {
+                "authority_kind": {
+                  "const": "human"
+                }
+              }
+            }
+          ]
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "creation_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "person_decision_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "privacy": {
+          "enum": [
+            "private",
+            "public"
+          ]
+        }
+      }
+    },
+    "DockerRepositoryConfirmV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "registry_id",
+        "namespace",
+        "repository_name",
+        "privacy",
+        "creation_request_id",
+        "repository_uid"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.create_repository.confirm"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "registry_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "privacy": {
+          "anyOf": [
+            {
+              "enum": [
+                "private",
+                "public"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "creation_request_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_uid": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DockerRepositoryCancelV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "creation_request_id",
+        "expected_request_revision"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.create_repository.cancel"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "creation_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_request_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "DockerRepositoryCancelV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "registry_id",
+        "namespace",
+        "repository_name",
+        "privacy",
+        "creation_request_id",
+        "repository_uid"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.create_repository.cancel"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "registry_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "namespace": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "privacy": {
+          "anyOf": [
+            {
+              "enum": [
+                "private",
+                "public"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "creation_request_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "repository_uid": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DockerImagePushV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "registry_id",
+        "account_ref",
+        "namespace",
+        "repository_name",
+        "image_digest",
+        "tags",
+        "platforms",
+        "local_artifact_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.image.push"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "local_artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "DockerImagePushV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "registry_id",
+        "namespace",
+        "repository_name",
+        "image_digest",
+        "tags",
+        "platforms",
+        "local_artifact_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.image.push"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "local_artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "DockerTagPushV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "registry_id",
+        "account_ref",
+        "namespace",
+        "repository_name",
+        "image_digest",
+        "tags",
+        "platforms",
+        "local_artifact_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.registry.tag_push"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "local_artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "DockerTagPushV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "registry_id",
+        "namespace",
+        "repository_name",
+        "image_digest",
+        "tags",
+        "platforms",
+        "local_artifact_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.registry.tag_push"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "local_artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "DockerTemplatePushV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "template_ref",
+        "template_revision",
+        "template_sha256",
+        "repository_ref",
+        "commit_oid",
+        "publication"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.template.push"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "template_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "template_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "template_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "commit_oid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "publication": {
+          "$ref": "https://puppetmaster.local/Plans/source_control_contracts.schema.json#/$defs/publication_authority_v2"
+        }
+      }
+    },
+    "DockerTemplatePushV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "template_ref",
+        "repository_ref",
+        "pushed_commit_oid"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.docker.template.push"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "template_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "pushed_commit_oid": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "OrchestratorLocalBuildV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "run_id",
+        "build_profile_ref",
+        "build_input_ref",
+        "build_input_sha256",
+        "expected_plan_sha256",
+        "build_target_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.orchestrator.build_run"
+        },
+        "context": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+            },
+            {
+              "properties": {
+                "scope": {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+                    },
+                    {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "project"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "build_profile_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "build_input_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "build_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_plan_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "build_target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "OrchestratorLocalBuildV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "build_result_ref",
+        "local_artifact_ref",
+        "build_input_sha256",
+        "remote_effect_performed"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.orchestrator.build_run"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "build_result_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "local_artifact_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "build_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "remote_effect_performed": {
+          "const": false
+        }
+      }
+    },
+    "OrchestratorImagePushV3Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "context",
+        "authority",
+        "expected_target_generation",
+        "filesafe_evidence",
+        "trust_evidence",
+        "capability_evidence",
+        "run_id",
+        "build_result_ref",
+        "build_result_sha256",
+        "registry_id",
+        "account_ref",
+        "namespace",
+        "repository_name",
+        "image_digest",
+        "tags",
+        "platforms",
+        "local_artifact_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.orchestrator.push_image"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/PublicationOperationContextV1"
+        },
+        "authority": {
+          "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/authority_evidence"
+        },
+        "expected_target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "filesafe_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "capability_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "build_result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "build_result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "account_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "local_artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "OrchestratorImagePushV3Result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation_id",
+        "status",
+        "owner_receipt_ref",
+        "return_context_ref",
+        "authority_kind",
+        "no_safe_undo",
+        "registry_id",
+        "namespace",
+        "repository_name",
+        "image_digest",
+        "tags",
+        "platforms",
+        "local_artifact_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.orchestrator.push_image"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "done",
+            "awaiting_confirmation",
+            "cancelled",
+            "refused",
+            "failed",
+            "unknown_outcome"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "authority_kind": {
+          "enum": [
+            "human",
+            "mode",
+            "build_grant"
+          ]
+        },
+        "no_safe_undo": {
+          "type": "boolean"
+        },
+        "registry_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "namespace": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "repository_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "image_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "local_artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "OrchestratorNodeApprovalRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "node_id",
+        "blocked_sequence"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "blocked_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "RuntimeApproveV3ToolRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "approval_kind",
+        "command_id",
+        "context",
+        "approval_id",
+        "run_id",
+        "tool_id",
+        "request_sha256",
+        "normalized_target_ref",
+        "target_sha256",
+        "expected_request_revision",
+        "request_evidence",
+        "person_evidence",
+        "decision",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.chat_tool_decision.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "approval_kind": {
+          "const": "chat_tool"
+        },
+        "command_id": {
+          "const": "cmd.runtime.approve"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "approval_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "tool_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "normalized_target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_request_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "request_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "person_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "decision": {
+          "const": "approved"
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RuntimeApproveV3Request": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorNodeApprovalRequestV1"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3ToolRequest"
+        }
+      ]
+    },
+    "RuntimeApproveV3NodeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_kind",
+        "command_id",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id",
+        "decision",
+        "status",
+        "event_types",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "approval_kind": {
+          "const": "orchestrator_node"
+        },
+        "command_id": {
+          "const": "cmd.runtime.approve"
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "blocked_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decision": {
+          "const": "approved"
+        },
+        "status": {
+          "enum": [
+            "done",
+            "refused",
+            "stale"
+          ]
+        },
+        "event_types": {
+          "const": [
+            "node.unblocked"
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "RuntimeApproveV3ToolResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_kind",
+        "command_id",
+        "resolution",
+        "event_types",
+        "producer_admission",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "approval_kind": {
+          "const": "chat_tool"
+        },
+        "command_id": {
+          "const": "cmd.runtime.approve"
+        },
+        "resolution": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResult"
+            },
+            {
+              "properties": {
+                "decision": {
+                  "const": "approved"
+                }
+              }
+            }
+          ]
+        },
+        "event_types": {
+          "const": [
+            "approval.chat_tool_resolved"
+          ]
+        },
+        "producer_admission": {
+          "const": "requires_owner_adoption"
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "RuntimeApproveV3Result": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3NodeResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3ToolResult"
+        }
+      ]
+    },
+    "RuntimeDeclineV3ToolRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "approval_kind",
+        "command_id",
+        "context",
+        "approval_id",
+        "run_id",
+        "tool_id",
+        "request_sha256",
+        "normalized_target_ref",
+        "target_sha256",
+        "expected_request_revision",
+        "request_evidence",
+        "person_evidence",
+        "decision",
+        "expires_at_utc"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.runtime.chat_tool_decision.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "approval_kind": {
+          "const": "chat_tool"
+        },
+        "command_id": {
+          "const": "cmd.runtime.decline"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+        },
+        "approval_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "tool_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "normalized_target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "expected_request_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "request_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "person_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "decision": {
+          "const": "declined"
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RuntimeDeclineV3Request": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorNodeApprovalRequestV1"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3ToolRequest"
+        }
+      ]
+    },
+    "RuntimeDeclineV3NodeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_kind",
+        "command_id",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id",
+        "decision",
+        "status",
+        "event_types",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "approval_kind": {
+          "const": "orchestrator_node"
+        },
+        "command_id": {
+          "const": "cmd.runtime.decline"
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "node_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "blocked_sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decision": {
+          "const": "declined"
+        },
+        "status": {
+          "enum": [
+            "done",
+            "refused",
+            "stale"
+          ]
+        },
+        "event_types": {
+          "const": []
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "RuntimeDeclineV3ToolResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_kind",
+        "command_id",
+        "resolution",
+        "event_types",
+        "producer_admission",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "approval_kind": {
+          "const": "chat_tool"
+        },
+        "command_id": {
+          "const": "cmd.runtime.decline"
+        },
+        "resolution": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/automation_authority_contracts.schema.json#/$defs/ChatToolApprovalResult"
+            },
+            {
+              "properties": {
+                "decision": {
+                  "const": "declined"
+                }
+              }
+            }
+          ]
+        },
+        "event_types": {
+          "const": [
+            "approval.chat_tool_resolved"
+          ]
+        },
+        "producer_admission": {
+          "const": "requires_owner_adoption"
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "RuntimeDeclineV3Result": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3NodeResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3ToolResult"
+        }
+      ]
     }
   }
 }
