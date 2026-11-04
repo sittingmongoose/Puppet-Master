@@ -28,8 +28,9 @@ export default async function(t){
  const f=await t.app.open(); await t.viewport(1390,900);
  for(const look of (t.args.looks?String(t.args.looks).split(','):looks)){
 
-  for(const screen of (look.startsWith('glass')?['where','ai-all','c-ready']:['where'])){
-   await f.evaluate(id=>O55.studio.onboarding.screen(id,'fresh'),screen);
+  for(const screen of (look.startsWith('glass')?['where','ai-all','ai-install']:['where'])){
+   await f.evaluate(id=>O55.studio.onboarding.screen(id,'fresh'),screen==='ai-install'?'ai-all':screen);
+   await f.waitForFunction(id=>O55.S.sess&&O55.S.sess.screen===id,screen==='ai-install'?'ai-all':screen);
    await f.waitForFunction(()=>{const e=document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out)');return e&&!e.matches('.o55-hold,.o55-entering');});
    await f.evaluate(([family,mode])=>O55.ui.applyLook(family,mode),look.split('-'));await t.settle();
    await f.waitForFunction(expected=>PMLogo.look()===expected,look);
@@ -37,9 +38,9 @@ export default async function(t){
    await t.equal(`${look} ${screen} look retained`,()=>f.evaluate(()=>PMLogo.look()),look);
    if(screen==='where') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [role="radio"]').first().click();
    if(screen==='where') await measure(t,f,f.locator('#pm-o55-onboarding .o55-tag:visible').first(),look+' Recommended');
-   if(screen==='ai-all') await f.locator('#pm-o55-onboarding [data-o55-do="install"][data-arg="claude"]').click();
-   const el=f.locator(screen==='ai-all'?'#pm-o55-onboarding [data-o55-do="installGo"][data-arg="claude"]':'#pm-o55-onboarding .o55-foot .o55-primary:visible:not(:disabled)').first();
-   await t.check(`${look} ${screen} expected primary label`,(await el.innerText()).trim()===(screen==='where'?'Continue':screen==='ai-all'?'Install':'Done'));
+   if(screen==='ai-install') await f.locator('#pm-o55-onboarding [data-o55-do="install"][data-arg="claude"]').click();
+   const el=f.locator(screen==='ai-install'?'#pm-o55-onboarding [data-o55-do="installGo"][data-arg="claude"]':'#pm-o55-onboarding .o55-foot .o55-primary:visible:not(:disabled)').first();
+   await t.check(`${look} ${screen} expected primary label`,(await el.innerText()).trim()===(screen==='where'?'Continue':screen==='ai-install'?'Install':'Done'));
    for(const state of (look.startsWith('glass')?['rest','hover','focus','pressed']:['rest','hover'])){
     await t.page.mouse.move(1,1); await el.evaluate(e=>e.blur());
     if(state==='hover'||state==='pressed') await el.hover();
