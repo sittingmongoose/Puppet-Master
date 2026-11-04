@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7281
+Source lines: L6715-L7285
 
-Source SHA256: `13e7e7f16338c37a31a6aebdd6211d9849f882ee4be0803befeeedbd7016864e`
+Source SHA256: `2e8e95ec95ca111c1b7df503f8116b9024154ad70dcc8bcc362d3b1995fd45e9`
 
 ---
 
@@ -541,6 +541,10 @@ canonical_text: |-
   Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking, its own exact payload definition URI and dedupe_by_idempotency_key policy. Positive append and identical retry return the retained full-value original with one append and no maintenance effect; scoped dedupe keys use the encoded project~ partition. Both fresh append and retry with projector_replay_only refuse replay_only_not_appendable with no output, append or effect. Unsupported/missing envelope fields, wrong payload dispatch, Project/correlation/causation joins, trailing-LF event names and raw Project partitions are negative cases. Compatibility reader shapes are never accepted as current writers. The reduced phase-model values remain explicitly synthetic and are not canonical envelopes or physical receipts.
 
   Completed recovery has separate permission-revoked and family-withdrawn negative traces for every exact family, requiring no output and unchanged durable state; authorized recovery returns the original value. All four started gates distinguish lawful accepted pre-append admission from recorded receipt/later phases and reject missing original start custody through completed state. Post-completion retry and recovery with lost start custody refuse rather than infer proof from terminal IDs. Schema-level trailing-LF negatives cover every lane-owned patterned identifier, including nested target inventories/selectors and operation schema copies in the storage registry.
+
+  Every completed-family current-writer suite checks retained-original retries in effect_committed and completed phases, for both succeeded and failed outcomes. Missing, changed or unflushed original start custody refuses start_receipt_missing before any original return; intact custody returns the exact terminal original without append or effect. Each of the eight exact families also rejects Application attempts, including CV-366-shaped application keys, because these contracts are Project-only. Maximum-width schema-valid UTF-8 payloads must fit the 16 KiB inline cap; oversized bodies fail the closed schema rather than acquire an undeclared large-body path. Storage-assigned sequence/observed/persisted retry changes individually return the original; changes to caller semantics conflict. SP-337 remains authoritative for any separately declared larger body.
+
+  Each exact family's SP-278 adoption has a synthetic storage-identity join case reusing Plans/event_record_index_checkpoint_contract_fixtures.json's existing generic checkpoint positive and its canonical schema. The event identity binds the same operation storage_instance_id as the checkpoint and instance-qualified key. Foreign checkpoint storage, key or event identity fails. This tests only that join, creates no DMEM checkpoint/cursor and does not validate a native source inclusion or authorize disclosure. The external full-checker mutation audit must corrupt each family's negative expectation independently and require a nonzero checker exit. These in-process maintenance events have no process-exit field; exit_code=0 is an unknown payload property and is rejected, not interpreted as a maintenance outcome.
 
   These are a static contract model and adversarial fixtures. They do not execute MemoryMaintenance, authenticate real SP-286 receipts, validate physical SeglogFrameV2 bytes or prove redb/filesystem atomicity/flush, native crash recovery, backup/restore or read-time deletion/permission races. Those native obligations remain NOT_RUN. Static success confers no Event Authority, retention assignment or deletion policy. Monthly summary/prune rows remain held for Jared and have no executable payload definition.
 gui_related: false
