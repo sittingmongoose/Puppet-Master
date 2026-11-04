@@ -1,0 +1,427 @@
+{
+  "schema_version": "1.0.0",
+  "cases": [
+    {
+      "event_type": "debug.investigation.context_item_added",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "item_id": "scrubbed",
+        "item_kind": "scrubbed",
+        "source_surface": "scrubbed",
+        "state": "active",
+        "summary": "scrubbed",
+        "redaction_state": "scrubbed"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:558e773c893f03f4a0545ec3399a6f276108fcb01e773a393ac56a39c24a8a15",
+        "evt_debug_558e773c893f03f4a0545ec3399a6f276108fcb01e773a393ac56a39c24a8a15"
+      ],
+      "mutation_field": "state",
+      "mutation_value": "revoked",
+      "native_oracles": [
+        {
+          "case": "context_item_added-transition-positive",
+          "given": "active scrubbed item with original artifact permission enters context once",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "context_item_added-transition-negative",
+          "given": "revoked item retained for audit but never serialized into prompt",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "context_item_added-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.context_item_state_changed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "item_id": "scrubbed",
+        "previous_state": "active",
+        "state": "active"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:549d352c40ed6c4afd137422598c438542d069598ece5c0b02853846dbc34ab2",
+        "evt_debug_549d352c40ed6c4afd137422598c438542d069598ece5c0b02853846dbc34ab2"
+      ],
+      "mutation_field": "state",
+      "mutation_value": "expired",
+      "native_oracles": [
+        {
+          "case": "context_item_state_changed-transition-positive",
+          "given": "matching previous_state accepts revocation and immediately stops prompt use",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "context_item_state_changed-transition-negative",
+          "given": "stale previous_state conflicts; revocation never deletes underlying artifact",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "context_item_state_changed-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.exported",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "bundle_id": "scrubbed",
+        "schema_id": "pm.investigation_bundle.schema.v1",
+        "item_count": 0,
+        "artifact_count": 0,
+        "redaction_profile": "scrubbed"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:f450f7636f86ff0d5e7c1bcf17fa7a762021bb44389ac3121bc8b9c3039f7e38",
+        "evt_debug_f450f7636f86ff0d5e7c1bcf17fa7a762021bb44389ac3121bc8b9c3039f7e38"
+      ],
+      "mutation_field": "item_count",
+      "mutation_value": 2,
+      "native_oracles": [
+        {
+          "case": "exported-transition-positive",
+          "given": "matching committed manifest counts and original first receipt publishes one export",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "exported-transition-negative",
+          "given": "count mismatch or missing manifest refuses success; replay writes no file",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "exported-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.imported",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "bundle_id": "scrubbed",
+        "source_kind": "scrubbed",
+        "schema_id": "pm.investigation_bundle.schema.v1",
+        "imported_target_kind": "imported_bundle"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:ef350196b0e5578b3f576876195f046c57bed7bbf8794b528b2a4247ca7fc3bc",
+        "evt_debug_ef350196b0e5578b3f576876195f046c57bed7bbf8794b528b2a4247ca7fc3bc"
+      ],
+      "mutation_field": "source_kind",
+      "mutation_value": "different-source",
+      "native_oracles": [
+        {
+          "case": "imported-transition-positive",
+          "given": "verified provenance creates imported_bundle evidence target only",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "imported-transition-negative",
+          "given": "imported bundle claiming live runtime mutation authority is refused",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "imported-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.instrumentation_state_changed",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "instrumentation_id": "scrubbed",
+        "scope_kind": "scrubbed",
+        "state": "scrubbed",
+        "rollback_state": "scrubbed"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:74730f16b0b4392297cd77d8b32112c8b28edcf4f658f7623a59eb075f389ab6",
+        "evt_debug_74730f16b0b4392297cd77d8b32112c8b28edcf4f658f7623a59eb075f389ab6"
+      ],
+      "mutation_field": "rollback_state",
+      "mutation_value": "different-outcome",
+      "native_oracles": [
+        {
+          "case": "instrumentation_state_changed-transition-positive",
+          "given": "matching lane and original restore receipt records cleanup outcome",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "instrumentation_state_changed-transition-negative",
+          "given": "missing restore receipt prevents invasive installation; residual cleanup cannot be reported successful",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "instrumentation_state_changed-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.started",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "project_id": "p1",
+        "initiator_surface": "scrubbed",
+        "target_kind": "dev_session",
+        "target_locator_summary": "scrubbed",
+        "requested_mode_overlay": "scrubbed",
+        "effective_mode_overlay": "scrubbed",
+        "runtime_mode": "ask"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:73b0406dbed67293486aaac8e9dc11a18b7cb35b16d2623467068ab1b82ce194",
+        "evt_debug_73b0406dbed67293486aaac8e9dc11a18b7cb35b16d2623467068ab1b82ce194"
+      ],
+      "mutation_field": "target_kind",
+      "mutation_value": "agent_session",
+      "native_oracles": [
+        {
+          "case": "started-transition-positive",
+          "given": "fresh investigation and thread exclusion accepts exactly one original launch",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "started-transition-negative",
+          "given": "second nonterminal investigation against same thread is refused",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "started-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.target_bound",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "target_kind": "dev_session",
+        "target_bindings": {
+          "owner_ref": "owner:target",
+          "target_ref": "target:1",
+          "binding_revision": 0,
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        "binding_state": "scrubbed"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:9dfad6b9c46e6f3480193edb0b95b3bfd5bdb2e6162426fc87577aeb2f94f1da",
+        "evt_debug_9dfad6b9c46e6f3480193edb0b95b3bfd5bdb2e6162426fc87577aeb2f94f1da"
+      ],
+      "mutation_field": "target_kind",
+      "mutation_value": "agent_session",
+      "native_oracles": [
+        {
+          "case": "target_bound-transition-positive",
+          "given": "matching target owner receipt, revision and hash binds the exact target",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "target_bound-transition-negative",
+          "given": "drift or wrong target hash refuses continuation; replay never reattaches",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "target_bound-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "debug.investigation.verification_recorded",
+      "payload": {
+        "schema_version": "1.0.0",
+        "investigation_id": "i1",
+        "operation_id": "op1",
+        "verification_strength": "none",
+        "verification_summary": "scrubbed"
+      },
+      "project_id": "p1",
+      "checks": [
+        "closed_schema",
+        "identity",
+        "retry_original",
+        "changed_digest_conflict",
+        "withdrawal_refusal",
+        "missing_admission_refusal",
+        "pending_retention_refusal",
+        "wrong_scope_refusal",
+        "replay_zero_effect"
+      ],
+      "native_execution": "NOT_RUN",
+      "expected_identity": [
+        "debug:4c570b31560ffeb7a966c023e25165fea7c8a43579fcc5773ddaa88e6152d97c",
+        "evt_debug_4c570b31560ffeb7a966c023e25165fea7c8a43579fcc5773ddaa88e6152d97c"
+      ],
+      "mutation_field": "verification_strength",
+      "mutation_value": "strong",
+      "native_oracles": [
+        {
+          "case": "verification_recorded-transition-positive",
+          "given": "original evidence strength and artifact joins record verification once",
+          "expected": "One event and original receipt; only the specified owner effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "verification_recorded-transition-negative",
+          "given": "missing/inaccessible evidence never proves resolution or cleanup",
+          "expected": "Refuse the forbidden effect; no second append or side effect.",
+          "execution_status": "NOT_RUN"
+        },
+        {
+          "case": "verification_recorded-custody-replay-withdrawal",
+          "given": "Lost ACK, source generation change, revoked evidence, then family withdrawal cutoff.",
+          "expected": "Resolve original SP-286 receipt; rebuild from complete SP-278 source; deny revoked dereference; refuse post-cutoff writes and readers.",
+          "execution_status": "NOT_RUN"
+        }
+      ]
+    }
+  ],
+  "native_obligations": [
+    "first-receipt lost ACK and crash recovery",
+    "SP-278 generic CAS and generation change",
+    "revoked evidence read and export refusal",
+    "per-family withdrawal cutoff and rebuild",
+    "no replay side effects"
+  ]
+}

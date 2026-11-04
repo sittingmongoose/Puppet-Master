@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7230
+Source lines: L6715-L7282
 
-Source SHA256: `38e77a608403e7e75070518a84d65993800f9cbba88822387e2f4f888cb925b2`
+Source SHA256: `51ab8e0fb08c8aec4e24330b06d12097109e99102ea189e3e40e8cad87c891ca`
 
 ---
 
@@ -524,3 +524,55 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-285 - Debug family independent event oracles
+
+```yaml
+plan_unit_id: ATS-285
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of the eight exact families listed in Plans/debug_investigation_event_fixtures.json
+  owns its own positive closed payload and negative missing-required/unknown-field/version/scope/identity/changed-digest/admission/retention/withdrawal
+  cases in scripts/pm-debug-investigation-events.py. No case for a sibling proves a family. Native first-receipt
+  crash, source-generation/CAS, original-ref permission/deletion and withdrawal/rebuild obligations in
+  that fixture remain NOT_RUN. debug.investigation.state_changed is deliberately absent pending CV-578;
+  no synthetic answer or test decides its lifecycle.
+gui_related: false
+gui_classification_reason: Event persistence and reader contract; existing UI behavior remains owned by
+  its surface.
+depends_on:
+- CV-570
+- CV-571
+- CV-572
+- CV-573
+- CV-574
+- CV-575
+- CV-576
+- CV-577
+- SP-570
+unblocks: []
+acceptance_criteria:
+- Exact family remains unadmitted until its own integration landing and all open product cells close.
+- Named positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm-debug-investigation-events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_debug_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Contracts_V0.md#CV-123
+- reports/event-authority-20261104/DDBG.md
+preserved_exact_tokens:
+- ATS-285
+negative_constraints:
+- No admission, retention decision, native readiness or governance seal.
+```

@@ -1,0 +1,487 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.debug_investigation.events.v1",
+  "$defs": {
+    "context_item_added": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "item_id",
+        "item_kind",
+        "source_surface",
+        "state",
+        "summary",
+        "redaction_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "item_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_surface": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "state": {
+          "enum": [
+            "active",
+            "redacted",
+            "revoked",
+            "blocked",
+            "expired",
+            "omitted"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "artifact_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "redaction_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.context_item_added.schema.v1"
+    },
+    "context_item_state_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "item_id",
+        "previous_state",
+        "state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "previous_state": {
+          "enum": [
+            "active",
+            "redacted",
+            "revoked",
+            "blocked",
+            "expired",
+            "omitted"
+          ]
+        },
+        "state": {
+          "enum": [
+            "active",
+            "redacted",
+            "revoked",
+            "blocked",
+            "expired",
+            "omitted"
+          ]
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.context_item_state_changed.schema.v1"
+    },
+    "exported": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "bundle_id",
+        "schema_id",
+        "item_count",
+        "artifact_count",
+        "redaction_profile"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_id": {
+          "const": "pm.investigation_bundle.schema.v1"
+        },
+        "item_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "artifact_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "redaction_profile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.exported.schema.v1"
+    },
+    "imported": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "bundle_id",
+        "source_kind",
+        "schema_id",
+        "imported_target_kind"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "bundle_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_id": {
+          "const": "pm.investigation_bundle.schema.v1"
+        },
+        "imported_target_kind": {
+          "const": "imported_bundle"
+        }
+      },
+      "$id": "pm.debug_investigation.imported.schema.v1"
+    },
+    "instrumentation_state_changed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "instrumentation_id",
+        "scope_kind",
+        "state",
+        "rollback_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "instrumentation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "scope_kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "rollback_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "detail_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.instrumentation_state_changed.schema.v1"
+    },
+    "started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "project_id",
+        "initiator_surface",
+        "target_kind",
+        "target_locator_summary",
+        "requested_mode_overlay",
+        "effective_mode_overlay",
+        "runtime_mode"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "initiator_surface": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_kind": {
+          "enum": [
+            "dev_session",
+            "browser_target",
+            "dap_session",
+            "agent_session",
+            "imported_bundle"
+          ]
+        },
+        "target_locator_summary": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "requested_mode_overlay": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "effective_mode_overlay": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "runtime_mode": {
+          "enum": [
+            "ask",
+            "plan",
+            "regular",
+            "yolo"
+          ]
+        }
+      },
+      "$id": "pm.debug_investigation.started.schema.v1"
+    },
+    "target_bound": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "target_kind",
+        "target_bindings",
+        "binding_state"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_kind": {
+          "enum": [
+            "dev_session",
+            "browser_target",
+            "dap_session",
+            "agent_session",
+            "imported_bundle"
+          ]
+        },
+        "target_bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner_ref",
+            "target_ref",
+            "binding_revision",
+            "source_sha256"
+          ],
+          "properties": {
+            "owner_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "target_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "binding_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "binding_state": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "$id": "pm.debug_investigation.target_bound.schema.v1"
+    },
+    "verification_recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "investigation_id",
+        "operation_id",
+        "verification_strength",
+        "verification_summary"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "investigation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "verification_strength": {
+          "enum": [
+            "none",
+            "weak",
+            "strong"
+          ]
+        },
+        "verification_summary": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true,
+          "maxItems": 256
+        }
+      },
+      "$id": "pm.debug_investigation.verification_recorded.schema.v1"
+    }
+  }
+}
