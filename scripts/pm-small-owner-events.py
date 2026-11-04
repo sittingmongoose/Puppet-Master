@@ -414,6 +414,11 @@ def current_retry(row, incoming, authority):
         return (append_policy_refusal(incoming), None, 0)
     if incoming.get('replay_policy') != 'dedupe_by_idempotency_key':
         return ('identity_conflict_without_effect', None, 0)
+    if incoming.get('event_type') != row['event_type']:
+        return ('identity_conflict_without_effect', None, 0)
+    expected_schema = json.loads((ROOT / row['schema']).read_text())['$id']
+    if incoming.get('payload_schema_id') != expected_schema:
+        return ('identity_conflict_without_effect', None, 0)
     result = resolve_original(row, incoming, authority)
     return ('return_original_without_effect', result, 0) if result is not None else ('identity_conflict_without_effect', None, 0)
 
@@ -758,6 +763,18 @@ def main(guard_first=None):
     guard_oracles = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(guard_oracles)
     isolation_count = guard_oracles.normal_checks(globals(), fixtures, guard_first)
+    families = {row['event_type']: row for row in fixtures['families']}
+    retry_boundary_count = 0
+    for row in fixtures['families']:
+        for case in row.get('foreign_family_retry_cases', []):
+            foreign = families[case['source_family']]
+            assert foreign is not row, case['case_id']
+            event = foreign['positive_event_record'] if case['foreign_event'] else row['positive_event_record']
+            authority = foreign['receipt_authority'] if case['foreign_authority'] else row['receipt_authority']
+            before = copy.deepcopy((event, authority))
+            assert current_retry(row, event, authority) == ('identity_conflict_without_effect', None, 0), case['case_id']
+            assert (event, authority) == before, (case['case_id'], 'immutable original inputs')
+            retry_boundary_count += 3
     reference_count = 0
     schema_paths = {r['schema'] for r in fixtures['families']} | {
         'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json',
@@ -771,7 +788,7 @@ def main(guard_first=None):
     golden = json.loads((ROOT / 'Plans/event_append_receipt_full_value_fixtures.json').read_text())
     assert full_value_preimage(golden['base_original_event']).hex() == golden['commitment_preimage_hex']
     assert hashlib.sha256(full_value_preimage(golden['base_original_event'])).hexdigest() == golden['commitment_sha256']
-    count = 2 + len(schema_paths) + reference_count + settings_count + isolation_count
+    count = 2 + len(schema_paths) + reference_count + settings_count + isolation_count + retry_boundary_count
     for row in fixtures['families']:
         event = row['event_type']
         schema = json.loads((ROOT / row['schema']).read_text())

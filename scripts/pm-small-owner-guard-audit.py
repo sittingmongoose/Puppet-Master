@@ -144,6 +144,40 @@ def catalogue(m, fixtures):
         # Replay policy is not producer semantic data; retained authority remains
         # the original. Only the current policy check refuses this retry.
         add('retry.current_policy',family+':unknown_retry_policy','current_retry',(row,e,a),(row,unknown,a),no_if("incoming.get('replay_policy') != 'dedupe_by_idempotency_key'"),lambda x:x[0]=='return_original_without_effect')
+        retry_family_edits = no_if("incoming.get('event_type') != row['event_type']")
+        retry_schema_edits = no_if("incoming.get('payload_schema_id') != expected_schema")
+        for field, value, guard, edits in (
+            ('event_type', 'foreign.family', 'retry.family', retry_family_edits),
+            ('payload_schema_id', 'pm.payload.foreign', 'retry.schema', retry_schema_edits),
+        ):
+            # One changed family/schema fact, with every derived identity and
+            # protected observation recomputed. No stale digest can mask it.
+            bad_event = dict(e, **{field: value})
+            if field == 'event_type':
+                bad_event['event_id'] = 'evt_' + m.digest(value, a['storage_instance_id'], row['positive_payload'])
+                if e['scope_kind'] == 'project':
+                    bad_event['idempotency_key'] = value + ':' + bad_event['event_id'][4:]
+            bad = copy.deepcopy(a)
+            bad['stored_event'] = bad_event
+            custody = bad['stored_custody']
+            for key in ('event_id', 'event_type', 'idempotency_key'):
+                custody[key] = bad_event[key]
+            custody['producer_semantic_digest'] = m.producer_digest(bad_event)
+            custody['original_event_value_commitment']['sha256'] = hashlib.sha256(m.full_value_preimage(bad_event)).hexdigest()
+            custody['first_append_receipt']['event_id'] = bad_event['event_id']
+            bad['first_append_receipt']['event_id'] = bad_event['event_id']
+            bad['original_append_result']['event_id'] = bad_event['event_id']
+            add(guard, family + ':retry_' + field, 'current_retry', (row,e,a), (row,bad_event,bad), edits,
+                lambda x:x[0]=='return_original_without_effect')
+        for case in row.get('foreign_family_retry_cases', []):
+            if not (case['foreign_event'] and case['foreign_authority']):
+                continue
+            foreign = next(r for r in fixtures['families'] if r['event_type'] == case['source_family'])
+            # Both exact fences intentionally reject an authentic foreign
+            # family/schema pair. Remove that named duplicate set together.
+            add('retry.family_schema_duplicate', family + ':' + case['case_id'], 'current_retry',
+                (row,e,a), (row,foreign['positive_event_record'],foreign['receipt_authority']),
+                retry_family_edits + retry_schema_edits, lambda x:x[0]=='return_original_without_effect')
         for field in ['sequence_id','observed_at_utc','persisted_at_utc']:
             value=e[field]+1 if field=='sequence_id' else '2026-11-04T12:01:00Z'
             add('receipt.full_value',family+':forged_'+field,'resolve_full_value',(row,e,a),(row,dict(e,**{field:value}),a),
@@ -470,6 +504,7 @@ def expected_probe_ids(guard, probes, containers):
     expected=[p['id'] for p in probes if p['guard']==guard
               or guard=='token.other_string_grammar' and p['guard']=='token.generation_dataset_grammar'
               or guard=='retry.replay_only' and p['guard']=='retry.current_policy'
+              or guard=='retry.family_schema_duplicate' and p['guard'] in ('retry.family','retry.schema')
               or guard=='rebuild.checkpoint' and p['guard'] in ('token.generation_dataset_grammar','token.other_string_grammar')
               or guard=='writer.original_joins' and p['guard']=='append.current_event'
               or guard=='receipt.full_value' and p['guard'] in ('reader.retained_value','rebuild.retained_value')

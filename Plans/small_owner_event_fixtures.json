@@ -45195,7 +45195,30 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_subagent_context_rehydrated"
+      "unresolved_reference_negative": "#/$defs/missing_subagent_context_rehydrated",
+      "foreign_family_retry_cases": [
+        {
+          "case_id": "genuine_other_context_event_and_receipt",
+          "source_family": "subagent.context_shrunk",
+          "foreign_event": true,
+          "foreign_authority": true,
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "genuine_other_context_event_only",
+          "source_family": "subagent.context_shrunk",
+          "foreign_event": true,
+          "foreign_authority": false,
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "genuine_other_context_receipt_only",
+          "source_family": "subagent.context_shrunk",
+          "foreign_event": false,
+          "foreign_authority": true,
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "subagent.context_shrunk",
@@ -57821,7 +57844,30 @@
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
       },
-      "unresolved_reference_negative": "#/$defs/missing_subagent_context_shrunk"
+      "unresolved_reference_negative": "#/$defs/missing_subagent_context_shrunk",
+      "foreign_family_retry_cases": [
+        {
+          "case_id": "genuine_other_context_event_and_receipt",
+          "source_family": "subagent.context_rehydrated",
+          "foreign_event": true,
+          "foreign_authority": true,
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "genuine_other_context_event_only",
+          "source_family": "subagent.context_rehydrated",
+          "foreign_event": true,
+          "foreign_authority": false,
+          "expected": "identity_conflict_without_effect"
+        },
+        {
+          "case_id": "genuine_other_context_receipt_only",
+          "source_family": "subagent.context_rehydrated",
+          "foreign_event": false,
+          "foreign_authority": true,
+          "expected": "identity_conflict_without_effect"
+        }
+      ]
     },
     {
       "event_type": "project.added",
