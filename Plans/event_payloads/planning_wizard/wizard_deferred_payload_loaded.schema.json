@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/dcw/wizard_deferred_payload_loaded.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "event_type",
+    "project_id",
+    "thread_id",
+    "planning_run_id",
+    "named_plan_id",
+    "thread_group_id",
+    "request_id",
+    "source_ref",
+    "result_ref",
+    "seed_ref",
+    "seed_kind",
+    "seed_version",
+    "seed_sha256",
+    "project_context_snapshot_ref",
+    "project_context_snapshot_hash",
+    "permission_snapshot_id",
+    "predecessor_event_id",
+    "ts"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event_payload.wizard.deferred_payload.loaded.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "event_type": {
+      "const": "wizard.deferred_payload.loaded"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "planning_run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "named_plan_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "thread_group_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "result_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "seed_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "seed_kind": {
+      "enum": [
+        "ApprovedPRDPack",
+        "normalized_requirements_pack",
+        "assistant_chat_handoff_seed"
+      ]
+    },
+    "seed_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "seed_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "project_context_snapshot_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "project_context_snapshot_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "permission_snapshot_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "predecessor_event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    }
+  }
+}

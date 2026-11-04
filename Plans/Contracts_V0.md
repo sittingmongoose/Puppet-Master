@@ -24499,7 +24499,7 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
   otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
-  replay_policy=projector_replay_only.
+  replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_requested",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -24516,7 +24516,14 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation order, capabilities and
   snapshot joins must hold before append. ACD-571 defines this family''s phase predicate; SP-575 defines the exact
   receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce or alias sibling payloads.
-  The schema is prepared without registry admission.'
+  The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
+  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
+  and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
+  equal this exact payload; node_id, requested_account_ref, effective_account_ref and payload_ref are null; all
+  migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
+  equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
+  not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
+  equality is mandatory under SP-579.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -24565,7 +24572,7 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
   otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
-  replay_policy=projector_replay_only.
+  replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_started",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -24582,7 +24589,14 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation order, capabilities and
   snapshot joins must hold before append. ACD-572 defines this family''s phase predicate; SP-576 defines the exact
   receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce or alias sibling payloads.
-  The schema is prepared without registry admission.'
+  The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
+  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
+  and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
+  equal this exact payload; node_id, requested_account_ref, effective_account_ref and payload_ref are null; all
+  migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
+  equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
+  not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
+  equality is mandatory under SP-579.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -24631,7 +24645,7 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
   otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
-  replay_policy=projector_replay_only.
+  replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_completed",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -24648,7 +24662,14 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation order, capabilities and
   snapshot joins must hold before append. ACD-573 defines this family''s phase predicate; SP-577 defines the exact
   receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce or alias sibling payloads.
-  The schema is prepared without registry admission.'
+  The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
+  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
+  and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
+  equal this exact payload; node_id, requested_account_ref, effective_account_ref and payload_ref are null; all
+  migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
+  equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
+  not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
+  equality is mandatory under SP-579.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -24697,7 +24718,7 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
   otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
-  replay_policy=projector_replay_only.
+  replay_policy=dedupe_by_idempotency_key.
 
 
   NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array ["bundle.revision_interrupted",project_id,thread_id,bundle_id,revision_id,phase_sequence]
@@ -24714,7 +24735,14 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   unresolved source/receipt custody cannot allocate a replacement sequence. Same-lifecycle predecessor, annotation
   order, capabilities and snapshot joins must hold before append. ACD-574 defines this family''s phase predicate;
   SP-578 defines the exact receipt/read/withdrawal protocol. Unsupported payload versions fail closed, never coerce
-  or alias sibling payloads. The schema is prepared without registry admission.'
+  or alias sibling payloads. The schema is prepared without registry admission. Normal append refuses projector_replay_only
+  as replay_only_not_appendable; compatibility history remains passive and cannot select the writer. EventRecord
+  follows Contracts_V0.md#EventRecord and Plans/event_record.schema.json, without a local envelope schema. Envelope
+  event_type and payload_schema_id equal this exact payload; node_id, requested_account_ref, effective_account_ref
+  and payload_ref are null; all migration fields are null for current native writes; parent_event_id equals predecessor_event_id,
+  producer_sequence_id equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner
+  frozen in SP-579 source, not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields.
+  Source/result/prepared-event equality is mandatory under SP-579.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
@@ -24743,4 +24771,144 @@ preserved_exact_tokens:
 - bundle.revision_interrupted
 negative_constraints:
 - No event admission, new UI behavior, retention choice, native execution proof or governance seal.
+```
+
+
+### CV-594 - Deferred Intake wizard.opened Payload And Identity
+
+```yaml
+plan_unit_id: CV-594
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'wizard.opened has the closed payload Plans/event_payloads/planning_wizard/wizard_opened.schema.json,
+  schema_id pm.event_payload.wizard.opened.v1, schema_version 1.0.0; every property is required-present and additionalProperties=false.
+  It adopts Contracts_V0.md#EventRecord and Plans/event_record.schema.json unchanged. Current scope_kind=project;
+  envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective
+  account refs are null because this observation is not runtime execution. actor_ref is the authenticated original
+  request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id; producer_sequence_id
+  is null, occurred_at_utc=ts, payload_schema_id=payload.schema_id, payload_ref=null, redaction_profile=secret_refs_only,
+  replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted
+  fields. Inline payload must fit the shared 16 KiB limit; refs never carry bodies, credentials or local paths.
+
+
+  NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.opened",project_id,planning_run_id,thread_id,request_id]
+  with ensure_ascii=false and comma/colon separators. event_id="evt_wizard_opened_"+digest and idempotency_key="wizard.opened:"+digest.
+  request_id is the existing immutable command instance identity, not a new id on retry; a genuine distinct user
+  open request has its own existing request identity. Freeze all source/result fields, seed version/hash, current
+  child revision/hash, actor, permission snapshot, project-context hash, causality and ts at original preparation.
+  Same identity and same producer semantic digest returns the original full value and first receipt; changed semantic
+  digest is idempotency_conflict, missing dedupe proof is dedupe_unavailable. Normal append refuses projector_replay_only
+  with replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for
+  the real Project and actual current PlanningRun intake child, after owner route/currentness and permission validation.
+  Opening is not proof of seed acceptance; a route click, attempt or failed open emits nothing. predecessor_event_id
+  is null. This event never creates or selects a child on replay.
+
+
+  Every payload ref must resolve to the actual original source request/result in Plans/dcw/wizard_open_evidence.schema.json;
+  payload joins compare exact child, Named Plan, thread group, seed identity/version/hash, permission snapshot and
+  project context; seed_kind comes from the current PWIZ-001 closed set. No stale source, retired raw payload or
+  event-name alias is accepted. Unsupported versions quarantine without reader/checkpoint advance. This is prepared
+  without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage
+  versus planning/chat content candidates. The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json,
+  checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain
+  independently required; a successful static fixture never supplies native source authority.'
+gui_related: false
+gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
+depends_on:
+- PWIZ-097
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
+- The complete positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw_fix1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- wizard.opened
+negative_constraints:
+- No event admission, retention choice, new UI behavior, native execution claim or governance seal.
+```
+
+
+### CV-595 - Deferred Intake wizard.deferred_payload.loaded Payload And Identity
+
+```yaml
+plan_unit_id: CV-595
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: 'wizard.deferred_payload.loaded has the closed payload Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json,
+  schema_id pm.event_payload.wizard.deferred_payload.loaded.v1, schema_version 1.0.0; every property is required-present
+  and additionalProperties=false. It adopts Contracts_V0.md#EventRecord and Plans/event_record.schema.json unchanged.
+  Current scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id
+  and requested/effective account refs are null because this observation is not runtime execution. actor_ref is
+  the authenticated original request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id;
+  producer_sequence_id is null, occurred_at_utc=ts, payload_schema_id=payload.schema_id, payload_ref=null, redaction_profile=secret_refs_only,
+  replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted
+  fields. Inline payload must fit the shared 16 KiB limit; refs never carry bodies, credentials or local paths.
+
+
+  NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.deferred_payload.loaded",project_id,planning_run_id,thread_id,request_id]
+  with ensure_ascii=false and comma/colon separators. event_id="evt_wizard_deferred_payload_loaded_"+digest and
+  idempotency_key="wizard.deferred_payload.loaded:"+digest. request_id is the existing immutable command instance
+  identity, not a new id on retry; a genuine distinct user open request has its own existing request identity. Freeze
+  all source/result fields, seed version/hash, current child revision/hash, actor, permission snapshot, project-context
+  hash, causality and ts at original preparation. Same identity and same producer semantic digest returns the original
+  full value and first receipt; changed semantic digest is idempotency_conflict, missing dedupe proof is dedupe_unavailable.
+  Normal append refuses projector_replay_only with replay_only_not_appendable. Passive readers cannot emit. Observe
+  the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun
+  intake child. The original successful open event and its exact first receipt must already resolve; predecessor_event_id
+  is that wizard.opened event for the same original request, child, Project, Named Plan, seed and context. Loading
+  is distinct from opening; route-open, a stale seed, unsupported raw legacy payload or failed load emits nothing.
+  Receipt-backed acceptance is not a compile/approval/execution grant.
+
+
+  Every payload ref must resolve to the actual original source request/result in Plans/dcw/wizard_seed_load_evidence.schema.json;
+  payload joins compare exact child, Named Plan, thread group, seed identity/version/hash, permission snapshot and
+  project context; seed_kind comes from the current PWIZ-001 closed set. No stale source, retired raw payload or
+  event-name alias is accepted. Unsupported versions quarantine without reader/checkpoint advance. This is prepared
+  without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage
+  versus planning/chat content candidates. The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json,
+  checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain
+  independently required; a successful static fixture never supplies native source authority.'
+gui_related: false
+gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
+depends_on:
+- PWIZ-098
+- CV-339
+unblocks: []
+acceptance_criteria:
+- Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
+- The complete positive and negative static oracles pass; native execution is NOT_RUN.
+validation_surfaces:
+- python3 scripts/pm_bundle_revision_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_identity_custody
+reasoning_tier: high
+context_scope: event_authority_wave2_dcw_fix1
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- wizard.deferred_payload.loaded
+negative_constraints:
+- No event admission, retention choice, new UI behavior, native execution claim or governance seal.
 ```

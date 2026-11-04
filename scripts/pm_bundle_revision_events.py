@@ -32,7 +32,7 @@ def validate(row, payload, envelope, previous):
     assert envelope['causation_event_id'] == payload['predecessor_event_id'], 'causation'
     assert envelope['run_id'] is None and envelope['attempt_id'] is None, 'runtime_scope'
     assert envelope['redaction_profile'] == 'secret_refs_only', 'redaction'
-    assert envelope['replay_policy'] == 'projector_replay_only', 'replay'
+    assert envelope['replay_policy'] == 'dedupe_by_idempotency_key', 'replay'
     phase = row['phase']
     if phase == 'requested':
         assert previous is None and payload['predecessor_event_id'] is None and payload['phase_sequence'] == 0, 'request_predecessor'
@@ -56,7 +56,7 @@ def main():
         envelope = dict(event_id=eid, idempotency_key=key, scope_kind='project', project_id=payload['project_id'],
                         thread_id=payload['thread_id'], correlation_id=payload['revision_id'],
                         causation_event_id=payload['predecessor_event_id'], run_id=None, attempt_id=None,
-                        redaction_profile='secret_refs_only', replay_policy='projector_replay_only')
+                        redaction_profile='secret_refs_only', replay_policy='dedupe_by_idempotency_key')
         previous = None if row['phase'] == 'requested' else dict(payload, event_id='evt-predecessor',
                     event_type='bundle.revision_' + ('requested' if row['phase'] == 'started' else 'started'), phase_sequence=payload['phase_sequence']-1)
         validate(row, payload, envelope, previous)
@@ -103,6 +103,9 @@ def main():
                                      ['Plans/assistant-chat-design.md', 'Plans/Contracts_V0.md', 'Plans/storage-plan.md'])
         assert row['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
         print(row['event_type'] + ': PASS (static shape/identity/joins/order only)')
+    from pm_dcw_event_oracles import run
+    full_checks = run(validate)
+    checks += full_checks
     assert all(x['execution_status'] == 'NOT_RUN' for x in fixtures['native_oracles'])
     print(json.dumps({'status': 'PASS', 'checks': checks, 'native': 'NOT_RUN', 'admission': 'ABSENT'}))
 
