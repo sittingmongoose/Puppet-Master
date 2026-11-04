@@ -11,7 +11,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 584,
-        "quote": "| `Plans/Formatters_System.md` | \u2014 | `format.applied` | \u2014 |"
+        "quote": "| `Plans/Formatters_System.md` | — | `format.applied` | — |"
       },
       {
         "path": "Plans/Formatters_System.md",
@@ -49,7 +49,19 @@
         "quote": "- format.applied"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Formatters_System.md; inspect FS-075 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 1122,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.timestamp",
+      "original_actor_source": "original HTE write/edit operation",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "git.clone.completed",
@@ -58,7 +70,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 599,
-        "quote": "| `Plans/Source_Control_System.md` | \u2014 | `git.clone.completed` | \u2014 |"
+        "quote": "| `Plans/Source_Control_System.md` | — | `git.clone.completed` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -66,7 +78,19 @@
         "quote": "- git.clone.completed"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Source_Control_System.md; inspect SCS-085 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 2155,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.completed_at_utc",
+      "original_actor_source": "original ordinary Git clone command operation",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "lsp.server.lifecycle_changed",
@@ -115,10 +139,22 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 587,
-        "quote": "| `Plans/LSPSupport.md` | \u2014 | `lsp.server.lifecycle_changed` | \u2014 |"
+        "quote": "| `Plans/LSPSupport.md` | — | `lsp.server.lifecycle_changed` | — |"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/LSPSupport.md; inspect LSPS-173 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 7261,
+      "invalid_profile_seen": true,
+      "new_profile": "no_secrets",
+      "time_join": "occurred_at_utc=payload.ts",
+      "original_actor_source": "original LspSupervisor Host/server/root/session observation",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "model.catalog_refreshed",
@@ -127,7 +163,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 588,
-        "quote": "| `Plans/Models_System.md` | \u2014 | `model.catalog_refreshed` | \u2014 |"
+        "quote": "| `Plans/Models_System.md` | — | `model.catalog_refreshed` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -155,7 +191,19 @@
         "quote": "        \"Assert cmd.model.refresh emits model.catalog_refreshed with command_id, origin, correlation_id, and handler target.\""
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Models_System.md; inspect MS-199 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 9920,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.completed_at_utc",
+      "original_actor_source": "original Models manual or automatic catalog refresh",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "project.added",
@@ -164,7 +212,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 593,
-        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
+        "quote": "| `Plans/Project_System.md` | — | `project.added`, `project.created` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -172,7 +220,19 @@
         "quote": "- project.added"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Project_System.md; inspect PJCT-072 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 997,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.completed_at_utc",
+      "original_actor_source": "original completed Project existing-content registration",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "project.created",
@@ -181,7 +241,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 593,
-        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
+        "quote": "| `Plans/Project_System.md` | — | `project.added`, `project.created` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -189,7 +249,19 @@
         "quote": "- project.created"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Project_System.md; inspect PJCT-073 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 1044,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.completed_at_utc",
+      "original_actor_source": "original root Project creation composition",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "settings.theme.updated",
@@ -198,7 +270,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 598,
-        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
+        "quote": "| `Plans/Settings_System.md` | — | `settings.theme.updated`, `settings.updated` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -325,7 +397,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 598,
-        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
+        "quote": "| `Plans/Settings_System.md` | — | `settings.theme.updated`, `settings.updated` | — |"
       },
       {
         "path": "Plans/Settings_System.md",
@@ -422,10 +494,22 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 594,
-        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
+        "quote": "| `Plans/Prompt_Pipeline.md` | — | `subagent.context_rehydrated`, `subagent.context_shrunk` | — |"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Prompt_Pipeline.md; inspect PP-151 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 6055,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.occurred_at_utc",
+      "original_actor_source": "original accepted child-context rehydration operation",
+      "no_sibling_binding": true
+    }
   },
   {
     "event_type": "subagent.context_shrunk",
@@ -459,9 +543,21 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 594,
-        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
+        "quote": "| `Plans/Prompt_Pipeline.md` | — | `subagent.context_rehydrated`, `subagent.context_shrunk` | — |"
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_1": {
+      "searched_head": "247e523f69b1f647cc7b23958ba038d9a71c7397",
+      "scope": "Re-read this family owner unit, its Contracts/Storage copies, closed payload, EventRecord section/schema, SP-278, SP-286/CV-339 full-value and group-commit amendments. Existing DM-search before-draft exact-name search retained above.",
+      "command": "git show 247e523f69b1f647cc7b23958ba038d9a71c7397:Plans/Prompt_Pipeline.md; inspect PP-152 and this exact family in current EventRecord/receipt contracts",
+      "finding": "The prepared identity line requires invalid redacted_refs_only; no exact actor_ref/correlation_id or payload-specific occurred_at_utc mapping is present in this family unit. Reuse EventRecord enums and CV-339/SP-278 interfaces; author only the missing exact-family mapping and original-intent/refusal/oracle refinements.",
+      "original_identity_line": 6102,
+      "invalid_profile_seen": true,
+      "new_profile": "secret_refs_only",
+      "time_join": "occurred_at_utc=payload.occurred_at_utc",
+      "original_actor_source": "original accepted child-context shrink operation",
+      "no_sibling_binding": true
+    }
   }
 ]

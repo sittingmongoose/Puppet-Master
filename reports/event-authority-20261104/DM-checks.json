@@ -1,63 +1,67 @@
 {
+  "review_round": 1,
+  "canonical_head": "9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
   "checks": [
     {
       "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
       "exit_code": 0,
       "top_level_status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/shard-generate.txt",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/shard-generate.txt",
       "sha256": "48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4"
     },
     {
       "command": "python3 scripts/pm-plan-index.py generate",
       "exit_code": 0,
       "top_level_status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/index-generate.txt",
-      "sha256": "bd92dffa9f19becfa9f75cc519da947c7b7ac256127f25ecac4a41faa3985a5c"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/index-generate.txt",
+      "sha256": "f1247a4a8ed7fe834c2195ad2813c19becdcc89dd049df6acc7065f4fdc2aee2"
     },
     {
       "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
       "exit_code": 0,
       "top_level_status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/shard-check.txt",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/shard-check.txt",
       "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
     },
     {
       "command": "python3 scripts/pm-plan-index.py validate",
       "exit_code": 0,
       "top_level_status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/index-validate.txt",
-      "sha256": "942c57a5c364f1e75d6bf773e196cfbb345b903e487ade0479a3657b976ed9d3"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/index-validate.txt",
+      "sha256": "860e8d7feecbdce893d966df917f77737d8405ae2a7683a35aa9fa88d58ca4b9"
     },
     {
       "command": "python3 scripts/pm-small-owner-events.py",
       "exit_code": 0,
       "top_level_status": "PASS",
-      "assertions": 272,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/targeted-check.txt",
-      "sha256": "8cb6880c244bbd962e47e6d41d61f50d4927a5fbc44f74a031d108585299d731"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/targeted-check.txt",
+      "sha256": "661ea50cd953df6163261643066e8178aa973257cf6ab6dcf78abfcc0c8f7af0",
+      "assertions": 3411
     },
     {
-      "command": "git diff --check HEAD",
-      "exit_code": 0
-    },
-    {
-      "command": "forbidden path and registry diff against HEAD",
-      "exit_code": 0
+      "command": "git diff --check",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
   "evidence": [
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/currentness-copy.json",
-      "sha256": "d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/currentness-copy.json",
+      "sha256": "76284c92cba3a91ed9a5e3f312c5415d94ebcb1b555016780a17499d937e431e"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/id-check.json",
-      "sha256": "84d5083d8e825706ab10a00b75d80b417c87073e756e44efec65ff00108853a2"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/quote-check.json",
+      "sha256": "3e58b9c261bb18b3e9fed2ae212913b4b24dea8e50716c0d9467ac76e6887877"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix1/scope-check.json",
+      "sha256": "af64b0cac4f4e4600f57f590f72f10bad34ce1e0d316342e17a22aaf0c1944d3"
     }
   ],
+  "native_execution": "NOT_RUN",
   "intermediate_repairs": [
-    "Date-time format validator required an explicit checker in this environment; fixed and targeted check rerun.",
-    "Pre-format validation runs were superseded; final validation ran sequentially after final generation."
-  ],
-  "native_execution": "NOT_RUN"
+    "The new retained-value mutation matrix exposed malformed application-scope input raising before refusal; stored envelope and payload now validate before identity decoding, and the full matrix passes.",
+    "Initial explicit staging included two unconfigured shard directory names; no paths were staged or committed. Corrected to the verified exact changed-path list."
+  ]
 }
