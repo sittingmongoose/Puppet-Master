@@ -4,7 +4,8 @@ import copy
 import base64
 import hashlib
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 import jsonschema
@@ -50,6 +51,86 @@ def source_observation(adapter, records):
             continue
         observed[field] = value
     return observed
+
+
+def instant(value):
+    result = datetime.fromisoformat(value)
+    require(result.tzinfo is not None, 'source clock timezone')
+    return result
+
+
+def validate_retry(contract, payload, records):
+    """Apply EP-032/SP-238 to the original per-error counter and scheduling facts."""
+    retry, failure = records['retry']['body'], records['failure']['body']
+    name, classification = contract['event_type'], failure['failure_class']
+    require(retry['failure_class'] == payload['failure_class'] == classification, 'retry classification')
+    require(retry['error_id'] == failure['error_id'], 'per-error counter identity')
+    require(type(retry['used']) is int and type(failure['retry_count_before']) is int and retry['used'] >= 0
+            and retry['used'] == failure['retry_count_before'], 'original per-error retry counter')
+    attempt_slot = 'prior_attempt' if name == 'run.node_retry_scheduled' else 'attempt'
+    require(failure['attempt_id'] == records[attempt_slot]['body']['attempt_id'], 'original failed attempt')
+    if name == 'run.node_retry_scheduled':
+        require(retry['prior_attempt_id'] == failure['attempt_id'], 'classified prior attempt')
+    require(classification not in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'), 'no blind retry')
+    limits = {'provider_transient': 3, 'rate_limited': 3,
+              'structured_output_invalid': 2, 'auth_expired': 1}
+    policy_owner = 'Plans/Executor_Protocol.md#EP-032'
+    if classification == 'storage_io':
+        storage_class = failure['storage_io_class']
+        require(storage_class == retry['storage_io_class'], 'original Storage classification')
+        require(storage_class in ('interrupted', 'transient_busy'), 'Storage retry class')
+        limit = 3 if storage_class == 'interrupted' else 1
+        policy_owner = 'Plans/storage-plan.md#SP-238'
+        require(retry['new_executor_attempt'] is False and retry['successor_attempt_id'] is None,
+                'Storage adapter retry cannot create an Executor attempt')
+    else:
+        require(classification in limits, 'classified retry policy domain')
+        require(retry['storage_io_class'] is None and failure['storage_io_class'] is None, 'foreign Storage policy')
+        limit = limits[classification]
+    require(retry['policy_owner_ref'] == policy_owner, 'classified owner policy provenance')
+    require(type(retry['limit']) is int and retry['limit'] == limit, 'exact classified retry limit')
+    require(retry['used'] < retry['limit'], 'per-error retry budget')
+    if 'retry_count' in payload:
+        require(payload['retry_count'] == retry['used'] + 1, 'classified retry ordinal')
+    failed = instant(failure['failed_at_utc'])
+    received = instant(failure['response_received_at_utc'])
+    scheduled = instant(retry['scheduled_at_utc'])
+    observed = instant(payload['ts'])
+    require(received <= failed <= scheduled <= observed, 'original failure/scheduling clocks')
+    delay = timedelta(0)
+    if classification == 'provider_transient':
+        delay = timedelta(seconds=2 ** retry['used'])
+    elif classification == 'rate_limited':
+        header = failure['retry_after_header']
+        if header is None:
+            delay = timedelta(seconds=30)
+        else:
+            require(isinstance(header, str) and bool(header), 'original Retry-After header')
+            if header.isascii() and header.isdecimal():
+                deadline = received + timedelta(seconds=int(header))
+            else:
+                deadline = parsedate_to_datetime(header)
+                require(deadline.tzinfo is not None, 'Retry-After date timezone')
+            delay = max(deadline - scheduled, timedelta(0))
+    elif classification == 'auth_expired':
+        refresh = failure['refresh']
+        require(refresh is not None and refresh['attempts'] == 1 and refresh['result'] == 'refreshed',
+                'one successful original auth refresh')
+        require(failed <= instant(refresh['completed_at_utc'])
+                <= instant(refresh['client_rebuilt_at_utc']) <= scheduled, 'refresh and client rebuild before retry')
+    elif classification == 'storage_io' and failure['storage_io_class'] == 'transient_busy':
+        delay = timedelta(milliseconds=250)
+    if classification != 'rate_limited':
+        require(failure['retry_after_header'] is None, 'Retry-After belongs to rate_limited')
+    if classification != 'auth_expired':
+        require(failure['refresh'] is None, 'refresh belongs to auth_expired')
+    until = instant(retry['backoff_until_utc'])
+    require(until == scheduled + delay, 'original classified retry deadline')
+    if name == 'run.node_backoff_expired':
+        require(observed >= until, 'early timer')
+    elif name == 'run.node_backoff_started':
+        require(instant(payload['backoff_until_utc']) == until, 'original start timer join')
+        require(until >= observed, 'backoff deadline')
 
 
 def validate_capture(contract, payload, capture):
@@ -126,7 +207,8 @@ def validate_capture(contract, payload, capture):
     require(capture['post_state']['state'] == transition['after'], 'post-state')
     require(capture['post_state']['revision'] == transition['revision'] + 1, 'post-state CAS')
     require(capture['post_state']['event_sequence'] == payload['event_sequence'], 'post-state sequence')
-    require(capture['post_state']['effects'] == adapter['effects'], 'post-state effects')
+    effects = adapter.get('effects_by_failure_class', {}).get(payload.get('failure_class'), adapter['effects'])
+    require(capture['post_state']['effects'] == effects, 'post-state effects')
     for path, expected in adapter['requirements'].items():
         require(at(records, path) == expected, 'owner predicate ' + path)
     for field, ref in capture['dependency_refs'].items():
@@ -182,17 +264,7 @@ def validate_capture(contract, payload, capture):
         if name == 'remediation.resolved' and payload['resolution'] == 'fixed':
             require(lineage['child_result'] == 'done', 'fixed without successful child')
     if name in ('run.node_backoff_started', 'run.node_backoff_expired', 'run.node_retry_scheduled'):
-        retry = records['retry']['body']
-        require(retry['used'] < retry['limit'], 'per-error retry budget')
-        require(retry['failure_class'] == payload['failure_class'], 'retry classification')
-        require(retry['failure_class'] not in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'), 'no blind retry')
-        if retry['failure_class'] == 'storage_io':
-            require(retry['storage_io_class'] in ('interrupted', 'transient_busy'), 'Storage retry class')
-            require(retry['new_executor_attempt'] is False, 'Storage adapter retry')
-        if name == 'run.node_backoff_expired':
-            require(datetime.fromisoformat(payload['ts']) >= datetime.fromisoformat(retry['backoff_until_utc']), 'early timer')
-        elif name == 'run.node_backoff_started':
-            require(datetime.fromisoformat(payload['backoff_until_utc']) >= datetime.fromisoformat(payload['ts']), 'backoff deadline')
+        validate_retry(contract, payload, records)
     if name == 'scheduler.pass':
         scheduler = records['scheduler']['body']
         require(scheduler['selected_nodes'] == payload['selected_nodes'], 'scheduler source selection')

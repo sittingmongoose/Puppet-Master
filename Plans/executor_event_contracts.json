@@ -1279,7 +1279,8 @@
           "run": "Plans/Executor_Protocol.md",
           "node": "Plans/Executor_Protocol.md",
           "attempt": "Plans/Executor_Protocol.md",
-          "retry": "Plans/Executor_Protocol.md"
+          "retry": "Plans/Executor_Protocol.md",
+          "failure": "Plans/Executor_Protocol.md"
         },
         "transition_record": "retry",
         "joins": {
@@ -1330,8 +1331,39 @@
           "retry": [
             "project",
             "run",
-            "node"
+            "node",
+            "failure"
+          ],
+          "failure": [
+            "project",
+            "run",
+            "node",
+            "attempt"
           ]
+        },
+        "retry_policy": {
+          "executor_owner": "Plans/Executor_Protocol.md#EP-032",
+          "storage_owner": "Plans/storage-plan.md#SP-238",
+          "original_failure_record": "failure",
+          "counter_scope": "original classified error_id within its actual attempt",
+          "used_field": "retry.body.used",
+          "original_counter_field": "failure.body.retry_count_before",
+          "classification_field": "failure.body.failure_class",
+          "failure_clock": "failure.body.failed_at_utc",
+          "schedule_clock": "retry.body.scheduled_at_utc",
+          "response_clock": "failure.body.response_received_at_utc",
+          "retry_after_evidence": "failure.body.retry_after_header",
+          "refresh_evidence": "failure.body.refresh",
+          "deadline": "retry.body.backoff_until_utc",
+          "limits": {
+            "provider_transient": 3,
+            "rate_limited": 3,
+            "structured_output_invalid": 2,
+            "auth_expired": 1,
+            "storage_io.interrupted": 3,
+            "storage_io.transient_busy": 1
+          },
+          "new_binding_status": "newly_authored_normalized_owner_reads_reusing_existing_policy"
         }
       }
     },
@@ -1378,7 +1410,8 @@
           "run": "Plans/Executor_Protocol.md",
           "node": "Plans/Executor_Protocol.md",
           "attempt": "Plans/Executor_Protocol.md",
-          "retry": "Plans/Executor_Protocol.md"
+          "retry": "Plans/Executor_Protocol.md",
+          "failure": "Plans/Executor_Protocol.md"
         },
         "transition_record": "retry",
         "joins": {
@@ -1431,8 +1464,39 @@
           "retry": [
             "project",
             "run",
-            "node"
+            "node",
+            "failure"
+          ],
+          "failure": [
+            "project",
+            "run",
+            "node",
+            "attempt"
           ]
+        },
+        "retry_policy": {
+          "executor_owner": "Plans/Executor_Protocol.md#EP-032",
+          "storage_owner": "Plans/storage-plan.md#SP-238",
+          "original_failure_record": "failure",
+          "counter_scope": "original classified error_id within its actual attempt",
+          "used_field": "retry.body.used",
+          "original_counter_field": "failure.body.retry_count_before",
+          "classification_field": "failure.body.failure_class",
+          "failure_clock": "failure.body.failed_at_utc",
+          "schedule_clock": "retry.body.scheduled_at_utc",
+          "response_clock": "failure.body.response_received_at_utc",
+          "retry_after_evidence": "failure.body.retry_after_header",
+          "refresh_evidence": "failure.body.refresh",
+          "deadline": "retry.body.backoff_until_utc",
+          "limits": {
+            "provider_transient": 3,
+            "rate_limited": 3,
+            "structured_output_invalid": 2,
+            "auth_expired": 1,
+            "storage_io.interrupted": 3,
+            "storage_io.transient_busy": 1
+          },
+          "new_binding_status": "newly_authored_normalized_owner_reads_reusing_existing_policy"
         }
       }
     },
@@ -1575,7 +1639,9 @@
           "run": "Plans/Executor_Protocol.md",
           "node": "Plans/Executor_Protocol.md",
           "retry": "Plans/Executor_Protocol.md",
-          "execution": "Plans/Executor_Protocol.md"
+          "execution": "Plans/Executor_Protocol.md",
+          "failure": "Plans/Executor_Protocol.md",
+          "prior_attempt": "Plans/Executor_Protocol.md"
         },
         "transition_record": "retry",
         "joins": {
@@ -1636,13 +1702,56 @@
           "retry": [
             "project",
             "run",
-            "node"
+            "node",
+            "failure"
           ],
           "execution": [
             "project",
             "run",
             "node"
+          ],
+          "failure": [
+            "project",
+            "run",
+            "node",
+            "prior_attempt"
+          ],
+          "prior_attempt": [
+            "project",
+            "run",
+            "node"
           ]
+        },
+        "effects_by_failure_class": {
+          "storage_io": {
+            "worker_dispatches": 0,
+            "successor_admissions": 0,
+            "adapter_retry_schedules": 1
+          }
+        },
+        "retry_policy": {
+          "executor_owner": "Plans/Executor_Protocol.md#EP-032",
+          "storage_owner": "Plans/storage-plan.md#SP-238",
+          "original_failure_record": "failure",
+          "counter_scope": "original classified error_id within its actual attempt",
+          "used_field": "retry.body.used",
+          "original_counter_field": "failure.body.retry_count_before",
+          "classification_field": "failure.body.failure_class",
+          "failure_clock": "failure.body.failed_at_utc",
+          "schedule_clock": "retry.body.scheduled_at_utc",
+          "response_clock": "failure.body.response_received_at_utc",
+          "retry_after_evidence": "failure.body.retry_after_header",
+          "refresh_evidence": "failure.body.refresh",
+          "deadline": "retry.body.backoff_until_utc",
+          "limits": {
+            "provider_transient": 3,
+            "rate_limited": 3,
+            "structured_output_invalid": 2,
+            "auth_expired": 1,
+            "storage_io.interrupted": 3,
+            "storage_io.transient_busy": 1
+          },
+          "new_binding_status": "newly_authored_normalized_owner_reads_reusing_existing_policy"
         }
       }
     },
