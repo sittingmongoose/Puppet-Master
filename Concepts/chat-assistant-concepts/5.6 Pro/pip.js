@@ -206,18 +206,19 @@
 
   /* gaze: the eyes lean toward the last place the pointer was, and stay there. With Sway and physics on (and no Reduced
      Motion) they follow the pointer; otherwise (Still) the face doesn't travel: each new face settles, in one step,
-     looking where the pointer last was. Retro's Pip is the kit's one 24-cell sprite with its eyes cut out of the head,
-     so it has no face of its own to lean and doesn't gaze. */
+     looking where the pointer last was. Retro moves its sprite head in whole cells, keeping the eye cutouts
+     together with their head and leaving the strings and control in place. */
   var lastPt = null, gazeQueued = false;
   var NO_GAZE = { dots: 1, working: 1, sleep: 1, happy: 1 };
   function applyGaze(st, now) {
     if (!st.face || !st.face.isConnected) return;
     if (!now && !moves('sway-and-physics')) return;
     var x = 0, y = 0;
-    if (lastPt && wants('gaze') && !NO_GAZE[st.mood] && family() !== 'retro') {
+    if (lastPt && wants('gaze') && !NO_GAZE[st.mood]) {
       var r = st.el.getBoundingClientRect(); if (!r.width) return;
       var cx = r.left + r.width * .33, cy = r.top + r.height * .64, dx = lastPt[0] - cx, dy = lastPt[1] - cy, l = Math.hypot(dx, dy) || 1, k = Math.min(1, l / 160);
       x = Math.round(dx / l * 2.4 * k * 10) / 10; y = Math.round(dy / l * 1.7 * k * 10) / 10;
+      if (family() === 'retro') { x = Math.round(dx / l * k); y = Math.round(dy / l * k); }
     }
     if (x === st.gx && y === st.gy && st.gazeA) return;
     var from = 'translate(' + st.gx + 'px, ' + st.gy + 'px)', to = 'translate(' + x + 'px, ' + y + 'px)';

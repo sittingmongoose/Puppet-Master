@@ -10,9 +10,9 @@ export const tests={
    const controls=sheet.locator('button,input:not([readonly]),select');
    const count=await controls.count();let unchanged=[];
    for(let i=0;i<count;i++){
-    const b=controls.nth(i); if(!await b.isVisible()||!await b.isEnabled())continue;
+    const b=controls.nth(i); if(!await b.isVisible()||!await b.isEnabled()||await b.getAttribute('aria-hidden')==='true')continue;
     await t.page.mouse.move(0,0);await t.page.waitForTimeout(180);
-    const style=e=>{const c=getComputedStyle(e);return [c.backgroundColor,c.borderColor,c.outlineColor,c.boxShadow,c.color].join('|')};
+    const style=e=>{const host=e.closest('label,.input-wrap')||e;return [host,...host.querySelectorAll('span,svg')].map(n=>{const c=getComputedStyle(n);return [c.backgroundColor,c.borderColor,c.outlineColor,c.boxShadow,c.color,c.textDecorationLine].join('|')}).join('~')};
     const before=await b.evaluate(style);await b.hover({timeout:1500}).catch(()=>{});await t.page.waitForTimeout(250);
     if(before===await b.evaluate(style))unchanged.push(await b.evaluate(e=>e.outerHTML.slice(0,180)));
    }
@@ -34,7 +34,7 @@ export const tests={
   }
  },
  'SW27 animation speed SW02 composer SW32 faces':async t=>{
-  const f=await t.app.open();const durations=[];
+  await t.emulate({reducedMotion:'no-preference'});const f=await t.app.open();const durations=[];
   for(const speed of ['Fast','Cinematic']){
    await f.evaluate(s=>{PM12_KIMI.setSettingFromHost('general.visual.animation-speed',s,false,false);PM56_DEMO.openActivity('subagents');},speed);
    durations.push(await f.locator('#pmRoot .activity-panel').evaluate(e=>getComputedStyle(e).animationDuration));

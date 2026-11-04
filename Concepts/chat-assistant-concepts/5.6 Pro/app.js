@@ -477,7 +477,11 @@
   }
 
   function activeThread() { return state.threads.find(t => t.id === state.selectedThread) || state.threads[0]; }
-  function selectedModel() { return D.models.find(m => m.id === state.model) || D.models[0]; }
+  function selectedModel() {
+    const models = configuredModels();
+    return models.find(m => m.id === state.model) || models[0] ||
+      { id: '', name: 'No AI connected', provider: '', account: '', accountId: '', efforts: [], fast: false };
+  }
   function workStep() { return D.workSteps[clamp(state.work.step,0,D.workSteps.length-1)]; }
   /* hosted: History pins beside the messages from a 560 px column (a 360 px message area and the 200 px drawer) */
   function isNarrow() { return HOSTED ? HOST.width() < 560 : window.innerWidth < 821; }
