@@ -1,0 +1,34 @@
+{
+  "dt-check.log": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  },
+  "registry-schema-check.json": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  },
+  "storage-recovery-check.log": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  },
+  "storage-profile-check.log": {
+    "top_level_status": "fail",
+    "exit_code": 1
+  },
+  "shard-generate.log": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  },
+  "index-generate.log": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  },
+  "shard-check.log": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  },
+  "index-validate.log": {
+    "top_level_status": "pass",
+    "exit_code": 0
+  }
+}

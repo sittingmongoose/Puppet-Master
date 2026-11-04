@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18791,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 21999,
+    "node_count": 7464,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T07:47:52Z",
+  "generated_at_utc": "2026-11-04T17:41:35Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7421,
+  "plan_unit_count": 7464,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2786,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -42939,6 +42939,8 @@
       "event_authority_checkpoint_drift": 2,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
+      "event_authority_false_pass": 9,
+      "event_authority_identity_or_replay": 34,
       "event_authority_payload_depth_drift": 1,
       "event_authority_registration_checkpoint_drift": 1,
       "event_authority_seal_check_drift": 1,
@@ -45863,7 +45865,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7204,
+      "accepted": 7247,
       "retired": 194,
       "superseded": 23
     },
@@ -45939,7 +45941,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 123,
+      "schema_contract": 157,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 18,
@@ -45962,6 +45964,7 @@
       "validation": 13,
       "validation_contract": 1,
       "validation_criterion": 37,
+      "validation_gate": 9,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,
@@ -46024,7 +46027,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "65bec3424aa40235b35f272539c9e423972f5f5deeebe33bae22a5bae3a2de2a",
+        "expected": "50765d3bff290a0f1997a785ccbe31476fe2f5e4f89ce18a148b412700429f17",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46060,7 +46063,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "38e77a608403e7e75070518a84d65993800f9cbba88822387e2f4f888cb925b2",
+        "expected": "9c88dd5ea5794b145dda50a3454667315a2c4579b6fe7092711c06a489db7414",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46102,6 +46105,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Assistant_Plan_Runtime.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Automated_Testing_System.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

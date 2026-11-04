@@ -3105,7 +3105,33 @@
     "DL-010",
     "DL-011",
     "DL-012",
+    "ATS-290",
+    "ATS-291",
+    "ATS-292",
+    "ATS-293",
+    "ATS-294",
+    "ATS-295",
+    "ATS-296",
+    "ATS-297",
+    "ATS-298",
     "CV-334",
+    "CV-600",
+    "CV-601",
+    "CV-602",
+    "CV-603",
+    "CV-604",
+    "CV-605",
+    "CV-606",
+    "CV-607",
+    "CV-608",
+    "CV-609",
+    "CV-610",
+    "CV-611",
+    "CV-612",
+    "CV-613",
+    "CV-614",
+    "CV-615",
+    "CV-616",
     "DL-047",
     "DL-048",
     "DL-049",
@@ -3122,6 +3148,23 @@
     "DL-087",
     "DL-088",
     "GRS-060",
+    "SP-580",
+    "SP-581",
+    "SP-582",
+    "SP-583",
+    "SP-584",
+    "SP-585",
+    "SP-586",
+    "SP-587",
+    "SP-588",
+    "SP-589",
+    "SP-590",
+    "SP-591",
+    "SP-592",
+    "SP-593",
+    "SP-594",
+    "SP-595",
+    "SP-596",
     "DL-076",
     "DL-077",
     "DL-078",
@@ -15529,6 +15572,51 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-290",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-291",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-292",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-293",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-294",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-295",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-296",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-297",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-298",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BBI-001",
       "to": "FGI-001"
     },
@@ -25931,6 +26019,91 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-600",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-601",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-602",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-603",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-604",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-605",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-606",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-607",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-608",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-609",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-610",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-611",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-612",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-613",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-614",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-615",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-616",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -81994,6 +82167,91 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-580",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-581",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-582",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-583",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-584",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-585",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-586",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-587",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-588",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-589",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-590",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-591",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-592",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-593",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-594",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-595",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-596",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117208,7 +117466,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T07:47:51Z",
+  "generated_at_utc": "2026-11-04T17:41:34Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131321,6 +131579,159 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-290",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-290 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7233,
+        "line": 7235,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-291",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-291 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7264,
+        "line": 7266,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-292",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-292 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7295,
+        "line": 7297,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-293",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-293 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7326,
+        "line": 7328,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-294",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-294 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7357,
+        "line": 7359,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-295",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-295 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7388,
+        "line": 7390,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-296",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-296 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7419,
+        "line": 7421,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-297",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-297 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7450,
+        "line": 7452,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-298",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_false_pass",
+      "source_location": {
+        "heading": "ATS-298 - DT per-family static and native oracles",
+        "heading_level": 3,
+        "heading_line": 7481,
+        "line": 7483,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_gate"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -144358,6 +144769,295 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-600",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-600 - approval.requested prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24472,
+        "line": 24474,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-601",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-601 - approval.granted prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24505,
+        "line": 24507,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-602",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-602 - approval.denied prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24538,
+        "line": 24540,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-603",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-603 - approval.timeout prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24571,
+        "line": 24573,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-604",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-604 - config.migrated prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24604,
+        "line": 24606,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-605",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-605 - gate.evaluation_started prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24637,
+        "line": 24639,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-606",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-606 - gate.failed prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24670,
+        "line": 24672,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-607",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-607 - gate.passed prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24703,
+        "line": 24705,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-608",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-608 - requirements.clarification_requested prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24736,
+        "line": 24738,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-609",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-609 - run.background_enqueued prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24769,
+        "line": 24771,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-610",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-610 - tool.denied prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24802,
+        "line": 24804,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-611",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-611 - tool.execution_completed prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24835,
+        "line": 24837,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-612",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-612 - tool.execution_started prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24868,
+        "line": 24870,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-613",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-613 - tool.invoked prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24901,
+        "line": 24903,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-614",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-614 - usage.event prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24934,
+        "line": 24936,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-615",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-615 - worktree.created prepared event contract",
+        "heading_level": 3,
+        "heading_line": 24967,
+        "line": 24969,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-616",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "CV-616 - worktree.deleted prepared event contract",
+        "heading_level": 3,
+        "heading_line": 25000,
+        "line": 25002,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "plan_standardization",
@@ -228068,6 +228768,295 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-580",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-580 - approval.requested prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29481,
+        "line": 29483,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-581",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-581 - approval.granted prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29514,
+        "line": 29516,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-582",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-582 - approval.denied prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29547,
+        "line": 29549,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-583",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-583 - approval.timeout prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29580,
+        "line": 29582,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-584",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-584 - config.migrated prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29613,
+        "line": 29615,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-585",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-585 - gate.evaluation_started prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29646,
+        "line": 29648,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-586",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-586 - gate.failed prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29679,
+        "line": 29681,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-587",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-587 - gate.passed prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29712,
+        "line": 29714,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-588",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-588 - requirements.clarification_requested prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29745,
+        "line": 29747,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-589",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-589 - run.background_enqueued prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29778,
+        "line": 29780,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-590",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-590 - tool.denied prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29811,
+        "line": 29813,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-591",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-591 - tool.execution_completed prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29844,
+        "line": 29846,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-592",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-592 - tool.execution_started prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29877,
+        "line": 29879,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-593",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-593 - tool.invoked prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29910,
+        "line": 29912,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-594",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-594 - usage.event prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29943,
+        "line": 29945,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-595",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-595 - worktree.created prepared event contract",
+        "heading_level": 3,
+        "heading_line": 29976,
+        "line": 29978,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "event_authority_DT_20261104",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-596",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_identity_or_replay",
+      "source_location": {
+        "heading": "SP-596 - worktree.deleted prepared event contract",
+        "heading_level": 3,
+        "heading_line": 30009,
+        "line": 30011,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -243374,10 +244363,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18791,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 21999,
+    "node_count": 7464,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -1,0 +1,512 @@
+{
+  "schema_id": "pm.event_authority.dt.fixtures.v1",
+  "families": [
+    {
+      "event_type": "approval.requested",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.approval_requested.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "node_id": "fixture-id",
+        "blocked_sequence": 1,
+        "approval_scope_key": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "allowed_action_ids": [
+          "fixture-id"
+        ]
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key",
+        "ts",
+        "allowed_action_ids"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "approval.granted",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.approval_granted.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "node_id": "fixture-id",
+        "blocked_sequence": 1,
+        "approval_scope_key": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "approver_identity": "fixture-id",
+        "allowed_action_id": "fixture-id",
+        "rationale_ref": "fixture-id"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key",
+        "ts",
+        "approver_identity",
+        "allowed_action_id",
+        "rationale_ref"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "approval.denied",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.approval_denied.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "node_id": "fixture-id",
+        "blocked_sequence": 1,
+        "approval_scope_key": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "denial_reason": "fixture-id"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key",
+        "ts",
+        "denial_reason"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "approval.timeout",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.approval_timeout.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "node_id": "fixture-id",
+        "blocked_sequence": 1,
+        "approval_scope_key": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "approval_scope_key",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "config.migrated",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.config_migrated.v1",
+        "schema_version": "1.0.0",
+        "source_ref": "fixture-id",
+        "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "legacy_value": "single",
+        "enum_value": "None",
+        "result_ref": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "source_ref",
+        "source_sha256",
+        "legacy_value",
+        "enum_value",
+        "result_ref",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "gate.evaluation_started",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.gate_evaluation_started.v1",
+        "schema_version": "1.0.0",
+        "gate_id": "fixture-id",
+        "run_id": "fixture-id",
+        "evaluation_id": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "gate_id",
+        "run_id",
+        "evaluation_id",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "gate.failed",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.gate_failed.v1",
+        "schema_version": "1.0.0",
+        "gate_id": "fixture-id",
+        "run_id": "fixture-id",
+        "evaluation_id": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "evidence_refs": [
+          "fixture-id"
+        ],
+        "failure_reason_code": "fixture-id"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "gate_id",
+        "run_id",
+        "evaluation_id",
+        "ts",
+        "evidence_refs",
+        "failure_reason_code"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "gate.passed",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.gate_passed.v1",
+        "schema_version": "1.0.0",
+        "gate_id": "fixture-id",
+        "run_id": "fixture-id",
+        "evaluation_id": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "evidence_refs": [
+          "fixture-id"
+        ]
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "gate_id",
+        "run_id",
+        "evaluation_id",
+        "ts",
+        "evidence_refs"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "requirements.clarification_requested",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.requirements_clarification_requested.v1",
+        "schema_version": "1.0.0",
+        "wizard_id": "fixture-id",
+        "thread_id": "fixture-id",
+        "report_ref": "fixture-id",
+        "question_ids": [
+          "fixture-id"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "wizard_id",
+        "thread_id",
+        "report_ref",
+        "question_ids",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "run.background_enqueued",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.run_background_enqueued.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "enqueue_id": "fixture-id",
+        "scope_ref": "fixture-id",
+        "host_ref": "fixture-id",
+        "root_ref": "fixture-id",
+        "queue_record_ref": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "enqueue_id",
+        "scope_ref",
+        "host_ref",
+        "root_ref",
+        "queue_record_ref",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "tool.denied",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.tool_denied.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "tool_use_id": "fixture-id",
+        "tool_name": "fixture-id",
+        "attempt_id": "fixture-id",
+        "blocked_sequence": 1,
+        "approval_scope_key": "fixture-id",
+        "action_available": true,
+        "escalation_level": "info",
+        "denial_reason_code": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "tool_use_id",
+        "tool_name",
+        "attempt_id",
+        "blocked_sequence",
+        "approval_scope_key",
+        "action_available",
+        "escalation_level",
+        "denial_reason_code",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "tool.execution_completed",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.tool_execution_completed.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "tool_use_id": "fixture-id",
+        "tool_name": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "outcome": "success"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "tool_use_id",
+        "tool_name",
+        "ts",
+        "outcome"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "tool.execution_started",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.tool_execution_started.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "tool_use_id": "fixture-id",
+        "tool_name": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "tool_use_id",
+        "tool_name",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "tool.invoked",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.tool_invoked.v1",
+        "schema_version": "1.0.0",
+        "run_id": "fixture-id",
+        "tool_use_id": "fixture-id",
+        "tool_name": "fixture-id",
+        "attempt_id": "fixture-id",
+        "success": true,
+        "latency_ms": 1,
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "run_id",
+        "tool_use_id",
+        "tool_name",
+        "attempt_id",
+        "success",
+        "latency_ms",
+        "ts"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "usage.event",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.usage_event.v1",
+        "schema_version": "1.0.0",
+        "usage_record_id": "fixture-id",
+        "usage_event_ref": "fixture-id",
+        "dedupe_key": "fixture-id",
+        "run_id": "fixture-id",
+        "attempt_id": "fixture-id",
+        "provider_id": "fixture-id",
+        "provider_route_kind": "fixture-id",
+        "model_id": "fixture-id",
+        "source_class": "provider_reported",
+        "source_confidence": "fixture-id",
+        "source_authority": "fixture-id",
+        "settlement_status": "observed",
+        "observed_at_utc": "2026-11-04T00:00:00Z",
+        "redaction_status": "fixture-id",
+        "provider_payload_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "counting_semantics": "fixture-id",
+        "input_total": 1,
+        "input_non_cached": 1,
+        "cache_read": 1,
+        "cache_write": 1,
+        "cache_write_1h": 1,
+        "output_total": 1,
+        "output_visible": 1,
+        "reasoning": 1,
+        "provider_total": 1,
+        "context_estimate": 1,
+        "cost_microdollars": 1
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "usage_record_id",
+        "usage_event_ref",
+        "dedupe_key",
+        "run_id",
+        "attempt_id",
+        "provider_id",
+        "provider_route_kind",
+        "model_id",
+        "source_class",
+        "source_confidence",
+        "source_authority",
+        "settlement_status",
+        "observed_at_utc",
+        "redaction_status",
+        "provider_payload_hash",
+        "counting_semantics",
+        "input_total",
+        "input_non_cached",
+        "cache_read",
+        "cache_write",
+        "cache_write_1h",
+        "output_total",
+        "output_visible",
+        "reasoning",
+        "provider_total",
+        "context_estimate",
+        "cost_microdollars"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "worktree.created",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.worktree_created.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture-id",
+        "worktree_id": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "branch_name": "fixture-id",
+        "worktree_path": "fixture-id"
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "worktree_id",
+        "ts",
+        "branch_name",
+        "worktree_path"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "event_type": "worktree.deleted",
+      "valid_payload": {
+        "schema_id": "pm.event_payload.worktree_deleted.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture-id",
+        "worktree_id": "fixture-id",
+        "ts": "2026-11-04T00:00:00Z",
+        "cleanup_reason": "fixture-id",
+        "grace_period_ms": 1,
+        "file_lock_checked": true
+      },
+      "required_field_negatives": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "worktree_id",
+        "ts",
+        "cleanup_reason",
+        "grace_period_ms",
+        "file_lock_checked"
+      ],
+      "unknown_field_negative": {
+        "unexpected": "refused"
+      },
+      "native_execution": "NOT_RUN"
+    }
+  ]
+}

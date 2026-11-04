@@ -7228,3 +7228,282 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-290 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-290
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For approval.requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (An actual current blocked episode creates one ordered action request; it is not a grant. Tool requests carry tool_use_id; other requests omit it.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For approval.granted alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Requires the exact unresolved requested episode and an authenticated human selecting a member of its ordered allowed_action_ids; PAUSE precedence and live revocation remain enforced. Grant resolves only this episode.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-291 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-291
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For approval.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Requires the exact unresolved requested episode; terminal denial never unblocks or executes the tool.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For approval.timeout alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Requires the exact unresolved requested episode and the original owner timeout expiry evidence; terminal timeout never authorizes work.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-292 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-292
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For config.migrated alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For gate.evaluation_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (A fresh evaluation_id is captured with the exact gate inputs before evaluation. Neither this event nor a previous pass permits progression.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-293 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-293
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For gate.failed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Exactly one failed result follows the matching evaluation_started with failure code and evidence. A blocked GATE-012 report with clarification items is BLOCKED, not falsely classified FAIL or PASS.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For gate.passed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Exactly one result follows the matching evaluation_started; all gate-specific PASS predicates and evidence must hold. GATE-012 requires a valid PASS report with zero clarification items.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-294 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-294
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For requirements.clarification_requested alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Only a schema-valid blocked requirements report with nonempty needs_user_clarification emits. question_ids equals the complete report question set. No automatic answers or progression; explicit answers and a new PASS report are required.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For run.background_enqueued alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Append only after the durable enqueue intent captures authenticated actual scope/Host/root. Queue release follows receipt. Missing worktree fields never choose main Project or application scope. Replay never enqueues again.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-295 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-295
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For tool.denied alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Denial follows policy/FileSafe/schema refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain all blocked and attempt joins.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For tool.execution_completed alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Exactly one terminal record follows a matching execution_started; result_ref joins original result custody and duration_ms is nonnegative. Replay never reexecutes.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-296 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-296
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For tool.execution_started alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (After every dispatch policy/schema/hook gate succeeds, record the admitted tool-use start before invoking the tool. No start is emitted for a policy denial.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For tool.invoked alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-297 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-297
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For usage.event alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments replace the prior contribution for usage_record_id atomically, never add it twice. Opening Usage reads rollups and does not scan events; JSONL is import/export only. Daily account/provider/model totals survive detail expiry.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence. For worktree.created alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Original allocation ownership and branch/path custody must exist before created is appended and before a node starts work. Creation replay inspects original allocation, never creates another tree.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+
+### ATS-298 - DT per-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-298
+unit_type: validation_gate
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+   For worktree.deleted alone, Plans/dt_event_contract_fixtures.json carries a valid closed payload and every required-field omission plus unknown-field rejection. scripts/pm-dt-event-contracts.py checks identity determinism, changed source identity, same-key changed digest refusal, lost-ack no-repeat result, wrong family/schema and checkpoint token custody. Native obligations NOT_RUN: crash after body commit, crash/lost ack after append, exact first-receipt recovery, actual source/scope mismatch refusal, full transition prerequisites (Delete only after original result custody, grace period, file-lock and active-lock/safe-point dependency checks pass. Active lock references must be empty or proven released; no held safe point may lose its dependencies. Replay never deletes another tree.), CAS loss, stale token/frontier, permission/deletion/withdrawal races, coherent restore and family-specific retention holds. No static result substitutes for native evidence.
+gui_related: false
+gui_classification_reason: Event contract validation only.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Each exact family passes its own positive and negative cases.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_false_pass
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/dt_event_contract_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
