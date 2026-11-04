@@ -22,15 +22,19 @@ MAIN_SHA='16acf7594a3fe8559af89491b895f440b314b99e'
 PINNED_EXTERNAL_INPUTS={'lanes/CA-COUNT.md': 'ca7085df112d01b5574c16273b93e126e7f75dfb21d0d9704adc38f42c0e485a', 'lanes/CARDS1-APPLY.md': 'f3f553370a89a6fc0467dedde8a5ed71169cc7e4b36f2c0be32ee2475b924104', 'decision-answers/E-CARDS-1.as-presented-578a6774.md': '578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696', 'surveys/L9/REPORT.md': 'ed537ce31df64b8ec1bd8399dd324792a5d48f041e3ba178fbfbec070541a4e5', 'surveys/L9/NEW-NAMES.jsonl': 'ff5e91c7d6c6d79d2a68155d42f992c3826e392fc96cd335e993db42cfba2b02', 'state/undecided-236.tsv': 'fad5326d8565b298257aa7f5f13f7e06fc7ecb233bb78ffaf9fca9d947c33d91', 'surveys/RT/TABLE.md': 'e3b1941dc015f98ebe12e967c8394d0f5b4ffab1bf61197135914400536e4c98'}
 DEFAULT_EVIDENCE=Path('/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104')
 REVIEWED_HEAD='d6dd33d5ddbd0150bb9dcfbe391460bebac04e65'
+ROUND2_REVIEWED_HEAD='cad54d77170dfc197d4dc2c42e86152d73e107ad'
 REPORT_DIR='reports/event-authority-20261104/census-recount-20261104'
 PINNED_EXTERNAL_INPUTS.update({
- 'BRIEF-DRAFT.md':'59e0a0f5002966a4dec489d66ea43f4fbd3711da7fdd60c0f75a0e585a265fed',
- 'lanes/FIX-ROUND.md':'3320d3c595b3ea73daa508f0f7f3845c372b51e5492b46b8e31659fd778d1028',
- 'reviews/CA-COUNT-sol/REVIEW.md':'a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159'})
+ 'BRIEF-DRAFT.md':'18751f47f1daa8f922fe97655528389f72be7d926e8713ad1baa90551dbe0b03',
+ 'lanes/FIX-ROUND.md':'4298583e2a69a3a6f6950ff94900b1a4d62b9e35bd151d55df227a27dda032e4',
+ 'reviews/CA-COUNT-sol/REVIEW.md':'a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159',
+ 'reviews/CA-COUNT-sol/REVIEW-astra.md':'161b7ad15c9479155550ba573c7b9290c271f4483ed6b2c4ec23d4029f6f85e7'})
 # Discovery is intentionally broader than authority: references, receipt effects,
 # invalid fixtures, schema labels and command receipts must all be adjudicated.
 SEMANTIC_EVENT_KEY=re.compile(r'event|emit|receipt.*effect',re.I)
 READINESS_QUESTION="Does this exact dotted spelling designate a separately persisted EventRecord family, an existing family's alias, or only this receipt/transport/readiness label?"
+HITL_NAMES=('hitl.approved','hitl.rejected')
+HITL_QUESTION='Do `hitl.approved` and `hitl.rejected` in HITL-028 designate live scheduler wake signals derived from the existing `approval.granted` and `approval.denied` records, retired spellings, or separately persisted EventRecord families? For each spelling, what exact owner binding establishes that outcome?'
 CANCEL_QUESTION='When one required subagent fails and Puppet Master asks its cancellable siblings to stop, should each stop request be kept as its own history event, `subagent.cancel_requested`, or should it remain a live cancellation signal with no new history family?'
 CANCEL_OPTIONS=[
  'A — Delivery only. Keep the specified cancellation delivery. Add no persisted `subagent.cancel_requested` family. Preserve the existing group-failure and sibling-terminal contracts.',
@@ -238,9 +242,11 @@ def adjudicate(ROOT,ROWS,BASE):
     assign('testing.runtime_enabled_for_adapter','persisted_event_candidate','Testing owner names this exact transition event and its payload fields.',['Plans/Automated_Testing_System.md:2590-2590'],owner_doc='Plans/Automated_Testing_System.md')
     assign('planning.question_budget_exhausted','persisted_event_candidate','CV-323 retains this exact optional admitted event alongside the mandatory result/record. Optional emission is still an event candidate, not evidence of an admitted writer.',['Plans/Contracts_V0.md:21402-21408'],owner_doc='Plans/Contracts_V0.md')
     assign('file.edited','not_persisted_by_owner_text','Formatter owner calls this the File.Edited-equivalent internal trigger after successful write/edit tools, not a persisted event family.',['Plans/Formatters_System.md:344-352','Plans/OpenCode_Deep_Extraction.md:714-714'])
-    assign('node.ready','retired_or_historical','Only the compatibility/source-lineage wiring section uses node.ready; canonical runtime payload uses run.node_ready. No alias registration is inferred.',['Plans/Wiring_Matrix.md:345-363','Plans/Contracts_V0.md:2444-2448'])
-    for n in ['hitl.approved','hitl.rejected']:
-     assign(n,'retired_or_historical','Old scheduler wake vocabulary; storage marks HITL command compatibility migration-only and canonical approval events remain approval.granted/denied. This recount does not invent an alias.',['Plans/human-in-the-loop.md:303-303','Plans/storage-plan.md:55-55'])
+    assign('node.ready','retired_or_historical','Only the compatibility/source-lineage wiring section uses node.ready; canonical runtime payload uses run.node_ready. No alias registration is inferred.',['Plans/Wiring_Matrix.md:341-363','Plans/Contracts_V0.md:2444-2448'])
+    for n in HITL_NAMES:
+     assign(n,'undetermined','HITL-028 currently requires this scheduler wake spelling. HITL requires durable approval history; Contracts names approval.granted/approval.denied. Storage lists only hitl.approved as command compatibility vocabulary, not hitl.rejected. No exact per-name binding resolves signal versus alias/retirement versus separate persistence.',
+            ['Plans/human-in-the-loop.md:32-36','Plans/human-in-the-loop.md:280-283','Plans/human-in-the-loop.md:299-304','Plans/human-in-the-loop.md:1940-1946','Plans/Contracts_V0.md:955-956','Plans/storage-plan.md:55-55'],
+            owner_doc='Plans/human-in-the-loop.md',investigation_owner='HITL + Contracts + Storage',decision_owner='Jared (new history or competing-owner choice)',question=HITL_QUESTION)
     # Deferred exact rows below are edited during exhaustive review.
     MANUAL={
      'acceptance_result.passed': {'classification': 'identifier_or_field', 'note': 'Explicit property, config key, schema/role/permission/profile name, enum value, method, or surface selector in the cited text.', 'skip_rule': 'reviewed_field_setting_or_selector', 'citations': ['Plans/orchestrator-subagent-integration.md:2003-2003']},
@@ -472,7 +478,7 @@ def adjudicate(ROOT,ROWS,BASE):
      'pipeline.artifact.download': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/Forge_Integrations.md:1843-1843']},
      'pipeline.open_in_browser': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/Forge_Integrations.md:1845-1845']},
      'place_menu.open': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/UI_Command_Catalog.md:19605-19605']},
-     'plan_compile.command_applied': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/UI_Command_Catalog.md:8627-8627']},
+     'plan_compile.command_applied': {'classification': 'not_persisted_by_owner_text', 'note': 'The command owner explicitly prohibits this fabricated success event for cmd.plan_compile.open_build while runtime activation is disabled; the command itself remains route/open or post-build reveal only.', 'evidence_kind': 'prohibited_synthetic_event', 'citations': ['Plans/UI_Command_Catalog.md:8627-8627']},
      'planning.wizard.final_review.approve_and_build': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/Wiring_Matrix.md:179-179']},
      'plugins.disabled': {'classification': 'identifier_or_field', 'note': 'Explicit property, config key, schema/role/permission/profile name, enum value, method, or surface selector in the cited text.', 'skip_rule': 'reviewed_field_setting_or_selector', 'citations': ['Plans/Plugins_System.md:412-412']},
      'pm7.home.unsaved': {'classification': 'identifier_or_field', 'note': 'Explicit property, config key, schema/role/permission/profile name, enum value, method, or surface selector in the cited text.', 'skip_rule': 'reviewed_field_setting_or_selector', 'citations': ['Plans/Decision_Log.md:17422-17422']},
@@ -601,7 +607,7 @@ def adjudicate(ROOT,ROWS,BASE):
      'thread.branch': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/Shared_Integration_Runtime.md:934-934']},
      'thread.request': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/assistant-chat-design.md:28842-28842']},
      'thread.spawn': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/assistant-chat-design.md:28842-28842']},
-     'thread.title_locked': {'classification': 'command_or_action_id', 'note': 'Current source uses an operation, tool, local action, control, or wiring shorthand; no separate persisted event is inferred.', 'citations': ['Plans/assistant-chat-design.md:25986-25986']},
+     'thread.title_locked': {'classification': 'identifier_or_field', 'note': 'ACD-479 defines a thread flag set by manual rename and cleared only by cmd.chat.thread.regenerate_title; automatic naming records user_locked and leaves the title unchanged while this flag is set.', 'skip_rule': 'reviewed_field_setting_or_selector', 'citations': ['Plans/assistant-chat-design.md:27309-27317', 'Plans/assistant-chat-design.md:27335-27336']},
      'tool.execute': {'classification': 'command_or_action_id', 'note': 'Hook or session callback/operation identity, not a separate persisted EventRecord.', 'citations': ['Plans/OpenCode_Deep_Extraction.md:1956-1956']},
      'tool.execute.after': {'classification': 'command_or_action_id', 'note': 'Hook or session callback/operation identity, not a separate persisted EventRecord.', 'citations': ['Plans/OpenCode_Deep_Extraction.md:211-211']},
      'tool.execute.before': {'classification': 'command_or_action_id', 'note': 'Hook or session callback/operation identity, not a separate persisted EventRecord.', 'citations': ['Plans/OpenCode_Deep_Extraction.md:211-211']},
@@ -765,7 +771,7 @@ def recommendation(n):
       'continuity.actor_identified':'runtime_continuity.actor_bound',
       'continuity.redaction_applied':'runtime_continuity.redaction_applied',
       'continuity.replay_checkpointed':'runtime_continuity.replay_checkpointed'}
-    assert n not in READINESS_RESEARCH,('unresolved label cannot receive a disposition recommendation',n)
+    assert n not in set(READINESS_RESEARCH)|set(HITL_NAMES)|{'subagent.cancel_requested'},('unresolved label cannot receive a disposition recommendation',n)
     if n=='continuity.provenance_recorded':
         return {'action':'stopped for Jared: semantic question','question':PROVENANCE_QUESTION,
                 'reason':'Source provenance is required by Orchestration (source_event_id/provenance_ref); Contracts describes navigation route resolution (surface_id/route_kind/target_ref). No cited equivalence subsumes provenance into route resolution.',
@@ -781,8 +787,8 @@ def recommendation(n):
                 'reason':'CV-323 makes this event optional and already requires the owner result/record. Prefer that mandatory durable result over a second event; Jared must accept the exclusion.'}
     return {'action':'register','reason':'The current owner explicitly requires or retains this exact semantic event, and no cited owner declares it an alias of an existing family; complete its contract before admission.'}
 
-def reviewed_bytes(root,name):
-    return subprocess.check_output(['git','show',f'{REVIEWED_HEAD}:{REPORT_DIR}/{name}'],cwd=root)
+def reviewed_bytes(root,name,revision=REVIEWED_HEAD):
+    return subprocess.check_output(['git','show',f'{revision}:{REPORT_DIR}/{name}'],cwd=root)
 
 def build(root,generator,evidence):
     raw,jsonpaths=extract(root,generator,evidence)
@@ -861,18 +867,47 @@ def build(root,generator,evidence):
     meta={'classified_count':len(classified),'outside_august_and_registry':sum(not r['in_august_ledger'] and not r['in_live_registry'] for r in classified),'classification_counts':dict(sorted(collections.Counter(r['classification'] for r in classified).items())), 'outside_classification_counts':dict(sorted(collections.Counter(r['classification'] for r in classified if not r['in_august_ledger'] and not r['in_live_registry']).items())), 'new_list_bucket_counts':{b:sum(r['bucket']==b for r in new) for b in 'abcde'}, 'all_unregistered_persisted_candidate_buckets':{b:allb[b] for b in 'abcde'},'live_registered_observed':len(registered), 'mechanical_required_queues':dict(sorted(collections.Counter(r['primary_mechanical_classification'] for r in required).items())), 'skip_rule_counts':dict(sorted(collections.Counter(r['skip_rule'] for r in skipped).items())), 'absent_open_august_rows':absent,'machine_files_scanned':len(jsonpaths),'direct_prose_files_scanned':len(list((root/'Plans').glob('*.md')))}
     previous={r['name']:r for r in map(json.loads,reviewed_bytes(root,'CLASSIFIED.jsonl').splitlines())}
     previous_new={r['name']:r for r in json.loads(reviewed_bytes(root,'NEW-LIST.json'))}
+    round1_rows=list(map(json.loads,reviewed_bytes(root,'CLASSIFIED.jsonl',ROUND2_REVIEWED_HEAD).splitlines()))
+    round1_new={r['name']:r for r in json.loads(reviewed_bytes(root,'NEW-LIST.json',ROUND2_REVIEWED_HEAD))}
     current_new={r['name']:r for r in new}
     old_e={n for n,r in previous_new.items() if r['bucket']=='e'}
+    round1_e={n for n,r in round1_new.items() if r['bucket']=='e'}
     new_e={n for n,r in current_new.items() if r['bucket']=='e'}
     meta['semantic_keys_with_dotted_bindings']=sorted({s.removeprefix('json_binding:') for r in raw for s in r['sources'] if s.startswith('json_binding:')})
     meta['unresolved_names']=[r['name'] for r in classified if r['classification']=='undetermined']
     meta['round1_changes']={
       'reviewed_head':REVIEWED_HEAD,
-      'newly_examined':[{k:r[k] for k in ('name','classification','note','citations')} for r in classified if r['name'] not in previous],
-      'names_no_longer_examined':sorted(set(previous)-set(byname)),
-      'classification_changes':[{'name':r['name'],'before':previous[r['name']]['classification'],'after':r['classification']} for r in classified if r['name'] in previous and r['classification']!=previous[r['name']]['classification']],
-      'bucket_e_removed_to_unresolved':sorted(old_e-new_e),'bucket_e_added':sorted(new_e-old_e),
-      'bucket_e_recommendation_changes':[{'name':n,'before':previous_new[n]['recommendation'],'after':current_new[n]['recommendation']} for n in sorted(old_e&new_e) if previous_new[n]['recommendation']!=current_new[n]['recommendation']]}
+      'newly_examined':[{k:r[k] for k in ('name','classification','note','citations')} for r in round1_rows if r['name'] not in previous],
+      'names_no_longer_examined':sorted(set(previous)-{r['name'] for r in round1_rows}),
+      'classification_changes':[{'name':r['name'],'before':previous[r['name']]['classification'],'after':r['classification']} for r in round1_rows if r['name'] in previous and r['classification']!=previous[r['name']]['classification']],
+      'bucket_e_removed_to_unresolved':sorted(old_e-round1_e),'bucket_e_added':sorted(round1_e-old_e),
+      'bucket_e_recommendation_changes':[{'name':n,'before':previous_new[n]['recommendation'],'after':round1_new[n]['recommendation']} for n in sorted(old_e&round1_e) if previous_new[n]['recommendation']!=round1_new[n]['recommendation']]}
+    round1_byname={r['name']:r for r in round1_rows}
+    current_byname={r['name']:r for r in classified}
+    prior_unresolved={r['name'] for r in round1_rows if r['classification']=='undetermined'}
+    meta['round2_changes']={
+      'reviewed_head':ROUND2_REVIEWED_HEAD,
+      'classification_changes':[{'name':r['name'],'before':round1_byname[r['name']]['classification'],'after':r['classification'],'citations':r['citations']} for r in classified if r['classification']!=round1_byname[r['name']]['classification']],
+      'other_classified_row_changes':[r['name'] for r in classified if r['classification']==round1_byname[r['name']]['classification'] and r!=round1_byname[r['name']]],
+      'bucket_e_removed':sorted(round1_e-new_e),'bucket_e_added':sorted(new_e-round1_e),
+      'new_list_rows_changed':[n for n in sorted(round1_new.keys()&current_new.keys()) if round1_new[n]!=current_new[n]],
+      'new_list_bytes_unchanged':blob(new)==reviewed_bytes(root,'NEW-LIST.json',ROUND2_REVIEWED_HEAD),
+      'unresolved_added':sorted(set(meta['unresolved_names'])-prior_unresolved),
+      'unresolved_removed':sorted(prior_unresolved-set(meta['unresolved_names'])),
+      'existing_unresolved_rows_unchanged':all(current_byname[n]==round1_byname[n] for n in prior_unresolved)}
+    ledger_path='Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl'
+    ledger_lines={r['event_type']:i for i,r in enumerate(map(json.loads,(root/ledger_path).read_text().splitlines()),1)}
+    meta['retirement_evidence_audit']=[{
+      'name':r['name'],'before':'retired_or_historical','after':current_byname[r['name']]['classification'],
+      'evidence_basis':'preserved August disposition, not a new retirement inference' if r['in_august_ledger'] else current_byname[r['name']]['note'],
+      'august_category':august_rows[r['name']]['category'] if r['in_august_ledger'] else None,
+      'citations':([f"{ledger_path}:{ledger_lines[r['name']]}-{ledger_lines[r['name']]}"] if r['in_august_ledger'] else [])+current_byname[r['name']]['citations']}
+      for r in round1_rows if r['classification']=='retired_or_historical']
+    assert len(meta['retirement_evidence_audit'])==154
+    assert {r['name'] for r in meta['round2_changes']['classification_changes']}==set(HITL_NAMES)|{'thread.title_locked','plan_compile.command_applied'}
+    assert meta['round2_changes']['unresolved_added']==sorted(HITL_NAMES)
+    assert meta['round2_changes']['existing_unresolved_rows_unchanged'] and not meta['round2_changes']['unresolved_removed']
+    assert meta['round2_changes']['new_list_bytes_unchanged']
     assert meta['round1_changes']['bucket_e_removed_to_unresolved']==sorted(READINESS_RESEARCH)
     assert not meta['round1_changes']['names_no_longer_examined']
     assert all(not r['persisted_candidate'] and 'bucket' not in r for r in classified if r['classification']=='undetermined')
@@ -904,9 +939,10 @@ def main():
     input_paths|={root/'scripts'/p for p in ['pm-event-authority-currentness.py','pm_event_evidence_adapter.py','pm_evidence_paths.py']}
     input_paths|={ev/p for p in PINNED_EXTERNAL_INPUTS}
     inputs={str(p.relative_to(root)) if p.is_relative_to(root) else str(p):{'sha256':sha(p.read_bytes()),'bytes':p.stat().st_size} for p in sorted(input_paths,key=str)}
-    for name in ('NEW-LIST.json','CLASSIFIED.jsonl','REPORT.md','RECEIPT.json','SKIPPED.jsonl','recount.py'):
-        previous=reviewed_bytes(root,name)
-        inputs[f'git:{REVIEWED_HEAD}:{REPORT_DIR}/{name}']={'sha256':sha(previous),'bytes':len(previous)}
+    for revision in (REVIEWED_HEAD,ROUND2_REVIEWED_HEAD):
+        for name in ('NEW-LIST.json','CLASSIFIED.jsonl','REPORT.md','RECEIPT.json','SKIPPED.jsonl','recount.py'):
+            previous=reviewed_bytes(root,name,revision)
+            inputs[f'git:{revision}:{REPORT_DIR}/{name}']={'sha256':sha(previous),'bytes':len(previous)}
     def gen_receipt(p):
         return {'command':['python3','scripts/pm-event-authority-currentness.py','generate','--outdir',str(p)],'output_digests':{q.relative_to(p).as_posix():sha(q.read_bytes()) for q in sorted(p.rglob('*')) if q.is_file()},'source_sha':json.loads((p/'CURRENT_EVENT_SOURCE_INVENTORY.json').read_text())['git_custody']['head']}
     gens=[gen_receipt(args.generator),gen_receipt(args.replay_generator)]
@@ -956,7 +992,7 @@ def report(root,ev,meta,new,classified,receipt,args):
     used=sorted({r['closest_card1_retention_group'] for r in new if r['bucket']=='e'})
     for g in used:lines.append(f'| {g} | {GROUP_RULE[g]} | {RULES[GROUP_RULE[g]]} |')
     lines+=['','## Unresolved persistence questions','',
-      'All six remain `undetermined` in CLASSIFIED.jsonl, with no bucket or disposition recommendation. The five readiness labels are not approved exclusions. Investigation owners search existing canon; a decision to add history or resolve competing owners belongs to Jared. No answer or option is selected.','']
+      f"All {len(meta['unresolved_names'])} names remain `undetermined` in CLASSIFIED.jsonl, with no bucket or disposition recommendation. The HITL pair joins the five readiness labels and the cancellation request. No unresolved name is an approved exclusion. Investigation owners search existing canon; a decision to add history or resolve competing owners belongs to Jared. No answer or option is selected.",'']
     for r in classified:
         if r['classification']!='undetermined':continue
         lines += [f"### `{r['name']}`",'',f"Investigation owner: **{r['investigation_owner']}**. Decision owner: **{r['decision_owner']}**.",'',r['question'],'']
@@ -975,8 +1011,47 @@ def report(root,ev,meta,new,classified,receipt,args):
       'The frozen validator hard-codes the August audit home, individual ledger and census path, then `DENOM = .../closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json` (Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py:22-30). It requires that denominator and `CURRENT_SOURCE_INVENTORY.json` (same validator:529-536), loads both directly (563-568), and compares the admitted exact set to the individual-disposition ledger (937-1005). It checks stored freeze-digest equality (1021-1040) and makes closure, partition/count agreement and that equality prerequisites to complete_denominator_known (1630-1646). Its receipt hashes the old artifacts (1689-1694). It never reads this reports directory or NEW-LIST.', '',
       'The frozen census itself pins 180 sources and the August digest (Plans/.audits/event-authority-2026-08-12/closed-world-census/CURRENT_SOURCE_INVENTORY.json:1-8). Its denominator stores the same pin and an old admitted set (Plans/.audits/event-authority-2026-08-12/closed-world-census/denominator/FRESH_CENSUS_DENOMINATOR.json:1-14). The census delta explicitly distinguishes the fresh source digest, requires a rescan rather than mixed snapshots, and forbids a freeze re-stamp (Plans/.audits/event-authority-2026-08-12/closed-world-census/FRESH_CENSUS_DELTA.md:39-50). The validator compares stored pins rather than rehashing the current corpus: retaining an old matching pin beside new membership would not make this new source snapshot an honestly frozen August census.', '',
       '**Task 6 answer:** preserving August history requires an explicitly authorized change to the seal check to consume this separate freeze; replacing its frozen source pin instead would require the forbidden re-stamp, so Card 4a’s open consequence returns to Jared. DL-412’s separate multi-family-admission amendment does not authorize this denominator change. Neither change was made, and the writing frozen validator was not run.', '',
-      '## Review round 1: findings and responses','',
-      f"Review: `{ev/'reviews/CA-COUNT-sol/REVIEW.md'}`; SHA-256 `{PINNED_EXTERNAL_INPUTS['reviews/CA-COUNT-sol/REVIEW.md']}`. Reviewed head: `{REVIEWED_HEAD}`. Fix commit: this six-file result's HEAD, whose parent is that reviewed head. The source corpus stays at the same MAIN_SHA.",'',
+      '## Review round 2: findings and responses','',
+      f"Review: `{ev/'reviews/CA-COUNT-sol/REVIEW-astra.md'}`; SHA-256 `{PINNED_EXTERNAL_INPUTS['reviews/CA-COUNT-sol/REVIEW-astra.md']}`. Reviewed head: `{ROUND2_REVIEWED_HEAD}`. Fix commit: this result's HEAD, whose parent is that reviewed head. Main remains `{MAIN_SHA}`; fetching origin confirmed no source drift.",'',
+      '| Finding | Response | Verification |','|---|---|---|',
+      f"| Blocking — HITL pair | Fixed the unsupported terminal classification; product cells remain stopped for owner evidence/Jared. Both spellings are undetermined, with Astra’s exact question and HITL + Contracts + Storage investigating. Storage’s compatibility sentence names approved only; it cannot settle rejected. No signal behavior, alias, persistence or August disposition is chosen. | {implementation_ref('HITL_QUESTION=')}; CLASSIFIED rows and unresolved sections above; HITL-028 and current owner spans cited per spelling. |",
+      '| Should fix — semantic classes | Fixed: thread.title_locked is identifier_or_field under ACD-479; plan_compile.command_applied is not_persisted_by_owner_text with evidence_kind=prohibited_synthetic_event under the explicit UCC prohibition. | Plans/assistant-chat-design.md:27309-27317,27335-27336; Plans/UI_Command_Catalog.md:8627-8627; changes below. |',
+      '| Retirement audit | All 154 previously retired_or_historical rows inspected. The two HITL names are the only unsupported fresh retirement decisions found. The other 11 non-August rows have explicit retirement or source-lineage evidence; 141 preserve named August dispositions without inferring live retirement. node.ready gains the source-lineage introduction in its citation. | Per-name audit below and RECEIPT counts.retirement_evidence_audit; no additional unresolved name or bucket change. |','',
+      'Family grades before/after: inapplicable; no family contract is authored. Recount assessment: Astra NOT_READY → requested classification fixes and replay verified, awaiting independent review. Eight persistence questions remain open. No depth PASS or admission is claimed. IDs used: none.','',
+      '### Every round 2 change','',
+      '| Name | Before | After / current evidence |','|---|---|---|']
+    r2=meta['round2_changes']
+    for change in r2['classification_changes']:
+        lines.append(f"| `{change['name']}` | {change['before']} | {change['after']}; "+'; '.join(change['citations'])+' |')
+    for n in r2['other_classified_row_changes']:
+        r=next(r for r in classified if r['name']==n)
+        lines.append(f"| `{n}` | Same classification; narrower citation | Citation-only correction: "+'; '.join(r['citations'])+' |')
+    lines+=['',
+      'Bucket (e): **148 → 148**. Added: none. Removed: none. Recommendation or retained-row changes: none. All 249 NEW-LIST objects and the complete file bytes are unchanged from the reviewed head. Unresolved: **6 → 8**; added hitl.approved and hitl.rejected; removed none; all six previous unresolved rows, questions and owner routing remain byte-equivalent as objects. The only SKIPPED change is the addition of thread.title_locked to reviewed_field_setting_or_selector.', '',
+      '### Per-name retirement evidence audit','',
+      'The audit covers all 154 rows labelled retired_or_historical at the reviewed head. The 13 outside August follow. Historical/source-lineage means only the cited source role; it does not assert that an upstream feature or live behavior was retired. No additional unsupported retirement inference was found.','',
+      '| Exact name outside August | Current outcome | Current evidence and basis |','|---|---|---|']
+    for row in meta['retirement_evidence_audit']:
+        if row['august_category'] is None:
+            lines.append(f"| `{row['name']}` | {row['after']} | {row['evidence_basis']} Evidence: "+'; '.join(row['citations'])+' |')
+    lines+=['',
+      'The remaining 141 entries retain the frozen ledger’s category, rather than claiming a newly proved retirement: 74 rejected_lexical_candidate, 55 exact_excluded, 12 alias. Every exact name and its ledger line/current occurrence is pinned in RECEIPT counts.retirement_evidence_audit. Current text can still mention these spellings; that is not a new exclusion or evidence that the named behavior was removed. In particular phase_selector.fallback, step.started, step.passed, step.failed and wizard.cancelled still have current prose occurrences; their old dispositions are preserved, not re-adjudicated or justified by an invented replacement.','',
+      '| Preserved August category | Every exact name |','|---|---|']
+    for category in ('rejected_lexical_candidate','exact_excluded','alias'):
+        names=[r['name'] for r in meta['retirement_evidence_audit'] if r['august_category']==category]
+        lines.append(f"| {category} ({len(names)}) | "+', '.join('`'+n+'`' for n in names)+' |')
+    lines+=['','### Round 2 checks','',
+      '| Check | Result |','|---|---|',
+      '| Two stock currentness generations at pinned main | Exit 0 each; all 14 checks true; event_authority_closed=false. |',
+      '| Two complete recount extraction/adjudication runs | Exit 0; NEW-LIST, CLASSIFIED, SKIPPED and metadata byte-identical between runs. |',
+      f"| Input/output custody and citation audit | All {len(receipt['inputs'])} input pins, 14 generator-output pins and four output pins checked against exact bytes; citation ranges, names, bucket memberships and all eight unresolved questions/owners checked. |",
+      '| Exact comparison with reviewed head | Four classification changes; one citation-only row; no added/dropped examined name; no NEW-LIST or bucket (e) row/recommendation change; exactly two unresolved additions. |',
+      '| Unresolved recommendation guard | All eight unresolved names reject a disposition recommendation. |',
+      '| Input-digest mutation probes | Forged, uppercase and trailing-space expected digests reject before output. |',
+      '| Canon/scope/whitespace | Plans/scripts diff against pinned main and git diff --check exit 0; only this report folder changes. |','',
+      'Check 11 and the runtime defect classes are not family-contract tests in this reports-only lane: no event writer/reader, metadata/identity consumer, payload-size contract, schema resolver or family fixture/checker was changed. Replay proves deterministic discovery/classification bytes, not a product choice or contract-depth grade. The receipt’s hashes are recomputed from the actual source and output bytes. No runtime property is claimed from these checks.','',
+      '## Review round 1: findings and responses (historical)','',
+      f"Review: `{ev/'reviews/CA-COUNT-sol/REVIEW.md'}`; SHA-256 `{PINNED_EXTERNAL_INPUTS['reviews/CA-COUNT-sol/REVIEW.md']}`. Reviewed head: `{REVIEWED_HEAD}`. Round 1 fix commit: `{ROUND2_REVIEWED_HEAD}`. The following change log and checks describe that round, not additional round 2 changes. The source corpus stays at the same MAIN_SHA.",'',
       '| Finding | Response | Verification |','|---|---|---|',
       f"| 1 — Readiness labels | Fixed: five names move from supported bucket (e) to undetermined, retained with exact owner questions and negative/live-related search evidence. No existing exact-spelling owner answer was found. | {implementation_ref('READINESS_RESEARCH=')}; {implementation_ref('def adjudicate(')}; six unresolved rows in CLASSIFIED; five fewer NEW-LIST objects. |",
       f"| 2 — Cancellation owner | Fixed routing; product cell stopped for Jared. Exact question and both verbatim options above; Orchestration + Storage investigate, Jared decides. | {implementation_ref('CANCEL_QUESTION=')}; {implementation_ref('CANCEL_OPTIONS=')}; subagent.cancel_requested stays undetermined, with no bucket. |",
@@ -1023,8 +1098,10 @@ def report(root,ev,meta,new,classified,receipt,args):
       '## Freeze and replay evidence','',
       f"NEW-LIST exact bytes: SHA-256 `{receipt['new_list_sha256']}`, {receipt['new_list_bytes']} bytes. Two independently regenerated currentness outputs and two full extraction/adjudication runs produce byte-identical NEW-LIST, CLASSIFIED and SKIPPED bytes. Generator occurrence bytes also match; generator timestamps legitimately differ. RECEIPT.json records both output digest sets, each input’s exact SHA-256, classification/cohort counts and the UTC receipt time.", '',
       'Reproduce from this source revision (with the designated ignored currentness edition copied and verified first):','', '```bash',
+      f'git checkout --detach {MAIN_SHA}',
       'python3 scripts/pm-event-authority-currentness.py generate --outdir <empty-external-first>',
       'python3 scripts/pm-event-authority-currentness.py generate --outdir <empty-external-second>',
+      'git checkout --detach <this-fix-head>',
       'python3 reports/event-authority-20261104/census-recount-20261104/recount.py --root . --generator <first> --replay-generator <second> --outdir <external-result>', '```', '',
       'The script checks unchanged Plans/scripts against the pinned revision, exact membership cardinalities, sorted uniqueness, every mandatory queue token, citation range validity, and equality of the two full procedures. It refuses an unclassified remainder. `NEW-LIST` contains no timestamps or machine-specific checkout path. Input and generator evidence custody is explicit; this receipt does not re-stamp any August artifact.', '',
       'Raw generator evidence retained for this result (paths and SHA-256; all other temporary work is removed):','']

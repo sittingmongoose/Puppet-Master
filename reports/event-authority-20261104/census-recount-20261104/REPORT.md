@@ -18,16 +18,16 @@ All 21 likely, 5 contested and 219 ambiguous generator names outside August and 
 
 | Classification | All examined | Outside August and registry |
 |---|---:|---:|
-| command_or_action_id | 2768 | 2768 |
+| command_or_action_id | 2766 | 2766 |
 | decided_elsewhere:DL-405 | 2 | 0 |
 | decided_elsewhere:DL-406 | 4 | 3 |
 | decided_elsewhere:DL-407 | 7 | 0 |
 | decided_elsewhere:DL-408 | 3 | 1 |
-| identifier_or_field | 3980 | 3980 |
-| not_persisted_by_owner_text | 61 | 61 |
+| identifier_or_field | 3981 | 3981 |
+| not_persisted_by_owner_text | 62 | 62 |
 | persisted_event_candidate | 588 | 249 |
-| retired_or_historical | 154 | 13 |
-| undetermined | 6 | 6 |
+| retired_or_historical | 152 | 11 |
+| undetermined | 8 | 8 |
 
 **Total:** 7573 names; 7081 outside both old sets.
 
@@ -39,7 +39,7 @@ All 21 likely, 5 contested and 219 ambiguous generator names outside August and 
 | field_setting_schema_or_role_namespace | 2008 |
 | file_or_hostname | 8 |
 | file_or_versioned_identifier | 1523 |
-| reviewed_field_setting_or_selector | 200 |
+| reviewed_field_setting_or_selector | 201 |
 
 Rules apply to whole mechanical classes: filenames/versioned contract or key IDs; explicit property/config/schema/role namespaces; code member access; and exact reviewed field, setting, enum, profile or selector bindings. Known event identities and explicit owner lists take precedence. A field suffix such as `payload.*` never creates another family. No claim of event semantics rests only on a terminal verb.
 
@@ -233,7 +233,7 @@ Each row names the proposed owner and section, what the event records, the close
 
 ## Unresolved persistence questions
 
-All six remain `undetermined` in CLASSIFIED.jsonl, with no bucket or disposition recommendation. The five readiness labels are not approved exclusions. Investigation owners search existing canon; a decision to add history or resolve competing owners belongs to Jared. No answer or option is selected.
+All 8 names remain `undetermined` in CLASSIFIED.jsonl, with no bucket or disposition recommendation. The HITL pair joins the five readiness labels and the cancellation request. No unresolved name is an approved exclusion. Investigation owners search existing canon; a decision to add history or resolve competing owners belongs to Jared. No answer or option is selected.
 
 ### `executor.intake_report.recorded`
 
@@ -254,6 +254,22 @@ Does this exact dotted spelling designate a separately persisted EventRecord fam
 Search: Every direct Plans/*.md owner at MAIN_SHA; exact dotted-token lookup, plus related receipt/stream contracts cited here; 96 owner documents, **zero exact-name matches**. No existing owner answer was found. Goal names goal.receipt_recorded and a canonical non-rebuildable goal_receipt record. Neither establishes equivalence with the readiness spelling. Any eventual reconciliation must preserve DL-409/Card 3 A historical-only status and create no new Goal receipt writer.
 
 Evidence: Plans/.implementation_readiness/non_executable_closure_evidence.json:1-10; Plans/.implementation_readiness/non_executable_closure_evidence.json:264-274; Plans/00-plans-index.md:243-243; scripts/pm-event-authority-currentness.py:95-95; Plans/Goal_Runtime_System.md:2739-2739; Plans/Goal_Runtime_System.md:2759-2764; Plans/Goal_Runtime_System.md:5366-5375.
+
+### `hitl.approved`
+
+Investigation owner: **HITL + Contracts + Storage**. Decision owner: **Jared (new history or competing-owner choice)**.
+
+Do `hitl.approved` and `hitl.rejected` in HITL-028 designate live scheduler wake signals derived from the existing `approval.granted` and `approval.denied` records, retired spellings, or separately persisted EventRecord families? For each spelling, what exact owner binding establishes that outcome?
+
+Evidence: Plans/human-in-the-loop.md:32-36; Plans/human-in-the-loop.md:280-283; Plans/human-in-the-loop.md:299-304; Plans/human-in-the-loop.md:1940-1946; Plans/Contracts_V0.md:955-956; Plans/storage-plan.md:55-55.
+
+### `hitl.rejected`
+
+Investigation owner: **HITL + Contracts + Storage**. Decision owner: **Jared (new history or competing-owner choice)**.
+
+Do `hitl.approved` and `hitl.rejected` in HITL-028 designate live scheduler wake signals derived from the existing `approval.granted` and `approval.denied` records, retired spellings, or separately persisted EventRecord families? For each spelling, what exact owner binding establishes that outcome?
+
+Evidence: Plans/human-in-the-loop.md:32-36; Plans/human-in-the-loop.md:280-283; Plans/human-in-the-loop.md:299-304; Plans/human-in-the-loop.md:1940-1946; Plans/Contracts_V0.md:955-956; Plans/storage-plan.md:55-55.
 
 ### `plan_compile.stage_receipt.recorded`
 
@@ -314,16 +330,82 @@ The frozen census itself pins 180 sources and the August digest (Plans/.audits/e
 
 **Task 6 answer:** preserving August history requires an explicitly authorized change to the seal check to consume this separate freeze; replacing its frozen source pin instead would require the forbidden re-stamp, so Card 4a’s open consequence returns to Jared. DL-412’s separate multi-family-admission amendment does not authorize this denominator change. Neither change was made, and the writing frozen validator was not run.
 
-## Review round 1: findings and responses
+## Review round 2: findings and responses
 
-Review: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW.md`; SHA-256 `a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159`. Reviewed head: `d6dd33d5ddbd0150bb9dcfbe391460bebac04e65`. Fix commit: this six-file result's HEAD, whose parent is that reviewed head. The source corpus stays at the same MAIN_SHA.
+Review: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-astra.md`; SHA-256 `161b7ad15c9479155550ba573c7b9290c271f4483ed6b2c4ec23d4029f6f85e7`. Reviewed head: `cad54d77170dfc197d4dc2c42e86152d73e107ad`. Fix commit: this result's HEAD, whose parent is that reviewed head. Main remains `16acf7594a3fe8559af89491b895f440b314b99e`; fetching origin confirmed no source drift.
 
 | Finding | Response | Verification |
 |---|---|---|
-| 1 — Readiness labels | Fixed: five names move from supported bucket (e) to undetermined, retained with exact owner questions and negative/live-related search evidence. No existing exact-spelling owner answer was found. | reports/event-authority-20261104/census-recount-20261104/recount.py:39-39; reports/event-authority-20261104/census-recount-20261104/recount.py:161-161; six unresolved rows in CLASSIFIED; five fewer NEW-LIST objects. |
-| 2 — Cancellation owner | Fixed routing; product cell stopped for Jared. Exact question and both verbatim options above; Orchestration + Storage investigate, Jared decides. | reports/event-authority-20261104/census-recount-20261104/recount.py:34-34; reports/event-authority-20261104/census-recount-20261104/recount.py:35-35; subagent.cancel_requested stays undetermined, with no bucket. |
-| 3 — Continuity and optional planning event | Unsupported provenance-to-route merge removed; semantic cell stopped for Jared. Three other merges are conditional proposals onto unadmitted August rows. Goal readiness label follows finding 1. Optional planning exclusion remains a recommendation. | reports/event-authority-20261104/census-recount-20261104/recount.py:763-763; all four continuity names and planning.question_budget_exhausted remain in bucket (e). |
-| 4 — Structural discovery | Fixed: expanded semantic keys and embedded-token extraction. Four reviewed labels explicitly classified as concept lineage or negative fixtures. Additional command receipts and a filename are accounted for below. | reports/event-authority-20261104/census-recount-20261104/recount.py:32-32; reports/event-authority-20261104/census-recount-20261104/recount.py:92-92; reports/event-authority-20261104/census-recount-20261104/recount.py:60-60; two complete replays. |
+| Blocking — HITL pair | Fixed the unsupported terminal classification; product cells remain stopped for owner evidence/Jared. Both spellings are undetermined, with Astra’s exact question and HITL + Contracts + Storage investigating. Storage’s compatibility sentence names approved only; it cannot settle rejected. No signal behavior, alias, persistence or August disposition is chosen. | reports/event-authority-20261104/census-recount-20261104/recount.py:37-37; CLASSIFIED rows and unresolved sections above; HITL-028 and current owner spans cited per spelling. |
+| Should fix — semantic classes | Fixed: thread.title_locked is identifier_or_field under ACD-479; plan_compile.command_applied is not_persisted_by_owner_text with evidence_kind=prohibited_synthetic_event under the explicit UCC prohibition. | Plans/assistant-chat-design.md:27309-27317,27335-27336; Plans/UI_Command_Catalog.md:8627-8627; changes below. |
+| Retirement audit | All 154 previously retired_or_historical rows inspected. The two HITL names are the only unsupported fresh retirement decisions found. The other 11 non-August rows have explicit retirement or source-lineage evidence; 141 preserve named August dispositions without inferring live retirement. node.ready gains the source-lineage introduction in its citation. | Per-name audit below and RECEIPT counts.retirement_evidence_audit; no additional unresolved name or bucket change. |
+
+Family grades before/after: inapplicable; no family contract is authored. Recount assessment: Astra NOT_READY → requested classification fixes and replay verified, awaiting independent review. Eight persistence questions remain open. No depth PASS or admission is claimed. IDs used: none.
+
+### Every round 2 change
+
+| Name | Before | After / current evidence |
+|---|---|---|
+| `hitl.approved` | retired_or_historical | undetermined; Plans/human-in-the-loop.md:32-36; Plans/human-in-the-loop.md:280-283; Plans/human-in-the-loop.md:299-304; Plans/human-in-the-loop.md:1940-1946; Plans/Contracts_V0.md:955-956; Plans/storage-plan.md:55-55 |
+| `hitl.rejected` | retired_or_historical | undetermined; Plans/human-in-the-loop.md:32-36; Plans/human-in-the-loop.md:280-283; Plans/human-in-the-loop.md:299-304; Plans/human-in-the-loop.md:1940-1946; Plans/Contracts_V0.md:955-956; Plans/storage-plan.md:55-55 |
+| `plan_compile.command_applied` | command_or_action_id | not_persisted_by_owner_text; Plans/UI_Command_Catalog.md:8627-8627 |
+| `thread.title_locked` | command_or_action_id | identifier_or_field; Plans/assistant-chat-design.md:27309-27317; Plans/assistant-chat-design.md:27335-27336 |
+| `node.ready` | Same classification; narrower citation | Citation-only correction: Plans/Wiring_Matrix.md:341-363; Plans/Contracts_V0.md:2444-2448 |
+
+Bucket (e): **148 → 148**. Added: none. Removed: none. Recommendation or retained-row changes: none. All 249 NEW-LIST objects and the complete file bytes are unchanged from the reviewed head. Unresolved: **6 → 8**; added hitl.approved and hitl.rejected; removed none; all six previous unresolved rows, questions and owner routing remain byte-equivalent as objects. The only SKIPPED change is the addition of thread.title_locked to reviewed_field_setting_or_selector.
+
+### Per-name retirement evidence audit
+
+The audit covers all 154 rows labelled retired_or_historical at the reviewed head. The 13 outside August follow. Historical/source-lineage means only the cited source role; it does not assert that an upstream feature or live behavior was retired. No additional unsupported retirement inference was found.
+
+| Exact name outside August | Current outcome | Current evidence and basis |
+|---|---|---|
+| `commands.save_` | retired_or_historical | Commands owner explicitly retired the first-draft save spellings; not event identities. Evidence: Plans/Commands_System.md:6923-6924; Plans/Commands_System.md:7366-7366 |
+| `commands.save_existing` | retired_or_historical | Commands owner explicitly retired the first-draft save spellings; not event identities. Evidence: Plans/Commands_System.md:6923-6924; Plans/Commands_System.md:7366-7366 |
+| `commands.save_new` | retired_or_historical | Commands owner explicitly retired the first-draft save spellings; not event identities. Evidence: Plans/Commands_System.md:6923-6924; Plans/Commands_System.md:7366-7366 |
+| `commands.save_override` | retired_or_historical | Commands owner explicitly retired the first-draft save spellings; not event identities. Evidence: Plans/Commands_System.md:6923-6924; Plans/Commands_System.md:7366-7366 |
+| `experimental.chat.system.transform` | retired_or_historical | External OpenCode extraction/reference material describes an upstream hook/bus event, not a PuppetMaster durable family. Historical/source-lineage classification does not assert that the upstream feature was retired. Evidence: Plans/OpenCode_Deep_Extraction.md:241-241 |
+| `hitl.approved` | undetermined | HITL-028 currently requires this scheduler wake spelling. HITL requires durable approval history; Contracts names approval.granted/approval.denied. Storage lists only hitl.approved as command compatibility vocabulary, not hitl.rejected. No exact per-name binding resolves signal versus alias/retirement versus separate persistence. Evidence: Plans/human-in-the-loop.md:32-36; Plans/human-in-the-loop.md:280-283; Plans/human-in-the-loop.md:299-304; Plans/human-in-the-loop.md:1940-1946; Plans/Contracts_V0.md:955-956; Plans/storage-plan.md:55-55 |
+| `hitl.rejected` | undetermined | HITL-028 currently requires this scheduler wake spelling. HITL requires durable approval history; Contracts names approval.granted/approval.denied. Storage lists only hitl.approved as command compatibility vocabulary, not hitl.rejected. No exact per-name binding resolves signal versus alias/retirement versus separate persistence. Evidence: Plans/human-in-the-loop.md:32-36; Plans/human-in-the-loop.md:280-283; Plans/human-in-the-loop.md:299-304; Plans/human-in-the-loop.md:1940-1946; Plans/Contracts_V0.md:955-956; Plans/storage-plan.md:55-55 |
+| `home.dashboard.pop_out` | retired_or_historical | Legacy panel UI wiring element retired by the cited owner reconciliation; never an event type. Evidence: Plans/Wiring_Matrix.md:7240-7240 |
+| `home.editor_panel_1.pop_out` | retired_or_historical | Legacy panel UI wiring element retired by the cited owner reconciliation; never an event type. Evidence: Plans/Wiring_Matrix.md:7240-7240 |
+| `home.file_manager.open_panel_1` | retired_or_historical | Legacy panel UI wiring element retired by the cited owner reconciliation; never an event type. Evidence: Plans/Wiring_Matrix.md:7241-7241 |
+| `node.ready` | retired_or_historical | Only the compatibility/source-lineage wiring section uses node.ready; canonical runtime payload uses run.node_ready. No alias registration is inferred. Evidence: Plans/Wiring_Matrix.md:341-363; Plans/Contracts_V0.md:2444-2448 |
+| `permission.asked` | retired_or_historical | External OpenCode extraction/reference material describes an upstream hook/bus event, not a PuppetMaster durable family. Historical/source-lineage classification does not assert that the upstream feature was retired. Evidence: Plans/OpenCode_Deep_Extraction.md:1802-1802 |
+| `run.cancelled` | retired_or_historical | Document Packaging Policy preserves this as contradictory seam evidence, not an event it owns or a current producer binding. Evidence: Plans/Document_Packaging_Policy.md:90-90 |
+
+The remaining 141 entries retain the frozen ledger’s category, rather than claiming a newly proved retirement: 74 rejected_lexical_candidate, 55 exact_excluded, 12 alias. Every exact name and its ledger line/current occurrence is pinned in RECEIPT counts.retirement_evidence_audit. Current text can still mention these spellings; that is not a new exclusion or evidence that the named behavior was removed. In particular phase_selector.fallback, step.started, step.passed, step.failed and wizard.cancelled still have current prose occurrences; their old dispositions are preserved, not re-adjudicated or justified by an invented replacement.
+
+| Preserved August category | Every exact name |
+|---|---|
+| rejected_lexical_candidate (74) | `accounts.empty.no_profiles`, `agent_id.to_string`, `analytics.scan_batch_size`, `attachments.is_empty`, `branching.assistant_auto_worktree`, `branching.assistant_worktree_pre_merge_cmd`, `branching.assistant_worktree_pre_merge_test_target`, `branching.worktree_pre_merge_test_timeout_s`, `chat.thread_worktree_`, `chat.thread_worktree_pr_failed.phase`, `context_capture.rs`, `current_project.path`, `dap_client.rs`, `defs.event_record_1_0_0_compatibility_reader`, `doctor.live_visualization`, `doctor.live_visualization.evidence`, `effective_request.prompt`, `error.concurrent_edit_conflict`, `file_manager.worktree_follow_thread`, `goal.evidence_captured.payload.retention_policy_ref`, `grid_texture.rs`, `gui.use_plan_mode_all_tiers`, `gui_config.interview`, `gui_config.rs`, `locked_decisions.storage`, `message_id.to_string`, `node_config.platform`, `orchestrator.project_state`, `payload_schema_ref.schema_id`, `permissions.external_directory.pick`, `pm.activity_bar_order`, `pm.debug.launch_profiles`, `pm.requested_effective_runtime`, `projection_trust.status`, `request.context_files`, `restore_point.expired.payload.retention_policy_ref`, `route_target.object_kind`, `run.qa_cycle_`, `safe_point.sp`, `security_filter.check_file_access`, `self.base.bash_guard.check_prompt`, `self.base.execute_command`, `self.build_args`, `self.build_tier_context`, `self.load_state`, `self.log_blocked_command`, `self.state_file.exists`, `self.state_file.with_extension`, `self.store.append_coordination_event`, `self.store.read_coordination_agents_by_file`, `self.store.read_coordination_snapshot`, `self.store.read_file_conflict_projection`, `self.subagent_selector.select_for_tier`, `source_control.accordion_state`, `source_control.project_state`, `source_control.worktree_filter`, `storage.legal_hold.manage`, `tier.plan_mode`, `tier_node.tier_type`, `tier_overrides.get`, `tool.execution_`, `tools.custom_headless`, `type_payload.restore_point_id`, `ui.chat.in_memory_cap_messages`, `widget.agent_terminal`, `widget.analytics_chart`, `widget.budget_donuts`, `widget.completed_prose`, `widget.current_task`, `widget.multi_account`, `widget.orchestrator_status`, `widget.progress_bars`, `widget.quota_summary`, `widget.tool_usage` |
+| exact_excluded (55) | `account.switched`, `browser.streaming_usage_reported`, `chat.subagent_`, `chat.thread.created`, `diag.synthetic_continue_loop_prevented`, `doctor.evidence_media.checked`, `done.budget_exceeded`, `done.cancelled`, `done.crashed`, `done.deferred`, `done.failed`, `done.gutter`, `done.ok`, `done.payload.outcome`, `done.payload.status`, `done.rotated`, `done.stop_reason`, `done.task_timeout`, `done.timeout`, `hitl.approval_requested`, `item.completed`, `kill.budget_exceeded`, `kill.hte_tool_observed`, `kill.identical_failure`, `kill.post_scan_failure`, `kill.shell_failure`, `kill.task_timeout`, `kill.write_thrash`, `node.unblocked.resolution`, `orchestrator.receipt`, `phase_selector.fallback`, `run.completed.stop_reason`, `run.completed.usage`, `run.persona_stage_changed`, `run.qa_cycle_completed`, `run.qa_cycle_started`, `run.tier_`, `run.tier_completed`, `run.tier_started`, `run.verification_result`, `runtime.command_applied`, `runtime_artifact.created`, `safe_point.recovery_resolved`, `step.failed`, `step.passed`, `step.started`, `stop.identical_failure`, `stop.user_cancel`, `storage.fallback_reconciled`, `thread.started`, `tool.custom_headless.invalid`, `tool.denied.payload.meta`, `turn.started`, `web.operation`, `wizard.cancelled` |
+| alias (12) | `chat.subagent_spawned`, `chat.thread.worktree_bound`, `filesafe.snapshot_conflict`, `filesafe.snapshot_created`, `filesafe.snapshot_restore`, `lsp.server_crashed`, `lsp.server_started`, `run.node_blocked`, `run.node_unblocked`, `run.remediation_completed`, `run.remediation_started`, `run.scheduler_analysis` |
+
+### Round 2 checks
+
+| Check | Result |
+|---|---|
+| Two stock currentness generations at pinned main | Exit 0 each; all 14 checks true; event_authority_closed=false. |
+| Two complete recount extraction/adjudication runs | Exit 0; NEW-LIST, CLASSIFIED, SKIPPED and metadata byte-identical between runs. |
+| Input/output custody and citation audit | All 597 input pins, 14 generator-output pins and four output pins checked against exact bytes; citation ranges, names, bucket memberships and all eight unresolved questions/owners checked. |
+| Exact comparison with reviewed head | Four classification changes; one citation-only row; no added/dropped examined name; no NEW-LIST or bucket (e) row/recommendation change; exactly two unresolved additions. |
+| Unresolved recommendation guard | All eight unresolved names reject a disposition recommendation. |
+| Input-digest mutation probes | Forged, uppercase and trailing-space expected digests reject before output. |
+| Canon/scope/whitespace | Plans/scripts diff against pinned main and git diff --check exit 0; only this report folder changes. |
+
+Check 11 and the runtime defect classes are not family-contract tests in this reports-only lane: no event writer/reader, metadata/identity consumer, payload-size contract, schema resolver or family fixture/checker was changed. Replay proves deterministic discovery/classification bytes, not a product choice or contract-depth grade. The receipt’s hashes are recomputed from the actual source and output bytes. No runtime property is claimed from these checks.
+
+## Review round 1: findings and responses (historical)
+
+Review: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW.md`; SHA-256 `a22a067876a204df9b6b6bc0c8e49034d211b3ea3480bc68fbb2e624e5232159`. Reviewed head: `d6dd33d5ddbd0150bb9dcfbe391460bebac04e65`. Round 1 fix commit: `cad54d77170dfc197d4dc2c42e86152d73e107ad`. The following change log and checks describe that round, not additional round 2 changes. The source corpus stays at the same MAIN_SHA.
+
+| Finding | Response | Verification |
+|---|---|---|
+| 1 — Readiness labels | Fixed: five names move from supported bucket (e) to undetermined, retained with exact owner questions and negative/live-related search evidence. No existing exact-spelling owner answer was found. | reports/event-authority-20261104/census-recount-20261104/recount.py:43-43; reports/event-authority-20261104/census-recount-20261104/recount.py:165-165; six unresolved rows in CLASSIFIED; five fewer NEW-LIST objects. |
+| 2 — Cancellation owner | Fixed routing; product cell stopped for Jared. Exact question and both verbatim options above; Orchestration + Storage investigate, Jared decides. | reports/event-authority-20261104/census-recount-20261104/recount.py:38-38; reports/event-authority-20261104/census-recount-20261104/recount.py:39-39; subagent.cancel_requested stays undetermined, with no bucket. |
+| 3 — Continuity and optional planning event | Unsupported provenance-to-route merge removed; semantic cell stopped for Jared. Three other merges are conditional proposals onto unadmitted August rows. Goal readiness label follows finding 1. Optional planning exclusion remains a recommendation. | reports/event-authority-20261104/census-recount-20261104/recount.py:769-769; all four continuity names and planning.question_budget_exhausted remain in bucket (e). |
+| 4 — Structural discovery | Fixed: expanded semantic keys and embedded-token extraction. Four reviewed labels explicitly classified as concept lineage or negative fixtures. Additional command receipts and a filename are accounted for below. | reports/event-authority-20261104/census-recount-20261104/recount.py:34-34; reports/event-authority-20261104/census-recount-20261104/recount.py:96-96; reports/event-authority-20261104/census-recount-20261104/recount.py:64-64; two complete replays. |
 | 5 — Frozen citation | Fixed to FRESH_CENSUS_DELTA.md:39-50. Task 6 conclusion stands. | Citation bounds checked; frozen validator/census unchanged. |
 
 Family grades before/after: no family contract or admission is authored by this reports-only lane; twelve-criterion family grades are inapplicable. Recount assessment changes from review NOT_READY to fixes mechanically verified, pending independent re-review. Product questions remain open. IDs used: none. Check 11 family guard-removal table is inapplicable: there is no family checker or positive/negative contract fixture in this lane. Discovery and classification invariants are verified by complete replay and the changes below.
@@ -813,8 +895,10 @@ NEW-LIST exact bytes: SHA-256 `2515ae5af31178a7d7a93581e982977bfb803d4494d779c72
 Reproduce from this source revision (with the designated ignored currentness edition copied and verified first):
 
 ```bash
+git checkout --detach 16acf7594a3fe8559af89491b895f440b314b99e
 python3 scripts/pm-event-authority-currentness.py generate --outdir <empty-external-first>
 python3 scripts/pm-event-authority-currentness.py generate --outdir <empty-external-second>
+git checkout --detach <this-fix-head>
 python3 reports/event-authority-20261104/census-recount-20261104/recount.py --root . --generator <first> --replay-generator <second> --outdir <external-result>
 ```
 
@@ -822,20 +906,20 @@ The script checks unchanged Plans/scripts against the pinned revision, exact mem
 
 Raw generator evidence retained for this result (paths and SHA-256; all other temporary work is removed):
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/CURRENT_EVENT_SOURCE_INVENTORY.json` — `8b7012f2be663b30f16a69493649c1761f804358f151531e34a44ad5adcbcc95`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/EVENT_FAMILY_DENOMINATOR_STATUS.json` — `37038d5f6a46e0d74d375891e03ea1be39494a6841a92beeec42dc75eb83026d`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/EVENT_OCCURRENCES.jsonl` — `f67f947f77a0b4e7668d6e75a422c1aacd3fa618988ed72ae3aa665899a664e1`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/README.md` — `a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/VALIDATOR_RECEIPT.json` — `35a096600db18d15b39952eeef3bff3d6ab88f8a8c085303a90755aa9f9bcc97`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/adjudication/GROUP_ARTIFACT_MANIFEST.json` — `fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl` — `e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/CURRENT_EVENT_SOURCE_INVENTORY.json` — `ee03bd885ddc801927d0d71cc60ce6a636071235cbedc3d42b4cee235cf5eeee`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/EVENT_FAMILY_DENOMINATOR_STATUS.json` — `37038d5f6a46e0d74d375891e03ea1be39494a6841a92beeec42dc75eb83026d`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/EVENT_OCCURRENCES.jsonl` — `f67f947f77a0b4e7668d6e75a422c1aacd3fa618988ed72ae3aa665899a664e1`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/README.md` — `a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/VALIDATOR_RECEIPT.json` — `57fbb6a4fee9da28cbb8143a70d43c7ec89b085a511392a7d4d5b78e6fb24a10`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/adjudication/GROUP_ARTIFACT_MANIFEST.json` — `fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl` — `e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/CURRENT_EVENT_SOURCE_INVENTORY.json` — `cd926333892ee95e2e4c53a3ee5342d6290153b79bfb1de1af77df6ed7fe2b68`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/EVENT_FAMILY_DENOMINATOR_STATUS.json` — `37038d5f6a46e0d74d375891e03ea1be39494a6841a92beeec42dc75eb83026d`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/EVENT_OCCURRENCES.jsonl` — `f67f947f77a0b4e7668d6e75a422c1aacd3fa618988ed72ae3aa665899a664e1`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/README.md` — `a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/VALIDATOR_RECEIPT.json` — `0b5960e0e8152cbca08dca69f4f6fdc5ce07bd46dd9b9683d3a513a5ff2f762c`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/adjudication/GROUP_ARTIFACT_MANIFEST.json` — `fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl` — `e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/CURRENT_EVENT_SOURCE_INVENTORY.json` — `aaaea2f13737a5d862ccf601313c87089b0cf969824400ba2493818c784ffa2c`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/EVENT_FAMILY_DENOMINATOR_STATUS.json` — `37038d5f6a46e0d74d375891e03ea1be39494a6841a92beeec42dc75eb83026d`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/EVENT_OCCURRENCES.jsonl` — `f67f947f77a0b4e7668d6e75a422c1aacd3fa618988ed72ae3aa665899a664e1`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/README.md` — `a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/VALIDATOR_RECEIPT.json` — `c74a00c61731d7dfdeace04a06f4c157ff6d2e88502cfb5ae394d2b53c79a47d`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/adjudication/GROUP_ARTIFACT_MANIFEST.json` — `fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2/adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl` — `e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294`
 
 ## Delivered scope
 
