@@ -1119,8 +1119,8 @@ Allowed transitions:
 | `creating` | `deleted` | `cmd.chat.thread.discard_empty_draft` | Drops an unsent shell; no transcript tombstone is required. |
 | `active` | `suspended` | `cmd.chat.thread.suspend` | User closes the thread or the session ends without archiving. |
 | `suspended` | `active` | `cmd.chat.thread.restore` | Restores transcript, metadata, and restorable UI state; ephemeral stream/queue state is not restored. |
-| `active` | `archived` | `cmd.chat.thread.archive` or retention policy | Preserves lineage and audit metadata while hiding from active lists. |
-| `suspended` | `archived` | `cmd.chat.thread.archive` or retention policy | Allows archival of inactive threads without first making them active. |
+| `active` | `archived` | `cmd.chat.thread.archive` (manual only; DL-287) | Preserves lineage and audit metadata while hiding from active lists. |
+| `suspended` | `archived` | `cmd.chat.thread.archive` (manual only; DL-287) | Allows archival of inactive threads without first making them active. |
 | `archived` | `active` | `cmd.chat.thread.unarchive` | Restores to active navigation with the same thread id and lineage. |
 | `active` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
 | `suspended` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
@@ -29058,7 +29058,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-511, ContractName:P
 
 ### ACD-610 — bundle.selection_forward_blocked
 
-Newly authored owner contract under DL-045 for `bundle.selection_forward_blocked` only, revision 1.0.0, prepared without admission. Exact producer: Document review selection-forward handler. A privacy/sensitivity, expired or scrubbed handoff is blocked. Keep the pending chip visible with its exact reason; never clear it or claim a successful handoff. No message or annotation is created. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-630; persistence/read route: SP-610.
+Newly authored owner contract under DL-045 for `bundle.selection_forward_blocked` only, revision 1.0.0, prepared without admission. Exact producer: Document review selection-forward handler. A privacy/sensitivity, expired or scrubbed handoff is blocked. Keep the pending chip visible with its exact reason; never clear it or claim a successful handoff. No message or annotation is created. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-630; persistence/read route: SP-610.
 
 ```yaml
 plan_unit_id: ACD-610
@@ -29074,15 +29074,24 @@ canonical_text: '### ACD-610 — bundle.selection_forward_blocked
   handoff. No message or annotation is created. For bundle.selection_forward_blocked, freeze operation_id from the
   original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The
   semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id,
-  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-630; persistence/read route: SP-610.'
+  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-630; persistence/read route: SP-610.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29116,7 +29125,7 @@ owner_hints:
 
 ### ACD-611 — bundle.selection_sent_to_chat
 
-Newly authored owner contract under DL-045 for `bundle.selection_sent_to_chat` only, revision 1.0.0, prepared without admission. Exact producer: Document review selection-to-chat handler. Resolve the requested target once: explicit selection, owning page surface, then explicit new-thread creation when necessary. After creating the visible pending chip, record the effective target. This event is chip handoff success, not sending a message; sending later clears the chips only on success. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-631; persistence/read route: SP-611.
+Newly authored owner contract under DL-045 for `bundle.selection_sent_to_chat` only, revision 1.0.0, prepared without admission. Exact producer: Document review selection-to-chat handler. Resolve the requested target once: explicit selection, owning page surface, then explicit new-thread creation when necessary. After creating the visible pending chip, record the effective target. This event is chip handoff success, not sending a message; sending later clears the chips only on success. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-631; persistence/read route: SP-611.
 
 ```yaml
 plan_unit_id: ACD-611
@@ -29133,15 +29142,24 @@ canonical_text: '### ACD-611 — bundle.selection_sent_to_chat
   sending later clears the chips only on success. For bundle.selection_sent_to_chat, freeze operation_id from the
   original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The
   semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id,
-  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-631; persistence/read route: SP-611.'
+  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-631; persistence/read route: SP-611.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29175,7 +29193,7 @@ owner_hints:
 
 ### ACD-612 — chat.message
 
-Newly authored owner contract under DL-045 for `chat.message` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat transcript commit handler. Commit a canonical typed message once at a durable message boundary; streamed display deltas are not independent messages. Keep edit/supersession lineage under the transcript owner. First user-message commit also creates the durable thread; an unsent draft has no durable thread event. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.
+Newly authored owner contract under DL-045 for `chat.message` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat transcript commit handler. Commit a canonical typed message once at a durable message boundary; streamed display deltas are not independent messages. Keep edit/supersession lineage under the transcript owner. First user-message commit also creates the durable thread; an unsent draft has no durable thread event. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.
 
 ```yaml
 plan_unit_id: ACD-612
@@ -29191,15 +29209,24 @@ canonical_text: '### ACD-612 — chat.message
   owner. First user-message commit also creates the durable thread; an unsent draft has no durable thread event.
   For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for
   a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id,
-  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple),
-  and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest;
-  same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt
-  custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-632; persistence/read route: SP-612.'
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple).
+  Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~"
+  + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or
+  read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id))
+  + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family''s original operation_id,
+  frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No
+  additional optional effect component is defined for this family; distinct event types retain separate Storage
+  lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins
+  remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result
+  and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable
+  with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord
+  semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339
+  full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and
+  read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal
+  success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
+  evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
+  This text defines no new user command or feature. The event cannot emit until its own admission and all required
+  owner source graphs are complete. Semantic/payload route: CV-632; persistence/read route: SP-612.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29233,7 +29260,7 @@ owner_hints:
 
 ### ACD-614 — chat.thread_created
 
-Newly authored owner contract under DL-045 for `chat.thread_created` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.commit_first_message handler. Mint thr_{ulid} only when the first user message commits. creating to active occurs once; discard_empty_draft emits no durable creation and creates no tombstone. Commit the message and canonical thread together before append. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-634; persistence/read route: SP-614.
+Newly authored owner contract under DL-045 for `chat.thread_created` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.commit_first_message handler. Mint thr_{ulid} only when the first user message commits. creating to active occurs once; discard_empty_draft emits no durable creation and creates no tombstone. Commit the message and canonical thread together before append. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-634; persistence/read route: SP-614.
 
 ```yaml
 plan_unit_id: ACD-614
@@ -29249,15 +29276,24 @@ canonical_text: '### ACD-614 — chat.thread_created
   Commit the message and canonical thread together before append. For chat.thread_created, freeze operation_id from
   the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
   The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id,
-  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-634; persistence/read route: SP-614.'
+  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-634; persistence/read route: SP-614.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29291,7 +29327,7 @@ owner_hints:
 
 ### ACD-615 — chat.thread_deleted
 
-Newly authored owner contract under DL-045 for `chat.thread_deleted` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.delete handler. Delete from active, suspended or archived only. Write the storage-owned content-free deletion record and hide immediately. Unheld content purges within 24 hours; backup bytes at most 30 days unless held, with tombstone replay before visibility. No undo and no resurrection; worktree keep/remove is independent. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635; persistence/read route: SP-615.
+Newly authored owner contract under DL-045 for `chat.thread_deleted` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.delete handler. Delete from active, suspended or archived only. Write the storage-owned content-free deletion record and hide immediately. Unheld content purges within 24 hours; backup bytes at most 30 days unless held, with tombstone replay before visibility. No undo and no resurrection; worktree keep/remove is independent. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635; persistence/read route: SP-615.
 
 ```yaml
 plan_unit_id: ACD-615
@@ -29308,15 +29344,24 @@ canonical_text: '### ACD-615 — chat.thread_deleted
   is independent. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect
   (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted",
   "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
-  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt
-  SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before
-  effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before
-  publishing terminal success. For started, append/receipt precedes test launch; for already completed external
-  effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked
-  before starting a new operation. This text defines no new user command or feature. The event cannot emit until
-  its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635; persistence/read
-  route: SP-615.'
+  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
+  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
+  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  focus or result component is added. No additional optional effect component is defined for this family; distinct
+  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
+  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
+  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
+  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
+  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
+  never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending
+  input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first
+  receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed
+  external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal
+  is checked before starting a new operation. This text defines no new user command or feature. The event cannot
+  emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-635;
+  persistence/read route: SP-615.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29350,7 +29395,7 @@ owner_hints:
 
 ### ACD-616 — chat.thread_worktree_bound
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_bound` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat WorktreeManager create/bind completion handler. After successful creation and canonical worktree_record write, bind the thread and reverse key atomically, enforcing 1:1. Changes during an in-flight turn are refused; next turn freezes the new binding. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-636; persistence/read route: SP-616.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_bound` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat WorktreeManager create/bind completion handler. After successful creation and canonical worktree_record write, bind the thread and reverse key atomically, enforcing 1:1. Changes during an in-flight turn are refused; next turn freezes the new binding. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-636; persistence/read route: SP-616.
 
 ```yaml
 plan_unit_id: ACD-616
@@ -29366,15 +29411,24 @@ canonical_text: '### ACD-616 — chat.thread_worktree_bound
   an in-flight turn are refused; next turn freezes the new binding. For chat.thread_worktree_bound, freeze operation_id
   from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
   The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id,
-  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-636; persistence/read route: SP-616.'
+  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-636; persistence/read route: SP-616.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29408,7 +29462,7 @@ owner_hints:
 
 ### ACD-617 — chat.thread_worktree_create_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_create_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat WorktreeManager create failure handler. A failed or timed-out creation records its sanitized error and origin without claiming a binding. Preserve any unresolved external effect for reconciliation; do not retry git on replay. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-637; persistence/read route: SP-617.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_create_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat WorktreeManager create failure handler. A failed or timed-out creation records its sanitized error and origin without claiming a binding. Preserve any unresolved external effect for reconciliation; do not retry git on replay. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-637; persistence/read route: SP-617.
 
 ```yaml
 plan_unit_id: ACD-617
@@ -29424,15 +29478,24 @@ canonical_text: '### ACD-617 — chat.thread_worktree_create_failed
   for reconciliation; do not retry git on replay. For chat.thread_worktree_create_failed, freeze operation_id from
   the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
   The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id,
-  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-637; persistence/read route: SP-617.'
+  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-637; persistence/read route: SP-617.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29466,7 +29529,7 @@ owner_hints:
 
 ### ACD-618 — chat.thread_worktree_merge_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_merge_failed` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.worktree.merge failure completion handler. Under the existing merge lock, capture failed merge/guard or hook result and conflicts. Rebase conflicts auto-abort under W.8.5. No success result or automatic unbind is published. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-638; persistence/read route: SP-618.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_merge_failed` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.worktree.merge failure completion handler. Under the existing merge lock, capture failed merge/guard or hook result and conflicts. Rebase conflicts auto-abort under W.8.5. No success result or automatic unbind is published. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-638; persistence/read route: SP-618.
 
 ```yaml
 plan_unit_id: ACD-618
@@ -29482,15 +29545,24 @@ canonical_text: '### ACD-618 — chat.thread_worktree_merge_failed
   result or automatic unbind is published. For chat.thread_worktree_merge_failed, freeze operation_id from the original
   accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic
   identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id,
-  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-638; persistence/read route: SP-618.'
+  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-638; persistence/read route: SP-618.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29524,7 +29596,7 @@ owner_hints:
 
 ### ACD-619 — chat.thread_worktree_merged
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_merged` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.worktree.merge success completion handler. After W.8 guards, tests and actual completed git strategy, record result commit. Rebase includes worktree rebase and main-repository ff-merge under one lock. Keep binding until explicit user cleanup. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-639; persistence/read route: SP-619.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_merged` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.worktree.merge success completion handler. After W.8 guards, tests and actual completed git strategy, record result commit. Rebase includes worktree rebase and main-repository ff-merge under one lock. Keep binding until explicit user cleanup. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-639; persistence/read route: SP-619.
 
 ```yaml
 plan_unit_id: ACD-619
@@ -29540,15 +29612,24 @@ canonical_text: '### ACD-619 — chat.thread_worktree_merged
   one lock. Keep binding until explicit user cleanup. For chat.thread_worktree_merged, freeze operation_id from
   the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
   The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id,
-  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-639; persistence/read route: SP-619.'
+  thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-639; persistence/read route: SP-619.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29582,7 +29663,7 @@ owner_hints:
 
 ### ACD-620 — chat.thread_worktree_pr_created
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_created` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat Create PR API success handler. After auto-push succeeds and PR API returns the actual PR, record URL and number. Keep worktree bound; create no cleanup modal. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_created` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat Create PR API success handler. After auto-push succeeds and PR API returns the actual PR, record URL and number. Keep worktree bound; create no cleanup modal. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.
 
 ```yaml
 plan_unit_id: ACD-620
@@ -29597,15 +29678,24 @@ canonical_text: '### ACD-620 — chat.thread_worktree_pr_created
   PR API returns the actual PR, record URL and number. Keep worktree bound; create no cleanup modal. For chat.thread_worktree_pr_created,
   freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
   retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id,
-  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple),
-  and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest;
-  same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt
-  custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-640; persistence/read route: SP-620.'
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple).
+  Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~"
+  + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or
+  read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id))
+  + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family''s original operation_id,
+  frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No
+  additional optional effect component is defined for this family; distinct event types retain separate Storage
+  lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins
+  remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result
+  and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable
+  with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord
+  semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339
+  full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and
+  read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal
+  success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
+  evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
+  This text defines no new user command or feature. The event cannot emit until its own admission and all required
+  owner source graphs are complete. Semantic/payload route: CV-640; persistence/read route: SP-620.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29639,7 +29729,7 @@ owner_hints:
 
 ### ACD-621 — chat.thread_worktree_pr_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat Create PR failure handler. Push failure records phase push; an API failure after successful push records phase api. Neither opens the PR panel. A retry has a new operation identity only if the original external effect has been reconciled. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pr_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat Create PR failure handler. Push failure records phase push; an API failure after successful push records phase api. Neither opens the PR panel. A retry has a new operation identity only if the original external effect has been reconciled. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.
 
 ```yaml
 plan_unit_id: ACD-621
@@ -29655,15 +29745,24 @@ canonical_text: '### ACD-621 — chat.thread_worktree_pr_failed
   identity only if the original external effect has been reconciled. For chat.thread_worktree_pr_failed, freeze
   operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained
   across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id,
-  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple),
-  and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest;
-  same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt
-  custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-641; persistence/read route: SP-621.'
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple).
+  Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~"
+  + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or
+  read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id))
+  + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family''s original operation_id,
+  frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No
+  additional optional effect component is defined for this family; distinct event types retain separate Storage
+  lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins
+  remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result
+  and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable
+  with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord
+  semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339
+  full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and
+  read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal
+  success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
+  evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
+  This text defines no new user command or feature. The event cannot emit until its own admission and all required
+  owner source graphs are complete. Semantic/payload route: CV-641; persistence/read route: SP-621.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29697,7 +29796,7 @@ owner_hints:
 
 ### ACD-622 — chat.thread_worktree_pre_merge_test_failed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After the matching started operation, record failure, duration and actual exit status. Respect W.8 test gate and existing explicit override rules; replay cannot authorize an override or merge. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-642; persistence/read route: SP-622.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_failed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After the matching started operation, record failure, duration and actual exit status. Respect W.8 test gate and existing explicit override rules; replay cannot authorize an override or merge. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-642; persistence/read route: SP-622.
 
 ```yaml
 plan_unit_id: ACD-622
@@ -29714,14 +29813,24 @@ canonical_text: '### ACD-622 — chat.thread_worktree_pre_merge_test_failed
   freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
   retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0",
   storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
-  = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and
-  EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286
-  and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect;
-  commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing
-  terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile
-  original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting
-  a new operation. This text defines no new user command or feature. The event cannot emit until its own admission
-  and all required owner source graphs are complete. Semantic/payload route: CV-642; persistence/read route: SP-622.'
+  = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact
+  scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project
+  identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase
+  hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this
+  family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus
+  or result component is added. No additional optional effect component is defined for this family; distinct event
+  types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source
+  joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original
+  result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields
+  dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original
+  payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite.
+  Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input
+  before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt
+  before publishing terminal success. For started, append/receipt precedes test launch; for already completed external
+  effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked
+  before starting a new operation. This text defines no new user command or feature. The event cannot emit until
+  its own admission and all required owner source graphs are complete. Semantic/payload route: CV-642; persistence/read
+  route: SP-622.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29755,7 +29864,7 @@ owner_hints:
 
 ### ACD-623 — chat.thread_worktree_pre_merge_test_passed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_passed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After matching started operation, record successful test and duration for this strategy. It does not prove post-hook state or permit replay to run a merge. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-643; persistence/read route: SP-623.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_passed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test completion handler. After matching started operation, record successful test and duration for this strategy. It does not prove post-hook state or permit replay to run a merge. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-643; persistence/read route: SP-623.
 
 ```yaml
 plan_unit_id: ACD-623
@@ -29771,15 +29880,24 @@ canonical_text: '### ACD-623 — chat.thread_worktree_pre_merge_test_passed
   replay to run a merge. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted
   operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity
   tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id,
-  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key
-  = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed
-  semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by
-  name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-643; persistence/read route: SP-623.'
+  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-643; persistence/read route: SP-623.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29813,7 +29931,7 @@ owner_hints:
 
 ### ACD-624 — chat.thread_worktree_pre_merge_test_started
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_started` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test launch handler. Acquire merge lock then re-check dirty/conflict/active-run/detached-HEAD guards. Capture target and strategy and safe-point worktree snapshot before mutation-capable tests. Started precedes exactly one terminal test outcome; no test on earlier rebase conflict. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644; persistence/read route: SP-624.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_pre_merge_test_started` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat pre-merge test launch handler. Acquire merge lock then re-check dirty/conflict/active-run/detached-HEAD guards. Capture target and strategy and safe-point worktree snapshot before mutation-capable tests. Started precedes exactly one terminal test outcome; no test on earlier rebase conflict. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644; persistence/read route: SP-624.
 
 ```yaml
 plan_unit_id: ACD-624
@@ -29830,15 +29948,24 @@ canonical_text: '### ACD-624 — chat.thread_worktree_pre_merge_test_started
   For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before
   its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started",
   "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
-  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt
-  SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before
-  effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before
-  publishing terminal success. For started, append/receipt precedes test launch; for already completed external
-  effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked
-  before starting a new operation. This text defines no new user command or feature. The event cannot emit until
-  its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644; persistence/read
-  route: SP-624.'
+  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
+  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
+  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  focus or result component is added. No additional optional effect component is defined for this family; distinct
+  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
+  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
+  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
+  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
+  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
+  never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending
+  input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first
+  receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed
+  external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal
+  is checked before starting a new operation. This text defines no new user command or feature. The event cannot
+  emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-644;
+  persistence/read route: SP-624.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29872,7 +29999,7 @@ owner_hints:
 
 ### ACD-625 — chat.thread_worktree_renamed
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_renamed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat title-generated worktree rename completion handler. After successful title-driven branch rename, update records and emit old/new branch names; keep worktree identity/path and original temp name. Failure retains the temporary branch and emits no renamed success. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_renamed` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat title-generated worktree rename completion handler. After successful title-driven branch rename, update records and emit old/new branch names; keep worktree identity/path and original temp name. Failure retains the temporary branch and emits no renamed success. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.
 
 ```yaml
 plan_unit_id: ACD-625
@@ -29888,15 +30015,24 @@ canonical_text: '### ACD-625 — chat.thread_worktree_renamed
   temp name. Failure retains the temporary branch and emits no renamed success. For chat.thread_worktree_renamed,
   freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
   retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id,
-  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple),
-  and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest;
-  same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt
-  custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body
-  refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt
-  precedes test launch; for already completed external effects, reconcile original evidence after uncertain append,
-  never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new
-  user command or feature. The event cannot emit until its own admission and all required owner source graphs are
-  complete. Semantic/payload route: CV-645; persistence/read route: SP-625.'
+  scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple).
+  Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~"
+  + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or
+  read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id))
+  + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family''s original operation_id,
+  frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No
+  additional optional effect component is defined for this family; distinct event types retain separate Storage
+  lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins
+  remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result
+  and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable
+  with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord
+  semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339
+  full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and
+  read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal
+  success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original
+  evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation.
+  This text defines no new user command or feature. The event cannot emit until its own admission and all required
+  owner source graphs are complete. Semantic/payload route: CV-645; persistence/read route: SP-625.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29930,7 +30066,7 @@ owner_hints:
 
 ### ACD-626 — chat.thread_worktree_unbound
 
-Newly authored owner contract under DL-045 for `chat.thread_worktree_unbound` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler. After explicit unbind, guarded removal/delete cleanup or verified path_missing, remove binding and reverse key atomically. Archive/completion/failure and Project switch are not unbind. Never recreate a missing worktree silently. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646; persistence/read route: SP-626.
+Newly authored owner contract under DL-045 for `chat.thread_worktree_unbound` only, revision 1.0.0, prepared without admission. Exact producer: Assistant Chat unbind/remove/delete cleanup or lazy path revalidation handler. After explicit unbind, guarded removal/delete cleanup or verified path_missing, remove binding and reverse key atomically. Archive/completion/failure and Project switch are not unbind. Never recreate a missing worktree silently. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646; persistence/read route: SP-626.
 
 ```yaml
 plan_unit_id: ACD-626
@@ -29947,15 +30083,24 @@ canonical_text: '### ACD-626 — chat.thread_worktree_unbound
   chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh
   entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound",
   "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
-  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
-  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt
-  SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before
-  effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before
-  publishing terminal success. For started, append/receipt precedes test launch; for already completed external
-  effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked
-  before starting a new operation. This text defines no new user command or feature. The event cannot emit until
-  its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646; persistence/read
-  route: SP-626.'
+  event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage
+  exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact
+  Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:"
+  + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is
+  exactly this family''s original operation_id, frozen with the accepted source before any effect; no retry, timestamp,
+  focus or result component is added. No additional optional effect component is defined for this family; distinct
+  event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original
+  Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic
+  digest returns the original result and first receipt without a new effect; a different digest conflicts; missing
+  authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch:
+  recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict,
+  never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending
+  input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first
+  receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed
+  external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal
+  is checked before starting a new operation. This text defines no new user command or feature. The event cannot
+  emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-646;
+  persistence/read route: SP-626.'
 gui_related: true
 gui_classification_reason: Owns visible chat outcome and existing presentation.
 depends_on:
@@ -29980,6 +30125,88 @@ source_lineage:
 - DL-045; WAVE2 DCH 2026-11-04
 preserved_exact_tokens:
 - chat.thread_worktree_unbound
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/assistant-chat-design.md
+```
+
+
+### ACD-613 — chat.thread_archived
+
+Newly authored owner contract under DL-045 for `chat.thread_archived` only, revision 1.0.0, prepared without admission. Exact producer: cmd.chat.thread.archive lifecycle handler for the existing manual Archive action, dispatched by cataloged cmd.chat.archive; the lifecycle spelling is an owner interface, not a new command registration. Adopt DL-280/DL-287, ACD-071/074/508 and the catalog guard thread_selected && !active_run_in_thread. No chat auto-archives, in Project or application scope. Only active or suspended may commit to archived; creating, already archived and deleted refuse a new transition. Revalidate current permission, exact selected thread/Server/Computer, expected lifecycle revision and absence of an active run at commit. CAS the canonical thread revision once and read back archived before append. Preserve thread id, transcript, lineage, citations, attachments, audit metadata and existing folder/worktree; hide from active lists and prune only existing transient composer/queue/cache state under ACD-074/075. Archive performs no folder/worktree cleanup, purge, delete or automatic retention action. A later explicit unarchive keeps the same identity; replay cannot override it or a deletion tombstone. For chat.thread_archived, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id)); validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366: idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)). Here owner_operation_id is exactly this family's original operation_id, frozen with the accepted source before any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key). Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts; missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending; recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch; for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect. Admission refusal is checked before starting a new operation. This text defines no new user command or feature. The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload route: CV-633; persistence/read route: SP-613.
+
+```yaml
+plan_unit_id: ACD-613
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: '### ACD-613 — chat.thread_archived
+
+
+  Newly authored owner contract under DL-045 for `chat.thread_archived` only, revision 1.0.0, prepared without admission.
+  Exact producer: cmd.chat.thread.archive lifecycle handler for the existing manual Archive action, dispatched by
+  cataloged cmd.chat.archive; the lifecycle spelling is an owner interface, not a new command registration. Adopt
+  DL-280/DL-287, ACD-071/074/508 and the catalog guard thread_selected && !active_run_in_thread. No chat auto-archives,
+  in Project or application scope. Only active or suspended may commit to archived; creating, already archived and
+  deleted refuse a new transition. Revalidate current permission, exact selected thread/Server/Computer, expected
+  lifecycle revision and absence of an active run at commit. CAS the canonical thread revision once and read back
+  archived before append. Preserve thread id, transcript, lineage, citations, attachments, audit metadata and existing
+  folder/worktree; hide from active lists and prune only existing transient composer/queue/cache state under ACD-074/075.
+  Archive performs no folder/worktree cleanup, purge, delete or automatic retention action. A later explicit unarchive
+  keeps the same identity; replay cannot override it or a deletion tombstone. For chat.thread_archived, freeze operation_id
+  from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries).
+  The semantic identity tuple is ["chat.thread_archived", "1.0.0", storage_instance_id, scope, computer_id, thread_id,
+  operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple). Project idempotency_key
+  = "dch:" + that same hex digest, with CV-365/Storage exact scope_partition = "project~" + unpadded base64url(UTF-8(project_id));
+  validate encoding and decoded exact Project identity before append or read. Application explicitly adopts CV-366:
+  idempotency_key = "application@1:" + lowercase hex(UTF-8(scope.server_id)) + ":" + lowercase hex(UTF-8(operation_id)).
+  Here owner_operation_id is exactly this family''s original operation_id, frozen with the accepted source before
+  any effect; no retry, timestamp, focus or result component is added. No additional optional effect component is
+  defined for this family; distinct event types retain separate Storage lifetime tuples (scope_partition,event_type,idempotency_key).
+  Exact original Server/Computer/thread/source joins remain mandatory, including on same-key retries. Same operation
+  and semantic digest returns the original result and first receipt without a new effect; a different digest conflicts;
+  missing authoritative dedupe yields dedupe_unavailable with zero new effect. Application must never use the Project
+  dch: recipe. Capture original payload and EventRecord semantic digest; same identity with changed semantics is
+  a conflict, never an overwrite. Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name: persist
+  original intent/pending input before effect; commit and read back actual canonical outcome/body refs before appending;
+  recover the first receipt before publishing terminal success. For started, append/receipt precedes test launch;
+  for already completed external effects, reconcile original evidence after uncertain append, never rerun the effect.
+  Admission refusal is checked before starting a new operation. This text defines no new user command or feature.
+  The event cannot emit until its own admission and all required owner source graphs are complete. Semantic/payload
+  route: CV-633; persistence/read route: SP-613.'
+gui_related: true
+gui_classification_reason: Owns visible chat outcome and existing presentation.
+depends_on:
+- DL-045
+- ACD-071
+- ACD-074
+- ACD-508
+- DL-287
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+- Review round 1 F3; DL-280/DL-287 current premise verified 2026-11-04
+preserved_exact_tokens:
+- chat.thread_archived
+- cmd.chat.thread.archive
+- cmd.chat.archive
+- No chat auto-archives
 negative_constraints:
 - No event admission or native execution proof; no retention choice.
 owner_hints:

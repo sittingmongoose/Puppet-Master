@@ -31768,3 +31768,140 @@ negative_constraints:
 owner_hints:
 - Plans/storage-plan.md
 ```
+
+
+### SP-613 — chat.thread_archived
+
+Newly authored persistence/read contract for `chat.thread_archived` 1.0.0 under DL-045, adopting ACD-613 and CV-633. Exact operating consumer `reader.chat.chat_thread_archived@1.0.0` serves Thread shell/navigation, SP-338 render-page builder and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`, schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278 including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically, complete captured coverage, source selection and current publication validation. Each read uses the actual live transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path. Replay of this event through `reader.chat.chat_thread_archived@1.0.0` returns original outcome evidence only: no git, API, test, send, chip creation, archive transition, notification, billing or deletion side effect. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized by this draft. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.thread.archive lifecycle handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings, errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output. Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family before new operations; fence `reader.chat.chat_thread_archived@1.0.0` and any affected domain projection, retain supported original-version historical lookup under current permissions, then rebuild a separately versioned successor from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current, remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+**chat.thread_archived domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_archived@1.0.0` 1.0.0 and operating consumer `reader.chat.chat_thread_archived@1.0.0` explicitly adopt SP-278 and the same verified full-index source path. The family's separate checkpoint is `projector.checkpoint.dch.chat_thread_archived.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_archived_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json#`, schema_id `pm.storage_value.dch_chat_thread_archived_checkpoint.v1` 1.0.0. The nine-field durable token is copied exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition app is also bound to its source token's Server/instance and the event's Computer/thread, never to every null Project. The projector processes only chat.thread_archived in verified source sequence order and applies the ACD-613 manual lifecycle transition once. Resolve thread_record_ref against the original committed archived revision and exact scope/Server/Computer/thread before accepting evidence. Build the existing lifecycle/navigation/search visibility projections from current canonical thread state and tombstones. A later unarchive or deletion wins over historical archived evidence; never force current state back to archived. Preserve existing transcript/lineage/attachment/folder/worktree identities, and never call Archive, create a folder, perform Git cleanup, delete content or send notifications during replay. No automatic archive or source expiry follows from this checkpoint. Rebuild shared lifecycle targets in global source order with every required admitted lifecycle source and current canonical joins; a missing counterpart fences publication.
+
+For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the pointer and checkpoint together. Readers serve only targets named by the current checkpoint's refs and same publication_id; old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild, not source repair. Source loss requires canonical backup recovery.
+
+The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through the existing maintenance intent before source staging; a staged candidate counts against three even before it is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0; retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability. Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader, sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild. Unsupported versions are unavailable, never rewritten in place.
+
+```yaml
+plan_unit_id: SP-613
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: '### SP-613 — chat.thread_archived
+
+
+  Newly authored persistence/read contract for `chat.thread_archived` 1.0.0 under DL-045, adopting ACD-613 and CV-633.
+  Exact operating consumer `reader.chat.chat_thread_archived@1.0.0` serves Thread shell/navigation, SP-338 render-page
+  builder and audit. Reuse exact projector `projector.storage.event_record_index@1.0.0` and checkpoint `event_record_index_checkpoint.v1:{storage_instance_id}`,
+  schema `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`, version 1.0.0. Explicitly adopt SP-278
+  including DL-076 nine-field durable read token and current full-index generation/frontier validation; no persisted
+  redb_snapshot_id. This consumer is an on-demand, exact-event filtered read of the generic index, not an independently
+  advancing persistent filtered projection. SP-278 performs predecessor-frontier CAS with index rows atomically,
+  complete captured coverage, source selection and current publication validation. Each read uses the actual live
+  transaction token, full scope and canonical source/payload joins and current permissions; a stale, unsupported
+  or unavailable token cannot publish a result. The generic checkpoint retains RP-PROJECTION-3GEN@1.0.0, without
+  extending the source event lifetime. No new stored family/key/value is created by this reader, so no storage registry
+  row is invented. Existing render pages, Tantivy and worktree binding projections remain their owner-defined stores
+  and must be rebuilt under their own current checkpoints, not by adopting this audit reader as a new mutation path.
+  Replay of this event through `reader.chat.chat_thread_archived@1.0.0` returns original outcome evidence only:
+  no git, API, test, send, chip creation, archive transition, notification, billing or deletion side effect. retention_policy_ref
+  = PENDING_RETENTION_DECISION. Candidates: Case L-3 Chat content (thread lifetime, 250,000/thread) versus audit
+  authority (indefinite, no count eviction); classification belongs to RT/Jared. No expiry/count deletion is authorized
+  by this draft. Original source intent, canonical outcome/body and first receipt remain with cmd.chat.thread.archive
+  lifecycle handler, under SP-286/CV-339; coherent backup/restore includes those dependencies and deletion records
+  before any visible read. Missing originals are unavailable, never recaptured. Stored excerpts, command strings,
+  errors, branch/path/PR text must be scrubbed before append; no credentials, inline message body or raw tool output.
+  Every referenced body requires current authorization, deletion/hold checks and exact source Computer/root; retained
+  audit metadata grants no access. This event adds no hold or purge exemption. Withdrawal cuts off this exact family
+  before new operations; fence `reader.chat.chat_thread_archived@1.0.0` and any affected domain projection, retain
+  supported original-version historical lookup under current permissions, then rebuild a separately versioned successor
+  from retained canonical sources and a fresh SP-278 token before publication. Never reset a cursor to zero as current,
+  remint events, or delete seglog as withdrawal. No admission or native execution proof is implied.
+
+
+
+
+  **chat.thread_archived domain projection binding (newly authored owner contract).** Exact domain projector `projector.chat.chat_thread_archived@1.0.0`
+  1.0.0 and operating consumer `reader.chat.chat_thread_archived@1.0.0` explicitly adopt SP-278 and the same verified
+  full-index source path. The family''s separate checkpoint is `projector.checkpoint.dch.chat_thread_archived.v1:{storage_instance_id}:{scope_partition}`,
+  stored family `dch_chat_thread_archived_checkpoint`, closed schema `Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json#`,
+  schema_id `pm.storage_value.dch_chat_thread_archived_checkpoint.v1` 1.0.0. The nine-field durable token is copied
+  exactly from SP-278/DL-076 without redb_snapshot_id. Consumer/projector versions are the suffixes in their stored
+  constant IDs; no version is inferred from the payload. `last_sequence_id` and `last_event_id` identify the last
+  applied exact-family EventRecord; `source_token` identifies complete inspected source coverage including nonmatching
+  events. Publication identity is fresh entropy for a new shadow generation and frozen on retries; revision increments
+  exactly once on successful CAS. The key joins storage_instance_id and scope_partition exactly. Application partition
+  app is also bound to its source token''s Server/instance and the event''s Computer/thread, never to every null
+  Project. The projector processes only chat.thread_archived in verified source sequence order and applies the ACD-613
+  manual lifecycle transition once. Resolve thread_record_ref against the original committed archived revision and
+  exact scope/Server/Computer/thread before accepting evidence. Build the existing lifecycle/navigation/search visibility
+  projections from current canonical thread state and tombstones. A later unarchive or deletion wins over historical
+  archived evidence; never force current state back to archived. Preserve existing transcript/lineage/attachment/folder/worktree
+  identities, and never call Archive, create a folder, perform Git cleanup, delete content or send notifications
+  during replay. No automatic archive or source expiry follows from this checkpoint. Rebuild shared lifecycle targets
+  in global source order with every required admitted lifecycle source and current canonical joins; a missing counterpart
+  fences publication.
+
+
+  For this exact family, publish projection mutation and checkpoint revision together in one redb transaction with
+  predecessor revision/publication_id CAS. Where the target is Tantivy or the SP-338 page payload store, first durably
+  stage and read back an immutable shadow commit, put its exact reference in projection_refs, then CAS-publish the
+  pointer and checkpoint together. Readers serve only targets named by the current checkpoint''s refs and same publication_id;
+  old/partial targets never become visible by newest-file inference. Existing canonical thread/worktree state is
+  not rewritten by a derived rebuild. Rebuild any shared target from all its admitted family sources in global source
+  order into one shadow, never by replaying a whole bound family after an unbound family. A required unadmitted
+  counterpart fences that target, not an inferred admission. Re-read canonical state/tombstones and current grants
+  before publication. On source-generation change or failed CAS, discard unpublished target or retry from the unchanged
+  verified prefix; never reuse a stale token. Missing or malformed derived bytes enter Q-DERIVED and governed rebuild,
+  not source repair. Source loss requires canonical backup recovery.
+
+
+  The checkpoint is MessagePack canonical, max 16 KiB under SP-340; oversized values use existing SP-337 reference
+  storage, never an exemption. The closed history array stores at most two full prior checkpoint generations with
+  first retired_at_utc and state retired; current fields name the selected generation. Reserve staged slots through
+  the existing maintenance intent before source staging; a staged candidate counts against three even before it
+  is visible in history. Retain at most three publication generations per exact key under RP-PROJECTION-3GEN@1.0.0;
+  retirement starts at first committed replacement, retries do not reset it, 604800 seconds for eligible retired
+  generations only, with holds/current/staged/live-ref protection. Reserve the slot first or disclose rebuild unavailability.
+  Source events keep PENDING_RETENTION_DECISION; the checkpoint gives no source keepalive. Backup restores canonical
+  source/custody/tombstones first; derived target/checkpoint is rebuilt and validated against the current full-index
+  token before read. Withdrawal fences this projector and its domain readers in addition to the passive reader,
+  sets checkpoint state withdrawn by CAS, and refuses all ordinary advances. Retained historical lookup uses original
+  schema and current access checks; successor publication requires a separately versioned, complete shadow rebuild.
+  Unsupported versions are unavailable, never rewritten in place.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-613
+- CV-633
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+- Review round 1 F3; DL-280/DL-287 current premise verified 2026-11-04
+preserved_exact_tokens:
+- chat.thread_archived
+- PENDING_RETENTION_DECISION
+- SP-278
+- SP-286
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/storage-plan.md
+```

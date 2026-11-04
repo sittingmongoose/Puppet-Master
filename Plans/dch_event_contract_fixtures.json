@@ -14,7 +14,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -56,7 +56,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_0e652f0cae20511cfdb75fcfaa7909882f27a781f1e64d5b60190a3fde5655a8",
+      "event_id": "evt_dch_a01bfa10ec312861a9ffb6bfa0950bcfc80517b38dbe2f5822cacc83fefea235",
       "event_type": "bundle.selection_forward_blocked",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -74,7 +74,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:0e652f0cae20511cfdb75fcfaa7909882f27a781f1e64d5b60190a3fde5655a8",
+      "idempotency_key": "dch:a01bfa10ec312861a9ffb6bfa0950bcfc80517b38dbe2f5822cacc83fefea235",
       "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.bundle_selection_forward_blocked.project.v1",
@@ -88,7 +88,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -109,7 +109,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "bundle.selection_forward_blocked",
@@ -162,7 +280,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -186,7 +305,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:d5283303fcc21ee2ea4a9ee5255ee97ca928e179eb96e0600e5ab9a40113d296",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.bundle_selection_forward_blocked.application.v1",
@@ -221,7 +340,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "bundle.selection_sent_to_chat",
@@ -238,7 +383,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -286,7 +431,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_ee783d17850017e59e070f5c682d8c0cbc9dbbb2e18fa31aac71143af59972d5",
+      "event_id": "evt_dch_86f7670f5b8fd149253235a706c34b1f982826c4b2e70c6b5ab24e68bb6b5840",
       "event_type": "bundle.selection_sent_to_chat",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -304,7 +449,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:ee783d17850017e59e070f5c682d8c0cbc9dbbb2e18fa31aac71143af59972d5",
+      "idempotency_key": "dch:86f7670f5b8fd149253235a706c34b1f982826c4b2e70c6b5ab24e68bb6b5840",
       "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.project.v1",
@@ -318,7 +463,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -343,7 +488,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "bundle.selection_sent_to_chat",
@@ -402,7 +665,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -426,7 +690,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:1ac7b6a462c1bb0b506296d0ed80fab9b0602f91397ce918cc7bd5eaa96aa0ff",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.bundle_selection_sent_to_chat.application.v1",
@@ -465,7 +729,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.message",
@@ -482,7 +772,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -524,7 +814,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_7ceea8405a54d94b6c7dd145e0bbc10a12cfd8e0195982f86e0873ae4eba9094",
+      "event_id": "evt_dch_ddcf3f21b46467e420f5a2b7e55a90753dd002d504184510deb04a350ef22902",
       "event_type": "chat.message",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -542,7 +832,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:7ceea8405a54d94b6c7dd145e0bbc10a12cfd8e0195982f86e0873ae4eba9094",
+      "idempotency_key": "dch:ddcf3f21b46467e420f5a2b7e55a90753dd002d504184510deb04a350ef22902",
       "payload_schema_id": "pm.dch_event.chat_message.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_message.project.v1",
@@ -556,7 +846,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -577,7 +867,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.message",
@@ -630,7 +1038,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -654,7 +1063,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:3078aed191824464a1fcd26ccb29c344d1aab1327b033857cf7f3774c6e32e5c",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_message.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_message.application.v1",
@@ -689,7 +1098,812 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
+  },
+  {
+    "event_type": "chat.thread_archived",
+    "edition": "project",
+    "valid": {
+      "schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+      "schema_version": "1.0.0",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "operation_id": "fixture_operation_id",
+      "actor_ref": "pmref:fixture:actor_ref",
+      "ts": "2026-11-04T00:00:00Z",
+      "computer_id": "fixture_computer_id",
+      "scope": {
+        "schema_id": "pm.workflow_scope.v2",
+        "schema_version": "2.0.0",
+        "scope_kind": "project",
+        "scope_partition": "project~cDE",
+        "project_id": "p1",
+        "project_home_server_id": "server1",
+        "named_plan_id": null,
+        "server_id": "server1"
+      },
+      "thread_record_ref": "pmref:fixture:thread_record_ref",
+      "previous_state": "active",
+      "state": "archived",
+      "archive_origin": "manual",
+      "command_id": "cmd.chat.archive",
+      "expected_thread_revision": 4,
+      "committed_thread_revision": 5
+    },
+    "missing_fields": [
+      "schema_id",
+      "schema_version",
+      "thread_id",
+      "operation_id",
+      "actor_ref",
+      "ts",
+      "computer_id",
+      "scope",
+      "thread_record_ref",
+      "previous_state",
+      "state",
+      "archive_origin",
+      "command_id",
+      "expected_thread_revision",
+      "committed_thread_revision"
+    ],
+    "negative_oracles": [
+      "extra_field",
+      "scope_mismatch",
+      "wrong_version",
+      "same_identity_changed_content",
+      "cross_scope_identity",
+      "replay_no_effect",
+      "missing_custody",
+      "stale_frontier",
+      "withdrawn_reader"
+    ],
+    "record": {
+      "schema_id": "pm.event.v0",
+      "schema_version": "2.0.0",
+      "scope_kind": "project",
+      "event_id": "evt_dch_4e4e1fc46dd556ec5473a1564d3a736e9a66ccb6271b3ee1bcc9ad794234dd0b",
+      "event_type": "chat.thread_archived",
+      "project_id": "p1",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "run_id": null,
+      "node_id": null,
+      "attempt_id": null,
+      "actor_ref": "pmref:fixture:actor_ref",
+      "requested_account_ref": null,
+      "effective_account_ref": null,
+      "occurred_at_utc": "2026-11-04T00:00:00Z",
+      "observed_at_utc": "2026-11-04T00:00:00Z",
+      "persisted_at_utc": "2026-11-04T00:00:00Z",
+      "sequence_id": 1,
+      "producer_sequence_id": null,
+      "correlation_id": "fixture_operation_id",
+      "causation_event_id": null,
+      "parent_event_id": null,
+      "idempotency_key": "dch:4e4e1fc46dd556ec5473a1564d3a736e9a66ccb6271b3ee1bcc9ad794234dd0b",
+      "payload_schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+      "payload": {
+        "schema_id": "pm.dch_event.chat_thread_archived.project.v1",
+        "schema_version": "1.0.0",
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "operation_id": "fixture_operation_id",
+        "actor_ref": "pmref:fixture:actor_ref",
+        "ts": "2026-11-04T00:00:00Z",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cDE",
+          "project_id": "p1",
+          "project_home_server_id": "server1",
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "thread_record_ref": "pmref:fixture:thread_record_ref",
+        "previous_state": "active",
+        "state": "archived",
+        "archive_origin": "manual",
+        "command_id": "cmd.chat.archive",
+        "expected_thread_revision": 4,
+        "committed_thread_revision": 5
+      },
+      "payload_ref": null,
+      "redaction_profile": "no_secrets",
+      "replay_policy": "dedupe_by_idempotency_key",
+      "migration": {
+        "migrated_from_schema_id": null,
+        "migrated_from_schema_version": null,
+        "migration_id": null,
+        "compatibility_event_type": null
+      }
+    },
+    "archive_source": {
+      "before": {
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cDE",
+          "project_id": "p1",
+          "project_home_server_id": "server1",
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "operation_id": "fixture_operation_id",
+        "state": "active",
+        "revision": 4,
+        "active_run": false
+      },
+      "after": {
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cDE",
+          "project_id": "p1",
+          "project_home_server_id": "server1",
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "operation_id": "fixture_operation_id",
+        "state": "archived",
+        "revision": 5,
+        "record_ref": "pmref:fixture:thread_record_ref",
+        "readback_available": true
+      },
+      "request": {
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cDE",
+          "project_id": "p1",
+          "project_home_server_id": "server1",
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "operation_id": "fixture_operation_id",
+        "origin": "manual",
+        "command_id": "cmd.chat.archive",
+        "expected_revision": 4,
+        "permission_allowed": true,
+        "thread_selected": true
+      }
+    },
+    "archive_oracles": [
+      {
+        "name": "manual_suspended",
+        "changes": {
+          "payload.previous_state": "suspended",
+          "source.before.state": "suspended"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "automatic_payload",
+        "changes": {
+          "payload.archive_origin": "retention_policy"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "automatic_request",
+        "changes": {
+          "source.request.origin": "retention_policy"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "creating",
+        "changes": {
+          "payload.previous_state": "creating",
+          "source.before.state": "creating"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "already_archived",
+        "changes": {
+          "payload.previous_state": "archived",
+          "source.before.state": "archived"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted",
+        "changes": {
+          "payload.previous_state": "deleted",
+          "source.before.state": "deleted"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "active_run",
+        "changes": {
+          "source.before.active_run": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unselected_thread",
+        "changes": {
+          "source.request.thread_selected": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "permission_denied",
+        "changes": {
+          "source.request.permission_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "stale_revision",
+        "changes": {
+          "source.request.expected_revision": 3
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "skipped_revision",
+        "changes": {
+          "payload.committed_thread_revision": 6,
+          "source.after.revision": 6
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "wrong_commit_state",
+        "changes": {
+          "source.after.state": "active"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "missing_readback",
+        "changes": {
+          "source.after.readback_available": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "wrong_readback_ref",
+        "changes": {
+          "source.after.record_ref": "pmref:fixture:other_record"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "wrong_command",
+        "changes": {
+          "payload.command_id": "cmd.chat.thread.archive"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_thread",
+        "changes": {
+          "source.after.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_computer",
+        "changes": {
+          "source.after.computer_id": "other_computer"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_source_scope",
+        "changes": {
+          "source.after.scope.server_id": "other_server"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_source_operation",
+        "changes": {
+          "source.after.operation_id": "other_operation"
+        },
+        "expected_valid": false
+      }
+    ],
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
+  },
+  {
+    "event_type": "chat.thread_archived",
+    "edition": "application",
+    "valid": {
+      "schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+      "schema_version": "1.0.0",
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "operation_id": "fixture_operation_id",
+      "actor_ref": "pmref:fixture:actor_ref",
+      "ts": "2026-11-04T00:00:00Z",
+      "computer_id": "fixture_computer_id",
+      "scope": {
+        "schema_id": "pm.workflow_scope.v2",
+        "schema_version": "2.0.0",
+        "scope_kind": "application",
+        "scope_partition": "app",
+        "project_id": null,
+        "project_home_server_id": null,
+        "named_plan_id": null,
+        "server_id": "server1"
+      },
+      "thread_record_ref": "pmref:fixture:thread_record_ref",
+      "previous_state": "active",
+      "state": "archived",
+      "archive_origin": "manual",
+      "command_id": "cmd.chat.archive",
+      "expected_thread_revision": 4,
+      "committed_thread_revision": 5
+    },
+    "missing_fields": [
+      "schema_id",
+      "schema_version",
+      "thread_id",
+      "operation_id",
+      "actor_ref",
+      "ts",
+      "computer_id",
+      "scope",
+      "thread_record_ref",
+      "previous_state",
+      "state",
+      "archive_origin",
+      "command_id",
+      "expected_thread_revision",
+      "committed_thread_revision"
+    ],
+    "negative_oracles": [
+      "extra_field",
+      "scope_mismatch",
+      "wrong_version",
+      "same_identity_changed_content",
+      "cross_scope_identity",
+      "replay_no_effect",
+      "missing_custody",
+      "stale_frontier",
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
+    ],
+    "record": {
+      "schema_id": "pm.event.v0",
+      "schema_version": "2.0.0",
+      "scope_kind": "application",
+      "event_id": "evt_dch_cc0a47c2ead78883f71f8faef631b841b84a85993fe2149fb3f0d4f58ed54611",
+      "event_type": "chat.thread_archived",
+      "project_id": null,
+      "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+      "run_id": null,
+      "node_id": null,
+      "attempt_id": null,
+      "actor_ref": "pmref:fixture:actor_ref",
+      "requested_account_ref": null,
+      "effective_account_ref": null,
+      "occurred_at_utc": "2026-11-04T00:00:00Z",
+      "observed_at_utc": "2026-11-04T00:00:00Z",
+      "persisted_at_utc": "2026-11-04T00:00:00Z",
+      "sequence_id": 1,
+      "producer_sequence_id": null,
+      "correlation_id": "fixture_operation_id",
+      "causation_event_id": null,
+      "parent_event_id": null,
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
+      "payload_schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+      "payload": {
+        "schema_id": "pm.dch_event.chat_thread_archived.application.v1",
+        "schema_version": "1.0.0",
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "operation_id": "fixture_operation_id",
+        "actor_ref": "pmref:fixture:actor_ref",
+        "ts": "2026-11-04T00:00:00Z",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "thread_record_ref": "pmref:fixture:thread_record_ref",
+        "previous_state": "active",
+        "state": "archived",
+        "archive_origin": "manual",
+        "command_id": "cmd.chat.archive",
+        "expected_thread_revision": 4,
+        "committed_thread_revision": 5
+      },
+      "payload_ref": null,
+      "redaction_profile": "no_secrets",
+      "replay_policy": "dedupe_by_idempotency_key",
+      "migration": {
+        "migrated_from_schema_id": null,
+        "migrated_from_schema_version": null,
+        "migration_id": null,
+        "compatibility_event_type": null
+      }
+    },
+    "archive_source": {
+      "before": {
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "operation_id": "fixture_operation_id",
+        "state": "active",
+        "revision": 4,
+        "active_run": false
+      },
+      "after": {
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "operation_id": "fixture_operation_id",
+        "state": "archived",
+        "revision": 5,
+        "record_ref": "pmref:fixture:thread_record_ref",
+        "readback_available": true
+      },
+      "request": {
+        "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
+        "computer_id": "fixture_computer_id",
+        "scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server1"
+        },
+        "operation_id": "fixture_operation_id",
+        "origin": "manual",
+        "command_id": "cmd.chat.archive",
+        "expected_revision": 4,
+        "permission_allowed": true,
+        "thread_selected": true
+      }
+    },
+    "archive_oracles": [
+      {
+        "name": "manual_suspended",
+        "changes": {
+          "payload.previous_state": "suspended",
+          "source.before.state": "suspended"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "automatic_payload",
+        "changes": {
+          "payload.archive_origin": "retention_policy"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "automatic_request",
+        "changes": {
+          "source.request.origin": "retention_policy"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "creating",
+        "changes": {
+          "payload.previous_state": "creating",
+          "source.before.state": "creating"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "already_archived",
+        "changes": {
+          "payload.previous_state": "archived",
+          "source.before.state": "archived"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted",
+        "changes": {
+          "payload.previous_state": "deleted",
+          "source.before.state": "deleted"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "active_run",
+        "changes": {
+          "source.before.active_run": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unselected_thread",
+        "changes": {
+          "source.request.thread_selected": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "permission_denied",
+        "changes": {
+          "source.request.permission_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "stale_revision",
+        "changes": {
+          "source.request.expected_revision": 3
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "skipped_revision",
+        "changes": {
+          "payload.committed_thread_revision": 6,
+          "source.after.revision": 6
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "wrong_commit_state",
+        "changes": {
+          "source.after.state": "active"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "missing_readback",
+        "changes": {
+          "source.after.readback_available": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "wrong_readback_ref",
+        "changes": {
+          "source.after.record_ref": "pmref:fixture:other_record"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "wrong_command",
+        "changes": {
+          "payload.command_id": "cmd.chat.thread.archive"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_thread",
+        "changes": {
+          "source.after.thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAX"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_computer",
+        "changes": {
+          "source.after.computer_id": "other_computer"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_source_scope",
+        "changes": {
+          "source.after.scope.server_id": "other_server"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "changed_source_operation",
+        "changes": {
+          "source.after.operation_id": "other_operation"
+        },
+        "expected_valid": false
+      }
+    ],
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_created",
@@ -706,7 +1920,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -742,7 +1956,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_0db1f1b5bd49b6d1120919c58851871de685f9c778bad9fdf303384403cac1e8",
+      "event_id": "evt_dch_769e17bb7209259c7554beac6c38d3def8245ec72c1bc7d3b537b582f4140016",
       "event_type": "chat.thread_created",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -760,7 +1974,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:0db1f1b5bd49b6d1120919c58851871de685f9c778bad9fdf303384403cac1e8",
+      "idempotency_key": "dch:769e17bb7209259c7554beac6c38d3def8245ec72c1bc7d3b537b582f4140016",
       "payload_schema_id": "pm.dch_event.chat_thread_created.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_created.project.v1",
@@ -774,7 +1988,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -792,7 +2006,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_created",
@@ -839,7 +2171,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -863,7 +2196,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:2b3f0aba6df7bd52380d7a51d4f95e436a507d5459be8152fb9137136078eeb2",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_created.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_created.application.v1",
@@ -895,7 +2228,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_deleted",
@@ -912,7 +2271,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -948,7 +2307,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_cdbb57ef78fa1d29695912f92612b02c02c905c3457fa8755340435ca0b78c65",
+      "event_id": "evt_dch_11b755ddc016c73b9779149a71a20df7b9071c956a7e07c2999751b832d04ea4",
       "event_type": "chat.thread_deleted",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -966,7 +2325,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:cdbb57ef78fa1d29695912f92612b02c02c905c3457fa8755340435ca0b78c65",
+      "idempotency_key": "dch:11b755ddc016c73b9779149a71a20df7b9071c956a7e07c2999751b832d04ea4",
       "payload_schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_deleted.project.v1",
@@ -980,7 +2339,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -998,7 +2357,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_deleted",
@@ -1045,7 +2522,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -1069,7 +2547,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:a1d752e8fbc2423211a316088871c333e688d4eda91b7d40d1cbf03b727bf086",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_deleted.application.v1",
@@ -1101,7 +2579,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_bound",
@@ -1118,7 +2622,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -1158,7 +2662,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_12681889402fb58775944ebeb0e6647dbe549520f34e069200a100d4fe9fde58",
+      "event_id": "evt_dch_b11bbca6817806147301b1bc22272091f6c54abd3d9338437141ccbd284eb661",
       "event_type": "chat.thread_worktree_bound",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -1176,7 +2680,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:12681889402fb58775944ebeb0e6647dbe549520f34e069200a100d4fe9fde58",
+      "idempotency_key": "dch:b11bbca6817806147301b1bc22272091f6c54abd3d9338437141ccbd284eb661",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_bound.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_bound.project.v1",
@@ -1190,7 +2694,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -1210,7 +2714,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_bound",
@@ -1261,7 +2883,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -1285,7 +2908,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:e016205a41b9419c7dbb47dea0779962f274b9aef5d305fe4d96381eebeb3e4a",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_bound.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_bound.application.v1",
@@ -1319,7 +2942,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_create_failed",
@@ -1336,7 +2985,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -1372,7 +3021,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_ad93f5d86345e04c027ecdcce13bcbb407f8066a4391f8fe1aecb137888ca822",
+      "event_id": "evt_dch_c18800ee29cc01f5b918a14db273cf554884a177abd73f1a9c9ea2d196df1bb3",
       "event_type": "chat.thread_worktree_create_failed",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -1390,7 +3039,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:ad93f5d86345e04c027ecdcce13bcbb407f8066a4391f8fe1aecb137888ca822",
+      "idempotency_key": "dch:c18800ee29cc01f5b918a14db273cf554884a177abd73f1a9c9ea2d196df1bb3",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_create_failed.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_create_failed.project.v1",
@@ -1404,7 +3053,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -1422,7 +3071,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_create_failed",
@@ -1469,7 +3236,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -1493,7 +3261,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:4e9a1a4da5c7711d1d5288a435818f2ddd84dbb9971f9e0679a1be71eabf25a4",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_create_failed.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_create_failed.application.v1",
@@ -1525,7 +3293,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_merge_failed",
@@ -1542,7 +3336,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -1586,7 +3380,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_2a0361040ff7462ef99abe1b1275cdc99fa87a0ea1cc2cc7db6872f16b36af4e",
+      "event_id": "evt_dch_370894625dd59ecf6315370c2ad9b2719b65bb51bcc3e9bba0e17bc3415bacfb",
       "event_type": "chat.thread_worktree_merge_failed",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -1604,7 +3398,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:2a0361040ff7462ef99abe1b1275cdc99fa87a0ea1cc2cc7db6872f16b36af4e",
+      "idempotency_key": "dch:370894625dd59ecf6315370c2ad9b2719b65bb51bcc3e9bba0e17bc3415bacfb",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.project.v1",
@@ -1618,7 +3412,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -1640,7 +3434,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_merge_failed",
@@ -1695,7 +3607,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -1719,7 +3632,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:29e4c880cf32f985f954bf0e7932166a81c3089fc8c3e1a766431089142c1b29",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_merge_failed.application.v1",
@@ -1755,7 +3668,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_merged",
@@ -1772,7 +3711,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -1814,7 +3753,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_e4fe252a2d4899e3209c7c9a575fc1173586ed48b71a4eaca889b9062405d590",
+      "event_id": "evt_dch_2f7bc9bc9916b32cfbab0df167877021adfa518a3dcd4a3efafc83d1940b9850",
       "event_type": "chat.thread_worktree_merged",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -1832,7 +3771,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:e4fe252a2d4899e3209c7c9a575fc1173586ed48b71a4eaca889b9062405d590",
+      "idempotency_key": "dch:2f7bc9bc9916b32cfbab0df167877021adfa518a3dcd4a3efafc83d1940b9850",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_merged.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_merged.project.v1",
@@ -1846,7 +3785,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -1867,7 +3806,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_merged",
@@ -1920,7 +3977,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -1944,7 +4002,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:062cea1ab89fd48cbdfb41debe605fdd549a264a347663804b21cb8b29e1844d",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_merged.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_merged.application.v1",
@@ -1979,7 +4037,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pr_created",
@@ -1996,7 +4080,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -2038,7 +4122,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_a4ba12a0fa8e9958309e8c0d15b20f0d3f0b10a600b0b6f95ab609af45ce7815",
+      "event_id": "evt_dch_49c4f1fab7b22e7e149f32c5f8a00605636c94c0a6b0b51c4ac6522a946dcb1b",
       "event_type": "chat.thread_worktree_pr_created",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -2056,7 +4140,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:a4ba12a0fa8e9958309e8c0d15b20f0d3f0b10a600b0b6f95ab609af45ce7815",
+      "idempotency_key": "dch:49c4f1fab7b22e7e149f32c5f8a00605636c94c0a6b0b51c4ac6522a946dcb1b",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_created.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pr_created.project.v1",
@@ -2070,7 +4154,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -2091,7 +4175,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pr_created",
@@ -2144,7 +4346,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -2168,7 +4371,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:a5745241962462b05f20b35353ba99ff42843a07887cd4f14be00a3ad09a072a",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_created.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pr_created.application.v1",
@@ -2203,7 +4406,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pr_failed",
@@ -2220,7 +4449,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -2260,7 +4489,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_77e3c02440adee6c93efdd151d4a668581b0872e63236d507d173c4e448c3367",
+      "event_id": "evt_dch_cc33c5eb3d208e44f9966a525760540cad071d4d1c46b13f52ca4ae3f8d4dbbb",
       "event_type": "chat.thread_worktree_pr_failed",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -2278,7 +4507,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:77e3c02440adee6c93efdd151d4a668581b0872e63236d507d173c4e448c3367",
+      "idempotency_key": "dch:cc33c5eb3d208e44f9966a525760540cad071d4d1c46b13f52ca4ae3f8d4dbbb",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_failed.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pr_failed.project.v1",
@@ -2292,7 +4521,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -2312,7 +4541,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pr_failed",
@@ -2363,7 +4710,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -2387,7 +4735,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:c8189211dfeda87babd42e0ea9fde7e879808635eaea29eece700978a3850f1d",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pr_failed.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pr_failed.application.v1",
@@ -2421,7 +4769,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_failed",
@@ -2438,7 +4812,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -2482,7 +4856,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_2e63506fed1d4b720f67ccbc2345ff0de2c7559769be516b04d8b6d06fafbf27",
+      "event_id": "evt_dch_8796d89503b9bc11b78bf4236387f5596e40bc739f41659ea0c94dad3c118950",
       "event_type": "chat.thread_worktree_pre_merge_test_failed",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -2500,7 +4874,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:2e63506fed1d4b720f67ccbc2345ff0de2c7559769be516b04d8b6d06fafbf27",
+      "idempotency_key": "dch:8796d89503b9bc11b78bf4236387f5596e40bc739f41659ea0c94dad3c118950",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1",
@@ -2514,7 +4888,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -2536,7 +4910,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_failed",
@@ -2591,7 +5083,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -2615,7 +5108,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:378bedb62af85861c9becb7265788631cecb208de8c7da4a1fc8b7f6d9d2667d",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1",
@@ -2651,7 +5144,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_passed",
@@ -2668,7 +5187,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -2708,7 +5227,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_ebdafe66c8a346b5fd34750f38ebe7f40a2f12139cfd1273281e6c79f9eedc7a",
+      "event_id": "evt_dch_0e537dc9ddae6b44949677d1d23868c020a80a45419630de0529b31564b6202e",
       "event_type": "chat.thread_worktree_pre_merge_test_passed",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -2726,7 +5245,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:ebdafe66c8a346b5fd34750f38ebe7f40a2f12139cfd1273281e6c79f9eedc7a",
+      "idempotency_key": "dch:0e537dc9ddae6b44949677d1d23868c020a80a45419630de0529b31564b6202e",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1",
@@ -2740,7 +5259,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -2760,7 +5279,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_passed",
@@ -2811,7 +5448,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -2835,7 +5473,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:a5431114bd4689a0e7b4f7c4b0c46ff2af598e00761636ed757caea284b10170",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1",
@@ -2869,7 +5507,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_started",
@@ -2886,7 +5550,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -2926,7 +5590,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_b650e6b33567176a5e322fea25ec973458f5d9c01a48df946830f0fd8a404a22",
+      "event_id": "evt_dch_ecabc8400d5537312e52782c011cf99c3fbc4a2c7f60f1d53b2d4b7184f93281",
       "event_type": "chat.thread_worktree_pre_merge_test_started",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -2944,7 +5608,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:b650e6b33567176a5e322fea25ec973458f5d9c01a48df946830f0fd8a404a22",
+      "idempotency_key": "dch:ecabc8400d5537312e52782c011cf99c3fbc4a2c7f60f1d53b2d4b7184f93281",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1",
@@ -2958,7 +5622,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -2978,7 +5642,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_pre_merge_test_started",
@@ -3029,7 +5811,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -3053,7 +5836,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:1e13789be81136cdd198e37aa4bfd126a365f44c957afaff4ab8ffb540f9a6e6",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1",
@@ -3087,7 +5870,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_renamed",
@@ -3104,7 +5913,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -3142,7 +5951,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_bd528546a2477715e02b0341333acd008a3b2f6d30f02ddc928d3d52c5e38743",
+      "event_id": "evt_dch_edaee98593f294f58adb259c16d582582a526a62d34d0705bb0a4713fdff19d5",
       "event_type": "chat.thread_worktree_renamed",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -3160,7 +5969,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:bd528546a2477715e02b0341333acd008a3b2f6d30f02ddc928d3d52c5e38743",
+      "idempotency_key": "dch:edaee98593f294f58adb259c16d582582a526a62d34d0705bb0a4713fdff19d5",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_renamed.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_renamed.project.v1",
@@ -3174,7 +5983,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -3193,7 +6002,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_renamed",
@@ -3242,7 +6169,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -3266,7 +6194,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:dac371b41c80d7bd96ef1756592e797373c3cbe059a0aa471c2f187aa6aa44ff",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_renamed.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_renamed.application.v1",
@@ -3299,7 +6227,33 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_unbound",
@@ -3316,7 +6270,7 @@
         "schema_id": "pm.workflow_scope.v2",
         "schema_version": "2.0.0",
         "scope_kind": "project",
-        "scope_partition": "project~p1",
+        "scope_partition": "project~cDE",
         "project_id": "p1",
         "project_home_server_id": "server1",
         "named_plan_id": null,
@@ -3352,7 +6306,7 @@
       "schema_id": "pm.event.v0",
       "schema_version": "2.0.0",
       "scope_kind": "project",
-      "event_id": "evt_dch_f37eb1baca043b0b18f8c6b7449cdf0a0f4058fa4bc0027f79f159cac9b1b0f2",
+      "event_id": "evt_dch_b791657bb2eaf75b0827f3e33fc11c0290aebed3bff9d655eaaa4f9dfdb09a3e",
       "event_type": "chat.thread_worktree_unbound",
       "project_id": "p1",
       "thread_id": "thr_01ARZ3NDEKTSV4RRFFQ69G5FAV",
@@ -3370,7 +6324,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:f37eb1baca043b0b18f8c6b7449cdf0a0f4058fa4bc0027f79f159cac9b1b0f2",
+      "idempotency_key": "dch:b791657bb2eaf75b0827f3e33fc11c0290aebed3bff9d655eaaa4f9dfdb09a3e",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_unbound.project.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_unbound.project.v1",
@@ -3384,7 +6338,7 @@
           "schema_id": "pm.workflow_scope.v2",
           "schema_version": "2.0.0",
           "scope_kind": "project",
-          "scope_partition": "project~p1",
+          "scope_partition": "project~cDE",
           "project_id": "p1",
           "project_home_server_id": "server1",
           "named_plan_id": null,
@@ -3402,7 +6356,125 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ],
+    "partition_oracles": [
+      {
+        "name": "ascii",
+        "project_id": "p1",
+        "scope_partition": "project~cDE",
+        "expected_valid": true
+      },
+      {
+        "name": "ascii_mismatch",
+        "project_id": "p1",
+        "scope_partition": "project~cDI",
+        "expected_valid": false
+      },
+      {
+        "name": "punctuation",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cC4xOi8rPw",
+        "expected_valid": true
+      },
+      {
+        "name": "punctuation_mismatch",
+        "project_id": "p.1:/+?",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "non_ascii",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~6aG555uuL86U",
+        "expected_valid": true
+      },
+      {
+        "name": "non_ascii_mismatch",
+        "project_id": "项目/Δ",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "composed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": true
+      },
+      {
+        "name": "composed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "decomposed_unicode",
+        "project_id": "é",
+        "scope_partition": "project~ZcyB",
+        "expected_valid": true
+      },
+      {
+        "name": "decomposed_unicode_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~cDE",
+        "expected_valid": false
+      },
+      {
+        "name": "raw_project_id",
+        "project_id": "p1",
+        "scope_partition": "project~p1",
+        "expected_valid": false
+      },
+      {
+        "name": "padded_encoding",
+        "project_id": "p1",
+        "scope_partition": "project~cDE=",
+        "expected_valid": false
+      },
+      {
+        "name": "noncanonical_pad_bits",
+        "project_id": "p1",
+        "scope_partition": "project~cDF",
+        "expected_valid": false
+      },
+      {
+        "name": "invalid_utf8",
+        "project_id": "p1",
+        "scope_partition": "project~_w",
+        "expected_valid": false
+      },
+      {
+        "name": "normalization_mismatch",
+        "project_id": "é",
+        "scope_partition": "project~w6k",
+        "expected_valid": false
+      }
+    ]
   },
   {
     "event_type": "chat.thread_worktree_unbound",
@@ -3449,7 +6521,8 @@
       "replay_no_effect",
       "missing_custody",
       "stale_frontier",
-      "withdrawn_reader"
+      "withdrawn_reader",
+      "incompatible_application_dch_key"
     ],
     "record": {
       "schema_id": "pm.event.v0",
@@ -3473,7 +6546,7 @@
       "correlation_id": "fixture_operation_id",
       "causation_event_id": null,
       "parent_event_id": null,
-      "idempotency_key": "dch:9a9acade4b5a2b4e0b4535d0e3d3d2c76e33358a3eb0c211234a95ce3de1f2bb",
+      "idempotency_key": "application@1:73657276657231:666978747572655f6f7065726174696f6e5f6964",
       "payload_schema_id": "pm.dch_event.chat_thread_worktree_unbound.application.v1",
       "payload": {
         "schema_id": "pm.dch_event.chat_thread_worktree_unbound.application.v1",
@@ -3505,6 +6578,32 @@
         "migration_id": null,
         "compatibility_event_type": null
       }
-    }
+    },
+    "retry_oracles": [
+      {
+        "name": "same_operation_same_semantics",
+        "expected": "original_result"
+      },
+      {
+        "name": "same_operation_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "expected": "conflict"
+      },
+      {
+        "name": "missing_authoritative_dedupe",
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      },
+      {
+        "name": "missing_dedupe_changed_semantics",
+        "payload_changes": {
+          "actor_ref": "pmref:fixture:other_actor"
+        },
+        "dedupe_available": false,
+        "expected": "dedupe_unavailable"
+      }
+    ]
   }
 ]
