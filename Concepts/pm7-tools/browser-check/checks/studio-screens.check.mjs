@@ -9,8 +9,8 @@
 // screens they change: oldKey, oldKeyWorks and oldKeyLocked on the NAS key screens, guestLater on the Server pairing
 // screens. A few cases press a choice first, for the paths that go back (a straight open has no history, and back()
 // went nowhere): c-route by Tailscale (FO-17's own route), ai-none's sign-up choice, nas-install's Try again after a
-// refused password, c-pair after a pairing request expired (Use a code instead shows only after a denial, which no
-// situation makes, so its way back is covered by the seeded history, not walked). --set only=c-route,nas-key walks some screens; --set extras=0 leaves
+// refused password, c-pair after a pairing request expired, and c-pair denied through Use a code instead back to review.
+// --set only=c-route,nas-key walks some screens; --set extras=0 leaves
 // the situations and these cases out. About 45 minutes.
 
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
@@ -28,7 +28,8 @@ const EXTRAS = [['oldKey', ['nas-find', 'nas-identity', 'nas-key']], ['oldKeyWor
 	['oldKeyLocked', ['nas-find', 'nas-identity', 'nas-key']], ['guestLater', ['s-kind', 's-wait', 's-confirm']]];
 /* cases that press a choice first: [screen, situation twist or null, [[action, arg], ...]] */
 const PATHS = [['c-route', null, [['more', null], ['route', 'tailscale']]], ['ai-none', null, [['pick', 'sub']]],
-	['nas-install', 'wrongPassword', []], ['c-pair', 'pairExpires', []]];
+	['nas-install', 'wrongPassword', []], ['c-pair', 'pairExpires', []],
+	['c-pair', null, [['demoHint', 'c-pair:outcome|0'], ['useCode', null]]]];
 
 /* in-page: what the walk can see and press on the current screen */
 const LOOK_NOW = (L) => {
@@ -92,8 +93,13 @@ export default async function (t) {
 			/* (a control that shows once the screen is waiting, such as c-pair's Use a code instead, is waited for) */
 			const shown = await f.waitForSelector(sel, { state: 'visible', timeout: 10000 }).then(() => true, () => false);
 			const el = f.locator(sel);
-			if (!shown) { await t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s'); break; }
+			if (!shown) { await t.check(`${name}: ${act} ${arg || ''} is on the screen`, false, 'absent after 10 s', { hard: true }); }
 			await el.first().scrollIntoViewIfNeeded(); await el.first().click();
+			if (act === 'useCode') {
+				await f.waitForFunction(() => O55.S.sess.screen === 'c-review', null, { timeout: 10000 });
+				const pairing = await f.evaluate(() => O55.S.sess.drafts.connect.connection_pairing);
+				await t.equal(`${name}: returns to review with code selected`, pairing, 'code');
+			}
 		}
 		const path = [c.screen];
 		let t0 = Date.now(), pressed = new Map(), trail = [];
