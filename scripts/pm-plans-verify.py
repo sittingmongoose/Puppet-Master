@@ -418,8 +418,16 @@ def progress_enabled(args: argparse.Namespace) -> bool:
     return not bool(getattr(args, "quiet_progress", False))
 
 
+# Default bound for each aggregate subcheck and standalone validator subprocess. It matches
+# scripts/pm-landing-check.py DEFAULT_SUBCHECK_TIMEOUT_SECONDS. The old 180 s was too tight in the
+# shared checkout on the network mount: lint-contractrefs takes about 199 s there, and since run 002
+# is declared superseded by every current snapshot (2026-11-04), validate-plan-migration fully
+# validates the terminal snapshot too and takes about 150-180 s on local disk.
+DEFAULT_SUBCHECK_TIMEOUT_SECONDS = 600
+
+
 def subcheck_timeout_seconds(args: argparse.Namespace) -> int:
-    return int(getattr(args, "subcheck_timeout_seconds", 180) or 0)
+    return int(getattr(args, "subcheck_timeout_seconds", DEFAULT_SUBCHECK_TIMEOUT_SECONDS) or 0)
 
 
 # Aggregate-gate subchecks that are intentionally run in-process (never re-forked).
@@ -7289,20 +7297,20 @@ def main() -> int:
             sub.add_argument(
                 "--subcheck-timeout-seconds",
                 type=int,
-                default=180,
+                default=DEFAULT_SUBCHECK_TIMEOUT_SECONDS,
                 help="Maximum seconds for the inner validator subprocess before reporting a structured timeout.",
             )
         if name in {"run-gates", "audit-governance"}:
             sub.add_argument(
                 "--subcheck-timeout-seconds",
                 type=int,
-                default=180,
+                default=DEFAULT_SUBCHECK_TIMEOUT_SECONDS,
                 help="Maximum seconds for each aggregate subcheck before reporting the stuck check.",
             )
             sub.add_argument("--quiet-progress", action="store_true", help="Suppress aggregate subcheck progress on stderr.")
     args = parser.parse_args()
     if not hasattr(args, "subcheck_timeout_seconds"):
-        args.subcheck_timeout_seconds = 180
+        args.subcheck_timeout_seconds = DEFAULT_SUBCHECK_TIMEOUT_SECONDS
     if not hasattr(args, "paths"):
         args.paths = []
     report = COMMANDS[args.command](args)

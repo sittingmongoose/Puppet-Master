@@ -30,6 +30,8 @@ INTERMEDIATE_SNAPSHOT_RUN_ID = "pds-20260828-903-current-planunit-snapshot"
 CURRENT_004_RUN_ID = "pds-20260828-904-current-planunit-snapshot"
 ROGUE_SNAPSHOT_RUN_ID = "pds-20260828-905-rogue-snapshot"
 FAILED_PUBLICATION_RUN_ID = "pds-20260828-906-forced-publication-failure"
+UNRELATED_PREDECESSOR_RUN_ID = "pds-20260828-907-unrelated-complete-run"
+DEFAULT_DECLARATION_RUN_ID = "pds-20260828-908-current-planunit-snapshot"
 
 
 def plan_doc(*, node_compile_mode: str = "design_only") -> str:
@@ -501,6 +503,72 @@ class PmPlanMigrationLineageTests(unittest.TestCase):
         self.assertEqual(reports[1]["status"], "fail")
         self.assertIn(expected_failure, reports[0]["failures"])
         self.assertIn(expected_failure, reports[1]["failures"])
+
+    def write_stranded_002_topology(self, *, middle_status: str | None = "COMPLETE") -> Path:
+        """Run 002 present, but the current snapshot's lineage never declares it (the 2026-09-10 state)."""
+        if middle_status is not None:
+            pm_plan_migration.write_json(
+                self.migrations / MIDDLE_RUN_ID / "final_validation_summary.json",
+                {"run_id": MIDDLE_RUN_ID, "status": middle_status},
+            )
+        pm_plan_migration.write_json(
+            self.migrations / UNRELATED_PREDECESSOR_RUN_ID / "final_validation_summary.json",
+            {"run_id": UNRELATED_PREDECESSOR_RUN_ID, "status": "COMPLETE"},
+        )
+        previous_run_dir, _ = self.write_terminal_snapshot(supersedes_run_ids=[UNRELATED_PREDECESSOR_RUN_ID])
+        return previous_run_dir
+
+    def snapshot_args(self, supersedes: list[str], *, dry_run: bool) -> argparse.Namespace:
+        return argparse.Namespace(
+            run_id=DEFAULT_DECLARATION_RUN_ID,
+            expected_doc_count=1,
+            supersedes_run_id=supersedes,
+            pilot_doc="Plans/Test.md",
+            batch_size=1,
+            dry_run=dry_run,
+        )
+
+    def test_snapshot_current_declares_run_002_by_default_and_restores_its_exemption(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+        middle_dir = self.migrations / MIDDLE_RUN_ID
+        stranded, _ = pm_plan_migration.historical_scope_exemption(middle_dir, set(), {"Plans/Test.md"})
+        self.assertIsNone(stranded)
+
+        report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=False))
+
+        self.assertEqual(report["status"], "pass", report)
+        summary = pm_plan_migration.read_json(
+            self.migrations / DEFAULT_DECLARATION_RUN_ID / "final_validation_summary.json"
+        )
+        self.assertIn(MIDDLE_RUN_ID, summary["supersedes_run_ids"])
+        exemption, failures = pm_plan_migration.historical_scope_exemption(middle_dir, set(), {"Plans/Test.md"})
+        self.assertEqual(failures, [])
+        self.assertIsNotNone(exemption)
+        assert exemption is not None
+        self.assertEqual(exemption["terminal_current_snapshot_run_id"], DEFAULT_DECLARATION_RUN_ID)
+        self.assertEqual(report["checks"]["supersedes_run_ids"], sorted([previous_run_dir.name, MIDDLE_RUN_ID]))
+
+    def test_snapshot_current_does_not_duplicate_an_explicit_run_002(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+
+        report = pm_plan_migration.cmd_snapshot_current(
+            self.snapshot_args([previous_run_dir.name, MIDDLE_RUN_ID], dry_run=True)
+        )
+
+        self.assertEqual(report["status"], "pass", report)
+        self.assertEqual(report["checks"]["supersedes_run_ids"], sorted([previous_run_dir.name, MIDDLE_RUN_ID]))
+
+    def test_snapshot_current_skips_run_002_when_absent_or_incomplete(self) -> None:
+        for middle_status in (None, "HISTORICAL_SUPERSEDED"):
+            with self.subTest(middle_status=middle_status):
+                self.tearDown()
+                self.setUp()
+                previous_run_dir = self.write_stranded_002_topology(middle_status=middle_status)
+
+                report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=True))
+
+                self.assertEqual(report["status"], "pass", report)
+                self.assertEqual(report["checks"]["supersedes_run_ids"], [previous_run_dir.name])
 
 
 if __name__ == "__main__":
