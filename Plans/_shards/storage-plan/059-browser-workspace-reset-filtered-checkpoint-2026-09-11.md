@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L21366-L22150
+Source lines: L21366-L22155
 
-Source SHA256: `70a756fcb6fd1ad6c93bc3973016c4d0ad974098ca657fa2c1a2f69ad1d2a43c`
+Source SHA256: `5b5b2eb291562397fd1fb812e7cefdd840f33a12a4a33c5ca916e59e9f734b10`
 
 ---
 
@@ -669,6 +669,8 @@ Static evidence independently types the actual MigrationReceipt, actual store ke
 
 The exact native and static validation boundaries, frozen synthetic source/owner adapters, and corrected proposal lineage are pinned by reports/event-authority-20260911/step-08-home-validation.md. Physical writes require the actual supported StorageMigrationCoordinator graph and owner activation; the fixtures do not install it.
 
+Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5, `/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v5/manifest.json` (SHA-256 `62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877`), which `Plans/home_layout_event_contract_fixtures.json` now pins. The v4 suite stored `redb_snapshot_id` wherever it stored the reader checkpoint's `generic_read_token`, against the 2026-09-24 amendment above. v5 stores the nine-field durable token there, joins each read's own live snapshot, and keeps every v4 case, its declared validity and every count. Its receipts are `reports/event-authority-20261104/ds-p2-layout-suite-refreeze.md` and `.json`; v4 and the 2026-09-11 report stay as lineage. The full-value suite that `reports/event-authority-20260911/step-08-home-full-value-validation.md` pins (SHA-256 `7ab4fb0046b9d1fb4824af9515b2361d8eed479ca73edf7dcc2e9dc725311eb2`) stores no reader checkpoint in its own cases: its tokens are live read tokens compared with the current source at each read. Its copy of the Home3 schema's reader-checkpoint definitions and its embedded copies of the v4 workspace regressions predate DL-076; for the stored token they are superseded by `Plans/home_layout_pending_receipt.schema.json`, corrected on 2026-09-24, and by v5.
+
 ```yaml
 plan_unit_id: SP-273
 unit_type: schema_contract
@@ -702,6 +704,8 @@ canonical_text: >-
   2026-10-09.1 and the earlier condition "once Event Authority admits it" is met.
   Amended 2026-11-04 (DL-045): SP-400 writes the v2 writer's slot and receipt schema (Home4, version 4.0.0), closing
   the SP-330 open item; this custody, transaction, crash, retention, read and withdrawal contract governs Home4 values.
+  Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5, which stores the nine-field durable read
+  token in every stored reader checkpoint and keeps every v4 case and count; v4 stays as lineage.
 gui_related: true
 gui_classification_reason: Layout mutation, rollback, currentness and receipt publication govern visible
   Home placement and recovery.
@@ -765,6 +769,7 @@ validation_surfaces:
 - reports/event-authority-20260911/step-08-home-validation.md
 - reports/event-authority-20260911/step-08-home-full-value-validation.md
 - reports/event-authority-20260911/step-08-home-full-value-checks.json
+- reports/event-authority-20261104/ds-p2-layout-suite-refreeze.md
 risk_class: home_layout_readback_event_receipt_crash_or_replay_authority_escape
 reasoning_tier: high
 context_scope: workspace_layout_changed_only
