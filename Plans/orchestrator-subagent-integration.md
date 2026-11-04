@@ -30741,7 +30741,7 @@ compatibility_only_notes:
 - Draft fallback applies only before graph lock.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Chain wizard, interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
+- Planning Wizard (legacy Chain Wizard compatibility), interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs:
