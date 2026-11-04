@@ -36,10 +36,14 @@
   const phaseNow = (S) => { const st = op(S, (S.sess.commit || {}).key), ph = (st && st.phases) || []; const a = ph.find((p) => p.status === 'active') || ph.find((p) => p.status !== 'done'); return a ? a.key : null; };
   /* the review's clipboard: ticked off line by line as the recheck finds each part ready */
   const ticks = (S) => { const st = op(S, 'recheck:' + md(S).project_draft_revision); return st && st.state === 'done' ? 4 : st ? Math.min(4, (st.phases || []).filter((p) => p.status === 'done').length) : 0; };
-  /* a share or drive step's own check (70-screens-nas.js checkKey: the key the step reads) */
-  const shareCheck = (S, scr) => op(S, O55.nas && O55.nas.checkKey ? O55.nas.checkKey(S, scr) : null);
+  /* What a NAS step's speech reports: its own check, by the key the step itself reads for the inputs on show
+     (70-screens-nas.js checkKey: share, account, domain and password generation; share; drive; the SSH install), and
+     where that check stands. Every line the step's check produces belongs to this, and gives way at once when it changes
+     (spec's speech, 60-ui-core.js renderScene, 58-rig.js direct; FO-41). */
+  const nasCheck = (scr) => (S) => { const key = O55.nas && O55.nas.checkKey ? O55.nas.checkKey(S, scr) : null, st = op(S, key); return { key: key || '', state: st ? st.state : 'none' }; };
 
   /* Each screen: props(S, hover) -> props; state(S) -> the line for where the screen stands ('enter' otherwise);
+     speech(S) -> { key, state }: the operation its lines report, by the key the screen reads for the inputs on show;
      look: the prop Pip watches; vars(S): the words its line and terminal fill in. A hover is a control id; a screen
      with prev(h) previews that choice's props (dashed strings) while Pip says that choice's line. */
   const one = (kind, slot) => () => [P(kind, slot || 'side')];
@@ -170,16 +174,16 @@
     'nas-key': { props: nasWith('key') },
     'nas-signin': { props: () => [P('nas', 'pairA'), P('key', 'pairB'), P('lock', 'hi', { scale: 0.8 })] },
     /* the owner's own operation key (70-screens-nas.js installKey: kept from when it started) */
-    'nas-install': { props: nasWith('key'), work: true, state: (S) => { const n = S.sess.nas || {}, st = op(S, n.opKey || 'sshinstall:' + (n.device || '') + ':' + (n.key || 'new')); return (st && st.state === 'done') || n.installed ? 'done' : 'enter'; } },
+    'nas-install': { props: nasWith('key'), work: true, speech: nasCheck('nas-install'), state: (S) => (nasCheck('nas-install')(S).state === 'done' || (S.sess.nas || {}).installed ? 'done' : 'enter') },
     'nas-pmpair': { props: nasWith('qr'), state: (S) => { const n = S.sess.nas || {}; return n.paired ? 'done' : n.pairAsked && (n.pairing || 'approval') === 'approval' ? 'waiting' : 'enter'; } },
     'nas-folder': { props: nasWith('folder'), state: (S) => ((S.sess.nas || {}).purpose === 'storage' ? 'storage' : 'enter'), vars: (S) => ({ path: String((S.sess.nas || {}).at || '').split('/').pop() }) },
     /* a share or drive step: its check under way, then passed; inputs changed since (another account, password or
        drive) start from the opening line again, as the step's own check does (FO-41) */
-    'nas-smb': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-smb'); return st && st.state === 'done' ? 'done' : st && st.state === 'running' ? 'checking' : 'enter'; } },
-    'nas-nfs': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-nfs'); return st && st.state === 'done' ? 'done' : 'enter'; } },
+    'nas-smb': { props: nasWith('folder'), speech: nasCheck('nas-smb'), state: (S) => ({ done: 'done', running: 'checking' })[nasCheck('nas-smb')(S).state] || 'enter' },
+    'nas-nfs': { props: nasWith('folder'), speech: nasCheck('nas-nfs'), state: (S) => (nasCheck('nas-nfs')(S).state === 'done' ? 'done' : 'enter') },
     /* The drive was picked on nas-find. This screen starts its check after the first scene render, so its initial
        line also describes checking: queuing the picker question here would leave it typing over the running check. */
-    'nas-mounted': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-mounted'); return st && st.state === 'done' ? 'done' : 'checking'; } }
+    'nas-mounted': { props: nasWith('folder'), speech: nasCheck('nas-mounted'), state: (S) => (nasCheck('nas-mounted')(S).state === 'done' ? 'done' : 'checking') }
   };
 
   /* The spec for the screen on show. hover: the control the pointer rests on (after the dwell) or keyboard focus;
@@ -218,19 +222,15 @@
       out.label = O55.t('pip.stage.labels.oops');
       out.oops = o.oops.key || 'unknown';
     }
-    /* NAS result speech belongs to the current operation, including its input key. The rig can invalidate
-       that speech when the result changes, without interrupting hover, typing or other unrelated speech. */
-    let check = null;
-    if (/^nas-(smb|nfs|mounted)$/.test(id)) {
-      const key = O55.nas.checkKey(S, id), st = shareCheck(S, id);
-      check = key + ':' + (st ? st.state : 'none');
-    } else if (id === 'nas-install') {
-      const n = S.sess.nas || {}, key = n.opKey || 'sshinstall:' + (n.device || '') + ':' + (n.key || 'new');
-      const st = op(S, key); check = key + ':' + (st ? st.state : 'none');
-    }
-    if (check !== null) {
-      out.speechOperation = { screen: id, state: check };
-      if (o.oops || (!h && !o.typing)) out.speechOperationText = out.say;
+    /* speech: the operation on show, with the inputs it was run for and where it stands ({ screen, key, state, id }).
+       sayOwner: the speech id a line reports, when the line comes from it (the screen's line for where it stands, or a
+       fault read off it); a hover's or a field's line is no operation's, and keeps the ordinary turn and dwell (58-rig.js
+       say). A cheer for the operation takes the same owner (60-ui-core.js renderScene). */
+    out.sayOwner = null;
+    if (sc.speech) {
+      const sp = sc.speech(S) || {}, key = sp.key || '', state = sp.state || 'none';
+      out.speech = { screen: id, key, state, id: id + '|' + key + '|' + state };
+      if (o.oops || (!h && !o.typing)) out.sayOwner = out.speech.id;
     }
     return out;
   }

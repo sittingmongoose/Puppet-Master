@@ -578,11 +578,12 @@
       this.root.style.setProperty('--st-power', String(Math.min(1, this.power / 3)));
       this.loopSnd('work', this.work ? 1 : 0);
       this.loopSnd('power', Math.min(1, this.power / 2));
-      // a new screen's line starts at once; changes within a screen take their turn (see say)
-      const owned = this.speechOperation, next = spec.speechOperation;
-      const staleOperation = owned && next && owned.screen === next.screen && owned.state !== next.state;
-      const fresh = spec.sayNow || staleOperation || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
-      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh);
+      /* a new screen's line starts at once; changes within a screen take their turn (see say), except where the line on
+         show (or waiting its turn) reports an operation that is no longer what the screen shows: its owner (spec.sayOwner,
+         55-scenes.js) is not the screen's speech now, because the operation moved on or its inputs changed. Such a line
+         gives way at once, whichever path said it (the screen's line, a fault, a cheer); FO-41 */
+      const fresh = spec.sayNow || !this.ownerLive(this.sayOwner) || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
+      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh, spec.sayOwner);
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
@@ -612,28 +613,30 @@
        nothing jumps. Lines that come faster than Pip could say them (a name being typed, a quick change of
        mind) wait: Pip says the one you settle on, once things are still for a moment, and a line it has
        started stays up long enough to read. */
-    say(text, mood, now) {
+    /* owner: the operation a line reports (spec.speech's id), or none; a line with an owner is said and kept only while
+       that is the screen's speech (ownerLive). The words on show, said again, take the owner they are said for now. */
+    ownerLive(owner) { return !owner || !!(this.spec && this.spec.speech && this.spec.speech.id === owner); }
+    say(text, mood, now, owner) {
       const b = this.bubble;
-      text = text || '';
+      text = text || ''; owner = owner || null;
       clearTimeout(this.sayT);
       /* the line a hover typed silently (O6) is said aloud once its choice is picked, without typing it again */
-      if (text && text === this.saying && this.sayMuted && b.classList.contains('on') && !(this.spec && this.spec.mute)) { this.sayNext = null; this.sayMuted = false; this.voice(text, mood); return; }
-      if (!text || now) { this.sayNext = null; if (text !== this.saying || !b.classList.contains('on')) this.sayNow(text, mood); return; }
-      if (text === this.saying && b.classList.contains('on')) { this.sayNext = null; return; }
+      if (text && text === this.saying && this.sayMuted && b.classList.contains('on') && !(this.spec && this.spec.mute)) { this.sayNext = null; this.sayMuted = false; this.sayOwner = owner; this.voice(text, mood); return; }
+      if (!text || now) { this.sayNext = null; if (text !== this.saying || !b.classList.contains('on')) this.sayNow(text, mood, owner); else this.sayOwner = owner; return; }
+      if (text === this.saying && b.classList.contains('on')) { this.sayNext = null; this.sayOwner = owner; return; }
       const tn = performance.now(), calm = tn - (this.sayCall || 0) > 380;
       this.sayCall = tn;
       const shown = tn - (this.sayAt || 0), open = b.classList.contains('on');
       // the first line, or one after a calm moment, starts at once; otherwise it waits its turn
       const wait = !open ? 0 : Math.max(calm ? 0 : 380, (this.minShow || 0) - shown);
       if (wait <= 0) { this.sayNow(text, mood); return; }
-      this.sayNext = [text, mood];
-      this.sayT = setTimeout(() => { const n = this.sayNext; this.sayNext = null; if (n) this.sayNow(n[0], n[1]); }, wait);
+      this.sayNext = [text, mood, owner];
+      this.sayT = setTimeout(() => { const n = this.sayNext; this.sayNext = null; if (n && this.ownerLive(n[2])) this.sayNow(n[0], n[1], n[2]); }, wait);
     }
-    sayNow(text, mood) {
+    sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
       if (this.typeT) this.typeT.cancel();
-      this.saying = text;
-      this.speechOperation = this.spec && this.spec.speechOperationText === text ? this.spec.speechOperation : null;
+      this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
       let r = null;

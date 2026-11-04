@@ -909,13 +909,15 @@
     const dv = (S.env.devices || []).find((x) => x.id === n.device) || (slug ? (S.env.devices || []).find((x) => U.slug(x.name) === slug || U.slug(x.id) === slug) : null);
     return (dv ? dv.name + ' · ' : '') + path;
   }
-  /* the check a share or drive step runs, by the key the step itself reads: Pip says where it stands (55-scenes.js,
-     FO-41: Pip stayed on the opening line after the check passed) */
+  /* the check a NAS step runs, by the key the step itself reads for the inputs on show: Pip's lines for the step belong
+     to it (55-scenes.js speech, FO-41: Pip stayed on the opening line after the check passed, and kept a line after the
+     account it was for had changed) */
   function checkKey(S, screen) {
     const n = N(S);
     if (screen === 'nas-smb') { const sh = shareOf(S); return sh ? smbKey(n, sh) : null; }
     if (screen === 'nas-nfs') return shareOf(S) ? nfsKey(S) : null;
     if (screen === 'nas-mounted') return n.volume ? 'mounted:' + n.volume : null;
+    if (screen === 'nas-install') return n.device ? installKey(S) : null;
     return null;
   }
   O55.nas = { dev, N, pubLine, entry, transport, endPair, remember, placeLabel, checkKey };
