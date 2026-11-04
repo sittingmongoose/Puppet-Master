@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L36476-L37679
 
-Source SHA256: `5219317d3f6de37616de475f8713f24e8d655c778fdc8df3544ad7e22bd18a4d`
+Source SHA256: `3eb30f7700b76febc313fd1288145b1a4adab0756f6eaa048aeb5ad9a247a41f`
 
 ---
 
@@ -581,7 +581,7 @@ negative_constraints:
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
   A/B.
-- Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing
+- Include family nier in the five visible family choices and Look menu, with one Light/Dark/Auto control resolving ten variants (DL-301); do not write a NieR choice durably before the existing
   Project binding exists.
 - Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.
 - Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
