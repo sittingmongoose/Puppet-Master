@@ -551,7 +551,10 @@
       let y = ps.Ct.y + Lay.rope;
       if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
       if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
-      return [ps.Ct.x + r[0], y + r[1], ps.Ct.x + r[2], y + r[3]];
+      /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
+      const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
+      const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
+      return [ps.Ct.x + r[0] - sw, y + r[1] - bob, ps.Ct.x + r[2] + sw, y + r[3] + bob];
     }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
