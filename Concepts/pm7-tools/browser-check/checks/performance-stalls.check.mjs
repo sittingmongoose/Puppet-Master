@@ -16,16 +16,26 @@ export default async function(t) {
    };
   }
  });
+ if(t.args.audioProbe) await t.page.addInitScript(()=>{
+  window.__audioCosts=[];
+  for(const [type,names] of [[window.BaseAudioContext,['createGain','createOscillator','createBuffer','createBufferSource','createBiquadFilter','createConvolver','createStereoPanner','createDynamicsCompressor']], [window.AudioNode,['connect']], [window.AudioScheduledSourceNode,['start']]]){
+   if(!type)continue;
+   for(const name of names){const real=type.prototype[name];if(!real)continue;
+    type.prototype[name]=function(...args){const at=performance.now();try{return real.apply(this,args);}finally{const ms=performance.now()-at;if(ms>1)window.__audioCosts.push({name,at,ms,stack:new Error().stack});}};
+   }
+  }
+ });
  const f = await t.app.open();
  await t.app.look('basic-dark');
  const cdp = await t.page.context().newCDPSession(t.page);
  await cdp.send('Tracing.start', {categories:'devtools.timeline,v8.execute,blink.user_timing,disabled-by-default-devtools.timeline.stack', transferMode:'ReturnAsStream'});
  await cdp.send('Emulation.setFocusEmulationEnabled',{enabled:true});
+ if(t.args.profile){await cdp.send('Profiler.enable');await cdp.send('Profiler.start');}
  const metrics=[];
  async function sample(name, action, ms=1200) {
-  await f.evaluate(name=>{window.__perfSample={name,start:performance.now(),gaps:[],times:[],last:performance.now(),on:true}; const s=window.__perfSample; performance.mark(name); if(name.includes('bell'))document.addEventListener('click',()=>{s.clickAt=performance.now();performance.mark(name+'-click');},{once:true,capture:true}); function tick(now){if(!s.on)return; s.gaps.push(now-s.last);s.times.push([now,now-s.last]);s.last=now;requestAnimationFrame(tick);}requestAnimationFrame(tick);},name);
+  await f.evaluate(name=>{window.__perfSample={name,start:performance.now(),gaps:[],times:[],last:performance.now(),on:true}; const s=window.__perfSample; performance.mark(name); document.addEventListener(name.includes('drag')?'pointerdown':'click',()=>{s.clickAt=performance.now();performance.mark(name+'-click');},{once:true,capture:true}); function tick(now){if(!s.on)return; s.gaps.push(now-s.last);s.times.push([now,now-s.last]);s.last=now;requestAnimationFrame(tick);}requestAnimationFrame(tick);},name);
   await t.mark(name); await action(); await t.page.waitForTimeout(ms);
-  metrics.push(await f.evaluate(()=>{const s=window.__perfSample;s.on=false;const a=s.gaps.slice(1).sort((a,b)=>a-b),m=s.times.filter(([t])=>t>=s.movingStart&&t<=s.movingEnd).map(x=>x[1]).sort((a,b)=>a-b);return {name:s.name,max:Math.max(...a),p95:a[Math.floor(a.length*.95)],frames:a.length,movingP95:m[Math.floor(m.length*.95)],movingMax:Math.max(...m),movingFrames:m.length,firstPostClickGap:s.clickAt==null?null:s.times.find(([t])=>t>=s.clickAt)?.[1]};}));
+  metrics.push(await f.evaluate(()=>{const s=window.__perfSample;s.on=false;const a=(s.clickAt==null?s.gaps.slice(1):s.times.filter(([at])=>at>=s.clickAt).map(x=>x[1])).sort((a,b)=>a-b),m=s.times.filter(([t])=>t>=s.movingStart&&t<=s.movingEnd).map(x=>x[1]).sort((a,b)=>a-b);return {name:s.name,max:Math.max(...a),p95:a[Math.floor(a.length*.95)],frames:a.length,movingP95:m[Math.floor(m.length*.95)],movingMax:Math.max(...m),movingFrames:m.length,firstPostClickGap:s.clickAt==null?null:s.times.find(([t])=>t>=s.clickAt)?.[1]};}));
  }
  async function drag(name) {
    const b=await f.locator('#chatResizer').boundingBox();
@@ -46,19 +56,24 @@ export default async function(t) {
     await t.app.look(from);
     await f.waitForFunction(()=>!(window.PM_THEME_TRANSITION?.busy()||window.PM_LOOK_COVERED?.()||window.PM_NIER?.wanted?.()!==window.PM_NIER?.on?.()),null,{timeout:20000});
     await f.locator('#themeSelect').click();
+    await f.evaluate(()=>{window.__colourSweeps=0;const real=document.getAnimations;window.__getAnimations=real;document.getAnimations=function(...a){if(new Error().stack.includes('finishColourTransitions'))window.__colourSweeps++;return real.apply(this,a);};});
     await sample(prefix+from+'-glass-'+i, async()=>{
      await f.locator('.pm6-tt-family[data-family="glass"]').click();
      await f.waitForFunction(()=>!(window.PM_THEME_TRANSITION?.busy()||window.PM_LOOK_COVERED?.()),null,{timeout:20000});
     },1500);
+    const sweeps=await f.evaluate(()=>{document.getAnimations=window.__getAnimations;return window.__colourSweeps;});
+    await t.check('look readiness bounds colour enumeration to initial/final sweeps',sweeps>0&&sweeps<=2,String(sweeps));
    }
  }
  try {
-  if(!t.args.only) {
+  if(!t.args.only||t.args.only==='studio') {
   await f.locator('.pmds-entry').click(); await f.locator('[data-pmds-tab="activity"]').click();
   const scenes=await f.locator('[data-pmds-do="act-scene"]').evaluateAll(es=>es.map(e=>e.getAttribute('data-arg')));
   await t.check('scenario controls exist',scenes.length>1);
   for(let i=0;i<21;i++) await sample('scenario-'+i,()=>f.locator(`[data-pmds-do="act-scene"][data-arg="${scenes[i%scenes.length]}"]`).click(),450);
   await f.locator('.pmds-entry').click();
+  }
+  if(!t.args.only) {
   for(let i=0;i<3;i++) {
    await sample('bell-'+i,async()=>{await f.locator('#pmnStack').click();await t.check('inbox opened',await f.evaluate(()=>PM_TITLEBAR_NOTIFY.isOpen()));});
    await t.page.keyboard.press('Escape');
@@ -134,9 +149,11 @@ export default async function(t) {
   for(let i=0;i<Number(t.args.reps || 5);i++) await drag('chat-drag-'+i);
   await cdp.send('Input.setInterceptDrags',{enabled:false});
   }
+  if(t.args.audioProbe)metrics.push({audioCosts:await f.evaluate(()=>window.__audioCosts)});
   if(t.args.idleProbe)metrics.push({idleDuringDrag:await f.evaluate(()=>window.__idleDuringDrag)});
   t.log(JSON.stringify(metrics.map(m=>m.idleDuringDrag?{idleCallbacksDuringDrag:m.idleDuringDrag.length}:m.dragDebug?{dragDebug:true}:m)));
  } finally {
+  if(t.args.profile){const {profile}=await cdp.send('Profiler.stop');writeFileSync(t.args.profile,JSON.stringify(profile));}
   const complete=new Promise(resolve=>cdp.once('Tracing.tracingComplete',resolve));
   await cdp.send('Tracing.end'); const {stream}=await complete;
   let data=''; for(;;){const r=await cdp.send('IO.read',{handle:stream});data+=r.data;if(r.eof)break;}

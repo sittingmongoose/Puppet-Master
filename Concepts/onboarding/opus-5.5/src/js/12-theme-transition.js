@@ -230,11 +230,14 @@
     const frame = (now) => {
       if (t !== ticket) return;
       if (job) { runJob(); last = null; onTime = 0; count = 0; began = performance.now(); }   /* a later pick, also under the cover */
-      finishColourTransitions();
+      // Finish the initial colour change once. Enumerating all document
+      // animations on every readiness frame forces style for unrelated work.
+      // A final sweep catches transitions begun by theme observers meanwhile.
+      if (count === 0) finishColourTransitions();
       count++;
       if (last != null) onTime = now - last <= 40 ? onTime + 1 : 0;
       last = now;
-      if (count >= 3 && (onTime >= 2 || performance.now() - began >= 1200)) { done(); return; }
+      if (count >= 3 && (onTime >= 2 || performance.now() - began >= 1200)) { finishColourTransitions(); done(); return; }
       requestAnimationFrame(frame);
     };
     requestAnimationFrame(frame);
