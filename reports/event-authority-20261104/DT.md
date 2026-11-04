@@ -1,6 +1,6 @@
 # DT-FIX1 — Event Authority review round 1
 
-Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `f4dcd88acc501f57c340c0475a31e126f0740df1`. Assessed implementation head: `b20c80659d413cfe9344fdc5365beddf693b72e8`. The following publication changes reports only. Worktree `/home/sittingmongoose/pm-worktrees/DT-fix1` is removed after the push.
+Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Reviewed head: `f4dcd88acc501f57c340c0475a31e126f0740df1`. Assessed implementation head: `63759b5b631505d09e0349cfdd0d409892a8e4a3`. The following publication changes reports only. Worktree `/home/sittingmongoose/pm-worktrees/DT-fix1` is removed after the push.
 
 **16/18 families pass as prepared**, with membership ABSENT throughout. `tool.denied` retains producer/transition CONFLICT for the FileSafe emission facet; its specified policy/user path is prepared. `tool.custom_headless.skipped` remains stopped. Usage retains a technical setting-driven retention adapter dependency, and requirements/worktree retention retain only the three narrow product residuals below. No recommendation is adopted. Native execution remains NOT_RUN; original-owner and SP-278 authentication remain assumed adapters in these static models.
 
@@ -83,7 +83,7 @@ Sixteen cited canonical source spans match current origin/main, including Tools/
 | Cited canonical source-span premise comparison | 0 | All 16 spans match current origin/main |
 | `git diff --check` | 0 | PASS |
 
-The first index generation caught indentation in nine appended ATS canonical-text blocks (exit 1). Those blocks were corrected, all 43 DT blocks parsed, and generation/validation reran successfully. The initial and corrected logs are retained in `fix1/`; no check was weakened. No aggregate governance or native execution pass is claimed.
+The first index generation caught indentation in nine appended ATS canonical-text blocks (exit 1). Those blocks were corrected, all 43 DT blocks parsed, and generation/validation reran successfully. The initial and corrected logs are retained in `fix1/`; no check was weakened. No aggregate governance or native execution pass is claimed. The first staging list omitted 38 newly generated Storage shards; they are committed in 63759b5b631505d09e0349cfdd0d409892a8e4a3. A final committed-tree audit verifies all 3,463 manifest/index/shard blobs and their SHA-256 values, with no missing, changed or untracked paths.
 
 Shared-file hunks remain entirely in CV-600..616, SP-580..596, ATS-290..298 and the existing DT source registry rows. Existing non-DT registry rows/policy objects and all profile objects are unchanged. Derived shards/indexes are regenerated, never hand-merged. No PlanUnit IDs were minted: **SP-580..596, CV-600..616, ATS-290..298 remain the IDs used**; unused tails remain unused.
 
