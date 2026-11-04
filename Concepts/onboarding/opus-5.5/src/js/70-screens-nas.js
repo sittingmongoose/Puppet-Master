@@ -83,7 +83,9 @@
            address (QA round 2, Q7) */
         const d = picked(S);
         let about = '';
-        if (d && d.pm) about += C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
+        /* (the committed device reached by SSH instead says so: its pairing note told a person on the SSH way that no key
+           or password was needed, FO-48; a device only picked here still pairs, as Continue would start it) */
+        if (d && d.pm) about += d.id === n.device && n.useSsh ? C.note(T('nas.find.sshNote', { name: d.name }), 'info', 'key') : C.note(T('nas.find.pmNote', { name: d.name }), 'ok', 'link');
         if (d && !d.ssh && !d.pm) {
           const cs = F.state(S, 'sshcheck:' + d.id);
           about += C.group(T('nas.find.offTitle', { name: d.name }), `<p class="o55-note o55-note-info">${C.mark('off', 14, C.smallArt('power', 14))}<span>${U.esc(T('nas.find.offLead', { brand: d.brand }))}</span></p>`
@@ -900,6 +902,14 @@
      projects') */
   function placeLabel(S, ref) {
     const r = String(ref || ''), n = S.sess.nas || {}, d0 = md(S);
+    /* no place yet (a saved record that stopped applying keeps its NAS and loses the folder: FO-47, Review read "Files on"
+       and a blank): the device still chosen for it and a folder still to choose */
+    if (!r) {
+      const own = (n.purpose || 'source') === 'storage' ? d0.storage_mode === 'network_location' : d0.project_mode === 'existing_local' && d0.project_transport !== 'local';
+      const m = n.method || 'ssh', sh = (m === 'smb' || m === 'nfs') && (n.share === 'manual' ? n.manualShare : (S.env.shares || []).find((x) => x.id === n.share));
+      const who = !own || m === 'mounted' ? null : sh ? (S.env.devices || []).find((x) => x.id === sh.device) : dev(S);
+      return who && who.name ? T('nas.folder.notChosen', { name: who.name }) : T('nas.folder.notChosenAny');
+    }
     if (n.folderLabel && ((n.purpose === 'storage' && d0.storage_location === r) || ((n.purpose || 'source') === 'source' && d0.project_source_ref === r))) return n.folderLabel;
     const m = /^(ssh|pm|mounted|smb|nfs):(.*)$/.exec(r); if (!m) return r;
     if (m[1] === 'mounted') return m[2];

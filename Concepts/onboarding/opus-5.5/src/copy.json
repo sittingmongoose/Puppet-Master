@@ -1646,6 +1646,7 @@
       "volumes": "Connected drives",
       "pmTag": "Runs Puppet Master",
       "pmNote": "{name} runs Puppet Master, so this computer pairs with it: you approve it once, and no key or password is needed.",
+      "sshNote": "You chose SSH for {name}: you check its fingerprint once, and this computer connects with a key instead of pairing.",
       "noAnswer": "Nothing answered at {addr}. Check the address and that the device is on.",
       "choose": "Choose a device",
       "portBad": "Use a port from 1 to 65535. SSH usually uses 22.",
@@ -1783,7 +1784,9 @@
       "readOnly": "This folder is read-only for {user}. Choose another.",
       "use": "Use this folder",
       "empty": "Empty folder",
-      "nameFirst": "Type a folder name first."
+      "nameFirst": "Type a folder name first.",
+      "notChosen": "{name} · folder not chosen yet",
+      "notChosenAny": "a place not chosen yet"
     },
     "smb": {
       "eyebrow": "Shared folder",
