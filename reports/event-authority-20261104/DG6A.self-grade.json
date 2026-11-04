@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "DG6A-FIX4-20261104",
+  "assessment_id": "DG6A-FIX5-20261104",
   "assessment_kind": "self_grade_preparation",
   "source_base": "be4766513ff71776346fc73b84f2542990f955af",
   "rubric": {
@@ -32,7 +32,7 @@
           "unit": "SP-660",
           "line_start": 29487,
           "line_end": 29487,
-          "quote": "canonical_text: \"Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\"
+          "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
       "outcome": "register (prepared)",
@@ -343,7 +343,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -362,17 +362,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -397,7 +404,7 @@
           "unit": "SP-661",
           "line_start": 29634,
           "line_end": 29634,
-          "quote": "canonical_text: \"Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\"
+          "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
       "outcome": "register (prepared)",
@@ -470,8 +477,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29660,
-              "line_end": 29660,
+              "line_start": 29512,
+              "line_end": 29512,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -558,15 +565,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29665,
-              "line_end": 29665,
+              "line_start": 29517,
+              "line_end": 29517,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29595,
+              "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
@@ -585,8 +592,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29697,
-              "line_end": 29697,
+              "line_start": 29549,
+              "line_end": 29549,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -612,8 +619,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29669,
-              "line_end": 29669,
+              "line_start": 29521,
+              "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
@@ -659,15 +666,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29677,
-              "line_end": 29677,
+              "line_start": 29529,
+              "line_end": 29529,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29655,
-              "line_end": 29655,
+              "line_start": 29507,
+              "line_end": 29507,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -693,8 +700,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29694,
-              "line_end": 29694,
+              "line_start": 29546,
+              "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
@@ -708,7 +715,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -720,24 +727,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29702,
-              "line_end": 29702,
+              "line_start": 29554,
+              "line_end": 29554,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -762,7 +776,7 @@
           "unit": "SP-662",
           "line_start": 29781,
           "line_end": 29781,
-          "quote": "canonical_text: \"Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\"
+          "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
       "outcome": "register (prepared)",
@@ -781,8 +795,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29800,
-              "line_end": 29800,
+              "line_start": 29653,
+              "line_end": 29653,
               "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
@@ -835,8 +849,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29807,
-              "line_end": 29807,
+              "line_start": 29512,
+              "line_end": 29512,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -889,15 +903,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29789,
-              "line_end": 29789,
+              "line_start": 29642,
+              "line_end": 29642,
               "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29789,
-              "line_end": 29789,
+              "line_start": 29642,
+              "line_end": 29642,
               "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
@@ -923,15 +937,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29812,
-              "line_end": 29812,
+              "line_start": 29517,
+              "line_end": 29517,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29890,
-              "line_end": 29890,
+              "line_start": 29595,
+              "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
@@ -950,8 +964,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29844,
-              "line_end": 29844,
+              "line_start": 29549,
+              "line_end": 29549,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -977,8 +991,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29816,
-              "line_end": 29816,
+              "line_start": 29521,
+              "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
@@ -1024,15 +1038,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29824,
-              "line_end": 29824,
+              "line_start": 29529,
+              "line_end": 29529,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29802,
-              "line_end": 29802,
+              "line_start": 29507,
+              "line_end": 29507,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -1051,15 +1065,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29837,
-              "line_end": 29837,
+              "line_start": 29690,
+              "line_end": 29690,
               "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29841,
-              "line_end": 29841,
+              "line_start": 29546,
+              "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
@@ -1073,7 +1087,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1085,24 +1099,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29849,
-              "line_end": 29849,
+              "line_start": 29554,
+              "line_end": 29554,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -1127,7 +1148,7 @@
           "unit": "SP-663",
           "line_start": 29928,
           "line_end": 29928,
-          "quote": "canonical_text: \"Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\"
+          "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\"
         }
       ],
       "outcome": "register (prepared)",
@@ -1146,8 +1167,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29947,
-              "line_end": 29947,
+              "line_start": 29653,
+              "line_end": 29653,
               "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
@@ -1200,8 +1221,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29954,
-              "line_end": 29954,
+              "line_start": 29512,
+              "line_end": 29512,
               "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
@@ -1254,15 +1275,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29936,
-              "line_end": 29936,
+              "line_start": 29642,
+              "line_end": 29642,
               "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29936,
-              "line_end": 29936,
+              "line_start": 29642,
+              "line_end": 29642,
               "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
@@ -1281,22 +1302,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29942,
-              "line_end": 29942,
+              "line_start": 29648,
+              "line_end": 29648,
               "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29959,
-              "line_end": 29959,
+              "line_start": 29517,
+              "line_end": 29517,
               "quote": "retries\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 30037,
-              "line_end": 30037,
+              "line_start": 29595,
+              "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
@@ -1315,8 +1336,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29991,
-              "line_end": 29991,
+              "line_start": 29549,
+              "line_end": 29549,
               "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
@@ -1342,8 +1363,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29963,
-              "line_end": 29963,
+              "line_start": 29521,
+              "line_end": 29521,
               "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
@@ -1362,8 +1383,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29931,
-              "line_end": 29931,
+              "line_start": 29490,
+              "line_end": 29490,
               "quote": "Transition: unacknowledged\\"
             }
           ],
@@ -1389,15 +1410,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29971,
-              "line_end": 29971,
+              "line_start": 29529,
+              "line_end": 29529,
               "quote": "SP-278 and DL-076:\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29949,
-              "line_end": 29949,
+              "line_start": 29507,
+              "line_end": 29507,
               "quote": "CAS the exact subject revision\\"
             }
           ],
@@ -1416,15 +1437,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29984,
-              "line_end": 29984,
+              "line_start": 29690,
+              "line_end": 29690,
               "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29988,
-              "line_end": 29988,
+              "line_start": 29546,
+              "line_end": 29546,
               "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
@@ -1438,7 +1459,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -1450,24 +1471,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29996,
-              "line_end": 29996,
+              "line_start": 29554,
+              "line_end": 29554,
               "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -3397,8 +3425,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30461,
-              "line_end": 30461,
+              "line_start": 30116,
+              "line_end": 30116,
               "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
@@ -3478,8 +3506,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30440,
-              "line_end": 30440,
+              "line_start": 22461,
+              "line_end": 22461,
               "quote": "Request digest"
             },
             {
@@ -3492,8 +3520,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30429,
-              "line_end": 30429,
+              "line_start": 491,
+              "line_end": 491,
               "quote": "projector_replay_only"
             }
           ],
@@ -3586,8 +3614,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-666",
-              "line_start": 30499,
-              "line_end": 30499,
+              "line_start": 30142,
+              "line_end": 30142,
               "quote": "SP-278/DL-076:"
             },
             {
@@ -3635,7 +3663,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -3654,17 +3682,24 @@
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -6130,15 +6165,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30120,
-              "line_end": 30120,
+              "line_start": 1735,
+              "line_end": 1735,
               "quote": "retries"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30189,
-              "line_end": 30189,
+              "line_start": 29595,
+              "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
@@ -6184,8 +6219,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30134,
-              "line_end": 30134,
+              "line_start": 245,
+              "line_end": 245,
               "quote": "backup"
             }
           ],
@@ -6280,7 +6315,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6292,24 +6327,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30187,
-              "line_end": 30187,
+              "line_start": 20215,
+              "line_end": 20215,
               "quote": "NOT_RUN."
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -6353,8 +6395,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30265,
-              "line_end": 30265,
+              "line_start": 30103,
+              "line_end": 30103,
               "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host"
             }
           ],
@@ -6407,8 +6449,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30278,
-              "line_end": 30278,
+              "line_start": 30116,
+              "line_end": 30116,
               "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
@@ -6461,15 +6503,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30251,
-              "line_end": 30251,
+              "line_start": 30089,
+              "line_end": 30089,
               "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30251,
-              "line_end": 30251,
+              "line_start": 30089,
+              "line_end": 30089,
               "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             }
           ],
@@ -6488,22 +6530,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30260,
-              "line_end": 30260,
+              "line_start": 30098,
+              "line_end": 30098,
               "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30282,
-              "line_end": 30282,
+              "line_start": 1735,
+              "line_end": 1735,
               "quote": "retries"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30351,
-              "line_end": 30351,
+              "line_start": 29595,
+              "line_end": 29595,
               "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
@@ -6522,8 +6564,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30344,
-              "line_end": 30344,
+              "line_start": 30182,
+              "line_end": 30182,
               "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
             }
           ],
@@ -6542,15 +6584,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30292,
-              "line_end": 30292,
+              "line_start": 30130,
+              "line_end": 30130,
               "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30296,
-              "line_end": 30296,
+              "line_start": 245,
+              "line_end": 245,
               "quote": "backup"
             }
           ],
@@ -6569,8 +6611,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30240,
-              "line_end": 30240,
+              "line_start": 30078,
+              "line_end": 30078,
               "quote": "Successful transition is"
             }
           ],
@@ -6596,15 +6638,15 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30304,
-              "line_end": 30304,
+              "line_start": 30142,
+              "line_end": 30142,
               "quote": "SP-278/DL-076: complete"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30281,
-              "line_end": 30281,
+              "line_start": 30119,
+              "line_end": 30119,
               "quote": "CAS committed -> settled with original_append_result_ref"
             }
           ],
@@ -6630,8 +6672,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30319,
-              "line_end": 30319,
+              "line_start": 30157,
+              "line_end": 30157,
               "quote": "withdrawn token, cursor beyond frontier or missing"
             }
           ],
@@ -6645,7 +6687,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Composed historical reader validates the actual checkpoint publication and independent original payload/schema, receipt, source and current disclosure fences. Retained originals survive live revisions, ended sessions and existing concerns; isolated negatives disclose only when their guard is weakened. Native NOT_RUN.",
+          "finding": "Current operation witnesses recompute identity and request digests from retained inputs; joined owner snapshots, authority, receipts and retries have isolated negatives. Every checker rejection site and deliberate duplicate pair has a source-removal witness. Historical originals use independent Storage evidence and survive live changes and compatibility replay-only policy. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
@@ -6657,24 +6699,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30349,
-              "line_end": 30349,
+              "line_start": 20215,
+              "line_end": 20215,
               "quote": "NOT_RUN."
             },
             {
               "path": "scripts/pm-alert-event-contracts-check.py",
               "unit": "historical_reader_cases",
-              "line_start": 268,
-              "line_end": 268,
+              "line_start": 365,
+              "line_end": 365,
               "quote": "def historical_reader_cases"
+            },
+            {
+              "path": "scripts/pm-dg6a-guard-check.py",
+              "unit": "duplicate_proofs",
+              "line_start": 175,
+              "line_end": 175,
+              "quote": "def duplicate_proofs("
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES-cycle4.json@de28e8be91b347e209f8b75e25838ef3bf686f73",
+            "source": "DG6A-sol/REVIEW-astra.md@370e7718684f2bcb025dafa3a3993091a96a49fd",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current owner evidence; repair composed historical validation without current-writer predicates; retain prior guards and verify all eleven checks and earlier mutations."
+          "change_reason": "B1/B2/B3 current-operation repair and whole-lane source guard-removal proof; membership ABSENT and retention PARTIAL remain."
         }
       },
       "remaining_gaps": [
@@ -6689,6 +6738,6 @@
       "notes": "Prepared without admission. Round 4 composes actual checkpoint publication, independent original event/payload/receipt/source and current disclosure checks before pagination; retained history survives live owner changes. All eleven standing checks and previous mutations rerun; native NOT_RUN."
     }
   ],
-  "reviewed_head": "de28e8be91b347e209f8b75e25838ef3bf686f73",
-  "revision_binding": "Round-4 repair commit plus final report commit on plans/ea-w2-gui-concerns-20261104; report commit is self-inclusive."
+  "reviewed_head": "370e7718684f2bcb025dafa3a3993091a96a49fd",
+  "revision_binding": "Round-5 technical repair plus self-inclusive report commit on plans/ea-w2-gui-concerns-20261104; no admission or native proof."
 }

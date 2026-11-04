@@ -1,3 +1,114 @@
+# DG6A — post-Astra technical fix round 5
+
+Worker: DG6A-FIX5, VM. Branch: `plans/ea-w2-gui-concerns-20261104`. Reviewed head: `370e7718684f2bcb025dafa3a3993091a96a49fd`. Technical commits: `6780aafe6c6383459386d50d7807211760bb679a` (type-exact proofs and historical source joins), `50d7f966de` (optional command presence and instant ordering), `b65638d1a610f4abc9ab4662aa96fcae7e608c33` (B1–B3), `74cbca0ca4` (new generated registry shards), and `87628f167daf8372a65ba652c2fd4371ae63d651` (independent protocol witnesses). The final report commit is self-inclusive. This section supersedes round 4's oracle-grade claims; earlier records and all nine stopped questions remain below unchanged.
+
+Seven families remain **prepared without admission**, each **10 PASS / 1 PARTIAL / 1 ABSENT** after repair, versus Astra's **9 PASS / 2 PARTIAL / 1 ABSENT**. Criterion 12 is restored with current-operation and whole-lane guard witnesses. Membership remains ABSENT, retention PARTIAL / `PENDING_RETENTION_DECISION`, and native execution NOT_RUN. No new retention, creator, lifecycle, or stopped-family policy is chosen.
+
+## Review round 5: findings and responses
+
+- **B1 — fixed (`b65638d1a6`, `87628f167d`). Where:** the four alert operation schemas/fixtures, SP-660..663, storage registry embedded schemas, and `scripts/pm-alert-event-contracts-check.py` (`operation_errors`, `request_digest`, `protocol_errors`). **Cause:** only shape/bytes were checked; all operation identities and digests were placeholders, and source refs disagreed with payload refs. **Fix:** each family's original normalized command is retained in a closed private snapshot; the exact canonical MessagePack command/payload preimage is specified separately in each existing owner. Event identity and operation digest are recomputed from the existing per-family Storage/Project/family/key array. Request digests are recomputed over the complete retained preimage. Original command, Project/key, subject/source, prior/result revisions and states, unchanged snapshot fields, unread/inbox effects, root cause and original deadlines join field by field. Same-key retry bodies are compared against retained original inputs. Forged IDs, arbitrary digests, foreign or contradictory snapshots and incorrect action effects have isolated witnesses. No digest is repaired while validating an input. The final strict-guard commit `50d7f966de` also rejects an optional payload field omitted from the retained command, and the converse optional command-only mismatch, with isolated negatives.
+- **B2 — fixed (`b65638d1a6`, `87628f167d`). Where:** both panel fixtures and `scripts/pm-panel-event-contracts-check.py`, with the guard runner. **Cause:** host snapshots, detached window and original result/receipt joins had no isolated current-operation witnesses; Home and successor checks were also unprotected. **Fix:** each host snapshot's session, host, revision and window, all three result/receipt links, command/payload and scope joins, Home context, application key and successor boundary are exercised independently. The original event identity in protocol evidence is also joined to the retained operation, preventing coherent forgery of both supplied receipt IDs. The redock window comparison deliberately repeats its generic command/window join; both are named and removed together for that witness.
+- **B3 — fixed (`b65638d1a6`, `87628f167d`). Where:** concern checker and fixture (`operation_errors`, `protocol_errors`, `isolated_cases`). **Cause:** unauthorized creators retained stale retry digests, while changed-body tests also broke unrelated joins. **Fix:** all unrelated command/record/retry commitments are reconciled before testing creator authority; every original authorized creator remains positive. A digest-only case changes no source object. Command, record, scope, creator/actor, revision-one ref, authority and receipt seams have separate witnesses. The old no-change alert/panel cases now use schema-valid equal revisions, so they exercise succession alone. Protocol vectors retain their own independent originals, preventing optional-array positives from leaving a borrowed original stale.
+- **N1 — retained generator exception.** Regeneration uses the copied, hash-verified ignored currentness edition; no timestamp is hand-restamped. Only the edited Storage owner and registry have changed shards. Index artifacts are regenerated normally; their existing `generated_at_utc` exception remains disclosed. No governance reseal occurs.
+- **N2 — pre-existing, unchanged.** The Assistant test file still runs 41 tests with exactly the two failures Astra reproduced at the pre-lane base: `test_definitionless_records_stay_blocked` and `test_live_equivalent_negatives_fail_for_intended_reason`. No test or unrelated Brainstorm/scheduling owner is changed in this round.
+
+## Family grades before and after
+
+| Family | Astra at 370e771868 | Round 5 | Remaining boundaries |
+|---|---|---|---|
+| alert.acknowledged | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | admission absent; retention pending; native NOT_RUN |
+| alert.dismissed | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | same |
+| alert.rule_muted | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | same |
+| alert.snoozed | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | same |
+| concern.created | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | same |
+| panel.redocked | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | same |
+| panel.undocked | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | same |
+
+## Check 11: whole-lane guard-removal proof
+
+The [guard-removal table](DG6A.guard-removal.md) records each guard, flipping witnesses, remaining rejections and named duplicates. The hashed JSON evidence contains every name and diagnostic, including the exact complement of each flipping set.
+
+- **229/229 guard rows pass:** 130 current-operation/payload/protocol/checkpoint/profile/schema/pager rejection sites across the three checker contexts; 99 historical rows, eleven guards across nine reader versions.
+- **660 current negative vectors** produce **28,976 source-removal trials**. Every negative has a singleton witness or a named duplicate proof. No unrelated pair is used to excuse a masked defect.
+- **54 duplicate witnesses / 11 pair matrices** cover replay-only versus generic unsupported-policy refusal, schema representation versus exact digest equality, the concern embedded/standalone payload schema, and redock's repeated window comparison. Every paired removal is swept across the full relevant negative set. All 55 changed-but-still-rejected diagnostics have named duplicate proofs; unrelated rejections retain their own reason.
+- **504 historical negative vectors / 5,544 cross-guard trials** prove exact original Storage/event/payload/receipt/source/publication and current disclosure guards. **18 positives** retain current/v1 originals, including replay-only history, with live state absent. Existing returning-helper revocation vectors continue to exercise the second disclosure fence.
+- Each mutant is compiled only in memory and the exact original function is restored in `finally`. The shipped checker retains every original guard and adds joins. The new vector assertions run through the normal three checker entry points.
+
+## All nine Astra defect classes, all seven prepared families
+
+The scope of every row below is explicitly all seven families in the grade table. Each family runs its own fixtures, schemas, operation, original evidence and reader. The full CLI regression separately mutates each exact family rather than inferring one sibling's result from another.
+
+| Astra class | Alert acknowledged / dismissed / rule_muted / snoozed | Concern created | Panel redocked / undocked |
+|---|---|---|---|
+| 1 Forgery/contradiction | Recomputed event/operation/request digests; command and every snapshot field/effect witness | Recomputed identity/request digest; command, Project/key, creator and every candidate-record field witness | Recomputed identities/digest; command, both hosts/windows, result/receipt and coherent original-ID forgery witnesses |
+| 2 Assigned metadata | Independently retained Storage event identity/sequence/observed/persisted time and all receipt leaves, with type-exact source joins | Same per-family Storage evidence | Same, for both current and immutable v1 readers |
+| 3 Historical direction | Valid retained current/replay-only originals survive absent/changed live state; forged/foreign/withdrawn inputs fail | Same; existing concern does not invalidate its original | Same; ended session/closed window do not invalidate current/v1 originals |
+| 4 Two representations | Integer, uppercase, spaced and LF digest probes; exact recomputation refuses each. Snooze offsets are parsed as instants, with past/equal/future offset witnesses in both predicates | Same; proof flags require literal Booleans and Storage maxima require integers | Same; proof flags/Storage maxima are type-exact; application keys retain CV-366 exact lowercase UTF-8 hex |
+| 5 Unresolved refs | Eager whole-schema traversal, including unused definitions; metaschema and dangling-ref source removals | Same, including embedded record/payload branches | Same, including current and immutable v1 schemas |
+| 6 Partial size limit | Complete canonical MessagePack operation, checkpoint and response measured; 16384/16385 boundaries; oversized metadata refused | Schema-valid multi-array stress updates all copies/digest and still fails only the complete operation cap | Complete operation/checkpoint/page cap witnesses; no fixed overhead allowance |
+| 7 Missing custody path | Retry source/receipt joins plus original read evidence; wrong event family refused | Authority/source/receipt/retry joins plus original read evidence | Source/session/window/retry and original receipt joins plus original read evidence |
+| 8 Masked negatives | Guard matrix, schema-valid successor witnesses, independent originals | Reconciled creator/retry copies; digest-only and field-specific negatives; matrix | Separate host/window/result/Home/successor negatives; named redock duplicate; matrix |
+| 9 Overgraded cells | PASS only for the tested static contract; admission ABSENT, retention PARTIAL, native NOT_RUN | Same; five existing creators preserved, no stopped transition privilege applied | Same; immutable v1 remains reader-only |
+
+Source hashes in historical fixtures are synthetic independently supplied Storage witnesses; native source authentication remains NOT_RUN. The original event and receipt are never reconstructed from a candidate. Physical guards measure every complete stored operation/checkpoint and emitted page, and the semantic producer digest excludes Storage-assigned metadata. The unchanged per-family SP-337 route externalizes event bodies above 16 KiB; it never permits an oversized mandatory operation value. A class-4 probe also found that lexically compared RFC3339 deadlines could accept an offset timestamp already before, or equal to, the original ts. `50d7f966de` uses one instant comparison in payload and operation predicates; the wrong-interpretation mutant reintroduces lexical comparison and admits exactly the four new offset negatives. Current writer/retry always refuses `projector_replay_only`; that rule never reaches the historical original.
+
+The final class-4 probes reproduced **58 accepted malformed current proof/profile representations** across all seven families. `6780aafe6c` requires literal Boolean authorization/absence/protection facts and integer Storage maxima. Historical joins now compare nested values **and types**; 63 Boolean/integer/float forgeries across all nine reader versions reject for their own guard, while a deliberately coercive comparison mutant discloses each. The leaf-change counter also distinguishes these types. Current writer predicates still never reach a retained historical original.
+
+## Authority, search and unchanged stops
+
+Per-family pinned searches across Storage, Contracts, FinalGUISpec, UI_Command_Catalog and Automated_Testing_System found no existing closed alert `original_command` field at 370e771868. Each existing identity array, command/handler, owner transition and source/currentness fence is reused; the exact private normalized snapshot/preimage is newly authored separately under SP-660, SP-661, SP-662 and SP-663. The public payloads and command signatures remain unchanged. `alert-binding-search.json` records the scope, source lines and negative schema evidence for each family. Earlier checked DL-045/DL-076/DL-188 premises remain applicable; no retention answer is extended.
+
+**All nine stopped families remain exact:** bundle.annotation_state_changed, bundle.note_created, bundle.note_status_changed, concern.assigned, concern.evidence_linked, concern.promoted, concern.reopened, concern.resolved and concern.updated. Their grade rows and questions/recommendations below are unchanged. No admission, registry append, Decision Log entry, new PlanUnit ID, governance artifact or main push occurs. IDs used remain **SP-660..666, CV-680..686, F3-700..705, ATS-330..334** (25 existing definitions).
+
+
+## Round 5 verification and evidence
+
+Technical input head: `6780aafe6c6383459386d50d7807211760bb679a`. The 700-observation broad regression ran with its inputs frozen at `87628f167d`; the 18 focused CLI cases then verified the optional-field and offset additions at `50d7f966de`. After the final type-exact changes, all three complete family checkers and the entire source/historical removal matrix pass again. The 63 historical representation observations run the actual composed readers with an independent coercive-comparison mutant, without weakening the leaf counter. No older result is represented as a full CLI rerun at the final head.
+
+| Check | Exit/result |
+|---|---|
+| Alert checker | 0 / pass; 1142 cases, four families |
+| Panel checker | 0 / pass; 638 cases, two families including immutable v1 readers |
+| Concern checker | 0 / pass; 449 cases |
+| Whole-lane guard runner | 0 / pass; 229 guard rows, 660 current negatives, 504 historical negatives, 11 paired matrices |
+| Broad CLI regression | 0 / pass; 700 observations, including 403 real CLI calls |
+| Focused CLI regression | 0 / pass; 18 real CLI calls, 10 refusals and eight optional-array positives |
+| Historical type interpretation mutant | 0 / pass; 63 exact own-guard refusals, each disclosed only by the deliberately coercive mutant |
+| Offset interpretation mutant | 0 / pass; four isolated offset negatives accepted by the former lexical predicate |
+| Grade/citation/hold audit | 0 / pass; 16 rows, 541 current citations, nine stops unchanged |
+| Shard generate/check; index generate/validate | 0 / pass; top-level JSON status parsed; currentness edition's 15 files SHA-256 matched before generation |
+| Assistant test file | 1; 41 tests, exactly the two pre-existing N2 failures |
+| Boundary/input audit; git diff --check | 0 / pass; only four alert operation registry schemas changed, no profile rows changed, no forbidden paths or new IDs |
+
+The initial optional-array CLI replay found a stale borrowed protocol original; its interrupted run is not counted as passing. Explicit independent protocol witnesses repaired that construction before the completed 700-observation rerun. The final strict additions found by the requested Astra-class probes add rules and negatives; they remove no existing valid rule.
+
+Initial resources: 13 GiB available RAM / 116 GB root disk free. Final check: 7 GiB / 91 GB. No subagents, messages to other threads, browser, server, main push or governance reseal. The detached sparse worktree is removed after the final report push; retained evidence and reports are copied to the draft folder.
+
+| Retained evidence | Absolute path | SHA-256 |
+|---|---|---|
+| `guard-removal.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-removal.json` | `c8d650d654d628951d2b0d5d1668065f8744e2efdbe0bb220539ddf3b417ca76` |
+| `guard-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-summary.json` | `06daaba1a39e73ad6641ba8f12b711b644a29933b65e0c2b1ada6b875ec91c12` |
+| `full-cli-mutations.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/full-cli-mutations.json` | `75d6bbaa3676db7983341f3d0596d76958348308919034e4c135450a06d85fdc` |
+| `final-cli.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/final-cli.json` | `e9cb51c6f8f9d7e8d6a00a1441bc1565c2339aa664cde32bfebd75317ee7eb75` |
+| `typed-inputs-before.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/typed-inputs-before.json` | `576a2214ae0bcb61f32884050af09d5ce0572da10c740844c13852f9caf06f03` |
+| `historical-representation-probe.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/historical-representation-probe.json` | `6451d522dbb62ec4c16dda42afff1c90705edac5e2af3c2f027c014f872576e8` |
+| `representation-probe.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/representation-probe.json` | `04203bfbf9e1a02ce5ca6263305d8e9a517b33bfe1b3c9de6b4daa8b866e1f56` |
+| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/boundary-audit.json` | `e060d7b2ed9006295f3ce463921f4e12f9dcf5f80dfaeb9a33549a5414be9294` |
+| `alert-binding-search.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alert-binding-search.json` | `8e774284a0a8639a5b0ae78fbe127423dc428e4a1da491f25f52522c6d81c42d` |
+| `currentness-copy.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/currentness-copy.json` | `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84` |
+| `review-evidence.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/review-evidence.json` | `e98c678640a9332b20390a8cacecd90d66b832f64c842c2884e6d934125ea7d6` |
+| `grade-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/grade-audit.json` | `e673d3b8b7c02c0dc158f9aa7b1f79de8622d2d07e368cb5625f0304fa824457` |
+| `alerts.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alerts.log` | `180b753dc5de1d072a71ce61455498c82d644e472dc280c7c8a9ac24ca0d4cd2` |
+| `panels.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/panels.log` | `a9445df915270fbf6b5237d9cf0e2cbf4b7cdfd56f6b461ac0dd1c9e3d313cd9` |
+| `concern.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/concern.log` | `03c9a6b6b8c7af4f3033c2d3a06a0a1f1ff9c46717fc3ab08a36d272360c65b3` |
+| `assistant-tests.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/assistant-tests.log` | `ec1eb8cc809b5a847c88c7459bb47f169b4c1a3115bcee66643a6b76317d1c89` |
+| `shard-generate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/shard-generate.json` | `32a149ab6029e00e969dad0c0c34dec8d8559259481c573d0387cd6050928d52` |
+| `shard-check.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/shard-check.log` | `48c1f857e2193456e9db56b97c616373bfca9a7db703b6ebe4b0efe2ae378363` |
+| `index-generate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/index-generate.json` | `5aff95b150b6a7fea98fbb9794671240dc785886f4f1745e74a361008eb5c32f` |
+| `index-validate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/index-validate.json` | `f4514cf8c856e212bb47a90831ad2bfa3661df07c1d10f918f150669a629393d` |
+
+## Earlier rounds (retained record)
+
 # DG6A — standing-check fix round 4
 
 Worker: DG6A-FIX4, VM. Branch: `plans/ea-w2-gui-concerns-20261104`.
