@@ -1,19 +1,15 @@
 import {pathToFileURL} from 'node:url';
+import {installActivityPaintProbe} from '../helpers/activity-paint.mjs';
 export default async function(t){
  await t.emulate({reducedMotion:'no-preference'});
+ await t.page.context().addInitScript(installActivityPaintProbe);
  await t.page.context().addInitScript(()=>{
   window.__shortClicks=[];
   for(const type of ['pointerdown','click'])window.addEventListener(type,e=>{
    const b=e.target.closest?.('[data-action]');
    const record={type,trusted:e.isTrusted,action:b?.dataset.action,domain:b?.dataset.domain,time:e.timeStamp,wall:performance.timeOrigin+e.timeStamp};
    window.__shortClicks.push(record);
-   if(type==='click'&&e.isTrusted&&b?.dataset.action==='open-activity'){
-    const probe=()=>{
-     const p=document.querySelector('#pmRoot .activity-panel.cover');
-     if(p&&p.getBoundingClientRect().width>0&&Number(getComputedStyle(p).opacity)>0)requestAnimationFrame(()=>{record.coverFrameMs=performance.now()-e.timeStamp;});
-     else if(performance.now()-e.timeStamp<2000)requestAnimationFrame(probe);
-    };requestAnimationFrame(probe);
-   }
+
   },true);
  });
  const base=/^https?:/.test(t.args.page)?t.args.page:pathToFileURL(t.args.page).href;
@@ -31,11 +27,12 @@ export default async function(t){
   t.log('input-clock anchor '+i+' '+JSON.stringify(await f.evaluate(()=>({wall:performance.timeOrigin+performance.now()}))));await t.mark('first click '+i);await t.page.mouse.click(box.x+box.width/2,box.y+box.height/2);
   // Event timestamps below locate the input independently of awaited click completion.
   await t.page.waitForTimeout(1200);await t.mark('cover settled '+i);
-  const got=await f.evaluate(()=>({events:window.__shortClicks,open:PM56_APP.state.activity.open,cover:!!document.querySelector('#pmRoot .activity-panel.cover'),rect:document.querySelector('#pmRoot .activity-panel.cover')?.getBoundingClientRect().toJSON()}));
+  await f.waitForFunction(()=>window.__activityPaintResult!==null,{},{timeout:10000});
+  const got=await f.evaluate(()=>({paint:window.__activityPaintResult,events:window.__shortClicks,open:PM56_APP.state.activity.open,cover:!!document.querySelector('#pmRoot .activity-panel.cover'),rect:document.querySelector('#pmRoot .activity-panel.cover')?.getBoundingClientRect().toJSON()}));
   t.log('paint region '+i+' '+JSON.stringify(got));
   await t.check('one click opens cover '+i,got.open&&got.cover,JSON.stringify(got));
-  const click=got.events.find(e=>e.type==='click'&&e.action==='open-activity');
-  await t.check('input-clock cover frame <=500ms '+i,click?.coverFrameMs<=500,JSON.stringify(click));
+  await t.check('input-clock first cover paint <=500ms '+i,
+   got.paint&&!got.paint.error&&got.paint.elapsed>=0&&got.paint.elapsed<=500,JSON.stringify(got.paint));
   await t.page.waitForTimeout(150);
  }
 
