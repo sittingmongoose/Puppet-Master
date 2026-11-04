@@ -329,7 +329,7 @@ def boundary_case(row, case):
             validate_payload_reference, resolve_payload, resolve_value, event_body,
             validate_writer, validate_profile, validate_operation_transition,
             validate_control_transition, validate_original_models, validate_case,
-            validate_snapshot_subjects, validate_complete_event)}
+            validate_snapshot_subjects, validate_complete_event, identity)}
         validator = validators[case["validator"]]
         # A boundary probe carries its accepting control and changes one invariant.
         validator(*copy.deepcopy(case["valid_args"]), **copy.deepcopy(case.get("valid_kwargs", {})))
@@ -457,6 +457,10 @@ def boundary_case(row, case):
         m = t["custody_model"]
         if scenario == "pack-missing":
             m["payload_rows"] = {}
+            # One missing source, observed consistently at final read and backup.
+            # Keep the references and independently retained logical originals.
+            m["final_payload_rows"] = {}
+            m["backup_binding"]["payload_rows"] = {}
         elif scenario in {"pack-changed", "pack-wrong-size"}:
             physical = m["operation_rows"][m["operation_key"]]
             ref = physical["value_ref"]
@@ -527,6 +531,27 @@ def boundary_case(row, case):
     elif scenario == "historical-live-state":
         # Retained SP-278 source authentication is distinct from today's native tree.
         t["current_live_state"] = case["live_state"]
+        return validate_case(name, p, t, historical=True)
+    elif scenario == "historical-policy":
+        event = m["operation_rows"][m["operation_key"]]["complete_event"]
+        event["replay_policy"] = case["policy"]
+        if case.get("compatibility"):
+            event["migration"].update(migrated_from_schema_id="pm.event.v0",
+                migrated_from_schema_version="1.0.0", migration_id="compat1",
+                compatibility_event_type=name)
+        fixture_event(t, event)
+        fixture_copies(t)
+        t["current_live_state"] = {"state": "deleted", "exists": False}
+        t.update(copy.deepcopy(case.get("trace_set", {})))
+        if case.get("reader_withdrawn"):
+            m["control_rows"][m["control_key"]]["reader_enabled"] = False
+            fixture_copies(t)
+        if case.get("foreign_storage"):
+            m["checkpoint_binding"]["storage_instance_id"] = "foreign"
+        if case.get("forged_digest"):
+            m["append_rows"][m["append_key"]]["producer_semantic_digest"] = "a" * 64
+            fixture_copies(t)
+        return validate_case(name, p, t, historical=True)
     else:
         raise AssertionError("unknown boundary scenario " + scenario)
     return validate_case(name, p, t)
@@ -563,6 +588,26 @@ def validate_path_coverage(paths, required_paths, label):
     # enforcement point so an isolated coverage mutation tests that invariant.
     if len(paths) != len(required_paths) or {p["path_ref"] for p in paths} != required_paths:
         raise ValueError(label + " path coverage")
+
+
+def validate_path_custody(payload, row):
+    """Authenticate complete settled coverage against the accepted path source."""
+    paths = row["settlement"]["path_snapshots"]
+    required_paths = set(payload["affected_path_refs"] +
+                         [payload[k] for k in ("source_path_ref", "destination_path_ref") if k in payload])
+    validate_path_coverage(paths, required_paths, "original")
+    for p in paths:
+        if (p["project_id"] != payload["project_id"] or
+                p["path_snapshot_revision"] != payload["path_snapshot_revision"] or
+                (p["node_ref"] is None) != (p["node_kind"] == "absent")):
+            raise ValueError("original path join")
+    accepted_paths = row["accepted_path_snapshots"]
+    validate_path_coverage(accepted_paths, required_paths, "accepted")
+    for p in paths:
+        original = next(a for a in accepted_paths if a["path_ref"] == p["path_ref"])
+        if any(original[k] != p[k] for k in ("project_id", "path_snapshot_revision", "computer_id",
+                                             "root_identity_ref", "relative_components")):
+            raise ValueError("changed accepted location")
 
 
 def validate_snapshot_subjects(event_type, payload, operation):
@@ -664,6 +709,7 @@ def validate_operation_transition(before, after, proof=None, storage=None):
             any(payload[k] != after["accepted_command"][k]
                 for k in ("command_id", "handler_target", "correlation_id", "origin"))):
         raise ValueError("settlement acceptance join")
+    validate_path_custody(payload, after)
     validate_snapshot_subjects(after["event_type"], payload, after)
     if after["phase"] == "history_settled":
         event = after["complete_event"]
@@ -712,7 +758,8 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
         raise ValueError("withdrawn authority rewritten")
 
 
-def validate_original_models(event_type, payload, trace, *, operation_candidate=None, transition_before=None):
+def validate_original_models(event_type, payload, trace, *, operation_candidate=None,
+                             transition_before=None, historical=False):
     model = trace["custody_model"]  # Synthetic canonical tables; native origin remains NOT_RUN.
     physical_operation = model["operation_rows"][model["operation_key"]]
     selected_operation = resolve_value("operation_custody", physical_operation, model["payload_rows"])
@@ -735,6 +782,11 @@ def validate_original_models(event_type, payload, trace, *, operation_candidate=
         raise ValueError("unsettled or changed original payload")
     # All remaining joins consume a historical complete event and issued receipt.
     if row["phase"] == "history_settled":
+        # Current append/retry and terminal publication still enforce writer policy.
+        # A retained historical original is governed by its authenticated written value.
+        if not historical or operation_candidate is not None:
+            validate_writer(row["complete_event"])
+            validate_writer(model["retry_event"])
         validate_historical_operation(event_type, payload, trace, model, row,
                                       physical_operation, selected_operation)
 
@@ -750,25 +802,9 @@ def validate_historical_operation(event_type, payload, trace, model, row,
             raise ValueError("original accepted input join")
     if row["settlement"]["settled_at_utc"] != payload["ts"]:
         raise ValueError("original completion time")
-    paths = row["settlement"]["path_snapshots"]
-    required_paths = set(payload["affected_path_refs"] +
-                         [payload[k] for k in ("source_path_ref", "destination_path_ref") if k in payload])
-    validate_path_coverage(paths, required_paths, "original")
-    for p in paths:
-        if (p["project_id"] != payload["project_id"] or
-                p["path_snapshot_revision"] != payload["path_snapshot_revision"] or
-                (p["node_ref"] is None) != (p["node_kind"] == "absent")):
-            raise ValueError("original path join")
-    accepted_paths = row["accepted_path_snapshots"]
-    validate_path_coverage(accepted_paths, required_paths, "accepted")
-    for p in paths:
-        original = next(a for a in accepted_paths if a["path_ref"] == p["path_ref"])
-        if any(original[k] != p[k] for k in ("project_id", "path_snapshot_revision", "computer_id",
-                                             "root_identity_ref", "relative_components")):
-            raise ValueError("changed accepted location")
+    validate_path_custody(payload, row)
     validate_snapshot_subjects(event_type, payload, row)
     event = row["complete_event"]
-    validate_writer(event)
     validate_complete_event(event_type, payload, row, event, model["payload_rows"])
     if model["resolver"] != "storage.first_append_receipt.resolve_full_value.v1":
         raise ValueError("semantic proof is not full-value proof")
@@ -779,7 +815,6 @@ def validate_historical_operation(event_type, payload, trace, model, row,
         raise ValueError("changed original full-value request")
     retry = model["retry_event"]
     validate_shape("event_record.schema.json", "", retry)
-    validate_writer(retry)
     if retry["event_id"] != event["event_id"]:
         raise ValueError("retry original event identity")
     if not same_value(semantic_body(retry), semantic_body(event)):
@@ -836,6 +871,8 @@ def validate_historical_operation(event_type, payload, trace, model, row,
 def identity(event_type, payload, context):
     # These fixtures contain ASCII strings only; JSON compact encoding equals RFC8785 here.
     # Production MUST use RFC8785, not this bounded oracle encoding, for arbitrary Unicode.
+    if type(context["recovery_epoch"]) is not int or context["recovery_epoch"] < 0:
+        raise ValueError("noncanonical recovery epoch")
     kind, action = event_type.split(".")
     subject = {
         "created": "result_node_ref" if kind == "file" else "result_folder_ref",
@@ -851,7 +888,8 @@ def identity(event_type, payload, context):
     return "evt_" + event_type.replace(".", "_") + "_" + digest, event_type + ":" + digest
 
 
-def validate_case(event_type, payload, trace, *, operation_candidate=None, transition_before=None):
+def validate_case(event_type, payload, trace, *, operation_candidate=None,
+                  transition_before=None, historical=False):
     validate_shape("event_payloads/file_manager/" + event_type.replace(".", "_") + ".schema.json", "", payload)
     validate_project_scope(payload["project_id"], trace["project_id"], "scope mismatch")
     kind, action = event_type.split(".")
@@ -903,7 +941,7 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None, trans
     if tuple(trace["retry_identity"]) != expected:
         raise ValueError("retry identity changed")
     validate_original_models(event_type, payload, trace, operation_candidate=operation_candidate,
-                             transition_before=transition_before)
+                             transition_before=transition_before, historical=historical)
     return expected
 
 
