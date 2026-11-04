@@ -7,6 +7,7 @@ export default async function(t){
   AudioScheduledSourceNode.prototype.start=function(...a){const stack=new Error().stack;if(stack.includes('primePlayback'))window.__primeStarts.push({offline:this.context instanceof OfflineAudioContext,gestures:window.__primeGestures});return real.apply(this,a);};
  });
  const f=await t.app.open();
+ await f.waitForFunction(()=>!!window.O55?.sound?.ctx,null,{timeout:30000});
  await f.evaluate(()=>O55.sound.prepare(O55.sound.ctx.sampleRate,'basic'));
  const starts=await f.evaluate(()=>window.__primeStarts);
  await t.check('offline prime synthesized before the first gesture',starts.some(x=>x.offline&&x.gestures===0),JSON.stringify(starts));
