@@ -24,6 +24,7 @@ Parallel runs are safe: each gets its own browser and run folder. Give each its 
 | Check file | What it asserts |
 |---|---|
 | `chat-sweep`, `chat-sweep-surfaces`, `chat-sweep-project`, `chat-gaze` | Stream F chat sweep: first Activity click, duplicate agent identity, shared sound switch, dock width, Room controls, Retro face, Reduced Motion loops and entry speed. |
+| `activity-speed-film` | SW-27: three owner-API Activity entries per speed, with stable viewport setup, for short control/fixed 60 fps GPU films. |
 | `chat-demo-dispatch` | Every Studio chat moment and guided example launches through the structured chat entry point; reset chains, recorded playback origin and absence of hidden trigger nodes, both surfaces. |
 | `identity` | R6 identity and completion guards: the frozen fields-lane generated matrix, kind/declared-part conflicts, admitted/AI/drive controls, stale-sign-in cleanup and keyless admitted completion. Owner-start matrices are synthetic; completion has separate checks. Defaults to T3 sandbox; run once with `--set sandbox=0` and `--set sandbox=1`. |
 | `own-servers` | Current Source Control offerings in onboarding/Settings, shipped-page retirement scan, invalidated saved/partial selections, explicit reselection and current-service continuation. Same two surface switches. |
