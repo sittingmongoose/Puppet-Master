@@ -42,7 +42,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.dedup_sweep"
@@ -60,7 +61,8 @@
         "result_ref": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256
+          "maxLength": 256,
+          "pattern": "^memresult_[0-9a-f]{64}$"
         },
         "result_sha256": {
           "type": "string",
@@ -103,7 +105,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.dedup_sweep"
@@ -149,7 +152,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.rebuild_lexical_index"
@@ -167,7 +171,8 @@
         "result_ref": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256
+          "maxLength": 256,
+          "pattern": "^memresult_[0-9a-f]{64}$"
         },
         "result_sha256": {
           "type": "string",
@@ -210,7 +215,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.rebuild_lexical_index"
@@ -256,7 +262,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.rebuild_semantic_index"
@@ -274,7 +281,8 @@
         "result_ref": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256
+          "maxLength": 256,
+          "pattern": "^memresult_[0-9a-f]{64}$"
         },
         "result_sha256": {
           "type": "string",
@@ -317,7 +325,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.rebuild_semantic_index"
@@ -363,7 +372,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.verification_sweep"
@@ -381,7 +391,8 @@
         "result_ref": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 256
+          "maxLength": 256,
+          "pattern": "^memresult_[0-9a-f]{64}$"
         },
         "result_sha256": {
           "type": "string",
@@ -424,7 +435,8 @@
         },
         "occurred_at_utc": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.chat.memory.verification_sweep"
