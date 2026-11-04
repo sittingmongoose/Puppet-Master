@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "0cd45903590ac3c92967bcb8236c33e67dce7cea6d68d300b5369df831d99df8",
+  "source_companion_sha256": "f7995454f0a01dddbe8bd5e182a4677f9333a5a577c48195b57e0b4e37782a89",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -5524,8 +5524,8 @@
             "command_id": "cmd.auth_profile.sign_in",
             "owner_ref": "Plans/Multi-Account.md#MA-074",
             "handler": "handlers::multi_account::sign_in",
-            "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
-            "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult",
+            "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInRequestV2",
+            "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInResultV2",
             "group": "no_project",
             "gui_consumers": [
               "Forge provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"
@@ -33165,8 +33165,8 @@
             "command_id": "cmd.auth_profile.sign_in",
             "owner_ref": "Plans/Multi-Account.md#MA-074",
             "handler": "handlers::multi_account::sign_in",
-            "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
-            "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult",
+            "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInRequestV2",
+            "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInResultV2",
             "group": "no_project",
             "gui_consumers": [
               "Forge provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"

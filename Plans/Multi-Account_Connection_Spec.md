@@ -395,6 +395,7 @@ canonical_text: >-
   revalidates frozen destination account/runtime choices and does not select from current focus. SRV-018
   owns protected SSH host-fingerprint trust and public-key installation; this facade neither promotes
   integration.connection.* into a remote key writer nor copies SSH private identity or protected input.
+  cmd.auth_profile.sign_in selects AuthProfileSignInRequestV2/ResultV2: historical AuthProfileCommandRequest/Result remain exact and the disjoint AppFirstTimeSignInRequestV2 references AppFirstTimeAuthBindingV1. A person choosing Set up a project later may start AI sign-in with null Project/account/profile/installation and no chat. The owner pre-identity binding fixes operation, initiating Client, actual Server/Host/Environment/provider and protected broker return. Null pre-identities are not eligibility evidence. Only the protected broker verified result allocates verified account/profile/installation and auth proof; accepted/pending is not verified. Subsequent commands use those real IDs and existing auth currentness. Cross-purpose selected-source bindings, agents, raw secrets and fabricated identities refuse.
 gui_related: false
 gui_classification_reason: Defines data, custody or resolver contracts consumed by existing GUI owners.
 depends_on:

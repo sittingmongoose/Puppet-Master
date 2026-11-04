@@ -2536,6 +2536,343 @@
           "maxLength": 256
         }
       }
+    },
+    "AppFirstTimeSignInRequestV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "operation",
+        "origin",
+        "command_instance_id",
+        "idempotency_key",
+        "provider_id",
+        "route_id",
+        "profile_id",
+        "account_id",
+        "installation_id",
+        "project_id",
+        "expected_auth_revision",
+        "expected_profile_generation",
+        "topology_generation",
+        "permission_snapshot_ref",
+        "first_time_app_auth",
+        "protected_auth_boundary",
+        "human_confirmation_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.app.first_time_sign_in.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.auth_profile.sign_in"
+        },
+        "operation": {
+          "const": "sign_in"
+        },
+        "origin": {
+          "enum": [
+            "human_gui",
+            "human_palette"
+          ]
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "route_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "profile_id": {
+          "const": null
+        },
+        "account_id": {
+          "const": null
+        },
+        "installation_id": {
+          "const": null
+        },
+        "project_id": {
+          "const": null
+        },
+        "expected_auth_revision": {
+          "const": 0
+        },
+        "expected_profile_generation": {
+          "const": 0
+        },
+        "topology_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "first_time_app_auth": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AppFirstTimeAuthBindingV1"
+            },
+            {
+              "properties": {
+                "scope": {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+                    },
+                    {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "verified_account_id": {
+                  "const": null
+                },
+                "verified_profile_id": {
+                  "const": null
+                }
+              }
+            }
+          ]
+        },
+        "protected_auth_boundary": {
+          "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/ProtectedAuthBoundary"
+        },
+        "human_confirmation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "AppFirstTimeSignInResultV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "operation_id",
+        "command_instance_id",
+        "status",
+        "provider_id",
+        "verified_account_id",
+        "verified_profile_id",
+        "verified_installation_id",
+        "authentication_proof_ref",
+        "protected_broker_evidence",
+        "credential_material_exposed",
+        "protected_content_exposed",
+        "protected_input_persisted",
+        "receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.app.first_time_sign_in.result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.auth_profile.sign_in"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "verified",
+            "cancelled",
+            "failed",
+            "blocked"
+          ]
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "verified_account_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_profile_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verified_installation_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authentication_proof_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "protected_broker_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "credential_material_exposed": {
+          "const": false
+        },
+        "protected_content_exposed": {
+          "const": false
+        },
+        "protected_input_persisted": {
+          "const": false
+        },
+        "receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "verified"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verified_account_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "verified_profile_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "verified_installation_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "authentication_proof_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "verified_account_id": {
+                "const": null
+              },
+              "verified_profile_id": {
+                "const": null
+              },
+              "verified_installation_id": {
+                "const": null
+              },
+              "authentication_proof_ref": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "AuthProfileSignInRequestV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AppFirstTimeSignInRequestV2"
+        }
+      ]
+    },
+    "AuthProfileSignInResultV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AppFirstTimeSignInResultV2"
+        }
+      ]
     }
   },
   "x-owner-command-count": 12,

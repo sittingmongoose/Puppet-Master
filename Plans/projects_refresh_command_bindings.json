@@ -5248,8 +5248,8 @@
       "command_id": "cmd.auth_profile.sign_in",
       "owner_ref": "Plans/Multi-Account.md#MA-074",
       "handler": "handlers::multi_account::sign_in",
-      "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandRequest",
-      "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileCommandResult",
+      "request_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInRequestV2",
+      "result_schema_ref": "Plans/multi_account_contracts.schema.json#/$defs/AuthProfileSignInResultV2",
       "group": "no_project",
       "gui_consumers": [
         "Forge provider setup and owner-routed Doctor remediation; Product Onboarding selected-source sign-in before commit (MACS-005), then paid/underlying-Free-Models setup after actual Project commit"
