@@ -38,6 +38,12 @@ def run(name, standing, configure=None, source=None, selected=None):
     m.SchemaReferences = m._raw_SchemaReferences
     if configure:
         configure(m)
+    # Causal witnesses always start from CLEAN, unmutated baseline data.
+    # Positive-input faults still reach every primary main() assertion, while
+    # they cannot turn the witness constructor into a second broken input.
+    canonical = module()
+    causal_cases = m.guard_cases
+    m.guard_cases = lambda boundary, excluded=(): causal_cases(canonical, excluded=excluded)
     output = io.StringIO()
     started = time.monotonic()
     with contextlib.redirect_stdout(output):
