@@ -30,8 +30,8 @@ const RECORDER = () => {
 		window.requestIdleCallback = function(fn, options) {
 			const stack = stackOf();
 			if (!owned(stack)) return ric.call(window, fn, options);
-			let id = identities.get(fn); if (!id) { id=++seq; identities.set(fn,id); }
-			const j={id, handle:++handle, fn, options, stack, pending:true, native:0};
+			let identity = identities.get(fn); if (!identity) { identity={id:++seq,stack}; identities.set(fn,identity); }
+			const j={id:identity.id, handle:++handle, fn, options, stack:identity.stack, pending:true, native:0};
 			R.jobs.push(j); pending.set(j.handle,j);
 			if (!R.gated) ask(j);
 			return j.handle;
