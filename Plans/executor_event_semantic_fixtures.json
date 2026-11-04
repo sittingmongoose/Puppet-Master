@@ -24655,7 +24655,7 @@
               "value": "structured_output_invalid"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-structured_output_invalid-retry-2",
@@ -24725,7 +24725,7 @@
               "value": "structured_output_invalid"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-structured_output_invalid-exhausted",
@@ -25192,7 +25192,7 @@
               "value": "auth_expired"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-auth_expired-exhausted",
@@ -25716,7 +25716,7 @@
               "value": "storage_io"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-storage_io-interrupted-retry-2",
@@ -25794,7 +25794,7 @@
               "value": "storage_io"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-storage_io-interrupted-retry-3",
@@ -25872,7 +25872,7 @@
               "value": "storage_io"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-storage_io-interrupted-exhausted",
@@ -26924,7 +26924,7 @@
               "value": "rate_limited"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "rate-limit-original-Retry-After-delta-seconds",
@@ -27110,7 +27110,7 @@
               "value": "rate_limited"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "ignore-original-Retry-After-use-fallback",
@@ -31427,7 +31427,7 @@
               "value": "2026-11-04T12:00:00.000Z"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-structured_output_invalid-retry-2",
@@ -31521,7 +31521,7 @@
               "value": 2
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-structured_output_invalid-exhausted",
@@ -32096,7 +32096,7 @@
               "value": "2026-11-04T12:00:02.000Z"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-auth_expired-exhausted",
@@ -32728,7 +32728,7 @@
               "value": "2026-11-04T12:00:00.000Z"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-storage_io-interrupted-retry-2",
@@ -32830,7 +32830,7 @@
               "value": 2
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-storage_io-interrupted-retry-3",
@@ -32932,7 +32932,7 @@
               "value": 3
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "classified-policy-storage_io-interrupted-exhausted",
@@ -34200,7 +34200,7 @@
               "value": "2026-11-04T12:00:00.000Z"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "rate-limit-original-Retry-After-delta-seconds",
@@ -34422,7 +34422,7 @@
               "value": "2026-11-04T12:00:00.000Z"
             }
           ],
-          "expected": "accept"
+          "expected": "reject"
         },
         {
           "case": "ignore-original-Retry-After-use-fallback",

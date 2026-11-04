@@ -126,6 +126,8 @@ def validate_retry(contract, payload, records):
         require(failure['refresh'] is None, 'refresh belongs to auth_expired')
     until = instant(retry['backoff_until_utc'])
     require(until == scheduled + delay, 'original classified retry deadline')
+    if name in ('run.node_backoff_started', 'run.node_backoff_expired'):
+        require(delay > timedelta(0), 'classified policy has no timed backoff')
     if name == 'run.node_backoff_expired':
         require(observed >= until, 'early timer')
     elif name == 'run.node_backoff_started':
