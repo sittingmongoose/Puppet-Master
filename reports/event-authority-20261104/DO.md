@@ -1,123 +1,112 @@
-# DO — Event Authority wave 2, 2026-11-04
+# DO — Event Authority review round 1, 2026-11-04
 
-**Branch:** `plans/ea-w2-orchestrator-20261104`, based on `origin/main` `be4766513f`. Prepared without admission. No registry, Decision Log, admission record, governance seal or main push. Worktree retained for integration at `/home/sittingmongoose/pm-worktrees/DO`.
+Branch `plans/ea-w2-orchestrator-20261104`; fix worker DO-FIX1. Owner/code revision `644a3df9c97ffc19c76924a02641cb852852f7ef` repairs reviewed head `942679dd84606c684faa520d1f73c8e2fc6a5a43`. All 25 are self-graded prepared under the lane's retention exception: **10 PASS, retention PARTIAL, membership ABSENT per family**. This is specification preparation; native execution remains NOT_RUN. No admission, event-family append, Decision Log entry, main push or reseal.
 
-## Per-row result
+## Review round 1: findings and responses
 
-| Family | Owner | Outcome | Self-grade | New operating reader |
-|---|---|---|---|---|
-| `config.validation.failed` | OSI-680 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.config_validation_failed.history.v1@1.0.0` |
-| `crew.board_message_posted` | OSI-681 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.crew_board_message_posted.history.v1@1.0.0` |
-| `crew.board_message_read` | OSI-682 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.crew_board_message_read.history.v1@1.0.0` |
-| `crew.board_messages_archived` | OSI-683 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.crew_board_messages_archived.history.v1@1.0.0` |
-| `parser.error` | OSI-684 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.parser_error.history.v1@1.0.0` |
-| `phase.force_completed` | OSI-685 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.phase_force_completed.history.v1@1.0.0` |
-| `subagent.budget_warning` | OSI-686 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_budget_warning.history.v1@1.0.0` |
-| `subagent.cancelled` | OSI-687 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_cancelled.history.v1@1.0.0` |
-| `subagent.completed` | OSI-688 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_completed.history.v1@1.0.0` |
-| `subagent.context_warning` | OSI-689 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_context_warning.history.v1@1.0.0` |
-| `subagent.escalated` | OSI-690 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_escalated.history.v1@1.0.0` |
-| `subagent.failed` | OSI-691 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_failed.history.v1@1.0.0` |
-| `subagent.message_received` | OSI-692 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_message_received.history.v1@1.0.0` |
-| `subagent.message_sent` | OSI-693 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_message_sent.history.v1@1.0.0` |
-| `subagent.model_switched` | OSI-694 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_model_switched.history.v1@1.0.0` |
-| `subagent.output_truncated` | OSI-695 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_output_truncated.history.v1@1.0.0` |
-| `subagent.paused` | OSI-696 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_paused.history.v1@1.0.0` |
-| `subagent.progress` | OSI-697 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_progress.history.v1@1.0.0` |
-| `subagent.resumed` | OSI-698 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_resumed.history.v1@1.0.0` |
-| `subagent.retried` | OSI-699 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_retried.history.v1@1.0.0` |
-| `subagent.spawned` | OSI-700 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_spawned.history.v1@1.0.0` |
-| `subagent.started` | OSI-701 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_started.history.v1@1.0.0` |
-| `subagent.timeout` | OSI-702 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_timeout.history.v1@1.0.0` |
-| `subagent.tool_called` | OSI-703 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_tool_called.history.v1@1.0.0` |
-| `subagent.tool_completed` | OSI-704 | register (prepared without admission) | 10 PASS; retention PARTIAL; membership ABSENT | `reader.orchestrator.subagent_tool_completed.history.v1@1.0.0` |
+- **DO-01 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/orchestrator-subagent-integration.md:32218`, OSI-681..683 and OSI-686..704; checker `scripts/pm-orchestrator-event-contracts.py:33`. All 22 application families explicitly use CV-366 `application@1:{hex(server_id)}:{hex(owner_operation_id)}`, preserving the Storage lifetime tuple. Each original operation retains its own exact event observation component before append/recovery. Project keys and both scopes' event-ID recipe remain unchanged. Fixed vectors independently decode Server/operation bytes. Same-identity changed semantics is a conflict; retries do not remint. Verify `python3 scripts/pm-orchestrator-event-contracts.py`; full-checker old-application-key mutation exits 1.
+- **DO-02 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/orchestrator-subagent-integration.md:32212`, the closed posted payload and exact-family fixtures. The event itself now carries exactly one of content up to 16,384 UTF-8 bytes or closed content_ref (BLAKE3 id, full byte size, text media type), adopting OSI-299/SP-337. Original message joins remain. Body bytes/index precede append acknowledgement; both inline and referenced text retain permission/deletion/hold checks. Required custom format pm-utf8-body-16k is enforced by producer/storage validators; maxLength alone is not the byte check. Positive/negative cases test both scopes, ASCII and multibyte boundaries, both/missing representations, invalid reference fields and secrets against both the payload and actual stored member. Pack-byte/BLAKE3 truth and crash/read races remain authored native NOT_RUN. Verify the DO checker; body-missing full-checker mutation exits 1.
+- **DO-03 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/storage-plan.md:29481` (SP-720..722), OSI-681..683, coordination_event_records in Plans/storage_value_registry.json, `scripts/pm-orchestrator-event-contracts.py:112` and `scripts/pm_coordination_events.py:777`. Each board family has its own key-shape and closed member, original sole AgentCoordinator, Project/application append/source adoption, genuine Server/thread/crew/run/message joins, actual terminal-Run anchor and board-specific text protection. Original eight members and other registry rows/policies/profiles remain exact. Board history does not enter the seven-agent lifecycle reducer. Stored-message custody does not stand in for event storage. Source join vectors exercise both scope editions against the actual value composition; they are static joins, not native source authentication. The coordination checker retains strict expected-row comparison and rejects removal of each member through its full CLI. Q1 and Q3 remain retention integration items; no count interpretation or admission is chosen.
+- **DO-04 — fixed (`644a3df9c97ffc19c76924a02641cb852852f7ef`).** Location: `Plans/orchestrator-subagent-integration.md:33014`, retry payload/fixtures and `scripts/pm-orchestrator-event-contracts.py:47`. New attempts cover failure, blockage and interruption without relabelling blocked/interrupted children as failed. Retain child lineage and increment the attempt once. Terminal/superseded, permission/ceiling, Stop/deadline, no-new/skipped-attempt, resume/reroute/replacement and missing interruption-source negatives refuse. Both-scope payload positives include all causes. Verify the DO checker; deleting blockage coverage from fixtures fails its full CLI.
 
-## Newly authored owner contracts and search evidence
+No finding is disputed. No new product choice was supplied. Retention remains a stopped/PARTIAL cell wherever the cited dependency has unresolved prerequisites.
 
-Every row has its own OSI unit and closed schema definition. Each unit independently states producer/ordering, scope and identity, receipt recovery, read/index/checkpoint adoption, custody, retention dependency, transitions, compatibility, withdrawal and exact-family oracles. No family is inferred from a sibling.
+## Family grades before and after
 
-Before drafting, each exact family was searched independently across current Plans Markdown and JSON, including Contracts, Storage, schema and value-registry definitions. Source-lineage/generated hits were inspected only as leads; they do not supply authority. The existing subagent and board payload-minima tables were reused; diagnostics reuse the Orchestrator parser, config-validation and soft-cap passages. Exact new reader identifiers and the ea-do-v1 identity recipe had no prior definition. The complete per-family negative/positive search transcript is external evidence below. No existing family-local closed schemas or complete family-local writer/reader contracts were found for these 25 rows.
+Before is the independent DO-sol regrade, not the superseded original self-grade. After is the current self-grade at the source revision above. Every row keeps retention PARTIAL and membership ABSENT.
 
-| Family | Reused current source | New technical bindings |
-|---|---|---|
-| `config.validation.failed` | Plans/orchestrator-subagent-integration.md:1336 | OSI-680: `Orchestrator backend config validator / reject unknown subagent`; `reader.orchestrator.config_validation_failed.history.v1@1.0.0`; `config_validation_failed` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `crew.board_message_posted` | Plans/orchestrator-subagent-integration.md:4770; Plans/orchestrator-subagent-integration.md:24161; Plans/Contracts_V0.md:3074 | OSI-681: `AgentCoordinator / post board message`; `reader.orchestrator.crew_board_message_posted.history.v1@1.0.0`; `crew_board_message_posted` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `crew.board_message_read` | Plans/orchestrator-subagent-integration.md:4831; Plans/Contracts_V0.md:3075 | OSI-682: `AgentCoordinator / acknowledge board read`; `reader.orchestrator.crew_board_message_read.history.v1@1.0.0`; `crew_board_message_read` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `crew.board_messages_archived` | Plans/orchestrator-subagent-integration.md:4839; Plans/Contracts_V0.md:3076 | OSI-683: `AgentCoordinator / archive stale board messages`; `reader.orchestrator.crew_board_messages_archived.history.v1@1.0.0`; `crew_board_messages_archived` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `parser.error` | Plans/orchestrator-subagent-integration.md:1223; Plans/orchestrator-subagent-integration.md:11762; Plans/orchestrator-subagent-integration.md:11797 | OSI-684: `Provider output parser / record parse failure`; `reader.orchestrator.parser_error.history.v1@1.0.0`; `parser_error` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `phase.force_completed` | Plans/orchestrator-subagent-integration.md:1442; Plans/orchestrator-subagent-integration.md:11526; Plans/orchestrator-subagent-integration.md:11561 | OSI-685: `Interview PhaseManager / enforce soft cap`; `reader.orchestrator.phase_force_completed.history.v1@1.0.0`; `phase_force_completed` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.budget_warning` | Plans/Contracts_V0.md:3013; Plans/Contracts_V0.md:16733; Plans/Contracts_V0.md:16761 | OSI-686: `Child budget monitor / report threshold`; `reader.orchestrator.subagent_budget_warning.history.v1@1.0.0`; `subagent_budget_warning` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.cancelled` | Plans/Contracts_V0.md:3005; Plans/Contracts_V0.md:16635; Plans/Contracts_V0.md:16643 | OSI-687: `Child cancellation owner / settle cancellation`; `reader.orchestrator.subagent_cancelled.history.v1@1.0.0`; `subagent_cancelled` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.completed` | Plans/Contracts_V0.md:1471; Plans/Contracts_V0.md:3003; Plans/Contracts_V0.md:9022 | OSI-688: `Child executor / complete child`; `reader.orchestrator.subagent_completed.history.v1@1.0.0`; `subagent_completed` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.context_warning` | Plans/Contracts_V0.md:3008; Plans/Contracts_V0.md:16732; Plans/Contracts_V0.md:16759 | OSI-689: `Child context monitor / report threshold`; `reader.orchestrator.subagent_context_warning.history.v1@1.0.0`; `subagent_context_warning` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.escalated` | Plans/Contracts_V0.md:3014; Plans/Contracts_V0.md:16733; Plans/Contracts_V0.md:16762 | OSI-690: `Child escalation owner / notify parent`; `reader.orchestrator.subagent_escalated.history.v1@1.0.0`; `subagent_escalated` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.failed` | Plans/Contracts_V0.md:3004; Plans/Contracts_V0.md:16635; Plans/Contracts_V0.md:16643 | OSI-691: `Child executor / fail child`; `reader.orchestrator.subagent_failed.history.v1@1.0.0`; `subagent_failed` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.message_received` | Plans/Contracts_V0.md:3002; Plans/Contracts_V0.md:16685; Plans/Contracts_V0.md:16715 | OSI-692: `Child response collector / record response`; `reader.orchestrator.subagent_message_received.history.v1@1.0.0`; `subagent_message_received` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.message_sent` | Plans/Contracts_V0.md:3001; Plans/Contracts_V0.md:16685; Plans/Contracts_V0.md:16714 | OSI-693: `Parent follow-up dispatcher / record send`; `reader.orchestrator.subagent_message_sent.history.v1@1.0.0`; `subagent_message_sent` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.model_switched` | Plans/Contracts_V0.md:3009; Plans/Contracts_V0.md:16733; Plans/Contracts_V0.md:16760 | OSI-694: `Child runtime resolver / apply model switch`; `reader.orchestrator.subagent_model_switched.history.v1@1.0.0`; `subagent_model_switched` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.output_truncated` | Plans/Contracts_V0.md:3012; Plans/Contracts_V0.md:16686; Plans/Contracts_V0.md:16716 | OSI-695: `Child output collector / bound preview`; `reader.orchestrator.subagent_output_truncated.history.v1@1.0.0`; `subagent_output_truncated` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.paused` | Plans/Contracts_V0.md:3010; Plans/Contracts_V0.md:16636; Plans/Contracts_V0.md:16643 | OSI-696: `Child pause owner / checkpoint child`; `reader.orchestrator.subagent_paused.history.v1@1.0.0`; `subagent_paused` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.progress` | Plans/Contracts_V0.md:2998; Plans/Contracts_V0.md:16684; Plans/Contracts_V0.md:16711 | OSI-697: `Child executor / report progress`; `reader.orchestrator.subagent_progress.history.v1@1.0.0`; `subagent_progress` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.resumed` | Plans/Contracts_V0.md:3011; Plans/Contracts_V0.md:16636; Plans/Contracts_V0.md:16643 | OSI-698: `Child resume owner / resume child`; `reader.orchestrator.subagent_resumed.history.v1@1.0.0`; `subagent_resumed` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.retried` | Plans/Contracts_V0.md:3007; Plans/Contracts_V0.md:16732; Plans/Contracts_V0.md:16758 | OSI-699: `Child retry owner / create next attempt`; `reader.orchestrator.subagent_retried.history.v1@1.0.0`; `subagent_retried` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.spawned` | Plans/Contracts_V0.md:1471; Plans/Contracts_V0.md:2996; Plans/Contracts_V0.md:9022 | OSI-700: `Child dispatcher / create child`; `reader.orchestrator.subagent_spawned.history.v1@1.0.0`; `subagent_spawned` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.started` | Plans/Contracts_V0.md:2997; Plans/Contracts_V0.md:16635; Plans/Contracts_V0.md:16643 | OSI-701: `Child executor / start child`; `reader.orchestrator.subagent_started.history.v1@1.0.0`; `subagent_started` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.timeout` | Plans/Contracts_V0.md:3006; Plans/Contracts_V0.md:16636; Plans/Contracts_V0.md:16643 | OSI-702: `Child deadline owner / settle timeout`; `reader.orchestrator.subagent_timeout.history.v1@1.0.0`; `subagent_timeout` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.tool_called` | Plans/Contracts_V0.md:2999; Plans/Contracts_V0.md:16684; Plans/Contracts_V0.md:16712 | OSI-703: `Child tool dispatcher / record invocation`; `reader.orchestrator.subagent_tool_called.history.v1@1.0.0`; `subagent_tool_called` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
-| `subagent.tool_completed` | Plans/Contracts_V0.md:3000; Plans/Contracts_V0.md:16684; Plans/Contracts_V0.md:16713 | OSI-704: `Child tool dispatcher / record result`; `reader.orchestrator.subagent_tool_completed.history.v1@1.0.0`; `subagent_tool_completed` closed payload; exact-family operation_id/occurrence SHA-256 recipe |
+| Family | Owner units | Before | After |
+|---|---|---:|---:|
+| `config.validation.failed` | OSI-680 | 10 PASS | 10 PASS |
+| `crew.board_message_posted` | OSI-681/SP-720 | 5 PASS | 10 PASS |
+| `crew.board_message_read` | OSI-682/SP-721 | 6 PASS | 10 PASS |
+| `crew.board_messages_archived` | OSI-683/SP-722 | 6 PASS | 10 PASS |
+| `parser.error` | OSI-684 | 10 PASS | 10 PASS |
+| `phase.force_completed` | OSI-685 | 10 PASS | 10 PASS |
+| `subagent.budget_warning` | OSI-686 | 7 PASS | 10 PASS |
+| `subagent.cancelled` | OSI-687 | 7 PASS | 10 PASS |
+| `subagent.completed` | OSI-688 | 7 PASS | 10 PASS |
+| `subagent.context_warning` | OSI-689 | 7 PASS | 10 PASS |
+| `subagent.escalated` | OSI-690 | 7 PASS | 10 PASS |
+| `subagent.failed` | OSI-691 | 7 PASS | 10 PASS |
+| `subagent.message_received` | OSI-692 | 7 PASS | 10 PASS |
+| `subagent.message_sent` | OSI-693 | 7 PASS | 10 PASS |
+| `subagent.model_switched` | OSI-694 | 7 PASS | 10 PASS |
+| `subagent.output_truncated` | OSI-695 | 7 PASS | 10 PASS |
+| `subagent.paused` | OSI-696 | 7 PASS | 10 PASS |
+| `subagent.progress` | OSI-697 | 7 PASS | 10 PASS |
+| `subagent.resumed` | OSI-698 | 7 PASS | 10 PASS |
+| `subagent.retried` | OSI-699 | 6 PASS | 10 PASS |
+| `subagent.spawned` | OSI-700 | 7 PASS | 10 PASS |
+| `subagent.started` | OSI-701 | 7 PASS | 10 PASS |
+| `subagent.timeout` | OSI-702 | 7 PASS | 10 PASS |
+| `subagent.tool_called` | OSI-703 | 7 PASS | 10 PASS |
+| `subagent.tool_completed` | OSI-704 | 7 PASS | 10 PASS |
 
-The new recipes hash RFC8785 JCS identity arrays, retaining the original canonical operation id and observation occurrence across retry. Readers are ephemeral history inspection adapters over the existing actual SP-278 index; no new persisted projection/checkpoint or storage value family is introduced. Thus no storage-value registry rows are needed. They reuse `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}`, its closed checkpoint schema, existing generic CAS/publication, and its existing retention. None may reconstruct canonical child/board state from an event. Every family explicitly adopts SP-286/CV-339 first-receipt custody and SP-278.
+**Totals:** before 179 PASS / 50 PARTIAL / 46 CONFLICT / 25 ABSENT; after 250 PASS / 25 PARTIAL / 0 CONFLICT / 25 ABSENT. Prepared-family count under the lane exception: **3/25 → 25/25**. All 300 current cell citations were re-pinned and mechanically verified. The self-grade records prior review grades per cell and individual remaining gaps; independent re-review remains required.
 
-## Decision premise checks
+## Newly authored bindings and current search evidence
 
-- **DL-084:** Contracts still enumerates the same 19 subagent histories and current child-run history semantics. OSI-440 and CV-366 extend scope to application chats without changing chat-lifetime retention. Cite `origin/plans/ea-storage-retention-20261104` (Case L-3 assignment and `reports/event-authority-20260911/step-09-storage-retention-20261104.md`): `RP-CHAT-THREAD-LIFETIME@1.0.0`, including its reuse check/cap/deletion behavior. Not duplicated here.
-- **DL-085:** The three board families still describe attributable run-internal board state. OSI-440/SP-351 already define application board custody and the 16 KiB/SP-337 body rule. The current lifecycle still said “archived or deleted”; changed to “archived”, with unresolved blockers remaining visible and archive deleting nothing. Storage policy remains the branch-owned `RP-COORDINATION-180D@1.0.0`.
-- **DL-086:** The parser failure, invalid-name rejection and phase soft-cap passages remain current; no later feature retirement found. Bind branch-owned `RP-RUNTIME-365D@1.0.0`. Technical reconciliation preserves the first 500 sanitized Unicode characters plus a reference to all permitted sanitized raw output, under SP-337; it does not pick a new retention/deletion rule.
-- **DL-087:** Current Collaborative Workflows still owns shared workflow lifecycle; the retirement branch report explicitly leaves this pointer outstanding. Both duplicated “Crew lifecycle, cleanup, and GUI routing” passages now point to `Plans/Collaborative_Workflows.md` and prohibit separate Crew lifecycle history. No retirement edit from the other branch is duplicated.
-- **Child states:** Current Contracts line 2930 owns queued/running/awaiting_parent/blocked/complete/failed/cancelled. Drafts use those states, with timeout a failure reason and pause a cause-based existing waiting state. No new child-state enum.
+Each of the 22 application families has its own stated observation component `JCS(["ea-do-observation-v1",operation_id,thread_id,run_id,event_type,occurrence])`, retained in its genuine original operation custody. This fills only the missing family-local effect component; CV-366 supplies the existing key format. All prior Project domains are preserved. OSI-681 newly spells the closed event content_ref and required UTF-8-byte format while preserving OSI-299/SP-337 behavior. SP-720..722 newly bind one board storage member/source/run anchor per exact family, reusing SP-320, OSI-440, CV-366, SP-351, SP-286 and SP-278. Readers remain ephemeral family-local adapters over the existing actual generic index/checkpoint; no new retained projection or checkpoint is introduced.
 
-**Failed premises:** none. **Questions for Jared:** none discovered. The outstanding retention integration dependency is an already answered decision, not a new question.
+Per-family searches used all tracked current Plans Markdown/JSON at reviewed head 942679dd, excluding generated/pipeline/source-lineage trees. Exact hits are in per-family-current-search.json. Existing original drafting evidence remains `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/per-family-search.json`, SHA-256 `b210f7025b6efd58b4003d8246270b98d8e91dca81708413c3e84a774a1445c0`. The current search explicitly reuses shared CV-366 identity even though exact-family searches did not discover it originally. The old claim that history-reader reuse removed the need for canonical board storage members is withdrawn. Eight original composition members contain no board key; each SP unit documents that negative evidence and the original app source edition it adopts. No sibling binding or admission is inferred.
 
-## Shared-file and owner hunks
+## Retention dependencies and premise checks
 
-- `Plans/Automated_Testing_System.md`: append ATS-360 only, exact-family static and native oracle obligations.
-- `Plans/orchestrator-subagent-integration.md`: two DL-087 pointer insertions; one DL-085 wording replacement; append OSI-680..704 in a new end section.
-- New files: `Plans/orchestrator_event_payloads.schema.json`, `Plans/orchestrator_event_contract_fixtures.json`, `scripts/pm-orchestrator-event-contracts.py`. No other shared owner/value-registry edit.
+Retention stays cited to `origin/plans/ea-storage-retention-20261104` at inspected `d1b0338a21da131e62a0779aa46e822f3a439843`, especially Case L-3 and report reports/event-authority-20260911/step-09-storage-retention-20261104.md section 6. This fix does not copy that branch's assignments or policies.
 
-## IDs and validation
+- **DL-084:** the same 19 histories still exist; OSI-440/CV-366 application support changes neither their chat lifetime nor the shared **250,000 per thread** cap. Each contract names the actual parent chat; linked successor physical form is still first-admission technical work. Immediate deletion tombstone, active purge within 24 h, backup purge within 30 d and non-disclosing holds are explicit in every child contract. Policy citation alone closes none of those prerequisites.
+- **DL-085:** all three run-internal board families remain current. Existing lane changes from “archived or deleted” to archived, unresolved blocker visibility and leaving-board-deletes-nothing remain intact. SP-720..722 now supply the missing members, text rule and first durable terminal actual-run anchor. **Q1 remains open:** Does the Storage owner/host read SP-349/SP-351's Server-wide application counterpart bound differently for application board EventRecords? This fix does not answer it or promote retention. **Q3** (carry-over of the host's September confirmation to the rebuilt retention branch) remains integration work.
+- **DL-086:** three diagnostics remain Project-only under DL-292 and join the original Orchestrator/interview Run's first durable terminal record, never their own event timestamp or a child's completion. OSI-684 keeps the first 500 sanitized Unicode characters plus the full permitted sanitized output's SP-337 reference. Policy remains RP-RUNTIME-365D on the dependency; retention PARTIAL.
+- **DL-087/088:** current Collaborative Workflows still owns lifecycle. Both Crew pointers remain, with no separate lifecycle history. None of the six retired crew lifecycle or two retired spawn-request names intersects these 25; board and subagent.spawned/completed names are preserved. Retirements dependency checked at d30028fbb943321df574cc159312c9c103d4de8c / b4ef60f0a9610a7fa64fc1e9f44674f20f31d876; no duplicate edit.
+- **DL-292/CV-366:** application availability remains relevant to 22 families. The old assumption that a new hashed do1 app key was allowed **failed**; current CV-366:24099 already governs. DO-01 applies it. The old body-only-in-message assumption **failed** against OSI-299:24161 and is corrected by DO-02. Retry's failure-only premise **failed** against Contracts:2948–2958 and is corrected by DO-04. There is no current owner conflict left for those fixes.
 
-**Used:** OSI-680..704 and ATS-360. Both blocks checked against main and every fetched origin branch: no collision. SP-720..739, CV-740..759, ATS-361..369 and OSI-705..719 unused.
+**Named integration follow-ups:** original CV-267..269 / child-history DL-084 citations and original Contracts board minima carrying DL-085 remain visible owner follow-ups from the Storage report. The retention branch's linked-successor work, Q1 and Q3 are not erased by these ten-PASS rows. Q2's separate collaborative record policy, SR-04 Boot aggregates and storage_maintenance_operation are outside DO. No admission readiness is claimed.
 
-Currentness edition copied before index generation; all 15 files matched SHA-256. Regeneration changed only the edited Orchestrator and Automated Testing shards and global plan-index artifacts. No test file was edited.
+## Shared-file hunks and IDs
 
-- DO contract checker: exit 0, 25 families, 1,496 static assertions; native NOT_RUN.
-- Shard generate: exit 0. Shard check: exit 0, 3,093 shards.
-- Index generate: exit 0, top-level pass. Index validate: exit 0, parsed top-level `status: pass`.
-- Runtime-integration canon validator: exit 1; see baseline comparison below.
-- Coordination checker: exit 1; see baseline comparison below.
+- **Orchestrator:** amend only OSI-680..704 contracts from this lane; the earlier DL-085 and two DL-087 lifecycle edits remain intact.
+- **Storage owner:** append three independent units SP-720..722. No existing prose rewritten and no retention assignment duplicated.
+- **Storage registry:** amend only coordination_event_records: three key/member additions, exact required/optional intersection/union, original append/consumer adoption, replay, run-anchor, text and prepared-state prose. All original eight payload definitions and all other family/policy/profile bytes are semantically unchanged. No new storage family is added.
+- **Testing owner:** amend ATS-360 with the exact-family regression obligations. **Checkers/companions:** two DO JSON files, DO checker and strict coordination composition expectation. No tests file edited: its ignore rule has no allowed `!` exception; regression vectors live in the allowed Plans companion and full-checker probe suite.
+- **IDs used:** original OSI-680..704 and ATS-360; new SP-720..722. New IDs were scanned across 500 fetched origin refs / 61 unique Storage blobs: no collision. SP-723..739, CV-740..759, ATS-361..369 and OSI-705..719 remain unused.
+- **Derived files:** regenerated only the edited Orchestrator, Testing, Storage and storage-value-registry shard directories plus six global plan-index files. No generated files hand-edited.
 
-The first UTC negative exposed that the installed jsonschema FormatChecker did not enforce date-time. The checker now explicitly validates UTC strings. A preliminary index validation overlapped the later owner regeneration and reported two stale generated artifacts; the final sequential validation supersedes it. The runtime validator was initially invoked without its required validate mode (exit 2), then rerun correctly.
+## Verification and boundaries
 
-## Integration and limitations
+| Command/check | Exit | Result |
+|---|---:|---|
+| free -g / df -BG / before worktree | 0 / 0 | 15 GB available RAM; 122 GB available disk, above 6/50 GB floors |
+| Currentness edition copy and SHA-256 compare | 0 | All 15 files match shared edition before generation |
+| python3 scripts/pm-orchestrator-event-contracts.py | 0 | 25 families; 2,186 assertions; native NOT_RUN |
+| Full DO checker negative mutations | 1 expected each | Old application key, missing posted body, missing member, omitted blockage retry coverage all caught |
+| Full coordination CLI with each board member removed | 1 expected each | Additional coordination_event_records mismatch for all three individual removals |
+| python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json | 0 | Only edited owners' derived paths |
+| python3 scripts/pm-plan-index.py generate | 0 | Top-level status pass |
+| python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json | 0 | Top-level status pass |
+| python3 scripts/pm-plan-index.py validate | 0 | Parsed top-level status pass |
+| python3 scripts/pm_coordination_events.py, baseline/fixed | 1 / 1 | Exact same 2 pre-existing failures; whole stdout bytes identical |
+| python3 scripts/pm-runtime-integration-canon-validate.py validate, baseline/fixed | 1 / 1 | Exact same 161 pre-existing failures; whole stdout bytes identical |
+| python3 scripts/pm-storage-profile-check.py, baseline/fixed | 1 / 1 | Exact same 41 pre-existing errors; whole stdout bytes identical |
+| Full storage registry/schema and preservation audit | 0 | Registry validates; other rows/policies/profiles and all original members preserved |
+| git diff --check | 0 | No whitespace errors |
 
-Integrate the Storage retention branch before claiming retention PASS; self-grades intentionally leave that cell PARTIAL. Registry membership remains ABSENT, and all family_id strings in the self-grade are proposed labels only. Native producer/durability/security/replay/withdrawal oracles are authored NOT_RUN. No native writer, new product feature, admission, checkpoint promotion or governance readiness is claimed. Independent Sol/Astra review and batch integration remain the lead’s work. Edited owner hashes and generated artifacts require the separately assigned reseal workflow after landing; no reseal was performed.
+Baseline/fixed checkers run with full read-only input overlays; only relevant baseline files are replaced with reviewed-head bytes. Scratch overlays were removed. No governance gates, admission, native run or landing was substituted for this bounded fix. A temporary integrity assertion used an incorrect underscore spelling for two shard directory names; correcting that audit expectation produced the passing four-owner preservation audit without changing product files.
+
+**Procedure disclosure:** the parallel initial startup issued read-only pm-mail inbox/who before FIX-ROUND's no-pm-mail instruction had been read. No register/send/reply occurred and no later pm-mail was used. No subagents, admission, registry append, Decision Log, governance edit or main push. Sparse detached worktree /home/sittingmongoose/pm-worktrees/DO-fix1 is removed after the pushed report/self-grade and final packet are written, as the fix-round override requires.
 
 ## External evidence
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/per-family-search.json` SHA-256 `b210f7025b6efd58b4003d8246270b98d8e91dca81708413c3e84a774a1445c0`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/contracts-check.txt` SHA-256 `b28d01702cb851926bc8f1d12bc83664881e972388dc33cf86e7780eca6debb3`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/runtime-canon-check.txt` SHA-256 `bd09795460a0685673e28093e0bf0299343bf8b5ac4c7062440eb9bac412b955`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/runtime-canon-baseline.txt` SHA-256 `bd09795460a0685673e28093e0bf0299343bf8b5ac4c7062440eb9bac412b955`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/coordination-check.json` SHA-256 `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/coordination-baseline.json` SHA-256 `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/shard-generate.txt` SHA-256 `ee8f25c4c314417161da89a187d2b5e131c5b4db3570f2b05f902053f5684cd8`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/shard-check.txt` SHA-256 `695c9deda2a5c4fc86fbb855223f1e463d00c0c9fdf27103427d3cb7f41177ad`.
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/index-generate.txt` SHA-256 `a399f497286727ab48941014f74a90092c5d28d70611d0ed3a6a6583a42ff54c`.
+Paths plus SHA-256 below identify the retained result evidence. Raw checks, repair/search/probe scripts and this report/self-grade copy remain outside the repository in the same DO draft directory.
 
-**runtime-canon baseline comparison:** branch 161 failures; unchanged-base owner files 161 failures; exact failure-list equality `True`. Baseline used a temporary external read-only overlay with the two edited owners replaced by origin/main bytes; removed after execution.
-
-**coordination baseline comparison:** branch 2 failures; unchanged-base owner files 2 failures; exact failure-list equality `True`. Baseline used a temporary external read-only overlay with the two edited owners replaced by origin/main bytes; removed after execution.
-
-Final index validation evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/index-validate.json` SHA-256 `b2bb4cff5cb63e94a1a4a72471d1e8b5f608b6c1f2669b4209eeb37c4a6b515f`.
-
-External dependency tips inspected: Storage `d1b0338a21da131e62a0779aa46e822f3a439843`; DL-087/088 retirements `d30028fbb943321df574cc159312c9c103d4de8c`.
+| Path | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/setup.json` | `806e7ff40beae0b680940b9d00c1e94ea06e093bae3e2164d7b853fd2383e086` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/per-family-current-search.json` | `0f459fd5a177e35c882f307b54a8ef27ad9a78a0d795349493463b27c47a1d13` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/contracts-check.json` | `7c3c5ca54f677da689b90506b86634455a3ad5cbcc79539a8e554625cfdac332` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/probe-results.json` | `b43c51cf1d024ffbfb3d020abf4cfccd13852c215fa68e4606e06ca2daab26b3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/integrity.json` | `1758d443fdb03a0ffd674953eac3da199cf00d617a4502e3ad05b9bd805659c5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/shard-generate.json` | `0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/index-generate.json` | `14ae5e716300a5bd14cc688998f874b37a360fe08f54a2ae6ed81fca75df082c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/shard-check.json` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/index-validate.json` | `e171e02450dc2ac597de625533555d3701ab6f61f6a3f63ac016cfa5a64d02c5` |
