@@ -22,7 +22,8 @@
 //     control as painted.
 // Probes can read a state that was never painted: the films (`--record`) are the claim; this check is the regression
 // gate on the causes. Both surfaces (`--set sandbox=1` for T3's sandbox); `--set motion=reduce` for Reduce Motion;
-// `--set size=740x900` for another window size (headless: a recording keeps 1920x1080).
+// `--set size=740x900` for another window size (headless: a recording keeps 1920x1080); `--set layouts=1` also crosses
+// the stage's three layouts on Welcome (headless).
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const FRAMES = 96;        // about 1.6 s at 60 fps: the cover or reveal, the rebuild and the bubble's pop
 const NIER_FRAMES = 300;  // NieR's moment plays its plate first
@@ -147,7 +148,16 @@ export default async function (t) {
 	// the look change has finished (the page's cover, NieR's moment and the window's reveal) before the menu is touched again
 	const quiet = () => f.waitForFunction(() => !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy())
 		&& !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !window.O55.S.vt, null, { timeout: 30000 }).catch(() => {});
-	const press = async (loc) => { await quiet(); await loc.click({ timeout: 30000 }); };
+	// the palette button pressed as a person does; where something covers it (NieR's step rail at 860 wide covered it on
+	// be4766513f: not this check's item, and logged as a NOTE), as a keyboard user does: focused, then Enter
+	const covered = [];
+	const press = async (loc) => {
+		await quiet();
+		if (await loc.click({ trial: true, timeout: 4000 }).then(() => true, () => false)) { await loc.click({ timeout: 30000 }); return; }
+		const by = await loc.evaluate((b) => { const r = b.getBoundingClientRect(), e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2), k = e && e.closest('[data-key]'); return e ? `${e.tagName.toLowerCase()}.${String(e.className && e.className.baseVal != null ? e.className.baseVal : e.className).trim().split(/\s+/).join('.')}${k ? ' [' + k.getAttribute('data-key') + ']' : ''}` : 'nothing'; });
+		covered.push(`${await f.evaluate(() => document.documentElement.getAttribute('data-theme') + (document.documentElement.getAttribute('data-o55-nier') === 'on' ? ' + NieR' : ''))}: ${by}`);
+		await loc.focus(); await t.page.keyboard.press('Enter');
+	};
 	const menuOpen = async () => { if (!(await f.locator('#pm-o55-onboarding .o55-lookmenu').count())) { await press(btn); await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 }); await f.waitForTimeout(350); } };
 	const rows = [], bad = [], tally = {}, dumps = [], causes = [];
 	let changes = 0, frames = 0;
@@ -187,7 +197,27 @@ export default async function (t) {
 		if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) { await press(btn); await f.waitForTimeout(300); }
 		await f.waitForTimeout(600);
 	}
+	// --set layouts=1 (headless: a recording refuses viewport changes): the window crosses the stage's three layouts (the
+	// tall pane, the narrow strip, the short strip), which rebuilds the rig the way a look change does (Stage.setLayout);
+	// each frame after each resize must show the rig placed and the head painted at its pose (no band: the pose changes)
+	if (t.args.layouts) {
+		const layoutRows = [];
+		for (const [w, h] of [[740, 900], [1280, 500], [1920, 1080], [1280, 500], [740, 900], [1920, 1080]]) {
+			await quiet();
+			await arm(f, FRAMES);
+			t.mark(`layout ${w}x${h}`);
+			await t.viewport(w, h);
+			const fr = (await collect(f)).filter((x) => !x.none);
+			const unplaced = fr.filter((x) => !x.hx || !x.cx).length, off = fr.filter((x) => !x.gp && x.hq && Math.max(...x.hp.map((v, k) => Math.abs(v - x.hq[k]))) > 2).length;
+			const lay = await f.evaluate(() => document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.layoutName);
+			layoutRows.push({ size: `${w}x${h}`, lay, n: fr.length, unplaced, off });
+			await f.waitForTimeout(600);
+		}
+		layoutRows.forEach((r) => t.log(`layout ${r.size} (${r.lay}): ${r.n} frames; unplaced ${r.unplaced}, off its pose ${r.off}`));
+		await t.check('a layout change (Stage.setLayout) paints the rebuilt rig in its pose in every frame', layoutRows.length && layoutRows.every((r) => !r.unplaced && !r.off) && new Set(layoutRows.map((r) => r.lay)).size === 3, layoutRows.map((r) => `${r.size} ${r.lay} unplaced ${r.unplaced} off ${r.off}`).join('; '));
+	}
 	if (t.args.dump) (await import('node:fs')).writeFileSync(String(t.args.dump), JSON.stringify(dumps));
+	if (covered.length) t.log(`NOTE: the window's look button was covered (pressed by keyboard instead) ${covered.length} time(s): ${[...new Set(covered)].join('; ')}`);
 	rows.forEach((r) => t.log(r));
 	t.log(`${changes} look changes, ${frames} frames read; bad frames by kind: ${Object.entries(tally).map(([k, v]) => `${k} ${v}`).join(', ') || 'none'}`);
 	await t.check('every look change was made on Welcome', changes >= looks.length && (await f.evaluate(() => window.O55.S.sess.screen)) === 'welcome', `${changes} changes`);
