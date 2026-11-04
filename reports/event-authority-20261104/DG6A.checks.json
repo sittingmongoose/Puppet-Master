@@ -1,7 +1,7 @@
 {
-  "review_round": 1,
-  "reviewed_head": "9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-  "content_head": "7df8a1eee31772c0c38d42e77cb5b75443173b1a",
+  "worker": "DG6A-FIX2",
+  "reviewed_head": "257c2af1af6c3fbb324594664cb09a1ebf26475e",
+  "contract_head": "276e10cd781c969f716bb8fec0b33b61f8855076",
   "checks": [
     {
       "name": "alert-check",
@@ -9,9 +9,9 @@
         "python3",
         "scripts/pm-alert-event-contracts-check.py"
       ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/alert-check.log",
-      "sha256": "0151b879fb7168f1f0b8ad950518436d1111d9207011d22a0fbb5c5c25ed2264"
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/alert-check.log",
+      "sha256": "751a68bbea20b1b4019ac16154a1cd4547e854d1444731fc3bd965a7013307a6"
     },
     {
       "name": "panel-check",
@@ -19,9 +19,79 @@
         "python3",
         "scripts/pm-panel-event-contracts-check.py"
       ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/panel-check.log",
-      "sha256": "f538c8ad7ad4b03451a368f4ccd00da86d61e1b578034a4c0514bf3f7bc02be2"
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/panel-check.log",
+      "sha256": "e72c88833e1a65899d9e4c79161c42b464f77e8e98f3fb0bf3b79d8f16396b95"
+    },
+    {
+      "name": "concern-check",
+      "command": [
+        "python3",
+        "scripts/pm-concern-created-contracts-check.py"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/concern-check.log",
+      "sha256": "42668b339fe51ac5b24afdfc07faaa35124df09acb3b3df5a040852634adc445"
+    },
+    {
+      "name": "shards-generate",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/shards-generate.log",
+      "sha256": "7c2c2dccbd5e1d910247816cbb7400054792c4a7a3937c29108b0002539db006"
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/index-generate.log",
+      "sha256": "2613eaad3a7befdad473dcbd7803a03f3cdd850e424409c1dd5f26e647be1bc7"
+    },
+    {
+      "name": "shards-check",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/shards-check.log",
+      "sha256": "2b3e5fdfaf24e7bcb524267fa5f1f5624f8d336eabf781db2b2c34407b307649"
+    },
+    {
+      "name": "index-validate",
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/index-validate.log",
+      "sha256": "7ab9ccb2659dbbc37160af57dd4a3727827af4c26847ae0eb58f3a5544e0acf5",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "name": "profile-check",
@@ -29,90 +99,110 @@
         "python3",
         "scripts/pm-storage-profile-check.py"
       ],
-      "exit_code": 1,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/profile-check.log",
-      "sha256": "40ddb3b98d752262a02b59a998985687fd4c5e8058618d154800887ff2d3e696"
+      "exit": 1,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/profile-check.log",
+      "sha256": "fc5885fa872722fec087a51bbfe1f79e9a91803254bd03e69d3eb464a3cee17f",
+      "pre_existing_errors": 41,
+      "families": 360,
+      "profiles": 319
+    },
+    {
+      "name": "assistant-contract-check",
+      "command": [
+        "python3",
+        "scripts/pm-assistant-contract-check.py"
+      ],
+      "exit": 1,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-contract-check.log",
+      "sha256": "f5c185f2cfb60b5898767d33237ae43eb14c4c72d144cd67e5114f9e9d63bb74",
+      "status": "gaps_found",
+      "errors": []
     },
     {
       "name": "assistant-tests",
       "command": [
         "python3",
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests",
-        "-p",
-        "test_pm_assistant_contract_closure.py"
+        "tests/test_pm_assistant_contract_closure.py"
       ],
-      "exit_code": 1,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/assistant-tests.log",
-      "sha256": "2c65a13696abc19875ee6abe32009b7bb08abdcb0e2edcb63ca5ced4d1f54b82"
-    },
-    {
-      "name": "registry-json-schema",
-      "exit_code": 0,
-      "error_count": 0
-    },
-    {
-      "name": "profile-delta",
-      "exit_code": 0,
-      "base_error_count": 41,
-      "reviewed_error_count": 51,
-      "final_error_count": 41,
-      "errors_identical_to_base": true,
-      "lane_errors": 0
-    },
-    {
-      "name": "assistant-tests-reviewed",
-      "exit_code": 1,
-      "run": 41,
-      "failures": 2,
-      "errors": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/assistant-tests-reviewed.json",
-      "note": "Full reviewed-head suite and source-text/registry inputs read from Git objects; identical two failures as final suite."
-    },
-    {
-      "name": "plan-index-validate",
-      "exit_code": 0,
-      "top_level_status": "pass",
-      "errors": [],
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/index-validate.json",
-      "sha256": "62f171d2a9040e8808832f0d4d76e657b733e10d6d3dce2b05b28a961336f8fb"
-    },
-    {
-      "name": "assistant-contract-check",
-      "exit_code": 1,
-      "top_level_status": "gaps_found",
-      "errors": [],
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/assistant-contract-check.json",
-      "sha256": "75187544f1f02c011382867e7a6bd8f56f69acc2eb6b53c5c8ff53155c41f52a"
-    },
-    {
-      "name": "shards-check",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/shards-check.log",
-      "sha256": "abfd549aedd5ac498f776eb595a5f5b64b33df2906e3c32fc0683b6200995dc8"
-    },
-    {
-      "name": "self-grade-evidence",
-      "exit_code": 0,
-      "cells": 192,
-      "cell_citations": 444,
-      "note": "Every quote mechanically resolves at its current cited line; all six prepared families regraded against current content."
-    },
-    {
-      "name": "id-scan",
-      "exit_code": 0,
-      "origin_refs": 500,
-      "collisions": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/id-scan.json"
-    },
-    {
-      "name": "current-main-premises",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/current-main-premises.json",
-      "note": "Nine deciding units byte-identical between reviewed head and fetched origin/main; none of the sixteen lane events admitted there."
+      "exit": 1,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-tests.log",
+      "sha256": "4da2e62e4a1aacad37ee069e892b93123089cd294d9f153ad00e992dc2b05234",
+      "tests": 41,
+      "pre_existing_failures": [
+        "test_definitionless_records_stay_blocked (__main__.LiveEquivalentPayloadClosureTests.test_definitionless_records_stay_blocked)",
+        "test_live_equivalent_negatives_fail_for_intended_reason (__main__.LiveEquivalentPayloadClosureTests.test_live_equivalent_negatives_fail_for_intended_reason)"
+      ]
     }
-  ]
+  ],
+  "evidence": [
+    {
+      "name": "targeted and derived checks",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/round2-checks.json",
+      "sha256": "f1764aaf6ed8c3646ee2e304ed0f7dc2ccced6de0a2641cc225ae8f1e653ebdb"
+    },
+    {
+      "name": "four full mutated-input checker reruns",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/panel-mutation-reruns.json",
+      "sha256": "67d0cc2fa8aa6205d1d7dbfd9ce97c62228a80b92e895a2cf3469becd7414e6b"
+    },
+    {
+      "name": "regeneration stability",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/regeneration-stability.json",
+      "sha256": "32c8942dae9264fce52c34a8a13216c3f1b97434885dee19acebd564ad15e850"
+    },
+    {
+      "name": "grade/citation audit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/grade-audit.json",
+      "sha256": "54895e961dc88ab3feb02a4d0040c31d9e42583ac63272d378b8665fd2f8dd97"
+    },
+    {
+      "name": "per-family current-canon search",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/concern-created-search.json",
+      "sha256": "e5179c09c2c5b06b66d35f242423481c9ab38b234c647322472796773f494139"
+    },
+    {
+      "name": "current-main premises",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/premise-checks.json",
+      "sha256": "d29b61658bdef13d6e034e3c038cc0b91f100510be3fa1bc3cf162b14637e348"
+    },
+    {
+      "name": "cross-origin id scan",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/id-scan.json",
+      "sha256": "0583e5f806faf4848b92e64ff2b452a8cb1871fd5de3834ba5adfa2e0e88a5ab"
+    },
+    {
+      "name": "currentness-edition copy",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/currentness-sha256.json",
+      "sha256": "ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c"
+    },
+    {
+      "name": "Assistant regression comparison",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-regression-comparison.json",
+      "sha256": "65a2b7bb341415dcae2737d3eafe9dd8b5591cd7dad94e8dee4198f17650dbb2"
+    },
+    {
+      "name": "pinned baseline read transport",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/pin-run.py",
+      "sha256": "c8ff993fb6e8cfff8b0c7adb658b43d94616f0d7c93825c68ff4d9725353623a"
+    },
+    {
+      "name": "pinned reviewed-head profile output",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/profile-reviewed.log",
+      "sha256": "40ddb3b98d752262a02b59a998985687fd4c5e8058618d154800887ff2d3e696"
+    },
+    {
+      "name": "pinned reviewed-head Assistant output",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-tests-reviewed.log",
+      "sha256": "24a95a114ed6ca1846e3ca2f7945e2fdc4cfd039cfff8879f2128819ab9aecad"
+    },
+    {
+      "name": "final boundary audit",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/final-boundary-audit.json",
+      "sha256": "2700dc601e588a49c6da0313358f1483ec8356c257a16e57fe10c1d25f2935a4"
+    }
+  ],
+  "native": "NOT_RUN",
+  "admission": "ABSENT",
+  "retention": "PENDING_RETENTION_DECISION",
+  "round": 2
 }

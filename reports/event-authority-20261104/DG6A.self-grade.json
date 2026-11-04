@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DG6A-FIX1-20261104",
+  "assessment_id": "EA-W2-DG6A-FIX2-20261104",
   "assessment_kind": "self_grade_preparation",
   "source_base": "be4766513ff71776346fc73b84f2542990f955af",
   "rubric": {
@@ -46,74 +46,81 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family absent from unchanged registry; all effects/append/checkpoint advance remain denied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29505,
               "line_end": 29505,
-              "quote": "\\ permission/currentness/owner mutation fence, validate exact registry membership FIRST; currently absent means\\"
+              "quote": "currently absent means\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29487,
               "line_end": 29487,
-              "quote": "canonical_text: \"Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\"
+              "quote": "Newly authored owner contract for alert.acknowledged 1.0.0 under DL-045; prepared without admission.\\"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-680",
+              "line_start": 24471,
+              "line_end": 24471,
+              "quote": "alert.acknowledged exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660 binds original producer ordering, genuine SP-286/CV-339 full-value receipt recovery and a bounded physical profile; native proof NOT_RUN.",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29488,
+              "line_end": 29488,
+              "quote": "handlers::alert::acknowledge, produces this exact family. Existing closed\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29512,
               "line_end": 29512,
-              "quote": "\\ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-660",
-              "line_start": 29585,
-              "line_end": 29585,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_acknowledged_operation is canonical MessagePack in\\"
+              "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
               "path": "Plans/event_payloads/attention/alert_acknowledged.schema.json",
@@ -121,181 +128,244 @@
               "line_start": 8,
               "line_end": 8,
               "quote": "\"additionalProperties\": false,"
+            },
+            {
+              "path": "Plans/event_payloads/attention/alert_acknowledged.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"schema_version\", \"project_id\", \"alert_id\", \"alert_record_ref\","
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-680",
+              "line_start": 24471,
+              "line_end": 24471,
+              "quote": "alert.acknowledged exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29494,
               "line_end": 29494,
-              "quote": "\\ stale result, no change, rollback or failed persistence produces no event.\\n\\nIdentity is Project-scoped EventRecord\\"
+              "quote": "Identity is Project-scoped EventRecord\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29495,
+              "line_end": 29495,
+              "quote": "project~base64url_no_pad(UTF8(project_id)); envelope project_id equals payload project_id,\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29500,
+              "line_end": 29500,
+              "quote": "Request digest covers\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29517,
               "line_end": 29517,
-              "quote": "\\ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\\"
+              "quote": "retries\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29595,
+              "line_end": 29595,
+              "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event, original operation and derived checkpoint policies remain explicitly pending; no candidate class is assigned.",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29549,
               "line_end": 29549,
-              "quote": "\\nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
+              "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29519,
               "line_end": 29519,
-              "quote": "\\nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_acknowledged_operation.schema.json.\\"
+              "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_acknowledged_operation.schema.json.\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29521,
+              "line_end": 29521,
+              "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29490,
               "line_end": 29490,
-              "quote": "\\ no sibling admission. Semantic owner is F3-700, payload route CV-680, storage route SP-660. Transition: unacknowledged\\"
+              "quote": "Transition: unacknowledged\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660 binds its exact SP-278/DL-076 reader/projector, bounded frontier key/schema, whole-value CAS, read-through continuation, rebuild and withdrawal.",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29528,
-              "line_end": 29528,
-              "quote": "\\ is independently read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_acknowledged_checkpoint.v1:{project_id}:{storage_instance_id},\\"
+              "line_start": 29526,
+              "line_end": 29526,
+              "quote": "projector.alert_acknowledged.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29585,
-              "line_end": 29585,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_acknowledged_operation is canonical MessagePack in\\"
+              "line_start": 29529,
+              "line_end": 29529,
+              "quote": "SP-278 and DL-076:\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29507,
+              "line_end": 29507,
+              "quote": "CAS the exact subject revision\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-660/CV-680/F3-700 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
               "line_start": 29542,
               "line_end": 29542,
-              "quote": "\\ deletion rebuilds only retained refs, never resurrects deleted content.\\n\\nCompatibility/withdrawal: only payload\\"
+              "quote": "Compatibility/withdrawal: only payload\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-660",
+              "line_start": 29546,
+              "line_end": 29546,
+              "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-330 and the passing full checker cover this exact current schema, profile/identity and 16 KiB/1000-match regression; native obligations remain NOT_RUN.",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-330",
+              "line_start": 7232,
+              "line_end": 7232,
+              "quote": "alert.acknowledged contract oracles"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-660",
-              "line_start": 29593,
-              "line_end": 29593,
-              "quote": "\\ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\\"
+              "line_start": 29554,
+              "line_end": 29554,
+              "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
@@ -306,7 +376,7 @@
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py"
       ],
-      "notes": "Prospective current-writer preparation only: exact family admission ABSENT, retention pending, native execution NOT_RUN. Current schema and oracles are static contracts."
+      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
     },
     {
       "event_type": "alert.dismissed",
@@ -333,74 +403,81 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family absent from unchanged registry; all effects/append/checkpoint advance remain denied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29653,
               "line_end": 29653,
-              "quote": "\\ exact registry membership FIRST; currently absent means deny before journal/body/effect/checkpoint. On future\\"
+              "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29634,
               "line_end": 29634,
-              "quote": "canonical_text: \"Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\"
+              "quote": "Newly authored owner contract for alert.dismissed 1.0.0 under DL-045; prepared without admission.\\"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-681",
+              "line_start": 24514,
+              "line_end": 24514,
+              "quote": "alert.dismissed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661 binds original producer ordering, genuine SP-286/CV-339 full-value receipt recovery and a bounded physical profile; native proof NOT_RUN.",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29635,
+              "line_end": 29635,
+              "quote": "handlers::alert::dismiss, produces this exact family. Existing closed payload\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29660,
               "line_end": 29660,
-              "quote": "\\ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-661",
-              "line_start": 29733,
-              "line_end": 29733,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_dismissed_operation is canonical MessagePack in the\\"
+              "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
               "path": "Plans/event_payloads/attention/alert_dismissed.schema.json",
@@ -408,181 +485,244 @@
               "line_start": 8,
               "line_end": 8,
               "quote": "\"additionalProperties\": false,"
+            },
+            {
+              "path": "Plans/event_payloads/attention/alert_dismissed.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"schema_version\", \"project_id\", \"alert_id\", \"alert_record_ref\","
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-681",
+              "line_start": 24514,
+              "line_end": 24514,
+              "quote": "alert.dismissed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29642,
               "line_end": 29642,
-              "quote": "\\ produces no event.\\n\\nIdentity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
+              "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29642,
+              "line_end": 29642,
+              "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29648,
+              "line_end": 29648,
+              "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29665,
               "line_end": 29665,
-              "quote": "\\ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\\"
+              "quote": "retries\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29743,
+              "line_end": 29743,
+              "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event, original operation and derived checkpoint policies remain explicitly pending; no candidate class is assigned.",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29697,
               "line_end": 29697,
-              "quote": "\\nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
+              "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29667,
               "line_end": 29667,
-              "quote": "\\nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.\\"
+              "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_dismissed_operation.schema.json.\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29669,
+              "line_end": 29669,
+              "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29637,
               "line_end": 29637,
-              "quote": "\\ no sibling admission. Semantic owner is F3-701, payload route CV-681, storage route SP-661. Transition: unacknowledged,\\"
+              "quote": "Transition: unacknowledged,\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661 binds its exact SP-278/DL-076 reader/projector, bounded frontier key/schema, whole-value CAS, read-through continuation, rebuild and withdrawal.",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29676,
-              "line_end": 29676,
-              "quote": "\\ independently read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_dismissed_checkpoint.v1:{project_id}:{storage_instance_id},\\"
+              "line_start": 29674,
+              "line_end": 29674,
+              "quote": "projector.alert_dismissed.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29733,
-              "line_end": 29733,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_dismissed_operation is canonical MessagePack in the\\"
+              "line_start": 29677,
+              "line_end": 29677,
+              "quote": "SP-278 and DL-076:\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29655,
+              "line_end": 29655,
+              "quote": "CAS the exact subject revision\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-661/CV-681/F3-701 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
               "line_start": 29690,
               "line_end": 29690,
-              "quote": "\\ rebuilds only retained refs, never resurrects deleted content.\\n\\nCompatibility/withdrawal: only payload 1.0.0\\"
+              "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-661",
+              "line_start": 29694,
+              "line_end": 29694,
+              "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-331 and the passing full checker cover this exact current schema, profile/identity and 16 KiB/1000-match regression; native obligations remain NOT_RUN.",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-331",
+              "line_start": 7282,
+              "line_end": 7282,
+              "quote": "alert.dismissed contract oracles"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-661",
-              "line_start": 29741,
-              "line_end": 29741,
-              "quote": "\\ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\\"
+              "line_start": 29702,
+              "line_end": 29702,
+              "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
@@ -593,7 +733,7 @@
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py"
       ],
-      "notes": "Prospective current-writer preparation only: exact family admission ABSENT, retention pending, native execution NOT_RUN. Current schema and oracles are static contracts."
+      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
     },
     {
       "event_type": "alert.rule_muted",
@@ -620,74 +760,81 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family absent from unchanged registry; all effects/append/checkpoint advance remain denied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29800,
               "line_end": 29800,
-              "quote": "\\ exact registry membership FIRST; currently absent means deny before journal/body/effect/checkpoint. On future\\"
+              "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29781,
               "line_end": 29781,
-              "quote": "canonical_text: \"Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\"
+              "quote": "Newly authored owner contract for alert.rule_muted 1.0.0 under DL-045; prepared without admission.\\"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-682",
+              "line_start": 24556,
+              "line_end": 24556,
+              "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662 binds original producer ordering, genuine SP-286/CV-339 full-value receipt recovery and a bounded physical profile; native proof NOT_RUN.",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29782,
+              "line_end": 29782,
+              "quote": "handlers::alert::mute_rule, produces this exact family. Existing closed\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29807,
               "line_end": 29807,
-              "quote": "\\ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-662",
-              "line_start": 29880,
-              "line_end": 29880,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_rule_muted_operation is canonical MessagePack in the\\"
+              "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
               "path": "Plans/event_payloads/attention/alert_rule_muted.schema.json",
@@ -695,181 +842,244 @@
               "line_start": 8,
               "line_end": 8,
               "quote": "\"additionalProperties\": false,"
+            },
+            {
+              "path": "Plans/event_payloads/attention/alert_rule_muted.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"schema_version\", \"project_id\", \"alert_rule_id\", \"alert_rule_ref\","
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-682",
+              "line_start": 24556,
+              "line_end": 24556,
+              "quote": "alert.rule_muted exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29789,
               "line_end": 29789,
-              "quote": "\\ or failed persistence produces no event.\\n\\nIdentity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
+              "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29789,
+              "line_end": 29789,
+              "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29795,
+              "line_end": 29795,
+              "quote": "Request digest covers the full admitted command, subject alert_rule_id,\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29812,
               "line_end": 29812,
-              "quote": "\\ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\\"
+              "quote": "retries\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29890,
+              "line_end": 29890,
+              "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event, original operation and derived checkpoint policies remain explicitly pending; no candidate class is assigned.",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29844,
               "line_end": 29844,
-              "quote": "\\nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
+              "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29814,
               "line_end": 29814,
-              "quote": "\\nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_rule_muted_operation.schema.json.\\"
+              "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_rule_muted_operation.schema.json.\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29816,
+              "line_end": 29816,
+              "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29784,
               "line_end": 29784,
-              "quote": "\\ no sibling admission. Semantic owner is F3-702, payload route CV-682, storage route SP-662. Transition: unmuted\\"
+              "quote": "Transition: unmuted\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662 binds its exact SP-278/DL-076 reader/projector, bounded frontier key/schema, whole-value CAS, read-through continuation, rebuild and withdrawal.",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29823,
-              "line_end": 29823,
-              "quote": "\\ independently read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_rule_muted_checkpoint.v1:{project_id}:{storage_instance_id},\\"
+              "line_start": 29821,
+              "line_end": 29821,
+              "quote": "projector.alert_rule_muted.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29880,
-              "line_end": 29880,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_rule_muted_operation is canonical MessagePack in the\\"
+              "line_start": 29824,
+              "line_end": 29824,
+              "quote": "SP-278 and DL-076:\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29802,
+              "line_end": 29802,
+              "quote": "CAS the exact subject revision\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-662/CV-682/F3-702 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
               "line_start": 29837,
               "line_end": 29837,
-              "quote": "\\ rebuilds only retained refs, never resurrects deleted content.\\n\\nCompatibility/withdrawal: only payload 1.0.0\\"
+              "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-662",
+              "line_start": 29841,
+              "line_end": 29841,
+              "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-332 and the passing full checker cover this exact current schema, profile/identity and 16 KiB/1000-match regression; native obligations remain NOT_RUN.",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-332",
+              "line_start": 7331,
+              "line_end": 7331,
+              "quote": "alert.rule_muted contract oracles"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-662",
-              "line_start": 29888,
-              "line_end": 29888,
-              "quote": "\\ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\\"
+              "line_start": 29849,
+              "line_end": 29849,
+              "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
@@ -880,7 +1090,7 @@
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py"
       ],
-      "notes": "Prospective current-writer preparation only: exact family admission ABSENT, retention pending, native execution NOT_RUN. Current schema and oracles are static contracts."
+      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
     },
     {
       "event_type": "alert.snoozed",
@@ -907,74 +1117,81 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family absent from unchanged registry; all effects/append/checkpoint advance remain denied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29947,
               "line_end": 29947,
-              "quote": "\\ exact registry membership FIRST; currently absent means deny before journal/body/effect/checkpoint. On future\\"
+              "quote": "currently absent means deny before journal/body/effect/checkpoint. On future\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29928,
               "line_end": 29928,
-              "quote": "canonical_text: \"Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\"
+              "quote": "Newly authored owner contract for alert.snoozed 1.0.0 under DL-045; prepared without admission.\\"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-683",
+              "line_start": 24598,
+              "line_end": 24598,
+              "quote": "alert.snoozed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663 binds original producer ordering, genuine SP-286/CV-339 full-value receipt recovery and a bounded physical profile; native proof NOT_RUN.",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 29929,
+              "line_end": 29929,
+              "quote": "handlers::alert::snooze, produces this exact family. Existing closed payload\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29954,
               "line_end": 29954,
-              "quote": "\\ adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-663",
-              "line_start": 30027,
-              "line_end": 30027,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_snoozed_operation is canonical MessagePack in the\\"
+              "quote": "storage.first_append_receipt.resolve.v2 including its full-value v2 successor, genuine original\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
               "path": "Plans/event_payloads/attention/alert_snoozed.schema.json",
@@ -982,181 +1199,244 @@
               "line_start": 8,
               "line_end": 8,
               "quote": "\"additionalProperties\": false,"
+            },
+            {
+              "path": "Plans/event_payloads/attention/alert_snoozed.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"schema_version\", \"project_id\", \"alert_id\", \"alert_record_ref\","
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-683",
+              "line_start": 24598,
+              "line_end": 24598,
+              "quote": "alert.snoozed exact payload and storage route"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29936,
               "line_end": 29936,
-              "quote": "\\ or failed persistence produces no event.\\n\\nIdentity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
+              "quote": "Identity is Project-scoped EventRecord v2, scope_partition project~base64url_no_pad(UTF8(project_id));\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 29936,
+              "line_end": 29936,
+              "quote": "project~base64url_no_pad(UTF8(project_id));\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 29942,
+              "line_end": 29942,
+              "quote": "Request digest covers the full admitted command, subject alert_id, actor,\\"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29959,
               "line_end": 29959,
-              "quote": "\\ Prepared with no commit may abandon only after original absence proof; ambiguous state fences. Committed retries\\"
+              "quote": "retries\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 30037,
+              "line_end": 30037,
+              "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event, original operation and derived checkpoint policies remain explicitly pending; no candidate class is assigned.",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29991,
               "line_end": 29991,
-              "quote": "\\nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
+              "quote": "PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29961,
               "line_end": 29961,
-              "quote": "\\nOriginal operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_snoozed_operation.schema.json.\\"
+              "quote": "Original operation custody is canonical and non-rebuildable; its schema is Plans/alert_event_contracts/alert_snoozed_operation.schema.json.\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 29963,
+              "line_end": 29963,
+              "quote": "Backup/restore must include coherent original operation, shared alert/rule state, Storage source and first/full-value\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29931,
               "line_end": 29931,
-              "quote": "\\ sibling admission. Semantic owner is F3-703, payload route CV-683, storage route SP-663. Transition: unacknowledged\\"
+              "quote": "Transition: unacknowledged\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663 binds its exact SP-278/DL-076 reader/projector, bounded frontier key/schema, whole-value CAS, read-through continuation, rebuild and withdrawal.",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 29970,
-              "line_end": 29970,
-              "quote": "\\ read from F3-453, never inferred as mutation authority from History. Checkpoint key alert_snoozed_checkpoint.v1:{project_id}:{storage_instance_id},\\"
+              "line_start": 29968,
+              "line_end": 29968,
+              "quote": "projector.alert_snoozed.history@1.0.0\\"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 30027,
-              "line_end": 30027,
-              "quote": "\\ through repeated calls.\\n\\nSP-340 physical binding: alert_snoozed_operation is canonical MessagePack in the\\"
+              "line_start": 29971,
+              "line_end": 29971,
+              "quote": "SP-278 and DL-076:\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 29949,
+              "line_end": 29949,
+              "quote": "CAS the exact subject revision\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-663/CV-683/F3-703 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
               "line_start": 29984,
               "line_end": 29984,
-              "quote": "\\ rebuilds only retained refs, never resurrects deleted content.\\n\\nCompatibility/withdrawal: only payload 1.0.0\\"
+              "quote": "Compatibility/withdrawal: only payload 1.0.0\\"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-663",
+              "line_start": 29988,
+              "line_end": 29988,
+              "quote": "withdrawn under whole-value CAS.\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-333 and the passing full checker cover this exact current schema, profile/identity and 16 KiB/1000-match regression; native obligations remain NOT_RUN.",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-333",
+              "line_start": 7380,
+              "line_end": 7380,
+              "quote": "alert.snoozed contract oracles"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-663",
-              "line_start": 30035,
-              "line_end": 30035,
-              "quote": "\\ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\\"
+              "line_start": 29996,
+              "line_end": 29996,
+              "quote": "NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\\n Original shared state for this\\"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current owner text after A1/A2 repair."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
@@ -1167,7 +1447,7 @@
       "static_checks_seen": [
         "scripts/pm-alert-event-contracts-check.py"
       ],
-      "notes": "Prospective current-writer preparation only: exact family admission ABSENT, retention pending, native execution NOT_RUN. Current schema and oracles are static contracts."
+      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
     },
     {
       "event_type": "bundle.annotation_state_changed",
@@ -2994,457 +3274,373 @@
     },
     {
       "event_type": "concern.created",
-      "family_id": null,
-      "family_revision": null,
+      "family_id": "concern_created",
+      "family_revision": "1.0.0",
       "disposition": "UNDISPOSITIONED",
       "disposition_evidence": [
         {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-666",
+          "line_start": 30399,
+          "line_end": 30399,
+          "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission."
+        },
+        {
           "path": "Plans/Orchestrator_Page.md",
-          "unit": "OP-002",
+          "unit": "Concern creator and nominee boundary",
           "line_start": 118,
           "line_end": 118,
-          "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "unit": "OP-002",
-          "line_start": 176,
-          "line_end": 176,
-          "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "unit": "UCC-147",
-          "line_start": 8571,
-          "line_end": 8571,
-          "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+          "quote": "runtime, package overseer, seam overseer, corroboration outcome, and graph patch logic may create canonical concerns, while workers nominate concerns rather than minting canonical concern re"
         }
       ],
-      "outcome": "blocked on Jared",
+      "outcome": "register (prepared)",
       "current_owner_units": [
         "OP-002",
-        "UCC-147"
+        "OP-004",
+        "UCC-147",
+        "SP-666",
+        "CV-686",
+        "ATS-334"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
-            },
-            {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30449,
+              "line_end": 30449,
+              "quote": "currently absent: deny before journal, record/body write, append"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30399,
+              "line_end": 30399,
+              "quote": "Newly authored owner contract for concern.created 1.0.0 under DL-045, prepared without admission."
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-686",
+              "line_start": 24736,
+              "line_end": 24736,
+              "quote": "concern.created closed current payload and authority route"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30404,
+              "line_end": 30404,
+              "quote": "handlers::concern::create commits this family, after independently authenticating one of those five creator"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30461,
+              "line_end": 30461,
+              "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
-          "representation": "listed_only",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "representation": "exact_normative_owner",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/event_payloads/concern/concern_created.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "\"additionalProperties\": false,"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
+              "path": "Plans/event_payloads/concern/concern_created.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 10,
+              "line_end": 10,
+              "quote": "\"schema_version\", \"project_id\", \"concern_id\", \"concern_revision\","
             },
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-686",
+              "line_start": 24736,
+              "line_end": 24736,
+              "quote": "concern.created closed current payload and authority route"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Project-only EventRecord 2.0.0, the exact original identity recipe and subject/actor/record joins are independently bound; no default or application Project is inferred.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30420,
+              "line_end": 30420,
+              "quote": "Identity: Project-only EventRecord 2.0.0, scope_kind=project, envelope project_id equals payload and original"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30421,
+              "line_end": 30421,
+              "quote": "project~base64url_no_pad(UTF8(project_id)). No application/default/focus"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30440,
+              "line_end": 30440,
+              "quote": "Request digest"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30468,
+              "line_end": 30468,
+              "quote": "retries recover append; settled retries"
             },
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30429,
+              "line_end": 30429,
+              "quote": "projector_replay_only"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "representation": "exact_normative_owner",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
-            },
-            {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30542,
+              "line_end": 30542,
+              "quote": "PENDING_RETENTION_DECISION, with Case L-3 audit-authority/ordinary telemetry and RP-PROJECTION-3GEN"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30487,
+              "line_end": 30487,
+              "quote": "Custody: canonical record and original operation are non-rebuildable original authority. Preserve immutable original"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30489,
+              "line_end": 30489,
+              "quote": "backup/restore includes all of them with the original Storage source under one verified recovery boundary."
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
-            },
-            {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30411,
+              "line_end": 30411,
+              "quote": "Birth is absent -> active at concern_revision=1, never acknowledged/resolved/dismissed, never a"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30497,
+              "line_end": 30497,
+              "quote": "projector.concern_created.history@1.0.0 and reader.concern_created.history@1.0.0 expose passive"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30499,
+              "line_end": 30499,
+              "quote": "SP-278/DL-076:"
             },
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30452,
+              "line_end": 30452,
+              "quote": "CAS creates concern_record.v1:{project_id}:{concern_id}"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "absent",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30526,
+              "line_end": 30526,
+              "quote": "Compatibility: only the exact current payload 1.0.0 and declared value schemas are selected;"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30516,
+              "line_end": 30516,
+              "quote": "withdrawn publication or missing coverage is unavailable. Source-generation change requires"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "ABSENT"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Current exact/listed material remains incomplete while the residual decision is stopped; no review recommendation is applied.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 118,
-              "line_end": 118,
-              "quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and grap"
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-334",
+              "line_start": 7456,
+              "line_end": 7456,
+              "quote": "concern.created has its own independent python3 scripts/pm-concern-created-contracts-check.py and"
             },
             {
-              "path": "Plans/Orchestrator_Page.md",
-              "unit": "OP-002",
-              "line_start": 176,
-              "line_end": 176,
-              "quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/owne"
-            },
-            {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-147",
-              "line_start": 8571,
-              "line_end": 8571,
-              "quote": "| `cmd.concern.create` | `project_id`, `title`, `severity`, `category`, `source_refs[]`, `idempotency_key` | `concern_id`, `concern_revision` | `invalid_args`, `permission_denied` | `concern.created` "
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-666",
+              "line_start": 30547,
+              "line_end": 30547,
+              "quote": "NOT_RUN. Nothing here admits an event or makes a native writer available.'"
             }
           ],
           "prior": {
-            "source": "DG6A.self-grade.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A.self-grade.json@257c2af1af",
             "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Question narrowed without deciding residual authority/identity policy; existing contract gaps remain."
+          "change": "upgraded",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
-        "PRODUCT: Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
-        "Retention remains PENDING_RETENTION_DECISION; no recommendation is applied."
+        "Membership remains ABSENT until independent admission.",
+        "Event/operation/checkpoint retention PENDING_RETENTION_DECISION; the existing concern_record RP-AUTHORITY-INDEFINITE policy/profile is preserved.",
+        "Native execution NOT_RUN; no sibling action or extra direct creator is authorized."
       ],
-      "static_checks_seen": [],
-      "notes": "No exclusion, admission, new binding, decision extension or row disposition mutation.",
-      "decision_card": {
+      "static_checks_seen": [
+        "scripts/pm-concern-created-contracts-check.py"
+      ],
+      "notes": "The authorized creator set is already decided. Optional extra direct creators remain a separate unapplied proposal, never a preparation blocker.",
+      "separate_proposal": {
         "question": "Beyond the already authorized runtime/package-overseer/seam-overseer/corroboration/graph-patch creators and worker nomination-only rule, may User or External Resource input directly commit a concern, or must an authorized owner accept its nomination, and with what confirmation?",
         "review_recommendation_unapplied": "Keep the already specified canonical creators. Worker, User and External Resource input is nomination until accepted by an authorized owner. Record creator separately from accountable owner. Do not re-ask whether the listed runtime creators may create.",
-        "status": "STOPPED_FOR_JARED"
+        "status": "UNAPPLIED_NONBLOCKING_PROPOSAL"
       }
     },
     {
@@ -5747,74 +5943,81 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family absent from unchanged registry; all effects/append/checkpoint advance remain denied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30105,
-              "line_end": 30105,
+              "line_start": 30103,
+              "line_end": 30103,
               "quote": "currently absent is deny. On future admission, under original permission/currentness/session and single-chat-host"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
               "line_start": 30075,
               "line_end": 30075,
-              "quote": "canonical_text: 'Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission."
+              "quote": "Newly authored owner contract for panel.redocked 2.0.0 under DL-045, prepared without admission."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-684",
+              "line_start": 24640,
+              "line_end": 24640,
+              "quote": "panel.redocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664 binds original producer ordering, genuine SP-286/CV-339 full-value receipt recovery and a bounded physical profile; native proof NOT_RUN.",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30118,
-              "line_end": 30118,
-              "quote": "Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
+              "line_start": 30078,
+              "line_end": 30078,
+              "quote": "handlers::panel::redock in the shared panel shell, is this family''s sole producer. Successful transition is"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30179,
-              "line_end": 30179,
-              "quote": "SP-340 physical binding: panel_redocked_operation uses canonical MessagePack in canonical redb, settings_and_layout"
+              "line_start": 30116,
+              "line_end": 30116,
+              "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
               "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
@@ -5822,19 +6025,33 @@
               "line_start": 6,
               "line_end": 6,
               "quote": "\"additionalProperties\": false,"
+            },
+            {
+              "path": "Plans/event_payloads/panel_redocked_v2.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 21,
+              "line_end": 21,
+              "quote": "\"schema_version\","
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-684",
+              "line_start": 24640,
+              "line_end": 24640,
+              "quote": "panel.redocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "CONFLICT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact EventRecord scope, encoded Project partition, original identity and subject/actor joins are bound. Application panel keys use CV-366 exactly.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -5842,161 +6059,210 @@
               "line_start": 30089,
               "line_end": 30089,
               "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-664",
+              "line_start": 30089,
+              "line_end": 30089,
+              "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30122,
-              "line_end": 30122,
-              "quote": "nonnull and publish terminal success. An uncertain append fences later host mutations. Committed/settled retries"
+              "line_start": 30098,
+              "line_end": 30098,
+              "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-664",
+              "line_start": 30120,
+              "line_end": 30120,
+              "quote": "retries"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-664",
+              "line_start": 30189,
+              "line_end": 30189,
+              "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event, original operation and derived checkpoint policies remain explicitly pending; no candidate class is assigned.",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30184,
-              "line_end": 30184,
-              "quote": "remains PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
+              "line_start": 30182,
+              "line_end": 30182,
+              "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30132,
-              "line_end": 30132,
+              "line_start": 30130,
+              "line_end": 30130,
               "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-664",
+              "line_start": 30134,
+              "line_end": 30134,
+              "quote": "backup"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
               "line_start": 30078,
               "line_end": 30078,
-              "quote": "by handlers::panel::redock in the shared panel shell, is this family''s sole producer. Successful transition is"
+              "quote": "Successful transition is"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664 binds its exact SP-278/DL-076 reader/projector, bounded frontier key/schema, whole-value CAS, read-through continuation, rebuild and withdrawal.",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30143,
-              "line_end": 30143,
-              "quote": "History audit only; current host is independently read from the running shell. Checkpoint key panel_redocked_checkpoint.v1:{storage_instance_id}:{scope_partition},"
+              "line_start": 30140,
+              "line_end": 30140,
+              "quote": "projector.panel_redocked.history@1.0.0 and reader.panel_redocked.history@1.0.0 expose passive record-backed"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30179,
-              "line_end": 30179,
-              "quote": "SP-340 physical binding: panel_redocked_operation uses canonical MessagePack in canonical redb, settings_and_layout"
+              "line_start": 30142,
+              "line_end": 30142,
+              "quote": "SP-278/DL-076: complete"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-664",
+              "line_start": 30119,
+              "line_end": 30119,
+              "quote": "CAS committed -> settled with original_append_result_ref"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-664/CV-684/F3-704 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30167,
-              "line_end": 30167,
+              "line_start": 30165,
+              "line_end": 30165,
               "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_redocked.schema.json is the original 1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-664",
+              "line_start": 30157,
+              "line_end": 30157,
+              "quote": "withdrawn token, cursor beyond frontier or missing"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-334 and the passing full checker cover this exact current schema, profile/identity and 16 KiB/1000-match regression; native obligations remain NOT_RUN.",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-334",
+              "line_start": 7436,
+              "line_end": 7436,
+              "quote": "panel.redocked is checked independently by python3 scripts/pm-panel-event-contracts-check.py with"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-664",
-              "line_start": 30186,
-              "line_end": 30186,
-              "quote": "applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_redocked.fixtures.json"
+              "line_start": 30187,
+              "line_end": 30187,
+              "quote": "NOT_RUN."
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
@@ -6007,7 +6273,7 @@
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py"
       ],
-      "notes": "Prospective current-writer preparation only: exact family admission ABSENT, retention pending, native execution NOT_RUN. Current schema and oracles are static contracts."
+      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
     },
     {
       "event_type": "panel.undocked",
@@ -6018,8 +6284,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-665",
-          "line_start": 30235,
-          "line_end": 30235,
+          "line_start": 30237,
+          "line_end": 30237,
           "quote": "canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission."
         }
       ],
@@ -6034,7 +6300,7 @@
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "Exact family absent from unchanged registry; all effects/append/checkpoint advance remain denied.",
+          "finding": "The exact family remains absent from the unchanged event registry; no journal, canonical write, effect, append or checkpoint advance is authorized.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6045,63 +6311,70 @@
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The family has its own current semantic/payload/Storage routes, with existing creator and product authority preserved.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30235,
-              "line_end": 30235,
-              "quote": "canonical_text: 'Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission."
+              "line_start": 30237,
+              "line_end": 30237,
+              "quote": "Newly authored owner contract for panel.undocked 2.0.0 under DL-045, prepared without admission."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-685",
+              "line_start": 24688,
+              "line_end": 24688,
+              "quote": "panel.undocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665 binds original producer ordering, genuine SP-286/CV-339 full-value receipt recovery and a bounded physical profile; native proof NOT_RUN.",
+          "finding": "The exact handler and original commit/append/first receipt/terminal ordering adopt SP-286/CV-339 full-value v2 custody; native authenticity remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30240,
+              "line_end": 30240,
+              "quote": "handlers::panel::undock in the shared panel shell, is this family''s sole producer. Successful transition is"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
               "line_start": 30278,
               "line_end": 30278,
-              "quote": "Explicitly adopt SP-286/CV-339 storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-665",
-              "line_start": 30339,
-              "line_end": 30339,
-              "quote": "SP-340 physical binding: panel_undocked_operation uses canonical MessagePack in canonical redb, settings_and_layout"
+              "quote": "storage.first_append_receipt.resolve.v2, including the full-value v2 successor,"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "The exact closed current payload and value companions are coherent; identifier patterns reject trailing LF. No historical reader authorizes current writes.",
           "evidence": [
             {
               "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
@@ -6109,79 +6382,114 @@
               "line_start": 6,
               "line_end": 6,
               "quote": "\"additionalProperties\": false,"
+            },
+            {
+              "path": "Plans/event_payloads/panel_undocked_v2.schema.json",
+              "unit": "closed payload schema",
+              "line_start": 21,
+              "line_end": 21,
+              "quote": "\"schema_version\","
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-685",
+              "line_start": 24688,
+              "line_end": 24688,
+              "quote": "panel.undocked current payload and historical reader"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "CONFLICT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact EventRecord scope, encoded Project partition, original identity and subject/actor joins are bound. Application panel keys use CV-366 exactly.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30249,
-              "line_end": 30249,
+              "line_start": 30251,
+              "line_end": 30251,
               "quote": "Identity: EventRecord v2 uses actual original project_id and project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30251,
+              "line_end": 30251,
+              "quote": "project~base64url_no_pad(UTF8(project_id)) when Project-scoped;"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Full frozen semantics and original identity/receipt recovery prevent changed-key reuse, renewed timestamps or repeated effects. Current append/retry refuses projector_replay_only.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30260,
+              "line_end": 30260,
+              "quote": "Request digest is lowercase SHA-256 of canonical MessagePack of the exact closed preimage {original_command: operation.original_command, candidate_payload: operation.payload}. Both values ar"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
               "line_start": 30282,
               "line_end": 30282,
-              "quote": "nonnull and publish terminal success. An uncertain append fences later host mutations. Committed/settled retries"
+              "quote": "retries"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30351,
+              "line_end": 30351,
+              "quote": "projector_replay_only is compatibility-reader-only and must fail replay_only_not_appendable before any canonical write or effect. EventRecord inline bodies at most 16 KiB; above that use the"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event, original operation and derived checkpoint policies remain explicitly pending; no candidate class is assigned.",
+          "finding": "Event, original operation and History checkpoint remain explicitly PENDING_RETENTION_DECISION; no new retention policy is chosen.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
               "line_start": 30344,
               "line_end": 30344,
-              "quote": "remains PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
+              "quote": "PENDING_RETENTION_DECISION independently for event, operation and checkpoint. Case L-3 audit-authority/receipt"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Original non-rebuildable evidence, coherent backup/restore and current membership/source/deletion checks are bound; immutable refs never grant access.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6189,66 +6497,80 @@
               "line_start": 30292,
               "line_end": 30292,
               "quote": "Custody: the operation is canonical non-rebuildable original audit evidence; it retains frozen prior/candidate"
-            }
-          ],
-          "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PARTIAL"
-          },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
-        },
-        "transitions": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
-          "evidence": [
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-665",
-              "line_start": 30238,
-              "line_end": 30238,
-              "quote": "by handlers::panel::undock in the shared panel shell, is this family''s sole producer. Successful transition is"
-            }
-          ],
-          "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "PASS"
-          },
-          "change": "carried",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
-        },
-        "consumers_checkpoints": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "SP-665 binds its exact SP-278/DL-076 reader/projector, bounded frontier key/schema, whole-value CAS, read-through continuation, rebuild and withdrawal.",
-          "evidence": [
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-665",
-              "line_start": 30303,
-              "line_end": 30303,
-              "quote": "History audit only; current host is independently read from the running shell. Checkpoint key panel_undocked_checkpoint.v1:{storage_instance_id}:{scope_partition},"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30339,
-              "line_end": 30339,
-              "quote": "SP-340 physical binding: panel_undocked_operation uses canonical MessagePack in canonical redb, settings_and_layout"
+              "line_start": 30296,
+              "line_end": 30296,
+              "quote": "backup"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact existing action/birth predicates, preconditions, refusal/no-change paths and original committed outcome are bound without granting sibling actions.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30240,
+              "line_end": 30240,
+              "quote": "Successful transition is"
+            }
+          ],
+          "prior": {
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "The exact passive History projector/reader adopts SP-278/DL-076 durable token, full-value CAS, bounded frontier and complete-response read-through/rebuild.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30302,
+              "line_end": 30302,
+              "quote": "projector.panel_undocked.history@1.0.0 and reader.panel_undocked.history@1.0.0 expose passive record-backed"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30304,
+              "line_end": 30304,
+              "quote": "SP-278/DL-076: complete"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30281,
+              "line_end": 30281,
+              "quote": "CAS committed -> settled with original_append_result_ref"
+            }
+          ],
+          "prior": {
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "SP-665/CV-685/F3-705 explicitly bind this exact current family criterion; immutable historical schemas do not authorize current writes.",
+          "finding": "Exact version dispatch and writer-cutoff/original-obligation/checkpoint-reader withdrawal fences are explicit; unknown or stale originals remain unavailable.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -6256,34 +6578,48 @@
               "line_start": 30327,
               "line_end": 30327,
               "quote": "Compatibility and withdrawal: immutable Plans/event_payloads/panel_undocked.schema.json is the original 1.0.0"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-665",
+              "line_start": 30319,
+              "line_end": 30319,
+              "quote": "withdrawn token, cursor beyond frontier or missing"
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-            "status": "ABSENT"
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change": "carried",
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-334 and the passing full checker cover this exact current schema, profile/identity and 16 KiB/1000-match regression; native obligations remain NOT_RUN.",
+          "finding": "The full static checker passes independent positive and negative cases, including replay-only refusal, LF patterns, complete-response byte limits and original evidence. Native proof remains NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-334",
+              "line_start": 7443,
+              "line_end": 7443,
+              "quote": "panel.undocked is checked independently by the same checker with Plans/panel_event_contracts/panel_undocked.fixtures.json:"
+            },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-665",
-              "line_start": 30346,
-              "line_end": 30346,
-              "quote": "applied to this restart-unsaved host transition. No deletion policy is invented. Fixtures Plans/panel_event_contracts/panel_undocked.fixtures.json"
+              "line_start": 30349,
+              "line_end": 30349,
+              "quote": "NOT_RUN."
             }
           ],
           "prior": {
-            "source": "DG6A-sol/REGRADES.json@9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+            "source": "DG6A-sol/REGRADES-cycle2.json@257c2af1af",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "A3 replaces invalid product stop with independent current v2 and historical-v1 technical contracts after verifying CV-361/SP-330."
+          "change_reason": "Re-read exact current owner contracts, schema/value joins and full checker outcomes after review round 2."
         }
       },
       "remaining_gaps": [
@@ -6294,9 +6630,9 @@
       "static_checks_seen": [
         "scripts/pm-panel-event-contracts-check.py"
       ],
-      "notes": "Prospective current-writer preparation only: exact family admission ABSENT, retention pending, native execution NOT_RUN. Current schema and oracles are static contracts."
+      "notes": "Prepared without admission; original product authority is unchanged. Round 2 self-grade closes the full frozen panel digest and complete-response oracle gaps; native execution NOT_RUN."
     }
   ],
-  "reviewed_head": "9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
-  "revision_binding": "Final report commit is self-inclusive; grade evidence is exact current owner/schema content, verified mechanically."
+  "reviewed_head": "257c2af1af6c3fbb324594664cb09a1ebf26475e",
+  "revision_binding": "Final report commit is self-inclusive; contract head and exact source evidence are in DG6A.md. Normative self-grades only; no admission or native proof."
 }
