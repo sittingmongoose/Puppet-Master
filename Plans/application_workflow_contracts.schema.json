@@ -5643,12 +5643,12 @@
         },
         "strategy": {
           "enum": [
-            "plan_quick",
-            "plan_standard",
-            "plan_thorough",
-            "deep_plan_thorough",
-            "deep_plan_exhaustive",
-            "deep_plan_brainstorm"
+            "quick",
+            "standard",
+            "thorough",
+            "deep_thorough",
+            "deep_exhaustive",
+            "deep_brainstorm"
           ]
         },
         "backend": {
@@ -5672,7 +5672,36 @@
           "format": "date-time"
         }
       },
-      "x-selected-logical-schema-id": "pm.assistant_plan.document_revision.application.v1"
+      "x-selected-logical-schema-id": "pm.assistant_plan.document_revision.application.v1",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "strategy": {
+                "enum": [
+                  "quick",
+                  "standard",
+                  "thorough"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "backend": {
+                "const": "direct"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "backend": {
+                "const": "ledger_bound"
+              }
+            }
+          }
+        }
+      ]
     },
     "AssistantPlanRunApplicationV1": {
       "type": "object",

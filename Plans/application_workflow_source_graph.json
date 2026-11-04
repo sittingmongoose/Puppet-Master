@@ -48,7 +48,7 @@
     {
       "retrieval_uri": "https://puppetmaster.local/schemas/application-workflows/1.0.0/contracts.schema.json",
       "path": "Plans/application_workflow_contracts.schema.json",
-      "whole_resource_sha256": "6b4644b52551fe97adab668a0e63d6a5ade68872564aca59ae77ece55f6c6186",
+      "whole_resource_sha256": "ba2ee75a24d63c893e950a43d2b39f3ac54535864f2ccf3a7eabeea91e1c7166",
       "resource_role": "selected_application_or_current_aggregate",
       "literal_root_pointers": [
         "#/$defs/AgentMessageApplicationV1",
@@ -1912,5 +1912,5 @@
       "adoption_disposition": "specified_unimplemented"
     }
   ],
-  "graph_sha256": "48838166c251ce47fbe9638e78a0bc51c1f61c414b56e06e586556eafcc06f9a"
+  "graph_sha256": "0f43be96f10f48badf324459ebb1293e8b8bf1731adf91391675be7bfca3fe1a"
 }
