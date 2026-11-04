@@ -5,6 +5,7 @@ Install scripts/requirements-runtime-artifact-drafts.txt in a venv. No native
 storage, transaction, source authentication, receipt issuance or admission runs.
 """
 import copy
+import base64
 import hashlib
 import json
 import math
@@ -16,7 +17,9 @@ import sys
 from blake3 import blake3
 import msgpack
 import rfc8785
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
+
+from pm_event_index_binding import binding_digest
 
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16384
@@ -29,6 +32,35 @@ SEMANTIC_FIELDS = (
 )
 STORAGE_FIELDS = ('sequence_id', 'observed_at_utc', 'persisted_at_utc')
 PACK_REF = re.compile(r'pm\.payload_pack\.v1:blake3:([0-9a-f]{64}):([1-9][0-9]*):application/json\Z')
+CHECKPOINT_SCHEMA = 'Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint'
+CHECKPOINT_KEY = 'event_record_index_checkpoint.v1:{storage_instance_id}'
+
+
+def exact_pattern(validator_, pattern, instance, schema):
+    """Keep every schema rule; anchored identifiers additionally require fullmatch.
+
+    Python's `$` admits a final LF. Historical schema IDs/bytes stay unchanged;
+    this stricter adopted boundary applies to payloads and stored values alike.
+    """
+    yield from Draft202012Validator.VALIDATORS['pattern'](validator_, pattern, instance, schema)
+    if isinstance(instance, str) and pattern.startswith('^') and pattern.endswith('$'):
+        if re.search(pattern, instance) and re.fullmatch(pattern, instance) is None:
+            yield ValidationError('identifier must match the entire value')
+
+
+def exact_pattern_properties(validator_, patterns, instance, schema):
+    yield from Draft202012Validator.VALIDATORS['patternProperties'](validator_, patterns, instance, schema)
+    if isinstance(instance, dict):
+        for pattern in patterns:
+            if pattern.startswith('^') and pattern.endswith('$'):
+                for key in instance:
+                    if re.search(pattern, key) and re.fullmatch(pattern, key) is None:
+                        yield ValidationError('identifier key must match the entire value', path=[key])
+
+
+ExactValidator = validators.extend(Draft202012Validator, {
+    'pattern': exact_pattern, 'patternProperties': exact_pattern_properties,
+})
 
 
 def load(path):
@@ -38,7 +70,7 @@ def load(path):
 def validator(schema, definition=None):
     if definition:
         schema = dict(schema, **{'$ref': '#/$defs/' + definition})
-    return Draft202012Validator(schema, format_checker=FormatChecker())
+    return ExactValidator(schema, format_checker=FormatChecker())
 
 
 EVENT_VALIDATOR = validator(load('Plans/event_record.schema.json'))
@@ -184,8 +216,11 @@ def inspect(row, payload, source):
 
 
 def full_value_matches(candidate, original, result, custody):
-    if (list(EVENT_VALIDATOR.iter_errors(candidate)) or list(RECEIPT_VALIDATOR.iter_errors(result['first_append_receipt']))
-            or list(CUSTODY_VALIDATOR.iter_errors(custody)) or list(RESULT_VALIDATOR.iter_errors(result))):
+    if (not stored_event_valid(candidate) or not stored_event_valid(original['event'])
+            or list(RECEIPT_VALIDATOR.iter_errors(result['first_append_receipt']))
+            or list(CUSTODY_VALIDATOR.iter_errors(custody)) or list(RESULT_VALIDATOR.iter_errors(result))
+            or list(CUSTODY_VALIDATOR.iter_errors(original['custody']))
+            or list(RESULT_VALIDATOR.iter_errors(original['result']))):
         return False
     receipt = result['first_append_receipt']
     stored = original['event']
@@ -193,10 +228,32 @@ def full_value_matches(candidate, original, result, custody):
             and result == original['result'] and custody == original['custody']
             and receipt == custody['first_append_receipt']
             and receipt['event_id'] == candidate['event_id'] == custody['event_id']
+            and custody['scope_partition'] == scope_partition(candidate['project_id'])
+            and custody['event_type'] == candidate['event_type']
+            and custody['idempotency_key'] == candidate['idempotency_key']
             and receipt['sequence_id'] == candidate['sequence_id']
             and result['original_segment_ref'] == custody['original_segment_ref']
             and commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment']
             and semantic_digest(candidate) == custody['producer_semantic_digest'])
+
+
+def stored_event_valid(event):
+    """Lexical/schema validation of original copies, without changing hash domains."""
+    if list(EVENT_VALIDATOR.iter_errors(event)):
+        return False
+    if event['scope_kind'] != 'project' or event['replay_policy'] != 'dedupe_by_idempotency_key':
+        return False
+    if event['payload_ref'] is not None:
+        return bool(PACK_REF.fullmatch(event['payload_ref'])) and event['payload'] == {}
+    for row in load('Plans/runtime_artifact_event_drafts.json')['rows']:
+        if event['event_type'] == row['event_type'] and event['payload_schema_id'] == row['payload_schema_id']:
+            return (len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT
+                    and validator(load(row['payload_schema_ref'])).is_valid(event['payload']))
+    return False
+
+
+def scope_partition(project_id):
+    return 'project~' + base64.urlsafe_b64encode(project_id.encode()).decode().rstrip('=')
 
 
 class AppendModel:
@@ -233,13 +290,14 @@ class AppendModel:
         receipt = copy.deepcopy(self.receipt)
         receipt.update(event_id=event['event_id'], sequence_id=event['sequence_id'])
         custody = copy.deepcopy(self.custody)
-        import base64
-        partition = 'project~' + base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('=')
+        partition = scope_partition(event['project_id'])
         custody.update(event_id=event['event_id'], scope_partition=partition, event_type=event['event_type'],
                        idempotency_key=event['idempotency_key'], producer_semantic_digest=digest,
                        first_append_receipt=receipt, original_event_value_commitment=commitment(event))
         result = {k: copy.deepcopy(custody[k]) for k in ('first_append_receipt', 'original_segment_ref', 'original_event_value_commitment')}
         original = dict(event=copy.deepcopy(event), result=result, custody=custody)
+        if not full_value_matches(event, original, result, custody):
+            return 'invalid'
         self.scoped[key] = original
         self.global_ids[event['event_id']] = digest
         return original
@@ -249,6 +307,267 @@ def policies_match(row, index_policy, checkpoint_policy):
     return (row.get('index_retention_policy_ref') == index_policy
             and row.get('checkpoint_retention_policy_ref') == checkpoint_policy
             and 'derived_retention_policy_ref' not in row)
+
+
+def checkpoint_matches(row, event, original, bundle):
+    """Bounded SP-278 initial-generation join, using its real schema and codec.
+
+    The single-segment source adapter is synthetic and assumed verified. This
+    exercises identities/bytes, never native controls, CRC, redb, sync or CAS.
+    """
+    try:
+        if row['checkpoint_key'] != CHECKPOINT_KEY or row['checkpoint_schema_ref'] != CHECKPOINT_SCHEMA:
+            return False
+        path, pointer = row['checkpoint_schema_ref'].split('#', 1)
+        schema = load(path)
+        definition = schema
+        for member in pointer.lstrip('/').split('/'):
+            definition = definition[member.replace('~1', '/').replace('~0', '~')]
+        if definition != schema['$defs']['checkpoint']:
+            return False
+        checkpoint, token, source = (bundle[k] for k in ('checkpoint', 'read_token', 'selected_source'))
+        if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):
+            return False
+        custody, receipt = original['custody'], original['result']['first_append_receipt']
+        storage = custody['storage_instance_id']
+        key = CHECKPOINT_KEY.format(storage_instance_id=storage)
+        if not (bundle['checkpoint_key'] == key == token['checkpoint_key']
+                and storage == checkpoint['storage_instance_id'] == token['storage_instance_id'] == source['storage_instance_id']):
+            return False
+        generation = checkpoint['current_generation_id']
+        node = checkpoint['generations'][generation]
+        anchor, frontier = node['anchor'], node['frontier']
+        selection = source['source_selection']
+        if (node['generation_id'] != generation or node['state'] != 'current'
+                or sum(n['state'] == 'current' for n in checkpoint['generations'].values()) != 1
+                or selection['storage_instance_id'] != storage
+                or anchor['source_selection']['storage_instance_id'] != storage
+                or selection != frontier['source_selection'] or selection != token['source_selection']
+                or source['verified'] is not True or source['redb_snapshot_id'] != token['redb_snapshot_id']):
+            return False
+        expected_generation = 'eig_' + binding_digest(dict(
+            domain='pm.event_index.generation.v1', storage_instance_id=storage,
+            projector_version=node['projector_version'], birth_source_selection=anchor['source_selection'],
+            generation_seed_sha256=anchor['generation_seed_sha256']))
+        expected_token = dict(storage_instance_id=storage, checkpoint_key=key,
+            checkpoint_ref=key + '#/generations/' + generation, generation_id=generation,
+            generation_anchor_sha256=binding_digest(anchor), frontier_revision=frontier['publication_revision'],
+            frontier_sha256=binding_digest(frontier), index_dataset_name='event_record_index.v2@' + generation,
+            source_selection=selection, redb_snapshot_id=source['redb_snapshot_id'])
+        if generation != expected_generation or token != expected_token or node['index_dataset_name'] != token['index_dataset_name']:
+            return False
+        if not full_value_matches(event, original, original['result'], custody) or source['event'] != event:
+            return False
+        partition = scope_partition(event['project_id'])
+        if (source['scope_partition'] != partition or custody['scope_partition'] != partition
+                or source['event_value_sha256'] != hashlib.sha256(value_bytes(event)).hexdigest()
+                or source['source_locator'] != {k: receipt[k] for k in ('segment_generation','segment_name','byte_offset','sequence_id')}
+                or selection['selected_segment_generation'] != receipt['segment_generation']):
+            return False
+        manifest, current = source['manifest'], source['current']
+        if (selection['current_bytes_sha256'] != hashlib.sha256(value_bytes(current)).hexdigest()
+                or selection['manifest_bytes_sha256'] != hashlib.sha256(value_bytes(manifest)).hexdigest()
+                or current['selected_segment_generation'] != selection['selected_segment_generation']
+                or manifest['selected_segment_generation'] != selection['selected_segment_generation']
+                or manifest['manifest_generation'] != selection['manifest_generation']
+                or manifest['recovery_epoch'] != selection['recovery_epoch']
+                or manifest['survivor_prefix_sha256'] != selection['manifest_survivor_prefix_sha256']
+                or manifest['retained_inventory'] != source['segments']
+                or selection['retained_inventory_sha256'] != binding_digest(manifest['retained_inventory'])
+                or selection['durable_watermarks_sha256'] != binding_digest(manifest['durable_watermarks'])
+                or selection['excluded_ranges_sha256'] != binding_digest(manifest['excluded_ranges'])
+                or selection['retired_inputs_sha256'] != binding_digest(manifest['retired_inputs'])):
+            return False
+        # This fixture edition represents one complete initial source/dataset.
+        # It cannot be used to claim a translated or partial/multi-segment read.
+        prefix = binding_digest(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(
+            sequence_id=event['sequence_id'], event_id=event['event_id'], scope_partition=partition,
+            source_value_bytes_sha256=source['event_value_sha256'])]))
+        coverage = frontier['coverage']
+        if (anchor['source_selection'] != selection or node['translation'] is not None
+                or anchor['retained_event_count'] != 1 or anchor['first_retained_sequence_id'] != event['sequence_id']
+                or anchor['through_sequence_id'] != event['sequence_id'] or anchor['retained_event_prefix_sha256'] != prefix
+                or anchor['sequence_gaps_sha256'] != binding_digest([])
+                or coverage['retained_event_count'] != 1 or not coverage['complete_to_captured_boundary']
+                or coverage['empty_retained_source'] or coverage['sequence_gaps'] != []
+                or coverage['retained_event_prefix_sha256'] != prefix
+                or coverage['first_retained_sequence_id'] != event['sequence_id'] or coverage['through_sequence_id'] != event['sequence_id']):
+            return False
+        last = dict(segment_generation=receipt['segment_generation'], segment_name=receipt['segment_name'],
+                    byte_offset=receipt['byte_offset'], frame_end_offset=source['frame_end_offset'],
+                    last_sequence_id=event['sequence_id'], last_event_id=event['event_id'])
+        if coverage['last_frame'] != last or coverage['segments'] != source['segments'] or len(source['segments']) != 1:
+            return False
+        segment = source['segments'][0]
+        if (segment['segment_generation'] != receipt['segment_generation'] or segment['segment_name'] != receipt['segment_name']
+                or segment['scan_start_offset'] != 0 or segment['scanned_through_offset'] != source['frame_end_offset']
+                or segment['source_durable_end_offset'] != receipt['durable_end_offset']
+                or segment['source_durable_bytes_sha256'] != source['event_value_sha256']
+                or source['frame_end_offset'] != len(value_bytes(event))
+                or source['frame_end_offset'] > receipt['durable_end_offset']
+                or segment['retained_event_count'] != 1 or segment['first_sequence_id'] != event['sequence_id']
+                or segment['last_sequence_id'] != event['sequence_id']):
+            return False
+        row_key = f"event_record_index.v2:{partition}:{event['sequence_id']:020}:{event['event_id']}"
+        expected_row = dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0',
+            scope_kind='project', project_id=event['project_id'], scope_partition=partition,
+            sequence_id=event['sequence_id'], event_id=event['event_id'], event_type=event['event_type'],
+            source_locator=source['source_locator'], publication_locator=dict(
+                manifest_generation=selection['manifest_generation'], recovery_epoch=selection['recovery_epoch'],
+                survivor_prefix_sha256=selection['manifest_survivor_prefix_sha256'],
+                checkpoint_ref=token['checkpoint_ref'], compaction_translation_manifest_ref=None),
+            payload_sha256=hashlib.sha256(value_bytes(event['payload'])).hexdigest(),
+            producer_semantic_digest=semantic_digest(event), idempotency_key=event['idempotency_key'],
+            correlation_id=event['correlation_id'], causation_event_id=event['causation_event_id'],
+            persisted_at_utc=event['persisted_at_utc'], redaction_profile=event['redaction_profile'],
+            source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=False)
+        dataset = {row_key: expected_row}
+        return (bundle['datasets'] == {token['index_dataset_name']: dataset}
+                and frontier['index_row_count'] == 1
+                and frontier['index_row_set_sha256'] == binding_digest(dict(
+                    domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)])))
+    except (KeyError, ValueError, TypeError, OSError):
+        return False
+
+
+def checkpoint_negative(name, row, event, original, bundle):
+    """Independent, schema-valid where possible, identity/route fault injection."""
+    row, event, original, bundle = copy.deepcopy((row, event, original, bundle))
+    foreign = '22222222-2222-4222-8222-222222222222'
+    cp, token, source = (bundle[k] for k in ('checkpoint', 'read_token', 'selected_source'))
+    node = cp['generations'][cp['current_generation_id']]
+    if name == 'wrong_store_key': bundle['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=foreign)
+    elif name == 'wrong_checkpoint_store': cp['storage_instance_id'] = foreign
+    elif name == 'wrong_token_store': token['storage_instance_id'] = foreign
+    elif name == 'wrong_source_store': source['storage_instance_id'] = foreign
+    elif name == 'wrong_anchor_store': node['anchor']['source_selection']['storage_instance_id'] = foreign
+    elif name == 'wrong_frontier_store': node['frontier']['source_selection']['storage_instance_id'] = foreign
+    elif name == 'wrong_token_source_store': token['source_selection']['storage_instance_id'] = foreign
+    elif name == 'wrong_source_selection': source['source_selection']['manifest_bytes_sha256'] = '0'*64
+    elif name == 'wrong_event': source['event']['event_id'] += '-other'
+    elif name == 'wrong_custody_store': original['custody']['storage_instance_id'] = foreign
+    elif name == 'wrong_custody_event': original['custody']['event_id'] += '-other'
+    elif name == 'wrong_partition': source['scope_partition'] = event['project_id']
+    elif name == 'wrong_locator': source['source_locator']['byte_offset'] += 1
+    elif name == 'wrong_schema_ref': row['checkpoint_schema_ref'] = 'Plans/DOES_NOT_EXIST.schema.json#/$defs/checkpoint'
+    elif name == 'wrong_key_route': row['checkpoint_key'] = CHECKPOINT_KEY.format(storage_instance_id=foreign)
+    elif name == 'wrong_pointer': token['checkpoint_ref'] += '-missing'
+    elif name == 'missing_dataset': bundle['datasets'] = {}
+    elif name == 'wrong_frontier': node['frontier']['publication_revision'] += 1
+    elif name == 'unverified_source': source['verified'] = False
+    elif name == 'wrong_live_snapshot': token['redb_snapshot_id'] += '-other'
+    else: raise ValueError('unknown checkpoint fault: ' + name)
+    return row, event, original, bundle
+
+
+def at_path(value, path):
+    for key in path:
+        value = value[key]
+    return value
+
+
+def set_path(value, path, replacement):
+    at_path(value, path[:-1])[path[-1]] = replacement
+
+
+def identifier_paths(value, schema):
+    """Enumerate concrete identifier strings accepted by an adopted pattern.
+
+    Includes local $defs and patternProperties; const/enum joins are still
+    checked independently. Unselected application definitions supply no values.
+    """
+    def values(node, selected, path=()):
+        if not isinstance(selected, dict):
+            return
+        if '$ref' in selected:
+            target = schema
+            for key in selected['$ref'].removeprefix('#/').split('/'):
+                target = target[key.replace('~1','/').replace('~0','~')]
+            yield from values(node, target, path)
+        if isinstance(node, str) and 'pattern' in selected and re.fullmatch(selected['pattern'], node):
+            yield path
+        if isinstance(node, dict):
+            for key, child in node.items():
+                if key in selected.get('properties', {}):
+                    yield from values(child, selected['properties'][key], path + (key,))
+                for pattern, child_schema in selected.get('patternProperties', {}).items():
+                    if re.fullmatch(pattern, key): yield from values(child, child_schema, path + (key,))
+        if isinstance(node, list) and 'items' in selected:
+            for key, child in enumerate(node): yield from values(child, selected['items'], path + (key,))
+        for keyword in ('allOf', 'anyOf', 'oneOf'):
+            for child_schema in selected.get(keyword, []): yield from values(node, child_schema, path)
+    return sorted(set(values(value, schema)), key=str)
+
+
+def standing_oracles(check, row, full, first, fixtures):
+    event = row['event_type']
+    check(event, 'S2_project_only_contract', row['scope_policy'] == 'project_only')
+    for key in fixtures['application_keys']:
+        bad = copy.deepcopy(full); bad.update(scope_kind='application', project_id=None, idempotency_key=key)
+        model = AppendModel(row, {}, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+        check(event, 'S2_application_refused_' + key, not isinstance(model.append(bad, True), dict) and not model.scoped and not model.global_ids)
+    # Compute the expected partition independently of the writer helper.
+    expected_partition = 'project~' + base64.urlsafe_b64encode(full['project_id'].encode()).decode().rstrip('=')
+    check(event, 'S3_encoded_project_partition', first['custody']['scope_partition'] == expected_partition)
+    bad = copy.deepcopy(first); bad['custody']['scope_partition'] = full['project_id']
+    check(event, 'S3_stored_raw_partition_refused', not full_value_matches(full,bad,bad['result'],bad['custody']))
+    check(event, 'S3_raw_project_partition_refused', not checkpoint_matches(row, full, bad, fixtures['checkpoint_positives'][event]))
+    check(event, 'S8_failure_oracle_rejects_success', not rejected(lambda: 0))
+
+    # All concrete identifier patterns, including original stored copies.
+    for label, value, schema in [('event', full, EVENT_VALIDATOR.schema),
+                                  ('payload', full['payload'], load(row['payload_schema_ref'])),
+                                  ('custody', first['custody'], RECEIPT_SCHEMA),
+                                  ('result', first['result'], RECEIPT_SCHEMA)]:
+        valid = {'event': EVENT_VALIDATOR, 'payload': validator(schema),
+                 'custody': CUSTODY_VALIDATOR, 'result': RESULT_VALIDATOR}[label]
+        for path in identifier_paths(value, valid.schema):
+            bad = copy.deepcopy(value); set_path(bad, path, at_path(value, path) + '\n')
+            check(event, 'S5_' + label + '_LF_' + '/'.join(map(str, path)), not valid.is_valid(bad))
+    for field in fixtures['payload_digest_fields'].get(event, []):
+        for name, digest in fixtures['malformed_identifiers'].items():
+            bad = copy.deepcopy(full); bad['payload']['type_payload'][field] = digest
+            check(event, 'S5_payload_schema_' + field + '_' + name, not validator(load(row['payload_schema_ref'])).is_valid(bad['payload']))
+            for route in ('inline', 'packed'):
+                packs = {}
+                if route == 'packed':
+                    bad['payload']['summary'] = 'x'*17000
+                    bad['payload'], bad['payload_ref'] = storage_form(bad['payload'], packs)
+                check(event, 'S5_payload_decode_' + field + '_' + name + '_' + route, rejected(lambda: decode(row, bad, packs)))
+                model = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+                check(event, 'S5_payload_append_' + field + '_' + name + '_' + route, model.append(bad, True) == 'invalid' and not model.scoped)
+            # Self-consistent hashes/equality cannot redeem invalid stored payloads.
+            bad = copy.deepcopy(full); bad['payload']['type_payload'][field] = digest
+            stored = copy.deepcopy(first); stored['event'] = bad
+            stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+            stored['custody']['original_event_value_commitment'] = commitment(bad)
+            stored['result']['original_event_value_commitment'] = commitment(bad)
+            check(event, 'S5_stored_payload_' + field + '_' + name, not full_value_matches(bad, stored, stored['result'], stored['custody']))
+    for name, digest in fixtures['malformed_identifiers'].items():
+        for path in [('group_digest',), ('producer_semantic_digest',), ('original_event_value_commitment', 'sha256')]:
+            stored = copy.deepcopy(first); set_path(stored['custody'], path, digest)
+            if path[0] == 'original_event_value_commitment':
+                stored['result']['original_event_value_commitment']['sha256'] = digest
+            check(event, 'S5_stored_custody_' + '/'.join(path) + '_' + name,
+                  not CUSTODY_VALIDATOR.is_valid(stored['custody']) and not full_value_matches(full, stored, stored['result'], stored['custody']))
+        template = copy.deepcopy(fixtures['custody_template']); template['group_digest'] = digest
+        model = AppendModel(row, {}, fixtures['first_append_receipts'][event], template)
+        check(event, 'S5_custody_append_' + name, model.append(full, True) == 'invalid' and not model.scoped and not model.global_ids)
+
+    bundle = fixtures['checkpoint_positives'][event]
+    check(event, 'S7_checkpoint_positive', checkpoint_matches(row, full, first, bundle))
+    for name in fixtures['checkpoint_negative_cases']:
+        args = checkpoint_negative(name, row, full, first, bundle)
+        check(event, 'S7_' + name, not checkpoint_matches(*args))
+    cp_schema = load(CHECKPOINT_SCHEMA.split('#')[0])
+    for label, value, definition in [('checkpoint', bundle['checkpoint'], 'checkpoint'), ('read_token', bundle['read_token'], 'read_token')]:
+        valid = validator(cp_schema, definition)
+        for path in identifier_paths(value, valid.schema):
+            bad = copy.deepcopy(value); set_path(bad, path, at_path(value, path) + '\n')
+            check(event, 'S5_' + label + '_LF_' + '/'.join(map(str,path)), not valid.is_valid(bad))
+        if label == 'checkpoint':
+            bad = copy.deepcopy(value); key = bad['current_generation_id']; bad['generations'][key+'\n'] = bad['generations'].pop(key)
+            check(event, 'S5_checkpoint_map_key_LF', not valid.is_valid(bad))
 
 
 def source_for(row, payload):
@@ -308,7 +627,14 @@ def main():
     check('shared', 'length_framing', identity('a', a) != identity('ab', b))
     check('shared', 'blake3_known_answer', blake3(b'').hexdigest() == 'af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262')
     check('shared', 'rfc8785_known_answer', rfc8785.dumps({'\U0001f600':1, '\ue000':2}) == '{"\U0001f600":1,"\ue000":2}'.encode())
-    check('shared', 'all_19_rows', len(document['rows']) == 19 and {r['event_type'] for r in document['rows']} == set(fixtures['positive_payloads']) == set(fixtures['positive_events']))
+    check('shared', 'all_19_rows', len(document['rows']) == 19 and {r['event_type'] for r in document['rows']} == set(fixtures['positive_payloads']) == set(fixtures['positive_events']) == set(fixtures['checkpoint_positives']) == set(fixtures['first_append_receipts']))
+    check('shared', 'inline_limit_exact', INLINE_LIMIT == 16384)
+    generic = load('Plans/event_record_index_checkpoint_contract_fixtures.json')['positive']['initial_mixed_scope']['checkpoint']
+    node = generic['generations'][generic['current_generation_id']]
+    check('shared', 'SP278_generation_known_answer', generic['current_generation_id'] == 'eig_' + binding_digest(dict(
+        domain='pm.event_index.generation.v1', storage_instance_id=generic['storage_instance_id'],
+        projector_version=node['projector_version'], birth_source_selection=node['anchor']['source_selection'],
+        generation_seed_sha256=node['anchor']['generation_seed_sha256'])))
     check('shared', 'all_semantic_fields_tested', set(fixtures['semantic_mutations']) == set(SEMANTIC_FIELDS))
     check('shared', 'all_receipt_fields_tested', set(fixtures['receipt_mutations']) == set(RECEIPT_SCHEMA['$defs']['AppendReceipt']['required']))
     registry = load('Plans/storage_value_registry.json')['families']
@@ -343,13 +669,16 @@ def main():
         check(event, 'cross_project_identity', identity(event, payload, revision) != identity(event, other, revision))
         packs = {}
         full = copy.deepcopy(fixtures['positive_events'][event])
-        check(event, 'full_envelope', decode(row, full, packs) == payload)
+        check(event, 'full_envelope', not rejected(lambda: decode(row, full, packs)) and decode(row, full, packs) == payload)
         check(event, 'semantic_known_answer', semantic_digest(full) == fixtures['known_answers'][event]['producer_semantic_digest'])
         check(event, 'full_value_known_answer', commitment(full)['sha256'] == fixtures['known_answers'][event]['full_value_sha256'])
-        receipt = fixtures['first_append_receipt']
+        receipt = fixtures['first_append_receipts'][event]
         model = AppendModel(row, packs, receipt, fixtures['custody_template'])
         first = model.append(full, admission=True)
         check(event, 'full_first_receipt', isinstance(first, dict) and full_value_matches(full, first, first['result'], first['custody']))
+        if not isinstance(first, dict):
+            continue  # Invalid positive inputs must produce a structured failure, never false success.
+        standing_oracles(check, row, full, first, fixtures)
         replay = model.append(copy.deepcopy(full), admission=True)
         check(event, 'lost_ack_exact_result', first is replay and len(model.scoped) == 1)
         alternate = copy.deepcopy(full); alternate['event_id'] += '-other-delivery'
@@ -409,10 +738,15 @@ def main():
             check(event, 'size_valid_' + str(size), not list(valid.iter_errors(large)) and len(rfc8785.dumps(large)) == size)
             candidate = copy.deepcopy(full)
             candidate['payload'], candidate['payload_ref'] = storage_form(large, packs)
-            check(event, 'size_dispatch_' + str(size), decode(row, candidate, packs) == large and (candidate['payload_ref'] is None) == (size <= INLINE_LIMIT))
-            if size > INLINE_LIMIT:
+            check(event, 'size_dispatch_' + str(size), decode(row, candidate, packs) == large and (candidate['payload_ref'] is None) == (size <= 16384))
+            if size > 16384:
                 bad = copy.deepcopy(candidate); bad['payload'], bad['payload_ref'] = large, None
                 check(event, 'oversized_inline_rejected_' + str(size), rejected(lambda: decode(row, bad, packs)))
+                stored = copy.deepcopy(first); stored['event'] = bad
+                stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+                stored['custody']['original_event_value_commitment'] = commitment(bad)
+                stored['result']['original_event_value_commitment'] = commitment(bad)
+                check(event, 'S4_stored_oversized_inline_' + str(size), not full_value_matches(bad,stored,stored['result'],stored['custody']))
         # The review's exact 17,000-byte-summary counterexample, independently of total size.
         large = copy.deepcopy(payload); large['summary'] = 'x' * 17000
         candidate = copy.deepcopy(full); candidate['payload'], candidate['payload_ref'] = storage_form(large, packs)
@@ -428,7 +762,8 @@ def main():
             check(event, name, rejected(lambda: decode(row, candidate, broken)))
         for name, ref in [('wrong_digest',candidate['payload_ref'].replace(digest,'0'*64)),
                           ('wrong_size',candidate['payload_ref'].replace(':'+str(len(rfc8785.dumps(large)))+':', ':1:')),
-                          ('wrong_media',candidate['payload_ref'].replace('application/json','text/plain'))]:
+                          ('wrong_media',candidate['payload_ref'].replace('application/json','text/plain')),
+                          ('S5_pack_reference_LF',candidate['payload_ref']+'\n')]:
             bad = copy.deepcopy(candidate); bad['payload_ref'] = ref
             check(event, name, rejected(lambda: decode(row, bad, packed)))
         bad = copy.deepcopy(candidate); bad['payload'] = copy.deepcopy(payload)
@@ -448,6 +783,12 @@ def main():
         external_model = AppendModel(row, packed, receipt, fixtures['custody_template'])
         external = external_model.append(candidate, True)
         check(event, 'external_full_receipt_replay', isinstance(external,dict) and full_value_matches(candidate,external,external['result'],external['custody']) and external_model.append(copy.deepcopy(candidate),True) is external)
+        bad = copy.deepcopy(candidate); bad['payload_ref'] += '\n'
+        stored = copy.deepcopy(external); stored['event'] = bad
+        stored['custody']['producer_semantic_digest'] = semantic_digest(bad)
+        stored['custody']['original_event_value_commitment'] = commitment(bad)
+        stored['result']['original_event_value_commitment'] = commitment(bad)
+        check(event, 'S5_stored_pack_reference_LF', not full_value_matches(bad,stored,stored['result'],stored['custody']))
         for policy, expected in fixtures['append_policy_refusals'].items():
             bad = copy.deepcopy(candidate); bad['replay_policy'] = policy
             fresh = AppendModel(row, packed, receipt, fixtures['custody_template'])
