@@ -8991,6 +8991,172 @@
       "errors": [
         "invalid schema contract"
       ]
+    },
+    {
+      "name": "optional_payload_without_command",
+      "target": "operation",
+      "value": {
+        "schema_id": "pm.storage_value.alert_acknowledged_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+        "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+        "idempotency_key": "fixture",
+        "request_digest": "ca31ca1fef88bd8dd16b7909dc74007340d2b05d1e0dfce72a6dc1a9d2413e1b",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_acknowledgement_state": "unacknowledged",
+          "result_acknowledgement_state": "acknowledged",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::acknowledge",
+          "command_id": "cmd.alert.acknowledge",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z",
+          "source_refs": [
+            "pmref:source:fixture"
+          ]
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "acknowledged",
+          "unread": false,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_acknowledgement_state": "unacknowledged",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::acknowledge",
+          "command_id": "cmd.alert.acknowledge",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "original command/payload field presence"
+      ]
+    },
+    {
+      "name": "optional_command_without_payload",
+      "target": "operation",
+      "value": {
+        "schema_id": "pm.storage_value.alert_acknowledged_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+        "event_id": "evt_alert_acknowledged_aee695ac20dd90994bea18ab50d7f15926ade366a179d0c6234d1063e8004d8f",
+        "idempotency_key": "fixture",
+        "request_digest": "c9cfb70a6cf276e3f97a3bcd7e93e05fda40c979ae8ab533f5ff597a2baf425d",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_acknowledged.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_acknowledgement_state": "unacknowledged",
+          "result_acknowledgement_state": "acknowledged",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::acknowledge",
+          "command_id": "cmd.alert.acknowledge",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "acknowledged",
+          "unread": false,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_acknowledgement_state": "unacknowledged",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::acknowledge",
+          "command_id": "cmd.alert.acknowledge",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z",
+          "source_refs": [
+            "pmref:source:fixture"
+          ]
+        }
+      },
+      "errors": [
+        "original command/payload source_refs"
+      ]
     }
   ]
 }

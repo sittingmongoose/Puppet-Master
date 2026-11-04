@@ -9141,6 +9141,176 @@
       "errors": [
         "invalid schema contract"
       ]
+    },
+    {
+      "name": "optional_payload_without_command",
+      "target": "operation",
+      "value": {
+        "schema_id": "pm.storage_value.alert_dismissed_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "0aefd680a861c2e396d280522673bef55cfd4c6c7fbc8fc811d2a0e4edf5aad6",
+        "event_id": "evt_alert_dismissed_0aefd680a861c2e396d280522673bef55cfd4c6c7fbc8fc811d2a0e4edf5aad6",
+        "idempotency_key": "fixture",
+        "request_digest": "db3c4b3646e13f4a831594a54c0b390adaafd02334024f999cc6995a097625eb",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_dismissed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "dismissed",
+          "dismissal_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::dismiss",
+          "command_id": "cmd.alert.dismiss",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z",
+          "source_refs": [
+            "pmref:source:fixture"
+          ]
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "dismissed",
+          "unread": true,
+          "inbox_visible": false,
+          "snooze_until": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "dismissal_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::dismiss",
+          "command_id": "cmd.alert.dismiss",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        }
+      },
+      "errors": [
+        "original command/payload field presence"
+      ]
+    },
+    {
+      "name": "optional_command_without_payload",
+      "target": "operation",
+      "value": {
+        "schema_id": "pm.storage_value.alert_dismissed_operation.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "project_id": "fixture",
+        "operation_digest": "0aefd680a861c2e396d280522673bef55cfd4c6c7fbc8fc811d2a0e4edf5aad6",
+        "event_id": "evt_alert_dismissed_0aefd680a861c2e396d280522673bef55cfd4c6c7fbc8fc811d2a0e4edf5aad6",
+        "idempotency_key": "fixture",
+        "request_digest": "cbbef64b1afeb666200827ee363090c48cc1c1ac1b05b4bdf9cf764100ede432",
+        "state": "prepared",
+        "payload": {
+          "schema_id": "pm.attention_event.alert_dismissed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "result_revision": 2,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "result_alert_state": "dismissed",
+          "dismissal_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::dismiss",
+          "command_id": "cmd.alert.dismiss",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "owner_commit_ref": null,
+        "result_ref": null,
+        "dispatch_receipt_ref": null,
+        "original_append_result_ref": null,
+        "prior_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 1,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "unacknowledged",
+          "unread": true,
+          "inbox_visible": true,
+          "snooze_until": null
+        },
+        "candidate_owner_state": {
+          "schema_id": "pm.storage_value.shared_alert_state.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "revision": 2,
+          "source_record_ref": "pmref:test:fixture",
+          "acknowledgement_state": "dismissed",
+          "unread": true,
+          "inbox_visible": false,
+          "snooze_until": null
+        },
+        "original_command": {
+          "project_id": "fixture",
+          "alert_id": "fixture",
+          "alert_record_ref": "pmref:test:fixture",
+          "actor_ref": "pmref:test:fixture",
+          "prior_revision": 1,
+          "currentness_basis_ref": "pmref:test:fixture",
+          "prior_alert_state": "unacknowledged",
+          "dismissal_reason_code": "fixture",
+          "origin": "notification_center",
+          "handler_target": "handlers::alert::dismiss",
+          "command_id": "cmd.alert.dismiss",
+          "correlation_id": "fixture",
+          "idempotency_key": "fixture",
+          "ts": "2026-11-04T00:00:00Z",
+          "source_refs": [
+            "pmref:source:fixture"
+          ]
+        }
+      },
+      "errors": [
+        "original command/payload source_refs"
+      ]
     }
   ]
 }

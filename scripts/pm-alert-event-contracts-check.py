@@ -2,6 +2,7 @@
 """Static DG6A payload/custody oracle; grants no admission or native proof."""
 import copy
 import hashlib
+from datetime import datetime
 import importlib.util
 import json
 import re
@@ -27,11 +28,15 @@ def errors(payload, schema, guard):
             found.append('non-successor')
         if not guard['current'] or not guard['allowed'] or not guard['committed']:
             found.append('uncommitted/stale/refused')
-        if payload.get('snooze_until', '9999') <= payload['ts']:
+        if snooze_expired(payload):
             found.append('expired snooze')
         if payload['command_id'] in ('cmd.alert.snooze', 'cmd.alert.mute_rule') and guard['protected']:
             found.append('protected interruption')
     return found
+
+def snooze_expired(payload):
+    return 'snooze_until' in payload and datetime.fromisoformat(payload['snooze_until'].upper()) <= datetime.fromisoformat(payload['ts'].upper())
+
 
 def packed(value):
     return _codec.canonical_messagepack_bytes(value)
@@ -82,6 +87,9 @@ def operation_errors(value, schema):
         found.append('event identity mismatch')
     if value['request_digest'] != request_digest(command, payload):
         found.append('frozen command digest mismatch')
+    expected_command_fields = {key for key in payload if key not in ('schema_id', 'schema_version') and not key.startswith('result_')}
+    if expected_command_fields - command.keys():
+        found.append('original command/payload field presence')
     for key in command:
         if command[key] != payload.get(key):
             found.append('original command/payload ' + key)
@@ -114,7 +122,7 @@ def operation_errors(value, schema):
         for field, expected in [('unread', expected_unread), ('inbox_visible', expected_visible), ('snooze_until', expected_snooze)]:
             if candidate[field] != expected:
                 found.append('candidate owner ' + field)
-    if payload.get('snooze_until', '9999') <= payload['ts']:
+    if snooze_expired(payload):
         found.append('expired snooze')
     return found
 
