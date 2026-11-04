@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX1-20261104",
+  "assessment_id": "EA-W2-DCW-FIX2-20261104",
   "assessment_kind": "worker_self_grade_after_blind_review",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "033c16f9400206b3c8842f1b448cae1212570d0e",
-    "reviewed_head": "a9c2916df1ac3e37922392dc07545a662ada2bc9",
-    "read_method": "Exact source/schema/fixture tree at this implementation commit; final follow-up edits only report/self-grade."
+    "commit": "610d0a8a8eb092649dd386e1e9d1311f66ae5b1a",
+    "reviewed_head": "b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+    "read_method": "Exact source/schema/fixture tree at the implementation commit; final follow-up edits only report/self-grade."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,16 +99,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact owner continuation, appendable dedupe policy, original source commit, SP-286/CV-339 full-value first receipt and publication order are explicit.",
+          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -123,14 +123,21 @@
               "line_start": 29487,
               "line_end": 29489,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -153,11 +160,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -180,11 +187,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -207,11 +214,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -227,16 +234,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Concrete original source schemas and materialized inventory bind immutable request/result/event/receipt, ref-only access, mandatory coherent backup and exact restore fences.",
+          "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -248,17 +255,31 @@
             {
               "path": "Plans/dcw/revision_run.schema.json",
               "unit": "original source root",
-              "line_start": 5,
-              "line_end": 14,
-              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"storage_instance_id\",\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n "
+              "line_start": 23,
+              "line_end": 31,
+              "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"project_id\",\n        \"thread_id\",\n        \"bundle_id\",\n       "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 324,
+              "line_end": 324,
+              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "transitions": {
           "status": "PASS",
@@ -274,11 +295,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -301,11 +322,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -328,38 +349,38 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full synthetic static envelope/admission/source/receipt/terminal/restore/withdrawal cases pass through the complete checker; native adapters remain NOT_RUN.",
+          "finding": "Full checker passes 1262 cases, including exact source boundaries, original/stored/payload LF negatives, invalid SP-337 references, source/receipt/restore checks and all eight standing checks. Native adapters remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_requested",
-              "line_start": 464,
-              "line_end": 469,
-              "quote": "\"case_id\": \"coherent_restore_preserves_original_bytes\",\n          \"operation\": \"publish\",\n          \"expected\": \"accept\",\n          \"mutations\": [\n            {\n              \"path\": \"/"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 313,
+              "line_end": 313,
+              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_requested",
-              "line_start": 2033,
-              "line_end": 2037,
-              "quote": "\"case_id\": \"compatibility_reader_append_refused\",\n          \"operation\": \"compatibility_append\",\n          \"expected\": \"replay_only_not_appendable\",\n          \"mutations\": [\n           "
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "full checker",
+              "line_start": 475,
+              "line_end": 475,
+              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         }
       },
       "remaining_gaps": [
@@ -368,7 +389,9 @@
       ],
       "static_checks_seen": [
         "python3 scripts/pm_bundle_revision_events.py (808 static cases, including 629 full-composition cases)",
-        "Plans/dcw_event_contract_fixtures.json"
+        "Plans/dcw_event_contract_fixtures.json",
+        "scripts/pm_bundle_revision_events.py",
+        "scripts/pm-storage-profile-check.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
     },
@@ -417,11 +440,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -444,16 +467,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact owner continuation, appendable dedupe policy, original source commit, SP-286/CV-339 full-value first receipt and publication order are explicit.",
+          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -468,14 +491,21 @@
               "line_start": 29586,
               "line_end": 29588,
               "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\n  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:\n  produ"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -498,11 +528,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -525,11 +555,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -552,11 +582,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -572,16 +602,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Concrete original source schemas and materialized inventory bind immutable request/result/event/receipt, ref-only access, mandatory coherent backup and exact restore fences.",
+          "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -593,17 +623,31 @@
             {
               "path": "Plans/dcw/revision_run.schema.json",
               "unit": "original source root",
-              "line_start": 5,
-              "line_end": 14,
-              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"storage_instance_id\",\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n "
+              "line_start": 23,
+              "line_end": 31,
+              "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"project_id\",\n        \"thread_id\",\n        \"bundle_id\",\n       "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 324,
+              "line_end": 324,
+              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "transitions": {
           "status": "PASS",
@@ -619,11 +663,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -646,11 +690,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -673,38 +717,38 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full synthetic static envelope/admission/source/receipt/terminal/restore/withdrawal cases pass through the complete checker; native adapters remain NOT_RUN.",
+          "finding": "Full checker passes 1262 cases, including exact source boundaries, original/stored/payload LF negatives, invalid SP-337 references, source/receipt/restore checks and all eight standing checks. Native adapters remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_started",
-              "line_start": 4149,
-              "line_end": 4154,
-              "quote": "\"case_id\": \"coherent_restore_preserves_original_bytes\",\n          \"operation\": \"publish\",\n          \"expected\": \"accept\",\n          \"mutations\": [\n            {\n              \"path\": \"/"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 313,
+              "line_end": 313,
+              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_started",
-              "line_start": 6368,
-              "line_end": 6372,
-              "quote": "\"case_id\": \"compatibility_reader_append_refused\",\n          \"operation\": \"compatibility_append\",\n          \"expected\": \"replay_only_not_appendable\",\n          \"mutations\": [\n           "
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "full checker",
+              "line_start": 475,
+              "line_end": 475,
+              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         }
       },
       "remaining_gaps": [
@@ -713,7 +757,9 @@
       ],
       "static_checks_seen": [
         "python3 scripts/pm_bundle_revision_events.py (808 static cases, including 629 full-composition cases)",
-        "Plans/dcw_event_contract_fixtures.json"
+        "Plans/dcw_event_contract_fixtures.json",
+        "scripts/pm_bundle_revision_events.py",
+        "scripts/pm-storage-profile-check.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
     },
@@ -762,11 +808,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -789,16 +835,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact owner continuation, appendable dedupe policy, original source commit, SP-286/CV-339 full-value first receipt and publication order are explicit.",
+          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -813,14 +859,21 @@
               "line_start": 29684,
               "line_end": 29686,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -843,11 +896,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -870,11 +923,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -897,11 +950,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -917,16 +970,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Concrete original source schemas and materialized inventory bind immutable request/result/event/receipt, ref-only access, mandatory coherent backup and exact restore fences.",
+          "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -938,17 +991,31 @@
             {
               "path": "Plans/dcw/revision_run.schema.json",
               "unit": "original source root",
-              "line_start": 5,
-              "line_end": 14,
-              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"storage_instance_id\",\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n "
+              "line_start": 23,
+              "line_end": 31,
+              "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"project_id\",\n        \"thread_id\",\n        \"bundle_id\",\n       "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 324,
+              "line_end": 324,
+              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "transitions": {
           "status": "PASS",
@@ -964,11 +1031,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -991,11 +1058,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1018,38 +1085,38 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full synthetic static envelope/admission/source/receipt/terminal/restore/withdrawal cases pass through the complete checker; native adapters remain NOT_RUN.",
+          "finding": "Full checker passes 1262 cases, including exact source boundaries, original/stored/payload LF negatives, invalid SP-337 references, source/receipt/restore checks and all eight standing checks. Native adapters remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_completed",
-              "line_start": 10033,
-              "line_end": 10038,
-              "quote": "\"case_id\": \"coherent_restore_preserves_original_bytes\",\n          \"operation\": \"publish\",\n          \"expected\": \"accept\",\n          \"mutations\": [\n            {\n              \"path\": \"/"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 313,
+              "line_end": 313,
+              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_completed",
-              "line_start": 12932,
-              "line_end": 12936,
-              "quote": "\"case_id\": \"compatibility_reader_append_refused\",\n          \"operation\": \"compatibility_append\",\n          \"expected\": \"replay_only_not_appendable\",\n          \"mutations\": [\n           "
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "full checker",
+              "line_start": 475,
+              "line_end": 475,
+              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         }
       },
       "remaining_gaps": [
@@ -1058,7 +1125,9 @@
       ],
       "static_checks_seen": [
         "python3 scripts/pm_bundle_revision_events.py (808 static cases, including 629 full-composition cases)",
-        "Plans/dcw_event_contract_fixtures.json"
+        "Plans/dcw_event_contract_fixtures.json",
+        "scripts/pm_bundle_revision_events.py",
+        "scripts/pm-storage-profile-check.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
     },
@@ -1107,11 +1176,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1134,16 +1203,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact owner continuation, appendable dedupe policy, original source commit, SP-286/CV-339 full-value first receipt and publication order are explicit.",
+          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1158,14 +1227,21 @@
               "line_start": 29783,
               "line_end": 29785,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1188,11 +1264,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1215,11 +1291,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1242,11 +1318,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "CONFLICT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1262,16 +1338,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Concrete original source schemas and materialized inventory bind immutable request/result/event/receipt, ref-only access, mandatory coherent backup and exact restore fences.",
+          "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1283,17 +1359,31 @@
             {
               "path": "Plans/dcw/revision_run.schema.json",
               "unit": "original source root",
-              "line_start": 5,
-              "line_end": 14,
-              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"storage_instance_id\",\n    \"project_id\",\n    \"thread_id\",\n    \"bundle_id\",\n    \"revision_id\",\n "
+              "line_start": 23,
+              "line_end": 31,
+              "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"project_id\",\n        \"thread_id\",\n        \"bundle_id\",\n       "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-579",
+              "line_start": 29941,
+              "line_end": 29942,
+              "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 324,
+              "line_end": 324,
+              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "transitions": {
           "status": "PASS",
@@ -1309,11 +1399,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1336,11 +1426,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1363,38 +1453,38 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full synthetic static envelope/admission/source/receipt/terminal/restore/withdrawal cases pass through the complete checker; native adapters remain NOT_RUN.",
+          "finding": "Full checker passes 1262 cases, including exact source boundaries, original/stored/payload LF negatives, invalid SP-337 references, source/receipt/restore checks and all eight standing checks. Native adapters remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 14490,
-              "line_end": 14495,
-              "quote": "\"case_id\": \"coherent_restore_preserves_original_bytes\",\n          \"operation\": \"publish\",\n          \"expected\": \"accept\",\n          \"mutations\": [\n            {\n              \"path\": \"/"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 313,
+              "line_end": 313,
+              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "bundle.revision_interrupted",
-              "line_start": 17371,
-              "line_end": 17375,
-              "quote": "\"case_id\": \"compatibility_reader_append_refused\",\n          \"operation\": \"compatibility_append\",\n          \"expected\": \"replay_only_not_appendable\",\n          \"mutations\": [\n           "
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "full checker",
+              "line_start": 475,
+              "line_end": 475,
+              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         }
       },
       "remaining_gaps": [
@@ -1403,7 +1493,9 @@
       ],
       "static_checks_seen": [
         "python3 scripts/pm_bundle_revision_events.py (808 static cases, including 629 full-composition cases)",
-        "Plans/dcw_event_contract_fixtures.json"
+        "Plans/dcw_event_contract_fixtures.json",
+        "scripts/pm_bundle_revision_events.py",
+        "scripts/pm-storage-profile-check.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
     },
@@ -1427,11 +1519,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -1454,11 +1546,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PARTIAL",
@@ -1481,11 +1573,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -1508,11 +1600,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -1535,11 +1627,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -1562,11 +1654,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1589,11 +1681,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -1616,11 +1708,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -1643,11 +1735,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -1670,11 +1762,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -1697,11 +1789,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -1724,18 +1816,19 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         }
       },
       "prepared_pass": false,
       "remaining_gaps": [
         "PRODUCT: Q1a current subject/emission predicate (CV-233)",
         "PENDING_RETENTION_DECISION; technical family preparation follows the subject/trigger answer."
-      ]
+      ],
+      "disposition_evidence": []
     },
     {
       "event_type": "wizard.deferred_payload.loaded",
@@ -1781,11 +1874,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1808,16 +1901,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "PARTIAL"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact owner continuation, appendable dedupe policy, original source commit, SP-286/CV-339 full-value first receipt and publication order are explicit.",
+          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1832,19 +1925,26 @@
               "line_start": 30011,
               "line_end": 30011,
               "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Wizard Deferred Payload Loaded Original Custody",
+              "line_start": 30024,
+              "line_end": 30024,
+              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact 1.0.0 candidate payload is closed and independently validated inside the complete EventRecord envelope.",
+          "finding": "Exact closed 1.0.0 payload and both inline/referenced original-source forms validate; every new SHA256/BLAKE3 pattern enforces exactly 64 lowercase hex characters and rejects trailing LF.",
           "evidence": [
             {
               "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
@@ -1859,14 +1959,21 @@
               "line_start": 30,
               "line_end": 36,
               "quote": "\"const\": \"pm.event_payload.wizard.deferred_payload.loaded.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"wizard.deferred_payload.lo"
+            },
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+              "unit": "exact hash guard",
+              "line_start": 97,
+              "line_end": 99,
+              "quote": "\"pattern\": \"^[0-9a-f]{64}$\",\n      \"minLength\": 64,\n      \"maxLength\": 64"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1889,11 +1996,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "PARTIAL"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1916,11 +2023,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1936,16 +2043,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Concrete original source schemas and materialized inventory bind immutable request/result/event/receipt, ref-only access, mandatory coherent backup and exact restore fences.",
+          "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1957,17 +2064,31 @@
             {
               "path": "Plans/dcw/wizard_seed_load_evidence.schema.json",
               "unit": "original source root",
-              "line_start": 5,
-              "line_end": 13,
-              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"storage_instance_id\",\n    \"recovery_epoch\",\n    \"value_revision\",\n    \"source_ref\",\n    \"reque"
+              "line_start": 23,
+              "line_end": 30,
+              "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"recovery_epoch\",\n        \"value_revision\",\n        \"source_ref"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Wizard Deferred Payload Loaded Original Custody",
+              "line_start": 30024,
+              "line_end": 30024,
+              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 324,
+              "line_end": 324,
+              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "transitions": {
           "status": "PASS",
@@ -1983,11 +2104,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "PARTIAL"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2010,11 +2131,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2024,8 +2145,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30017,
-              "line_end": 30017,
+              "line_start": 30034,
+              "line_end": 30034,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_"
             },
             {
@@ -2037,38 +2158,38 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full synthetic static envelope/admission/source/receipt/terminal/restore/withdrawal cases pass through the complete checker; native adapters remain NOT_RUN.",
+          "finding": "Full checker passes 1262 cases, including exact source boundaries, original/stored/payload LF negatives, invalid SP-337 references, source/receipt/restore checks and all eight standing checks. Native adapters remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "wizard.deferred_payload.loaded",
-              "line_start": 23465,
-              "line_end": 23470,
-              "quote": "\"case_id\": \"coherent_restore_preserves_original_bytes\",\n          \"operation\": \"publish\",\n          \"expected\": \"accept\",\n          \"mutations\": [\n            {\n              \"path\": \"/"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 313,
+              "line_end": 313,
+              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "wizard.deferred_payload.loaded",
-              "line_start": 25963,
-              "line_end": 25967,
-              "quote": "\"case_id\": \"compatibility_reader_append_refused\",\n          \"operation\": \"compatibility_append\",\n          \"expected\": \"replay_only_not_appendable\",\n          \"mutations\": [\n           "
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "full checker",
+              "line_start": 475,
+              "line_end": 475,
+              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         }
       },
       "remaining_gaps": [
@@ -2077,7 +2198,9 @@
       ],
       "static_checks_seen": [
         "python3 scripts/pm_bundle_revision_events.py (808 static cases, including 629 full-composition cases)",
-        "Plans/dcw_event_contract_fixtures.json"
+        "Plans/dcw_event_contract_fixtures.json",
+        "scripts/pm_bundle_revision_events.py",
+        "scripts/pm-storage-profile-check.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
     },
@@ -2125,11 +2248,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2152,16 +2275,16 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "PARTIAL"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact owner continuation, appendable dedupe policy, original source commit, SP-286/CV-339 full-value first receipt and publication order are explicit.",
+          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2173,22 +2296,29 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 29996,
-              "line_end": 29996,
+              "line_start": 30011,
+              "line_end": 30011,
               "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Wizard Opened Original Custody",
+              "line_start": 30007,
+              "line_end": 30007,
+              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "The exact 1.0.0 candidate payload is closed and independently validated inside the complete EventRecord envelope.",
+          "finding": "Exact closed 1.0.0 payload and both inline/referenced original-source forms validate; every new SHA256/BLAKE3 pattern enforces exactly 64 lowercase hex characters and rejects trailing LF.",
           "evidence": [
             {
               "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
@@ -2203,14 +2333,21 @@
               "line_start": 30,
               "line_end": 39,
               "quote": "\"const\": \"pm.event_payload.wizard.opened.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"wizard.opened\"\n    },\n    \"project_id\": {\n "
+            },
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+              "unit": "exact hash guard",
+              "line_start": 97,
+              "line_end": 99,
+              "quote": "\"pattern\": \"^[0-9a-f]{64}$\",\n      \"minLength\": 64,\n      \"maxLength\": 64"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2233,11 +2370,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "PARTIAL"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2260,11 +2397,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2274,44 +2411,58 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 29998,
-              "line_end": 30000,
+              "line_start": 30013,
+              "line_end": 30015,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.\n\nThe independent passive consumer is `reader.wizard_"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family contracts after fix round 1; native execution is not claimed."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Concrete original source schemas and materialized inventory bind immutable request/result/event/receipt, ref-only access, mandatory coherent backup and exact restore fences.",
+          "finding": "Ref-only originals retain existing permission/deletion and coherent backup/restore custody; closed SP-337 overflow references preserve complete source bytes, physical-row inventory and reachable pack/index coverage.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 29998,
-              "line_end": 29998,
+              "line_start": 30013,
+              "line_end": 30013,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody "
             },
             {
               "path": "Plans/dcw/wizard_open_evidence.schema.json",
               "unit": "original source root",
-              "line_start": 5,
-              "line_end": 13,
-              "quote": "\"additionalProperties\": false,\n  \"required\": [\n    \"schema_id\",\n    \"schema_version\",\n    \"storage_instance_id\",\n    \"recovery_epoch\",\n    \"value_revision\",\n    \"source_ref\",\n    \"reque"
+              "line_start": 23,
+              "line_end": 30,
+              "quote": "\"additionalProperties\": false,\n      \"required\": [\n        \"schema_id\",\n        \"schema_version\",\n        \"storage_instance_id\",\n        \"recovery_epoch\",\n        \"value_revision\",\n        \"source_ref"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "Wizard Opened Original Custody",
+              "line_start": 30007,
+              "line_end": 30007,
+              "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 324,
+              "line_end": 324,
+              "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         },
         "transitions": {
           "status": "PASS",
@@ -2327,11 +2478,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "PARTIAL"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2341,24 +2492,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30000,
-              "line_end": 30000,
+              "line_start": 30015,
+              "line_end": 30015,
               "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30000,
-              "line_end": 30000,
+              "line_start": 30015,
+              "line_end": 30015,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2368,51 +2519,51 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30002,
-              "line_end": 30002,
+              "line_start": 30017,
+              "line_end": 30017,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_opened_history@1.0.0` fr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30002,
-              "line_end": 30002,
+              "line_start": 30017,
+              "line_end": 30017,
               "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change": "carried",
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full synthetic static envelope/admission/source/receipt/terminal/restore/withdrawal cases pass through the complete checker; native adapters remain NOT_RUN.",
+          "finding": "Full checker passes 1262 cases, including exact source boundaries, original/stored/payload LF negatives, invalid SP-337 references, source/receipt/restore checks and all eight standing checks. Native adapters remain NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "wizard.opened",
-              "line_start": 18678,
-              "line_end": 18683,
-              "quote": "\"case_id\": \"coherent_restore_preserves_original_bytes\",\n          \"operation\": \"publish\",\n          \"expected\": \"accept\",\n          \"mutations\": [\n            {\n              \"path\": \"/"
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "source_storage",
+              "line_start": 313,
+              "line_end": 313,
+              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
-              "path": "Plans/dcw_event_contract_fixtures.json",
-              "unit": "wizard.opened",
-              "line_start": 20808,
-              "line_end": 20812,
-              "quote": "\"case_id\": \"compatibility_reader_append_refused\",\n          \"operation\": \"compatibility_append\",\n          \"expected\": \"replay_only_not_appendable\",\n          \"mutations\": [\n           "
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "full checker",
+              "line_start": 475,
+              "line_end": 475,
+              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
-            "status": "ABSENT"
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Fix round 1 closes the reviewed technical gap; membership and retention remain the instructed exceptions."
+          "change_reason": "F1/F2 close exact hash-shape, physical source profile/size/reference and full-checker oracle gaps found in cycle 2."
         }
       },
       "remaining_gaps": [
@@ -2421,7 +2572,9 @@
       ],
       "static_checks_seen": [
         "python3 scripts/pm_bundle_revision_events.py (808 static cases, including 629 full-composition cases)",
-        "Plans/dcw_event_contract_fixtures.json"
+        "Plans/dcw_event_contract_fixtures.json",
+        "scripts/pm_bundle_revision_events.py",
+        "scripts/pm-storage-profile-check.py"
       ],
       "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
     },
@@ -2445,11 +2598,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -2472,11 +2625,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "producer": {
           "status": "PARTIAL",
@@ -2499,11 +2652,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -2526,11 +2679,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -2553,11 +2706,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -2580,11 +2733,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2607,11 +2760,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2634,11 +2787,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -2661,11 +2814,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2688,11 +2841,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2715,11 +2868,11 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -2742,18 +2895,19 @@
             }
           ],
           "prior": {
-            "source": "DCW-sol/regrade.json at a9c2916df1ac3e37922392dc07545a662ada2bc9",
+            "source": "DCW-sol/cycle2-regrade.json at b72cdbff1596b8e2724a31b43d9ea7d8dcbca083",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "The exact current subject and emission/resolution predicate are reserved to Jared; no recommendation applied."
+          "change_reason": "Re-read current exact-family contract after fix round 2; membership and pending retention remain the instructed exceptions. Native execution is NOT_RUN."
         }
       },
       "prepared_pass": false,
       "remaining_gaps": [
         "PRODUCT: Q1b matching resolution predicate for the same subject/episode (CV-234)",
         "PENDING_RETENTION_DECISION; technical family preparation follows the subject/trigger answer."
-      ]
+      ],
+      "disposition_evidence": []
     }
   ],
   "summary": {
@@ -2762,6 +2916,11 @@
     "assigned": 8,
     "stopped_for_Jared": 2,
     "admissions": 0,
-    "native_execution": "NOT_RUN"
+    "native_execution": "NOT_RUN",
+    "full_contract_cases": 1083,
+    "total_static_cases": 1262,
+    "independent_mutations": 437,
+    "standing_checks_per_drafted_family": 8,
+    "storage_profile_new_failures": 0
   }
 }
