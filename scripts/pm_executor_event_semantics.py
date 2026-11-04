@@ -416,6 +416,11 @@ def run_trace(contract, payload, scenario):
             p = copy.deepcopy(payload)
             p.update(operation.get('payload_changes', {}))
             try:
+                schema_validate(contract['schema_ref'], p)
+            except (ValueError, jsonschema.ValidationError):
+                outputs.append('invalid_payload')
+                continue
+            try:
                 validate_payload_transport(p, {
                     'payload': operation.get('inline_payload', p),
                     'payload_ref': operation.get('payload_ref'),

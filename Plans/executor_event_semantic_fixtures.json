@@ -7921,6 +7921,84 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "terminal_state": "failed",
+                "retry_count": 1,
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+                "verification_result_refs": [
+                  "verifier-001"
+                ],
+                "reviewer_result_refs": [
+                  "reviewer-001"
+                ],
+                "safe_point_id": "safe_point_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "failure_class": "verification_failed",
+                "backoff_until_utc": "2026-11-04T12:00:00Z"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F7-append-LF-backoff_until_utc",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "terminal_state": "failed",
+                "retry_count": 1,
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+                "verification_result_refs": [
+                  "verifier-001"
+                ],
+                "reviewer_result_refs": [
+                  "reviewer-001"
+                ],
+                "safe_point_id": "safe_point_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "failure_class": "verification_failed",
+                "backoff_until_utc": "2026-11-04T12:00:00Z\n"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -16819,6 +16897,41 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "scheduler_lane": "remediation",
+                "permission_snapshot_id": "permission_snapshot_id-001",
+                "requested_model_snapshot_id": "requested_model_snapshot_id-001",
+                "effective_model_snapshot_id": "effective_model_snapshot_id-001",
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+                "safe_point_id": "safe_point_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "requested_account_snapshot_id": "requested_account_snapshot_id-001",
+                "effective_account_snapshot_id": "effective_account_snapshot_id-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -24703,6 +24816,49 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "node_id": "node_id-001",
+                "replan_generation": 1,
+                "blocked_sequence": 1,
+                "blocked_reason_code": "auth_required",
+                "allowed_action_ids": [
+                  "open_details",
+                  "retry_now"
+                ],
+                "preserved_local_work": true,
+                "attempt_id": "attempt_id-001",
+                "detail_ref": "detail_ref-001",
+                "safe_point_id": "safe_point_id-001",
+                "anchor_ref": "anchor_ref-001",
+                "auth_realm": "provider-account",
+                "missing_scopes": [
+                  "read"
+                ],
+                "requires_safe_point_restore": true,
+                "failure_class": "auth_expired",
+                "timeout_class": "inactivity_timeout",
+                "wait_state_class": "approval_wait"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -31588,6 +31744,38 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "result_outcome": "done",
+                "evidence_refs": [
+                  "verifier-001"
+                ],
+                "artifact_refs": [
+                  "artifact-001"
+                ],
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
@@ -38573,6 +38761,32 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "execution_unit_context_ref": "execution_unit_context_ref-001",
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -44271,6 +44485,32 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "replan_generation": 1,
+                "blocked_sequence": 1,
+                "resolution": "approval_granted",
+                "attempt_id": "attempt_id-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -48839,6 +49079,31 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "source_stage": "source_stage-001",
+                "reason_code": "reason_code-001",
+                "original_shape": "original_shape-001",
+                "degraded_shape": "degraded_shape-001",
+                "evidence_ref": "evidence_ref-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
@@ -55303,6 +55568,35 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 1,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "resolution": "fixed"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -61654,6 +61948,35 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "child_attempt_id": "child_attempt_id-001",
+                "remediation_root_id": "remediation_root_id-001",
+                "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+                "remediation_generation": 1,
+                "replan_generation": 1,
+                "finding_refs": [],
+                "parent_failure_class": "provider_transient"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -66619,6 +66942,31 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "replan_generation": 1,
+                "terminal_outcome": "terminal_outcome-001",
+                "usage_ref": "usage_ref-001",
+                "result_ref": "result_ref-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -71135,6 +71483,30 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "replan_generation": 1,
+                "reason_code": "reason_code-001",
+                "detail_ref": "detail_ref-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
@@ -82270,6 +82642,31 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:01.000Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "failure_class": "provider_transient"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
@@ -95369,6 +95766,60 @@
             ],
             "effects": 1
           }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "failure_class": "provider_transient",
+                "backoff_until_utc": "2026-11-04T12:00:01Z",
+                "retry_count": 1
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F7-append-LF-backoff_until_utc",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "failure_class": "provider_transient",
+                "backoff_until_utc": "2026-11-04T12:00:01Z\n",
+                "retry_count": 1
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
         }
       ],
       "schema_cases": [
@@ -100128,6 +100579,56 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "replan_generation": 1,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "wake_reason": "prerequisite_resolved"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F7-append-LF-ready_since_utc",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "replan_generation": 1,
+                "ready_since_utc": "2026-11-04T12:00:00Z\n",
+                "wake_reason": "prerequisite_resolved"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
@@ -112906,6 +113407,33 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "node_id": "node_id-001",
+                "prior_attempt_id": "prior_attempt_id-001",
+                "replan_generation": 1,
+                "retry_count": 1,
+                "failure_class": "provider_transient",
+                "safe_point_id": "safe_point_id-001"
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
@@ -141481,6 +142009,278 @@
               "first-receipt-001"
             ],
             "effects": 1
+          }
+        },
+        {
+          "case": "F7-append-LF-ts",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z\n",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "replan_generation": 1,
+                "scheduler_pass_id": "scheduler_pass_id-001",
+                "wake_reason": "prerequisite_resolved",
+                "available_slots": 1,
+                "ready_nodes": [
+                  {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-low"
+                  }
+                ],
+                "selected_nodes": [
+                  {
+                    "node_id": "node-high",
+                    "score_tuple": {
+                      "scheduler_lane": "remediation",
+                      "manual_priority": 1,
+                      "transitive_unblock_count": 2,
+                      "ready_since_utc": "2026-11-04T12:00:00Z",
+                      "node_id": "node-high"
+                    },
+                    "lane": "remediation"
+                  }
+                ],
+                "non_selected_nodes": [
+                  {
+                    "node_id": "node-low",
+                    "exclusion_reason_code": "capacity",
+                    "ready_state": "ready"
+                  }
+                ],
+                "wake_event_refs": [
+                  "wake-002"
+                ],
+                "coalesced_wake_reasons": [
+                  "capacity_available"
+                ]
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F7-append-LF-ready_nodes-0-ready_since_utc",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "replan_generation": 1,
+                "scheduler_pass_id": "scheduler_pass_id-001",
+                "wake_reason": "prerequisite_resolved",
+                "available_slots": 1,
+                "ready_nodes": [
+                  {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z\n",
+                    "node_id": "node-high"
+                  },
+                  {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-low"
+                  }
+                ],
+                "selected_nodes": [
+                  {
+                    "node_id": "node-high",
+                    "score_tuple": {
+                      "scheduler_lane": "remediation",
+                      "manual_priority": 1,
+                      "transitive_unblock_count": 2,
+                      "ready_since_utc": "2026-11-04T12:00:00Z",
+                      "node_id": "node-high"
+                    },
+                    "lane": "remediation"
+                  }
+                ],
+                "non_selected_nodes": [
+                  {
+                    "node_id": "node-low",
+                    "exclusion_reason_code": "capacity",
+                    "ready_state": "ready"
+                  }
+                ],
+                "wake_event_refs": [
+                  "wake-002"
+                ],
+                "coalesced_wake_reasons": [
+                  "capacity_available"
+                ]
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F7-append-LF-ready_nodes-1-ready_since_utc",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "replan_generation": 1,
+                "scheduler_pass_id": "scheduler_pass_id-001",
+                "wake_reason": "prerequisite_resolved",
+                "available_slots": 1,
+                "ready_nodes": [
+                  {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z\n",
+                    "node_id": "node-low"
+                  }
+                ],
+                "selected_nodes": [
+                  {
+                    "node_id": "node-high",
+                    "score_tuple": {
+                      "scheduler_lane": "remediation",
+                      "manual_priority": 1,
+                      "transitive_unblock_count": 2,
+                      "ready_since_utc": "2026-11-04T12:00:00Z",
+                      "node_id": "node-high"
+                    },
+                    "lane": "remediation"
+                  }
+                ],
+                "non_selected_nodes": [
+                  {
+                    "node_id": "node-low",
+                    "exclusion_reason_code": "capacity",
+                    "ready_state": "ready"
+                  }
+                ],
+                "wake_event_refs": [
+                  "wake-002"
+                ],
+                "coalesced_wake_reasons": [
+                  "capacity_available"
+                ]
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F7-append-LF-selected_nodes-0-score_tuple-ready_since_utc",
+          "operations": [
+            {
+              "op": "append",
+              "payload_changes": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "replan_generation": 1,
+                "scheduler_pass_id": "scheduler_pass_id-001",
+                "wake_reason": "prerequisite_resolved",
+                "available_slots": 1,
+                "ready_nodes": [
+                  {
+                    "scheduler_lane": "remediation",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-high"
+                  },
+                  {
+                    "scheduler_lane": "normal",
+                    "manual_priority": 1,
+                    "transitive_unblock_count": 2,
+                    "ready_since_utc": "2026-11-04T12:00:00Z",
+                    "node_id": "node-low"
+                  }
+                ],
+                "selected_nodes": [
+                  {
+                    "node_id": "node-high",
+                    "score_tuple": {
+                      "scheduler_lane": "remediation",
+                      "manual_priority": 1,
+                      "transitive_unblock_count": 2,
+                      "ready_since_utc": "2026-11-04T12:00:00Z\n",
+                      "node_id": "node-high"
+                    },
+                    "lane": "remediation"
+                  }
+                ],
+                "non_selected_nodes": [
+                  {
+                    "node_id": "node-low",
+                    "exclusion_reason_code": "capacity",
+                    "ready_state": "ready"
+                  }
+                ],
+                "wake_event_refs": [
+                  "wake-002"
+                ],
+                "coalesced_wake_reasons": [
+                  "capacity_available"
+                ]
+              }
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "invalid_payload"
+            ],
+            "effects": 0
           }
         }
       ],
