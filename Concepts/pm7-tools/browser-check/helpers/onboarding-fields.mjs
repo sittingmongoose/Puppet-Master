@@ -56,8 +56,8 @@ export function onboardingApp(t) {
         if (via !== 'bell' && !(await tucked())) {
           /* (it may tuck between this look and the press: then the bell) */
           way = await f.locator('#o55-resume [data-o55-chip="resume"]').click({ timeout: 3000 }).then(() => 'chip', () => null);
-          if (!way && via === 'chip') throw new Error('the Resume chip was not shown: it had tucked into the bell');
         }
+        if (!way && via === 'chip') throw new Error('the Resume chip was not shown: it had tucked into the bell');
         if (!way) {
           await f.waitForFunction(() => { const c = document.getElementById('o55-resume'); return !c || c.classList.contains('pmn-pin-tucked') || !c.getClientRects().length; }, null, { timeout });
           await f.waitForFunction(() => { const s = document.getElementById('pmnStack'); return !!s && s.getClientRects().length > 0; }, null, { timeout });

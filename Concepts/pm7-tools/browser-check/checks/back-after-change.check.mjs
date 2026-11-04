@@ -411,7 +411,7 @@ const INVAR = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas ||
    record server:, an access or a check ssh-key:, pairing: or preflight:, an account account:, a fixture's fixture:; a
    URL's scheme is not one), or any reference the session holds, whole or with its leading schemes taken off one at a
    time down to its opaque hash (FO-45 itself was the stored 'ssh:sshp:server-this:<hash>/volume1/projects' shown with one
-   scheme stripped). RAW_STALE is the Back walk's stale list for both; rawIn judges any texts. */
+   scheme stripped). rawStale is the Back walk's stale list for both; rawIn judges any texts. */
 const RAW_RE = '(?<![\\w/.-])(?:sshp|shp|ssh|smb|nfs|mounted|pm|server|ssh-key|pairing|preflight|account|fixture):(?!//)[^\\s\'"«»,;()]+';
 const STORED_REFS = () => { const S = O55.S, out = new Set();
   const add = (v) => { if (typeof v !== 'string' || !/^[a-z][a-z0-9-]*:/.test(v) || /^[a-z]+:\/\//.test(v)) return;
@@ -432,8 +432,8 @@ const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not
    about 0.3 px a frame; it is one card trembling (fo-kit, 2026-11-04): after Review > Edit name > Change the pointer rests
    where Change was clicked, 0.5 px inside the bottom edge of the files sheet's 'custom' card, and the card's own hover lift
    (10-window.css .o55-card:hover translateY(-1px), a 0.18 s transition) carries its edge past the pointer and back, 0.3 to
-   0.9 px, for as long as the pointer rests there. A page issue, reported to the lead; a person's click lands, and this row
-   judges what the click does */
+   0.9 px, for as long as the pointer rests there. A page issue, handed to fo-fields, with row 25 as its regression; a
+   person's click lands, and this row judges what the click does */
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
 const pickOther = async (A) => {
