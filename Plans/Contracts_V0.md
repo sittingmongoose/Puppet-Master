@@ -24480,3 +24480,48 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+### CV-560 - FileManager exact payload routes
+
+- file.copied@1.0.0: Plans/event_payloads/file_manager/file_copied.schema.json; semantic owner F-150.
+- file.created@1.0.0: Plans/event_payloads/file_manager/file_created.schema.json; semantic owner F-151.
+- file.deleted@1.0.0: Plans/event_payloads/file_manager/file_deleted.schema.json; semantic owner F-152.
+- file.exported@1.0.0: Plans/event_payloads/file_manager/file_exported.schema.json; semantic owner F-153.
+- file.moved@1.0.0: Plans/event_payloads/file_manager/file_moved.schema.json; semantic owner F-154.
+- file.renamed@1.0.0: Plans/event_payloads/file_manager/file_renamed.schema.json; semantic owner F-155.
+- folder.copied@1.0.0: Plans/event_payloads/file_manager/folder_copied.schema.json; semantic owner F-156.
+- folder.created@1.0.0: Plans/event_payloads/file_manager/folder_created.schema.json; semantic owner F-157.
+- folder.deleted@1.0.0: Plans/event_payloads/file_manager/folder_deleted.schema.json; semantic owner F-158.
+- folder.exported@1.0.0: Plans/event_payloads/file_manager/folder_exported.schema.json; semantic owner F-159.
+- folder.moved@1.0.0: Plans/event_payloads/file_manager/folder_moved.schema.json; semantic owner F-160.
+- folder.renamed@1.0.0: Plans/event_payloads/file_manager/folder_renamed.schema.json; semantic owner F-161.
+Each closed root is adopted independently under its own schema_id and schema_version. Opaque references resolve original owner receipt entries, never raw filesystem paths. No family is admitted.
+
+```yaml
+plan_unit_id: CV-560
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  FileManager exact payload routes: the preceding per-family routes and obligations are prepared without admission.
+  Each family retains its own semantic contract; retention is PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Internal event contract routing and static assurance.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - No registry append, policy selection or native readiness claim.
+validation_surfaces:
+  - python3 scripts/pm-filemanager-event-contracts.py
+risk_class: file_event_contract_routing
+reasoning_tier: high
+context_scope: filemanager_event_authority
+implementation_surfaces: [Plans/Contracts_V0.md]
+node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
+source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
+negative_constraints:
+  - Do not treat prepared contracts as event admission.
+owner_hints: [Plans/Contracts_V0.md]
+```

@@ -1,0 +1,2939 @@
+{
+  "schema_id": "pm.filemanager_event_contract_fixtures.v1",
+  "native_execution": "NOT_RUN",
+  "rows": [
+    {
+      "event_type": "file.copied",
+      "owner_unit": "F-150",
+      "payload": {
+        "schema_id": "pm.file_manager_event.file_copied.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "file",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "source_node_ref": "pmref:receipt:source_node_ref",
+        "result_node_ref": "pmref:receipt:result_node_ref",
+        "path_snapshot_revision": 0,
+        "copy_mode": "clipboard_paste",
+        "operation_status": "completed",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::paste_nodes",
+        "command_id": "cmd.file.paste_nodes",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.file_copied.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "file",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "source_node_ref": "pmref:receipt:source_node_ref",
+          "result_node_ref": "pmref:receipt:result_node_ref",
+          "path_snapshot_revision": 0,
+          "copy_mode": "clipboard_paste",
+          "operation_status": "completed",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::paste_nodes",
+          "command_id": "cmd.file.paste_nodes",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_file_copied_5d78c14c80d5656de10a2de522d037898f8cadc37287137cb8d5d590040d7f48",
+          "file.copied:5d78c14c80d5656de10a2de522d037898f8cadc37287137cb8d5d590040d7f48"
+        ],
+        "semantic_checks": {
+          "source_unchanged": true,
+          "distinct_result": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "folder"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-source_unchanged",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": false,
+              "distinct_result": true
+            }
+          }
+        },
+        {
+          "name": "reject-distinct_result",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": true,
+              "distinct_result": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "file.created",
+      "owner_unit": "F-151",
+      "payload": {
+        "schema_id": "pm.file_manager_event.file_created.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "file",
+        "operation_id": "fixture1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "destination_container_ref": "pmref:receipt:destination_container_ref",
+        "result_node_ref": "pmref:receipt:result_node_ref",
+        "path_snapshot_revision": 0,
+        "creation_kind": "empty",
+        "operation_status": "completed",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::new_file",
+        "command_id": "cmd.file.new_file",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.file_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "file",
+          "operation_id": "fixture1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "destination_container_ref": "pmref:receipt:destination_container_ref",
+          "result_node_ref": "pmref:receipt:result_node_ref",
+          "path_snapshot_revision": 0,
+          "creation_kind": "empty",
+          "operation_status": "completed",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::new_file",
+          "command_id": "cmd.file.new_file",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_file_created_a2777dd3358e451198dc0055ca12d518189729853f3f758702fb63812ca1d9e5",
+          "file.created:a2777dd3358e451198dc0055ca12d518189729853f3f758702fb63812ca1d9e5"
+        ],
+        "semantic_checks": {
+          "valid_name": true,
+          "exact_container": true,
+          "new_node": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "folder"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "destination_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-valid_name",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": false,
+              "exact_container": true,
+              "new_node": true
+            }
+          }
+        },
+        {
+          "name": "reject-exact_container",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "exact_container": false,
+              "new_node": true
+            }
+          }
+        },
+        {
+          "name": "reject-new_node",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "exact_container": true,
+              "new_node": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "file.deleted",
+      "owner_unit": "F-152",
+      "payload": {
+        "schema_id": "pm.file_manager_event.file_deleted.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "file",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "prior_node_ref": "pmref:receipt:prior_node_ref",
+        "path_snapshot_revision": 0,
+        "deletion_mode": "os_trash",
+        "operation_status": "completed",
+        "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::delete",
+        "command_id": "cmd.file.delete",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.file_deleted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "file",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "prior_node_ref": "pmref:receipt:prior_node_ref",
+          "path_snapshot_revision": 0,
+          "deletion_mode": "os_trash",
+          "operation_status": "completed",
+          "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::delete",
+          "command_id": "cmd.file.delete",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_file_deleted_79fa6f405e3cc7bdb8d39eec110bde7245fd0f9d7da146d16be89b1603dc7d13",
+          "file.deleted:79fa6f405e3cc7bdb8d39eec110bde7245fd0f9d7da146d16be89b1603dc7d13"
+        ],
+        "semantic_checks": {
+          "mode_matches_original": true,
+          "confirmation_valid": true,
+          "custody_distinct": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "folder"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-mode_matches_original",
+          "trace_set": {
+            "semantic_checks": {
+              "mode_matches_original": false,
+              "confirmation_valid": true,
+              "custody_distinct": true
+            }
+          }
+        },
+        {
+          "name": "reject-confirmation_valid",
+          "trace_set": {
+            "semantic_checks": {
+              "mode_matches_original": true,
+              "confirmation_valid": false,
+              "custody_distinct": true
+            }
+          }
+        },
+        {
+          "name": "reject-custody_distinct",
+          "trace_set": {
+            "semantic_checks": {
+              "mode_matches_original": true,
+              "confirmation_valid": true,
+              "custody_distinct": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "file.exported",
+      "owner_unit": "F-153",
+      "payload": {
+        "schema_id": "pm.file_manager_event.file_exported.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "file",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "source_node_ref": "pmref:receipt:source_node_ref",
+        "destination_authorization_ref": "pmref:receipt:destination_authorization_ref",
+        "path_snapshot_revision": 0,
+        "export_mode": "save_local_copy",
+        "project_identity_unchanged": true,
+        "operation_status": "completed",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::save_local_copy",
+        "command_id": "cmd.file.save_local_copy",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.file_exported.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "file",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "source_node_ref": "pmref:receipt:source_node_ref",
+          "destination_authorization_ref": "pmref:receipt:destination_authorization_ref",
+          "path_snapshot_revision": 0,
+          "export_mode": "save_local_copy",
+          "project_identity_unchanged": true,
+          "operation_status": "completed",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::save_local_copy",
+          "command_id": "cmd.file.save_local_copy",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_file_exported_1564a40615a920559c7f7be546a6060604c149468da6cfac67a72789ffe3058d",
+          "file.exported:1564a40615a920559c7f7be546a6060604c149468da6cfac67a72789ffe3058d"
+        ],
+        "semantic_checks": {
+          "source_unchanged": true,
+          "destination_authorized": true,
+          "transfer_complete": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "folder"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-source_unchanged",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": false,
+              "destination_authorized": true,
+              "transfer_complete": true
+            }
+          }
+        },
+        {
+          "name": "reject-destination_authorized",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": true,
+              "destination_authorized": false,
+              "transfer_complete": true
+            }
+          }
+        },
+        {
+          "name": "reject-transfer_complete",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": true,
+              "destination_authorized": true,
+              "transfer_complete": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "file.moved",
+      "owner_unit": "F-154",
+      "payload": {
+        "schema_id": "pm.file_manager_event.file_moved.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "file",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "node_ref": "pmref:receipt:node_ref",
+        "path_snapshot_revision": 0,
+        "move_mode": "clipboard_paste",
+        "identity_preserved": true,
+        "operation_status": "completed",
+        "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::paste_nodes",
+        "command_id": "cmd.file.paste_nodes",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.file_moved.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "file",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "node_ref": "pmref:receipt:node_ref",
+          "path_snapshot_revision": 0,
+          "move_mode": "clipboard_paste",
+          "identity_preserved": true,
+          "operation_status": "completed",
+          "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::paste_nodes",
+          "command_id": "cmd.file.paste_nodes",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_file_moved_da8168e6497f89f00b3f8306fc808a9e575f07936128942b98ced59e14bf4ec9",
+          "file.moved:da8168e6497f89f00b3f8306fc808a9e575f07936128942b98ced59e14bf4ec9"
+        ],
+        "semantic_checks": {
+          "destination_committed": true,
+          "source_removed": true,
+          "identity_preserved": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "folder"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-destination_committed",
+          "trace_set": {
+            "semantic_checks": {
+              "destination_committed": false,
+              "source_removed": true,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-source_removed",
+          "trace_set": {
+            "semantic_checks": {
+              "destination_committed": true,
+              "source_removed": false,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-identity_preserved",
+          "trace_set": {
+            "semantic_checks": {
+              "destination_committed": true,
+              "source_removed": true,
+              "identity_preserved": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "file.renamed",
+      "owner_unit": "F-155",
+      "payload": {
+        "schema_id": "pm.file_manager_event.file_renamed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "file",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "node_ref": "pmref:receipt:node_ref",
+        "path_snapshot_revision": 0,
+        "rename_scope": "basename",
+        "identity_preserved": true,
+        "operation_status": "completed",
+        "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::rename",
+        "command_id": "cmd.file.rename",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.file_renamed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "file",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "node_ref": "pmref:receipt:node_ref",
+          "path_snapshot_revision": 0,
+          "rename_scope": "basename",
+          "identity_preserved": true,
+          "operation_status": "completed",
+          "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::rename",
+          "command_id": "cmd.file.rename",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_file_renamed_85114ee9f82ab792e30c375b9f03d4a46de79ac26ff2631121475a71963eba26",
+          "file.renamed:85114ee9f82ab792e30c375b9f03d4a46de79ac26ff2631121475a71963eba26"
+        ],
+        "semantic_checks": {
+          "valid_name": true,
+          "same_parent": true,
+          "identity_preserved": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "folder"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-valid_name",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": false,
+              "same_parent": true,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-same_parent",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "same_parent": false,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-identity_preserved",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "same_parent": true,
+              "identity_preserved": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "folder.copied",
+      "owner_unit": "F-156",
+      "payload": {
+        "schema_id": "pm.file_manager_event.folder_copied.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "folder",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "source_folder_ref": "pmref:receipt:source_folder_ref",
+        "result_folder_ref": "pmref:receipt:result_folder_ref",
+        "transfer_manifest_ref": "pmref:receipt:transfer_manifest_ref",
+        "descendant_count": 0,
+        "path_snapshot_revision": 0,
+        "copy_mode": "clipboard_paste",
+        "operation_status": "completed",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::paste_nodes",
+        "command_id": "cmd.file.paste_nodes",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.folder_copied.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "folder",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "source_folder_ref": "pmref:receipt:source_folder_ref",
+          "result_folder_ref": "pmref:receipt:result_folder_ref",
+          "transfer_manifest_ref": "pmref:receipt:transfer_manifest_ref",
+          "descendant_count": 0,
+          "path_snapshot_revision": 0,
+          "copy_mode": "clipboard_paste",
+          "operation_status": "completed",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::paste_nodes",
+          "command_id": "cmd.file.paste_nodes",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_folder_copied_0309357f1e87ebda282115e776b67c6a1098571a476708a5ea38e4a73d3a9f72",
+          "folder.copied:0309357f1e87ebda282115e776b67c6a1098571a476708a5ea38e4a73d3a9f72"
+        ],
+        "semantic_checks": {
+          "source_unchanged": true,
+          "distinct_result": true
+        },
+        "original_descendant_count": 0,
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "file"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-source_unchanged",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": false,
+              "distinct_result": true
+            }
+          }
+        },
+        {
+          "name": "reject-distinct_result",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": true,
+              "distinct_result": false
+            }
+          }
+        },
+        {
+          "name": "descendant-mismatch",
+          "trace_set": {
+            "original_descendant_count": 999
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "folder.created",
+      "owner_unit": "F-157",
+      "payload": {
+        "schema_id": "pm.file_manager_event.folder_created.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "folder",
+        "operation_id": "fixture1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "destination_container_ref": "pmref:receipt:destination_container_ref",
+        "result_folder_ref": "pmref:receipt:result_folder_ref",
+        "path_snapshot_revision": 0,
+        "creation_kind": "empty",
+        "operation_status": "completed",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::new_folder",
+        "command_id": "cmd.file.new_folder",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.folder_created.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "folder",
+          "operation_id": "fixture1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "destination_container_ref": "pmref:receipt:destination_container_ref",
+          "result_folder_ref": "pmref:receipt:result_folder_ref",
+          "path_snapshot_revision": 0,
+          "creation_kind": "empty",
+          "operation_status": "completed",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::new_folder",
+          "command_id": "cmd.file.new_folder",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_folder_created_b0cf069dde12d7f245c9ae2afc9e621b12ff6741d249a24f31a79e06e98da66e",
+          "folder.created:b0cf069dde12d7f245c9ae2afc9e621b12ff6741d249a24f31a79e06e98da66e"
+        ],
+        "semantic_checks": {
+          "valid_name": true,
+          "exact_container": true,
+          "new_node": true
+        },
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "file"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "destination_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-valid_name",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": false,
+              "exact_container": true,
+              "new_node": true
+            }
+          }
+        },
+        {
+          "name": "reject-exact_container",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "exact_container": false,
+              "new_node": true
+            }
+          }
+        },
+        {
+          "name": "reject-new_node",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "exact_container": true,
+              "new_node": false
+            }
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "folder.deleted",
+      "owner_unit": "F-158",
+      "payload": {
+        "schema_id": "pm.file_manager_event.folder_deleted.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "folder",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "prior_folder_ref": "pmref:receipt:prior_folder_ref",
+        "deletion_manifest_ref": "pmref:receipt:deletion_manifest_ref",
+        "descendant_count": 0,
+        "path_snapshot_revision": 0,
+        "deletion_mode": "os_trash",
+        "operation_status": "completed",
+        "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::delete",
+        "command_id": "cmd.file.delete",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.folder_deleted.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "folder",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "prior_folder_ref": "pmref:receipt:prior_folder_ref",
+          "deletion_manifest_ref": "pmref:receipt:deletion_manifest_ref",
+          "descendant_count": 0,
+          "path_snapshot_revision": 0,
+          "deletion_mode": "os_trash",
+          "operation_status": "completed",
+          "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::delete",
+          "command_id": "cmd.file.delete",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_folder_deleted_ec5de6486fb265711d0f6b5777d0928a543ba74c702222caaea40c8ca6082f81",
+          "folder.deleted:ec5de6486fb265711d0f6b5777d0928a543ba74c702222caaea40c8ca6082f81"
+        ],
+        "semantic_checks": {
+          "mode_matches_original": true,
+          "confirmation_valid": true,
+          "custody_distinct": true
+        },
+        "original_descendant_count": 0,
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "file"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-mode_matches_original",
+          "trace_set": {
+            "semantic_checks": {
+              "mode_matches_original": false,
+              "confirmation_valid": true,
+              "custody_distinct": true
+            }
+          }
+        },
+        {
+          "name": "reject-confirmation_valid",
+          "trace_set": {
+            "semantic_checks": {
+              "mode_matches_original": true,
+              "confirmation_valid": false,
+              "custody_distinct": true
+            }
+          }
+        },
+        {
+          "name": "reject-custody_distinct",
+          "trace_set": {
+            "semantic_checks": {
+              "mode_matches_original": true,
+              "confirmation_valid": true,
+              "custody_distinct": false
+            }
+          }
+        },
+        {
+          "name": "descendant-mismatch",
+          "trace_set": {
+            "original_descendant_count": 999
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "folder.exported",
+      "owner_unit": "F-159",
+      "payload": {
+        "schema_id": "pm.file_manager_event.folder_exported.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "folder",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "source_folder_ref": "pmref:receipt:source_folder_ref",
+        "destination_authorization_ref": "pmref:receipt:destination_authorization_ref",
+        "transfer_manifest_ref": "pmref:receipt:transfer_manifest_ref",
+        "descendant_count": 0,
+        "path_snapshot_revision": 0,
+        "export_mode": "save_local_copy",
+        "project_identity_unchanged": true,
+        "operation_status": "completed",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::save_local_copy",
+        "command_id": "cmd.file.save_local_copy",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.folder_exported.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "folder",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "source_folder_ref": "pmref:receipt:source_folder_ref",
+          "destination_authorization_ref": "pmref:receipt:destination_authorization_ref",
+          "transfer_manifest_ref": "pmref:receipt:transfer_manifest_ref",
+          "descendant_count": 0,
+          "path_snapshot_revision": 0,
+          "export_mode": "save_local_copy",
+          "project_identity_unchanged": true,
+          "operation_status": "completed",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::save_local_copy",
+          "command_id": "cmd.file.save_local_copy",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_folder_exported_1b011cce1b407328c186f3d1716eb2e26fcdfe00166883c3cffc81bf5f40c6c1",
+          "folder.exported:1b011cce1b407328c186f3d1716eb2e26fcdfe00166883c3cffc81bf5f40c6c1"
+        ],
+        "semantic_checks": {
+          "source_unchanged": true,
+          "destination_authorized": true,
+          "transfer_complete": true
+        },
+        "original_descendant_count": 0,
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "file"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-source_unchanged",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": false,
+              "destination_authorized": true,
+              "transfer_complete": true
+            }
+          }
+        },
+        {
+          "name": "reject-destination_authorized",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": true,
+              "destination_authorized": false,
+              "transfer_complete": true
+            }
+          }
+        },
+        {
+          "name": "reject-transfer_complete",
+          "trace_set": {
+            "semantic_checks": {
+              "source_unchanged": true,
+              "destination_authorized": true,
+              "transfer_complete": false
+            }
+          }
+        },
+        {
+          "name": "descendant-mismatch",
+          "trace_set": {
+            "original_descendant_count": 999
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "folder.moved",
+      "owner_unit": "F-160",
+      "payload": {
+        "schema_id": "pm.file_manager_event.folder_moved.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "folder",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "folder_ref": "pmref:receipt:folder_ref",
+        "descendant_count": 0,
+        "path_snapshot_revision": 0,
+        "move_mode": "clipboard_paste",
+        "identity_preserved": true,
+        "operation_status": "completed",
+        "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::paste_nodes",
+        "command_id": "cmd.file.paste_nodes",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z"
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.folder_moved.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "folder",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "folder_ref": "pmref:receipt:folder_ref",
+          "descendant_count": 0,
+          "path_snapshot_revision": 0,
+          "move_mode": "clipboard_paste",
+          "identity_preserved": true,
+          "operation_status": "completed",
+          "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::paste_nodes",
+          "command_id": "cmd.file.paste_nodes",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z"
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_folder_moved_42a1131a3610b2c29bb9ea832909578148fbc07056fe2820a4de2edd8c996f58",
+          "folder.moved:42a1131a3610b2c29bb9ea832909578148fbc07056fe2820a4de2edd8c996f58"
+        ],
+        "semantic_checks": {
+          "destination_committed": true,
+          "source_removed": true,
+          "identity_preserved": true
+        },
+        "original_descendant_count": 0,
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "file"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-destination_committed",
+          "trace_set": {
+            "semantic_checks": {
+              "destination_committed": false,
+              "source_removed": true,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-source_removed",
+          "trace_set": {
+            "semantic_checks": {
+              "destination_committed": true,
+              "source_removed": false,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-identity_preserved",
+          "trace_set": {
+            "semantic_checks": {
+              "destination_committed": true,
+              "source_removed": true,
+              "identity_preserved": false
+            }
+          }
+        },
+        {
+          "name": "descendant-mismatch",
+          "trace_set": {
+            "original_descendant_count": 999
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    },
+    {
+      "event_type": "folder.renamed",
+      "owner_unit": "F-161",
+      "payload": {
+        "schema_id": "pm.file_manager_event.folder_renamed.schema.v1",
+        "schema_version": "1.0.0",
+        "project_id": "fixture1",
+        "node_kind": "folder",
+        "operation_id": "fixture1",
+        "source_path_ref": "pm-path-ref:v1:project:source1",
+        "destination_path_ref": "pm-path-ref:v1:project:destination1",
+        "affected_path_refs": [
+          "pm-path-ref:v1:project:path1"
+        ],
+        "folder_ref": "pmref:receipt:folder_ref",
+        "path_snapshot_revision": 0,
+        "rename_scope": "basename",
+        "identity_preserved": true,
+        "operation_status": "completed",
+        "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+        "origin": "file_manager",
+        "handler_target": "handlers::file::rename",
+        "command_id": "cmd.file.rename",
+        "correlation_id": "fixture1",
+        "receipt_ref": "pmref:receipt:receipt_ref",
+        "evidence_refs": [
+          "pmref:evidence:original1"
+        ],
+        "ts": "2026-11-04T00:00:00Z",
+        "descendant_count": 0
+      },
+      "trace": {
+        "project_id": "fixture1",
+        "storage_instance_id": "storage1",
+        "recovery_epoch": 1,
+        "original_payload": {
+          "schema_id": "pm.file_manager_event.folder_renamed.schema.v1",
+          "schema_version": "1.0.0",
+          "project_id": "fixture1",
+          "node_kind": "folder",
+          "operation_id": "fixture1",
+          "source_path_ref": "pm-path-ref:v1:project:source1",
+          "destination_path_ref": "pm-path-ref:v1:project:destination1",
+          "affected_path_refs": [
+            "pm-path-ref:v1:project:path1"
+          ],
+          "folder_ref": "pmref:receipt:folder_ref",
+          "path_snapshot_revision": 0,
+          "rename_scope": "basename",
+          "identity_preserved": true,
+          "operation_status": "completed",
+          "filesafe_receipt_ref": "pmref:receipt:filesafe_receipt_ref",
+          "origin": "file_manager",
+          "handler_target": "handlers::file::rename",
+          "command_id": "cmd.file.rename",
+          "correlation_id": "fixture1",
+          "receipt_ref": "pmref:receipt:receipt_ref",
+          "evidence_refs": [
+            "pmref:evidence:original1"
+          ],
+          "ts": "2026-11-04T00:00:00Z",
+          "descendant_count": 0
+        },
+        "stages": [
+          "effect_settled",
+          "receipt_settled",
+          "append",
+          "first_ack",
+          "terminal"
+        ],
+        "original_first_receipt_resolved": true,
+        "replay_effect_count": 0,
+        "retry_append_count": 0,
+        "retry_identity": [
+          "evt_folder_renamed_25bb90ca60000a2cdc321fd370bd23e5102ede34f3f91cd31eee751eab0ce95a",
+          "folder.renamed:25bb90ca60000a2cdc321fd370bd23e5102ede34f3f91cd31eee751eab0ce95a"
+        ],
+        "semantic_checks": {
+          "valid_name": true,
+          "same_parent": true,
+          "identity_preserved": true
+        },
+        "original_descendant_count": 0,
+        "current_source_verified": true,
+        "access_allowed": true,
+        "restore_coherent": true,
+        "reader_revision": "1.0.0",
+        "event_revision": "1.0.0",
+        "reader_enabled": true,
+        "event_sequence": 1,
+        "writer_cutoff_sequence": 1
+      },
+      "negative_cases": [
+        {
+          "name": "closed-root",
+          "payload_set": {
+            "secret": "password"
+          }
+        },
+        {
+          "name": "missing-operation",
+          "payload_delete": [
+            "operation_id"
+          ]
+        },
+        {
+          "name": "wrong-kind",
+          "payload_set": {
+            "node_kind": "file"
+          }
+        },
+        {
+          "name": "scope-mismatch",
+          "trace_set": {
+            "project_id": "other_project"
+          }
+        },
+        {
+          "name": "unequal-original",
+          "trace_set": {
+            "original_payload": {}
+          }
+        },
+        {
+          "name": "append-before-effect",
+          "trace_set": {
+            "stages": [
+              "append",
+              "effect_settled",
+              "first_ack",
+              "terminal"
+            ]
+          }
+        },
+        {
+          "name": "lost-first-receipt",
+          "trace_set": {
+            "original_first_receipt_resolved": false
+          }
+        },
+        {
+          "name": "replayed-effect",
+          "trace_set": {
+            "replay_effect_count": 1
+          }
+        },
+        {
+          "name": "second-append",
+          "trace_set": {
+            "retry_append_count": 1
+          }
+        },
+        {
+          "name": "new-retry-identity",
+          "trace_set": {
+            "retry_identity": [
+              "new",
+              "new"
+            ]
+          }
+        },
+        {
+          "name": "not-completed",
+          "payload_set": {
+            "operation_status": "partial"
+          }
+        },
+        {
+          "name": "raw-path",
+          "payload_set": {
+            "source_path_ref": "/secret/file"
+          }
+        },
+        {
+          "name": "reject-valid_name",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": false,
+              "same_parent": true,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-same_parent",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "same_parent": false,
+              "identity_preserved": true
+            }
+          }
+        },
+        {
+          "name": "reject-identity_preserved",
+          "trace_set": {
+            "semantic_checks": {
+              "valid_name": true,
+              "same_parent": true,
+              "identity_preserved": false
+            }
+          }
+        },
+        {
+          "name": "descendant-mismatch",
+          "trace_set": {
+            "original_descendant_count": 999
+          }
+        },
+        {
+          "name": "fence-current_source_verified",
+          "trace_set": {
+            "current_source_verified": false
+          }
+        },
+        {
+          "name": "fence-access_allowed",
+          "trace_set": {
+            "access_allowed": false
+          }
+        },
+        {
+          "name": "fence-restore_coherent",
+          "trace_set": {
+            "restore_coherent": false
+          }
+        },
+        {
+          "name": "fence-reader_revision",
+          "trace_set": {
+            "reader_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-event_revision",
+          "trace_set": {
+            "event_revision": "2.0.0"
+          }
+        },
+        {
+          "name": "fence-reader_enabled",
+          "trace_set": {
+            "reader_enabled": false
+          }
+        },
+        {
+          "name": "fence-writer_cutoff_sequence",
+          "trace_set": {
+            "writer_cutoff_sequence": 0
+          }
+        }
+      ]
+    }
+  ]
+}

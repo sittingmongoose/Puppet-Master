@@ -29585,3 +29585,48 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+### SP-560 - FileManager prepared persistence routing
+
+- file.copied@1.0.0: Plans/FileManager.md#F-150 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- file.created@1.0.0: Plans/FileManager.md#F-151 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- file.deleted@1.0.0: Plans/FileManager.md#F-152 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- file.exported@1.0.0: Plans/FileManager.md#F-153 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- file.moved@1.0.0: Plans/FileManager.md#F-154 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- file.renamed@1.0.0: Plans/FileManager.md#F-155 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- folder.copied@1.0.0: Plans/FileManager.md#F-156 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- folder.created@1.0.0: Plans/FileManager.md#F-157 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- folder.deleted@1.0.0: Plans/FileManager.md#F-158 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- folder.exported@1.0.0: Plans/FileManager.md#F-159 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- folder.moved@1.0.0: Plans/FileManager.md#F-160 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+- folder.renamed@1.0.0: Plans/FileManager.md#F-161 owns this exact producer, identity, first-receipt, SP-278 history-only reader and withdrawal contract. retention_policy_ref: PENDING_RETENTION_DECISION.
+No family-specific stored value is introduced: events reuse canonical seglog, receipts reuse SP-286 custody and each history-only reader adopts the existing SP-278 checkpoint. No event registry row is appended. Candidate retention classes remain Case L-3 authority versus telemetry/operational history; this routing selects none.
+
+```yaml
+plan_unit_id: SP-560
+unit_type: contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  FileManager prepared persistence routing: the preceding per-family routes and obligations are prepared without admission.
+  Each family retains its own semantic contract; retention is PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Internal event contract routing and static assurance.
+split_recommended: false
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - No registry append, policy selection or native readiness claim.
+validation_surfaces:
+  - python3 scripts/pm-filemanager-event-contracts.py
+risk_class: file_event_contract_routing
+reasoning_tier: high
+context_scope: filemanager_event_authority
+implementation_surfaces: [Plans/storage-plan.md]
+node_compile_hint: {mode: prepared_without_admission, create_worknodes: false}
+source_lineage: [Plans/FileManager.md, Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: ["PENDING_RETENTION_DECISION"]
+negative_constraints:
+  - Do not treat prepared contracts as event admission.
+owner_hints: [Plans/storage-plan.md]
+```
