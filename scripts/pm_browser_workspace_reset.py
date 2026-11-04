@@ -14,6 +14,7 @@ import json
 import re
 from datetime import datetime, timedelta
 from functools import lru_cache
+import sys
 from pathlib import Path
 from urllib.parse import urljoin
 
@@ -22,6 +23,9 @@ from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+import pm_event_payload_route as body_route
+Draft202012Validator = body_route.StrictValidator
 CONTRACT_PATH = "Plans/browser_workspace_reset_contracts.schema.json"
 FIXTURE_PATH = "Plans/browser_workspace_reset_contract_fixtures.json"
 GENERIC_PATH = "Plans/event_record_index_checkpoint.schema.json"
@@ -65,7 +69,8 @@ def validators(root=ROOT):
     def refuse(uri):
         raise ValueError("unregistered local schema: " + uri)
 
-    registry = Registry(retrieve=refuse).with_resources(resources).crawl()
+    registry = body_route.schema_registry(root).with_resources(resources).crawl()
+    body_route.eager(registry, own, generic, owner, payloads)
     result = {}
     for prefix, schema, names in (("", own, ("resolved_transition", "checkpoint", "subject", "generation_transaction",
                                             "durable_read_token")),
@@ -82,11 +87,11 @@ def scope_partition(project_id):
     return "project~" + base64.urlsafe_b64encode(project_id.encode("utf-8")).decode("ascii").rstrip("=")
 
 
-def reset_preflight_failures(event, request, result, transition, witness, *, root=ROOT):
+def reset_preflight_failures(event, request, result, transition, witness, *, root=ROOT, payload_store=None):
     """Check claimed resolved values; witness booleans are NOT native evidence."""
     gate = sibling("pm-browser-event-admission", root)
     errors = gate.candidate_failures(event, witness.get("producer_component") if isinstance(witness, dict) else None,
-                                     gate.contract_context())
+                                     gate.contract_context(), payload_store=payload_store)
     if errors:
         return errors
     for name, value in (("browser_command_request", request), ("browser_command_result", result),
@@ -95,6 +100,7 @@ def reset_preflight_failures(event, request, result, transition, witness, *, roo
             return [name + "_schema"]
     if not isinstance(witness, dict):
         return ["reset_witness_missing"]
+    event, _ = body_route.resolved_event(event, payload_store)
     payload = event["payload"]
     context, facts = payload["context"], payload["facts"]
     if event["event_type"] != EVENT_TYPE:
@@ -169,8 +175,8 @@ class ResetOracle:
         self.event_ids = {}
         self.reset_count = self.append_count = self.publication_count = 0
 
-    def reset(self, event, request, result, transition, witness, append_outcome, *, admitted=False):
-        if not admitted or reset_preflight_failures(event, request, result, transition, witness):
+    def reset(self, event, request, result, transition, witness, append_outcome, *, admitted=False, payload_store=None):
+        if not admitted or reset_preflight_failures(event, request, result, transition, witness, payload_store=payload_store):
             return "rejected_no_reset"
         if transition["subject"] != self.subject:
             return "wrong_owner_subject_no_reset"
@@ -544,7 +550,7 @@ class CheckpointOracle:
 
 def workspace_history_fact(event, subject, *, admitted=False, source_verified=False,
                            access_allowed=False, deletion_allows_audit=False,
-                           checkpoint_read_token_valid=False, root=ROOT):
+                           checkpoint_read_token_valid=False, root=ROOT, payload_store=None):
     """One bounded synthetic payload join, not whole-range or live authority."""
     refused = {"outcome": "read_unavailable", "fact": None, "current_runtime_authority": False}
     if not all(flag is True for flag in (admitted, source_verified, access_allowed, deletion_allows_audit, checkpoint_read_token_valid)):
@@ -552,8 +558,9 @@ def workspace_history_fact(event, subject, *, admitted=False, source_verified=Fa
     if not validators(root)["subject"].is_valid(subject):
         return refused
     gate = sibling("pm-browser-event-admission", root)
-    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", gate.contract_context()) or event["event_type"] != EVENT_TYPE:
+    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", gate.contract_context(), payload_store=payload_store, historical=True) or event["event_type"] != EVENT_TYPE:
         return refused
+    event, _ = body_route.resolved_event(event, payload_store, historical=True)
     payload = event["payload"]
     actual = {field: payload["context"][field] for field in SUBJECT}
     if subject != actual:

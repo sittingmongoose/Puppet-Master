@@ -1,0 +1,381 @@
+#!/usr/bin/env python3
+"""DS cycle-2 static boundary and guard-removal oracles. Never native/seal proof."""
+from __future__ import annotations
+import argparse
+import ast
+import base64
+import copy
+import hashlib
+import importlib.util
+import inspect
+import json
+import re
+import textwrap
+import subprocess
+import sys
+from contextlib import contextmanager, ExitStack
+from pathlib import Path
+from unittest.mock import patch
+from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema._keywords import pattern as python_pattern
+import pm_event_payload_route as route
+import pm_home_layout_v2_slot_receipt as home
+import pm_browser_workspace_created as created
+import pm_browser_workspace_created_v2 as created_v2
+import pm_browser_workspace_reset as reset
+
+ROOT = Path(__file__).resolve().parents[1]
+
+def load(path):
+    return json.loads((ROOT / path).read_text())
+
+def source_without_guard(fn, text):
+    """Weaken actual production condition(s), in memory only; never filter returned errors."""
+    tree = ast.parse(textwrap.dedent(inspect.getsource(fn)))
+    class Weaken(ast.NodeTransformer):
+        def visit_If(self, node):
+            if text in ast.unparse(node.test):
+                node.test = ast.Constant(False)
+            return self.generic_visit(node)
+    changed = ast.fix_missing_locations(Weaken().visit(tree))
+    namespace = dict(fn.__globals__)
+    exec(compile(changed, inspect.getsourcefile(fn), 'exec'), namespace)
+    return namespace[fn.__name__]
+
+def padded(body, target, field):
+    """Keep valid identifier refs; solve the *encoded* map boundary, including str headers."""
+    for width in range(200, 430):
+        value = copy.deepcopy(body)
+        value[field] = ['artifact:%02d:' % i + 'x' * width for i in range(48)]
+        value[field].append('artifact:tail:')
+        size = len(route.canonical_msgpack(value))
+        for extra in range(max(0, target - size - 4), min(480, target - size + 4)):
+            value[field][-1] = 'artifact:tail:' + 'x' * extra
+            if len(route.canonical_msgpack(value)) == target:
+                return value
+    raise AssertionError('no exact encoded boundary')
+
+def compaction_payload_errors(payload):
+    schema = load('Plans/event_payload_context_compaction_completed.schema.json')
+    errors = []
+    if not route.validator(schema).is_valid(payload):
+        return ['compaction_payload_schema']
+    if payload['output_context_revision'] <= payload['input_context_revision']:
+        errors.append('revision_must_increase')
+    if payload['input_tokens'] - payload['output_tokens'] != payload['reclaimed_tokens']:
+        errors.append('gain_equation')
+    return errors
+
+def compaction_event_errors(event, *, historical=False):
+    fixtures = load('Plans/context_compaction_completion_contract_fixtures.json')
+    errors = compaction_payload_errors(event['payload'])
+    if errors:
+        return errors
+    payload = event['payload']
+    if not route.validator(load('Plans/event_record.schema.json')).is_valid(event):
+        errors.append('envelope_schema')
+    if event['scope_kind'] != 'project' or event['project_id'] is None:
+        errors.append('project_only')
+    if event['scope_kind'] == 'project' and any(event[k] != payload[k] for k in ('project_id', 'thread_id')):
+        errors.append('payload_envelope_identity')
+    if event['event_type'] != 'context.compaction.completed' or event['payload_schema_id'] != payload['schema_id']:
+        errors.append('family_identity')
+    if event['payload_ref'] is not None:
+        errors.append('inline_only')
+    if event['replay_policy'] != 'dedupe_by_idempotency_key' and not historical:
+        errors.append('replay_policy')
+    if event['occurred_at_utc'] != payload['committed_at_utc']:
+        errors.append('commit_time_equality')
+    identity = [payload['project_id'], payload['thread_id'], payload['operation_id']]
+    sha = lambda x: hashlib.sha256(home.canonical_json(x)).hexdigest()
+    digest = sha([fixtures['storage_instance_id']] + identity)
+    if event['event_id'] != 'evt_compaction_' + digest:
+        errors.append('event_identity')
+    if event['idempotency_key'] != 'compaction:' + sha(identity):
+        errors.append('idempotency_identity')
+    if payload['compaction_receipt_ref'] != 'compaction_receipt:' + digest:
+        errors.append('receipt_identity')
+    return errors
+
+def compaction_history(event, *, verified, withdrawn, deleted, live_revision):
+    # SP-259: historical audit fact neither reconstructs purged content nor rewinds a newer head.
+    if not verified or withdrawn or compaction_event_errors(event, historical=True):
+        return 'unavailable'
+    return 'content_free_deleted_thread_audit' if deleted else 'historical_audit_fact'
+
+class Suite:
+    def __init__(self):
+        self.positives = []
+        self.negatives = []
+        self.weakeners = {}
+
+    def positive(self, name, accepted):
+        self.positives.append((name, accepted))
+
+    def negative(self, name, guard, accepted):
+        self.negatives.append((name, guard, accepted))
+
+    def run(self):
+        failures = []
+        positives = {}
+        for name, fn in self.positives:
+            try:
+                positives[name] = bool(fn())
+            except Exception as exc:
+                positives[name] = False
+                failures.append({'positive': name, 'exception': repr(exc)})
+            if not positives[name]:
+                failures.append({'positive': name, 'unexpected_rejection': True})
+        baseline = {}
+        for name, guard, fn in self.negatives:
+            try:
+                baseline[name] = bool(fn())
+            except Exception as exc:
+                baseline[name] = None
+                failures.append({'negative': name, 'exception_is_not_rejection_proof': repr(exc)})
+            if baseline[name] is not False:
+                failures.append({'negative': name, 'unexpected_acceptance': baseline[name]})
+        table = []
+        for guard, weaken in self.weakeners.items():
+            with weaken():
+                flipped, stayed, exceptions = [], [], []
+                for name, owner, fn in self.negatives:
+                    try:
+                        (flipped if fn() else stayed).append(name)
+                    except Exception as exc:
+                        exceptions.append({'case': name, 'exception': repr(exc)})
+            expected = {name for name, owner, fn in self.negatives if owner == guard}
+            holds = set(flipped) == expected and not exceptions
+            table.append({'guard': guard, 'negatives_that_flip': flipped,
+                          'negatives_that_stay_rejected': stayed, 'expected_flips': sorted(expected),
+                          'exceptions': exceptions, 'status': 'pass' if holds else 'partial'})
+        for guard in sorted({g for _,g,_ in self.negatives} - set(self.weakeners)):
+            table.append({'guard':guard, 'negatives_that_flip':[],
+                          'negatives_that_stay_rejected':list(baseline),
+                          'expected_flips':[n for n,g,_ in self.negatives if g==guard],
+                          'status':'partial','reason':'No complete guard-removal witness yet; never promoted by suite success.'})
+        return {'schema_id': 'pm.event_authority.ds.round2.static.v1',
+                'status': 'fail' if failures else 'pass', 'native_execution': 'NOT_RUN',
+                'claim': 'Static contract oracles only; whole-lane legacy guard inventory is reported separately.',
+                'positive_count': len(positives), 'negative_count': len(baseline),
+                'positive_results': positives, 'negative_acceptances': baseline,
+                'guard_removal_table': table, 'guard_removal_complete': all(r['status']=='pass' for r in table),
+                'failures': failures}
+
+@contextmanager
+def no_pattern_guard():
+    def loose(validator, pattern, value, schema):
+        yield from python_pattern(validator, pattern.replace(r'(?![\s\S])', '$'), value, schema)
+    length_guard = route.StrictValidator.VALIDATORS['maxLength']
+    def loose_length(validator, limit, value, schema):
+        if schema.get('pattern','').startswith('^thr_'):
+            return
+        yield from length_guard(validator, limit, value, schema)
+    with patch.dict(route.StrictValidator.VALIDATORS, {'pattern': loose, 'maxLength': loose_length}):
+        yield
+
+@contextmanager
+def no_eager_guard():
+    with patch.object(route, 'eager', lambda *args: None):
+        yield
+
+def build():
+    suite = Suite()
+    gate, context = created.candidate_gate(ROOT)
+    suite.weakeners['identifier_end_of_input'] = no_pattern_guard
+    suite.weakeners['eager_reference_closure'] = no_eager_guard
+    @contextmanager
+    def no_browser_replay_guard():
+        with ExitStack() as stack:
+            for instance in (gate,reset.sibling('pm-browser-event-admission')):
+                stack.enter_context(patch.object(instance,'candidate_failures',source_without_guard(instance.candidate_failures,"event.get('replay_policy')")))
+            yield
+    suite.weakeners['browser_writer_replay_policy'] = no_browser_replay_guard
+    # Actual helper condition weakened; the total JSON budget stays unchanged.
+    suite.weakeners['inline_encoded_byte_limit'] = lambda: patch.object(route, 'INLINE_LIMIT', 65536)
+    cfixture = load(created.FIXTURE_PATH)['creation_fixture']
+    cb = next(v for v in gate.load_json('Plans/browser_event_admission_fixtures.json')['valid'] if v['case_id']==cfixture['event_case_id'])
+    bases = {'browser.workspace.created': {'event': gate.fixture_event(cb, 1), **{k:copy.deepcopy(cfixture[k]) for k in ('request','result','witness')}},
+             'browser.workspace.reset': reset.fixture_values()[0]}
+    for family, base in bases.items():
+        model = created if family.endswith('created') else reset
+        check = model.creation_preflight_failures if model is created else model.reset_preflight_failures
+        suite.positive(family + ':valid_writer', lambda b=base, check=check: not check(**b))
+        replay = copy.deepcopy(base); replay['event']['replay_policy']='projector_replay_only'
+        suite.negative(family + ':replay_only', 'browser_writer_replay_policy', lambda b=replay, check=check: not check(**b))
+        for n in load('Plans/event_authority_ds_round2_fixtures.json')['inline_boundaries']:
+            value = copy.deepcopy(base)
+            value['event']['payload'] = padded(base['event']['payload'], n, 'artifact_refs')
+            assert len(route.canonical_msgpack(value['event']['payload'])) == n
+            if n==16384:
+                suite.positive(family + ':exact_inline_limit', lambda b=value, check=check: not check(**b))
+            else:
+                suite.negative(family + ':one_byte_over_inline', 'inline_encoded_byte_limit', lambda b=value, check=check: not check(**b))
+                store={}; external=copy.deepcopy(value);external['event']=route.encode(value['event'],store);external['payload_store']=store
+                suite.positive(family + ':resolved_reference', lambda b=external, check=check: not check(**b))
+                missing=copy.deepcopy(external);missing['payload_store']={}
+                suite.negative(family + ':missing_reference', 'verified_reference_resolution', lambda b=missing, check=check: not check(**b))
+                key=external['event']['payload_ref']['blake3_id']
+                for defect in ('hash','size','media','encoding'):
+                    bad=copy.deepcopy(external)
+                    if defect=='hash':
+                        media,data=bad['payload_store'][key];at=data.index(b'xxxxxxxx');data=data[:at]+b'y'+data[at+1:];bad['payload_store'][key]=(media,data)
+                    elif defect=='size': bad['event']['payload_ref']['byte_size']+=1
+                    elif defect=='media': bad['payload_store'][key]=('text/plain',bad['payload_store'][key][1])
+                    else:
+                        data=bad['payload_store'][key][1];data=b'\xde'+len(value['event']['payload']).to_bytes(2,'big')+data[1:]
+                        ident=route.blake3_hex(data);bad['event']['payload_ref'].update(blake3_id=ident,byte_size=len(data));bad['payload_store']={ident:(route.MEDIA,data)}
+                    suite.negative(family+':reference_'+defect,'verified_reference_resolution',lambda b=bad, check=check:not check(**b))
+                def committed_retry(b=external, model=model):
+                    digest=gate.envelope_oracle().event_producer_semantic_digest
+                    if model is created:
+                        oracle=model.CreationOracle(digest);fn=oracle.create
+                    else:
+                        t=b['transition'];oracle=model.ResetOracle(t['subject'],t['checked_workspace_revision'],t['prior_workspace_generation'],digest);fn=oracle.reset
+                    inputs={k:v for k,v in b.items() if k!='payload_store'}
+                    first=fn(**inputs,append_outcome='committed',admitted=True,payload_store=b['payload_store'])
+                    retry=copy.deepcopy(inputs);retry['event'].update(sequence_id=999,observed_at_utc='2026-11-04T00:00:00Z',persisted_at_utc='2026-11-04T00:00:01Z')
+                    same=fn(**retry,append_outcome='committed',admitted=True,payload_store=b['payload_store'])
+                    refused=copy.deepcopy(retry);refused['event']['replay_policy']='projector_replay_only'
+                    replay=fn(**refused,append_outcome='committed',admitted=True,payload_store=b['payload_store'])
+                    return 'published' in first and same.startswith('original_result') and replay.startswith('rejected') and oracle.append_count==1
+                suite.positive(family+':reference_retry_storage_metadata_and_replay_refusal',committed_retry)
+                def history_read(b=external,model=model,verified=True,token=True):
+                    decoded,_=route.resolved_body(b['event'],b['payload_store'])
+                    subject={k:decoded['context'][k] for k in model.SUBJECT}
+                    flags={'source_verified':verified,'access_allowed':True,'deletion_allows_audit':True,'checkpoint_read_token_valid':token,'payload_store':b['payload_store']}
+                    if model is reset:flags['admitted']=True
+                    return model.workspace_history_fact(b['event'],subject,**flags)['outcome']
+                suite.positive(family+':historical_reference_independent_of_live_state',lambda fn=history_read:fn().startswith('historical_'))
+                suite.negative(family+':historical_unverified_source','browser_historical_authenticity',lambda fn=history_read:fn(verified=False).startswith('historical_'))
+                suite.negative(family+':historical_withdrawn_checkpoint','browser_historical_authenticity',lambda fn=history_read:fn(token=False).startswith('historical_'))
+                def retry_accepts_replay(b=external,model=model):
+                    digest=gate.envelope_oracle().event_producer_semantic_digest
+                    if model is created:oracle=model.CreationOracle(digest);fn=oracle.create
+                    else:
+                        t=b['transition'];oracle=model.ResetOracle(t['subject'],t['checked_workspace_revision'],t['prior_workspace_generation'],digest);fn=oracle.reset
+                    inputs={k:v for k,v in b.items() if k!='payload_store'}
+                    fn(**inputs,append_outcome='committed',admitted=True,payload_store=b['payload_store'])
+                    inputs=copy.deepcopy(inputs);inputs['event']['replay_policy']='projector_replay_only'
+                    return not fn(**inputs,append_outcome='committed',admitted=True,payload_store=b['payload_store']).startswith('rejected')
+                suite.negative(family+':known_retry_replay_only','browser_writer_replay_policy',retry_accepts_replay)
+
+        lf=copy.deepcopy(base);lf['event']['payload']['artifact_refs']=['artifact:review\n']
+        suite.negative(family+':artifact_ref_LF','identifier_end_of_input',lambda b=lf,check=check:not check(**b))
+        cp=created_v2.fixture_values()[0] if model is created else reset.fixture_values()[1]
+        # created_v2.fixture_values returns a named mapping; materialize below in the caller if needed.
+        if isinstance(cp,dict):
+            cp=copy.deepcopy(cp);cp['publication_id']+='\n'
+            cpcheck=created_v2.checkpoint_failures if model is created else reset.checkpoint_failures
+            suite.negative(family+':publication_id_LF','identifier_end_of_input',lambda cp=cp,check=cpcheck:not check(cp))
+        schemas=[load('Plans/browser_event_payloads.schema.json'),load('Plans/browser_workspace_created_checkpoint_v2.schema.json' if model is created else 'Plans/browser_workspace_reset_contracts.schema.json')]
+        for i,schema in enumerate(schemas):
+            broken=copy.deepcopy(schema);broken.setdefault('$defs',{})['ds_dormant_bad_ref']={'$ref':'#/not_a_schema'}
+            def closure_accepts(s=broken):
+                try:route.eager(route.schema_registry(),s)
+                except ValueError:return False
+                return True
+            suite.negative(family+':dormant_ref_'+str(i),'eager_reference_closure',closure_accepts)
+    comp=load('Plans/context_compaction_completion_contract_fixtures.json')
+    suite.positive('compaction:valid_event',lambda:not compaction_event_errors(comp['valid_event']))
+    for field in ('project_id','thread_id','operation_id','context_epoch_id'):
+        bad=copy.deepcopy(comp['valid_event']['payload']);bad[field]+='\n'
+        suite.negative('compaction:'+field+'_LF','identifier_end_of_input',lambda b=bad:not compaction_payload_errors(b))
+    bad=copy.deepcopy(comp['valid_event']);bad['replay_policy']='projector_replay_only'
+    suite.negative('compaction:replay_only','compaction_writer_replay_policy',lambda:not compaction_event_errors(bad))
+    suite.weakeners['compaction_writer_replay_policy']=lambda:patch(__name__+'.compaction_event_errors',source_without_guard(compaction_event_errors,"event['replay_policy']"))
+    broken=load('Plans/event_payload_context_compaction_completed.schema.json');broken.setdefault('$defs',{})['ds_dormant_bad_ref']={'$ref':'#/not_a_schema'}
+    def comp_closure():
+        try:route.eager(route.schema_registry(),broken)
+        except ValueError:return False
+        return True
+    suite.negative('compaction:dormant_ref','eager_reference_closure',comp_closure)
+    suite.positive('compaction:historical_newer_live_head',lambda:compaction_history(comp['valid_event'],verified=True,withdrawn=False,deleted=False,live_revision=999)=='historical_audit_fact')
+    suite.positive('compaction:deleted_thread_content_free',lambda:compaction_history(comp['valid_event'],verified=True,withdrawn=False,deleted=True,live_revision=999)=='content_free_deleted_thread_audit')
+    suite.negative('compaction:forged_source','compaction_historical_authenticity',lambda:compaction_history(comp['valid_event'],verified=False,withdrawn=False,deleted=False,live_revision=999)!='unavailable')
+    suite.negative('compaction:withdrawn_history','compaction_historical_authenticity',lambda:compaction_history(comp['valid_event'],verified=True,withdrawn=True,deleted=False,live_revision=999)!='unavailable')
+    suite.weakeners['compaction_historical_authenticity']=lambda:patch(__name__+'.compaction_history',source_without_guard(compaction_history,'not verified'))
+    add_layout_cases(suite)
+    return suite
+
+
+def layout_event_errors(event, store=None, *, historical=False):
+    errors=[]
+    schema = load('Plans/event_record.schema.json' if event.get('schema_version')=='2.0.0' else 'Plans/event_record_v3.schema.json')
+    if not route.validator(schema).is_valid(event):
+        errors.append('layout_envelope_schema')
+    body, physical = route.resolved_body(event,store,historical=historical)
+    errors.extend(physical)
+    if body is None:
+        return errors
+    if not route.validator(load('Plans/event_payloads/workspace_layout_changed_v2.schema.json')).is_valid(body):
+        errors.append('layout_payload_schema')
+    if event['replay_policy'] != 'dedupe_by_idempotency_key' and not historical:
+        errors.append('layout_replay_only_not_appendable')
+    return errors
+
+def add_layout_cases(suite):
+    fixtures=load('Plans/home_layout_v2_slot_receipt_fixtures.json')
+    slot=copy.deepcopy(next(v['value'] for v in fixtures['valid'] if v['id']=='home4_readback_verified_slot'))
+    event=copy.deepcopy(slot['event_semantics'])
+    event.update(schema_version='3.0.0',sequence_id=52,observed_at_utc=event['occurred_at_utc'],persisted_at_utc=event['occurred_at_utc'])
+    suite.positive('layout:valid_inline_event',lambda:not layout_event_errors(event))
+    for n in load('Plans/event_authority_ds_round2_fixtures.json')['inline_boundaries']:
+        changed=copy.deepcopy(event);changed['payload']=padded(event['payload'],n,'affected_tab_ids')
+        if n==16384:
+            suite.positive('layout:exact_inline_limit',lambda e=changed:not layout_event_errors(e))
+        else:
+            suite.negative('layout:one_byte_over_inline','inline_encoded_byte_limit',lambda e=changed:not layout_event_errors(e))
+            objects={};external=route.encode(changed,objects)
+            suite.positive('layout:boundary_resolved_reference',lambda e=external,o=objects:not layout_event_errors(e,o))
+            suite.negative('layout:boundary_missing_reference','verified_reference_resolution',lambda e=external:not layout_event_errors(e,{}))
+            corrupt=copy.deepcopy(objects);ident=external['payload_ref']['blake3_id'];media,data=corrupt[ident];at=data.index(b'xxxxxxxx');corrupt[ident]=(media,data[:at]+b'y'+data[at+1:])
+            suite.negative('layout:boundary_corrupt_reference','verified_reference_resolution',lambda e=external,o=corrupt:not layout_event_errors(e,o))
+    # One panel move changes placement for all its tabs. Keep both captures and affected ids coherent.
+    ids=[];objects={}
+    for key in ('prior_layout','candidate_layout'):
+        layout=slot[key];template=next(v for v in layout['tabs'].values() if v['kind']=='editor')
+        for i in range(load('Plans/event_authority_ds_round2_fixtures.json')['large_layout_tab_count']):
+            tab=copy.deepcopy(template);tab['ref']['path']='src/large_event_%04d.rs'%i;tab.update(mode='kept',pinned=False)
+            ident='file:'+tab['ref']['path'];layout['tabs'][ident]=tab;layout['root']['tab_ids'].append(ident)
+            if key=='candidate_layout':ids.append(ident)
+        data=home.canonical_json(layout);ident=route.blake3_hex(data);objects[ident]=('application/json',data)
+        slot[key+'_sha256']=home.sha(data);slot[key+'_source_bytes']={'form':'payload_ref','blake3_id':ident,'byte_size':len(data),'media_type':'application/json'}
+    slot['readback']['layout_sha256']=slot['candidate_layout_sha256']
+    large=copy.deepcopy(event);large['payload']['affected_tab_ids']=ids
+    assert len(route.canonical_msgpack(large['payload']))>16384
+    large=route.encode(large,objects)
+    slot['event_semantics']={k:v for k,v in large.items() if k not in ('sequence_id','observed_at_utc','persisted_at_utc')}
+    data=home.stored_bytes('transaction_slot',slot);ident=route.blake3_hex(data);objects[ident]=(route.MEDIA,data)
+    ref={'stored_form':'payload_ref','schema_id':slot['schema_id'],'schema_version':slot['schema_version'],'storage_instance_id':slot['storage_instance_id'],'logical_key':home.logical_key('transaction_slot',slot),'value_ref':{'blake3_id':ident,'byte_size':len(data),'media_type':route.MEDIA},'value_sha256':home.sha(data)}
+    checker=home.Checker(ROOT);store=home.PayloadStore(objects)
+    suite.positive('layout:1200_affected_ids_external_event',lambda:not layout_event_errors(large,objects) and len(route.resolved_body(large,objects)[0]['affected_tab_ids'])==1200)
+    suite.positive('layout:1200_tab_complete_home4_value_reference',lambda:not checker.schema_errors('stored_value_ref',ref) and not checker.semantic('stored_value_ref',ref,store))
+    retry=copy.deepcopy(large);retry.update(sequence_id=999,observed_at_utc='2026-11-04T00:00:00Z',persisted_at_utc='2026-11-04T00:00:01Z')
+    gate,_=created.candidate_gate(ROOT);digest=gate.envelope_oracle().event_producer_semantic_digest
+    suite.positive('layout:retry_preserves_original_pins',lambda:digest(large)==digest(retry) and large['payload_ref']==retry['payload_ref'] and not layout_event_errors(retry,objects))
+    bad=copy.deepcopy(large);bad['replay_policy']='projector_replay_only'
+    suite.negative('layout:writer_replay_only','layout_writer_replay_policy',lambda:not layout_event_errors(bad,objects))
+    suite.weakeners['governed_envelope_successor']=lambda:patch.object(route,'resolved_body',source_without_guard(route.resolved_body,"event.get('event_type') in ADOPTED"))
+    suite.weakeners['layout_writer_replay_policy']=lambda:patch(__name__+'.layout_event_errors',source_without_guard(layout_event_errors,"event['replay_policy']"))
+    old=copy.deepcopy(event);old['schema_version']='2.0.0'
+    suite.positive('layout:historical_exact_2_reader',lambda:not layout_event_errors(old,historical=True))
+    suite.positive('layout:historical_reference_newer_live_layout',lambda:not layout_event_errors(large,objects,historical=True))
+    suite.negative('layout:old_envelope_not_a_new_writer','governed_envelope_successor',lambda:not layout_event_errors(old))
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path);ap.add_argument('--self-test',action='store_true');ap.add_argument('--inject-invalid-positive',action='store_true');args=ap.parse_args()
+    if args.self_test:
+        proc=subprocess.run([sys.executable,'-B',__file__,'--inject-invalid-positive'],capture_output=True,text=True)
+        result={'status':'pass' if proc.returncode==1 else 'fail','injected_bad_positive_exit_code':proc.returncode}
+        print(json.dumps(result));return int(result['status']!='pass')
+    suite=build()
+    if args.inject_invalid_positive:
+        bad=copy.deepcopy(load('Plans/context_compaction_completion_contract_fixtures.json')['valid_event']['payload']);bad['project_id']+='\n'
+        suite.positive('fault_control_invalid_positive',lambda:not compaction_payload_errors(bad))
+    result=suite.run();data=json.dumps(result,indent=2)+'\n'
+    if args.output:args.output.write_text(data)
+    print(json.dumps({k:v for k,v in result.items() if k not in ('guard_removal_table','positive_results','negative_acceptances')},indent=2))
+    return int(result['status']!='pass')
+
+if __name__=='__main__':raise SystemExit(main())

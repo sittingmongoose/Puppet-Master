@@ -35719,7 +35719,7 @@
           "storage_instance_id": {
             "type": "string",
             "format": "uuid",
-            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?![\\s\\S])"
           },
           "project_id": {
             "type": "string",
@@ -35728,7 +35728,7 @@
           },
           "scope_partition": {
             "type": "string",
-            "pattern": "^project~[A-Za-z0-9_-]+$"
+            "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
           },
           "projector_id": {
             "const": "storage.browser_workspace_created_index.v2"
@@ -35918,7 +35918,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 512,
-            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*(?![\\s\\S])",
             "not": {
               "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
             }
@@ -35962,7 +35962,7 @@
               "storage_instance_id": {
                 "type": "string",
                 "format": "uuid",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?![\\s\\S])"
               },
               "project_id": {
                 "type": "string",
@@ -35971,7 +35971,7 @@
               },
               "scope_partition": {
                 "type": "string",
-                "pattern": "^project~[A-Za-z0-9_-]+$"
+                "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
               },
               "projector_id": {
                 "const": "storage.browser_workspace_created_index.v2"
@@ -36440,7 +36440,7 @@
               },
               "storage_instance_id": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(?![\\s\\S])"
               },
               "project_id": {
                 "type": "string",
@@ -36449,7 +36449,7 @@
               },
               "scope_partition": {
                 "type": "string",
-                "pattern": "^project~[A-Za-z0-9_-]+$"
+                "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
               },
               "projector_id": {
                 "const": "storage.browser_workspace_created_index.v1"
@@ -36629,7 +36629,7 @@
           },
           "sha256": {
             "type": "string",
-            "pattern": "^[0-9a-f]{64}$"
+            "pattern": "^[0-9a-f]{64}(?![\\s\\S])"
           },
           "source_cursor": {
             "type": "object",
@@ -36660,7 +36660,7 @@
               },
               "segment_name": {
                 "type": "string",
-                "pattern": "^seg-[0-9]{6}-[0-9]{20}(?:-[0-9]{20}\\.seglog|\\.active)$"
+                "pattern": "^seg-[0-9]{6}-[0-9]{20}(?:-[0-9]{20}\\.seglog|\\.active)(?![\\s\\S])"
               },
               "byte_offset": {
                 "type": "integer",
@@ -47023,7 +47023,7 @@
           },
           "scope_partition": {
             "type": "string",
-            "pattern": "^project~[A-Za-z0-9_-]+$"
+            "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
           },
           "projector_id": {
             "const": "storage.browser_workspace_reset_index.v1"
@@ -47213,7 +47213,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 512,
-            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*$",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:/#-]*(?![\\s\\S])",
             "not": {
               "pattern": "AuthBrowserSession|auth_browser_session|auth-browser-session|protected_auth|protected-auth"
             }
@@ -47265,7 +47265,7 @@
               },
               "scope_partition": {
                 "type": "string",
-                "pattern": "^project~[A-Za-z0-9_-]+$"
+                "pattern": "^project~[A-Za-z0-9_-]+(?![\\s\\S])"
               },
               "projector_id": {
                 "const": "storage.browser_workspace_reset_index.v1"

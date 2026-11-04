@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21658-L21738
+Source lines: L21670-L21750
 
-Source SHA256: `078ea0299d9a8cbba000a9e5b550f2c95ca1f02c7d8a4525dc53c6427bdad8c5`
+Source SHA256: `e4736b604f542b21b449198a7b9f73b48dec74ba2a96b9646f025cda3b49e524`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Browser EventRecords consume the existing EventRecord 2.0 envelope and Case L identity/replay rules. Fifty-three exact prepared event_type values each select one unique closed metadata payload schema from browser_event_payloads.schema.json through browser_event_admission.json. Preparation does not register them; only an admitted_static_contract row with its exact central family binding passes admission. Producer admission requires the actual owner transition and verified exact scope, not a Client action or receipt-shaped object alone. CV-366’s application browser sibling selects a distinct whole source/action/producer/index/read/reset/backup graph. Fifty-three prepared names are not fifty-three admitted app writers. Protected AuthBrowserSession remains separate, transient, human-only and excluded from app automation/capture/restore.
+  Browser EventRecords consume Case L identity/replay rules. Individually, browser.workspace.created and browser.workspace.reset adopt the governed EventRecord 3.0.0 inline/reference route in section 1.2.1; each retains exact 2.0.0 historical readers and resolves the complete body before producer, reader and checkpoint joins. Other prepared Browser families retain their existing 2.0.0 edition without admission. Fifty-three exact prepared event_type values each select one unique closed metadata payload schema from browser_event_payloads.schema.json through browser_event_admission.json. Preparation does not register them; only an admitted_static_contract row with its exact central family binding passes admission. Producer admission requires the actual owner transition and verified exact scope, not a Client action or receipt-shaped object alone. CV-366’s application browser sibling selects a distinct whole source/action/producer/index/read/reset/backup graph. Fifty-three prepared names are not fifty-three admitted app writers. Protected AuthBrowserSession remains separate, transient, human-only and excluded from app automation/capture/restore.
 gui_related: false
 gui_classification_reason: This is event envelope, payload, producer and replay authority.
 depends_on: [CV-317, SMPFS-147]
@@ -26,7 +26,7 @@ unblocks: []
 acceptance_criteria:
   - Validate the central envelope, registered payload schema ID and event_type pair, payload, project scope, and parity for project, thread, Run, and attempt where applicable before checkpoint advance.
   - Require exact Home Server, Execution Host, Environment, Source Location and row-specific workspace, session, page/generation, program, segment, ProgramWorkspace or routine context; pre-allocation identities remain null only where the selected transition permits them.
-  - Payloads are at most 16384 UTF-8 JSON bytes (16 KiB inline body, SP-337) with at most 64 artifact refs and closed typed facts, a larger body is carried by BLAKE3 payload-store reference, and inline base64 is an admission error; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.
+  - Payloads keep the separate 65536 UTF-8 JSON-byte total-body budget, at most 64 artifact refs and closed typed facts; the exact canonical MessagePack body is inline only through 16384 bytes (inclusive), and a larger body is carried by the verified EventRecord 3.0.0 BLAKE3 payload-store reference, and inline base64 is an admission error; owner-record schema ID, transition receipt, permission snapshot and capability snapshot refs do not substitute for resolving and authenticating the actual producer and transition.
   - Application-scope, mismatched scope, unknown family, stale generation, protected-auth content, unhandled inline data, mismatched schema identity and oversized payloads fail closed without checkpoint advance.
   - App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest; a matching retry returns the original with zero effects while conflicting identity is quarantined.
   - Storage-assigned sequence and observation/persistence times do not change producer-semantic digest; producer sequence and correlation retain their existing meaning.
