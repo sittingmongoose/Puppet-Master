@@ -121,7 +121,7 @@ def settings_predicate(predicate, record, rows, expected=None):
             return 'resolve_there'
         return 'accept' if record['selected_account_id'] == record['authenticated_account_id'] else 'refuse'
     if predicate == 'models.strategy_tier_allowed':
-        allowed = {'Standard': {1, 2, 3, 4, 5, 6, 7}, 'Conservative': {2, 5, 6, 7, 9},
+        allowed = {'Standard': {1, 2, 3, 4, 5, 6, 7}, 'Conservative': {1, 2, 5, 6, 7, 9},
                    'Aggressive': set(range(1, 10))}
         return 'accept' if record['precedence_tier'] in allowed.get(record['strategy'], set()) else 'refuse'
     raise ValueError('unknown Settings predicate: ' + predicate)
