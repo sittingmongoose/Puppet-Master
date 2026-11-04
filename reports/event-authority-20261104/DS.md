@@ -1,10 +1,149 @@
 # Lane DS (stream E, batch 1): clearing the frozen seal check's blockers
 
 **Branch:** `plans/ea-b1-seal-blockers-20261104`, from `origin/main` `be4766513f`.
-**Worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead.
+**Worktree:** Nas1 `~/pm-worktrees/ea-ds`, kept for the lead. Second pass (DS-P2): VM sparse worktree `~/pm-worktrees/DS-p2` from `600575221d`, removed after the push.
 **Inputs:** `BRIEF-DRAFT.md`, `lanes/DS.md`, D1b's `BLOCKERS.md` and `DEPTH.jsonl`. Every D1b claim used here was re-checked on this branch.
 
-## Result
+## Second pass (DS-P2, VM, 2026-11-04)
+
+The first pass left the frozen seal check at 4 failures. Three depth cells on the two August families remained, all technical work under DL-045. This pass took each in turn.
+
+| Cell | Outcome | Commit |
+|---|---|---|
+| `workspace.layout_changed` producer | **PASS.** SP-400 writes the v2 slot and receipt schema that SP-330 required ("Home4", 4.0.0). | `2e5801d7df` |
+| `workspace.layout_changed` oracles | **PASS.** The suite SP-273 pins is fixed against DL-076, re-frozen as v5 and repinned, with receipts. | `bef4342ecc` |
+| `terminal.workgroup_moved` oracles | **Stopped** with an owner question (below). Nothing was written for it. | none |
+| Both August rows re-graded | Receipted row update in the step-5 pattern: layout 12/12, terminal 11/12. | `af9bff39ae` |
+
+**Frozen seal check.** The validator was unchanged (SHA-256 `190a86f2…`) and ran on scratch copies.
+- **Before (`600575221d`):** 4 failures. The receipt equals the first pass's `43d1ab5555` receipt in every field but the time.
+- **After (`af9bff39ae`):** 4 failures. `seal_prerequisites_met` stays false.
+
+| Failure | Before (`600575221d`) | After (`af9bff39ae`) |
+|---|---|---|
+| `post_august_admission_incomplete` | the DL-300 three have no record | unchanged (waits on cards) |
+| `unexpected_august_set` | DL-300 three + the August pair | unchanged: it lists every live family that is neither Known37 nor admitted, whatever its depth |
+| `registered_contract_depth_incomplete` | 2: layout (producer, oracles), terminal (oracles) | **1: terminal (oracles)** |
+| `fresh_census_denominator_not_closed` | present | present (its `blocked_by` strings are fixed text) |
+
+The count stays 4 because the remaining terminal cell keeps `registered_contract_depth_incomplete` open. The other three failures do not depend on these cells.
+
+### Cell 1: layout producer (SP-400, newly authored owner contract under DL-045)
+
+**Premise check.** SP-330: "The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` … until it exists no native v2 writer is admitted through those families". SP-273's 2026-10-09 amendment calls it "an open item of SP-330". Both are still current. The registry admits only 2.0.0 appends. The family is one of DL-045's 285 names.
+
+**Search first.** Every `Plans/`, `scripts/` and `tests/` file naming the v2 record, the 2.0.0 payload, the two families or the capture and core codec ids was read (`reports/event-authority-20261104/ds-p2-home4-binding-search.txt`).
+- No slot, receipt or capture definition is typed for the v2 record or the 2.0.0 payload.
+- No MessagePack capture or core codec id exists.
+
+**What was written:**
+- **`Plans/home_layout_v2_slot_receipt.schema.json`.** It references the v2 record and CV-361 by `$ref`. It reuses by `$ref` every Home3 member that is not typed for v1 layouts or the 1.1.0 payload, and replaces only these:
+  - the two layouts;
+  - event semantics: a 2.0.0 payload, never `migrated_from_v1`, never a null command;
+  - `command_id` in the binding and the owner result: the CV-361 set; the owner result moves to 2.0.0;
+  - the v2 readback key;
+  - the encodings DL-270 retires: binary source bytes, or a BLAKE3 payload reference above 16 KiB, and new canonical MessagePack ids for capture and migration core.
+- **Fixtures.** `Plans/home_layout_v2_slot_receipt_fixtures.json` has 5 valid values, 12 schema negatives and 14 joined-value negatives. Each negative was checked to fail for its stated reason.
+- **Checker.** `scripts/pm_home_layout_v2_slot_receipt.py` checks the fixtures against the schema and invariants I1–I9; rc 0, pass.
+- **Owner text in `Plans/storage-plan.md`:**
+  - the SP-400 section and unit;
+  - dated amendments in SP-330's transaction paragraph and in SP-273's prose and canonical text.
+
+**What it does not change.** No registry row, family, key, retention policy or hold. The storage registry rows keep naming Home3 until the 4.0.0 edges are registered with their installation, as SP-400 says.
+
+**Newly authored names:**
+- schema and slot-producer version `4.0.0` of the existing families;
+- owner result `pm.home_layout_owner_result.v1` at `2.0.0`;
+- `home_content_free_capture_canonical_msgpack.v1`;
+- `home_slot_migration_core_canonical_msgpack.v1`;
+- the `layout_source_bytes` shape (`inline` / `payload_ref`).
+
+### Cell 2: layout oracles (DL-076 re-freeze)
+
+The suite at `~/PM-Experiments/event-authority-step08-workspace-layout-20260911` is a symlink into `/mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/`, so it is on the share. v4 was left untouched, and `v5/` was made beside it.
+
+**Proof the change is DL-076 only.** In a scratch copy, v4 first reproduced its own fixtures byte-identically.
+
+**The proposed schema.** v5's proposed schema is byte-identical to canon's DL-076 correction (`fe46283fc5`). v4's copy was byte-identical to that commit's parent content.
+
+**What v5 does:**
+- `validate_v5.py` stores the nine-field durable token and joins each read's own live snapshot.
+- Converted v2 bundles and synthetic history keep the durable token only.
+- The v2 `generic_snapshot` defect moves to the live read.
+
+**Result.**
+- Stored `redb_snapshot_id`: 173 → 0. Proposed-schema occurrences: 6 → 0.
+- Live-read occurrences (`proof`, `admitted_receipt_store`) are kept: they are live fences.
+- All 48 relation, 22 history, 4 cleanup, 32 slot-migration and 12 cleanup-ordinary cases keep their ids, validity and counts. Three negative outcomes now name the DL-076 join.
+- `freeze_v5.py` asserts all of this and wrote manifest `62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877` (53 members).
+- A fresh scratch rerun reproduces every member.
+
+**Repin.**
+- `Plans/home_layout_event_contract_fixtures.json` `frozen_joined_subject` names v5. The old pin and the reason sit beside it in `refrozen`, as the Browser pin's reason sits beside its re-frozen value.
+- SP-273 records the re-freeze.
+- SP-273 also records that the full-value suite (`7ab4fb00…`, pinned by a 2026-09-11 report) stores no reader checkpoint in its own cases, and that its pre-DL-076 checkpoint copies are superseded by the corrected Home3 schema and v5.
+
+That suite was **not** re-frozen. It is 193 MB and 3,658 files, with pinned-source checks against old canon. This is a judgement call a reviewer may reverse.
+
+Receipts: `reports/event-authority-20261104/ds-p2-layout-suite-refreeze.{md,json}`.
+
+### Cell 3: terminal oracles (stopped)
+
+**What canon settles for a withdrawn family:**
+- **Withdrawal refusal.** CV-361: "No producer writes terminal.workgroup_moved" (`Contracts_V0.md:23713`); Wiring Matrix: "No entry declares terminal.workgroup_moved" (`:7286`).
+- **Historical readability.** "recorded events stay readable at 1.0.0" (CV-361); "the family keeps its registry row for history" (`:23774`).
+- **No remint.** A move pending at upgrade "is never reminted" (CV-361).
+
+**What canon leaves open:**
+1. **Reader disclosure (two owner documents disagree).**
+   - SMPFS-170 says the withdrawal admits "no new producer admission and no new reader disclosure" and "the passive reader admits no new disclosure" (`Section15_MVP_Promoted_Features_Spec.md:12413`, `:12604`).
+   - SP-319's DL-181 amendment keeps "this passive reader … only to read 1.0.0 events already written" (`storage-plan.md:26912`).
+   - SP-319's canonical text says no consumer operates (`:27073`).
+2. **Live-behavior oracles for a feature that never ran.**
+   - SP-319 still says "Paired static oracles and closed original/read-result companions remain required" (`:27090`), and "These are required paired oracles for the companion task" (`:27057`).
+   - Those oracles are original-move checks: a positive "real-shaped changed move" with original result and append joins; negatives such as fifth-section admission, false rollback after possible append and lost-acknowledgement remint.
+   - Writing them needs the original result/custody companion that SP-319 calls "separate unfinished work under SMPFS-170" (`:26991`–`:26992`). SMPFS-170 says no such operation was ever admitted.
+   - The DL-181 amendment itself notes that one of these oracles "describes the retired cap of four sections" (`:26912`), but does not retire the list.
+
+**The exact question (for a card; the first two options touch DL-045's reserved "conflict between two owner documents").** For `terminal.workgroup_moved`, withdrawn under SMPFS-170's rule with a producer that never activated, which oracle set does SP-319 require?
+- **A.** Withdrawal and historical-readability oracles only. The reader is withdrawn and discloses nothing. SP-319's original-move oracles and both companions become lineage.
+  - The withdrawal and readability oracles: any append is refused; a recorded 1.0.0 event validates by its own `payload_schema_id` and is never rewritten or aliased; SP-330's conversion never mints one; a terminal tab move is a `tab_moved`.
+- **B.** A, plus the passive reader's closed read-result companion (`verified_historical` | `unresolved_historical_validation` | `unavailable`) and reader oracles. An authentic recorded event can only resolve to `unresolved_historical_validation`, because no operation was ever admitted. The original-move oracles and the original result/custody companion become lineage. This sides with SP-319 over SMPFS-170 on disclosure.
+- **C.** Everything SP-319 lists, including the original result/custody companion and the original-move oracles, written for an operation that never existed.
+
+Whichever is chosen, the A-part is needed. With an answer, the fixtures, checker and companion are a short follow-up, using ids from SMPFS-300–309 or SP-401–409.
+
+### Premise checks (second pass)
+
+| Answer or text | Today's text | Result |
+|---|---|---|
+| DL-045, authoring scope | `workspace.layout_changed` and `terminal.workgroup_moved` are both in its 285 names (first pass) | Holds |
+| SP-330/SP-273, "not written … until it exists no native v2 writer is admitted" | Unchanged since 2026-10-09 | Holds; basis of SP-400 |
+| DL-270 (SP-337, SP-339, SP-340), JSON/base64 retired for new stored writes | Current | Holds; SP-400 uses binary fields and new MessagePack ids |
+| DL-076, stored token without `redb_snapshot_id` | Current; canonical schemas corrected 2026-09-24 | Holds; basis of v5 |
+| DL-039 AUG-CP-WLC-001 / AUG-CP-TWM-001 | Unchanged | Holds; owner choices untouched |
+| SMPFS-170 withdrawal vs SP-319 reader and oracle list | Disagree (above) | **Open; the terminal cell is stopped** |
+
+### Checks (second pass, VM, exit codes)
+
+| Check | Result |
+|---|---|
+| `pm-shard-plans.py --generate` / `--check` (after cells 1 and 2) | 0 / 0; only storage-plan shards changed |
+| `pm-plan-index.py generate` / `validate` | 0 / 0, top-level `status: pass`; 7422 units (+SP-400) |
+| `pm-plans-verify.py lint-path-refs`, `json-syntax`, `lint-contractrefs` | rc 1 on the sparse tree before and after, with the same 14 / 1 / 1 failures (absent `Concepts`, the raw-capture link, an old audit ref); no new failure |
+| `pm-plans-verify.py lint-banned-phrases` | rc 0, pass |
+| `pm-plans-verify.py validate-plan-graph` | rc 1, 1,438 failures, none naming SP-400 or the new files |
+| `scripts/pm_home_layout_v2_slot_receipt.py` | rc 0: 5 positive, 12 schema-negative, 14 invariant-negative cases as declared |
+| v5 suite: `check_slot_migration.py`, `validate_v5.py`, `check_slot_migration.py`, `freeze_v5.py`, fresh scratch rerun | rc 0 each; 0 manifest mismatches |
+| `pm-validate-pm7-gui-fixtures.py validate` / `pm-plans-verify.py validate-pm7-gui-fixtures` | rc 0, pass / rc 0, pass (7 workspace-event valid fixtures) |
+| `pm-projects-refresh-contracts.py` / `pm-shared-runtime-command-contracts.py validate` | rc 0 / rc 0 |
+| `tests/test_pm_validate_pm7_gui_fixtures.py` | 13 OK |
+| `tests/test_event_authority_holding_bucket.py` | 2 failures, the same two as the first pass and `main` |
+| Frozen seal check, scratch copies, validator `190a86f2…` | rc 1 on both: 4 failures before, 4 after (depth sample 2 → 1) |
+
+**Expected governance staleness for the reseal request:** the Spec Lock hash of `Plans/storage-plan.md` (again).
+
+## Result (first pass)
 
 The frozen seal check (`Plans/.audits/event-authority-2026-08-12/independent-validator/`, run unchanged on scratch copies) goes from **6 failures on `main` to 4 on this branch**. `seal_prerequisites_met` stays false.
 
@@ -181,11 +320,13 @@ Records: `ds-step7-exclusions-application.json` and `.md`. Both rows become `REC
 
 ## Newly authored bindings
 
-None. Step 1 restates the admission state that the registry, SP-259, DL-300 and CV-366 already give. Step 2 states, from existing text, that no consumer operates. No consumer, projector, checkpoint, identity recipe or replay mechanic was authored.
+**Second pass:** SP-400, the Home4 v2 slot and receipt contract, newly authored under DL-045 after the search in `ds-p2-home4-binding-search.txt`. Its new names are listed under "Cell 1" above. No consumer, projector, checkpoint, identity recipe or replay mechanic was authored; SP-273's are reused.
+
+**First pass:** none. Step 1 restates the admission state that the registry, SP-259, DL-300 and CV-366 already give. Step 2 states, from existing text, that no consumer operates. No consumer, projector, checkpoint, identity recipe or replay mechanic was authored.
 
 ## Ids used
 
-None. No PlanUnit was minted. The blocks SP-400–409, ACD-600–609, SMPFS-300–309, CV-400–409 and ATS-200–204 are unused.
+**SP-400** (second pass). It was checked against `Plans/storage-plan.md` on all 505 `origin` branches: SP-400–409 appear nowhere else. The first pass minted none. Unused: SP-401–409, ACD-600–609, SMPFS-300–309, CV-400–409, ATS-200–204.
 
 ## Checks run (exit codes)
 
@@ -217,9 +358,9 @@ None. No PlanUnit was minted. The blocks SP-400–409, ACD-600–609, SMPFS-300�
 ## Open items
 
 1. **The DL-300 three.** No admission record; they wait on CC-D1b-1 (before-state form) and CC-D1b-2 (DL-045 scope). Untouched here.
-2. **Layout producer (DL-045 authoring).** Author the v2 transaction-slot and operation-receipt schema in SP-330.
-3. **Layout oracles.** Re-freeze and repin SP-273's external suites under the nine-field token. This needs the VM's `~/PM-Experiments/event-authority-step08-workspace-layout-20260911/`.
-4. **Terminal oracles (DL-045 authoring).** Author SP-319's read-result companion and paired fixtures for the historical read.
+2. **Layout producer:** done in the second pass (SP-400, `2e5801d7df`). Native installation of the 4.0.0 edges is NOT_RUN.
+3. **Layout oracles:** done in the second pass. The workspace suite was re-frozen as v5 and repinned (`bef4342ecc`). The full-value suite (`7ab4fb00…`) is **not** re-frozen; SP-273 records its stored-token copies as superseded. Re-freeze it if a reviewer prefers that to the note.
+4. **Terminal oracles:** **stopped on the owner question** under "Cell 3" above. Nothing was written.
 5. **Lead decisions.**
    - Whether to accept step 5's regrade, or revert to untouched rows until items 2–4 land.
    - How to treat the terminal premise shift (a withdrawn family's provisional state ended under DL-039).
@@ -232,7 +373,8 @@ None. No PlanUnit was minted. The blocks SP-400–409, ACD-600–609, SMPFS-300�
 ## Files
 
 - `reports/event-authority-20261104/DS.md`: this report.
-- `reports/event-authority-20261104/DS.selfgrade.json`: self-grade of the five touched families: compaction, created and reset 12/12, layout 10/12, terminal 11/12.
+- `reports/event-authority-20261104/DS.selfgrade.json`: self-grade of the five touched families at `af9bff39ae`: compaction, created, reset and layout 12/12, terminal 11/12 (59 PASS, 1 PARTIAL).
+- `reports/event-authority-20261104/ds-p2-home4-binding-search.txt`, `ds-p2-layout-suite-refreeze.{md,json}`, `ds-p2-august-regrade-application.{md,json}` (second pass)
 - `reports/event-authority-20261104/depth-b1-seal-families.{json,md}`
 - `reports/event-authority-20261104/ds-step{5,6,7}-*.{json,md}`
 - **Evidence copy:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS/`: this report, the self-grade, the seal-check receipts and the check outputs.
