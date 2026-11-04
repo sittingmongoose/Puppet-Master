@@ -1,81 +1,75 @@
-# DCW — fix round 3, Event Authority
+# DCW — fix round 4, Event Authority
 
-Branch: `plans/ea-w2-chain-wizard-20261104`. Worker: **DCW-FIX3**, VM. Reviewed head: `9dd2bebf8c4dacd8e65ae254a94df6162c86372a`. Assessed implementation: `636befcbf78a8d059f0258675292f54f0a6f149b`. Citation/re-grade commit: `8670286d31ba7e114aec5dd93a46656051848be6`. This is the third and last fix round; the next independent review is final.
+Branch: `plans/ea-w2-chain-wizard-20261104`. Worker: **DCW-FIX4**, VM. Reviewed head: `3f91eece872b0c2266172c9204e842e9e66ecc21`. Assessed implementation: `1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e`. This authorized extra round repairs the two standing-check findings only.
 
-**Worker self-grade: 0/6 prepared passes before → 6/6 after (6/8 assigned).** Every drafted family now has 10 PASS / 1 PARTIAL / 1 ABSENT. Membership remains intentionally ABSENT; pending retention is the permitted PARTIAL. Native execution remains NOT_RUN. The two narrow owner holds remain unanswered.
+**Worker self-grade: 0/6 prepared passes before → 6/6 after (6/8 assigned).** Before is Astra's independent review, not the earlier worker claim. Each prepared family has 10 PASS / 1 PARTIAL / 1 ABSENT. Membership remains ABSENT, retention remains PENDING_RETENTION_DECISION, and native adapters remain NOT_RUN. `wizard.blocked` and `wizard.unblocked` stay held on their unchanged exact questions.
 
-## Review round 3: findings and responses
+## Review round 4: findings and responses
 
-1. **F3 / blocking caller-retry admission — fixed (`636befcbf78a8d059f0258675292f54f0a6f149b`).** Location: `scripts/pm_dcw_event_oracles.py:73` (shared writer-policy guard), `:402` (incoming caller policy), `:517` (each successful caller retry); exact-family regressions in `Plans/dcw_event_contract_fixtures.json` and `scripts/pm_dcw_event_regressions.py:85`. Cause: the incoming policy was outside the semantic digest and received no independent admission check. Fix: validate every explicitly supplied caller policy before semantic dedupe, with `projector_replay_only` refused as `replay_only_not_appendable`; other unsupported/null policies refuse `writer_policy`. Omitted policy remains supported for semantic-only retry inputs. Storage-assigned observed/persisted times and sequence remain excluded from semantic comparison; original stored full-value receipt authentication still runs. All 12 exact review counterexamples now refuse, with unchanged original events/receipts. Add 72 explicit caller fixtures and rerun the incoming-policy negative over every successful authored retry, including restored, referenced-source, cutoff-drain and metadata-only variants. Verify with both checked-in commands below.
+1. **F1 — fixed (`9728165bc635d0c0383dd621075f686fb230dc78`). Where:** `scripts/pm_dcw_event_oracles.py:471`, with exact-family `compatibility_forged_*` cases in `Plans/dcw_event_contract_fixtures.json`. **Why:** compatibility replaced the supplied view before comparing its full value. **Fix:** normalize only the explicitly allowed transient replay policy, authenticate every other supplied field against the retained original, then verify its recorded producer-semantic digest, full-value commitment and original first receipt. All 30 Astra payload/actor/sequence/Storage-time/source-time forgeries now refuse; the complete CLI accepts each correctly classified negative. Retained reads survive writer cutoff, obsolete writer CAS, unknown current effects and later resumed source phases. Withdrawal, foreign partitions/Storage identities and forged originals still refuse. Referenced-body compatibility reads obey the same authentication.
 
-2. **Loaded-family evidence / should-fix — fixed (`8670286d31ba7e114aec5dd93a46656051848be6`).** Location: `reports/event-authority-20261104/DCW.self-grade.json`, `wizard.deferred_payload.loaded` producer, retention, custody, consumer and compatibility citations. Cause: duplicate wording allowed seven citations into the preceding opened-family section. Fix: all such evidence now lies within the loaded family’s own `Plans/storage-plan.md:30024–30037` section. The artifact checker verifies heading containment as well as exact quotes, and rejects the original wrong-heading mutation. No normative binding or additional grade was changed by this citation correction.
+2. **F2 — fixed (`1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e`). Where:** CV-590–595 in `Plans/Contracts_V0.md`, all six exact-family payload schemas, and `scripts/pm_dcw_event_oracles.py:164–235,430`. **Why:** JSON sizing rejected valid canonical MessagePack bodies at exactly 16 KiB; contracts admitted no overflow event transport. Source-record overflow did not solve event-body overflow. **Fix:** each family's own CV unit adopts SP-337, preserving the existing shared EventRecord schema. Measure the actual SP-026 canonical MessagePack body bytes. Exactly 16,384 inline accepts; 16,385 inline refuses `inline_limit`. Larger bodies use an empty inline stub plus a compact sorted-key JSON descriptor string in `payload_ref`, with exact BLAKE3/byte_size/family media type. Resolve and validate the complete closed logical payload, exact canonical bytes and original source joins; require readable and durable pack/index authority before referencing append/publication. Missing, wrong-size/type/digest, noncanonical, malformed, unavailable or undurable data refuses. Original semantic digest, full-value commitment and first receipt bind the stored reference representation. Retry, read, compatibility, rebuild and admitted restore resolve that same original; coherent restore additionally requires the event-payload inventory. Source overflow remains independently verified. No annotation truncation, new product cap, feature or retention/deletion answer was chosen.
 
-3. **Standing check 9 — fixed (`636befcbf78a8d059f0258675292f54f0a6f149b`).** Location: `scripts/pm_dcw_event_oracles.py:55` and `:492`. Cause: schema syntax/instance checks did not inspect unused definitions for dangling references. Fix: resolve every `$ref` in every registered input schema before fixture execution, including nested subresource bases, with `unresolved_schema_ref` on failure. All 80 existing refs resolve. For every exact family, dangling local/external refs in both source and payload schemas make the complete CLI exit 1. Source-registry mirrors are mutated consistently to isolate the reference defect. All 24 corresponding controls pass when only the new preflight is disabled.
+**Verification:** `python3 scripts/pm_bundle_revision_events.py` → 1,826 PASS (179 original + 1,647 full composition). `python3 scripts/pm_dcw_event_regressions.py --output <evidence>/standing-checks.json` → 1,328/1,328, all 66 family/check cells populated and PASS, including 264 guard-ablation witnesses. Independent Python msgpack encoding reproduces Astra's four exact 16,384-byte bundle examples (JSON sizes 16,506 / 16,503 / 16,503 / 16,503); all now accept. An additional 300 independent event-byte/reference/retry/history cases and all 183 exact Astra probes pass.
 
-No finding is disputed. No owner decision, admission, exclusion or registry append was made.
+No finding is disputed or stopped for a new owner decision.
 
 ## Family grades before and after
 
-Before is the independent cycle-three review; the earlier worker PASS claims are not the baseline. All 96 current cells and 210 exact source quotes are verified in the updated self-grade.
+All 96 cells are rechecked at the implementation above; every quote in the self-grade is verified against its current exact owner unit or family fixture. The producer and positive_negative_oracles cells recover from PARTIAL to PASS for all six prepared families.
 
-| Family | Before | After | Outcome |
+| Family | Before (Astra) | After (worker) | Outcome |
 |---|---|---|---|
-| `bundle.revision_requested` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
-| `bundle.revision_started` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
-| `bundle.revision_completed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
-| `bundle.revision_interrupted` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
-| `wizard.deferred_payload.loaded` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
-| `wizard.opened` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
+| `bundle.revision_requested` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
+| `bundle.revision_started` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
+| `bundle.revision_completed` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
+| `bundle.revision_interrupted` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
+| `wizard.opened` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
+| `wizard.deferred_payload.loaded` | 8 PASS / 3 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT | prepared without admission |
 | `wizard.blocked` | 6 PARTIAL / 6 ABSENT | unchanged | held for Jared |
 | `wizard.unblocked` | 6 PARTIAL / 6 ABSENT | unchanged | held for Jared |
 
-## Per-family standing checks, 1 through 9
+## Per-family standing checks, 1 through 11
 
-**Fixed = `636befcbf78a8d059f0258675292f54f0a6f149b`. Pass = exercised successfully at that implementation.** Check 2 is an active refusal test: these are project-only families, so even a correctly shaped CV-366 application key cannot authorize an application writer. No standing-check cell is open.
+**Fixed F1 = `9728165bc635d0c0383dd621075f686fb230dc78`; Fixed F2 = `1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e`. Pass = exercised successfully at this implementation. No standing-check cell remains open.** These families are Project-only; check 2 tests refusal of both a correctly formatted CV-366 application key and a malformed application key, without inferring application support.
 
-| Exact family | 1 Writer/retry | 2 App key | 3 Partition | 4 Size/ref | 5 LF | 6 Semantic retry | 7 Checkpoint | 8 Failure exit | 9 Refs |
-|---|---|---|---|---|---|---|---|---|---|
-| `bundle.revision_requested` | Fixed | Pass | Pass | Pass | Pass | Pass | Pass | Pass | Fixed |
-| `bundle.revision_started` | Fixed | Pass | Pass | Pass | Pass | Pass | Pass | Pass | Fixed |
-| `bundle.revision_completed` | Fixed | Pass | Pass | Pass | Pass | Pass | Pass | Pass | Fixed |
-| `bundle.revision_interrupted` | Fixed | Pass | Pass | Pass | Pass | Pass | Pass | Pass | Fixed |
-| `wizard.deferred_payload.loaded` | Fixed | Pass | Pass | Pass | Pass | Pass | Pass | Pass | Fixed |
-| `wizard.opened` | Fixed | Pass | Pass | Pass | Pass | Pass | Pass | Pass | Fixed |
+| Family | 1 Writer/retry | 2 App key | 3 Project partition | 4 Bytes/SP-337 | 5 LF | 6 Semantic retry | 7 Checkpoint | 8 Failure exit | 9 Refs | 10 Retained history | 11 Isolation |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `bundle.revision_requested` | Pass | Pass | Pass | Fixed F2 | Pass | Pass | Pass | Pass | Pass | Fixed F1 | Fixed F2 |
+| `bundle.revision_started` | Pass | Pass | Pass | Fixed F2 | Pass | Pass | Pass | Pass | Pass | Fixed F1 | Fixed F2 |
+| `bundle.revision_completed` | Pass | Pass | Pass | Fixed F2 | Pass | Pass | Pass | Pass | Pass | Fixed F1 | Fixed F2 |
+| `bundle.revision_interrupted` | Pass | Pass | Pass | Fixed F2 | Pass | Pass | Pass | Pass | Pass | Fixed F1 | Fixed F2 |
+| `wizard.opened` | Pass | Pass | Pass | Fixed F2 | Pass | Pass | Pass | Pass | Pass | Fixed F1 | Fixed F2 |
+| `wizard.deferred_payload.loaded` | Pass | Pass | Pass | Fixed F2 | Pass | Pass | Pass | Pass | Pass | Fixed F1 | Fixed F2 |
 
-The complete `verify` composition is invoked for checks 1–7. Checks 8–9 invoke the complete CLI in a fresh subprocess. The core negative for each check is recorded independently for all six exact families in `fix3-standing-checks.json`; the wider variants below are also recorded in the full suite and independent review audit, including exact boundary, restored, referenced-body and authenticated original cases.
-
-| Check | Negative that catches it | Full-checker outcome for every family |
-|---|---|---|
-| 1 | Change only incoming `retry_request.replay_policy` to `projector_replay_only`; repeat for every successful caller-retry variant and ordinary/referenced sources. Independently mutate first-write/publish/prepared-event policies. | Event/caller policy: `replay_only_not_appendable`; prepared Wizard source: `latest_source_event`. The prior 12 invalid acceptances are gone. |
-| 2 | Supply CV-366 `application@1:hex(server_id):hex(owner_operation_id)` with application scope; also try malformed `application:server:operation`. | Both refuse `identity`; no application or fabricated-Project fallback. |
-| 3 | Replace the original custody `project~` base64url/no-padding partition with raw Project ID or another encoded Project. | `receipt_scope` on publish/retry/read; independently encoded positives match. |
-| 4 | Store 16385 canonical MessagePack bytes inline; remove/corrupt/unsync/substitute a referenced body or restore inventory. | `refuse_oversized_source` or the specific payload/restore refusal. 16383/16384 inline and 16385/24576 authenticated SP-337 reference positives pass. |
-| 5 | Add LF to a source hash and every corresponding trusted owner observation; also mutate event/stored payload hashes or BLAKE3 refs. | `schema`, including matching malformed originals and referenced bodies. All 23 identifier-pattern sites reject LF/CRLF/short/long forms. |
-| 6 | Change only a caller semantic payload field, such as permission snapshot/source evidence; separately change stored original metadata. | `idempotency_conflict` for caller semantics; `original_full_value` for stored tampering. Semantic-only inputs and each Storage-only time/sequence change pass. |
-| 7 | Move source, selected instance and authority together while leaving the original checkpoint, or mutate only token Storage identity. | `checkpoint_storage_instance`; matched positive event/token identities pass. |
-| 8 | Deliberately make the runner accept the authored invalid 16385-byte inline case. | Complete CLI exits **1**, naming expected `refuse_oversized_source` versus actual `accept` (6/6). |
-| 9 | Insert a dangling local/external `$ref` into an unused source/payload definition, with source registry mirror aligned. | Complete CLI exits **1** with `unresolved_schema_ref` (24/24); identical inputs pass with only preflight disabled (24/24 controls). |
-
-Checked-in verification:
-
-```bash
-python3 scripts/pm_bundle_revision_events.py
-python3 scripts/pm_dcw_event_regressions.py
-```
+| Check | Exact-family evidence and isolation |
+|---|---|
+| 1 | Replay-only first-write/publish/prepared-source and incoming-caller retry negatives rerun over every successful writer variant, including referenced/restored originals. Isolated caller policy changes only that field; relaxing its reader-only admission guard accepts it. |
+| 2 | Foreign application key negatives align the synthetic source/custody/receipt mirrors, so only the exact-family key recipe is defective. Wizard source_ref follows the mutated key; the legacy bundle validator's repeated identity guard is mutated with the same invariant. Both well-formed CV-366 and malformed keys refuse. |
+| 3 | Positives use encoded project~ base64url partitions without padding. Raw and other encoded Project partitions refuse receipt_scope; relaxing only that guard accepts the same input. |
+| 4 | Inline 16,383/16,384 positives, 16,385 inline negatives, and 16,385/20,000 referenced positives use actual canonical bytes. Full paths cover append/publish/retry/read/rebuild/compatibility and admitted restore. Every new pack defect is built after a valid source/event/custody construction. Size, digest, media, body closure, stub closure, canonical bytes/reference text, missing/readability/sync/index, substituted result and inventory guards have otherwise-valid controls. Source references cannot satisfy missing event-pack authority. |
+| 5 | All 29 anchored identifier sites have exact lengths; LF/CRLF/short/long direct mutants refuse. Full-composition matching original-owner hash LF negatives still refuse. Ref BLAKE3 LF is guarded by both exact schema length and digest equality; its ablation relaxes that one exact-identifier invariant at both enforcement sites. |
+| 6 | Caller semantic changes conflict; semantic-only and Storage-only observed/persisted/sequence changes accept. The isolated semantic mutation changes no stored original. Referenced retry metadata variants also pass. Original full-value authentication remains independent. |
+| 7 | Event/source/custody Storage identities move coherently while the checkpoint stays foreign; only checkpoint_storage_instance fails, and its isolated ablation accepts. Token-only mismatch negatives remain. |
+| 8 | Each complete CLI rejects a deliberately accepted invalid inline-source case with exit 1. Relaxing only the runner's result/expectation assertion makes the same complete CLI exit 0 (6 controls); no fixture or repository file is edited. |
+| 9 | All schema references preflight. Unused dangling local/external refs in each family's source/payload schemas make the complete CLI exit 1, with source-registry mirrors aligned; identical inputs exit 0 when only preflight is disabled (24 controls). |
+| 10 | Valid retained originals read after independent writer-state changes and later source progression. Withdrawal, all five supplied compatibility forgeries, and altered recorded commitments/first receipts refuse. Each historical negative has its own guard-ablation witness; referenced original history and access/withdrawal cases also run independently. |
+| 11 | 264 exact-family witnesses show each isolated standing-negative input accepts when only its defective invariant is weakened. Repeated enforcement of one invariant is ablated together, preserving all other guards. Missing-pack controls weaken only absent-resolution into fallback to the unchanged original pack observation. Earlier composite stress cases remain as regression coverage and are not used as isolation witnesses. |
 
 ## Earlier findings: mutation replay
 
-| Finding | Negative replay and result |
+| Earlier finding | Replay result |
 |---|---|
-| Cycle 1 F1: reader-only writers | Six-family append/publish/retry and prepared-source mutations still refuse; every successful writer path is re-mutated. Caller-retry hole is now closed separately. |
-| Cycle 1 F2: deferred originals | Every family refuses a deferred source schema/status and deferred restore mode through the complete CLI. Missing/substituted first receipt, original commitment, source restore inventory and receipt admission refuse. Original intent/result/document and historical-source cases remain. |
-| Cycle 1 F3: missing full oracles | Full suite retains every earlier scenario. Terminal conflicts/completed resume, cutoff/fence, withdrawn readers, replacement admission and incomplete rebuild mutations refuse. Check 8 proves accepted-invalid input cannot yield success. |
-| Cycle 1 F4: false Wizard action-existence hold | Both existing current Wizard families pass valid original intake and all canonical seeds. Missing actual child/request, raw legacy seed, stale child/context, and loaded-family missing original open/receipt refuse. Artifact audit rejects reinstating the false prepared-family stop. |
-| Cycle 1 F5: retired competing owner / broad questions | Current retired CWF is not reinstated. The artifact audit rejects `owner_doc=CONFLICT` for each of the four Wizard rows, broadening either exact Q1a/Q1b question, and reintroducing Q2. Current exact Q1a/Q1b holds are preserved verbatim; no Q2 action-existence question or answer is applied. These ownership-grade mutations are checked by the complete artifact audit, not presented as EventRecord fields. |
-| Cycle 2 F1: LF hashes | All 36 exact original hash/size recipes pass on append/publish/retry. Source/owner hash matching cannot bypass validation. Full audit additionally covers stored payloads, reference bodies and all 23 direct identifier sites. |
-| Cycle 2 F2: storage profiles/overflow | Unchanged profile checker: branch and current-main baseline both exit 1 with exactly the same 41 existing errors. All 9 mutations (delete, 16385-byte limit, derived placement for each of three profiles) are detected. Registry schema remains valid. |
+| Cycle 1 F1: reader-only writers | Append/publish/retry/prepared-source and incoming-caller policy mutations still refuse, including all successful referenced/restored/cutoff-drain cases. |
+| Cycle 1 F2: deferred originals | All six source/restore deferral probes through complete CLIs refuse. Missing/substituted receipts, commitments, source inventory and restore admission still refuse. |
+| Cycle 1 F3: full oracles | Terminal conflicts, completed resume, cutoff fences, withdrawal, incomplete rebuild/replacement and forbidden reader effects still refuse. Failure-exit probes pass. |
+| Cycle 1 F4/F5: Wizard provenance and false holds | Existing intake and all canonical seeds remain supported. Actual child/request/seed/context/open-predecessor mutations still refuse. Artifact audit rejects false action-existence stops, retired-owner conflicts and broadened/reintroduced questions. |
+| Cycle 2 F1: trailing-LF hashes | 36 exact hash/oversized-source recipes replay on append/publish/retry. Matched malformed owner mirrors still refuse. All 29 identifier sites are guarded. |
+| Cycle 2 F2: source profiles and overflow | Registry schema passes. Unchanged checker has exactly the same 41 errors as current origin/main; all 9 delete/over-limit/wrong-file profile mutants are detected. Original oversized sources remain refused at 23,760 / 26,927 / 30,143 / 30,157 / 24,124 / 24,548 bytes. |
+| Cycle 3 F1: caller retry policy | All 12 original caller-policy counterexamples refuse; Storage-only metadata still accepts. New referenced original retries obey the same admission rule. |
+| Cycle 3 F2 / standing 9: citation and refs | Loaded-family citations remain inside its own Storage heading; wrong-heading artifact mutant refuses. All 24 dangling-ref negatives and 24 single-guard-disabled complete-CLI controls pass. |
 
-The six original oversized values remain 23760 / 26927 / 30143 / 30157 / 24124 / 24548 bytes and refuse. Prior-finding contract audit: **119/119**; cycle-two audit: **461/461**; exact cycle-two recipes: **36/36**; final independent review audit: **991/991**. Artifact audit rejects four false owner conflicts, two false intake product stops, three broadened/reintroduced owner questions, and the original loaded-family wrong-heading citation (**10/10**). All six original positives, all 686 reviewed-head scenarios, all 357 cycle-two scenarios and every native obligation are unchanged.
+Counts: cycle-one contract replay **119/119**; cycle-two mutation replay **575/575**; exact cycle-two recipes **36/36**; later independent regression replay **1,105/1,105**; exact Astra replay **183/183**; independent event-byte/transport probes **300/300**. Original positives, every prior scenario and all native obligations are preserved.
 
 ## Questions for Jared — card-ready, no answer applied
 
@@ -91,73 +85,80 @@ Current supporting evidence: `Plans/assistant-chat-design.md:3524`; `Plans/Plann
 
 ## Scope, authority and IDs
 
-The current semantic/physical/consumer bindings remain those already authored under DL-045: ACD-049/050 and ACD-571–574 for Deep Plan targeted revision; UCC-002/UCC-032, PWIZ-001/002 and PWIZ-097/098 for existing real-Project deferred Planning Wizard intake. Per-family search lineage remains `base-family-search.json` (SHA-256 `96832ddf6013b0116d2adff5ac939f365bb6928a4b2454d59435a1881d0f605a`) and `fix1-wizard-search.json` (SHA-256 `324dffe4d7426126626a8fe31fc4262d501880855d81d357a2c4441e5621180f`) in this evidence directory. No new family/consumer/projector/checkpoint/storage binding is authored this round.
+This round authors only the six missing SP-337 event-body technical bindings in the already allocated CV-590–595 units, schema companions and their static oracles. It reuses the existing event identities, source owners, producers, readers, SP-278 checkpoint and SP-337 pack machinery. No family/consumer/projector/checkpoint identifier, admission, source family or owner decision is added. The sole owner Markdown edit is Contracts_V0.md, confined to CV-590–595; regenerated shards are confined to contracts_v0, plus the aggregate plan index.
 
-Premises rechecked: DL-045 still includes all eight exact families and grants only bounded technical work. Current UCC 2.1A still normalizes the old command into the existing current intake, with actual Project/child identity. DL-076 still requires nine durable token fields and no persisted snapshot ID; SP-278 adoption is unchanged. Contracts EventRecord still excludes Storage-assigned metadata from semantic digest and independently refuses reader-only append. No older answer is used to choose retention, a blocked episode or a resolution. **Failed premise checks: none.**
+DL-045 still names all eight assigned families and permits only bounded technical bindings for existing behavior. Current ACD-049/050 + ACD-571–574 still govern targeted Deep Plan revision. UCC-002/UCC-032 + PWIZ-001/002 + PWIZ-097/098 still govern the existing real-Project intake and canonical seed kinds. DL-076's nine durable token fields/no persisted snapshot ID remain. SP-026/SP-337 remain the current canonical-byte/overflow owners; no old retention or retired CWF ruling is revived. Failed premise checks: none. Original per-family search lineage remains base-family-search.json (SHA-256 96832ddf6013b0116d2adff5ac939f365bb6928a4b2454d59435a1881d0f605a) and fix1-wizard-search.json (SHA-256 324dffe4d7426126626a8fe31fc4262d501880855d81d357a2c4441e5621180f) under the parent drafts/DCW evidence directory.
 
-**IDs used (existing): CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098. New IDs: none.**
-
-Changed paths this round: `Plans/dcw_event_contract_fixtures.json`, `scripts/pm_dcw_event_oracles.py`, new `scripts/pm_dcw_event_regressions.py`, and this report/self-grade. No canonical owner markdown, schema, registry, physical profile or generated shard/index changed. Therefore owner-document regeneration was not required; read-only shard and parsed top-level index checks pass. All 15 ignored currentness files were copied and SHA-256 matched before index validation. No generated file was hand-edited.
-
-No pm-mail, subagent, admission, exclusion, registry append, Decision Log, test-file, .gitignore, Spec Lock, auto-decisions, frozen validator, governance evidence, seal, landing lock or main push.
+**IDs used (existing): CV-590–595, SP-575–579, ACD-571–574, PWIZ-097/098. New IDs: none.** SP-026 and SP-337 are reused authorities. `wizard.blocked` and `wizard.unblocked` retain the exact held grades and questions above.
 
 ## Commands and exit codes
 
-| Command/check | Exit | Result |
+| Command/check | Exit | Final result |
 |---|---:|---|
-| `python3 scripts/pm_bundle_revision_events.py` | 0 | 1424 PASS: 179 original plus 1245 full-composition checks |
-| `python3 scripts/pm_dcw_event_regressions.py` | 0 | 419/419 across checks 1-9; six failure-exit probes; 24 dangling-ref negatives and 24 otherwise-identical guard-disabled controls |
-| `fix3-review-mutation-audit.py --before` | 1 | 967 cases: 955 expected; exactly the 12 review caller-policy acceptances reproduced |
-| `fix3-review-mutation-audit.py (after)` | 0 | 991/991; zero unexpected acceptances; all 23 identifier sites guarded; six expected exit-1 failure probes |
-| `fix3-prior-findings-audit.py` | 0 | 119/119 cycle-one F1-F4 contract mutations; six-family source/restore deferral full-CLI probes included |
-| `fix3-cycle2-mutation-audit.py` | 0 | 461/461 review-derived cycle-two cases; 23 guarded identifier sites |
-| `fix3-prior-counterexamples.py` | 0 | 36/36 exact cycle-two hash and original oversized-source recipes on append/publish/retry |
-| `fix3-storage-audit.py` | 0 | Registry schema valid; unchanged profile checker has the identical 41 baseline failures; all 9 missing/over-limit/wrong-file profile mutants detected |
-| `python3 scripts/pm-storage-recovery-contracts.py --self-test` | 0 | Parsed top-level pass, all 22 checks true |
-| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | Parsed top-level pass |
-| `python3 scripts/pm-plan-index.py validate` | 0 | Parsed top-level pass |
-| `fix3-artifact-audit.py` | 0 | 96 cells, 210 exact current-source quotes, 10 artifact mutants refused; all original positives/scenarios/native obligations preserved |
-| `git diff --check` | 0 | No whitespace errors |
+| python3 scripts/pm_bundle_revision_events.py | 0 | 1,826 PASS; 1,647 full composition |
+| python3 scripts/pm_dcw_event_regressions.py --output <evidence>/standing-checks.json | 0 | 1,328 PASS; all 66 cells; 264 ablations |
+| fix4-prior-findings-audit.py <worktree> | 0 | 119 PASS |
+| fix4-cycle2-mutation-audit.py <worktree> | 0 | 575 PASS |
+| fix4-prior-counterexamples.py <worktree> | 0 | 36 PASS |
+| fix4-review-mutation-audit.py <worktree> | 0 | 1,105 PASS, 29 guarded patterns, 6 correct exit-1 failure probes |
+| astra-exact-replay.py | 0 | 183 exact review-derived probes pass; forged CLI cases now correctly exit 0 |
+| independent-event-bytes.py <worktree> | 0 | 300 PASS, independent msgpack bytes, four exact reviewer boundary examples accept |
+| fix4-storage-audit.py | 0 | Registry valid, 41 identical baseline errors, 9 profile mutants caught |
+| python3 scripts/pm-storage-recovery-contracts.py --self-test | 0 | Parsed top-level pass; 22 checks true |
+| python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json | 0 | Only edited owner shard directory changes |
+| python3 scripts/pm-plan-index.py generate | 0 | Parsed top-level pass; currentness edition present |
+| python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json | 0 | Parsed top-level pass; no failures |
+| python3 scripts/pm-plan-index.py validate | 0 | Parsed top-level pass; no failures |
+| fix4-artifact-audit.py | 0 | 96 cells/current quotes, 10 artifact mutants, original fixtures and holds preserved |
+| git diff --check | 0 | No whitespace errors |
 
-The first prior-counterexample invocation raced its helper creation and exited 2 (missing helper); the rerun after creation exits 0 and its 36 results above are complete. No production/checker failure was hidden. The initial baseline mutation audit’s exit 1 is expected reproduction of the review, and each deliberate failure probe’s exit 1 is a required PASS outcome.
+The unchanged storage-profile checker itself still exits 1 for its 41 baseline errors; the comparison audit exits 0 because branch and baseline errors are identical. An intermediate index validation ran before the final CV dependency regeneration and correctly refused stale generated hashes; final generation and validation above pass. During fixture construction the checker caught byte-size-changing substitution and duplicate opened-original mirror defects; corrected builders now preserve isolated defects. No production guard was relaxed: all ablations run only in test-memory controls and restore the real rules afterward.
 
-Native authentication, redb CAS, sync/pack/index issuance, actual append/recovery/restore and OS codecs remain **NOT_RUN**. Synthetic authority inputs verify static composition only. Open integration items: the two exact Jared holds, pending retention, individual admissions and the unchanged 41 baseline storage-profile errors. No native writer/readiness activation follows.
+## Resources, cleanup and limitations
 
-## Resources and cleanup
+Entry: 104 GB root disk free, 17 GB available RAM. Latest check: 108 GB disk free, 10 GB available RAM. Both the stricter 50 GB disk and 6 GB RAM thresholds were met. The requested detached sparse worktree is /home/sittingmongoose/pm-worktrees/DCW-fix4 from /home/sittingmongoose/src/PuppetMaster. Fifteen ignored currentness files were copied from the specified shared edition and SHA-256 matched before generation. After the final report commit/push and evidence copy, remove that literal worktree path; completion records the final head, remote verification and removal.
 
-Entry: 18 GB available RAM; 148 GB root disk free. Before final report: 16 GB available RAM; 119 GB disk free. The 6 GB RAM and stricter 50 GB disk thresholds were met. Work used the requested detached sparse worktree `/home/sittingmongoose/pm-worktrees/DCW-fix3` from `/home/sittingmongoose/src/PuppetMaster`. After the final push, remove that literal worktree path; `fix3-completion.json` records the remote heads, clean state and removal. No temporary branch, server or browser was created. Temporary report/grade authoring helpers are removed; retained audit programs and outputs are pinned below.
+Two initial read-only mailbox commands ran before FIX-ROUND.md was consumed. No registration or mail send occurred; no subsequent mailbox use. No subagent, admission, registry append, Decision Log entry, test-file edit, .gitignore edit, governance reseal/lock/evidence edit, landing lock or main push occurred. No browser/server/temporary branch was created. Temporary authoring helpers are deleted. Retained audit programs/results below are the task evidence, not discarded scratch.
+
+Native authentication, pack/index durability issuance, real redb CAS, actual append/recovery/restore and OS codecs remain **NOT_RUN**. Open integration items remain the two exact owner holds, pending retention, individual admissions, native adapter proof and the unchanged 41 baseline profile errors. No native writer activation follows this self-grade.
 
 ## Retained evidence
 
-All evidence below is under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/`. Reports/self-grade are copied there after final commit. Completion is recorded separately because it names that final commit. Each retained audit path is cited by this absolute directory plus filename and SHA-256.
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/fix4/`. The report/self-grade are also copied to the parent drafts/DCW directory. Each evidence path below is that absolute directory plus filename, bound by SHA-256. Completion is recorded separately after the final head exists.
 
 | File | SHA-256 |
 |---|---|
-| `fix3-after-review-mutations.json` | `0369b4e6bcf2e2fdcfb31559f60f3c9a7e1209ce27169518252d498e61ce4ff6` |
-| `fix3-after-review-mutations.txt` | `9fd891d1a291898889742d8dbebde071bc936157a437aa90329e63112d332aed` |
-| `fix3-artifact-audit.json` | `69fc4b550f36c8f836485e4d09f0f44625033cbc55dc4e561f9ec93a03e702de` |
-| `fix3-artifact-audit.py` | `bb0b756b58f3a22a02a01caed02bd9598562ab905f878bc194e50fdc0dd66c00` |
-| `fix3-artifact-audit.txt` | `69fc4b550f36c8f836485e4d09f0f44625033cbc55dc4e561f9ec93a03e702de` |
-| `fix3-before-review-mutations.json` | `70c3af0fabec965787a9924782771ada18c797efbe7ef0379e8998ca1672c3e6` |
-| `fix3-before-review-mutations.txt` | `f8a0678c576a1be613f3bf4baa2bfd4ad9ecb92ed43755d936f806114ca62584` |
-| `fix3-check-results.json` | `6df252b5b2ad0d6c02d24fa07389dbc30a6144a03592f8cd02422432ac524f4d` |
-| `fix3-contract-check.txt` | `3aa85befaeffedd38c97bae6a4e3a659e22a8867e94437c8dfe01650818647a6` |
-| `fix3-currentness-sha256.json` | `d16f37ebaecb14d83b684c606224b84a970c34fc7864933e98e28354bf172e34` |
-| `fix3-cycle2-mutation-audit.py` | `6dfe0d3f874077a1856243a58afe622187d1767b929ed9d5acf8d2fe5e1e82f6` |
-| `fix3-cycle2-mutations.json` | `60b37098e5480f01569395f176a7c63e4cba38cfca743c997fc862c3ba60b2f7` |
-| `fix3-cycle2-mutations.txt` | `c4d492cab876ec4a1695136b1e51d310da205ef85304451c03642cfd6fd3970a` |
-| `fix3-index-validate.txt` | `ff1e96f7461d55392b3ce15dad7d0d023087c01b89db7a0aecb6e5ef00510fd2` |
-| `fix3-prior-counterexamples.json` | `0b82b6f6a7398d6f99030ba84ff94c2853f5992b12d441c4ab6587c3f1482ea7` |
-| `fix3-prior-counterexamples.py` | `bad51d98e7b966a840e0d23320a9dff13d877266b2bf5a1ab3aa31f1bd54ea51` |
-| `fix3-prior-counterexamples.txt` | `1437e4841ee8eb7af271d618bf32d508ffa2fc0e6d2dafc5165864dbcd8f6542` |
-| `fix3-prior-findings-audit.py` | `6ad3cc56833ab38fb261ed68e6cb0988a96a9738d42d5dcf03029d4f71154a1d` |
-| `fix3-prior-findings.json` | `4a7b0998968c5f61607f0c0f369ba27906315383223c15fcbb43e3099a37e378` |
-| `fix3-prior-findings.txt` | `bc40bd97bd006e18adfb8db4fd473c970e6c915aa16f6589e35162265e8dbc23` |
-| `fix3-review-mutation-audit.py` | `1064a4c377329582a9b9fcf560579404a131160a7280f5fe530c2a715be40fc2` |
-| `fix3-shard-check.txt` | `353b434b8f99c23e82801aee68941ecef36e9fc71638a6bce463523cd6b01ade` |
-| `fix3-standing-checks.json` | `686452a725213a8c6ee1bebae03889583cbdc8f21efdd9d200949d84134201b1` |
-| `fix3-standing-checks.txt` | `0120d0f29f7dd61cfc3cf5c151f4cf174418d0e6d00cc751624af005e34d3d8a` |
-| `fix3-storage-audit.py` | `7e28f667038725cfaf0980908a6cced067f225cb341cc555bb327912be6c6264` |
-| `fix3-storage-audit.txt` | `e13a391a36b9dd8a0ca8ac2b616a12607673f3a59cf9acd95d17d09cada6323a` |
-| `fix3-storage-recovery.txt` | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |
-| `fix3-storage-regression.json` | `487d6cb10ca00399265fa081f5dd0f6ecde1fdf90831e0b02851251e86e04b5a` |
+| `artifact-audit.txt` | `97bbbea3567bb94b7f1e2d2f439675d664f95f0b86d5910dabeafec24019e103` |
+| `astra-exact-replay.json` | `72386ae6abcbd7b3fbc2235d987a0fbe6913bd6dc556d7bea7613b139634a3d4` |
+| `astra-exact-replay.py` | `82077e51e750669d4691e7e9d8d9ed12d6738718d7ecdea894948dad8ad3c7b0` |
+| `astra-exact-replay.txt` | `b0fa56fc4c393f9d4a689525b7af99b8a1683d7d882442293b2463061d1c527d` |
+| `check-results.json` | `06aa2600299cdee8e68407b49fe604caca475f98712a98ac1d6162388993bb87` |
+| `contract-check.txt` | `b0317c57ef500a07c492e9679f9d5922e00f11a306fc7f31f1421f412dc420b0` |
+| `currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `cycle2-mutations.txt` | `3f3c611995d70615a1e57dc4747258d1f4c24ea171e5dc4c95cfe85162863616` |
+| `fix4-after-review-mutations.json` | `f17b32657096aac9a287ce73452430569e0ed4323a0a8bbed4b656265068f1bb` |
+| `fix4-artifact-audit.json` | `97bbbea3567bb94b7f1e2d2f439675d664f95f0b86d5910dabeafec24019e103` |
+| `fix4-artifact-audit.py` | `9236a582e6f26a1e48c022010c0acee0563dece0dd97517c5e89f7826939dfdf` |
+| `fix4-cycle2-mutation-audit.py` | `22fd12eafada2ac42f7e173fe3a606e85481d568424bf240088ed4950ba4a2c8` |
+| `fix4-cycle2-mutations.json` | `3c8648844379af913333db37dc61a32de045ca6da54eb29959b4b6ef03aa5496` |
+| `fix4-prior-counterexamples.json` | `0b82b6f6a7398d6f99030ba84ff94c2853f5992b12d441c4ab6587c3f1482ea7` |
+| `fix4-prior-counterexamples.py` | `4d9fa467d1a7de9296fcf33b30eca811f674bb91563ac3135af4b53a36c5061a` |
+| `fix4-prior-findings-audit.py` | `6b896931e14e925036f0eab1bbe6b3a28968efe51c1b791a909c12d9dc4f0e68` |
+| `fix4-prior-findings.json` | `4a7b0998968c5f61607f0c0f369ba27906315383223c15fcbb43e3099a37e378` |
+| `fix4-review-mutation-audit.py` | `f272175542f1ba9f60cbd0abf38786c5cfa13b4e4d710eaa1968abc6c46decc5` |
+| `fix4-storage-audit.py` | `72c2c8b9c2ff9be791bafb90b1aa2ea4df73ac385f1f22aa3b845ce2adc62819` |
+| `fix4-storage-regression.json` | `487d6cb10ca00399265fa081f5dd0f6ecde1fdf90831e0b02851251e86e04b5a` |
+| `independent-event-bytes.json` | `27e9aada11c782d9b96605746b4a6e49426e99bdf9c8e4d61f7be9781edec3f4` |
+| `independent-event-bytes.py` | `605bc9dae321fefbc732b44373c0bc9a0567d192b75a4a28ec3ca216100ac0e5` |
+| `independent-event-bytes.txt` | `326b5bfdddb6a150e8ae2b175bb2be4ae736b61d3a72411ab707790e41b9daf0` |
+| `index-generate.json` | `8c19d0ba0273f8f8ed4ffc41f956ffb1106e200c74df40bd605c234409c3aa9c` |
+| `index-validate.json` | `894f88e691192486778623f2138a54c17d0dec029cffdf63dffb3d6e9789528f` |
+| `prior-counterexamples.txt` | `1437e4841ee8eb7af271d618bf32d508ffa2fc0e6d2dafc5165864dbcd8f6542` |
+| `prior-findings.txt` | `bc40bd97bd006e18adfb8db4fd473c970e6c915aa16f6589e35162265e8dbc23` |
+| `review-mutations.txt` | `d09bd9acf519f65915842bfe0ad3ccfdf703c05354a07bcf9528b04f93b33805` |
+| `shard-check.json` | `353b434b8f99c23e82801aee68941ecef36e9fc71638a6bce463523cd6b01ade` |
+| `shard-generate.json` | `8c69184b47a3633087138322660fd620b900339e49e603fbc29230e5ade7a015` |
+| `standing-checks.json` | `aa4d761f695b3d96aa162c229d15ec8c0449531507a808810bb5eb485b4a1bbd` |
+| `standing-checks.txt` | `d5d29483a4e78ac6ce917cb1edf9c296a060a3cac2fb7f5152d5e6ab5ea7beec` |
+| `storage-audit.txt` | `e13a391a36b9dd8a0ca8ac2b616a12607673f3a59cf9acd95d17d09cada6323a` |
+| `storage-recovery.json` | `e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a` |

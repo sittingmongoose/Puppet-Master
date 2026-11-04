@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-FIX3-20261104",
+  "assessment_id": "EA-W2-DCW-FIX4-20261104",
   "assessment_kind": "worker_self_grade_after_blind_review",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "commit": "636befcbf78a8d059f0258675292f54f0a6f149b",
-    "reviewed_head": "9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-    "read_method": "Current exact-family owner/schema/fixture/checker evidence at the implementation commit. Final follow-up changes only report/self-grade."
+    "commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+    "reviewed_head": "3f91eece872b0c2266172c9204e842e9e66ecc21",
+    "read_method": "Current exact-family owner/schema/fixture/checker evidence at the round-four implementation commit; report/self-grade follow-up changes no implementation. All eleven standing checks run per prepared family and earlier mutation recipes are replayed."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -72,11 +72,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -99,16 +99,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
+          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -130,14 +130,21 @@
               "line_start": 29941,
               "line_end": 29942,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24516,
+              "line_end": 24516,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size."
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -157,14 +164,21 @@
               "line_start": 56,
               "line_end": 63,
               "quote": "\"const\": \"pm.event_payload.bundle.revision_requested.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"bundle.revision_requested\"\n    "
+            },
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+              "unit": "bundle.revision_requested",
+              "line_start": 116,
+              "line_end": 126,
+              "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -187,11 +201,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -214,11 +228,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -234,11 +248,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -269,17 +283,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 353,
-              "line_end": 353,
+              "line_start": 394,
+              "line_end": 394,
               "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -295,11 +309,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -322,16 +336,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact writer cutoff, drain/fence, reader withdrawal, unsupported-version refusal and authenticated complete replacement rebuild are explicit.",
+          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -346,62 +360,90 @@
               "line_start": 29530,
               "line_end": 29532,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_requested",
+              "line_start": 471,
+              "line_end": 473,
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker and all nine per-family standing checks pass, including caller retry policy admission before semantic dedupe, dangling schema references, and nonzero failure exits. Native remains NOT_RUN.",
+          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 342,
-              "line_end": 342,
+              "line_start": 383,
+              "line_end": 383,
               "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 513,
-              "line_end": 513,
+              "line_start": 569,
+              "line_end": 569,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 402,
-              "line_end": 402,
+              "line_start": 450,
+              "line_end": 450,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 545,
+              "line_end": 545,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 127,
-              "line_end": 127,
+              "line_start": 148,
+              "line_end": 148,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_requested",
+              "line_start": 4417,
+              "line_end": 4423,
+              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_requested",
+              "line_start": 4716,
+              "line_end": 4723,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_requested",
+              "line_start": 5001,
+              "line_end": 5006,
+              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Cycle-three F3 is fixed: explicit reader-only caller retries refuse for inline and SP-337 sources on every authored successful retry path; Storage metadata remains outside the digest."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "remaining_gaps": [
@@ -413,7 +455,26 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
+      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "review_round_4": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "F1_commit": "9728165bc635d0c0383dd621075f686fb230dc78",
+        "F2_commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+        "standing_checks": {
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        }
+      }
     },
     {
       "event_type": "bundle.revision_started",
@@ -460,11 +521,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -481,28 +542,28 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24551,
-              "line_end": 24552,
+              "line_start": 24555,
+              "line_end": 24556,
               "quote": "bundle.revision_started` has payload schema Plans/event_payloads/bundle_revision/revision_started.schema.json,\n  schema_id pm.event_payload.bundle.revision_started.v1, schema_version 1."
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
+          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24562,
-              "line_end": 24565,
+              "line_start": 24566,
+              "line_end": 24569,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,threa"
             },
             {
@@ -518,14 +579,21 @@
               "line_start": 29941,
               "line_end": 29942,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24593,
+              "line_end": 24593,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. A"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -545,14 +613,21 @@
               "line_start": 56,
               "line_end": 64,
               "quote": "\"const\": \"pm.event_payload.bundle.revision_started.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"bundle.revision_started\"\n    },\n "
+            },
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
+              "unit": "bundle.revision_started",
+              "line_start": 116,
+              "line_end": 126,
+              "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -562,24 +637,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24565,
-              "line_end": 24566,
+              "line_start": 24569,
+              "line_end": 24570,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n  "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24559,
-              "line_end": 24560,
+              "line_start": 24563,
+              "line_end": 24564,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -589,24 +664,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24562,
-              "line_end": 24565,
+              "line_start": 24566,
+              "line_end": 24569,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,threa"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24579,
-              "line_end": 24581,
+              "line_start": 24583,
+              "line_end": 24585,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -622,11 +697,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -657,17 +732,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 353,
-              "line_end": 353,
+              "line_start": 394,
+              "line_end": 394,
               "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -683,11 +758,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -710,16 +785,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact writer cutoff, drain/fence, reader withdrawal, unsupported-version refusal and authenticated complete replacement rebuild are explicit.",
+          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -734,62 +809,90 @@
               "line_start": 29628,
               "line_end": 29630,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_started",
+              "line_start": 471,
+              "line_end": 473,
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker and all nine per-family standing checks pass, including caller retry policy admission before semantic dedupe, dangling schema references, and nonzero failure exits. Native remains NOT_RUN.",
+          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 342,
-              "line_end": 342,
+              "line_start": 383,
+              "line_end": 383,
               "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 513,
-              "line_end": 513,
+              "line_start": 569,
+              "line_end": 569,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 402,
-              "line_end": 402,
+              "line_start": 450,
+              "line_end": 450,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 545,
+              "line_end": 545,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 127,
-              "line_end": 127,
+              "line_start": 148,
+              "line_end": 148,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_started",
+              "line_start": 4417,
+              "line_end": 4423,
+              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_started",
+              "line_start": 4716,
+              "line_end": 4723,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_started",
+              "line_start": 5001,
+              "line_end": 5006,
+              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Cycle-three F3 is fixed: explicit reader-only caller retries refuse for inline and SP-337 sources on every authored successful retry path; Storage metadata remains outside the digest."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "remaining_gaps": [
@@ -801,7 +904,26 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
+      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "review_round_4": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "F1_commit": "9728165bc635d0c0383dd621075f686fb230dc78",
+        "F2_commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+        "standing_checks": {
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        }
+      }
     },
     {
       "event_type": "bundle.revision_completed",
@@ -848,11 +970,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -869,28 +991,28 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24624,
-              "line_end": 24625,
+              "line_start": 24632,
+              "line_end": 24633,
               "quote": "bundle.revision_completed` has payload schema Plans/event_payloads/bundle_revision/revision_completed.schema.json,\n  schema_id pm.event_payload.bundle.revision_completed.v1, schema_vers"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
+          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24635,
-              "line_end": 24638,
+              "line_start": 24643,
+              "line_end": 24646,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thr"
             },
             {
@@ -906,14 +1028,21 @@
               "line_start": 29941,
               "line_end": 29942,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24670,
+              "line_end": 24670,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size."
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -933,14 +1062,21 @@
               "line_start": 56,
               "line_end": 63,
               "quote": "\"const\": \"pm.event_payload.bundle.revision_completed.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"bundle.revision_completed\"\n    "
+            },
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
+              "unit": "bundle.revision_completed",
+              "line_start": 116,
+              "line_end": 126,
+              "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -950,24 +1086,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24638,
-              "line_end": 24639,
+              "line_start": 24646,
+              "line_end": 24647,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24632,
-              "line_end": 24633,
+              "line_start": 24640,
+              "line_end": 24641,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -977,24 +1113,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24635,
-              "line_end": 24638,
+              "line_start": 24643,
+              "line_end": 24646,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thr"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24652,
-              "line_end": 24654,
+              "line_start": 24660,
+              "line_end": 24662,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1010,11 +1146,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1045,17 +1181,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 353,
-              "line_end": 353,
+              "line_start": 394,
+              "line_end": 394,
               "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1071,11 +1207,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1098,16 +1234,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact writer cutoff, drain/fence, reader withdrawal, unsupported-version refusal and authenticated complete replacement rebuild are explicit.",
+          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1122,62 +1258,90 @@
               "line_start": 29727,
               "line_end": 29729,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_completed",
+              "line_start": 471,
+              "line_end": 473,
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker and all nine per-family standing checks pass, including caller retry policy admission before semantic dedupe, dangling schema references, and nonzero failure exits. Native remains NOT_RUN.",
+          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 342,
-              "line_end": 342,
+              "line_start": 383,
+              "line_end": 383,
               "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 513,
-              "line_end": 513,
+              "line_start": 569,
+              "line_end": 569,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 402,
-              "line_end": 402,
+              "line_start": 450,
+              "line_end": 450,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 545,
+              "line_end": 545,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 127,
-              "line_end": 127,
+              "line_start": 148,
+              "line_end": 148,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_completed",
+              "line_start": 4417,
+              "line_end": 4423,
+              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_completed",
+              "line_start": 4716,
+              "line_end": 4723,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_completed",
+              "line_start": 5001,
+              "line_end": 5006,
+              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Cycle-three F3 is fixed: explicit reader-only caller retries refuse for inline and SP-337 sources on every authored successful retry path; Storage metadata remains outside the digest."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "remaining_gaps": [
@@ -1189,7 +1353,26 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
+      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "review_round_4": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "F1_commit": "9728165bc635d0c0383dd621075f686fb230dc78",
+        "F2_commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+        "standing_checks": {
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        }
+      }
     },
     {
       "event_type": "bundle.revision_interrupted",
@@ -1236,11 +1419,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1257,28 +1440,28 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24697,
-              "line_end": 24698,
+              "line_start": 24709,
+              "line_end": 24710,
               "quote": "bundle.revision_interrupted` has payload schema Plans/event_payloads/bundle_revision/revision_interrupted.schema.json,\n  schema_id pm.event_payload.bundle.revision_interrupted.v1, schem"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
+          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24708,
-              "line_end": 24711,
+              "line_start": 24720,
+              "line_end": 24723,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,t"
             },
             {
@@ -1294,14 +1477,21 @@
               "line_start": 29941,
               "line_end": 29942,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24747,
+              "line_end": 24747,
+              "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON siz"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1321,14 +1511,21 @@
               "line_start": 56,
               "line_end": 63,
               "quote": "\"const\": \"pm.event_payload.bundle.revision_interrupted.v1\"\n    },\n    \"schema_version\": {\n      \"const\": \"1.0.0\"\n    },\n    \"event_type\": {\n      \"const\": \"bundle.revision_interrupted\"\n"
+            },
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 116,
+              "line_end": 126,
+              "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1338,24 +1535,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24711,
-              "line_end": 24711,
+              "line_start": 24723,
+              "line_end": 24723,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,thread_id,bundle_id,revision_id,phase_sequence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24705,
-              "line_end": 24706,
+              "line_start": 24717,
+              "line_end": 24718,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1365,24 +1562,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24708,
-              "line_end": 24711,
+              "line_start": 24720,
+              "line_end": 24723,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,t"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24726,
-              "line_end": 24727,
+              "line_start": 24738,
+              "line_end": 24739,
               "quote": "replay_only_not_appendable; compatibility history remains passive and cannot select the writer. EventRecord\n  follows Contracts_V0.md#EventRecord and Plans/event_record.schema.json, wit"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1398,11 +1595,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1433,17 +1630,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 353,
-              "line_end": 353,
+              "line_start": 394,
+              "line_end": 394,
               "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1459,11 +1656,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1486,16 +1683,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact writer cutoff, drain/fence, reader withdrawal, unsupported-version refusal and authenticated complete replacement rebuild are explicit.",
+          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1510,62 +1707,90 @@
               "line_start": 29826,
               "line_end": 29828,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 471,
+              "line_end": 473,
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker and all nine per-family standing checks pass, including caller retry policy admission before semantic dedupe, dangling schema references, and nonzero failure exits. Native remains NOT_RUN.",
+          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 342,
-              "line_end": 342,
+              "line_start": 383,
+              "line_end": 383,
               "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 513,
-              "line_end": 513,
+              "line_start": 569,
+              "line_end": 569,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 402,
-              "line_end": 402,
+              "line_start": 450,
+              "line_end": 450,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 545,
+              "line_end": 545,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 127,
-              "line_end": 127,
+              "line_start": 148,
+              "line_end": 148,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 11650,
+              "line_end": 11656,
+              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 11949,
+              "line_end": 11956,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "bundle.revision_interrupted",
+              "line_start": 12234,
+              "line_end": 12239,
+              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Cycle-three F3 is fixed: explicit reader-only caller retries refuse for inline and SP-337 sources on every authored successful retry path; Storage metadata remains outside the digest."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "remaining_gaps": [
@@ -1577,7 +1802,26 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
+      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "review_round_4": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "F1_commit": "9728165bc635d0c0383dd621075f686fb230dc78",
+        "F2_commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+        "standing_checks": {
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        }
+      }
     },
     {
       "event_type": "wizard.blocked",
@@ -1599,11 +1843,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -1626,11 +1870,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PARTIAL",
@@ -1653,11 +1897,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -1680,11 +1924,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -1707,11 +1951,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -1734,11 +1978,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1761,11 +2005,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -1788,11 +2032,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -1815,11 +2059,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -1842,11 +2086,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -1869,11 +2113,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -1896,11 +2140,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "prepared_pass": false,
@@ -1954,11 +2198,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1975,29 +2219,29 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24833,
-              "line_end": 24840,
+              "line_start": 24853,
+              "line_end": 24860,
               "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.deferr"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
+          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24847,
-              "line_end": 24848,
-              "quote": "replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted\n  fields. Inline payload must fit the shared 16 KiB limit; ref"
+              "line_start": 24896,
+              "line_end": 24896,
+              "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON "
             },
             {
               "path": "Plans/storage-plan.md",
@@ -2012,14 +2256,21 @@
               "line_start": 30024,
               "line_end": 30024,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-595",
+              "line_start": 24896,
+              "line_end": 24896,
+              "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2046,14 +2297,21 @@
               "line_start": 97,
               "line_end": 99,
               "quote": "\"pattern\": \"^[0-9a-f]{64}$\",\n      \"minLength\": 64,\n      \"maxLength\": 64"
+            },
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_deferred_payload_loaded.schema.json",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 134,
+              "line_end": 144,
+              "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2063,24 +2321,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24851,
-              "line_end": 24852,
+              "line_start": 24871,
+              "line_end": 24872,
               "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.deferred_payload.loaded\",project_id,planning_run_id,thread_id,request_id]\n  with en"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24843,
-              "line_end": 24844,
+              "line_start": 24863,
+              "line_end": 24864,
               "quote": "scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id\n  and requested/effective account refs are null because this obser"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2090,24 +2348,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24847,
-              "line_end": 24848,
-              "quote": "replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted\n  fields. Inline payload must fit the shared 16 KiB limit; ref"
+              "line_start": 24896,
+              "line_end": 24896,
+              "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24858,
-              "line_end": 24860,
+              "line_start": 24878,
+              "line_end": 24880,
               "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe\n  the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun\n "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2123,11 +2381,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2158,17 +2416,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 353,
-              "line_end": 353,
+              "line_start": 394,
+              "line_end": 394,
               "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2184,11 +2442,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2211,16 +2469,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact writer cutoff, drain/fence, reader withdrawal, unsupported-version refusal and authenticated complete replacement rebuild are explicit.",
+          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2235,62 +2493,90 @@
               "line_start": 30034,
               "line_end": 30034,
               "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 471,
+              "line_end": 473,
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker and all nine per-family standing checks pass, including caller retry policy admission before semantic dedupe, dangling schema references, and nonzero failure exits. Native remains NOT_RUN.",
+          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 342,
-              "line_end": 342,
+              "line_start": 383,
+              "line_end": 383,
               "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 513,
-              "line_end": 513,
+              "line_start": 569,
+              "line_end": 569,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 402,
-              "line_end": 402,
+              "line_start": 450,
+              "line_end": 450,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 545,
+              "line_end": 545,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 127,
-              "line_end": 127,
+              "line_start": 148,
+              "line_end": 148,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 37133,
+              "line_end": 37139,
+              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 37432,
+              "line_end": 37439,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "wizard.deferred_payload.loaded",
+              "line_start": 37717,
+              "line_end": 37722,
+              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Cycle-three F3 is fixed: explicit reader-only caller retries refuse for inline and SP-337 sources on every authored successful retry path; Storage metadata remains outside the digest."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "remaining_gaps": [
@@ -2302,7 +2588,26 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
+      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "review_round_4": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "F1_commit": "9728165bc635d0c0383dd621075f686fb230dc78",
+        "F2_commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+        "standing_checks": {
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        }
+      }
     },
     {
       "event_type": "wizard.opened",
@@ -2348,11 +2653,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2369,29 +2674,29 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24764,
-              "line_end": 24771,
+              "line_start": 24780,
+              "line_end": 24787,
               "quote": "wizard.opened Payload And Identity\n\n```yaml\nplan_unit_id: CV-594\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.opened has the closed p"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact original source/result and SP-286/CV-339 receipt publication order now includes the SP-340 canonical profile and byte limit plus durable SP-337 payload-reference admission.",
+          "finding": "Exact SP-286 original source/receipt ordering and independently durable SP-337 event pack/index transport use actual canonical MessagePack bytes: 16,384 inline accepts, 16,385 inline refuses, verified overflow references accept. Source overflow remains independent.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24778,
-              "line_end": 24779,
-              "quote": "replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted\n  fields. Inline payload must fit the shared 16 KiB limit; ref"
+              "line_start": 24821,
+              "line_end": 24821,
+              "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,"
             },
             {
               "path": "Plans/storage-plan.md",
@@ -2406,14 +2711,21 @@
               "line_start": 30007,
               "line_end": 30007,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-594",
+              "line_start": 24821,
+              "line_end": 24821,
+              "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
-            "status": "PASS"
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2440,14 +2752,21 @@
               "line_start": 97,
               "line_end": 99,
               "quote": "\"pattern\": \"^[0-9a-f]{64}$\",\n      \"minLength\": 64,\n      \"maxLength\": 64"
+            },
+            {
+              "path": "Plans/event_payloads/planning_wizard/wizard_opened.schema.json",
+              "unit": "wizard.opened",
+              "line_start": 132,
+              "line_end": 142,
+              "quote": "\"payload_reference\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\n        \"blake3\",\n        \"byte_size\",\n        \"media_type\"\n      ],\n      \"properties\": {\n        \"blake3\": {\n     "
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2457,24 +2776,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24782,
-              "line_end": 24783,
+              "line_start": 24798,
+              "line_end": 24799,
               "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.opened\",project_id,planning_run_id,thread_id,request_id]\n  with ensure_ascii=false "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24773,
-              "line_end": 24775,
+              "line_start": 24789,
+              "line_end": 24791,
               "quote": "scope_kind=project;\n  envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective\n  account refs are null because this obs"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2484,24 +2803,24 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24778,
-              "line_end": 24779,
-              "quote": "replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted\n  fields. Inline payload must fit the shared 16 KiB limit; ref"
+              "line_start": 24821,
+              "line_end": 24821,
+              "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24789,
-              "line_end": 24790,
+              "line_start": 24805,
+              "line_end": 24806,
               "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for\n  the real Project and actual current PlanningRun intake child, after owner rout"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2517,11 +2836,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2552,17 +2871,17 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 353,
-              "line_end": 353,
+              "line_start": 394,
+              "line_end": 394,
               "quote": "require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2578,11 +2897,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2605,16 +2924,16 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact writer cutoff, drain/fence, reader withdrawal, unsupported-version refusal and authenticated complete replacement rebuild are explicit.",
+          "finding": "Retained originals remain readable independently of current writer state. Compatibility changes only replay_policy, authenticates every supplied original field, and verifies the recorded full-value commitment and first receipt. Withdrawal and forged/foreign views refuse; referenced/restored originals obey the same gates.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2629,62 +2948,90 @@
               "line_start": 30017,
               "line_end": 30017,
               "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
+            },
+            {
+              "path": "scripts/pm_dcw_event_oracles.py",
+              "unit": "wizard.opened",
+              "line_start": 471,
+              "line_end": 473,
+              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(supplied_original == original_event, 'original_full_value')\n        scenario=copy.deepcopy(scenario);scenario['event']=origin"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker and all nine per-family standing checks pass, including caller retry policy admission before semantic dedupe, dangling schema references, and nonzero failure exits. Native remains NOT_RUN.",
+          "finding": "This exact family passes all eleven standing checks, isolated negative/guard-ablation witnesses, forged compatibility views, encoded-byte boundaries, SP-337 event references, retry/read/rebuild/restore and complete-CLI failure/ref preflight mutations. Earlier finding mutations pass; native adapters remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 342,
-              "line_end": 342,
+              "line_start": 383,
+              "line_end": 383,
               "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 513,
-              "line_end": 513,
+              "line_start": 569,
+              "line_end": 569,
               "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 402,
-              "line_end": 402,
+              "line_start": 450,
+              "line_end": 450,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 492,
-              "line_end": 492,
+              "line_start": 545,
+              "line_end": 545,
               "quote": "schema_references(schema)"
             },
             {
               "path": "scripts/pm_dcw_event_regressions.py",
               "unit": "audit",
-              "line_start": 127,
-              "line_end": 127,
+              "line_start": 148,
+              "line_end": 148,
               "quote": "for kind in ('failure_exit', 'source_fragment', 'source_external', 'payload_fragment', 'payload_external'):"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "wizard.opened",
+              "line_start": 30073,
+              "line_end": 30079,
+              "quote": "\"case_id\": \"compatibility_forged_payload\",\n          \"operation\": \"compatibility_read\",\n          \"expected\": \"original_full_value\",\n          \"mutations\": [\n            {\n              \"path\": \"/event/replay_policy\",\n  "
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "wizard.opened",
+              "line_start": 30372,
+              "line_end": 30379,
+              "quote": "\"case_id\": \"event_body_16384_inline_retry\",\n          \"event_bytes\": 16384,\n          \"event_representation\": \"inline\",\n          \"operation\": \"retry\",\n          \"expected\": \"accept\"\n        },\n        {\n          \"case_"
+            },
+            {
+              "path": "Plans/dcw_event_contract_fixtures.json",
+              "unit": "wizard.opened",
+              "line_start": 30657,
+              "line_end": 30662,
+              "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n          \"operation\": \"r"
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
-          "change": "upgraded",
-          "change_reason": "Cycle-three F3 is fixed: explicit reader-only caller retries refuse for inline and SP-337 sources on every authored successful retry path; Storage metadata remains outside the digest."
+          "change": "repaired",
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "remaining_gaps": [
@@ -2696,7 +3043,26 @@
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py"
       ],
-      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission."
+      "notes": "Normative preparation only; no live writer, native execution, readiness or governance admission.",
+      "review_round_4": {
+        "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
+        "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
+        "F1_commit": "9728165bc635d0c0383dd621075f686fb230dc78",
+        "F2_commit": "1e9ca78cc51fafd184cb8e86e69fe333d54e7f0e",
+        "standing_checks": {
+          "1": "PASS",
+          "2": "PASS",
+          "3": "PASS",
+          "4": "PASS",
+          "5": "PASS",
+          "6": "PASS",
+          "7": "PASS",
+          "8": "PASS",
+          "9": "PASS",
+          "10": "PASS",
+          "11": "PASS"
+        }
+      }
     },
     {
       "event_type": "wizard.unblocked",
@@ -2718,11 +3084,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -2745,11 +3111,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "producer": {
           "status": "PARTIAL",
@@ -2772,11 +3138,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -2799,11 +3165,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -2826,11 +3192,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -2853,11 +3219,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2880,11 +3246,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2907,11 +3273,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -2934,11 +3300,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2961,11 +3327,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2988,11 +3354,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -3015,11 +3381,11 @@
             }
           ],
           "prior": {
-            "source": "reviews/DCW-sol/cycle3-regrade.json at 9dd2bebf8c4dacd8e65ae254a94df6162c86372a",
+            "source": "reviews/DCW-sol/ASTRA-regrade.json at 3f91eece872b0c2266172c9204e842e9e66ecc21",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current exact-family owner evidence and complete checker/regression executions support this grade."
+          "change_reason": "Round-four owner/companion evidence and exact-family mutation executions; membership, retention and owner holds remain unchanged."
         }
       },
       "prepared_pass": false,
@@ -3037,15 +3403,22 @@
     "stopped_for_Jared": 2,
     "admissions": 0,
     "native_execution": "NOT_RUN",
-    "full_contract_cases": 1245,
-    "total_static_cases": 1424,
-    "independent_mutations": 991,
-    "standing_checks_per_drafted_family": 9,
-    "standing_regression_cases": 419,
+    "full_contract_cases": 1647,
+    "total_static_cases": 1826,
+    "independent_mutations": 1105,
+    "standing_checks_per_drafted_family": 11,
+    "standing_regression_cases": 1328,
     "storage_profile_new_failures": 0,
     "checks_fixed_this_round": [
-      1,
-      9
-    ]
+      4,
+      10,
+      11
+    ],
+    "guard_ablation_witnesses": 264,
+    "earlier_cycle_one_cases": 119,
+    "earlier_cycle_two_cases": 575,
+    "exact_cycle_two_recipes": 36,
+    "astra_exact_cases": 183,
+    "independent_event_byte_cases": 300
   }
 }
