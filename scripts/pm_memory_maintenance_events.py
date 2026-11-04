@@ -467,6 +467,12 @@ def run_writers(fixtures, families):
                 'invalid-envelope-version', 'missing-replay-policy', 'wrong-payload-schema',
                 'wrong-envelope-project', 'wrong-envelope-correlation', 'wrong-envelope-causation',
                 'raw-project-partition', 'event-type-trailing-lf'}
+    required |= {'standing2-application-' + n for n in
+                 ('canonical-key', 'old-project-key', 'raw-server-key', 'trailing-lf-key')}
+    required |= {'standing3-other-project', 'standing3-padded-project', 'standing6-conflict-payload'}
+    required |= {'standing6-storage-' + n for n in ('sequence_id', 'observed_at_utc', 'persisted_at_utc')}
+    required |= {'standing6-conflict-' + n for n in
+                 ('actor_ref', 'occurred_at_utc', 'correlation_id', 'redaction_profile', 'producer_sequence_id')}
     for family in fixtures['writer_families']:
         event = family['event_type']; assert event in families and event not in counts
         cases = family['cases']; names = [c['name'] for c in cases]
@@ -499,6 +505,48 @@ def run_writers(fixtures, families):
     return counts
 
 
+@lru_cache(maxsize=1)
+def checkpoint_validator():
+    schema = load('Plans/event_record_index_checkpoint.schema.json')
+    return Draft202012Validator({**schema, '$ref': '#/$defs/checkpoint'}, format_checker=FormatChecker())
+
+
+def checkpoint_identity_matches(checkpoint, row, value, event):
+    """Only the adopted SP-278 storage/event join; no projector, cursor advance or read authorization."""
+    expected_id, expected_key = identity(event, row['storage_instance_id'], row['project_id'], row['operation_id'])
+    return (valid_operation(row, operation_name(event)) and envelope_validator().is_valid(value)
+            and checkpoint_validator().is_valid(checkpoint['checkpoint'])
+            and checkpoint['checkpoint']['storage_instance_id'] == row['storage_instance_id']
+            and checkpoint['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + row['storage_instance_id']
+            and value['event_type'] == event and value['event_id'] == expected_id
+            and value['idempotency_key'] == expected_key and value['scope_kind'] == 'project'
+            and value['project_id'] == row['project_id']
+            and value['payload'] == payload_from(row, event.rsplit('.', 1)[1]))
+
+
+def run_checkpoint_joins(fixtures, families):
+    # Reuse the existing generic checkpoint fixture; DMEM owns no checkpoint format or durable cursor.
+    generic = load('Plans/event_record_index_checkpoint_contract_fixtures.json')['positive']['current_read_without_old_controls']
+    counts = {}
+    for family in fixtures['checkpoint_families']:
+        event = family['event_type']; assert event in families and event not in counts
+        names = [case['name'] for case in family['cases']]
+        required = {'checkpoint-storage-positive', 'checkpoint-foreign-storage', 'checkpoint-foreign-key',
+                    'checkpoint-foreign-event-identity'}
+        assert len(names) == len(set(names)) and {event + ':' + n for n in required} <= set(names)
+        counts[event] = 0
+        for case in family['cases']:
+            context = patch({'checkpoint': generic, 'operation': family['operation'],
+                             'value': family['value']}, case.get('edits', []))
+            before = deepcopy(context)
+            result = checkpoint_identity_matches(context['checkpoint'], context['operation'], context['value'], event)
+            assert result == case['accepted'], case['name']
+            assert context == before, (case['name'], 'identity check mutated context')
+            counts[event] += 1
+    assert set(counts) == set(families)
+    return counts
+
+
 def main():
     contracts = load('Plans/memory_maintenance_contracts.json'); fixtures = load('Plans/memory_maintenance_event_fixtures.json')
     registered = {x['event_type'] for x in load('Plans/event_family_registry.json')['families']}
@@ -519,9 +567,17 @@ def main():
     assert set(counts) == set(families)
     stateful, schema_count, trace_count = run_stateful(fixtures, families)
     writers = run_writers(fixtures, families)
+    checkpoints = run_checkpoint_joins(fixtures, families)
+    identifier_names = [case['name'] for case in fixtures['identifier_cases']]
+    assert len(identifier_names) == len(set(identifier_names))
+    assert {event.replace('.', '_') + ':' + name for event in families
+            for name in ('standing4-max-inline-positive', 'standing4-oversize-rejected',
+                         'standing8-unknown-process-exit-zero', 'trailing-lf:source_revision_sha256')} <= set(identifier_names)
     for case in fixtures['identifier_cases']:
         result = validator(case['schema'], case['definition']).is_valid(case['value'])
         assert result == case['valid'], case['name']
+        if 'inline_cap' in case:
+            assert case['inline_cap'] == 16384 and result and within_value_cap(case['value']), case['name']
     values = load('Plans/storage_value_registry.json')['families']; ops = load('Plans/memory_maintenance_operation.schema.json')
     target_schemas = load('Plans/memory_maintenance_rebuild_target.schema.json')['$defs']
     own_values = [v for v in values if v['family_id'] in ['memory_' + n + '_operation' for n in OP_NAMES]
@@ -547,6 +603,7 @@ def main():
     print(json.dumps({'status': 'pass', 'families': counts, 'boundary_cases': sum(counts.values()),
                       'operation_cases': schema_count, 'stateful_traces': trace_count, 'stateful_steps': stateful,
                       'current_writer_steps': writers, 'identifier_cases': len(fixtures['identifier_cases']),
+                      'generic_checkpoint_identity_cases': checkpoints,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 
 
