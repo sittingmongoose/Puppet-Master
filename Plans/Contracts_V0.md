@@ -24467,3 +24467,979 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+
+### CV-630 — bundle.selection_forward_blocked
+
+Newly authored closed payload contract for `bundle.selection_forward_blocked` 1.0.0: `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project` selects `pm.dch_event.bundle_selection_forward_blocked.project.v1`; `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application` selects `pm.dch_event.bundle_selection_forward_blocked.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_forward_blocked`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-630
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-630 — bundle.selection_forward_blocked
+
+
+  Newly authored closed payload contract for `bundle.selection_forward_blocked` 1.0.0: `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/project`
+  selects `pm.dch_event.bundle_selection_forward_blocked.project.v1`; `Plans/dch_event_payloads/bundle_selection_forward_blocked.schema.json#/$defs/application`
+  selects `pm.dch_event.bundle_selection_forward_blocked.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_forward_blocked`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For bundle.selection_forward_blocked, freeze operation_id from the original accepted operation before its effect
+  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_forward_blocked",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-610
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- bundle.selection_forward_blocked
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-631 — bundle.selection_sent_to_chat
+
+Newly authored closed payload contract for `bundle.selection_sent_to_chat` 1.0.0: `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/project` selects `pm.dch_event.bundle_selection_sent_to_chat.project.v1`; `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/application` selects `pm.dch_event.bundle_selection_sent_to_chat.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_sent_to_chat`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-631
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-631 — bundle.selection_sent_to_chat
+
+
+  Newly authored closed payload contract for `bundle.selection_sent_to_chat` 1.0.0: `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/project`
+  selects `pm.dch_event.bundle_selection_sent_to_chat.project.v1`; `Plans/dch_event_payloads/bundle_selection_sent_to_chat.schema.json#/$defs/application`
+  selects `pm.dch_event.bundle_selection_sent_to_chat.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `bundle.selection_sent_to_chat`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For bundle.selection_sent_to_chat, freeze operation_id from the original accepted operation before its effect
+  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["bundle.selection_sent_to_chat",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-611
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- bundle.selection_sent_to_chat
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-632 — chat.message
+
+Newly authored closed payload contract for `chat.message` 1.0.0: `Plans/dch_event_payloads/chat_message.schema.json#/$defs/project` selects `pm.dch_event.chat_message.project.v1`; `Plans/dch_event_payloads/chat_message.schema.json#/$defs/application` selects `pm.dch_event.chat_message.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.message`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.message, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-632
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-632 — chat.message
+
+
+  Newly authored closed payload contract for `chat.message` 1.0.0: `Plans/dch_event_payloads/chat_message.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_message.project.v1`; `Plans/dch_event_payloads/chat_message.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_message.application.v1`. The root and both payload editions are closed; application
+  and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.message`, schema/version
+  dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline,
+  and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.message,
+  freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation,
+  retained across retries). The semantic identity tuple is ["chat.message", "1.0.0", storage_instance_id, scope,
+  computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple),
+  and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest;
+  same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable.
+  Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration;
+  readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-612
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.message
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-634 — chat.thread_created
+
+Newly authored closed payload contract for `chat.thread_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_created.project.v1`; `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_created.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_created`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-634
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-634 — chat.thread_created
+
+
+  Newly authored closed payload contract for `chat.thread_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_created.project.v1`; `Plans/dch_event_payloads/chat_thread_created.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_created.application.v1`. The root and both payload editions are closed; application
+  and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_created`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_created, freeze operation_id from the original accepted operation before its effect (fresh entropy
+  for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_created", "1.0.0",
+  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
+  = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and
+  EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version
+  or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a
+  new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-614
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_created
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-635 — chat.thread_deleted
+
+Newly authored closed payload contract for `chat.thread_deleted` 1.0.0: `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_deleted.project.v1`; `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_deleted.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_deleted`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-635
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-635 — chat.thread_deleted
+
+
+  Newly authored closed payload contract for `chat.thread_deleted` 1.0.0: `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_deleted.project.v1`; `Plans/dch_event_payloads/chat_thread_deleted.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_deleted.application.v1`. The root and both payload editions are closed; application
+  and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_deleted`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_deleted, freeze operation_id from the original accepted operation before its effect (fresh entropy
+  for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_deleted", "1.0.0",
+  storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id
+  = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and
+  EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version
+  or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a
+  new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-615
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_deleted
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-636 — chat.thread_worktree_bound
+
+Newly authored closed payload contract for `chat.thread_worktree_bound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_bound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_bound.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_bound`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-636
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-636 — chat.thread_worktree_bound
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_bound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_bound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_bound.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_bound.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_bound`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_bound, freeze operation_id from the original accepted operation before its effect (fresh
+  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_bound",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-616
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_bound
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-637 — chat.thread_worktree_create_failed
+
+Newly authored closed payload contract for `chat.thread_worktree_create_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_create_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_create_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_create_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-637
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-637 — chat.thread_worktree_create_failed
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_create_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_create_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_create_failed.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_create_failed.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_create_failed`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_create_failed, freeze operation_id from the original accepted operation before its effect
+  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_create_failed",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-617
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_create_failed
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-638 — chat.thread_worktree_merge_failed
+
+Newly authored closed payload contract for `chat.thread_worktree_merge_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merge_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-638
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-638 — chat.thread_worktree_merge_failed
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_merge_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_merge_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merge_failed.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_merge_failed.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merge_failed`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_merge_failed, freeze operation_id from the original accepted operation before its effect
+  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merge_failed",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-618
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_merge_failed
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-639 — chat.thread_worktree_merged
+
+Newly authored closed payload contract for `chat.thread_worktree_merged` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_merged.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_merged.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merged`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-639
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-639 — chat.thread_worktree_merged
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_merged` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_merged.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_merged.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_merged.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_merged`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_merged, freeze operation_id from the original accepted operation before its effect (fresh
+  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_merged",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-619
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_merged
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-640 — chat.thread_worktree_pr_created
+
+Newly authored closed payload contract for `chat.thread_worktree_pr_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pr_created.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pr_created.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_created`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-640
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-640 — chat.thread_worktree_pr_created
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_pr_created` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_pr_created.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_created.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_pr_created.application.v1`. The root and both payload editions are
+  closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_created`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_pr_created, freeze operation_id from the original accepted operation before its effect
+  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_created",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-620
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pr_created
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-641 — chat.thread_worktree_pr_failed
+
+Newly authored closed payload contract for `chat.thread_worktree_pr_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pr_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-641
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-641 — chat.thread_worktree_pr_failed
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_pr_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_pr_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pr_failed.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_pr_failed.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pr_failed`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_pr_failed, freeze operation_id from the original accepted operation before its effect
+  (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pr_failed",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-621
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pr_failed
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-642 — chat.thread_worktree_pre_merge_test_failed
+
+Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_failed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-642
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-642 — chat.thread_worktree_pre_merge_test_failed
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_failed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_failed.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_failed.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root
+  authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_failed`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_pre_merge_test_failed, freeze operation_id from the original accepted operation before
+  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_failed",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-622
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_failed
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-643 — chat.thread_worktree_pre_merge_test_passed
+
+Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_passed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-643
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-643 — chat.thread_worktree_pre_merge_test_passed
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_passed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_passed.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_passed.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root
+  authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_passed`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_pre_merge_test_passed, freeze operation_id from the original accepted operation before
+  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_passed",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-623
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_passed
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-644 — chat.thread_worktree_pre_merge_test_started
+
+Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_started`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-644
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-644 — chat.thread_worktree_pre_merge_test_started
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_pre_merge_test_started` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_pre_merge_test_started.application.v1`. The root and both payload editions
+  are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema.
+  CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id
+  equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root
+  authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_pre_merge_test_started`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_pre_merge_test_started, freeze operation_id from the original accepted operation before
+  its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_pre_merge_test_started",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-624
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_pre_merge_test_started
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-645 — chat.thread_worktree_renamed
+
+Newly authored closed payload contract for `chat.thread_worktree_renamed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_renamed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_renamed.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_renamed`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-645
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-645 — chat.thread_worktree_renamed
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_renamed` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_renamed.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_renamed.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_renamed.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_renamed`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_renamed, freeze operation_id from the original accepted operation before its effect (fresh
+  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_renamed",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-625
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_renamed
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```
+
+
+### CV-646 — chat.thread_worktree_unbound
+
+Newly authored closed payload contract for `chat.thread_worktree_unbound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/project` selects `pm.dch_event.chat_thread_worktree_unbound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/application` selects `pm.dch_event.chat_thread_worktree_unbound.application.v1`. The root and both payload editions are closed; application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2 scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id, null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_unbound`, schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor, payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins. For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound", "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8, event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires a new version/edition and governed migration; readers never rewrite original identities or payload bytes.
+
+```yaml
+plan_unit_id: CV-646
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: '### CV-646 — chat.thread_worktree_unbound
+
+
+  Newly authored closed payload contract for `chat.thread_worktree_unbound` 1.0.0: `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/project`
+  selects `pm.dch_event.chat_thread_worktree_unbound.project.v1`; `Plans/dch_event_payloads/chat_thread_worktree_unbound.schema.json#/$defs/application`
+  selects `pm.dch_event.chat_thread_worktree_unbound.application.v1`. The root and both payload editions are closed;
+  application and Project are separate schema IDs, never a nullable rewrite of the old swept schema. CV-366/WorkflowScopeV2
+  scope joins apply: envelope scope_kind equals payload scope.scope_kind; envelope project_id equals scope.project_id,
+  null only for application, with exact Server and storage instance. Freeze actual Computer/thread/root authority
+  from original input, never focus, Settings, HOME or main fallback. EventRecord event_type is `chat.thread_worktree_unbound`,
+  schema/version dispatch selects the exact edition; occurred_at_utc equals ts, actor_ref equals original actor,
+  payload inline, and thread joins the actual original source/committed record. No synthetic run/node/attempt joins.
+  For chat.thread_worktree_unbound, freeze operation_id from the original accepted operation before its effect (fresh
+  entropy for a new operation, retained across retries). The semantic identity tuple is ["chat.thread_worktree_unbound",
+  "1.0.0", storage_instance_id, scope, computer_id, thread_id, operation_id]; use RFC 8785 canonical JSON UTF-8,
+  event_id = "evt_dch_" + SHA-256(tuple), and idempotency_key = "dch:" + the same hex digest. Capture original payload
+  and EventRecord semantic digest; same identity with changed semantics is a conflict, never an overwrite. Unknown
+  version or scope is quarantined/unavailable. Earlier shape-only schemas remain unadopted. A payload change requires
+  a new version/edition and governed migration; readers never rewrite original identities or payload bytes.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on:
+- ACD-626
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- chat.thread_worktree_unbound
+- SP-286
+- SP-278
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Contracts_V0.md
+```

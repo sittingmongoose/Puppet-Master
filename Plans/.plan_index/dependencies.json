@@ -229,6 +229,7 @@
     "ATS-009",
     "ATS-010",
     "ATS-077",
+    "ATS-305",
     "BPM-008",
     "BS-001",
     "BS-002",
@@ -3105,6 +3106,22 @@
     "DL-010",
     "DL-011",
     "DL-012",
+    "ACD-610",
+    "ACD-611",
+    "ACD-612",
+    "ACD-614",
+    "ACD-615",
+    "ACD-616",
+    "ACD-617",
+    "ACD-618",
+    "ACD-619",
+    "ACD-620",
+    "ACD-621",
+    "ACD-622",
+    "ACD-623",
+    "ACD-624",
+    "ACD-625",
+    "ACD-626",
     "CV-334",
     "DL-047",
     "DL-048",
@@ -3319,6 +3336,22 @@
     "DL-015",
     "DL-013",
     "DL-016",
+    "CV-630",
+    "CV-631",
+    "CV-632",
+    "CV-634",
+    "CV-635",
+    "CV-636",
+    "CV-637",
+    "CV-638",
+    "CV-639",
+    "CV-640",
+    "CV-641",
+    "CV-642",
+    "CV-643",
+    "CV-644",
+    "CV-645",
+    "CV-646",
     "DL-084",
     "GRS-064",
     "DL-089",
@@ -6141,6 +6174,22 @@
     "SP-300",
     "SP-302",
     "SP-303",
+    "SP-610",
+    "SP-611",
+    "SP-612",
+    "SP-614",
+    "SP-615",
+    "SP-616",
+    "SP-617",
+    "SP-618",
+    "SP-619",
+    "SP-620",
+    "SP-621",
+    "SP-622",
+    "SP-623",
+    "SP-624",
+    "SP-625",
+    "SP-626",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -12256,6 +12305,86 @@
       "edge_type": "depends_on",
       "from": "ACD-511",
       "to": "ACD-510"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-610",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-611",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-612",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-614",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-615",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-616",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-617",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-618",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-619",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-620",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-621",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-622",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-623",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-624",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-625",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-626",
+      "to": "DL-045"
     },
     {
       "edge_type": "depends_on",
@@ -25931,6 +26060,86 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-630",
+      "to": "ACD-610"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-631",
+      "to": "ACD-611"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-632",
+      "to": "ACD-612"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-634",
+      "to": "ACD-614"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-635",
+      "to": "ACD-615"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-636",
+      "to": "ACD-616"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-637",
+      "to": "ACD-617"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-638",
+      "to": "ACD-618"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-639",
+      "to": "ACD-619"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-640",
+      "to": "ACD-620"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-641",
+      "to": "ACD-621"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-642",
+      "to": "ACD-622"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-643",
+      "to": "ACD-623"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-644",
+      "to": "ACD-624"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-645",
+      "to": "ACD-625"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-646",
+      "to": "ACD-626"
     },
     {
       "edge_type": "depends_on",
@@ -81994,6 +82203,326 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-610",
+      "to": "ACD-610"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-610",
+      "to": "CV-630"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-610",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-610",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-611",
+      "to": "ACD-611"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-611",
+      "to": "CV-631"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-611",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-611",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-612",
+      "to": "ACD-612"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-612",
+      "to": "CV-632"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-612",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-612",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-614",
+      "to": "ACD-614"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-614",
+      "to": "CV-634"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-614",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-614",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-615",
+      "to": "ACD-615"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-615",
+      "to": "CV-635"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-615",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-615",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-616",
+      "to": "ACD-616"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-616",
+      "to": "CV-636"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-616",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-616",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-617",
+      "to": "ACD-617"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-617",
+      "to": "CV-637"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-617",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-617",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-618",
+      "to": "ACD-618"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-618",
+      "to": "CV-638"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-618",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-618",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-619",
+      "to": "ACD-619"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-619",
+      "to": "CV-639"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-619",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-619",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-620",
+      "to": "ACD-620"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-620",
+      "to": "CV-640"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-620",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-620",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-621",
+      "to": "ACD-621"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-621",
+      "to": "CV-641"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-621",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-621",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-622",
+      "to": "ACD-622"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-622",
+      "to": "CV-642"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-622",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-622",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-623",
+      "to": "ACD-623"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-623",
+      "to": "CV-643"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-623",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-623",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-624",
+      "to": "ACD-624"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-624",
+      "to": "CV-644"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-624",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-624",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-625",
+      "to": "ACD-625"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-625",
+      "to": "CV-645"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-625",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-625",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-626",
+      "to": "ACD-626"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-626",
+      "to": "CV-646"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-626",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-626",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117208,7 +117737,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T07:47:51Z",
+  "generated_at_utc": "2026-11-04T17:55:04Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -126799,6 +127328,278 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-610",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-610 — bundle.selection_forward_blocked",
+        "heading_level": 3,
+        "heading_line": 29079,
+        "line": 29083,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-611",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-611 — bundle.selection_sent_to_chat",
+        "heading_level": 3,
+        "heading_line": 29137,
+        "line": 29141,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-612",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-612 — chat.message",
+        "heading_level": 3,
+        "heading_line": 29196,
+        "line": 29200,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-614",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-614 — chat.thread_created",
+        "heading_level": 3,
+        "heading_line": 29254,
+        "line": 29258,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-615",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-615 — chat.thread_deleted",
+        "heading_level": 3,
+        "heading_line": 29312,
+        "line": 29316,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-616",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-616 — chat.thread_worktree_bound",
+        "heading_level": 3,
+        "heading_line": 29371,
+        "line": 29375,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-617",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-617 — chat.thread_worktree_create_failed",
+        "heading_level": 3,
+        "heading_line": 29429,
+        "line": 29433,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-618",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-618 — chat.thread_worktree_merge_failed",
+        "heading_level": 3,
+        "heading_line": 29487,
+        "line": 29491,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-619",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-619 — chat.thread_worktree_merged",
+        "heading_level": 3,
+        "heading_line": 29545,
+        "line": 29549,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-620",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-620 — chat.thread_worktree_pr_created",
+        "heading_level": 3,
+        "heading_line": 29603,
+        "line": 29607,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-621",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-621 — chat.thread_worktree_pr_failed",
+        "heading_level": 3,
+        "heading_line": 29660,
+        "line": 29664,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-622",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
+        "heading_level": 3,
+        "heading_line": 29718,
+        "line": 29722,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-623",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
+        "heading_level": 3,
+        "heading_line": 29776,
+        "line": 29780,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-624",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
+        "heading_level": 3,
+        "heading_line": 29834,
+        "line": 29838,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-625",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-625 — chat.thread_worktree_renamed",
+        "heading_level": 3,
+        "heading_line": 29893,
+        "line": 29897,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-626",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ACD-626 — chat.thread_worktree_unbound",
+        "heading_level": 3,
+        "heading_line": 29951,
+        "line": 29955,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "azure_devops_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Azure_DevOps_Integration.md",
@@ -131319,6 +132120,23 @@
       },
       "status": "accepted",
       "unit_type": "acceptance_gate"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-305",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "ATS-305 — DCH",
+        "heading_level": 3,
+        "heading_line": 7233,
+        "line": 7237,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "bitbucket_provider_identity",
@@ -144358,6 +145176,278 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-630",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-630 — bundle.selection_forward_blocked",
+        "heading_level": 3,
+        "heading_line": 24472,
+        "line": 24476,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-631",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-631 — bundle.selection_sent_to_chat",
+        "heading_level": 3,
+        "heading_line": 24533,
+        "line": 24537,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-632",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-632 — chat.message",
+        "heading_level": 3,
+        "heading_line": 24594,
+        "line": 24598,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-634",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-634 — chat.thread_created",
+        "heading_level": 3,
+        "heading_line": 24655,
+        "line": 24659,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-635",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-635 — chat.thread_deleted",
+        "heading_level": 3,
+        "heading_line": 24716,
+        "line": 24720,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-636",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-636 — chat.thread_worktree_bound",
+        "heading_level": 3,
+        "heading_line": 24777,
+        "line": 24781,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-637",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-637 — chat.thread_worktree_create_failed",
+        "heading_level": 3,
+        "heading_line": 24838,
+        "line": 24842,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-638",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-638 — chat.thread_worktree_merge_failed",
+        "heading_level": 3,
+        "heading_line": 24899,
+        "line": 24903,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-639",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-639 — chat.thread_worktree_merged",
+        "heading_level": 3,
+        "heading_line": 24960,
+        "line": 24964,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-640",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-640 — chat.thread_worktree_pr_created",
+        "heading_level": 3,
+        "heading_line": 25021,
+        "line": 25025,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-641",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-641 — chat.thread_worktree_pr_failed",
+        "heading_level": 3,
+        "heading_line": 25082,
+        "line": 25086,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-642",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-642 — chat.thread_worktree_pre_merge_test_failed",
+        "heading_level": 3,
+        "heading_line": 25143,
+        "line": 25147,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-643",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-643 — chat.thread_worktree_pre_merge_test_passed",
+        "heading_level": 3,
+        "heading_line": 25204,
+        "line": 25208,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-644",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-644 — chat.thread_worktree_pre_merge_test_started",
+        "heading_level": 3,
+        "heading_line": 25265,
+        "line": 25269,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-645",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-645 — chat.thread_worktree_renamed",
+        "heading_level": 3,
+        "heading_line": 25326,
+        "line": 25330,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-646",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-646 — chat.thread_worktree_unbound",
+        "heading_level": 3,
+        "heading_line": 25387,
+        "line": 25391,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -228068,6 +229158,278 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-610",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-610 — bundle.selection_forward_blocked",
+        "heading_level": 3,
+        "heading_line": 29481,
+        "line": 29493,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-611",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-611 — bundle.selection_sent_to_chat",
+        "heading_level": 3,
+        "heading_line": 29617,
+        "line": 29629,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-612",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-612 — chat.message",
+        "heading_level": 3,
+        "heading_line": 29753,
+        "line": 29765,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-614",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-614 — chat.thread_created",
+        "heading_level": 3,
+        "heading_line": 29890,
+        "line": 29902,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-615",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-615 — chat.thread_deleted",
+        "heading_level": 3,
+        "heading_line": 30025,
+        "line": 30037,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-616",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-616 — chat.thread_worktree_bound",
+        "heading_level": 3,
+        "heading_line": 30162,
+        "line": 30174,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-617",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-617 — chat.thread_worktree_create_failed",
+        "heading_level": 3,
+        "heading_line": 30298,
+        "line": 30310,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-618",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-618 — chat.thread_worktree_merge_failed",
+        "heading_level": 3,
+        "heading_line": 30434,
+        "line": 30446,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-619",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-619 — chat.thread_worktree_merged",
+        "heading_level": 3,
+        "heading_line": 30570,
+        "line": 30582,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-620",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-620 — chat.thread_worktree_pr_created",
+        "heading_level": 3,
+        "heading_line": 30706,
+        "line": 30718,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-621",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-621 — chat.thread_worktree_pr_failed",
+        "heading_level": 3,
+        "heading_line": 30842,
+        "line": 30854,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-622",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-622 — chat.thread_worktree_pre_merge_test_failed",
+        "heading_level": 3,
+        "heading_line": 30978,
+        "line": 30990,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-623",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-623 — chat.thread_worktree_pre_merge_test_passed",
+        "heading_level": 3,
+        "heading_line": 31115,
+        "line": 31127,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-624",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-624 — chat.thread_worktree_pre_merge_test_started",
+        "heading_level": 3,
+        "heading_line": 31252,
+        "line": 31264,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-625",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-625 — chat.thread_worktree_renamed",
+        "heading_level": 3,
+        "heading_line": 31389,
+        "line": 31401,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "event_authority_dch",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-626",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-626 — chat.thread_worktree_unbound",
+        "heading_level": 3,
+        "heading_line": 31525,
+        "line": 31537,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -243374,10 +244736,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18844,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 22052,
+    "node_count": 7470,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

@@ -7228,3 +7228,56 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-305 — DCH
+
+DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+
+```yaml
+plan_unit_id: ATS-305
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: '### ATS-305 — DCH
+
+
+  DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application
+  fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates
+  every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict
+  and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry.
+  Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash before/after
+  body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion denial; SP-278
+  frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported edition; withdrawal/rebuild.
+  These are authored obligations, NOT_RUN. Each per-family SP unit separately binds its domain projector/checkpoint
+  with source-order, CAS/shadow publication, replay and withdrawal. Native execution remains NOT_RUN. Retention
+  acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.'
+gui_related: false
+gui_classification_reason: Owns event data and persistence contract.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
+  absent.
+validation_surfaces:
+- python3 scripts/pm_dch_events.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: event_authority_dch
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- DL-045; WAVE2 DCH 2026-11-04
+preserved_exact_tokens:
+- DCH
+- PENDING_RETENTION_DECISION
+negative_constraints:
+- No event admission or native execution proof; no retention choice.
+owner_hints:
+- Plans/Automated_Testing_System.md
+```
