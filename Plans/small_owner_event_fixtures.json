@@ -5566,7 +5566,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_format_applied"
     },
     {
       "event_type": "lsp.server.lifecycle_changed",
@@ -11175,7 +11176,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_lsp_server_lifecycle_changed"
     },
     {
       "event_type": "model.catalog_refreshed",
@@ -19152,7 +19154,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_model_catalog_refreshed"
     },
     {
       "event_type": "subagent.context_rehydrated",
@@ -27195,7 +27198,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_subagent_context_rehydrated"
     },
     {
       "event_type": "subagent.context_shrunk",
@@ -35267,7 +35271,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_subagent_context_shrunk"
     },
     {
       "event_type": "project.added",
@@ -40777,7 +40782,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_project_added"
     },
     {
       "event_type": "project.created",
@@ -46298,7 +46304,8 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_project_created"
     },
     {
       "event_type": "git.clone.completed",
@@ -51926,9 +51933,487 @@
       "oversized_inline_probe": {
         "field": "unrecognized_inline_padding",
         "padding_bytes": 16385
-      }
+      },
+      "unresolved_reference_negative": "#/$defs/missing_git_clone_completed"
     }
   ],
   "fixture_only": true,
-  "qualification": "Independent exact-family static contract matrices. Hypothetical positive admission assumes a later resolved retention decision and membership, without assigning either. Source handles, owner acceptance, protected authority and crash states are synthetic inputs, never native proof or new persisted source families. Native execution NOT_RUN."
+  "qualification": "Independent exact-family static contract matrices. Hypothetical positive admission assumes a later resolved retention decision and membership, without assigning either. Source handles, owner acceptance, protected authority and crash states are synthetic inputs, never native proof or new persisted source families. Native execution NOT_RUN.",
+  "settings_retirement_cases": [
+    {
+      "case_id": "catalog.theme_reset.expected.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_reset.effect.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_reset.test.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.updated."
+    },
+    {
+      "case_id": "catalog.theme_reset.requirement.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_reset.expected.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_reset.effect.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_reset.test.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.theme.updated."
+    },
+    {
+      "case_id": "catalog.theme_reset.requirement.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_reset",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.theme.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_accent.expected.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_accent.effect.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_accent.test.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.updated."
+    },
+    {
+      "case_id": "catalog.theme_set_accent.requirement.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_accent.expected.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_accent.effect.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_accent.test.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.theme.updated."
+    },
+    {
+      "case_id": "catalog.theme_set_accent.requirement.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_accent",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.theme.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_density.expected.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_density.effect.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_density.test.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.updated."
+    },
+    {
+      "case_id": "catalog.theme_set_density.requirement.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_density.expected.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_density.effect.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_density.test.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.theme.updated."
+    },
+    {
+      "case_id": "catalog.theme_set_density.requirement.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_density",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.theme.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_mode.expected.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_mode.effect.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_mode.test.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.updated."
+    },
+    {
+      "case_id": "catalog.theme_set_mode.requirement.settings.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.updated."
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_mode.expected.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "expected_event_types"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_mode.effect.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "effect_contract",
+        "receipt_or_event_refs"
+      ],
+      "value": [
+        "settings.theme.updated"
+      ]
+    },
+    {
+      "case_id": "catalog.theme_set_mode.test.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "test_evidence",
+        4,
+        "requirement"
+      ],
+      "value": "Assert emits settings.theme.updated."
+    },
+    {
+      "case_id": "catalog.theme_set_mode.requirement.settings.theme.updated",
+      "document": "matrix",
+      "path": [
+        "entries",
+        "catalog.theme_set_mode",
+        "event_test_requirements"
+      ],
+      "value": [
+        "Assert emits settings.theme.updated."
+      ]
+    },
+    {
+      "case_id": "guard_migration.settings.updated",
+      "document": "touch",
+      "path": [
+        "profiles",
+        57,
+        "migration_refs",
+        1
+      ],
+      "value": "Future settings.updated emission required."
+    },
+    {
+      "case_id": "guard_exclusion.settings.updated",
+      "document": "exclusions",
+      "path": [
+        "notes",
+        "cmd.settings.agent_rules.dry_method_default_guard.set"
+      ],
+      "value": "Future settings.updated emission required."
+    },
+    {
+      "case_id": "guard_migration.settings.theme.updated",
+      "document": "touch",
+      "path": [
+        "profiles",
+        57,
+        "migration_refs",
+        1
+      ],
+      "value": "Future settings.theme.updated emission required."
+    },
+    {
+      "case_id": "guard_exclusion.settings.theme.updated",
+      "document": "exclusions",
+      "path": [
+        "notes",
+        "cmd.settings.agent_rules.dry_method_default_guard.set"
+      ],
+      "value": "Future settings.theme.updated emission required."
+    },
+    {
+      "case_id": "guard_event",
+      "document": "touch",
+      "path": [
+        "profiles",
+        57,
+        "event_refs"
+      ],
+      "value": [
+        "settings.layer.changed"
+      ]
+    },
+    {
+      "case_id": "guard_handler",
+      "document": "touch",
+      "path": [
+        "profiles",
+        57,
+        "handler_status"
+      ],
+      "value": "implemented"
+    },
+    {
+      "case_id": "guard_wiring",
+      "document": "touch",
+      "path": [
+        "profiles",
+        57,
+        "wiring_status"
+      ],
+      "value": "verified"
+    },
+    {
+      "case_id": "historical_readability",
+      "document": "touch",
+      "path": [
+        "profiles",
+        57,
+        "migration_refs",
+        1
+      ],
+      "value": "Only settings.layer.changed is supported."
+    }
+  ]
 }

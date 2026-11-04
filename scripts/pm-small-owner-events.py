@@ -12,6 +12,9 @@ except ImportError:
     raise SystemExit('pm-small-owner-events requires the blake3 Python package for exact SP-337 byte oracles')
 from datetime import datetime
 from pathlib import Path
+from referencing import Registry
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
 FORMATS = FormatChecker()
 @FORMATS.checks('date-time')
@@ -26,6 +29,79 @@ def utc_datetime(value):
 
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16 * 1024
+
+
+def assert_schema_references(schema, registry=None):
+    """Resolve even unused definitions, before any positive or negative data.
+
+    A dangling reference is a broken contract, never an expected data refusal.
+    jsonschema's resolver preserves JSON Pointer/anchor and nested-id semantics.
+    """
+    Draft202012Validator.check_schema(schema)
+    validator = Draft202012Validator(schema, registry=registry if registry is not None else Registry())
+    count = 0
+
+    def walk(node, resolver):
+        nonlocal count
+        if isinstance(node, dict):
+            resolver = resolver.in_subresource(DRAFT202012.create_resource(node))
+            if '$ref' in node:
+                try:
+                    resolver.lookup(node['$ref'])
+                except Unresolvable as error:
+                    raise AssertionError(('unresolved schema reference', node['$ref'])) from error
+                count += 1
+            for child in node.values():
+                walk(child, resolver)
+        elif isinstance(node, list):
+            for child in node:
+                walk(child, resolver)
+
+    walk(schema, validator._resolver)
+    return count
+
+
+def settings_companions_consistent(documents):
+    """DL-408 changes current requirements; retained DRY history stays readable."""
+    for document in documents.values():
+        if any(name in json.dumps(document) for name in ('settings.updated', 'settings.theme.updated')):
+            return False
+    entries = documents['matrix']['entries']
+    for key in ('catalog.theme_reset', 'catalog.theme_set_accent', 'catalog.theme_set_density', 'catalog.theme_set_mode'):
+        entry = entries[key]
+        if entry['expected_event_types'] != ['settings.layer.changed'] or entry['effect_contract']['receipt_or_event_refs'] != ['settings.layer.changed']:
+            return False
+    guard = next(p for p in documents['touch']['profiles'] if p['profile_id'] == 'TCP-DRY-METHOD')
+    if guard['event_refs'] != [] or (guard['handler_status'], guard['wiring_status']) != ('absent', 'absent'):
+        return False
+    if 'owner_contract_missing' not in guard['disabled_reason_rule']:
+        return False
+    migration = ' '.join(guard['migration_refs'])
+    if not all(token in migration for token in ('settings.agent_rules.dry_method_default_guard.updated', 'read-only', 'settings.layer.changed', 'owner-adoption', 'owner_contract_missing')):
+        return False
+    command = 'cmd.settings.agent_rules.dry_method_default_guard.set'
+    if any(e['ui_command_id'] == command for e in entries.values()):
+        return False
+    exclusion = documents['exclusions']['notes'][command]
+    return all(token in exclusion for token in ('settings.layer.changed', 'owner-adoption', 'owner_contract_missing', 'disabled'))
+
+
+def run_settings_retirement(cases):
+    documents = {key: json.loads((ROOT / path).read_text()) for key, path in (
+        ('matrix', 'Plans/Wiring_Matrix.production.json'),
+        ('touch', 'Plans/touch_closure.json'),
+        ('exclusions', 'Plans/Wiring_Matrix.production.exclusions.json'),
+    )}
+    assert settings_companions_consistent(documents), 'DL-408 current Settings companions'
+    for case in cases:
+        bad = dict(documents)
+        target = bad[case['document']] = copy.copy(documents[case['document']])
+        for key in case['path'][:-1]:
+            target[key] = copy.copy(target[key])
+            target = target[key]
+        target[case['path'][-1]] = case['value']
+        assert not settings_companions_consistent(bad), case['case_id']
+    return 1 + len(cases)
 
 
 def digest(event, instance, payload):
@@ -650,14 +726,34 @@ def event_receipt_fields(row):
 def main():
     fixtures = json.loads((ROOT / 'Plans/small_owner_event_fixtures.json').read_text())
     assert len(fixtures['families']) == len(FAMILY_BINDINGS) and {r['event_type'] for r in fixtures['families']} == set(FAMILY_BINDINGS)
+    reference_count = 0
+    schema_paths = {r['schema'] for r in fixtures['families']} | {
+        'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json',
+        'Plans/event_append_receipt_contracts.schema.json',
+    }
+    schemas = {path: json.loads((ROOT / path).read_text()) for path in sorted(schema_paths)}
+    registry = Registry().with_resources((schema['$id'], DRAFT202012.create_resource(schema)) for schema in schemas.values())
+    for schema in schemas.values():
+        reference_count += assert_schema_references(schema, registry)
+    settings_count = run_settings_retirement(fixtures['settings_retirement_cases'])
     golden = json.loads((ROOT / 'Plans/event_append_receipt_full_value_fixtures.json').read_text())
     assert full_value_preimage(golden['base_original_event']).hex() == golden['commitment_preimage_hex']
     assert hashlib.sha256(full_value_preimage(golden['base_original_event'])).hexdigest() == golden['commitment_sha256']
-    count = 2
+    count = 2 + len(schema_paths) + reference_count + settings_count
     for row in fixtures['families']:
         event = row['event_type']
         schema = json.loads((ROOT / row['schema']).read_text())
         Draft202012Validator.check_schema(schema)
+        # Even an unused dangling definition must be caught for this family.
+        bad_schema = copy.deepcopy(schema)
+        bad_schema.setdefault('$defs', {})['unused_reference_negative'] = {'$ref': row['unresolved_reference_negative']}
+        try:
+            assert_schema_references(bad_schema, registry)
+        except AssertionError as error:
+            assert error.args[0] == ('unresolved schema reference', row['unresolved_reference_negative'])
+        else:
+            raise AssertionError((event, 'unresolved schema reference accepted'))
+        count += 1
         validator = Draft202012Validator(schema, format_checker=FORMATS)
         payload = row['positive_payload']
         assert validator.is_valid(payload), (event, list(validator.iter_errors(payload)))
