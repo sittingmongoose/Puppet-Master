@@ -129,6 +129,9 @@ export const tests = {
 		await f.locator('.page-tab[data-page="usage"]').click();
 		await f.waitForFunction(() => !document.documentElement.hasAttribute('data-pm-page-transition'), null, {timeout:20000});
 		await t.page.waitForTimeout(Number(t.args.setupDelay ?? 1500));
+		// Request an actual census through its owner API: a previous Usage page
+		// visit in this context may legitimately have completed its initial scan.
+		await f.evaluate(() => window.PM_HOVER_TAG_CONTROLLER.scheduleScan(document.querySelector('#panel-usage')));
 		const pending = await f.evaluate(() => window.__pmIdleRec.pending());
 		for (const [owner] of OWNERS.slice(0,3)) {
 			await t.check(`setup exercised: pending ${owner}`, pending.some(j=>ownerOf(j.stack)===owner), JSON.stringify(pending.map(j=>({id:j.id,owner:ownerOf(j.stack),stack:top(j.stack)}))));
