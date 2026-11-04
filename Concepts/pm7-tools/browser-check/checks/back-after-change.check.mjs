@@ -415,7 +415,9 @@ const INVAR = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas ||
 const RAW_RE = '(?<![\\w/.-])(?:sshp|shp|ssh|smb|nfs|mounted|pm|server|ssh-key|pairing|preflight|account|fixture):(?!//)[^\\s\'"«»,;()]+';
 const STORED_REFS = () => { const S = O55.S, out = new Set();
   const add = (v) => { if (typeof v !== 'string' || !/^[a-z][a-z0-9-]*:/.test(v) || /^[a-z]+:\/\//.test(v)) return;
-    for (let r = v, i = 0; r && i < 8; i++) { if (r.length >= 8 && (r.includes(':') || /(^|[^0-9a-f])[0-9a-f]{8}([^0-9a-f]|$)/.test(r))) out.add(r); const m = /^[^:]*:(.+)$/.exec(r); if (!m) break; r = m[1]; } };
+    /* (a suffix still raw starts with a scheme or a profile's slug, or carries its hash; what is left once they are gone
+       is the place as a person reads it: an NFS export 'media.local:/mnt/tank/share', a share's path, a volume) */
+    for (let r = v, i = 0; r && i < 8; i++) { if (r.length >= 8 && (/^[a-z][a-z0-9-]*:/.test(r) || /(^|[^0-9a-f])[0-9a-f]{8}([^0-9a-f]|$)/.test(r))) out.add(r); else break; const m = /^[^:]*:(.+)$/.exec(r); if (!m) break; r = m[1]; } };
   const walk = (v, depth = 0) => { if (depth > 6) return; if (Array.isArray(v)) v.forEach((x) => walk(x, depth + 1)); else if (v && typeof v === 'object') Object.values(v).forEach((x) => walk(x, depth + 1)); else add(v); };
   walk(S.sess.drafts.main); walk(S.sess.nas || {}); walk(S.sess.backup || {}); walk(S.sess.restore || {}); walk((S.sess.server || {}).ref || null); walk(S.sess.connect || {});
   return [...out]; };
