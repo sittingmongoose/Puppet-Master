@@ -106,5 +106,37 @@
       "type": "integer",
       "minimum": 0
     }
+  },
+  "$defs": {
+    "referenced_stub": {
+      "type": "object",
+      "maxProperties": 0,
+      "additionalProperties": false
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blake3",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "blake3": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 16385,
+          "maximum": 18446744073709551615
+        },
+        "media_type": {
+          "const": "application/vnd.puppetmaster.event.bundle-revision-completed+msgpack"
+        }
+      }
+    }
   }
 }

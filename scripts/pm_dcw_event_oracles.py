@@ -161,15 +161,54 @@ def event_identity(payload):
     return prefix + h, name + ':' + h
 
 
-def envelope(row, event, compatibility=False):
+def event_reference(row, event):
+    """A compact JSON descriptor fits the existing nullable-string envelope slot."""
+    try:
+        ref = json.loads(event['payload_ref'])
+    except (TypeError, ValueError) as exc:
+        raise Refusal('event_payload_reference_encoding') from exc
+    check_schema(row['schema'], ref, 'payload_reference')
+    require(event['payload_ref'] == json.dumps(ref, sort_keys=True, separators=(',', ':')),
+            'event_payload_reference_encoding')
+    return ref
+
+
+def event_body(row, event, authority=None):
+    """Validate the actual SP-026 bytes, or resolve a verified SP-337 body.
+
+    The supplied adapter observations are synthetic; pack/index durability and
+    original custody still need independent native evidence before admission.
+    """
+    if event['payload_ref'] is None:
+        check_schema(row['schema'], event['payload'])
+        require(len(canonical_msgpack(event['payload'])) <= 16384, 'inline_limit')
+        return event['payload']
+    check_schema(row['schema'], event['payload'], 'referenced_stub')
+    ref = event_reference(row, event)
+    payload = (authority or {}).get('event_payloads', {}).get(ref['blake3'])
+    require(payload is not None, 'event_payload_missing')
+    require(payload['readable'], 'event_payload_unavailable')
+    require(payload['durable'] and payload['index_durable'], 'event_payload_not_durable')
+    try:
+        raw = bytes.fromhex(payload['bytes_hex'])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise Refusal('event_payload_encoding') from exc
+    require(len(raw) == ref['byte_size'], 'event_payload_size')
+    require(blake3(raw).hexdigest() == ref['blake3'], 'event_payload_digest')
+    check_schema(row['schema'], payload['body'])
+    require(raw == canonical_msgpack(payload['body']), 'event_payload_encoding')
+    secret_free(payload['body'])
+    return payload['body']
+
+
+def envelope(row, event, compatibility=False, authority=None):
     check_schema('Plans/event_record.schema.json', event)
-    payload = event['payload']
-    check_schema(row['schema'], payload)
+    payload = event_body(row, event, authority)
     require(event['event_type'] == payload['event_type'] == row['event_type'], 'family')
     require(event['payload_schema_id'] == payload['schema_id'], 'dispatch')
     require((event['event_id'], event['idempotency_key']) == event_identity(payload), 'identity')
     require(event['scope_kind'] == 'project' and all(event[k] == payload[k] for k in ('project_id', 'thread_id')), 'scope')
-    require(all(event[k] is None for k in ('run_id', 'node_id', 'attempt_id', 'requested_account_ref', 'effective_account_ref', 'payload_ref')), 'runtime_scope')
+    require(all(event[k] is None for k in ('run_id', 'node_id', 'attempt_id', 'requested_account_ref', 'effective_account_ref')), 'runtime_scope')
     require(event['causation_event_id'] == event['parent_event_id'] == payload['predecessor_event_id'], 'causation')
     require(event['occurred_at_utc'] == payload['ts'], 'original_time')
     require(event['correlation_id'] == payload['revision_id' if row['event_type'].startswith('bundle.') else 'request_id'], 'correlation')
@@ -180,7 +219,6 @@ def envelope(row, event, compatibility=False):
     else:
         writer_policy(event['replay_policy'])
     require(all(v is None for v in event['migration'].values()), 'native_migration')
-    require(len(json.dumps(payload, ensure_ascii=False).encode()) <= 16384, 'inline_limit')
     def no_secret(value):
         if isinstance(value, str):
             require(not re.search(r'^(?:/|[A-Za-z]:[\\/]|file://|sk-[A-Za-z0-9]{8,}|Bearer\s)|://[^/]*@', value), 'secret_or_path')
@@ -191,6 +229,7 @@ def envelope(row, event, compatibility=False):
             for v in value:
                 no_secret(v)
     no_secret(event)
+    return payload
 
 
 def original_receipt(event, slot, authority):
@@ -220,7 +259,7 @@ def original_receipt(event, slot, authority):
 def bundle_source(row, scenario, legacy_validate, historical=False):
     source, authority, event = scenario['source'], scenario['authority'], scenario['event']
     check_schema('Plans/dcw/revision_run.schema.json', source, 'inline')
-    payload = event['payload']
+    payload = event_body(row, event, authority)
     fields = ('project_id', 'thread_id', 'bundle_id', 'revision_id', 'annotation_ids',
               'requested_revision_capability', 'effective_revision_capability', 'permission_snapshot_id')
     require(all(source[k] == payload[k] for k in fields), 'source_identity')
@@ -233,9 +272,9 @@ def bundle_source(row, scenario, legacy_validate, historical=False):
     previous = None
     settled = set()
     for slot in source['phases']:
-        e = slot['prepared_event'];p = e['payload'];name = e['event_type']
+        e = slot['prepared_event'];name = e['event_type']
         phase_row = dict(row, event_type=name, phase=name.split('_')[-1], schema='Plans/event_payloads/bundle_revision/revision_' + name.split('_')[-1] + '.schema.json')
-        envelope(phase_row, e)
+        p = envelope(phase_row, e, authority=authority)
         if name in ('bundle.revision_completed','bundle.revision_interrupted'):
             require(p['predecessor_event_id'] not in settled, 'exclusive_terminal')
         try:
@@ -276,8 +315,8 @@ def wizard_source(row, scenario):
     check_schema(row['source_schema'], source, 'inline')
     # EventRecord leaves payload dispatch to its exact family schema, including
     # the frozen stored copy; equality alone does not validate its hash shape.
-    check_schema(row['schema'], source['prepared_event']['payload'])
-    p=event['payload'];req=source['request'];child=source['child'];seed=source['seed'];result=source['result']
+    event_body(row, source['prepared_event'], authority)
+    p=event_body(row, event, authority);req=source['request'];child=source['child'];seed=source['seed'];result=source['result']
     require(scenario['source_key'] == [row['source_family'] + '.v1', p['project_id'], p['planning_run_id'], p['request_id']], 'source_key')
     require(source['source_ref'] == p['source_ref'] == row['source_family'] + ':' + event['idempotency_key'].split(':')[-1], 'source_ref')
     for key in ('project_id', 'planning_run_id', 'named_plan_id', 'thread_group_id', 'thread_id'):
@@ -302,8 +341,10 @@ def wizard_source(row, scenario):
         require(result['status'] == 'seed_loaded', 'load_boundary')
         opened = authority['events'].get(p['predecessor_event_id'])
         require(opened is not None and opened['event_type'] == 'wizard.opened', 'opened_original')
+        opened_row = dict(row, event_type='wizard.opened', schema='Plans/event_payloads/planning_wizard/wizard_opened.schema.json')
+        opened_payload = envelope(opened_row, opened, authority=authority)
         for key in ('project_id','planning_run_id','named_plan_id','thread_group_id','thread_id','request_id','seed_ref','seed_kind','seed_version','seed_sha256','project_context_snapshot_ref','project_context_snapshot_hash'):
-            require(opened['payload'][key] == p[key], 'opened_join')
+            require(opened_payload[key] == p[key], 'opened_join')
         original_receipt(opened, authority['opened_source'], authority)
     require(source['prepared_event'] == event, 'latest_source_event')
     return source
@@ -361,8 +402,8 @@ def source_storage(row, scenario):
 def verify(row, scenario, operation, legacy_validate):
     event=scenario['event'];authority=scenario['authority'];control=scenario['control']
     if operation == 'compatibility_append':
-        envelope(row,event)  # Explicit replay_only_not_appendable regression.
-    envelope(row,event, compatibility=operation=='compatibility_read')
+        envelope(row,event, authority=authority)  # Explicit replay_only_not_appendable regression.
+    payload = envelope(row,event, compatibility=operation=='compatibility_read', authority=authority)
     require(row['event_type'] in control['admitted_families'], 'family_not_admitted')
     require(control['selected_storage_instance_id'] == authority['storage_instance_id'] == scenario['source']['storage_instance_id'], 'storage_instance')
     require(control['selected_recovery_epoch'] == authority['recovery_epoch'], 'restore_epoch')
@@ -379,7 +420,14 @@ def verify(row, scenario, operation, legacy_validate):
             require(authority.get('restored_payloads', {}).get(ref['blake3']) ==
                     {k: ref[k] for k in ('byte_size', 'media_type')}, 'restore_payload_inventory')
         ids={slot['prepared_event']['event_id'] for slot in scenario['source']['phases']} if row['event_type'].startswith('bundle.') else {event['event_id']}
-        if row['event_type']=='wizard.deferred_payload.loaded':ids.add(event['payload']['predecessor_event_id'])
+        if row['event_type']=='wizard.deferred_payload.loaded':ids.add(payload['predecessor_event_id'])
+        for event_id in ids:
+            original = authority['events'].get(event_id)
+            if original is not None and original['payload_ref'] is not None:
+                original_row = dict(row, schema=next(r['schema'] for r in load('Plans/dcw_event_contract_fixtures.json')['families'] if r['event_type']==original['event_type']))
+                ref = event_reference(original_row, original)
+                require(authority.get('restored_event_payloads', {}).get(ref['blake3']) ==
+                        {k: ref[k] for k in ('byte_size', 'media_type')}, 'restore_event_payload_inventory')
         require(ids <= {m['event_id'] for m in admission['members']}, 'restore_members')
         for member in admission['members']:
             c=authority['custody'].get(member['event_id'])
@@ -388,10 +436,10 @@ def verify(row, scenario, operation, legacy_validate):
     if operation in ('append','publish','retry'):
         require(control['expected_value_revision'] == scenario['source']['value_revision'], 'source_CAS')
         require(control['effect_state'] != 'unknown', 'effect_unknown')
-    require(event['payload']['project_id'] in authority['readable_projects'], 'permission_or_deleted_source')
-    require(event['payload']['permission_snapshot_id'] in authority['permission_snapshots'], 'permission_or_deleted_source')
+    require(payload['project_id'] in authority['readable_projects'], 'permission_or_deleted_source')
+    require(payload['permission_snapshot_id'] in authority['permission_snapshots'], 'permission_or_deleted_source')
     if operation in ('append','publish','retry'):
-        require(event['payload']['project_id'] in authority['writable_projects'], 'permission_or_deleted_source')
+        require(payload['project_id'] in authority['writable_projects'], 'permission_or_deleted_source')
         require(not control['writer_cutoff'] or (operation != 'append' and control['pending_disposition']=='drain_original'), 'writer_cutoff')
     if operation == 'retry':
         # A caller retries semantic inputs; Storage-assigned observed/persisted
@@ -405,7 +453,7 @@ def verify(row, scenario, operation, legacy_validate):
         original_receipt(event,scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source'],authority)
     if operation in ('read','rebuild','compatibility_read'):
         require(not control['reader_withdrawn'], 'reader_withdrawn')
-        require(control['reader_schema_version'] == event['payload']['schema_version'], 'unsupported_reader')
+        require(control['reader_schema_version'] == payload['schema_version'], 'unsupported_reader')
         if operation=='rebuild':
             require(control['replacement_reader_admitted'] and control['rebuild_complete'], 'rebuild_not_current')
         index=copy.deepcopy(load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['generic'])
@@ -506,6 +554,9 @@ def run(legacy_validate):
                 base = next(c for c in row['cases'] if c['case_id'] == case['base_case'])
                 for mutation in base.get('mutations', ()):
                     patch(scenario, mutation)
+            if 'event_bytes' in case:
+                from pm_dcw_event_fixtures import event_case_fixture
+                event_case_fixture(row, scenario, case)
             if 'source_bytes' in case:
                 source_size_fixture(row, scenario, case['source_bytes'], case['source_representation'] == 'payload_reference',
                                     case.get('payload_body_mutations', ()))

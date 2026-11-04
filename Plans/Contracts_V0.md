@@ -24498,7 +24498,7 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
   replay_policy=dedupe_by_idempotency_key.
 
 
@@ -24523,11 +24523,15 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
   equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
   not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
-  equality is mandatory under SP-579.'
+  equality is mandatory under SP-579.
+
+
+  NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-requested+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord schema unchanged. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
 - ACD-571
+- SP-337
 unblocks: []
 acceptance_criteria:
 - This exact family remains unadmitted until individual admission; no sibling inference.
@@ -24571,7 +24575,7 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
   replay_policy=dedupe_by_idempotency_key.
 
 
@@ -24596,11 +24600,15 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
   equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
   not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
-  equality is mandatory under SP-579.'
+  equality is mandatory under SP-579.
+
+
+  NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-started+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord schema unchanged. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
 - ACD-572
+- SP-337
 unblocks: []
 acceptance_criteria:
 - This exact family remains unadmitted until individual admission; no sibling inference.
@@ -24644,7 +24652,7 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
   replay_policy=dedupe_by_idempotency_key.
 
 
@@ -24669,11 +24677,15 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
   equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
   not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
-  equality is mandatory under SP-579.'
+  equality is mandatory under SP-579.
+
+
+  NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-completed+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord schema unchanged. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
 - ACD-573
+- SP-337
 unblocks: []
 acceptance_criteria:
 - This exact family remains unadmitted until individual admission; no sibling inference.
@@ -24717,7 +24729,7 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   and permission_snapshot_id must resolve through their existing owners. Project scope is mandatory: EventRecord
   scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or
   focus fallback is refused. actor_ref names the authenticated review owner for request, targeted revision runner
-  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload is inline, redaction_profile=secret_refs_only,
+  otherwise. correlation_id=revision_id and causation_event_id=predecessor_event_id. payload follows the SP-337 representation below, redaction_profile=secret_refs_only,
   replay_policy=dedupe_by_idempotency_key.
 
 
@@ -24742,11 +24754,15 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   and payload_ref are null; all migration fields are null for current native writes; parent_event_id equals predecessor_event_id,
   producer_sequence_id equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner
   frozen in SP-579 source, not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields.
-  Source/result/prepared-event equality is mandatory under SP-579.'
+  Source/result/prepared-event equality is mandatory under SP-579.
+
+
+  NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.bundle-revision-interrupted+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord schema unchanged. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines event semantics and persistence, without changing presentation.
 depends_on:
 - ACD-574
+- SP-337
 unblocks: []
 acceptance_criteria:
 - This exact family remains unadmitted until individual admission; no sibling inference.
@@ -24787,9 +24803,9 @@ canonical_text: 'wizard.opened has the closed payload Plans/event_payloads/plann
   envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective
   account refs are null because this observation is not runtime execution. actor_ref is the authenticated original
   request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id; producer_sequence_id
-  is null, occurred_at_utc=ts, payload_schema_id=payload.schema_id, payload_ref=null, redaction_profile=secret_refs_only,
+  is null, occurred_at_utc=ts, payload_schema_id=decoded_payload.schema_id, redaction_profile=secret_refs_only,
   replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted
-  fields. Inline payload must fit the shared 16 KiB limit; refs never carry bodies, credentials or local paths.
+  fields. Payload representation follows the SP-337 binding below; refs never carry bodies, credentials or local paths.
 
 
   NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.opened",project_id,planning_run_id,thread_id,request_id]
@@ -24812,12 +24828,16 @@ canonical_text: 'wizard.opened has the closed payload Plans/event_payloads/plann
   without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage
   versus planning/chat content candidates. The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json,
   checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain
-  independently required; a successful static fixture never supplies native source authority.'
+  independently required; a successful static fixture never supplies native source authority.
+
+
+  NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.wizard-opened+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord schema unchanged. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
 depends_on:
 - PWIZ-097
 - CV-339
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Prepared without family admission; retention remains PENDING_RETENTION_DECISION.
@@ -24856,9 +24876,9 @@ canonical_text: 'wizard.deferred_payload.loaded has the closed payload Plans/eve
   Current scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id
   and requested/effective account refs are null because this observation is not runtime execution. actor_ref is
   the authenticated original request actor. correlation_id=request_id; causation_event_id=parent_event_id=predecessor_event_id;
-  producer_sequence_id is null, occurred_at_utc=ts, payload_schema_id=payload.schema_id, payload_ref=null, redaction_profile=secret_refs_only,
+  producer_sequence_id is null, occurred_at_utc=ts, payload_schema_id=decoded_payload.schema_id, redaction_profile=secret_refs_only,
   replay_policy=dedupe_by_idempotency_key; native migration fields are all null. Storage assigns sequence/observed/persisted
-  fields. Inline payload must fit the shared 16 KiB limit; refs never carry bodies, credentials or local paths.
+  fields. Payload representation follows the SP-337 binding below; refs never carry bodies, credentials or local paths.
 
 
   NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON ["wizard.deferred_payload.loaded",project_id,planning_run_id,thread_id,request_id]
@@ -24883,12 +24903,16 @@ canonical_text: 'wizard.deferred_payload.loaded has the closed payload Plans/eve
   without registry admission; retention_policy_ref=PENDING_RETENTION_DECISION with Case L-3 receipt/audit/source-lineage
   versus planning/chat content candidates. The complete positive/negative matrix for this exact family is Plans/dcw_event_contract_fixtures.json,
   checked by scripts/pm_bundle_revision_events.py, with native execution NOT_RUN. Original custody and restore remain
-  independently required; a successful static fixture never supplies native source authority.'
+  independently required; a successful static fixture never supplies native source authority.
+
+
+  NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JSON size. At most 16,384 bytes (including exactly 16,384) uses that closed logical body inline and payload_ref=null. A larger body cannot append inline: payload is the empty object selected by this schema''s #/$defs/referenced_stub and payload_ref is the UTF-8 compact sorted-key JSON descriptor string {"blake3":"<64 lowercase hex>","byte_size":<encoded byte count>,"media_type":"application/vnd.puppetmaster.event.wizard-deferred-payload-loaded+msgpack"}. #/$defs/payload_reference closes the descriptor; byte_size is at least 16,385, and the BLAKE3 length is exactly 64, so a trailing LF is invalid. This string representation preserves the shared EventRecord schema unchanged. It contains metadata only, never a base64 body. payload_schema_id continues to identify this family''s complete logical body, which the reader validates against the same closed payload schema after reference resolution. Verify readable original pack bytes, exact size, BLAKE3, this exact media type, canonical encoding and all original source/identity/actor/causality joins; pack bytes and their index must be durable before the referencing append or successful publication. Missing, corrupt, substituted, wrong-size/type, unreadable or undurable content refuses without append or checkpoint advancement. Source-record overflow references are independent and cannot stand in for this event reference. Freeze this representation and descriptor at original preparation; producer-semantic comparison includes the stored payload and payload_ref, excludes Storage-assigned metadata, and preserves the original full value, commitment and first receipt on retry. Read, compatibility, rebuild and restore resolve the same bytes without rerunning the owner. A compatibility view may change replay_policy only; authenticate every other supplied field against the retained original before checking its recorded full-value commitment and receipt. Historical reads recheck current access/deletion and reader withdrawal, not current writer CAS/effect eligibility. Coherent backup and admitted restore include every reachable event pack/index, exact digest/size/media-type inventory and original source/event/receipt dependencies; missing event-payload inventory fences. No truncation, product limit, retention/deletion answer or admission is added.'
 gui_related: false
 gui_classification_reason: Defines original event/source custody and read contracts, without a presentation change.
 depends_on:
 - PWIZ-098
 - CV-339
+- SP-337
 unblocks: []
 acceptance_criteria:
 - Prepared without family admission; retention remains PENDING_RETENTION_DECISION.

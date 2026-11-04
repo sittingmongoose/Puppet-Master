@@ -4649,6 +4649,362 @@
               "value": true
             }
           ]
+        },
+        {
+          "case_id": "event_body_16383_inline_append",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_publish",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_retry",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_rebuild",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_compatibility_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16384_inline_append",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_publish",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_retry",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_rebuild",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_compatibility_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_inline_append",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_publish",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_retry",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "inline_limit",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_reference_append",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_publish",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_missing",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "missing",
+          "operation": "retry",
+          "expected": "event_payload_missing"
+        },
+        {
+          "case_id": "event_pack_unreadable",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unreadable",
+          "operation": "retry",
+          "expected": "event_payload_unavailable"
+        },
+        {
+          "case_id": "event_pack_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_index_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "index_unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_size",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "size",
+          "operation": "retry",
+          "expected": "event_payload_size"
+        },
+        {
+          "case_id": "event_pack_digest",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "digest",
+          "operation": "retry",
+          "expected": "event_payload_digest"
+        },
+        {
+          "case_id": "event_pack_media",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "media",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_LF",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "LF",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_body_schema",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "body_schema",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "encoding",
+          "operation": "retry",
+          "expected": "event_payload_encoding"
+        },
+        {
+          "case_id": "event_pack_reference_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "reference_encoding",
+          "operation": "retry",
+          "expected": "event_payload_reference_encoding"
+        },
+        {
+          "case_id": "event_pack_stub",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "stub",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_substituted",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "substituted",
+          "operation": "retry",
+          "expected": "result_join"
+        },
+        {
+          "case_id": "event_pack_inventory",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "event_defect": "inventory",
+          "operation": "retry",
+          "expected": "restore_event_payload_inventory"
         }
       ]
     },
@@ -11526,6 +11882,362 @@
               "value": true
             }
           ]
+        },
+        {
+          "case_id": "event_body_16383_inline_append",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_publish",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_retry",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_rebuild",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_compatibility_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16384_inline_append",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_publish",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_retry",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_rebuild",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_compatibility_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_inline_append",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_publish",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_retry",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "inline_limit",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_reference_append",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_publish",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_missing",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "missing",
+          "operation": "retry",
+          "expected": "event_payload_missing"
+        },
+        {
+          "case_id": "event_pack_unreadable",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unreadable",
+          "operation": "retry",
+          "expected": "event_payload_unavailable"
+        },
+        {
+          "case_id": "event_pack_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_index_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "index_unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_size",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "size",
+          "operation": "retry",
+          "expected": "event_payload_size"
+        },
+        {
+          "case_id": "event_pack_digest",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "digest",
+          "operation": "retry",
+          "expected": "event_payload_digest"
+        },
+        {
+          "case_id": "event_pack_media",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "media",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_LF",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "LF",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_body_schema",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "body_schema",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "encoding",
+          "operation": "retry",
+          "expected": "event_payload_encoding"
+        },
+        {
+          "case_id": "event_pack_reference_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "reference_encoding",
+          "operation": "retry",
+          "expected": "event_payload_reference_encoding"
+        },
+        {
+          "case_id": "event_pack_stub",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "stub",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_substituted",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "substituted",
+          "operation": "retry",
+          "expected": "result_join"
+        },
+        {
+          "case_id": "event_pack_inventory",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "event_defect": "inventory",
+          "operation": "retry",
+          "expected": "restore_event_payload_inventory"
         }
       ]
     },
@@ -17241,6 +17953,362 @@
               "value": true
             }
           ]
+        },
+        {
+          "case_id": "event_body_16383_inline_append",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_publish",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_retry",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_rebuild",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_compatibility_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16384_inline_append",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_publish",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_retry",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_rebuild",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_compatibility_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_inline_append",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_publish",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_retry",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "inline_limit",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_reference_append",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_publish",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_missing",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "missing",
+          "operation": "retry",
+          "expected": "event_payload_missing"
+        },
+        {
+          "case_id": "event_pack_unreadable",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unreadable",
+          "operation": "retry",
+          "expected": "event_payload_unavailable"
+        },
+        {
+          "case_id": "event_pack_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_index_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "index_unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_size",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "size",
+          "operation": "retry",
+          "expected": "event_payload_size"
+        },
+        {
+          "case_id": "event_pack_digest",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "digest",
+          "operation": "retry",
+          "expected": "event_payload_digest"
+        },
+        {
+          "case_id": "event_pack_media",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "media",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_LF",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "LF",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_body_schema",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "body_schema",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "encoding",
+          "operation": "retry",
+          "expected": "event_payload_encoding"
+        },
+        {
+          "case_id": "event_pack_reference_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "reference_encoding",
+          "operation": "retry",
+          "expected": "event_payload_reference_encoding"
+        },
+        {
+          "case_id": "event_pack_stub",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "stub",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_substituted",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "substituted",
+          "operation": "retry",
+          "expected": "result_join"
+        },
+        {
+          "case_id": "event_pack_inventory",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "event_defect": "inventory",
+          "operation": "retry",
+          "expected": "restore_event_payload_inventory"
         }
       ]
     },
@@ -22919,6 +23987,362 @@
               "value": true
             }
           ]
+        },
+        {
+          "case_id": "event_body_16383_inline_append",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_publish",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_retry",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_rebuild",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_compatibility_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16384_inline_append",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_publish",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_retry",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_rebuild",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_compatibility_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_inline_append",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_publish",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_retry",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "inline_limit",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_reference_append",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_publish",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_missing",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "missing",
+          "operation": "retry",
+          "expected": "event_payload_missing"
+        },
+        {
+          "case_id": "event_pack_unreadable",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unreadable",
+          "operation": "retry",
+          "expected": "event_payload_unavailable"
+        },
+        {
+          "case_id": "event_pack_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_index_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "index_unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_size",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "size",
+          "operation": "retry",
+          "expected": "event_payload_size"
+        },
+        {
+          "case_id": "event_pack_digest",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "digest",
+          "operation": "retry",
+          "expected": "event_payload_digest"
+        },
+        {
+          "case_id": "event_pack_media",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "media",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_LF",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "LF",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_body_schema",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "body_schema",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "encoding",
+          "operation": "retry",
+          "expected": "event_payload_encoding"
+        },
+        {
+          "case_id": "event_pack_reference_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "reference_encoding",
+          "operation": "retry",
+          "expected": "event_payload_reference_encoding"
+        },
+        {
+          "case_id": "event_pack_stub",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "stub",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_substituted",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "substituted",
+          "operation": "retry",
+          "expected": "result_join"
+        },
+        {
+          "case_id": "event_pack_inventory",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "event_defect": "inventory",
+          "operation": "retry",
+          "expected": "restore_event_payload_inventory"
         }
       ]
     },
@@ -28881,6 +30305,362 @@
               "value": true
             }
           ]
+        },
+        {
+          "case_id": "event_body_16383_inline_append",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_publish",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_retry",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_rebuild",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_compatibility_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16384_inline_append",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_publish",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_retry",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_rebuild",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_compatibility_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_inline_append",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_publish",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_retry",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "inline_limit",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_reference_append",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_publish",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_missing",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "missing",
+          "operation": "retry",
+          "expected": "event_payload_missing"
+        },
+        {
+          "case_id": "event_pack_unreadable",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unreadable",
+          "operation": "retry",
+          "expected": "event_payload_unavailable"
+        },
+        {
+          "case_id": "event_pack_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_index_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "index_unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_size",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "size",
+          "operation": "retry",
+          "expected": "event_payload_size"
+        },
+        {
+          "case_id": "event_pack_digest",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "digest",
+          "operation": "retry",
+          "expected": "event_payload_digest"
+        },
+        {
+          "case_id": "event_pack_media",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "media",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_LF",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "LF",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_body_schema",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "body_schema",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "encoding",
+          "operation": "retry",
+          "expected": "event_payload_encoding"
+        },
+        {
+          "case_id": "event_pack_reference_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "reference_encoding",
+          "operation": "retry",
+          "expected": "event_payload_reference_encoding"
+        },
+        {
+          "case_id": "event_pack_stub",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "stub",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_substituted",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "substituted",
+          "operation": "retry",
+          "expected": "result_join"
+        },
+        {
+          "case_id": "event_pack_inventory",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "event_defect": "inventory",
+          "operation": "retry",
+          "expected": "restore_event_payload_inventory"
         }
       ]
     },
@@ -35585,6 +37365,362 @@
               "value": true
             }
           ]
+        },
+        {
+          "case_id": "event_body_16383_inline_append",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_publish",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_retry",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_rebuild",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16383_inline_compatibility_read",
+          "event_bytes": 16383,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16384_inline_append",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_publish",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_retry",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_rebuild",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16384_inline_compatibility_read",
+          "event_bytes": 16384,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_inline_append",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "append",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_publish",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "publish",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_retry",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "retry",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "read",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "rebuild",
+          "expected": "inline_limit"
+        },
+        {
+          "case_id": "event_body_16385_inline_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "inline",
+          "operation": "compatibility_read",
+          "expected": "inline_limit",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_body_16385_reference_append",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "append",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_publish",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "publish",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_body_16385_reference_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_retry",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "retry",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "read",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_rebuild",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "rebuild",
+          "expected": "accept"
+        },
+        {
+          "case_id": "event_pack_admitted_boundary_compatibility_read",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "operation": "compatibility_read",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/event/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "event_pack_missing",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "missing",
+          "operation": "retry",
+          "expected": "event_payload_missing"
+        },
+        {
+          "case_id": "event_pack_unreadable",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unreadable",
+          "operation": "retry",
+          "expected": "event_payload_unavailable"
+        },
+        {
+          "case_id": "event_pack_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_index_unsynced",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "index_unsynced",
+          "operation": "retry",
+          "expected": "event_payload_not_durable"
+        },
+        {
+          "case_id": "event_pack_size",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "size",
+          "operation": "retry",
+          "expected": "event_payload_size"
+        },
+        {
+          "case_id": "event_pack_digest",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "digest",
+          "operation": "retry",
+          "expected": "event_payload_digest"
+        },
+        {
+          "case_id": "event_pack_media",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "media",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_LF",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "LF",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_body_schema",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "body_schema",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "encoding",
+          "operation": "retry",
+          "expected": "event_payload_encoding"
+        },
+        {
+          "case_id": "event_pack_reference_encoding",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "reference_encoding",
+          "operation": "retry",
+          "expected": "event_payload_reference_encoding"
+        },
+        {
+          "case_id": "event_pack_stub",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "stub",
+          "operation": "retry",
+          "expected": "schema"
+        },
+        {
+          "case_id": "event_pack_substituted",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": false,
+          "event_defect": "substituted",
+          "operation": "retry",
+          "expected": "result_join"
+        },
+        {
+          "case_id": "event_pack_inventory",
+          "event_bytes": 16385,
+          "event_representation": "payload_reference",
+          "event_restored": true,
+          "event_defect": "inventory",
+          "operation": "retry",
+          "expected": "restore_event_payload_inventory"
         }
       ]
     }

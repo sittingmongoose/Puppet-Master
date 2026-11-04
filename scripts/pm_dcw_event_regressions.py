@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Nine standing DCW contract checks, including full-runner failure probes.
+"""Eleven standing DCW contract checks, including full-runner failure probes.
 
 Static synthetic authority only; this neither admits events nor runs native code.
 Run from any directory. Optional --output writes the per-family case evidence.
 """
 import argparse
+import ast
 import copy
+import inspect
 import json
 import subprocess
 import sys
@@ -21,6 +23,9 @@ def scenario(row, case):
         base = next(c for c in row['cases'] if c['case_id'] == case['base_case'])
         for mutation in base.get('mutations', ()):
             m.patch(value, mutation)
+    if 'event_bytes' in case:
+        from pm_dcw_event_fixtures import event_case_fixture
+        event_case_fixture(row, value, case)
     if 'source_bytes' in case:
         m.source_size_fixture(row, value, case['source_bytes'],
                               case['source_representation'] == 'payload_reference',
@@ -35,7 +40,8 @@ def probe(family, kind):
     control = kind.startswith('control_')
     if control:
         kind = kind.removeprefix('control_')
-        m.schema_references = lambda schema: None
+        if kind != 'failure_exit':
+            m.schema_references = lambda schema: None
     original_load = m.load
     rows = copy.deepcopy(original_load('Plans/dcw_event_contract_fixtures.json'))
     selected = next(r for r in rows['families'] if r['event_type'] == family)
@@ -44,8 +50,23 @@ def probe(family, kind):
             row['cases'] = [c for c in row['cases'] if row['event_type'] == family and
                             c['case_id'] == 'source_inline_16385_append']
         original_verify = m.verify
-        m.verify = lambda r, s, o, v: 'accept' if r['event_type'] == family else original_verify(r, s, o, v)
+        def accepted_invalid(r, s, o, v):
+            try:
+                return original_verify(r, s, o, v)
+            except m.Refusal as exc:
+                if r['event_type'] == family and str(exc) == 'refuse_oversized_source':
+                    return 'accept'
+                raise
+        m.verify = accepted_invalid
         m.load = lambda p: rows if p == 'Plans/dcw_event_contract_fixtures.json' else original_load(p)
+        if control:
+            # Weaken only the result/expectation guard in the complete runner.
+            tree = ast.parse(inspect.getsource(m.run))
+            class RemoveOutcomeAssertion(ast.NodeTransformer):
+                def visit_Assert(self, node):
+                    return ast.copy_location(ast.Pass(), node) if ast.unparse(node.test) == "outcome == case['expected']" else node
+            tree = ast.fix_missing_locations(RemoveOutcomeAssertion().visit(tree))
+            exec(compile(tree, '<DCW failure-result guard ablation>', 'exec'), m.__dict__)
     else:
         # Put a dangling ref in an UNUSED definition: validating only positive
         # instances or only JSON Schema syntax would miss this counterexample.
@@ -132,6 +153,10 @@ def audit():
             rejected = child.returncode != 0 and needle in child.stderr
             if kind == 'failure_exit':
                 rejected = rejected and 'AssertionError' in child.stderr and "'accept'" in child.stderr
+                control = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--probe',
+                                          row['event_type'], 'control_' + kind],
+                                         cwd=m.ROOT, capture_output=True, text=True)
+                rejected = rejected and control.returncode == 0
             else:
                 # Removing only the new reference preflight must accept the
                 # same otherwise-valid input, proving this mutant is specific.
@@ -140,14 +165,16 @@ def audit():
                                          cwd=m.ROOT, capture_output=True, text=True)
                 rejected = rejected and control.returncode == 0
             results.append(dict(family=row['event_type'], check=check, case=kind, exit=child.returncode,
-                                reference_guard_disabled_exit=control.returncode if check == 9 else None,
+                                guard_disabled_exit=control.returncode,
                                 expected='nonzero: ' + needle,
                                 actual=child.stderr.splitlines()[-1] if child.stderr else '',
                                 passed=rejected))
+    from pm_dcw_event_standing import additional_checks
+    additional_checks(rows, results)
     summary = {row['event_type']: {str(check): {
         'cases': sum(r['family'] == row['event_type'] and r['check'] == check for r in results),
         'passed': all(r['passed'] for r in results if r['family'] == row['event_type'] and r['check'] == check)
-    } for check in range(1, 10)} for row in rows}
+    } for check in range(1, 12)} for row in rows}
     return dict(status='PASS' if all(r['passed'] for r in results) else 'FAIL',
                 native='NOT_RUN', families=summary, cases=results)
 
