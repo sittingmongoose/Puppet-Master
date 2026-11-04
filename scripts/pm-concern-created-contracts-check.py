@@ -91,8 +91,8 @@ def protocol_errors(context, original):
     return found
 
 
-def checkpoint_errors(value, schema):
-    found = shared.checkpoint_errors(value, schema)
+def checkpoint_errors(value, schema, original_context):
+    found = shared.checkpoint_errors(value, schema, original_context)
     if not found:
         expected = 'project~' + base64.urlsafe_b64encode(value['project_id'].encode()).decode().rstrip('=')
         if value['scope_partition'] != expected:
@@ -108,10 +108,11 @@ def main():
     cp_schema = load('Plans/concern_created_contracts/concern_created_checkpoint.schema.json')
     record_schema = load('Plans/concern_created_contracts/concern_record.schema.json')
     for schema in (payload_schema, op_schema, cp_schema, record_schema):
-        Draft202012Validator.check_schema(schema)
+        shared.check_schema(schema)
     original = fixture['settled_operation']
     assert not operation_errors(original, op_schema, payload_schema)
     count = 1
+    count += shared.producer_cases(fixture, 'concern.created', original['payload'])
     for schema in (payload_schema, op_schema, cp_schema, record_schema):
         count += shared.pattern_leaf_cases(schema)
     authority = {key: original['original_command'][key] for key in (
@@ -193,24 +194,25 @@ def main():
     count += shared.trailing_lf_cases(original, op_schema)
     count += shared.trailing_lf_cases(original['payload'], payload_schema)
     checkpoint = fixture['checkpoint']
-    assert not checkpoint_errors(checkpoint, cp_schema)
+    assert not checkpoint_errors(checkpoint, cp_schema, original)
+    count += shared.checkpoint_context_cases(checkpoint, cp_schema, original, checkpoint_errors)
     count += shared.trailing_lf_cases(checkpoint, cp_schema)
     for field, bad in [('scope_partition', 'fixture'), ('event_refs', ['event'] * 1000)]:
         value = copy.deepcopy(checkpoint)
         value[field] = bad
-        assert checkpoint_errors(value, cp_schema)
+        assert checkpoint_errors(value, cp_schema, original)
         count += 1
     value = copy.deepcopy(checkpoint)
     value['index_read_token']['storage_instance_id'] = 'foreign'
-    assert checkpoint_errors(value, cp_schema)
+    assert checkpoint_errors(value, cp_schema, original)
     value = copy.deepcopy(checkpoint)
     value['index_read_token']['redb_snapshot_id'] = 'forbidden'
-    assert checkpoint_errors(value, cp_schema)
+    assert checkpoint_errors(value, cp_schema, original)
     count += 2
-    count += shared.history_response_cases(checkpoint, cp_schema, 'concern.created', 'fixture')
+    count += shared.history_response_cases(checkpoint, cp_schema, 'concern.created', 'fixture', original)
     value = copy.deepcopy(checkpoint)
     value['index_read_token']['checkpoint_ref'] += 'x' * 16384
-    assert checkpoint_errors(value, cp_schema)
+    assert checkpoint_errors(value, cp_schema, original)
     count += 1
     events = [dict(sequence_id=i + 1, event_type='concern.created' if i < 1000 else 'other',
                    project_id='fixture', event_ref='event_' + str(i)) for i in range(2000)]
@@ -228,6 +230,7 @@ def main():
     registry = load('Plans/storage_value_registry.json')
     for fid, schema in [('concern_record', record_schema), ('concern_created_operation', op_schema), ('concern_created_checkpoint', cp_schema)]:
         row = next(row for row in registry['families'] if row['family_id'] == fid)
+        shared.check_schema(row['value_schema'])
         assert row['value_schema'] == {k: v for k, v in schema.items() if k != '$schema'}
         assert row['retention_policy_ref'] == ('RP-AUTHORITY-INDEFINITE' if fid == 'concern_record' else 'PENDING_RETENTION_DECISION')
         group = 'event_log' if fid.endswith('checkpoint') else ('runs_and_goals' if fid == 'concern_record' else 'coordination_and_storage')

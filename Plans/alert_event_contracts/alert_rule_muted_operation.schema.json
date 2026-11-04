@@ -360,7 +360,7 @@
     "payload_ref_array": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/non_secret_ref"
+        "$ref": "#/$defs/payload_non_secret_ref"
       },
       "maxItems": 32,
       "uniqueItems": true

@@ -42,8 +42,8 @@ def identity(value, event_type):
                                  value['app_session_id'], event_type, value['idempotency_key']])).hexdigest()
 
 
-def checkpoint_errors(value, schema):
-    found = shared.checkpoint_errors(value, schema)
+def checkpoint_errors(value, schema, original_context):
+    found = shared.checkpoint_errors(value, schema, original_context)
     if not found:
         project = value['project_id']
         expected = 'app' if project is None else 'project~' + base64.urlsafe_b64encode(project.encode()).decode().rstrip('=')
@@ -127,7 +127,7 @@ def main():
         assert event not in admitted
         fixture = load(f'Plans/panel_event_contracts/{slug}.fixtures.json')
         schema = load(family['payload_schema'])
-        Draft202012Validator.check_schema(schema)
+        shared.check_schema(schema)
         for case in fixture['writer_policy_cases']:
             assert (not shared.writer_policy_errors(case['policy'])) == case['valid']
             count += 1
@@ -135,6 +135,7 @@ def main():
             assert (not payload_errors(case['value'], schema)) == case['valid'], (event, case['name'])
             count += 1
         historical = load(f'Plans/event_payloads/{slug}.schema.json')
+        shared.check_schema(historical)
         assert not list(Draft202012Validator(historical).iter_errors(fixture['historical_v1']))
         assert payload_errors(fixture['historical_v1'], schema)
         assert list(Draft202012Validator(historical).iter_errors(fixture['payload_cases'][0]['value']))
@@ -142,9 +143,10 @@ def main():
         op_schema = load(f"Plans/panel_event_contracts/{family['operation']}.schema.json")
         cp_schema = load(f"Plans/panel_event_contracts/{family['checkpoint']}.schema.json")
         for value_schema in (op_schema, cp_schema):
-            Draft202012Validator.check_schema(value_schema)
+            shared.check_schema(value_schema)
             count += shared.pattern_leaf_cases(value_schema)
         operation = fixture['settled_operation']
+        count += shared.producer_cases(fixture, event, operation['payload'])
         assert not operation_errors(operation, op_schema, schema, event)
         count += 1
         count += shared.trailing_lf_cases(operation, op_schema)
@@ -187,18 +189,20 @@ def main():
         for key, value_schema in [('operation', op_schema), ('checkpoint', cp_schema)]:
             fid = family[key]
             row = next(row for row in registry['families'] if row['family_id'] == fid)
+            shared.check_schema(row['value_schema'])
             assert row['value_schema'] == {k: v for k, v in value_schema.items() if k != '$schema'}
             assert row['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
             assert not shared.profile_errors(registry, fid, row['storage_kind'], 'settings_and_layout' if key == 'operation' else 'event_log')
             count += 1
         checkpoint = fixture['checkpoint']
-        assert not checkpoint_errors(checkpoint, cp_schema)
+        assert not checkpoint_errors(checkpoint, cp_schema, operation)
+        count += shared.checkpoint_context_cases(checkpoint, cp_schema, operation, checkpoint_errors)
         count += shared.trailing_lf_cases(checkpoint, cp_schema)
-        count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'])
+        count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'], operation)
         for field, bad_value in [('scope_partition', 'app'), ('storage_instance_id', 'foreign')]:
             altered = copy.deepcopy(checkpoint)
             altered[field] = bad_value
-            assert checkpoint_errors(altered, cp_schema)
+            assert checkpoint_errors(altered, cp_schema, operation)
             count += 1
         for target in fixture['size_boundaries']:
             value = copy.deepcopy(checkpoint)
@@ -209,11 +213,11 @@ def main():
             elif delta:
                 value['index_read_token']['checkpoint_ref'] += 'x' * delta
             assert len(packed(value)) == target
-            assert (not checkpoint_errors(value, cp_schema)) == (target <= 16384)
+            assert (not checkpoint_errors(value, cp_schema, operation)) == (target <= 16384)
             count += 1
         bad = copy.deepcopy(checkpoint)
         bad['event_refs'] = ['event_' + str(i) + '_' + 'a' * 64 for i in range(1000)]
-        assert checkpoint_errors(bad, cp_schema)
+        assert checkpoint_errors(bad, cp_schema, operation)
         events = [dict(sequence_id=i + 1, event_type=event, project_id=payload['project_id'], event_ref='event_' + str(i))
                   for i in range(fixture['history_match_count'])]
         cursor, refs, complete = 0, [], False

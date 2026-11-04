@@ -193,5 +193,51 @@
     "withdrawn_history",
     "foreign_storage_token"
   ],
-  "history_match_count": 1000
+  "history_match_count": 1000,
+  "partition_cases": [
+    {
+      "name": "encoded_project",
+      "value": "project~Zml4dHVyZQ",
+      "valid": true
+    },
+    {
+      "name": "raw_project",
+      "value": "fixture",
+      "valid": false
+    }
+  ],
+  "semantic_digest_cases": [
+    {
+      "name": "assigned_sequence_id",
+      "envelope_changes": {
+        "sequence_id": 99
+      },
+      "payload_changes": {},
+      "same_digest": true
+    },
+    {
+      "name": "assigned_observed_at_utc",
+      "envelope_changes": {
+        "observed_at_utc": "2026-11-04T19:00:00Z"
+      },
+      "payload_changes": {},
+      "same_digest": true
+    },
+    {
+      "name": "assigned_persisted_at_utc",
+      "envelope_changes": {
+        "persisted_at_utc": "2026-11-04T20:00:00Z"
+      },
+      "payload_changes": {},
+      "same_digest": true
+    },
+    {
+      "name": "changed_semantic_payload",
+      "envelope_changes": {},
+      "payload_changes": {
+        "correlation_id": "foreign"
+      },
+      "same_digest": false
+    }
+  ]
 }

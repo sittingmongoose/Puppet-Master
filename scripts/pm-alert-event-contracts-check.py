@@ -6,6 +6,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from urllib.parse import unquote
 from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,7 +35,67 @@ def errors(payload, schema, guard):
 def packed(value):
     return _codec.canonical_messagepack_bytes(value)
 
-def checkpoint_errors(value, schema):
+def schema_ref_errors(schema):
+    """Resolve every local reference, including unused definitions and optional leaves."""
+    found = []
+    def visit(node):
+        if isinstance(node, dict):
+            if '$ref' in node:
+                ref, target = node['$ref'], schema
+                try:
+                    if ref != '#':
+                        if not ref.startswith('#/'):
+                            raise ValueError('unsupported non-local reference')
+                        for part in unquote(ref[2:]).split('/'):
+                            part = part.replace('~1', '/').replace('~0', '~')
+                            target = target[int(part)] if isinstance(target, list) else target[part]
+                    if not isinstance(target, (dict, bool)):
+                        raise ValueError('target is not a schema')
+                except (KeyError, IndexError, TypeError, ValueError):
+                    found.append('unresolved schema reference: ' + str(ref))
+            for child in node.values():
+                visit(child)
+        elif isinstance(node, list):
+            for child in node:
+                visit(child)
+    visit(schema)
+    return found
+
+def check_schema(schema):
+    Draft202012Validator.check_schema(schema)
+    assert not schema_ref_errors(schema), schema_ref_errors(schema)
+
+def operation_errors(value, schema):
+    found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
+    if len(packed(value)) > 16384:
+        found.append('operation exceeds 16384 encoded bytes')
+    return found
+
+def operation_size_cases(original, schema, cases):
+    for case in cases:
+        value = copy.deepcopy(original)
+        target = case['encoded_bytes']
+        for _ in range(4):
+            ref = value['prior_owner_state']['source_record_ref']
+            delta = target - len(packed(value))
+            value['prior_owner_state']['source_record_ref'] = ref + 'x' * delta if delta >= 0 else ref[:delta]
+        assert len(packed(value)) == target
+        # Ensure an oversized negative reaches the physical guard with a valid shape.
+        assert not list(Draft202012Validator(schema).iter_errors(value))
+        assert (not operation_errors(value, schema)) == case['valid'], case['name']
+    value = copy.deepcopy(original)
+    for key in ('prior_owner_state', 'candidate_owner_state'):
+        value[key]['source_record_ref'] = 'pmref:source:' + 'x' * 17000
+    assert not list(Draft202012Validator(schema).iter_errors(value))
+    assert operation_errors(value, schema), 'oversized owner snapshots accepted'
+    return len(cases) + 1
+
+def checkpoint_errors(value, schema, original_context):
+    """Join the synthetic checkpoint to independently supplied original-event context.
+
+    Internal token agreement alone cannot authenticate its Storage instance. Native
+    source authentication remains a separate NOT_RUN obligation.
+    """
     found = list(Draft202012Validator(schema).iter_errors(value))
     if len(packed(value)) > 16384:
         found.append('checkpoint exceeds 16384 encoded bytes')
@@ -42,7 +103,23 @@ def checkpoint_errors(value, schema):
         token = value['index_read_token']
         if not (value['storage_instance_id'] == token['storage_instance_id'] == token['source_selection']['storage_instance_id']):
             found.append('foreign Storage token')
+        for field in ('storage_instance_id', 'project_id', 'server_id', 'scope_partition'):
+            if field in value and field in original_context and value[field] != original_context[field]:
+                found.append('foreign original-event context: ' + field)
     return found
+
+def checkpoint_context_cases(value, schema, original_context, checker=checkpoint_errors):
+    count = 0
+    foreign = '00000000-0000-4000-8000-000000000002'
+    for coherent in (False, True):
+        altered = copy.deepcopy(value)
+        altered['index_read_token']['storage_instance_id'] = foreign
+        if coherent:
+            altered['storage_instance_id'] = foreign
+            altered['index_read_token']['source_selection']['storage_instance_id'] = foreign
+        assert checker(altered, schema, original_context), 'foreign checkpoint accepted'
+        count += 1
+    return count
 
 def profile_errors(registry, fid, kind, group):
     profile = registry['storage_profile']['family_profiles'].get(fid)
@@ -59,6 +136,33 @@ def writer_policy_errors(policy):
     if policy == 'projector_replay_only':
         return ['replay_only_not_appendable']
     return [] if policy == 'dedupe_by_idempotency_key' else ['unsupported current writer policy']
+
+def producer_cases(fixtures, event_type, payload):
+    """Exercise the canonical partition codec and EventRecord semantic preimage.
+
+    This is static coverage of existing owners, never an admitted EventRecord writer.
+    """
+    count = 0
+    partition = _codec.scope_partition('project', payload['project_id'])
+    for case in fixtures['partition_cases']:
+        assert (case['value'] == partition) == case['valid'], case['name']
+        count += 1
+    record = dict(event_type=event_type, scope_kind='project', project_id=payload['project_id'],
+                  thread_id=None, run_id=None, node_id=None, attempt_id=None,
+                  actor_ref=payload['actor_ref'], requested_account_ref=None, effective_account_ref=None,
+                  occurred_at_utc=payload.get('ts', payload.get('settled_at_utc')), producer_sequence_id=None,
+                  correlation_id=payload['correlation_id'], causation_event_id=None, parent_event_id=None,
+                  idempotency_key=payload['idempotency_key'], payload_schema_id=payload['schema_id'],
+                  payload=payload, payload_ref=None, redaction_profile='secret_refs_only', migration=None,
+                  sequence_id=1, observed_at_utc='2026-11-04T18:00:00Z', persisted_at_utc='2026-11-04T18:00:00Z')
+    original = _codec.event_producer_semantic_digest(record)
+    for case in fixtures['semantic_digest_cases']:
+        retry = copy.deepcopy(record)
+        retry.update(case['envelope_changes'])
+        retry['payload'].update(case['payload_changes'])
+        assert (original == _codec.event_producer_semantic_digest(retry)) == case['same_digest'], case['name']
+        count += 1
+    return count
 
 def history_page(events, event_type, project_id, after, frontier, publication_id, index_read_token):
     """Static reference oracle for bounded read-through; not native source authentication."""
@@ -136,7 +240,7 @@ def pattern_leaf_cases(schema):
     visit(schema)
     return count
 
-def history_response_cases(checkpoint, schema, event_type, project_id):
+def history_response_cases(checkpoint, schema, event_type, project_id, original_context):
     """Complete-byte boundaries with real closed checkpoint metadata; no fixed allowance."""
     large = copy.deepcopy(checkpoint)
     ref = large['index_read_token']['checkpoint_ref']
@@ -147,7 +251,7 @@ def history_response_cases(checkpoint, schema, event_type, project_id):
         if delta < 0:
             ref = ref[:delta]
             large['index_read_token']['checkpoint_ref'] = ref
-    assert len(packed(large)) == 16384 and not checkpoint_errors(large, schema)
+    assert len(packed(large)) == 16384 and not checkpoint_errors(large, schema, original_context)
     events = [dict(sequence_id=i + 1, event_type=event_type, project_id=project_id,
                    event_ref='event_' + str(i) + '_' + 'a' * 64) for i in range(64)]
     cursor, seen = 0, []
@@ -186,14 +290,18 @@ def history_response_cases(checkpoint, schema, event_type, project_id):
 
 def main():
     count = 0
+    for path in (ROOT / 'Plans/alert_event_contracts').glob('*.schema.json'):
+        check_schema(json.loads(path.read_text()))
     registry = load('Plans/event_family_registry.json')
     # Exact serialized event name cannot appear as an admitted event_type.
     admitted = {x.get('event_type') for x in registry['families']}
     values = load('Plans/storage_value_registry.json')
     for family in load('Plans/alert_event_contracts/manifest.json')['families']:
         schema = load(family['payload_schema'])
-        Draft202012Validator.check_schema(schema)
+        check_schema(schema)
         fixtures = load(f"Plans/alert_event_contracts/{family['slug']}.fixtures.json")
+        original_context = fixtures['operation_cases'][0]['value']
+        count += producer_cases(fixtures, family['event_type'], original_context['payload'])
         for case in fixtures['writer_policy_cases']:
             assert (not writer_policy_errors(case['policy'])) == case['valid']
             guard = dict(fixtures['payload_cases'][0]['guard'], replay_policy=case['policy'])
@@ -208,19 +316,22 @@ def main():
         for key in ('operation', 'checkpoint'):
             path = f"Plans/alert_event_contracts/{family[key]}.schema.json"
             value_schema = load(path)
-            Draft202012Validator.check_schema(value_schema)
+            check_schema(value_schema)
             count += pattern_leaf_cases(value_schema)
             count += trailing_lf_cases(fixtures[key + '_cases'][0]['value'], value_schema)
             for case in fixtures[key + '_cases']:
-                valid = not (checkpoint_errors(case['value'], value_schema) if key == 'checkpoint'
-                             else list(Draft202012Validator(value_schema).iter_errors(case['value'])))
+                valid = not (checkpoint_errors(case['value'], value_schema, original_context) if key == 'checkpoint'
+                             else operation_errors(case['value'], value_schema))
                 assert valid == case['valid'], (family['event_type'], key, case['name'])
                 count += 1
+            if key == 'operation':
+                count += operation_size_cases(original_context, value_schema, fixtures['operation_size_cases'])
             if key == 'checkpoint':
                 baseline = copy.deepcopy(fixtures['checkpoint_cases'][0]['value'])
+                count += checkpoint_context_cases(baseline, value_schema, original_context)
                 regression = copy.deepcopy(baseline)
                 regression['event_refs'] = ['event_' + str(i) + '_' + 'a' * 64 for i in range(1000)]
-                assert len(packed(regression)) > 16384 and checkpoint_errors(regression, value_schema)
+                assert len(packed(regression)) > 16384 and checkpoint_errors(regression, value_schema, original_context)
                 count += 1
                 for case in fixtures['checkpoint_size_cases']:
                     value = copy.deepcopy(baseline)
@@ -234,7 +345,7 @@ def main():
                     if delta < 0:
                         value['index_read_token']['checkpoint_ref'] = value['index_read_token']['checkpoint_ref'][:delta]
                     assert len(packed(value)) == target
-                    assert (not checkpoint_errors(value, value_schema)) == case['valid'], case['name']
+                    assert (not checkpoint_errors(value, value_schema, original_context)) == case['valid'], case['name']
                     count += 1
                 for case in fixtures['read_through_cases']:
                     events = [{'sequence_id': i + 1, 'event_type': family['event_type'] if i < case['matches'] else 'other',
@@ -252,9 +363,10 @@ def main():
                     assert len(refs) == len(set(refs)) == case['expected_matches']
                     assert len(packed(baseline)) < 16384 and 'event_refs' not in baseline
                     count += 1
-                count += history_response_cases(baseline, value_schema, family['event_type'], 'fixture')
+                count += history_response_cases(baseline, value_schema, family['event_type'], 'fixture', original_context)
             group = 'event_log' if key == 'checkpoint' else 'coordination_and_storage'
             row = next(x for x in values['families'] if x['family_id'] == family[key])
+            check_schema(row['value_schema'])
             assert not profile_errors(values, family[key], row['storage_kind'], group)
             missing = copy.deepcopy(values)
             del missing['storage_profile']['family_profiles'][family[key]]
@@ -270,6 +382,8 @@ def main():
         for required in ('SP-278', 'SP-286', 'CV-339', 'storage.first_append_receipt.resolve.v2', 'PENDING_RETENTION_DECISION', family['handler'], family['event_type']):
             assert required in text, (family['event_type'], required)
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):
+        row = next(row for row in values['families'] if row['family_id'] == fid)
+        check_schema(row['value_schema'])
         assert not profile_errors(values, fid, 'redb', 'settings_and_layout')
         missing = copy.deepcopy(values)
         del missing['storage_profile']['family_profiles'][fid]
