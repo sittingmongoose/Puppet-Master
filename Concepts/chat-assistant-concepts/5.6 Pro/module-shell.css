@@ -312,7 +312,7 @@ body[data-theme^="retro"] .pmx-sheet{--pmx-hero-side-full:330px;}
 .pmx-sheet .pmx-hero-aside{margin-left:auto;display:flex;align-items:center;gap:10px;width:280px;max-width:50%;font:var(--pmx-fs-meta);color:var(--muted);white-space:nowrap;}
 /* J-2: the card-title field is a boxed 32 px input (text used to sit on its underline) */
 .pmx-sheet .pmx-hero-aside input[type=text]{flex:1;min-width:0;height:32px;min-height:32px;padding:0 10px;font:600 12px var(--font-ui);color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;outline:none;box-shadow:none;}
-.pmx-sheet .pmx-hero-aside input[type=text]:hover{border-color:var(--pmx-focus-edge);}
+.pmx-sheet .pmx-hero-aside input[type=text]:hover{border-color:var(--pmx-focus-edge);outline:1px solid var(--pmx-focus-edge);outline-offset:-1px;}
 .pmx-sheet .pmx-hero-aside input[type=text]:focus{border-color:var(--pmx-focus-edge);}
 
 /* ================================================================ A4 control row */
@@ -366,7 +366,7 @@ body[data-theme^="retro"] .pmx-sheet .pmx-roster :is(.pmx-roster-head, .pmx-row)
 .pmx-sheet .pmx-row:has(> .pmx-route), .pmx-sheet .pmx-row:has(> .pmx-row-note){grid-template-rows:var(--pmx-row-h,60px) auto;}
 .pmx-sheet .pmx-row-mark{display:grid;place-items:center;}
 .pmx-sheet input.pmx-row-job{width:calc(100% + 10px);min-width:0;height:32px;min-height:32px;padding:0 10px;margin-left:-10px;border:1px solid transparent;border-radius:8px;background:transparent;font:var(--pmx-fs-ctl);color:var(--text);outline:none;box-shadow:none;text-overflow:ellipsis;}
-.pmx-sheet input.pmx-row-job:not([readonly]):hover{border-color:var(--pmx-focus-edge);}
+.pmx-sheet input.pmx-row-job:not([readonly]):hover{border-color:var(--pmx-focus-edge);outline:1px solid var(--pmx-focus-edge);outline-offset:-1px;}
 .pmx-sheet input.pmx-row-job:focus{border-color:var(--pmx-focus-edge);background:var(--surface-2);}
 .pmx-sheet input.pmx-row-job[readonly]{pointer-events:none;}
 .pmx-sheet .pmx-row-model, .pmx-sheet .pmx-row-persona{min-width:0;}
