@@ -659,7 +659,7 @@ def semantic_outcome(predicate, record, corpus, pack, case):
                     'bitbucket_data_center', 'forgejo_self_managed', 'gitea_self_managed'}
         return 'accept_with_provider_specific_fields' if record['admitted_profile'] in admitted else 'refuse'
     if predicate == 'assistant_plan.backend_strategy':
-        expected = 'ledger_bound' if record['strategy'].startswith('deep_plan') else 'direct'
+        expected = 'ledger_bound' if record['strategy'] in {'deep_thorough', 'deep_exhaustive', 'deep_brainstorm'} else 'direct'
         return 'accept' if record['backend'] == expected else 'refuse'
     if predicate.startswith('coverage.'):
         return 'refuse' if coverage_failures(record) else 'accept'
