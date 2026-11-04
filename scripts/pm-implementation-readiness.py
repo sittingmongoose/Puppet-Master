@@ -779,10 +779,11 @@ STORAGE_VALUE_REGISTRY_SCHEMA_URI = (
 # are unchanged.
 # Re-pinned 2026-11-03 for the projects/settings refresh (SP-337..SP-349; DL-280..DL-299, Jared's no-project
 # rulings in DL-292): 41 materialized families are added, none removed or re-tiered. 34 are app-scope
-# (*_application) families under SP-345's app-data root (29 tier_0_launch_critical, 5
-# later_gui_or_feature_projection); 7 are new settings-level, Project settings v2, settings-differences,
-# chat-move, build-grant, created-resource and app automation-pause records (6 tier_0_launch_critical, 1
-# later). App families carry no Project-keyed legacy aliases (SP-349). Retention policies are unchanged.
+# (*_application) families under SP-345's app-data root (15 tier_0_launch_critical, 19
+# later_gui_or_feature_projection): per Jared 2026-11-04, an app family with a Project counterpart takes that
+# counterpart's tier. 7 are new settings-level, Project settings v2, settings-differences, chat-move,
+# build-grant, created-resource and app automation-pause records (6 tier_0_launch_critical, 1 later). App
+# families carry no Project-keyed legacy aliases (SP-349). Retention policies are unchanged.
 STORAGE_VALUE_REGISTRY_EXPECTED_FAMILY_COUNT = 342
 STORAGE_VALUE_REGISTRY_EXPECTED_RETENTION_POLICY_COUNT = 27
 STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
@@ -791,8 +792,8 @@ STORAGE_VALUE_REGISTRY_EXPECTED_STATUS_COUNTS = {
     "compatibility_alias": 1,
 }
 STORAGE_VALUE_REGISTRY_EXPECTED_TIER_COUNTS = {
-    "tier_0_launch_critical": 75,
-    "later_gui_or_feature_projection": 257,
+    "tier_0_launch_critical": 61,
+    "later_gui_or_feature_projection": 271,
     "migration_only": 10,
 }
 STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
