@@ -1,125 +1,120 @@
-# DMEM fix round 2 — 2026-11-04
+# DMEM fix round 3 — 2026-11-04
 
-Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source head / repair commit: `9d197a494c9e091fde0529788d7f6959d1ff0b18`. Astra reviewed head: `47b099a837b84ce8718f69c40a84ebd9f1179d3b`. Original base: `be4766513ff71776346fc73b84f2542990f955af`. This report and the self-grade are a report-only follow-up; the source pin is exact. The previous round's report remains in the reviewed commit.
+Branch: `plans/ea-w2-memory-maintenance-20261104`. Assessed source head: `91c899446cf01a62db84067940b9fcab53f8272b`. Reviewed head: `720fc29400ce5fbf5e2fd92e2454f725c4f909b9`. B4 repair: `2d6bc3d09e`. Standing-check companion and derived files: `91c899446c`. This report and the self-grade are a report-only follow-up; the source pin is exact. Prior reports remain in Git history.
 
-## Outcome and family regrade
+## Outcome and family grades
 
-B1, B2 and B3 are fixed. The worker self-grade moves the prepared set from Astra's 0/8 to 8/8 prepared, pending independent re-review. Each prepared row retains membership ABSENT and retention PARTIAL. Native execution remains NOT_RUN. No admission or policy answer is claimed.
+**Worker result: 8/8 prepared**, up from the cycle-3 review’s 4/8, pending the final independent review. No additional fix round is assumed. All 96 prepared-family cells were regraded, with 220 exact current citation instances checked. Only the four completed-family `positive_negative_oracles` cells change from PARTIAL to PASS. Membership remains ABSENT and retention PARTIAL. Native execution remains NOT_RUN.
 
-| Exact family | Before: Astra review | After: round-2 self-grade |
+P/Q/A below are PASS/PARTIAL/ABSENT counts. Every standing cell is PASS with the applicability and proof limits in the numbered table below.
+
+| Exact family | Before P/Q/A | After P/Q/A | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `memory.dedup_sweep.completed` | 9/2/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.dedup_sweep.started` | 10/1/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.index.lexical.rebuild.completed` | 9/2/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.index.lexical.rebuild.started` | 10/1/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.index.semantic.rebuild.completed` | 9/2/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.index.semantic.rebuild.started` | 10/1/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.verification_sweep.completed` | 9/2/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `memory.verification_sweep.started` | 10/1/1 | 10/1/1 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+
+Prepared totals move from **76 PASS / 12 PARTIAL / 8 ABSENT** to **80 PASS / 8 PARTIAL / 8 ABSENT**. The four monthly-summary/prune families stay held and ungraded in this round. Their legacy self-grade row objects and contract hold rows are structurally unchanged. Including those historical rows, the file retains 84 PASS / 16 PARTIAL / 44 ABSENT; that total does not represent a fresh grade of the holds. Jared’s DL-402/DL-403 settle archive-only, not-yet-runnable terms; applying those answers is separate work, not an unanswered product question or permission request from this repair.
+
+## Review round 3: findings and responses
+
+### B4 — fixed (`2d6bc3d09e`)
+
+**Where:** `scripts/pm_memory_maintenance_events.py:188–190`, before the retained-original branch; all four completed `writer_families` in `Plans/memory_maintenance_event_fixtures.json`. Governing owner text is unchanged: SP-630/632/634/636 already requires exact original start custody for later phases and retries.
+
+**Why:** The old terminal-original return ran before the start-custody guard. The exact review mutation reproduced eight false accepts: four completed families, each at effect_committed and completed, with intact terminal originals and schema-valid operations but no original start. `B4-before.json` records them.
+
+**Fix:** Move the existing guard before any completed original return. No rule is removed or weakened. Each completed family adds succeeded and failed retry states before and after completion: 16 intact-custody positives and 64 negatives across missing start, altered retained hash, altered retained full value and missing full-flush custody. Every refusal is exactly `start_receipt_missing`, with no output and unchanged durable state. Authorized retries return the exact terminal original without append/effect. Restoring the old guard order makes the full checker assert `expected refusal`; all 16 phase/outcome missing-start expectations also independently fail the full-process checker when corrupted to expect success.
+
+### Earlier Astra B1 — fixed (`9d197a494c`), recheck PASS
+
+**Where:** The eight complete canonical writer suites and `append_current`. **Why:** Earlier reduced originals omitted required writer-envelope and replay-policy checks. **Fix retained:** All 28 required envelope fields, legal replay policy, exact dispatch/identity/partition joins, plus fresh and retry `projector_replay_only` refusal. The review harness rerun passes 248 B1 probes, including 16 replay-only refusals and 224 required-field deletions. Each family’s independently corrupted replay-only expectation exits 1.
+
+### Earlier Astra B2 — fixed (`9d197a494c`), recheck PASS
+
+**Where:** Completed recovery in `transition` and each exact family’s traces. **Why:** Recovery disclosed an original without current permission/withdrawal checks. **Fix retained:** All 32 succeeded/failed denied-or-withdrawn recoveries refuse `permission_or_withdrawal` without durable mutation; 16 authorized recoveries return their original. These are the exact earlier mutations plus failed-outcome coverage.
+
+### Earlier Astra B3 — fixed (`9d197a494c`), recheck PASS
+
+**Where:** Started `accept`, retry/replay and recovery custody gates. **Why:** A later-phase started gate could pass after original-start removal. **Fix retained:** The exact four Astra reproductions reject; all 38 review custody probes pass. Lawful accepted pre-append admission remains distinct from required recorded/later-phase start custody.
+
+### Cycle-1 blocker 1 — fixed (`87024556d8`), recheck PASS
+
+**Where:** Both lexical and both semantic operation/target/selector contracts and fixtures. **Why:** Durable prepared target and post-swap recovery custody were not representable. **Fix retained:** All four own prepared rows are representable; deleting the required target fails the closed schema, and schema-valid wrong target identities fail semantic validation. Each family’s missing-target mutation independently causes a named full-checker assertion. Existing prepare/swap/recovery and selector-CAS traces remain unchanged.
+
+### Cycle-1 blocker 2 — fixed (`87024556d8`), recheck PASS
+
+**Where:** Boundary, operation and stateful oracles for all eight families. **Why:** Proof flags did not establish frozen originals, CAS or no-repeat behavior. **Fix retained:** Exact earlier changed terminal status/ref/hash mutations reject for every completed family, as do schema-valid failed results paired with original success custody. Null completed receipt/outcome rows reject for all eight families. Stale CAS, repeated effect and altered retained-original probes refuse with unchanged state. All original 206 boundary cases, 84 operation cases, 276 traces / 464 steps and old snapshots remain structurally unchanged.
+
+### N1 — handled by explicit qualification (report-only)
+
+**Where:** `Plans/.plan_index/{doc_cards,dependencies,coverage_report,node_readiness_report}.json`. **Why:** The existing generator writes `generated_at_utc`; literal byte equality across regeneration is not a valid claim for those clock fields. **Fix:** Retain that qualification, leave the generator unchanged and report parsed top-level validation results. All regenerated shard paths belong to the edited Automated Testing System owner. Index content reflects the ATS change and expected timestamps; no unrelated owner shard changed.
+
+No finding is disputed. No repair cell needs a new Jared decision.
+
+## All eight standing checks and their negative cases
+
+Every numbered check has an independently corrupted expectation executed through the complete checker for **each of the eight families**. The audit requires exit 1 with that case’s named AssertionError. Success exit 0 is rejected by the audit. There are 80 such standing runs (additional cases for 6 and 8), plus 32 review-regression runs: **112/112 rejected**. `standing-checks.json` contains every family/check pairing, exact fixture name, full-checker exit and qualification.
+
+| # | Result across 8 families | Negative and qualification |
 |---|---|---|
-| `memory.dedup_sweep.completed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.dedup_sweep.started` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.index.lexical.rebuild.completed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.index.lexical.rebuild.started` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.index.semantic.rebuild.completed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.index.semantic.rebuild.started` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.verification_sweep.completed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `memory.verification_sweep.started` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| **1 — replay-only** | PASS 8/8 | Fresh and retained-original retry with `projector_replay_only` refuse exactly `replay_only_not_appendable`. |
+| **2 — CV-366 Application key** | PASS 8/8, Project-only scope | Each rejects an exact `application@1:{hex(server_id)}:{hex(owner_operation_id)}`-shaped key and malformed/raw/old-Project/trailing-LF Application attempts. No Application writer is introduced or claimed. |
+| **3 — Project partition** | PASS 8/8 | Positives use `project~cHJvamVjdC0x`; raw Project, another encoded Project and padded encoding refuse `scope_partition_mismatch`. |
+| **4 — inline cap / SP-337** | PASS 8/8, bounded inline roots | Maximum-width permitted UTF-8 bodies are 2,348–2,649 MessagePack bytes and fit 16 KiB. A 17,000-character body fails each closed schema. No permitted over-limit body exists, so no new payload-ref path is authored; SP-337 remains authoritative for separately declared larger bodies. |
+| **5 — exact identifiers** | PASS 8/8 | All 170 lane pattern declarations retain exact lengths/full-input guards. Trailing-LF raw-schema negatives cover payloads, operations, targets and selectors; all six registry schema mirrors still match. |
+| **6 — caller semantics** | PASS 8/8 | Caller payload/actor/time/correlation/redaction/producer-sequence changes conflict. Individual and combined Storage sequence/observed/persisted changes return the retained original. Both wrong conflict acceptance and returning changed metadata are rejected by full-checker mutations. |
+| **7 — checkpoint Storage join** | PASS 8/8, adopted generic identity only | New synthetic positives reuse the existing canonical SP-278 checkpoint schema/fixture, with event IDs bound to the same operation Storage instance. Foreign checkpoint instance, instance-qualified key and event identity each fail. No DMEM cursor/format, source-inclusion proof, native projection or read authorization is claimed. |
+| **8 — failure exit** | PASS 8/8, checker process | Corrupting a negative boundary to expect success makes the full checker exit 1 for each family. Unknown `exit_code=0` is separately rejected by each closed payload schema. The maintenance event has no process-exit contract, so this proves checker failure propagation and unknown-field rejection, not an absent native process path. |
 
-The four `memory.monthly_summary.started`, `memory.monthly_summary.completed`, `memory.prune_archive.started` and `memory.prune_archive.completed` rows remain held and untouched: each 1 PASS / 2 PARTIAL / 9 ABSENT. Their contract rows and complete self-grade row objects are unchanged. Across all 144 cells, the review baseline was 76 PASS / 24 PARTIAL / 44 ABSENT; after repair it is 84 PASS / 16 PARTIAL / 44 ABSENT. Only the eight `positive_negative_oracles` grades change from PARTIAL to PASS. All prepared-family evidence was re-read and all 252 citation instances resolve to current exact substrings of at most 200 characters.
+`91c899446c` adds these per-family companion negatives, maximum-width positives, adopted generic checkpoint identity tests, required-case coverage guards and ATS-315’s exact test boundaries. Existing tests and expectations are preserved. No new product binding, producer, consumer, checkpoint family, retention class or PlanUnit is minted. The inherited per-family searches remain in `reports/event-authority-20261104/DMEM-search.json`; existing AMS-100–107, CV-650–657 and SP-630–637 remain each family’s own contract.
 
-## Review round 2: findings and responses
+## Checks, scope and limits
 
-### B1 — fixed in `9d197a494c9e091fde0529788d7f6959d1ff0b18`
-
-**Where:** `scripts/pm_memory_maintenance_events.py:142` (`canonical_value`), `:166` (`append_current`) and `:462` (`run_writers`); `Plans/memory_maintenance_event_fixtures.json#/writer_families`; the eight independent SP-630–637 additions beginning at `Plans/storage-plan.md:29499`; `Plans/Automated_Testing_System.md:7245` (ATS-315); each prepared row in `Plans/memory_maintenance_contracts.json`.
-
-**Why:** The reduced nine-field phase values omitted the canonical writer envelope and could not exercise its replay-only refusal.
-
-**Fix:** Keep those values explicitly reduced and synthetic. Add a separate independently checked canonical EventRecord 2.0.0 boundary suite, with 28 required fields, canonical schema/format validation, exact payload definition URI, payload/Project/correlation/causation/identity joins and each family's newly authored `dedupe_by_idempotency_key` selection. Both fresh append and retained-original retry with `projector_replay_only` fail as exactly `replay_only_not_appendable`, with no output or durable mutation. Positive append/retry returns the retained complete original with one append and no maintenance effect. Retry changes to Storage-assigned sequence/observed/persisted fields return the original; changed producer semantics under the same identity refuse `idempotency_conflict`. The scoped key uses `project~cHJvamVjdC0x` for fixture Project `project-1`; a raw Project partition is rejected. Frozen compatibility 1.0.0 shapes cannot pass this current-writer suite. No compatibility reader is implemented or claimed.
-
-**Verify:** The full checker runs 128 canonical writer steps over all eight exact families, including both replay-only negatives per family. All eight positive full envelopes independently validate against `Plans/event_record.schema.json`. Restoring a replay-policy bypass makes the full checker fail at `memory.dedup_sweep.completed:append-projector-replay-only`. See `targeted-check.json` and `review-regressions.json` below.
-
-### B2 — fixed in `9d197a494c9e091fde0529788d7f6959d1ff0b18`
-
-**Where:** `scripts/pm_memory_maintenance_events.py:367` (`recover`); each exact family's own SP current-writer/recovery paragraph; ATS-315 at `Plans/Automated_Testing_System.md:7247`; each family's `completed-recovery-permission-refusal` and `completed-recovery-withdrawal-refusal` traces.
-
-**Why:** Completed recovery returned its retained original without rechecking current permission or family withdrawal.
-
-**Fix:** Recovery applies both current fences before any disclosure or tentative transition. A refusal returns no output and preserves the complete durable state. It leaves the operation pending at its existing durable phase; it does not invent an internal settlement. Each exact family also has an authorized completed-recovery positive that returns its original.
-
-**Verify:** All 16 Astra permission/withdrawal probes now refuse `permission_or_withdrawal`. Removing only recovery's new authorization guard makes the full checker fail at `completed-recovery-permission-refusal`. Both new negative traces run for every exact family, with unchanged-state assertions.
-
-### B3 — fixed in `9d197a494c9e091fde0529788d7f6959d1ff0b18`
-
-**Where:** `scripts/pm_memory_maintenance_events.py:241` (started acceptance), `:360` (retry/replay start custody) and `:370` (recovery start custody); each of SP-631/633/635/637; the four started-family boundary suites and completed recovery/retry traces.
-
-**Why:** A later-phase operation with both receipt IDs could pass started acceptance after its original start value had been removed.
-
-**Fix:** Missing first-start custody is lawful only in the accepted pre-append phase. A recorded start or any later phase requires and compares the retained exact original. Started boundaries now exercise missing originals in started, prepared where applicable, effect_committed and completed phases, plus lawful accepted pre-append positives. Post-completion recovery also requires the start original; started retry with its original removed refuses. The current permission/withdrawal fences run first.
-
-**Verify:** All four exact Astra acceptance reproductions now return false. Removing the started-custody gate makes the full checker fail at `memory.dedup_sweep.started:started-missing-original-start`. Every exact family's completed recovery with lost start custody refuses; all four started-family post-completion retry negatives also run.
-
-### Standing check 5 — fixed in `9d197a494c9e091fde0529788d7f6959d1ff0b18`
-
-**Where:** The three `Plans/memory_maintenance_*schema.json` documents and their six existing inline schema mirrors in `Plans/storage_value_registry.json`; `Plans/memory_maintenance_event_fixtures.json#/identifier_cases`.
-
-**Why:** Python regex `$` also matches before a final LF. Several lane-owned patterned identifiers had no exact length or full-input guard.
-
-**Fix:** All 170 lane pattern occurrences now carry exact fixed lengths or a full-input guard. Closed raw-schema positives and trailing-LF negatives cover payload hashes/receipt IDs/result refs, operation rows, target IDs/manifests/artifact names and hashes, selectors and nullable prior-selector hashes. The six registry mirrors are structurally identical to their canonical definitions; no other registry row or profile changes.
-
-**Verify:** The full checker runs 105 identifier cases. Removing those guards from the payload schema makes it fail on a trailing-LF source hash. Current-writer event-name trailing LF is also explicitly refused by the exact envelope join.
-
-No finding is disputed or stopped for a new Jared decision. The review contains no additional numbered should-fix findings or lane-owned notes requiring changes. Its four holds and native/admission/retention boundaries remain intact.
-
-## Bindings, current premises and standing checks
-
-Each prepared family's `review_round_2` record in `reports/event-authority-20261104/DMEM-search.json` states its independent current-canon search scope, negative evidence and reuse. Own SP units previously had neither a selected replay policy nor exact payload dispatch URI. Reuse is Contracts_V0 EventRecord 2.0.0 and its existing replay-only rejection, the family's own existing closed payload definition, SP-286 original custody and Storage §2.2.5 partition encoding. Each exact family labels its newly authored writer contract independently; no sibling supplies its authority.
-
-The exact payload URI is the schema document's existing `$id`, `https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json`, plus `#/$defs/` and that family's dot-to-underscore definition name. SP-630/631 bind dedup completed/started, SP-632/633 lexical completed/started, SP-634/635 semantic completed/started, SP-636/637 verification completed/started. Every prepared contract row records its own URI and legal writer policy. The synthetic canonical fixtures use non-secret `component:MemoryMaintenance` and fixed example Storage clocks/sequences; they do not allocate real native identities or authenticate receipts.
-
-The current EventRecord rules (`Contracts_V0.md:1000–1002,1028–1036`), AMS §7.2 (`assistant-memory-subsystem.md:398–414`) and DL-045 (`Decision_Log.md:6662–6683`) were rechecked and occur unchanged on fetched `origin/main` `5e37ffb616ec393af9097a198a9fc78dee9b8605`. No changed premise or new feature/retention/deletion choice was applied. Existing SP-278/SP-286, DL-076/DL-270 and BRS-031 bindings remain unchanged from round 1.
-
-Standing checks: (1) both writer/retry replay-only negatives exist per prepared family; (2) CV-366 Application key rules are inapplicable to these explicitly Project-only families; (3) positives use the encoded Project partition; (4) event payloads remain bounded metadata far below 16 KiB, with the inline cap checked and no new large body, while SP-337 remains authoritative for larger bodies; (5) all lane identifier patterns are guarded and tested. No Application writer is introduced.
-
-## Checks and scope
-
-The full checker passes 206 boundary cases, all 84 original operation cases, 276 stateful traces / 464 steps, 128 canonical writer steps and 105 identifier cases. No original case or expected outcome was removed or changed: all original 188 boundaries, 84 operation cases, every old state snapshot and every old trace prefix are identical to the reviewed head. The four restored-defect probes each execute the full checker and are rejected by the new negative cases.
-
-| Command / check | Exit | Output under the fix2 evidence directory |
+| Command / check | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm_memory_maintenance_events.py` | 0 | `targeted-check.json` |
-| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | `shard-generate.log` |
-| `python3 scripts/pm-plan-index.py generate` | 0 | `index-generate.json` |
-| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `shard-check.log` |
-| `python3 scripts/pm-plan-index.py validate` | 0 | `index-validate.json` |
-| `Draft202012Validator(storage_value_registry.schema.json).validate(storage_value_registry.json)` | 0 | `storage-value-schema.json` |
-| `Full-checker restored-defect probes and independent Astra reproductions` | 0 | `review-regressions.json` |
-| `Original fixture / hold / non-lane registry / identifier-pattern scope audit` | 0 | `scope-audit.json` |
-| `Current owner-premise comparison with origin/main` | 0 | `premise-checks.json` |
-| `All 144 regraded cells and 252 exact current citations` | 0 | `regrade-validation.json` |
-| `git diff --check` | 0 | empty |
+| `python3 scripts/pm_memory_maintenance_events.py` | 0 | 206 boundaries; 84 operation cases; 276 stateful traces / 464 steps; 328 current-writer steps; 129 identifier cases; 32 adopted generic checkpoint identity cases. |
+| Adapted unchanged cycle-3 independent probe harness | 0 | 827/827 probes, no failures; all exact B1–B4 reproductions rerun. |
+| `prior-findings.py` | 0 | 180/180 earlier-finding, schema-valid outcome/target and expanded B4 custody probes. |
+| `full-checker-mutations.py` | 0 | 112 independent complete-checker subprocesses; each exits 1 with its named assertion. |
+| Shard `--generate`, then index `generate` | 0 / 0 | Parsed status pass; only ATS owner shards regenerated. |
+| Shard `--check --config Plans/sharding_config.json` | 0 | Parsed status pass, failures empty; 99 sources / 3,107 shards. |
+| `python3 scripts/pm-plan-index.py validate` | 0 | Parsed top-level pass; failures empty. |
+| Fixture preservation, forbidden-path and scope audit | 0 | Prior cases/states unchanged; holds, registries and governance files untouched. |
+| Regrade and current quote check | 0 | 96 prepared cells; 220 exact citation instances; four oracle upgrades only. |
+| Currentness copy/hash and owner-premise comparisons | 0 | 15/15 edition files match; current envelope, CV-366 key and AMS operation premises unchanged on local `origin/main` `16acf7594a3fe8559af89491b895f440b314b99e`. |
+| `git diff --check` | 0 | No whitespace errors. |
 
-Top-level index generate/validate statuses were parsed as `pass`; validation has no failures. Shard verification passes for 99 sources / 3,107 shards. All 15 ignored currentness-edition files were copied from the prescribed share before index generation, with matching SHA-256. Initial resource gates passed with 19 GB available RAM and 124 GB free disk; a later check had 10 GB available RAM and 113 GB free disk.
+No test file was edited. The only checker edited is `scripts/pm_memory_maintenance_events.py`, run in full. No event-family registry append, admission, Decision Log, `.gitignore`, Spec Lock, `.evidence`, auto-decisions, frozen validator, governance seal, landing lock or main push. No mail was sent and no subagent, browser or server was started. Standard landing aggregate checks are left to the landing agent; this worker does not land.
 
-Shared prose changes are additions only within SP-630–637 and ATS-315. Contracts_V0 and AMS prose are unchanged this round. Only the six lane storage value schema mirrors change; all value metadata, profiles and unrelated rows are unchanged. Derived changes are limited to the edited `storage-plan`, `automated_testing_system`, `storage_value_registry` shard groups and the generated plan index. No unrelated document's derived output changed.
-
-The source commit and report commit are pushed only to the DMEM branch. No test file was edited; checker discovery found only `scripts/pm_memory_maintenance_events.py` for this lane. No registry append, admission, Decision Log, `.gitignore`, Spec Lock, `.evidence`, auto-decisions, frozen validator, governance reseal, pm-mail, subagent, landing lock or main push. Auxiliary round-1 storage-profile/Assistant failures were not rerun or treated as proof for these changes.
+Initial gates: 126 GB disk free and 18 GB available RAM. Available RAM stayed at least 13 GB in the observed checks; the latest check showed 135 GB disk free and 19 GB available RAM. The worktree uses the prescribed sparse set `Plans scripts reports tests`.
 
 ## IDs and remaining work
 
-No new PlanUnit ID was minted. Existing lane IDs retained: AMS-100–107, CV-650–657, SP-630–637 and ATS-315 (25 total); this round edits SP-630–637 and ATS-315. Unused reservations remain AMS-108–129, CV-658–659, SP-638–639 and ATS-316–319.
+**New IDs: none.** Existing lane IDs retained: AMS-100–107, CV-650–657, SP-630–637, ATS-315 (25 total). Only ATS-315 prose is edited this round. Unused reservations remain AMS-108–129, CV-658–659, SP-638–639, ATS-316–319.
 
-The four existing monthly-summary/prune holds keep their exact questions: monthly low-activation Note selection/source retention; archive-versus-delete eligibility with history/holds/pins. Dedup survivor/deletion policy remains unset and policy-dependent mutation stays unavailable. RT still must settle event/operation/selector/target retention. Independent re-review, admission and native receipt/atomicity/flush/crash/backup/read-race proof remain outstanding. Static success grants none of them.
+Final independent review remains required. Event/operation/selector/target retention, admission and native receipt/atomicity/flush/crash/backup/read-race proof remain separate obligations. Existing dedup survivor/deletion limits remain unchanged. Applying DL-402/DL-403 to the four archive-only held families is separate work. Static success grants no native activation or policy decision.
 
 ## Evidence and cleanup
 
-Report and self-grade copies overwrite `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/DMEM.md` and `DMEM-self-grade.json`. Round-specific outputs remain below. Temporary authoring/probe scripts are removed after their outputs are recorded. The detached sparse worktree `/home/sittingmongoose/pm-worktrees/DMEM-fix2` is removed with the prescribed literal-path command after the final branch push. No browser or server was started.
+All raw outputs and the runnable audit scripts are outside the repository under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/`. `source-inputs.json` pins the exact assessed source bytes. The report/self-grade overwrite the draft copies in the parent DMEM directory after the report commit. The detached worktree `/home/sittingmongoose/pm-worktrees/DMEM-fix3` is removed with the prescribed literal-path `git -C /home/sittingmongoose/src/PuppetMaster worktree remove --force /home/sittingmongoose/pm-worktrees/DMEM-fix3` after all commits are pushed. The evidence remains as the reviewable result.
 
 | Evidence path | SHA-256 |
 |---|---|
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/targeted-check.json` | `018f67818b32d9c1e7b50a62c655457a46191373a0d31d96cd917c5424596471` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/review-regressions.json` | `60e9bb7f65f37d838e61596bc4923b5dfe7e94eb9c1c64a92147376358ce7f3f` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/scope-audit.json` | `539bc7ad34303079842201cc3e956d4d9ae1e5289444cb2578532747daf79e22` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/premise-checks.json` | `b85ec1df1d521af1bd1a7ec9c25b8994e3c1a77e0809b638a157cefde718c8f2` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/regrade-validation.json` | `c467d7a63d52998929ced5eb068f9175086a67a70d2f967ddf7e9543bfe2968f` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/storage-value-schema.json` | `80312a988d17b68b22b8c49276d6dd948cae7c0b596605dffca4f6ad828fcd7a` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/shard-generate.log` | `84374bbf7bd16b6b26dac68ab50d56c5a61e09d08b6b94ee15824c6f53c8245d` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/shard-check.log` | `1a25aa4c77107f640cfffd7413df3618d6e71a670a7cc06f349236660cad9fc6` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/index-generate.json` | `c473b236d3dc088c7f3696b0e7c0408073319e5c4f86d781c384ee31c265bb05` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/index-validate.json` | `e80de7264ef46b11d9659548ca31842ff25c7515e3a6aa8c0939adcc98fe98dd` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix2/commands.json` | `5c0616367322165ca563d33eaae289ef2f4d9141ede5b6cce12395ac46e191d8` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DMEM-sol/REVIEW-astra.md` | `ffb2ced310c3f14234a0bc85dfd56c3d6e92a0b1ac91e596247ccb8a7ac1f47d` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/FIX-ROUND.md` | `0112fe0c7453d44376870569216482dd5db9da0d37a00d90bd8dd57922480d27` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/evidence-sha256.json` | `578d57155693de4f77e156b6a9dc1263b19044755d0b674768f3002adb98de0e` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/standing-checks.json` | `c94032a65f0e2806104ee4d34e69eee54cac9f4e43a4c73e62fe307f95f5f4d1` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/full-checker-mutations.json` | `7f15c8e68df5ba9a7fe77f8657d0860918daf8f7164e31f9d5bfad84ab57df0c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/cycle3-probe-results.json` | `fc482c133818883239c43500997daf46e967c4d89a61c1af83c6e75d85c03012` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/prior-findings.json` | `d04d1ea232a9e03e1776c1091fc0946aa47a6c49a19ab101af5c59c2c71a2f03` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/B4-before.json` | `fc471cd7c65221176b3ee093d867438380210fa0d2a8fca219abd706b77a5dd5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/B4-restored-defect.json` | `c2fe6c2580d407b0d32fe032527b3bb0e025cb52a221ee71217d069f742b79dd` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/targeted-check.json` | `60bd777cde99f59d0ea1e05bc0639fa2748b321e9fa4c06ddb39d527c4692bd3` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/scope-audit.json` | `59c7f1e3a7017ae294b74c5a5339d53478907836e566803fd22107c17cbc31f4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/regrade-validation.json` | `87d18bc061b4ecf17c26b4815e1f63ab5891b39f715e973b8bd2485cb435cce9` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/index-validate.json` | `96f8d60789e57083e5ff258aa41a8d570f9cf8aaa3acf944ba18e866ca60a437` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix3/shard-check.json` | `1a25aa4c77107f640cfffd7413df3618d6e71a670a7cc06f349236660cad9fc6` |
