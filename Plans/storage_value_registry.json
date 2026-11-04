@@ -119972,7 +119972,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120052,7 +120052,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "collaboration_participant_application",
@@ -120083,7 +120083,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120163,7 +120163,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "collaboration_transcript_application",
@@ -120194,7 +120194,7 @@
       "nullable_fields": [],
       "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
       "migration": "Explicit new application family; Project resource/key/hash unchanged.",
-      "retention_compaction": "canonical; `RP-RUNTIME-365D` Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
+      "retention_compaction": "canonical; `RP-CHAT-THREAD-LIFETIME` (DL-404, 2026-11-04: kept as long as the run's chat exists, with the chat's holds and deletion deadlines; replaces `RP-RUNTIME-365D`). Independent owner/source/backup/legal/recovery/maintenance holds apply, including after chat Undo expiry.",
       "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
       "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
       "value_schema": {
@@ -120274,7 +120274,7 @@
           "Plans/storage-plan.md#SP-351"
         ]
       },
-      "retention_policy_ref": "RP-RUNTIME-365D"
+      "retention_policy_ref": "RP-CHAT-THREAD-LIFETIME"
     },
     {
       "family_id": "crew_auto_application",
