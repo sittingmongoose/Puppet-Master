@@ -547,6 +547,16 @@ const keepAttempt = async (A) => { await A.click('reviewAgain', undefined, 'revi
   await A.waitFor(() => ['failed', 'recovery', 'unknown'].includes(O55.S.sess.commit.state), null, 25000); await A.sleep(600); };
 
 export const tests = {
+  /* Focused SW-41 regression. Run with --grep 'SW-41' and --set selftest=nopick to require failure on
+     every eligible screen, or nopick:begin to require failure after other screens really were picked. */
+  async 'SW-41 · every Back-walk picker must offer a change'(t) {
+    await flow(t, 'SW-41 online new copy Back walk', async (A, bad) => {
+      await RICH.find(([kind]) => kind === 'online new copy')[1](A); await A.screen('review');
+      const w = await pickBackWalk(A, bad, 'SW-41');
+      if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41: Back stopped on ${w.seq[w.seq.length - 1]}`);
+      t.log(`SW-41 Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
+    });
+  },
   async 'row A · Safe › GitHub › sign in › details › Safe › Change kept twice › Change › Not now, then Back to the start (Continue tried at each stop) and on'(t) {
     await row(t, 'A', { establish: async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); }, keep: keepCopy,
       invalidate: async (A) => { await A.click('online', undefined, 'online-service'); await A.click('notNow', undefined, 'safe'); }, force: ['online-details', 'online-service'],
