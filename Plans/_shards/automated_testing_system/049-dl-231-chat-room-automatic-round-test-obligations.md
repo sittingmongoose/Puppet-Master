@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7292
+Source lines: L6715-L7301
 
-Source SHA256: `9518326334f9b4eaab0d51b901c3c1c6deafed0b21ba21c662326be47b73ae6c`
+Source SHA256: `95439937d1c58321a2a1a7bfb168d9f4d5f4c2c9737e16f480d48bbaf7404f06`
 
 ---
 
@@ -554,15 +554,24 @@ canonical_text: >-
   each recorded project~ partition with its actual Project encoding. Use the exact EventRecord
   producer-semantic RFC8785 field set, exclude Storage sequence/observed/persisted metadata, return
   the original complete result on equal semantics and reject changed caller semantics without append.
-  Run every family's S1..S8 authored failure (each requires exit 1); success-labelled failures reject.
+  Run every family's S1..S10 authored failure (each requires exit 1); success-labelled failures reject.
   Enforce the complete inline MessagePack payload budget, exact ASCII/multibyte boundaries and
   valid external SP-337 pack bytes, digest/length/media and bytes/index durability witnesses.
   Missing/forged references, foreign Storage checkpoints, every changed token member, source/index
   mismatch and a nonmatching append's frontier advance refuse. Enforce the phase count predicate,
   retry counter/cause/current-source join, truncation ordering and existing board priority enum on
   the actual selected payload. Validate full closed application originals/input/wrappers for every
-  board contract, including missing/foreign fields. Application posted-message subject/priority
-  source is STOPPED under OSI-681/SP-720; an expected fail-closed oracle never certifies that producer.
+  board contract, including missing/foreign fields. Application posts select CV-740/SP-723's complete
+  governed V2 message/source/wrapper graph with genuine original headers/body/routing and separate
+  accepted-source/stage/semantic/physical commitments; frozen Project/V1 resources remain exact.
+  Eagerly resolve every declared selected $ref, including dormant optional branches and actual stored
+  compositions, with exact offline URIs and scoped JSON Pointers; unresolved resources/fragments refuse.
+  Every family runs retained originally-valid history after live producer state/writer admission changes,
+  supported compatibility reads, forged/unproven/foreign originals and exact-family withdrawal/publication
+  fences with an unchanged valid generic checkpoint. Current disclosure access/deletion/hold still applies.
+  Prove every lane guard by removing it in an isolated in-memory checker, showing its own single-defect
+  negatives pass and unrelated negatives still refuse; keep the full guard-removal table in the report.
+  Restore all production guards; no bypass flag or weakened production guard is permitted.
   Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
   commit referenced content before append, crash before and after first receipt, resolve full value on
   uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,

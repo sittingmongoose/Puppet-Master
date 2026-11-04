@@ -97,6 +97,7 @@ def board_storage_checks(schema, fixtures, storage, owner):
     assert len(rows) == 1
     row = rows[0]
     composition = row['value_schema']
+    assert not oracles.reference_errors(dict(composition, **{'$id': schema['$id'] + '/storage'}), documents=oracles.selected_documents(ROOT)), 'unresolved_schema_reference'
     validator = Draft202012Validator(composition, format_checker=UTC_FORMAT)
     checks = 0
     # Independent preservation of all original members, not only a self-derived expected row.
@@ -132,8 +133,7 @@ def board_storage_checks(schema, fixtures, storage, owner):
         assert len(selected) == 1 and selected[0]['logical_payload'] == case['payload'], 'board_full_append_payload_join'
         assert not oracles.transport_errors(selected[0]['event'], case['payload'], selected[0]['payload_packs']), 'board_full_append_transport'
         validator.validate(case['payload'])
-        expected_errors = (['application_post_subject_priority_unavailable'] if
-                           case['event_type'] == BOARD[0] and case['payload']['scope'] == 'application' else [])
+        expected_errors = []
         assert board_join_errors(case) == expected_errors, (case['event_type'], board_join_errors(case))
         # No terminal source yet is a valid append, but cannot make expiry eligible.
         no_anchor = copy.deepcopy(case); no_anchor['terminal_run'] = None
@@ -184,6 +184,7 @@ def main():
     storage = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
     admitted = {f['event_type'] for f in registry['families']}
     checks = 0
+    assert not oracles.successor_errors(ROOT), oracles.successor_errors(ROOT)
     assert len(fixtures['contracts']) == 25
     assert {c['definition'] for c in fixtures['contracts']} == set(schema['$defs'])
     assert {c['event_type'] for c in fixtures['valid_payloads']} == {c['event_type'] for c in fixtures['contracts']}
@@ -196,6 +197,7 @@ def main():
         checks += 1
     for case in fixtures['valid_payloads']:
         definition = schema['$defs'][case['definition']]
+        assert not oracles.reference_errors(schema, '#/$defs/' + case['definition'], oracles.selected_documents(ROOT)), 'unresolved_schema_reference'
         Draft202012Validator.check_schema(definition)
         validator = Draft202012Validator(definition, format_checker=UTC_FORMAT)
         payload = case['payload']
@@ -277,7 +279,7 @@ def main():
     checks += board_storage_checks(schema, fixtures, storage, owner)
     import sys
     checks += oracles.check_oracles(fixtures, schema, sys.modules[__name__])
-    print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN', 'stopped_facets': ['crew.board_message_posted/application: subject and priority source unavailable']}))
+    print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN', 'stopped_facets': []}))
 
 if __name__ == '__main__':
     main()

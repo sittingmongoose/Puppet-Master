@@ -15,6 +15,8 @@ import msgpack
 import rfc8785
 from jsonschema import Draft202012Validator, ValidationError, validators
 from referencing import Registry, Resource
+from referencing.jsonschema import DRAFT202012
+from referencing.exceptions import Unresolvable
 
 from pm_event_index_binding import binding_digest
 from pm_projects_refresh_contracts import semantic_hash, scope_failures
@@ -143,42 +145,120 @@ def predicate_errors(family, payload, context, retry_allowed):
         return ['truncation_grows_output']
     if family == 'subagent.retried':
         joins = ('retry_cause', 'prior_attempt_number', 'attempt_number', 'child_run_id', 'parent_run_id')
-        if any(payload[k] != context.get(k) for k in joins) or not retry_allowed(context):
+        if any(payload[k] != context.get(k) for k in joins):
             return ['retry_payload_source_predicate']
+        if not retry_allowed(context):
+            return ['retry_current_transition']
     return []
 
 
-@lru_cache(maxsize=4)
-def selected_validators(root, format_checker):
-    names = ('application_workflow_contracts', 'application_workflow_sources',
-             'shared_integration_runtime', 'event_record_index_checkpoint', 'event_record')
-    documents = {name: json.loads((root / 'Plans' / (name + '.schema.json')).read_text()) for name in names}
+def offline_registry(documents):
     def refuse(uri):
         raise ValueError('unselected schema URI: ' + uri)
     registry = Registry(retrieve=refuse)
     for name, schema in documents.items():
-        resource = Resource.from_contents(schema)
+        resource = Resource.from_contents(schema, default_specification=DRAFT202012)
         registry = registry.with_resources([(schema['$id'], resource),
                 ('https://puppetmaster.local/Plans/' + name + '.schema.json', resource)])
+    return registry.crawl()
+
+
+def reference_errors(document, selection=None, documents=None):
+    """Eager offline closure, including dormant subschemas and scoped $id/anchors.
+
+    Traverse only selected roots and every schema edge reachable from them; the
+    immutable aggregate's unrelated Goal roots are not implicitly selected.
+    Referencing implements URI scope, escaped JSON Pointers and anchors. Retrieval
+    always refuses; neither filesystem basename nor newest-version fallback exists.
+    """
+    return list(_reference_errors(json.dumps(document, sort_keys=True), selection,
+                                  json.dumps(documents or {}, sort_keys=True)))
+
+
+@lru_cache(maxsize=256)
+def _reference_errors(document_json, selection, documents_json):
+    document = json.loads(document_json)
+    docs = json.loads(documents_json)
+    docs['selected'] = document
+    registry = offline_registry(docs)
+    resolver = registry.resolver(base_uri=document['$id'])
+    seen, errors = set(), []
+    def visit(resource, resolver, entered=False):
+        if not entered:
+            resolver = resolver.in_subresource(resource)
+        key = (resolver._base_uri, id(resource.contents))
+        if key in seen:
+            return
+        seen.add(key)
+        value = resource.contents
+        if isinstance(value, dict):
+            for keyword in ('$ref', '$dynamicRef'):
+                if keyword in value:
+                    try:
+                        target = resolver.lookup(value[keyword])
+                        visit(Resource.from_contents(target.contents, default_specification=DRAFT202012),
+                              target.resolver, entered=True)
+                    except (Unresolvable, ValueError, KeyError) as exc:
+                        errors.append('unresolved_schema_reference:' + value[keyword])
+        for child in resource.subresources():
+            visit(child, resolver)
+    try:
+        if selection:
+            target = resolver.lookup(selection)
+            visit(Resource.from_contents(target.contents, default_specification=DRAFT202012),
+                  target.resolver, entered=True)
+        else:
+            visit(Resource.from_contents(document, default_specification=DRAFT202012), resolver, entered=True)
+    except (Unresolvable, ValueError, KeyError):
+        errors.append('unresolved_schema_reference:' + str(selection))
+    return tuple(sorted(set(errors)))
+
+
+@lru_cache(maxsize=4)
+def selected_documents(root):
+    names = ('application_workflow_contracts', 'application_workflow_sources',
+             'shared_integration_runtime', 'event_record_index_checkpoint', 'event_record',
+             'coordination_projection_contracts', 'application_board_message_v2',
+             'orchestrator_historical_read')
+    return {name: json.loads((root / 'Plans' / (name + '.schema.json')).read_text()) for name in names}
+
+
+@lru_cache(maxsize=4)
+def selected_validators(root, format_checker):
+    documents = selected_documents(root)
+    registry = offline_registry(documents)
     result = {}
     for key, name, definition in (
         ('source', 'application_workflow_sources', 'OriginalCoordinationAppendSource'),
         ('input', 'application_workflow_contracts', 'AgentMessageApplicationV1'),
         ('wrapper', 'application_workflow_contracts', 'CrewBoardMessageStorageApplicationV1'),
+        ('source_v2', 'application_board_message_v2', 'OriginalCoordinationAppendSourceV2'),
+        ('input_v2', 'application_board_message_v2', 'AgentMessageApplicationV2'),
+        ('wrapper_v2', 'application_board_message_v2', 'CrewBoardMessageStorageApplicationV2'),
+        ('historical', 'orchestrator_historical_read', None),
         ('checkpoint', 'event_record_index_checkpoint', 'checkpoint'),
         ('read_token', 'event_record_index_checkpoint', 'read_token'),
         ('event', 'event_record', None),
     ):
-        uri = documents[name]['$id'] + ('#/$defs/' + definition if definition else '')
+        pointer = '#/$defs/' + definition if definition else None
+        errors = reference_errors(documents[name], pointer, documents)
+        if errors:
+            raise ValueError(errors)
+        uri = documents[name]['$id'] + (pointer or '')
         result[key] = StrictValidator({'$ref': uri}, registry=registry, format_checker=format_checker)
     return result
 
 
-def event_errors(case, schema, identity, retry_allowed, root, formats):
+def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
     event, payload = case['event'], case['logical_payload']
+    refs = reference_errors(schema, '#/$defs/' + case['definition'], selected_documents(root))
+    if refs:
+        return ['unresolved_schema_reference']
     v = selected_validators(root, formats)
     errors = ['event_schema'] if list(v['event'].iter_errors(event)) else []
-    if event.get('replay_policy') == 'projector_replay_only':
+    if historical and event.get('replay_policy') in ('projector_replay_only', 'dedupe_by_idempotency_key'):
+        pass
+    elif event.get('replay_policy') == 'projector_replay_only':
         errors.append('replay_only_not_appendable')
     elif event.get('replay_policy') != 'dedupe_by_idempotency_key':
         errors.append('family_current_replay_policy')
@@ -201,6 +281,19 @@ def event_errors(case, schema, identity, retry_allowed, root, formats):
     return errors
 
 
+def application_shape_errors(case, root, formats):
+    """Closed original input/source/wrapper preconditions, before relational joins."""
+    v = selected_validators(root, formats)
+    edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
+                         case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
+    errors = []
+    for kind, value in [('source', case['source']), ('input', case['source'].get('original_input')),
+                        ('wrapper', case['wrapper'])]:
+        if list(v[kind + edition].iter_errors(value)):
+            errors.append('application_' + kind + '_schema')
+    return errors
+
+
 def board_source_errors(case, root, formats):
     """Validate the selected closed original, not a hand-written source summary."""
     payload, source = case['payload'], case['source']
@@ -219,11 +312,10 @@ def board_source_errors(case, root, formats):
         if source.get('message_ids') != payload.get('message_ids', [payload.get('message_id')]):
             errors.append('message_source')
     else:
-        v = selected_validators(root, formats)
+        edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
+                         case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
         wrapper = case['wrapper']
-        for kind, value in [('source', source), ('input', source.get('original_input')), ('wrapper', wrapper)]:
-            if list(v[kind].iter_errors(value)):
-                errors.append('application_' + kind + '_schema')
+        errors += application_shape_errors(case, root, formats)
         if errors:
             return errors
         message = source['original_input']
@@ -255,17 +347,28 @@ def board_source_errors(case, root, formats):
         ids = payload.get('message_ids', [payload.get('message_id')])
         if ids != [message['message_id']]:
             errors.append('message_source')
-        key = 'crew_board_message.application.v1:' + ':'.join(
-            payload[k].encode().hex() for k in ('storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'message_id')
-        ) if 'message_id' in payload else 'crew_board_message.application.v1:' + ':'.join(
-            value.encode().hex() for value in (payload['storage_instance_id'], payload['server_id'], payload['thread_id'], payload['crew_id'], payload['run_id'], message['message_id']))
+        prefix = 'crew_board_message.application.' + ('v2:' if edition else 'v1:')
+        key = prefix + ':'.join(value.encode().hex() for value in (
+            wrapper['storage_instance_id'], wrapper['server_id'], message['thread_id'],
+            message['crew_id'], message['run_id'], message['message_id']))
         if case['wrapper_key'] != key:
             errors.append('wrapper_key_join')
     if case['event_type'] == 'crew.board_message_posted':
         if payload['scope'] == 'application':
-            # Frozen app input has no such members. Do not manufacture them or
-            # default them from the EventRecord being proved. This facet is STOPPED.
-            errors.append('application_post_subject_priority_unavailable')
+            for k in ('subject', 'priority'):
+                if message[k] != payload[k]:
+                    errors.append('message_' + k)
+            if message['receiver_agent_type'] != payload.get('to_agent_type'):
+                errors.append('message_target_type')
+            witness = case.get('accepted_source_witness', {})
+            if (witness.get('ref') != source['accepted_source_ref'] or witness.get('value') != message
+                    or source['accepted_source_sha256'] != semantic_hash('accepted_source', witness.get('value'))):
+                errors.append('accepted_original_source_join')
+            if case.get('physical_record_sha256') != hashlib.sha256(packed(case['wrapper'])).hexdigest():
+                errors.append('wrapper_physical_digest')
+            for stage in source['stage_custody'].values():
+                if stage['owner_method_id'] != source['interface_id']:
+                    errors.append('source_stage_method')
         else:
             for k in ('message_id', 'from_agent_id', 'subject', 'priority'):
                 if message.get(k) != payload.get(k):
@@ -275,14 +378,80 @@ def board_source_errors(case, root, formats):
                 errors.append('message_sender')
             if message['receiver_agent_id'] != payload.get('to_agent_id'):
                 errors.append('message_target')
-            if 'to_agent_type' in payload:
-                errors.append('application_post_target_type_unavailable')
             if (message['inline_text'] != payload.get('content')
                     or message['blake3_payload_ref'] != payload.get('content_ref', {}).get('blake3_id')):
                 errors.append('message_content_join')
         elif (message.get('content') != payload.get('content')
               or message.get('content_ref') != payload.get('content_ref')):
             errors.append('message_content_join')
+    return errors
+
+
+def successor_errors(root):
+    """Pin the whole live successor selection without rewriting frozen graphs."""
+    doc = json.loads((root / 'Plans/application_board_message_v2.schema.json').read_text())
+    graph = json.loads((root / 'Plans/application_board_message_v2_graph.json').read_text())
+    errors = reference_errors(doc, documents=selected_documents(root))
+    if graph['graph_sha256'] != semantic_hash('source_graph', {k:v for k,v in graph.items() if k != 'graph_sha256'}):
+        errors.append('successor_graph_digest')
+    expected_resources = {'Plans/' + name + '.schema.json': selected_documents(root)[name]['$id']
+        for name in ('application_board_message_v2', 'application_workflow_contracts',
+                     'shared_integration_runtime', 'coordination_projection_contracts')}
+    if ({x['path']: x['schema_uri'] for x in graph['resources']} != expected_resources
+            or len(graph['resources']) != len(expected_resources)
+            or any(x['sha256'] != hashlib.sha256((root / x['path']).read_bytes()).hexdigest()
+                   for x in graph['resources'])):
+        errors.append('successor_resource_selection')
+    method = graph['methods'][0]
+    expected_method = {'interface_id': 'storage.coordination_append.application@2.0.0',
+        'owner_doc': 'Plans/Contracts_V0.md#CV-740',
+        'source_root_ref': 'Plans/application_board_message_v2.schema.json#/$defs/OriginalCoordinationAppendSourceV2',
+        'input_root_ref': 'Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2',
+        'output_root_ref': 'Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1',
+        'current_or_retained_role': 'original_current_and_retained_exact'}
+    if method != expected_method or len(graph['methods']) != 1:
+        errors.append('successor_method_selection')
+    g = graph['graphs'][0]
+    stages = list(doc['$defs']['OriginalCoordinationAppendSourceV2']['properties']['stage_custody']['properties'])
+    expected_edges = [{'from_role': a, 'to_role': b, 'interface_id': expected_method['interface_id'],
+        'input_root_ref': expected_method['input_root_ref'], 'output_root_ref': expected_method['output_root_ref']}
+        for a,b in zip(stages, stages[1:])]
+    if (g['graph_id'] != 'app.coordination_append.v2' or g['ordered_role_edges'] != expected_edges
+            or g['participating_method_ids'] != [expected_method['interface_id']]
+            or g['physical_family_ids'] != ['crew_board_message_application_v2']
+            or g['event_selectors'] != ['crew.board_message_posted@1.0.0', 'crew.board_message_read@1.0.0', 'crew.board_messages_archived@1.0.0']
+            or g['reader_ids'] != ['reader.orchestrator.crew_board_message_posted.history.v1@1.0.0']):
+        errors.append('successor_complete_graph')
+    physical = graph['physical_selection']
+    if (physical['wrapper_root_ref'] != 'Plans/application_board_message_v2.schema.json#/$defs/CrewBoardMessageStorageApplicationV2'
+            or physical['codec_id'] != 'pm.crew_board_message.application.physical_messagepack.v2'
+            or physical['codec_algorithm'] != 'pm.application.physical_messagepack.v1'
+            or physical['key_prefix'] != 'crew_board_message.application.v2'):
+        errors.append('successor_physical_selection')
+    rb = graph['read_backup_restore']
+    if any(rb[k] != value for k,value in {
+        'canonical_reader_id':'storage.crew_board_message.read.application@2.0.0',
+        'backup_method_id':'storage.crew_board_message.backup.application@2.0.0',
+        'restore_method_id':'storage.crew_board_message.restore.application@2.0.0',
+        'wrapper_root_ref':physical['wrapper_root_ref'], 'source_root_ref':method['source_root_ref'],
+        'owner_ref':'Plans/storage-plan.md#SP-723', 'backup_owner_ref':'Plans/Backup_Restore_System.md#BRS-033',
+        'same_source_access_deletion_hold_fences':True}.items()):
+        errors.append('successor_read_backup_restore')
+    storage = json.loads((root / 'Plans/storage_value_registry.json').read_text())
+    rows = [x for x in storage['families'] if x['family_id'] == 'crew_board_message_application_v2']
+    if len(rows) != 1:
+        return errors + ['successor_storage_member']
+    row = rows[0]
+    if (row['value_schema'] != doc['$defs']['CrewBoardMessageStorageApplicationV2']
+            or row['schema_version'] != '2.0.0' or row['value_schema_id'] != 'pm.storage_value.crew_board_message.application.v2'
+            or row['value_schema_ref'] != physical['wrapper_root_ref']
+            or storage['storage_profile']['family_profiles'].get('crew_board_message_application_v2') != {
+                'redb_file':'canonical', 'storage_group':'coordination_and_storage',
+                'encoding_target':'messagepack_canonical',
+                'encoding_note':'SP-723 governed V2 wrapper uses CV-366 deterministic MessagePack algorithm; frozen V1 remains exact.',
+                'max_value_bytes':16384}
+            or row['key_shape'] != physical['key_prefix'] + ':{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}'):
+        errors.append('successor_storage_selection')
     return errors
 
 
@@ -297,6 +466,42 @@ def retry_outcome(original, candidate):
     if semantic_digest(original) != semantic_digest(candidate):
         return {'status': 'idempotency_conflict', 'appended': False, 'receipt': None}
     return {'status': 'original_result', 'appended': False, 'receipt': copy.deepcopy(original)}
+
+
+def historical_read_errors(case, schema, owner_module):
+    root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
+    state = case.get('historical_reader_state')
+    validators = selected_validators(root, formats)
+    if not validators['historical'].is_valid(state):
+        return ['historical_state_schema']
+    errors = checkpoint_errors(case, root, formats)
+    family, payload, event = case['event_type'], case['logical_payload'], case['event']
+    expected_reader = 'reader.orchestrator.' + family.replace('.', '_') + '.history.v1@1.0.0'
+    if state['event_type'] != family or state['reader_id'] != expected_reader:
+        errors.append('historical_reader_identity')
+    if state['reader_status'] == 'withdrawn' or state['publication_state'] != 'published':
+        errors.append('historical_reader_withdrawn')
+    if state['supported_payload_schema'] != event['payload_schema_id']:
+        errors.append('historical_schema_unsupported')
+    admission = state['original_admission']
+    expected = {'event_type': family, 'family_revision': payload['schema_version'],
+                'payload_schema_id': event['payload_schema_id'], 'event_id': event['event_id'],
+                'scope_partition': case['scope_partition'], 'storage_instance_id': payload['storage_instance_id']}
+    if not admission['admitted_when_written'] or any(admission[k] != value for k, value in expected.items()):
+        errors.append('historical_original_admission')
+    if (state['original_source_sha256'] != hashlib.sha256(packed(event)).hexdigest()
+            or state['original_source_ref'] != 'seglog:' + event['event_id']
+            or not state['original_source_verified']):
+        errors.append('historical_original_source')
+    # Only captured original facts enter original-event validation. Current live
+    # child/phase/model/board/Stop/deadline/permission state cannot recapture them.
+    original = copy.deepcopy(case)
+    original['producer_context'] = state['original_producer_context']
+    errors += event_errors(original, schema, owner_module.identity, owner_module.retry_allowed,
+                           root, formats, historical=True)
+    if not state['current_access_allowed'] or state['source_deleted'] or not state['hold_allows_disclosure']:
+        errors.append('historical_disclosure_fence')
+    return errors
 
 
 def checkpoint_errors(case, root, formats):
@@ -372,9 +577,14 @@ def index_row_schema(root):
     return next(row['value_schema'] for row in registry['families'] if row['family_id'] == 'event_record_index')
 
 
+def failure_oracle_errors(test):
+    return [] if test.get('expected_exit_code') == 1 else ['failure_oracle_success_code']
+
+
 def check_oracles(fixtures, schema, owner_module):
     root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
     checks = 0
+    assert not reference_errors(schema, documents=selected_documents(root)), 'unresolved_schema_reference'
     cases = fixtures['event_cases']
     assert len(cases) == len(fixtures['valid_payloads'])
     for case, source in zip(cases, fixtures['valid_payloads']):
@@ -383,7 +593,7 @@ def check_oracles(fixtures, schema, owner_module):
         assert case['scope_partition'] == source['identity']['scope_partition']
         errors = event_errors(case, schema, owner_module.identity, owner_module.retry_allowed, root, formats)
         assert not errors, (case['case_id'], errors)
-        errors = checkpoint_errors(case, root, formats)
+        errors = historical_read_errors(case, schema, owner_module)
         assert not errors, (case['case_id'], errors)
         for field in case['read']['read_token']:
             bad = copy.deepcopy(case)
@@ -440,11 +650,11 @@ def check_oracles(fixtures, schema, owner_module):
         checks += 1
     for family in fixtures['contracts']:
         tests = [c for c in fixtures['standing_cases'] if c['event_type'] == family['event_type']]
-        assert {c['standing_check'] for c in tests} == set(range(1, 9)), family['event_type']
+        assert {c['standing_check'] for c in tests} == set(range(1, 11)), family['event_type']
         for test in tests:
             base = by_id[test['case_id']]
             assert base['event_type'] == family['event_type']
-            assert test['expected_exit_code'] == 1, ('failure_oracle_success_code', test['name'])
+            assert not failure_oracle_errors(test), ('failure_oracle_success_code', test['name'])
             bad = copy.deepcopy(base)
             kind = test['mutation']
             if kind == 'replay_only':
@@ -473,6 +683,15 @@ def check_oracles(fixtures, schema, owner_module):
             elif kind == 'foreign_checkpoint':
                 bad['read']['checkpoint']['storage_instance_id'] = '22222222-2222-4222-8222-222222222222'
                 errors = checkpoint_errors(bad, root, formats)
+            elif kind in ('unresolved_resource', 'unresolved_fragment'):
+                broken = copy.deepcopy(schema)
+                target = ('https://puppetmaster.local/schemas/DO-MISSING/schema.json' if kind == 'unresolved_resource'
+                          else '#/$defs/DO_MISSING')
+                broken['$defs'][base['definition']]['properties']['unvisited_optional_ref'] = {'$ref': target}
+                errors = event_errors(base, broken, owner_module.identity, owner_module.retry_allowed, root, formats)
+            elif kind == 'withdrawn_reader':
+                bad['historical_reader_state']['publication_state'] = 'fenced'
+                errors = historical_read_errors(bad, schema, owner_module)
             elif kind == 'missing_required':
                 bad['event'].pop('schema_id')
                 errors = event_errors(bad, schema, owner_module.identity, owner_module.retry_allowed, root, formats)
@@ -480,6 +699,35 @@ def check_oracles(fixtures, schema, owner_module):
                 raise AssertionError(('unknown_negative_mutation', kind))
             assert test['expected_error'] in errors, (test['name'], errors)
             checks += 2
+    for case in fixtures['compatibility_event_cases']:
+        assert case['historical_reader_state']['reader_status'] == 'compatibility'
+        assert case['event']['replay_policy'] == 'projector_replay_only'
+        assert not historical_read_errors(case, schema, owner_module), case['case_id']
+        assert 'replay_only_not_appendable' in event_errors(case, schema, owner_module.identity,
+            owner_module.retry_allowed, root, formats)
+        assert retry_outcome(case['event'], case['event'])['status'] == 'replay_only_not_appendable'
+        checks += 3
+    assert {x['event_type'] for x in fixtures['compatibility_event_cases']} == {x['event_type'] for x in fixtures['contracts']}
+    for test in fixtures['board_successor_cases']:
+        actual = owner_module.board_join_errors(test['case'])
+        assert test['expected_error'] in actual and test['expected_exit_code'] == 1, (test['name'], actual)
+        checks += 1
+    for test in fixtures['historical_cases']:
+        bad = copy.deepcopy(by_id[test['case_id']])
+        for key, value in test['state_changes'].items():
+            bad['historical_reader_state'][key] = copy.deepcopy(value)
+        if 'current_producer_state' in test:
+            bad['producer_context'] = copy.deepcopy(test['current_producer_state'])
+        actual = historical_read_errors(bad, schema, owner_module)
+        assert (not actual) == test['valid'], (test['name'], actual)
+        if not test['valid']:
+            assert test['expected_error'] in actual and test['expected_exit_code'] == 1, (test['name'], actual)
+        checks += 1
+    for contract in fixtures['contracts']:
+        selected = [x for x in fixtures['historical_cases'] if x['event_type'] == contract['event_type']]
+        assert {'changed_live_state', 'compatibility_reader', 'forged_source', 'unproven_admission',
+                'foreign_admission', 'withdrawn', 'publication_fenced', 'access_denied', 'deleted', 'held_hidden'} <= {x['kind'] for x in selected}
+        checks += 1
     # Every family gets physical inline/external/boundary and forged-reference probes.
     for test in fixtures['transport_cases']:
         base = by_id[test['case_id']]

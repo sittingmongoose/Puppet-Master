@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31893-L32158
+Source lines: L31901-L32169
 
-Source SHA256: `ba7d22d69bd91cf49e929a8d7c3e99252cf89c2ef429521f6e7205f0fc507df8`
+Source SHA256: `50af792e5959fb426e219283275a2d943bb4307c7a9537cade2fb0d06978da1a`
 
 ---
 
@@ -164,9 +164,12 @@ canonical_text: App Crew/subagents reuse AgentCoordinator and its versioned stor
   no-project bucket per Server mirrors counterpart coordination caps, retention and holds. N25 settles/fences source
   registrations, operations and claims; destination registrations/claims and checkpoint coverage are newly admitted,
   never copied epoch numbers. No active-agents.json or agent-messages.json mirror or export becomes scheduling truth.
-  CV-366 selects app.coordination_append.v1 with OriginalCoordinationAppendSource and AgentMessageApplicationV1/CoordinationProjectionApplicationV1;
-  SP-351 owns its explicit app physical keys and counterpart policy joins. Both canonical AgentMessage description
-  sites consume that same selected app definition. Original storage.coordination_append.v1 Project source and read/checkpoint
+  CV-740 selects app.coordination_append.v2 with OriginalCoordinationAppendSourceV2 and AgentMessageApplicationV2
+  for current application board posts; SP-723 selects its V2 wrapper/key/codec and original read/backup/restore graph.
+  Both canonical AgentMessage producer/consumer description sites select that same complete edition. CV-366's
+  app.coordination_append.v1 and AgentMessageApplicationV1/CoordinationProjectionApplicationV1 remain explicit
+  supported historical selections and the current existing read/archive source witnesses; no V1 header invention.
+  SP-351's counterpart retention/hold policies and sole coordinator/payload store remain unchanged. Original storage.coordination_append.v1 Project source and read/checkpoint
   resources remain exact; no nullable reinterpretation or copied checkpoint admits an app append.
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
