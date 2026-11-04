@@ -25034,7 +25034,7 @@ canonical_text: >-
   effective window/tokens, cache hit, and source composition; its click menu is local and
   offers Compact Now plus More Details. Compact Now alone dispatches
   cmd.chat.compact_context and updates ring/detail projections coherently, while More
-  Details reuses the existing open/focus/close thread Context Detail Pane commands and
+  Details reuses cmd.chat.open_thread_context_details and the existing focus/close commands and
   Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
   Assistant clone, app-wide Usage substitute, second detail drawer, or second context
   store is permitted.
@@ -25058,8 +25058,8 @@ acceptance_criteria:
   - No second Assistant component, controller, transcript store, context store, or page-local detail drawer is created.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
-  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plans-verify.py
+  - scripts/pm-plan-index.py
 risk_class: shared_assistant_identity_or_context_projection_drift
 reasoning_tier: high
 context_scope: pm7_commands_wiring_dry_assistant
@@ -25078,6 +25078,7 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/assistant-chat-design.md#ACD-500"
+  - "DL-260 source lineage only (no product API or implementation obligation): chatPanel and chatResizer were concept DOM identities; the shared Assistant component, resize ownership and state continuity remain product requirements."
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -25085,8 +25086,6 @@ preserved_exact_tokens:
   - Raw
   - cmd.chat.compact_context
   - cmd.chat.open_thread_context_details
-  - chatPanel
-  - chatResizer
 negative_constraints:
   - Do not clone or fork Assistant state when changing pages or hosts.
   - Do not dispatch compaction from hover or menu disclosure.
@@ -27020,8 +27019,8 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   per-reply files row replace the stream footer pill''s helpers and files chips (ACD-482, DL-129). Amended 2026-10-29
   (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views
   of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped
-  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. needsYou
-  items are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
+  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. Items requiring input or review
+  are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
   their visibility rules. Visible work times update through the shared tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
@@ -27074,6 +27073,7 @@ source_lineage:
   - "Plans/Decision_Log.md DL-231 (a finished Chat Room round is no longer the user's move, 2026-10-21)"
   - "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
   - "DL-260 source lineage only (no product API or implementation obligation): activity-panel.js registered PM56_PMX.dock.provide(workDock) over PM_WORK and patched [data-work-time]; these were concept provider/DOM spellings."
+  - "DL-260 source lineage only (no product API or implementation obligation): needsYou was a concept work predicate; the owner AttentionItem projection supplies the product needs tone."
 preserved_exact_tokens:
   - "dock"
   - "AttentionItem"
@@ -28566,14 +28566,11 @@ canonical_text: >-
   uses its actual container. Activity/History/attachment floating Glass plates use persona/model menu
   plate. Friendly/Glass context ring is continuous, antialiased and never segmented by broken transforms.
   All ten looks, widths 860/1024/1280/~1390/1920, narrow/short, Reduced Motion and drag budgets are
-  acceptance surfaces. G9/C5, PM7 Step4 final-source reconciliation, 2026-10-30: the activity lane report and
-  pm7-port/css/20-controls.css resolve PM7-C5-CONTEXT-RING. The conic background tiled into a 1 px faint
-  border (Friendly 6 percent, Glass 9 percent alpha), exposing slivers; Glass’s clear --surface middle disc
-  exposed the meter as a pie. The hosted Basic/Friendly/Glass owner now draws the meter on its own ::before
-  layer, cut to an approximately 3 px ring with a radial mask; the
-  middle is the header’s ground and no gradient tiles into the border. Retro/NieR retain their own drawings.
-  This records the reported concept cause/drawing rule; native continuous antialiased rendering at actual
-  widths/DPR/Reduced Motion remains acceptance, not certification by this source note. G1 B (Jared
+  acceptance surfaces. G9/C5: the shared presentation owner draws the Basic/Friendly/Glass context meter as
+  a continuous antialiased ring approximately 3 px thick. Its middle matches the header ground, with no
+  tiled gradient slivers at the border or meter fill leaking into the middle. Retro/NieR retain their own
+  drawings. Actual widths, device pixel ratios and Reduced Motion remain native acceptance surfaces;
+  concept diagnosis or a static drawing is not certification. G1 B (Jared
   2026-10-30): Pin/unpin is the view-local ui.activity_detail.pin action
   (binding chat.activity.pin), default false. Pinned Activity Detail stays open across thread switches and
   reprojects the selected thread’s data; unpinned detail closes on a thread switch. Pin changes lifetime only:
@@ -28600,11 +28597,11 @@ acceptance_criteria:
 - Glass Activity/History/attachment plates use the same menu token, and C5 remains an explicit measured acceptance/investigation
   until the GUI report records its fix.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- Concepts/background-activity/opus-5.5/HANDOFF.md (22 checks rewritten for native owner surfaces)
-- 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
-- python3 scripts/pm7-build-check.py
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
+  - Concepts/background-activity/opus-5.5/HANDOFF.md
+  - future 60 fps GPU recordings across ten looks, narrow/short widths and Reduced Motion
+  - scripts/pm7-build-check.py
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -28618,6 +28615,7 @@ source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/background-activity/opus-5.5/README.md
 - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+- "DL-260 source lineage only (no product stylesheet, selector or implementation obligation): the activity lane report and pm7-port/css/20-controls.css resolved PM7-C5-CONTEXT-RING; a conic background tiled into a faint 1 px border (Friendly 6 percent, Glass 9 percent alpha), while a clear --surface disc exposed the meter as a pie. The concept repair used an isolated ::before layer and radial mask; native rendering must satisfy the shared visual invariant."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.
