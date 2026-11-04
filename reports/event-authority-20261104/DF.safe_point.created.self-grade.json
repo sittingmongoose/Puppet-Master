@@ -14,13 +14,13 @@
       "line_end": 25023,
       "quote": "**Producer and transition.**",
       "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
-      "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+      "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
       "quote_check": "exact"
     }
   ],
-  "outcome": "register (technically prepared; held on retention and admission)",
+  "outcome": "register (prepared; individual admission absent; event-history retention pending)",
   "pass_count": 10,
-  "before_pass_count": 7,
+  "before_pass_count": 8,
   "normative_depth_complete": false,
   "technical_depth_complete": true,
   "native_execution": "NOT_RUN",
@@ -53,12 +53,12 @@
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "ABSENT"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "owner_doc": {
       "status": "PASS",
@@ -72,7 +72,7 @@
           "line_end": 25021,
           "quote": "**Newly authored owner contract",
           "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         },
         {
@@ -82,22 +82,22 @@
           "line_end": 25031,
           "quote": "**Exact original source graph (second pass).**",
           "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "producer": {
       "status": "PASS",
       "representation": "exact_normative_owner",
-      "finding": "CV-557 selects its exact producer, separate Project/application original-source roots and ordered lifecycle; SP-557 explicitly adopts SP-286/CV-339 full-value v2 before terminal publication. Native methods remain specified_unimplemented.",
+      "finding": "CV-557 now requires its own complete application original composition: closed safe-point record, manifest/blob inventory and, for restoration, journal/pre/post/equality roots. Exact method outputs, body codecs, scope/subject/hold/outcome joins validate; original Project bytes remain unchanged. SP-286/CV-339 ordering remains explicit. Native methods stay specified_unimplemented.",
       "evidence": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -106,7 +106,27 @@
           "line_end": 25031,
           "quote": "**Exact original source graph (second pass).**",
           "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-557",
+          "line_start": 25045,
+          "line_end": 25045,
+          "quote": "**Lifecycle barriers for",
+          "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-557",
+          "line_start": 29986,
+          "line_end": 29986,
+          "quote": "**Ordered producer and custody.**",
+          "excerpt_sha256": "231cb7973757ab8bc3a8e344fcd3b93bfcc4510cbb98bad2dc9aef6a8a073d6c",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         },
         {
@@ -114,29 +134,49 @@
           "unit": "CV-557",
           "line_start": 25039,
           "line_end": 25039,
-          "quote": "**Lifecycle barriers for",
-          "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "quote": "**Complete application originals for `safe_point.created`",
+          "excerpt_sha256": "1a0d3e6468fcd1327be0383f2031a98e906d1787a278d8f1df1d02078cff8c75",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         },
         {
-          "path": "Plans/storage-plan.md",
-          "unit": "SP-557",
-          "line_start": 29956,
-          "line_end": 29956,
-          "quote": "**Ordered producer and custody.**",
-          "excerpt_sha256": "231cb7973757ab8bc3a8e344fcd3b93bfcc4510cbb98bad2dc9aef6a8a073d6c",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "path": "Plans/filesafe_event_sources/safe_point_created.contract.json",
+          "unit": "CV-557",
+          "line_start": 196,
+          "line_end": 196,
+          "quote": "\"application_original_composition_root\"",
+          "excerpt_sha256": "08d8aa7b1c1c2be732b8f3ad15f7bfc988847ef35e134f5461cfd7489b8bfc29",
+          "file_sha256": "f813f1d9fb208468537a36dc3fcd174a22e5f000457b387ccd4088ee0bddb4f6",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-557",
+          "line_start": 25039,
+          "line_end": 25039,
+          "quote": "**Complete application originals for `safe_point.created`",
+          "excerpt_sha256": "1a0d3e6468fcd1327be0383f2031a98e906d1787a278d8f1df1d02078cff8c75",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_event_sources/safe_point_created.contract.json",
+          "unit": "CV-557",
+          "line_start": 196,
+          "line_end": 196,
+          "quote": "\"application_original_composition_root\"",
+          "excerpt_sha256": "08d8aa7b1c1c2be732b8f3ad15f7bfc988847ef35e134f5461cfd7489b8bfc29",
+          "file_sha256": "f813f1d9fb208468537a36dc3fcd174a22e5f000457b387ccd4088ee0bddb4f6",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PARTIAL"
       },
       "change": "upgraded",
-      "change_reason": "Own complete source graph, full envelope joins and executable contract oracles now close the first-pass technical gap."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -160,17 +200,17 @@
           "line_end": 25021,
           "quote": "**Newly authored owner contract",
           "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "scope_identity": {
       "status": "PASS",
@@ -184,37 +224,37 @@
           "line_end": 25025,
           "quote": "**Scope and joins.**",
           "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         },
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29958,
-          "line_end": 29958,
+          "line_start": 29988,
+          "line_end": 29988,
           "quote": "**Identity and replay.**",
           "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25051,
-          "line_end": 25051,
+          "line_start": 25057,
+          "line_end": 25057,
           "quote": "For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id",
           "excerpt_sha256": "f47b120453aaecf4c6f89b6cedba1f5e546b1d1a318620eab8101bb2c624a94d",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
-        "status": "PARTIAL"
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
+        "status": "PASS"
       },
-      "change": "upgraded",
-      "change_reason": "Own complete source graph, full envelope joins and executable contract oracles now close the first-pass technical gap."
+      "change": "carried",
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "replay_idempotency": {
       "status": "PASS",
@@ -224,55 +264,85 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29958,
-          "line_end": 29958,
+          "line_start": 29988,
+          "line_end": 29988,
           "quote": "**Identity and replay.**",
           "excerpt_sha256": "034db3a68c887aa6cc2b0edc84154ffc1cc637de2a1eaa4193ac07fca6897749",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         },
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29968,
-          "line_end": 29968,
+          "line_start": 30002,
+          "line_end": 30002,
           "quote": "**Exact original/issued joins for",
           "excerpt_sha256": "7d30fbf28de19e08f8c5e6fc7bd3bb139095e767453b0ece4a0b3dc7e4307b1e",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-557",
+          "line_start": 29998,
+          "line_end": 29998,
+          "quote": "**Recovery and withdrawal authority for `safe_point.created`",
+          "excerpt_sha256": "b8860f4671c3ff49d406b465010e381fe3c18f76f957fa3d8dc731412d5bb630",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-557",
+          "line_start": 29998,
+          "line_end": 29998,
+          "quote": "**Recovery and withdrawal authority for `safe_point.created`",
+          "excerpt_sha256": "b8860f4671c3ff49d406b465010e381fe3c18f76f957fa3d8dc731412d5bb630",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "retention": {
       "status": "PARTIAL",
       "representation": "exact_normative_owner",
-      "finding": "PENDING_RETENTION_DECISION remains unchanged. Jared must select the exact event-history retention class; source-body and generic index/checkpoint policies do not decide it. No assignment or deletion policy is chosen here.",
+      "finding": "SP-557 leaves only this EventRecord history classification as PENDING_RETENTION_DECISION. Its exact narrowed question is recorded without reopening already-governed source-body, snapshot, transaction, index or checkpoint policies. No owner choice is inferred.",
       "evidence": [
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29964,
-          "line_end": 29964,
+          "line_start": 29994,
+          "line_end": 29994,
           "quote": "**Retention.**",
           "excerpt_sha256": "e3b37dea46eb5c037336ebd0ac01fbdaa25d40ee8eb0f60d13fc6970139ccfba",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_event_sources/safe_point_created.contract.json",
+          "unit": "CV-557",
+          "line_start": 144,
+          "line_end": 144,
+          "quote": "\"retention_policy_ref\"",
+          "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
+          "file_sha256": "f813f1d9fb208468537a36dc3fcd174a22e5f000457b387ccd4088ee0bddb4f6",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PARTIAL"
       },
       "change": "carried",
-      "change_reason": "Explicit retention marker preserved for Jared; no policy choice made."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "redaction_custody": {
       "status": "PASS",
@@ -282,11 +352,11 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29962,
-          "line_end": 29962,
+          "line_start": 29992,
+          "line_end": 29992,
           "quote": "**Redaction and custody.**",
           "excerpt_sha256": "8296c6aac065df812febb80a254a528c45dd22d35e8bcd8004a440343a19647d",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         },
         {
@@ -296,17 +366,17 @@
           "line_end": 25033,
           "quote": "The source's original_request, original_result, writer_epoch",
           "excerpt_sha256": "de1002a443a05f71d88cc27b17bbf29fb758718f7b9c1a9a14a48d3e3331133a",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "transitions": {
       "status": "PASS",
@@ -320,27 +390,27 @@
           "line_end": 25023,
           "quote": "**Producer and transition.**",
           "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-557",
-          "line_start": 25039,
-          "line_end": 25039,
+          "line_start": 25045,
+          "line_end": 25045,
           "quote": "**Lifecycle barriers for",
           "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "consumers_checkpoints": {
       "status": "PASS",
@@ -350,21 +420,21 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29960,
-          "line_end": 29960,
+          "line_start": 29990,
+          "line_end": 29990,
           "quote": "**Exact consumer and checkpoint.**",
           "excerpt_sha256": "c24eda101413e36fba51ca3419bd8f48dd9b7412408bd931bbcb152dc6a87ff6",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
@@ -378,66 +448,86 @@
           "line_end": 25027,
           "quote": "**Compatibility.**",
           "excerpt_sha256": "1f2549a6c617bebc1dfaf68610c6d1dcf58a05ee350ae8c170ee238fece5f094",
-          "file_sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
+          "file_sha256": "188c65a680cd6787ee1ce2683b5d7327e6f9a082d11ac6aa1b240aedc0e6d5f7",
           "quote_check": "exact"
         },
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-557",
-          "line_start": 29966,
-          "line_end": 29966,
+          "line_start": 29996,
+          "line_end": 29996,
           "quote": "**Withdrawal and rebuild.**",
           "excerpt_sha256": "de37570b4c3d81147182c5b59fa0fbebea4c6b2277b590040a69dab7ce530304",
-          "file_sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-557",
+          "line_start": 29998,
+          "line_end": 29998,
+          "quote": "**Recovery and withdrawal authority for `safe_point.created`",
+          "excerpt_sha256": "b8860f4671c3ff49d406b465010e381fe3c18f76f957fa3d8dc731412d5bb630",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-557",
+          "line_start": 29998,
+          "line_end": 29998,
+          "quote": "**Recovery and withdrawal authority for `safe_point.created`",
+          "excerpt_sha256": "b8860f4671c3ff49d406b465010e381fe3c18f76f957fa3d8dc731412d5bb630",
+          "file_sha256": "85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Re-read current owner text and checked current source/schema/fixture evidence; this criterion remains supported at its stated status."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     },
     "positive_negative_oracles": {
       "status": "PASS",
       "representation": "exact_normative_owner",
-      "finding": "ATS-279 authors this family's complete source/envelope/receipt positives, wrong-scope/missing-join/forged-source negatives and duplicate/conflict/crash/recovery/withdrawal traces. Both targeted checkers pass. Native authenticity, fsync/CAS, access, deletion and actual effects remain authored NOT_RUN.",
+      "finding": "ATS-279 and this family's fixtures cover Project/application complete originals and authority joins, durable recovery refusal, missing/changed issued custody, retained duplicates without disposed controls, pre-prepare pending withdrawal, pre-rebuild survivor loss and source/reader-generation CAS races. Full authority and payload checkers pass. Native execution remains NOT_RUN.",
       "evidence": [
         {
           "path": "Plans/Automated_Testing_System.md",
           "unit": "ATS-279",
-          "line_start": 7443,
-          "line_end": 7443,
-          "quote": "`safe_point.created`: `Plans/filesafe_event_authority_fixtures.json`",
-          "excerpt_sha256": "9e89d1efb88df19701172bd0254f77fe724b5987d759a02adfcf7aa87db8f7e9",
-          "file_sha256": "323cb328c6e1ab6de46d5c9aa372881c3a0c98ccbe858d6ed32e71d038b857df",
+          "line_start": 7474,
+          "line_end": 7474,
+          "quote": "- `safe_point.created`: independent Project and application traces",
+          "excerpt_sha256": "7fd3f3b9feb2f9533fad1d8e02f113b0b5c24254274fbf320173bf299d185ba1",
+          "file_sha256": "88ef1d61ac97c1a4a36444add5b06fa6afdfbc051e62049532d26e199ece456a",
           "quote_check": "exact"
         },
         {
-          "path": "Plans/filesafe_event_sources/safe_point_created.contract.json",
+          "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-557",
-          "line_start": 4,
-          "line_end": 4,
-          "quote": "\"event_type\": \"safe_point.created\"",
-          "excerpt_sha256": "3f81fcaaa79ac8c32d7731fcf2a452d96662481fcac2367b8ec1e4f2b18203d5",
-          "file_sha256": "e6660ebe75d28e26b0f8d028bb71a7ff7d1323463216dc0a9eb26effdbc49809",
+          "line_start": 41087,
+          "line_end": 41087,
+          "quote": "\"id\": \"safe_point_created.fix1.1.missing_custody_after_recovery\"",
+          "excerpt_sha256": "958ab4a3b9ff2dba80b21a8988ae196f73a26388efb0598c5dd1e447c7fa0e18",
+          "file_sha256": "2c5e7d24464fc5cfda32b829d61fbdb6c2650565c6ccd4170c95b7aaa6a3b497",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "reports/event-authority-20261104/DF.self-grade.json",
-        "commit": "c7058590332b1cc87afb56e39dc6b7afc2fa3e7a",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/regrade.json",
+        "commit": "be2b254338c4d5fd4d79e63df8a74f9dda651f44",
         "status": "PARTIAL"
       },
       "change": "upgraded",
-      "change_reason": "Own complete source graph, full envelope joins and executable contract oracles now close the first-pass technical gap."
+      "change_reason": "Re-read own current owner text and refreshed exact citations; review round 1 fixtures and full checker pass."
     }
   },
   "remaining_gaps": [
-    "RETENTION: Jared, which exact Case L-3 retention class owns safe_point.created event history: authority/approval/receipt, non-authority security/recovery, or runtime/run history? PENDING_RETENTION_DECISION is preserved in SP-557.",
-    "ADMISSION: safe_point.created membership_version remains ABSENT; batch integration owns separate individual admission after retention and review."
+    "RETENTION: Is safe_point.created EventRecord history an authority/capture receipt (RP-AUTHORITY-INDEFINITE), non-authority recovery operational history (RP-OPERATIONAL-2555D), or runtime history (RP-RUNTIME-365D), independently of the already-governed released snapshot bodies? PENDING_RETENTION_DECISION remains in SP-557.",
+    "ADMISSION: safe_point.created membership_version remains ABSENT; separate individual batch admission is required."
   ],
   "static_checks_seen": [
     "python3 scripts/pm_filesafe_event_contracts.py",
@@ -445,6 +535,12 @@
     "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
     "python3 scripts/pm-plan-index.py validate"
   ],
-  "notes": "Ten technical criteria PASS; no 12/12 claim, native certification, Event Authority admission or retention decision. Original-source banks and protocol traces are synthetic contract tests, never native acceptance.",
-  "grading_batch": "DF_P2_self_grade"
+  "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
+  "grading_batch": "DF_FIX1_self_grade",
+  "assessed_head": "a73fe06f238b88db8b2f4280bcec34af65ee6e75",
+  "counts": {
+    "PASS": 10,
+    "PARTIAL": 1,
+    "ABSENT": 1
+  }
 }
