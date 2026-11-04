@@ -1,25 +1,34 @@
-# DF — review round 3 fixes
+# DF — extra authorized review round 4
 
-Branch: `plans/ea-w2-filesafe-20261104`. Starting reviewed head: `bd0000e139825d8e99260de647f2421026eadb42`. Assessed repair head: `223e52e83e7b4147d371005d1c0d0a7621fa515c`. The subsequent report/self-grade commit changes no assessed source or derived artifact. This is the third and last permitted fix round; no further review was spawned.
+Branch: `plans/ea-w2-filesafe-20261104`. Reviewed starting head: `d82ede0801cf2f66a5bc869e4664838729ea1241`. Assessed repair head: `67aeb8c7228003c40324d5b30a0fdf875a5665ec`. The following report/self-grade commit changes no assessed source or derived artifact. This extra round fixes only Astra's two standing-check blockers. No further review was spawned.
 
-All nine families are prepared with B8 repaired in the static contract/checker scope. Membership remains ABSENT, native execution NOT_RUN, and seven event-history retention questions remain pending. No emission permission, native payload-pack proof or 12/12 admission is claimed.
+All nine are prepared in the static contract scope after the two repairs and complete regression run. Membership remains ABSENT; native execution remains NOT_RUN. Seven unchanged, narrowed EventRecord retention questions remain pending for Jared. No admission, deletion choice or runtime/governance clearance follows.
 
-## Review round 3: findings and responses
+## Review round 4: findings and responses
 
-- **B8 — fixed (`223e52e83e7b4147d371005d1c0d0a7621fa515c`). Where:** `scripts/pm_filesafe_event_authority.py:164` / `418`, `scripts/pm_filesafe_event_contracts.py:52`, each of the nine own payload/source schema roots and source graph resource pins, CV-550..558 and ATS-275..279. **Why:** the old materializer required a null reference without measuring the complete inline semantic body, and retained issued lookup had no independent byte-budget check. **Fix:** enforce SP-337's complete canonical UTF-8 JSON byte budget before original acceptance/append and on issued/retained-boundary copies. Exactly 16,384 bytes is inline-valid; 16,385 refuses as inline_payload_too_large. Larger semantic bodies use verified BLAKE3/byte-size/media-type references with empty stored inline payload, canonical decoding, exact original-source joins and selected durable synthetic pack/index custody. Recovery, terminal publication, retry and rebuild cannot accept oversized or unavailable stored copies. Each family has ASCII/UTF-8 exact-boundary negatives, isolated consistently committed oversized issued negatives, valid reference positives in both scopes, reference corruption/loss/durability negatives and full writer/refusal/recovery/retry traces. Verify `full-mutations.py standing`, both checker entry points and `standing-checks.json`; the review's original 18 B8 invalid originals now produce 18 of the deliberate CLI failures.
-- **B1 — fixed previously (`42b9a62384`); regression PASS.** Both safe-point families' complete application originals remain closed. Re-encoded/rehashed wrong safe-point subjects and manifest counts refuse; restored's impossible cursor refuses. `full-mutations.py B1-B7` passes these independent mutations through the complete checker; all preserved original Project resources remain byte-identical.
-- **B2 — fixed previously (`42b9a62384`); regression PASS.** For all nine families in both scopes, issued-row loss, custody loss and changed first receipts fence recovery, terminal publication and cached retry, including a second crash. The unchanged own full-checker traces and independent `cycle3-regression-probes.py` cover every earlier mutation.
-- **B3 — fixed previously (`42b9a62384`); regression PASS.** Every family/scope refuses reduced retained sets before constructor/cutoff/rebuild/publication, pending owner work and source/reader generation races. Intact retained custody still supports retry/rebuild after original controls are disposed. B2/B3 total 396 independently asserted refusals plus valid disposed-control paths; the original authored protocol traces pass unchanged.
-- **B4 — fixed previously (`42b9a62384`, `a73fe06f23`); regression PASS.** Own granted/policy_degraded retain the existing authority-indefinite / 2,555-day diagnostic defaults. Across all nine, four assignment probes each give exactly one valid policy. Three full-CLI graph mutation batches rehash the graph and apply each wrong alternative per family; all 27 mutations fail. Each batch returns exit 1 and exactly 18 diagnostics: retention_changed and the existing wrong_retention_assignment_accepted invariant for each family. The mutation harness originally expected one diagnostic per family; its assertion was corrected to require both existing diagnostics and rerun. No owner question was answered or expanded.
-- **B5 — fixed previously (`42b9a62384`); regression PASS.** All 15 ignored currentness inputs match the shared edition by SHA-256, all 269 inventoried sources exist, index generation/validation pass, and committed readiness has zero false missing-source rows. Removing inventoried ledger_registry.json makes the actual full index validator exit 1/status fail, then exact restoration returns validation to pass (`B5-index-mutation.py`).
-- **B6 — fixed previously (`655a0d97e8`); regression PASS.** Every family/scope refuses projector_replay_only at original materialization, owner_commit, prepare, append, receipt and both retry paths: 126 independent assertions, plus full-checker replay refusal traces. The Storage semantic digest remains byte-unchanged.
-- **B7 — fixed previously (`655a0d97e8`); regression PASS.** All five application restore outcomes refuse rehashed wrong result pointers and delete against live targets; full-checker mutations pass. The 45-case independent journal group retains 39 expected refusals and six valid metadata/unchanged controls. Earlier valid null-pointer/create/delete/metadata positives remain unchanged.
+- **Astra B1 — fixed (`67aeb8c7228003c40324d5b30a0fdf875a5665ec`). Where:** `scripts/pm_filesafe_event_authority.py:546`, own inline/reference Project/application protocol cases, ATS-275..279. **Why:** passive event reads called current writer materialization, reopening domain controls and comparing historical writer_epoch to live writer_epoch. **Fix:** independently resolve the retained original issued EventRecord and unchanged first receipt against the selected retained boundary, Storage identity and reader generation; verify complete issued/payload custody without reopening current writer controls. Reader withdrawal, forged/lost issued rows, altered receipts, absent boundary, stale reader generation and wrong Storage still refuse. Writer acceptance retains its original selection/epoch checks. All 36 earlier historical counterexamples now read successfully. Own fixtures add 486 protocol traces, including all inline/reference/scope combinations and 18 body reads after epoch rollover. The nine old missing-body tests now explicitly request `read_body`, keep their original `read_unavailable` assertion, and also assert that the intact event row remains readable; no body-refusal expectation is removed. Native body access/holds remain their owner's responsibility and NOT_RUN. Verify both full checkers, `probes.py`, `cli-mutations.py` and the own protocol fixtures.
+- **Astra B2 — fixed (`67aeb8c7228003c40324d5b30a0fdf875a5665ec`). Where:** `scripts/pm_filesafe_schema_graph.py:42`, `scripts/pm_filesafe_event_contracts.py:92`, all nine own source graphs and `Plans/filesafe_schema_graph_fixtures.json`. **Why:** the graph omitted the existing shared integration expansion resource and check_schema never dereferenced unused definitions. **Fix:** pin the missing exact dependency in each graph, preserve all prior pins, and resolve every selected `$ref`/`$dynamicRef` offline, including unused definitions and nested `$id` scopes. Both entry points run five own negative graph cases per family (45 each): dangling source, payload and dependency definitions, unselected dependency and nested-scope missing reference. All 3,937 independently inspected references now resolve. Rehashed additions of 18 unexercised dangling definitions produce exit 1/status fail and exactly 18 unresolved-reference diagnostics in each complete CLI. Their prior incorrect exit 0 is gone. Verify the full schema fixture tests and `cli-mutations.py`.
 
-No finding is disputed. No technical review finding remains open.
+No finding is disputed. No standing-check defect remains open in the static scope. N1's timestamp-only index note is retained: generation refreshes generated_at_utc; structural content, not literal timestamp identity, is asserted.
+
+## Earlier findings B1 through B8: every mutation rerun
+
+These are the numbered findings from the earlier Sol reviews, distinct from Astra's restarted B1/B2 numbering. Each result is based on this round's execution, not a carried old log.
+
+| Earlier finding | Result at assessed head | Current reproduction evidence |
+|---|---|---|
+| B1: opaque application safe-point originals | PASS; prior fix `42b9a62384` holds | Re-encoded/rehashed wrong subjects and manifest counts refuse; restored impossible cursors refuse. Full-checker B1/B7 mutations and independent original-record probes pass. Original Project resources remain byte-identical. |
+| B2: terminal/cached retry after failed recovery | PASS; prior fix `42b9a62384` holds | Every family/scope loses issued row, custody or first receipt; recovery, terminal and cached retry refuse through two crashes. No prior counterexample is accepted. |
+| B3: reduced survivors/pending owner commit | PASS; prior fix `42b9a62384` holds | Before-constructor/cutoff/rebuild/publication loss, pre-prepare pending work and source/reader generation races retain fences. B2/B3's 396 earlier refusal assertions pass; intact custody supports disposed-control retry/rebuild/publication. |
+| B4: already-governed retention defaults | PASS; prior fixes `42b9a62384`, `a73fe06f23` hold | Thirty-six independent assignment probes plus three rehashed full-CLI batches reject every wrong alternative (27 mutations, 18 exact diagnostics per batch, exit 1). Granted remains authority-indefinite; policy_degraded remains 2,555-day non-authority diagnostics. Seven narrow questions unchanged. |
+| B5: false missing-source index failures | PASS; prior fix `42b9a62384` holds | All 269 inventoried sources and 15 SHA-verified currentness inputs exist; generated index validates with parsed top-level pass. Removing inventoried ledger_registry.json makes the full index validator exit 1/status fail; exact restoration returns final validation to pass. No false missing-source rows remain. |
+| B6: replay-only retry acceptance | PASS; prior fix `655a0d97e8` holds | 126 independent current-writer/retry refusals, including after disposed controls; added full-checker traces pass. Storage's semantic digest implementation is byte-unchanged. |
+| B7: restore journal/result/operation contradictions | PASS; prior fix `655a0d97e8` holds | Rehashed wrong result pointers/delete-against-live-target mutations refuse for all five app outcomes; 45 journal probes preserve 39 expected refusals and six valid controls. Pre-append null/create/delete/metadata positives remain supported. |
+| B8: oversized inline semantic bodies | PASS; prior fix `223e52e83e` holds | All 18 independent oversized originals refuse, including when deliberately supplied as positives to the actual CLI. ASCII/UTF-8 exact 16,383/16,384/16,385 boundaries, 18 large SP-337 reference positives, reference loss/corruption/non-durability and consistently committed oversized issued copies pass their expected oracle outcomes. |
 
 ## Family grades before and after
 
-Before is the independent cycle-3 review. Counts are PASS / PARTIAL / ABSENT. Only positive_negative_oracles changes PARTIAL to PASS; all other cells are checked against their own evidence. The 108 cells and all refreshed citations pin the assessed repair head.
+Before is Astra's pinned review. Counts are PASS / PARTIAL / ABSENT. Only C12 positive_negative_oracles upgrades PARTIAL to PASS for each family. All 108 cells have refreshed, exact own-family source citations; C1 stays ABSENT and seven C7 cells stay PARTIAL. Native NOT_RUN does not lower a normative grade.
 
 | Family | Before | After |
 |---|---|---|
@@ -33,45 +42,46 @@ Before is the independent cycle-3 review. Counts are PASS / PARTIAL / ABSENT. On
 | `safe_point.created` | 9 / 2 / 1 | 10 / 1 / 1 |
 | `safe_point.restored` | 9 / 2 / 1 | 10 / 1 / 1 |
 
-## Standing checks per family
+## All ten standing checks per family
 
-1 replay-only refusal; 2 exact CV-366 application key; 3 encoded Project partition; 4 SP-337 inline bytes/reference/stored copies; 5 trailing-LF guards; 6 caller semantic retry comparison; 7 storage identity joins; 8 failure exit codes. **F = fixed by the assessed repair commit above; P = pass.** Every cell has an own-family negative case in standing-case-map.json and a complete-checker result. The deliberate failure suites are expected to exit 1; their wrapper fails if either checker exits 0 or reports success.
+P = pass; F = fixed by `67aeb8c7228003c40324d5b30a0fdf875a5665ec`; no cell is open in the implemented static scope. Checks: 1 replay-only writer/retry refusal; 2 exact CV-366 application key; 3 encoded project~ partition; 4 SP-337 16 KiB/reference custody; 5 trailing-LF guards; 6 caller semantic retry comparison; 7 checkpoint/storage identities; 8 nonzero failure exits; 9 complete reference closure; 10 retained historical reads across live writer-state changes.
 
-| Family | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---|---|---|---|---|---|---|---|---|
-| `filesafe.command_denied` | P | P | P | F | P | P | P* | P |
-| `filesafe.destructive_override_denied` | P | P | P | F | P | P | P* | P |
-| `filesafe.destructive_override_granted` | P | P | P | F | P | P | P* | P |
-| `filesafe.destructive_override_requested` | P | P | P | F | P | P | P* | P |
-| `filesafe.guard_init_failed` | P | P | P | F | P | P | P* | P |
-| `filesafe.path_denied` | P | P | P | F | P | P | P* | P |
-| `filesafe.policy_degraded` | P | P | P | F | P | P | P* | P |
-| `safe_point.created` | P | P | P | F | P | P | P* | P |
-| `safe_point.restored` | P | P | P | F | P | P | P* | P |
+| Family | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `filesafe.command_denied` | P | P | P | P | P | P | P* | P | F | F |
+| `filesafe.destructive_override_denied` | P | P | P | P | P | P | P* | P | F | F |
+| `filesafe.destructive_override_granted` | P | P | P | P | P | P | P* | P | F | F |
+| `filesafe.destructive_override_requested` | P | P | P | P | P | P | P* | P | F | F |
+| `filesafe.guard_init_failed` | P | P | P | P | P | P | P* | P | F | F |
+| `filesafe.path_denied` | P | P | P | P | P | P | P* | P | F | F |
+| `filesafe.policy_degraded` | P | P | P | P | P | P | P* | P | F | F |
+| `safe_point.created` | P | P | P | P | P | P | P* | P | F | F |
+| `safe_point.restored` | P | P | P | P | P | P | P* | P | F | F |
 
-*Check 7 is precise about coverage: every family has family_checkpoint=none_required, so there are zero family checkpoint positives. Complete original/event/receipt positives join Storage instance and partition; mismatches fail the full authority checker. All nine SP units independently adopt the generic SP-278/DL-076 nine durable token fields, fresh live snapshot, generation and CAS boundary. Actual generic native checkpoint/token/CAS execution remains NOT_RUN; receipt probes are not represented as execution of that protocol.
+*Check 7 is scoped precisely: all nine own graphs select family_checkpoint=none_required, with zero family checkpoint positives. Each separately adopts SP-278/DL-076's generic checkpoint, nine-field durable token, fresh live snapshot and CAS. All receipt Storage/partition mismatches and changed-store retries refuse. These receipt tests are not execution of generic checkpoint/CAS; native token/CAS remains NOT_RUN.
 
-Standing negatives: replay_only_not_appendable; wrong application version/prefix/suffix; raw Project partition; complete 16,385-byte ASCII/UTF-8 inline body and consistently committed issued copy; trailing LF on source/body/receipt/hash/descriptor identifiers; changed caller semantic body with metadata-only positive controls; cross-Storage/partition receipt and changed-store retry; a valid materialization/payload deliberately labelled negative. Every family has all applicable negative shapes. No standing cell is open in the implemented static scope.
+Per-family machine evidence: `standing-checks.json`, own graph-negative fixtures and `history-case-map.json`. The independent eight-check suite reran 126 replay refusals, 432 retry comparisons, 108 guarded identifier patterns, 144 composed LF cases and 45 journal probes, with no unexpected acceptance. The independent all-ten probe suite records 5,054 assertions, zero failures, including 90 unchanged/changed-live-state/withdrawn/forged history controls. Both complete CLIs reject nine valid cases deliberately labelled negative; the wrapper requires both nonzero exit and failing status. All mutation inputs restore byte-for-byte.
 
-## Checks and exact limits
+## Commands and limits
 
 | Check | Exit | Result |
 |---|---:|---|
-| Full authority checker, every standing case | 0 | top-level pass: 131 positives, 1,570 negatives, 684 protocol traces |
-| Full payload checker | 0 | pass: 92 positives, 186 negatives, 18 identity vectors |
-| ASCII and multibyte exact-boundary cases | 0 | 108 family/scope/alphabet/size cases; 16,383 and 16,384 accepted; 16,385 refused |
-| Complete semantic-body references | 0 | 18 positives; independently verified BLAKE3/length/media, 16,385 external bytes and empty 2-byte inline JSON object |
-| Full checker deliberate failure controls | 1 / 1 | authority exactly 27 expected failures (nine valid negatives + 18 review B8 invalid positives); payload exactly nine |
-| Full checker independent B1/B7 negatives + B6 traces | 0 | pass; original source relationships maintained and bodies re-encoded/rehashed |
-| Full checker B4 wrong assignments, three batches | 1 each | expected refusal: nine wrong policies and 18 exact diagnostics per batch |
-| Independent eight-check probe suite | 0 | 126 replay refusals, 432 retry comparisons, 108 guarded anchored patterns, 144 composed LF mutations, 45 journal cases; zero B8 acceptances |
-| Independent B2/B3 earlier mutation audit | 0 | 396 refusals, zero prior counterexamples accepted; valid disposed-control paths retained |
-| Shard generate / check | 0 / 0 | only Contracts and Automated Testing shard directories changed |
-| Index generate / validate | 0 / 0 | parsed top-level pass; 15 exact currentness files, all 269 inputs, zero false missing-source rows |
-| Full index missing-source negative | 1 | expected fail; source restored byte-for-byte, final validate pass |
-| Scope / preservation / citation audit / diff check | 0 | old 41 positives / 1,300 negatives / 468 traces unchanged; original payload rows and Project resources unchanged |
+| Full authority CLI | 0 | pass: 131 positives, 1,570 negatives, 1,170 protocol traces; 45 graph-negative cases |
+| Full payload CLI | 0 | pass: 92 positives, 186 negatives, 18 identity vectors; 45 graph-negative cases |
+| Independent all-ten probes | 0 | 5,054 assertions, zero failures; 3,937 reference resolutions |
+| Independent earlier B1/B2/B3/B4/B6/B7/B8 probes | 0 | every prior counterexample refuses; valid controls retained |
+| Added rehashed source/payload dangling definitions | 1 / 1 | both complete CLIs fail, exactly 18 unresolved-reference diagnostics each |
+| Added retained-history epoch positives | 0 | all 18 pass the actual authority CLI |
+| Valid-labelled-negative controls | 1 / 1 | both CLIs fail with exactly nine diagnostics |
+| Earlier B1/B7 negatives and B6 retry traces in full CLI | 0 | all pass |
+| Earlier B4 rehashed wrong assignments | 1 each | three batches, 18 exact diagnostics per batch |
+| Earlier B8 invalid positives plus valid-negative controls | 1 / 1 | authority 27 expected failures; payload nine |
+| Shard generate/check | 0 / 0 | only Automated Testing derived directory changes |
+| Index generate/validate | 0 / 0 | parsed top-level pass; complete inputs; readiness remains blocked_runtime_certification_incomplete |
+| Full index missing-source negative | 1 | expected fail; exact source restoration; final validate pass |
+| Scope/case preservation/citations/diff check | 0 | all earlier positive/negative cases retained; only nine explicit body-read action routes clarified; no forbidden changes |
 
-Readiness remains blocked_runtime_certification_incomplete. Existing governance/currentness drift remains visible; no reseal, governance clearance, family admission or native certification is claimed. Native physical payload packs, fsync, permission/hold/deletion and generic checkpoint/CAS are NOT_RUN. The targeted checker search found the DF authority entry point and its imported payload owner; both ran in full. No test file was edited.
+Existing governance/currentness drift remains visible. A governance reseal is requested at batch integration for these owner edits; this worker does not reseal. No aggregate governance clearance is claimed. Native physical payload packs, fsync, permissions/holds/deletion, source authenticity and generic checkpoint/CAS are NOT_RUN.
 
 ## Exact retention questions stopped for Jared
 
@@ -87,30 +97,30 @@ Each question is copied exactly from its own SP retention paragraph. The five se
 
 ## Current premises, bindings and scope
 
-The nine own CV-550..558 paragraphs each explicitly adopt the current EventRecord envelope limit (Contracts_V0:1019) and SP-337/DL-270. `payload-binding-searches.json` records each family's separate current-owner search and negative evidence: the previous null-only materializer had no complete-semantic-body reference codec; the existing large file-blob fixture did not exercise EventRecord inline limits. Newly authored per-family technical bindings are the canonical JSON descriptor in the existing string payload_ref, the own closed payload_reference schema root and strict synthetic pack/index selection/readback. They implement already specified SP-337 behavior, without a new product feature, public command, persisted family or envelope field. No premise check failed.
+DL-045 still covers these nine exact names; current F2-213/CV-366 scope/original-source semantics, SP-286/CV-339 complete original receipt custody, SP-278/DL-076 durable-token/CAS and SP-337 payload ownership remain explicit. Current Case L-3 still supplies the two bound exact-kind defaults. No premise failed and no product choice was made. This round adds no new consumer, command, public schema root, identity recipe, stored family or lifetime. It repairs existing read and schema validation bindings.
 
-Unchanged premises: DL-045 still covers all nine exact names; F2-213/CV-366 still own application and encoded Project scope; SP-286/CV-339 retain full-value original custody; SP-278/DL-076 retain generic token/CAS; SP-336/SP-347 retain durability; granted and policy_degraded retain current governed defaults. The shared EventRecord schema, append-receipt roots, Storage-owned semantic digest, original Project resources, storage value registry, event family registry, Decision Log and Storage owner prose are byte-unchanged in this round. The seven exact questions above select no deletion, original-body, transaction, snapshot, index or checkpoint lifetime.
+Shared-owner hunk: only nine separately named round-4 regression paragraphs in ATS-275..279. Companions: DF authority fixtures, nine resource graphs, one lightweight per-family schema-graph fixture pack, the two existing DF checkers and one shared offline schema-resolution helper. All own payload/source schemas, original Project resources, Contracts and Storage owner prose, EventRecord/receipt/shared dependency resources and the Storage semantic digest implementation are byte-unchanged. Derived shards/index were regenerated, never hand-edited. No other owner document's derived files changed.
 
-Shared owner hunks: added only each own CV-550..558 SP-337 paragraph and each named family's ATS-275..279 mandatory regression paragraph. Companions: nine payload schema comments, nine source schema descriptor roots/resource graph pins, two DF fixture packs and two DF checker entry points. Derived shards/indexes were generated, never hand-edited. No files for another owner document changed.
+IDs reused: CV-550..558, SP-550..558, ATS-275..279. No new IDs; CV-559/SP-559 remain unused. No registry append/admission/Decision Log/storage-value edit; no Spec Lock/auto-decisions/evidence/frozen-validator/test edit; no main push/landing/reseal/subagent/new review.
 
-IDs used: existing **CV-550..558, SP-550..558, ATS-275..279**. No new IDs; CV-559/SP-559 remain unused. No registry append, admission, exclusion, Decision Log entry, storage-value addition, .gitignore/Spec Lock/auto_decisions/evidence/frozen-validator edit, main push, landing, subagent or additional blind review.
+## Resource checks and cleanup
 
-## Resources and cleanup
-
-Before worktree creation: 21 GiB RAM available and 134 GB disk available, satisfying the 6 GiB / 50 GB stop rules. Later: 18 GiB / 148 GB. Work used the required sparse detached `/home/sittingmongoose/pm-worktrees/DF-fix3` from the local clone and pinned lane head. The protocol's no-mail rule was followed after loading it; the initial read-only inbox preceded that read, and no registration or message was sent. All mutation inputs restore byte-for-byte. No server/browser was started. After the report/grades and source are pushed and copied, the temporary worktree is removed with a literal path. Nothing is landed.
+Before worktree creation: 17 GiB memory available and 107 GB disk free, above the 6 GiB/50 GB stop thresholds. Work used the sparse detached `/home/sittingmongoose/pm-worktrees/DF-fix4` from `~/src/PuppetMaster`. Later resource checks remained above limits. The fix brief's no-mail rule was followed after loading it: the initial read-only inbox/who calls preceded that read, and no registration/message was sent. No browser/server was started. The pushed source and final report/self-grades are copied to the evidence directory; the temporary worktree is removed with a literal path after push. No temporary branch was created and nothing was landed.
 
 ## Evidence custody
 
-Reproduction scripts and full outputs: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/`. The report and ten self-grade files are copied to `drafts/DF/`. Full technical manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/manifest.json`, SHA-256 `0f837cef96e773da16bde34cea7d9bf8f8972b06f9bd19a52517efe128d0f3f0`. It inventories every retained script/output by absolute path and SHA-256. Key evidence:
+Report and all ten self-grade files are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/`. Reproduction scripts and complete outputs are retained in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/`. Manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/manifest.json`, SHA-256 `3392ead7e21c3fce785ecc795d87d882dce19e882b79eb033beebd20a9fb2d86`. It records absolute paths, lengths and SHA-256 for every retained technical artifact. Final pushed head and worktree removal are recorded separately in `fix4/delivery.json`.
 
-| Path | SHA-256 |
+| Evidence path | SHA-256 |
 |---|---|
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/standing-checks.json` | `110ae5b1ee8e045ea31badb837ab0f7a10d8de1bccc165d1b09865aabb957bc3` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/full-mutations-standing.json` | `097bbcfb730c8837fcd9401bf95d01971e9bea5ce7034308319d307f48c9e51e` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/full-mutations-failure.json` | `74c5ddf3c051b5eb1c399e9ebc5002fc1c0df0658506f8f12864b3c22e1ba597` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/full-mutations-B1-B7.json` | `5a2814c50ea400529c60bec38b0bbcacf31168d4855475f76b179c1369845c7e` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/full-mutations-B4.json` | `692d6eae846c36021d1328217d3e2de028deaaff637ec93046cc1b23acd678e6` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/B5-index-mutation.json` | `e4c6990c8da686970cf121810427cf6addf8aecf73811f7b1481200a04809867` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/scope.json` | `6586d67e61c311369fa17f5cd54bdd171df17f3d4fb66c950e8ec16951e17d44` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/grade-citations.json` | `300dceb37c83f4f8dc26483363eaf4d3108f8005339c3ad0f09d15a9671d2523` |
-| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix3/index-validate.result.json` | `1643f99b4f175b0e234a1fcf050b935667ae1c9d4a9102f48e03f51dff136dc0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/authority.stdout.json` | `99e9fdcfce54d4a4785f1bd7fda208c801c7bca4fdd9679e2e606985b0ea5155` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/payload.stdout.json` | `fc8393517396082385ddce65221c2634632d8e0815c7a2ae2381107841b41218` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/probe-results.json` | `54b71b5824d2612919df1b2520566b466b02459cec92705c05fc2214961f3780` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/cli-mutation-summary.json` | `f978fd62d3b05c64db343d69b267638ac4d3e6499bd2323eb5d17f749029e5ca` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/full-mutations-B1-B7.json` | `94a02c9264acd4ee707a15424d560beb5d3c47da6d695f46f572f7e65c193cdf` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/full-mutations-B4.json` | `8c9cf150737fc302d3f15cc43a62d4d6fdedbe1998f361e49df1ee61acf0b6ed` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/full-mutations-failure.json` | `6995d163c3508efb82db70a640740ab476c55d8784582dcb9706e14da0eb9c85` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/B5-index-mutation.json` | `5eb2d8968a4b1a362011bb963d83f1e78d5e9e4454e81476d2ac49e90046dd47` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/scope-audit.json` | `c5ce3a2c60cbfda4779383e79b97503466b83aed11d7d813f50ed5a1b3540c9c` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/grade-citations.json` | `0656f09ce6b2a2c4324c4ffb0aff998fe06adc333e547dc5994987419124296a` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DF/fix4/index-validate.result.json` | `4ecebecdd31e1789f5f8da081a9da4cfe4ba3a783289ac69ce12ff2a2b9f2b1c` |
