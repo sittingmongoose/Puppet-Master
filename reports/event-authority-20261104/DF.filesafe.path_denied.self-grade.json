@@ -53,12 +53,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "ABSENT"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "owner_doc": {
       "status": "PASS",
@@ -87,12 +87,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "producer": {
       "status": "PASS",
@@ -131,12 +131,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -165,12 +165,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "scope_identity": {
       "status": "PASS",
@@ -209,12 +209,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "replay_idempotency": {
       "status": "PASS",
@@ -283,12 +283,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "retention": {
       "status": "PARTIAL",
@@ -308,21 +308,21 @@
         {
           "path": "Plans/filesafe_event_sources/filesafe_path_denied.contract.json",
           "unit": "CV-555",
-          "line_start": 134,
-          "line_end": 134,
+          "line_start": 139,
+          "line_end": 139,
           "quote": "\"retention_policy_ref\"",
           "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
-          "file_sha256": "c89c88901b26286f6522e71075273c6e2bce6822fda10b0ba6ba70882c56f1d2",
+          "file_sha256": "3fde4cd56bfaa360da24355bb449787e6beba628b6db440bd528d8b6cd3c2713",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PARTIAL"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "redaction_custody": {
       "status": "PASS",
@@ -351,12 +351,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "transitions": {
       "status": "PASS",
@@ -385,12 +385,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "consumers_checkpoints": {
       "status": "PASS",
@@ -409,12 +409,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
@@ -463,36 +463,36 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
+      "change_reason": "Own-family evidence re-read at the round-4 source head; Astra status retained."
     },
     "positive_negative_oracles": {
       "status": "PASS",
       "representation": "exact_normative_owner",
-      "finding": "ATS-277 and own full-checker Project/application cases cover complete canonical UTF-8 bodies at 16,383/16,384/16,385 bytes, ASCII and multibyte; valid BLAKE3-addressed large semantic-body references and invalid inline/retained copies. Missing/changed/non-durable references fail. Every standing check and B1..B7 regression holds; deliberate failure controls require nonzero exit. Native NOT_RUN.",
+      "finding": "ATS-277: own inline/reference historical reads survive writer changes/control disposal; withdrawn/forged/lost authority and unavailable bodies refuse. Both full CLIs exhaustively resolve pinned schemas and reject rehashed dangling references, including unused/nested definitions. All ten standing checks and earlier B1..B8 mutations pass. Native NOT_RUN.",
       "evidence": [
         {
           "path": "Plans/Automated_Testing_System.md",
           "unit": "ATS-277",
-          "line_start": 7400,
-          "line_end": 7400,
+          "line_start": 7414,
+          "line_end": 7414,
           "quote": "- `filesafe.path_denied`: independent Project and application traces",
           "excerpt_sha256": "24a90b091716cc70d0228f338697273174fe495d0abbadf1b09ca69e00cdc825",
-          "file_sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
+          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-555",
-          "line_start": 122412,
-          "line_end": 122412,
+          "line_start": 134866,
+          "line_end": 134866,
           "quote": "\"id\": \"filesafe_path_denied.fix1.1.missing_custody_after_recovery\"",
           "excerpt_sha256": "87179e1a338303acd086cee7658db49b60680a118f30c1c7d3036185e28a379a",
-          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
+          "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
           "quote_check": "exact"
         },
         {
@@ -509,30 +509,30 @@
           "path": "Plans/Automated_Testing_System.md",
           "unit": "ATS-277",
           "quote": "- `filesafe.path_denied`: in each Project/application scope",
-          "line_start": 7406,
-          "line_end": 7406,
+          "line_start": 7420,
+          "line_end": 7420,
           "excerpt_sha256": "1a40e35e0967b279511f9c8c4cc093f6de0d4377e1d9041e75ee9ff81e98e197",
-          "file_sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
+          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-555",
           "quote": "\"id\": \"filesafe_path_denied.fix2.replay_only_writer.project\"",
-          "line_start": 112979,
-          "line_end": 112979,
+          "line_start": 125429,
+          "line_end": 125429,
           "excerpt_sha256": "ff39324e9c069bb277bbbca16780c62e4f4830604ae80932dce50dded0f400cd",
-          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
+          "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
           "quote_check": "exact"
         },
         {
           "path": "scripts/pm_filesafe_event_authority.py",
           "unit": "CV-555",
           "quote": "return 'replay_only_not_appendable'",
-          "line_start": 478,
-          "line_end": 478,
+          "line_start": 470,
+          "line_end": 470,
           "excerpt_sha256": "d724ff68974f6d3c28933813a60a372848d55ce5bf8f35ddeacfc7ec4f6c2909",
-          "file_sha256": "f5f0368481af283a97fb4afc69a981841e75ecaf1f060f9dd0a3600593521c4b",
+          "file_sha256": "83fc7c1641a3454ea88e75e067fc7280d10c74559bd97206bfa8ffcd48d489c5",
           "quote_check": "exact"
         },
         {
@@ -549,50 +549,100 @@
           "path": "Plans/Automated_Testing_System.md",
           "unit": "ATS-277",
           "quote": "**Review round 3 SP-337 regressions for `filesafe.path_denied`.**",
-          "line_start": 7411,
-          "line_end": 7411,
+          "line_start": 7425,
+          "line_end": 7425,
           "excerpt_sha256": "30144d78e3f09d9264f3bd73b040144131a09d4d90d0f0d8bde840d8c10bb568",
-          "file_sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
+          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-555",
           "quote": "\"id\": \"filesafe_path_denied.fix3.inline_utf8_16385.project\"",
-          "line_start": 113671,
-          "line_end": 113671,
+          "line_start": 126121,
+          "line_end": 126121,
           "excerpt_sha256": "b9d2faa208930fd3a3420ba3cd97a9ed59605fb1f08870a9a13f3d6cd4636064",
-          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
+          "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-555",
           "quote": "\"id\": \"filesafe_path_denied.fix3.sp337_reference.application\"",
-          "line_start": 111240,
-          "line_end": 111240,
+          "line_start": 123690,
+          "line_end": 123690,
           "excerpt_sha256": "b1a348da50fb99949b7c4b4db90f06ba898681d7e6efd37e1cedf8056b8de24e",
-          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
+          "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
           "quote_check": "exact"
         },
         {
           "path": "scripts/pm_filesafe_event_authority.py",
           "unit": "CV-555",
           "quote": "return None, ['inline_payload_too_large']",
-          "line_start": 173,
-          "line_end": 173,
+          "line_start": 165,
+          "line_end": 165,
           "excerpt_sha256": "e8d6ae5f7cf6c653b007b152ff87d0c45613a864fbd88c190b8dc9a62cef64ab",
-          "file_sha256": "f5f0368481af283a97fb4afc69a981841e75ecaf1f060f9dd0a3600593521c4b",
+          "file_sha256": "83fc7c1641a3454ea88e75e067fc7280d10c74559bd97206bfa8ffcd48d489c5",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "unit": "ATS-277",
+          "quote": "- `filesafe.path_denied`: the passive historical reader resolves",
+          "line_start": 7430,
+          "line_end": 7430,
+          "excerpt_sha256": "0ad8545dc21be85d04cedcb3fd90389ebc18fd703ade05972d50d022a5b9745d",
+          "file_sha256": "55b9282e438c7a863c2cef65f63188395a8fb631d0870bef62281b3e1f5951c3",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_event_authority_fixtures.json",
+          "unit": "CV-555",
+          "quote": "\"id\": \"filesafe_path_denied.fix4.history.project.inline.epoch_rollover\"",
+          "line_start": 138281,
+          "line_end": 138281,
+          "excerpt_sha256": "415802c5e8f88c0817ab53e0dfe7b2ad265dd6d64c6a929a4d89380116951f4c",
+          "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_event_authority_fixtures.json",
+          "unit": "CV-555",
+          "quote": "\"id\": \"filesafe_path_denied.fix4.history.application.ref.disposed_controls\"",
+          "line_start": 140159,
+          "line_end": 140159,
+          "excerpt_sha256": "35f6378c23e684380a1570111bd42f43c013a93b8186e275e8fe44ebe062a260",
+          "file_sha256": "1c2284c6b0d26344d5f25abdc42aa1c50295f7aed136503c93e69241246485a5",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_schema_graph_fixtures.json",
+          "unit": "CV-555",
+          "quote": "\"id\": \"filesafe_path_denied.fix4.source_unexercised_dangling_ref\"",
+          "line_start": 164,
+          "line_end": 164,
+          "excerpt_sha256": "c01dfa49454c0899ddf44aa4be532cf803ddb093709c4c1ba190b4b8a231e0ea",
+          "file_sha256": "6d424afe6b7763e624eaf57db22b6473d964694df0cfbf6929c923a997df54c4",
+          "quote_check": "exact"
+        },
+        {
+          "path": "scripts/pm_filesafe_schema_graph.py",
+          "unit": "CV-555",
+          "quote": "def reference_failures(graph, documents, registry=None):",
+          "line_start": 42,
+          "line_end": 42,
+          "excerpt_sha256": "d5ece7815a275b1f0afe12843580458e2f86cc71abf08ab632ba1ef07a3beef4",
+          "file_sha256": "7e641ea2058f970b61af47d2717d87a4d532fb1891a20f86e103038f378ffb29",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
-        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/astra-evidence/independent-regrade.json",
+        "commit": "d82ede0801cf2f66a5bc869e4664838729ea1241",
         "status": "PARTIAL"
       },
       "change": "upgraded",
-      "change_reason": "Round-3 B8 complete inline byte budget and verified SP-337 reference/stored-copy regressions now pass the full checker."
+      "change_reason": "Round-4 historical reader and schema closure mutations pass both complete checker entry points; all earlier B1..B8 mutations rerun."
     }
   },
   "remaining_gaps": [
@@ -606,11 +656,12 @@
     "python3 scripts/pm-plan-index.py validate"
   ],
   "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-  "grading_batch": "DF_FIX3_self_grade",
-  "assessed_head": "223e52e83e7b4147d371005d1c0d0a7621fa515c",
+  "grading_batch": "DF_FIX4_self_grade",
+  "assessed_head": "67aeb8c7228003c40324d5b30a0fdf875a5665ec",
   "counts": {
     "PASS": 10,
     "PARTIAL": 1,
     "ABSENT": 1
-  }
+  },
+  "prepared_verdict": "PREPARED_WITHOUT_ADMISSION_RETENTION_PENDING"
 }
