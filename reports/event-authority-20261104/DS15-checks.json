@@ -1,79 +1,157 @@
 [
   {
-    "command": "python3 scripts/pm-ds15-event-contracts.py",
+    "check": "ds15",
+    "command": [
+      "python3",
+      "scripts/pm-ds15-event-contracts.py"
+    ],
     "exit_code": 0,
     "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/ds15-final.log",
-    "sha256": "5ee243719236cf529a6880ba3a5c6251f5c4942b50f96ad5c8489cd8f3be68b7"
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/ds15-final.log",
+    "sha256": "b4d7407de1ac30a436aba40c55cb4029f44bdd5a9897edcd93cf4d393abb8027",
+    "result": {
+      "status": "pass",
+      "families": 14,
+      "payload_oracles": 56,
+      "semantic_oracles": 2146,
+      "reference_closure_oracles": 84,
+      "predicate_oracles": 107,
+      "value_oracles": 49,
+      "guard_proof_oracles": 172,
+      "native_execution": "NOT_RUN"
+    }
   },
   {
-    "command": "python3 scripts/pm-implementation-readiness.py validate-case-l",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/case-l-final.log",
-    "sha256": "8f0cceb3d9a35e4b05ca887e3caf2bc10730734d6f9e3260126968ad918811f3"
-  },
-  {
-    "command": "python3 scripts/pm-storage-recovery-contracts.py --self-test",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/storage-recovery-final.log",
-    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
-  },
-  {
-    "command": "python3 scripts/pm-shared-runtime-contracts.py --self-test",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shared-runtime-final.log",
-    "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027"
-  },
-  {
-    "command": "python3 scripts/pm-storage-profile-check.py",
+    "check": "storage-profile",
+    "command": [
+      "python3",
+      "scripts/pm-storage-profile-check.py"
+    ],
     "exit_code": 1,
-    "top_level_status": "fail",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/storage-profile-final.log",
-    "sha256": "9270749a06650c8ca65cd42ed7a1f73fde7d3b2a574c20d5950831cc0bf94bd8"
+    "seconds": 0.69,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/storage-profile.log",
+    "sha256": "9270749a06650c8ca65cd42ed7a1f73fde7d3b2a574c20d5950831cc0bf94bd8",
+    "top_level_status": "fail"
   },
   {
-    "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+    "check": "case-l",
+    "command": [
+      "python3",
+      "scripts/pm-implementation-readiness.py",
+      "validate-case-l"
+    ],
     "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shard-generate-final.log",
-    "sha256": "d84a2c16f59253693752d9f4a4daedcffeeb7bd5bae8afeae0670c8b7499549e"
+    "seconds": 1.26,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/case-l.log",
+    "sha256": "b8b623f0843122fe4c4a445ec04008f5cb54ab971ce0cb339738033f7b4ecc24",
+    "top_level_status": "pass"
   },
   {
-    "command": "python3 scripts/pm-plan-index.py generate",
+    "check": "storage-recovery",
+    "command": [
+      "python3",
+      "scripts/pm-storage-recovery-contracts.py",
+      "--self-test"
+    ],
     "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/index-generate-final.log",
-    "sha256": "adde8bc62f775c4d550ac15482e5343d5d7a0f8d6c740c33ed5b95a0263a3675"
+    "seconds": 2.12,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/storage-recovery.log",
+    "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a",
+    "top_level_status": "pass"
   },
   {
-    "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+    "check": "shared-runtime",
+    "command": [
+      "python3",
+      "scripts/pm-shared-runtime-contracts.py",
+      "--self-test"
+    ],
     "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shard-check-final.log",
-    "sha256": "e5387ddb13846f72ceb7a5cfa0dec6047818f910b8005f5e44885508a42eb602"
+    "seconds": 0.88,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/shared-runtime.log",
+    "sha256": "6064a1454776e6f9cdec906eeb1453f1652e74f79bee69ee1719fec58d184027",
+    "top_level_status": "pass"
   },
   {
-    "command": "python3 scripts/pm-plan-index.py validate",
-    "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/index-validate-final.log",
-    "sha256": "77258d3798bba2d8f7587ee41e686e6eaba96353517a336acde4d54f10bcbe8d"
-  },
-  {
-    "command": "python3 -m unittest discover -s tests -p test_shared_runtime_storage_contracts.py",
+    "check": "shared-runtime-tests",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_shared_runtime_storage_contracts.py"
+    ],
     "exit_code": 1,
-    "top_level_status": "fail (17/20 pass; three explained exceptions)",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/shared-runtime-storage-tests-final.log",
-    "sha256": "5752b62d399735100e171ca967303410921467fa5e851a4f97974b2e773eba37"
+    "seconds": 33.29,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/shared-runtime-tests.log",
+    "sha256": "c120da71ab592ef26f469a6eb575061bda347970047aa16e4d31104ea867450f"
   },
   {
-    "command": "Inline JSON Schema + all current self-grade evidence quotes",
+    "check": "shard-check",
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
     "exit_code": 0,
-    "top_level_status": "pass",
-    "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix1/schema-and-grade-final.json",
-    "sha256": "ad580b755bbefb0b43ce3d3a442b1d71d107deeba89c63359b7d07672c649b18"
+    "seconds": 28.03,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/shard-check.log",
+    "sha256": "e5387ddb13846f72ceb7a5cfa0dec6047818f910b8005f5e44885508a42eb602",
+    "top_level_status": "pass"
+  },
+  {
+    "check": "index-validate",
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/index-final.log",
+    "sha256": "58bce82232dc6e42be4b916755b954c478ff2e0c1831242cbb14e88d93964a98",
+    "top_level_status": "pass"
+  },
+  {
+    "check": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "seconds": 1.94,
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/diff-check.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "check": "exact-guard-audit",
+    "command": [
+      "python3",
+      "scripts/pm-ds15-guard-audit.py",
+      "--out",
+      "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/whole-lane-guard-audit.json"
+    ],
+    "exit_code": 1,
+    "top_level_status": "partial",
+    "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DS15/fix5/whole-lane-guard-audit.json",
+    "sha256": "c0300146767b12cd8663e1d450a1c027ee2f9234ac8d2bb899ea8dba1389b26d",
+    "result": {
+      "status": "partial",
+      "mutants": 177,
+      "negatives": 2120,
+      "unexposed": 345,
+      "guards_without_flips": 16,
+      "positive_regressions": 0,
+      "named_duplicate_sets": 20,
+      "duplicate_witnesses": 171,
+      "guards_without_single_or_duplicate_proof": [],
+      "unexposed_after_duplicate_sets": 58,
+      "seconds": 97.2
+    }
   }
 ]
