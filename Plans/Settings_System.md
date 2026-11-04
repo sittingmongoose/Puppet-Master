@@ -597,7 +597,7 @@ canonical_text: >-
   Projects follow resolved defaults; existing explicit values and detached copied own values win over a fresh
   seed. No project resolves Everywhere and Device, without allocating a Project snapshot. Theme family plus mode
   apply as the SSYS-009 atomic pair. Family-specific controls (Glass transparency, Retro textures and their strengths,
-  Basic high contrast and the older Basic light/dark choice) show only while that family is active (decided 2026-09-27;
+  Basic high contrast) show only while that family is active (decided 2026-09-27;
   they were previously kept visible as `not_applicable`); Glass alpha never drops below 0.35 in Dark or 0.45 in
   Light. Jared retired the visible Preview a theme / Preview Themes Before Applying preference (general.visual.theme-preview)
   on 2026-10-13. It renders nowhere and a stored value is ignored. Theme selection commits through cmd.settings.transaction.preview
@@ -618,7 +618,9 @@ canonical_text: >-
   Retro, Glass and NieR. The single Light or dark control offers Light, Dark and Auto; the title-bar quick switch
   retains the same family and scheme separation. A family pick preserves the selected scheme, including Auto,
   and commits the resolved composite storage value and unchanged mode as one SSYS-009 transaction. Existing
-  per-Project selections remain intact without a data migration. This supersedes DL-228's visible named-variant
+  per-Project selections remain intact without a data migration. The older Basic light/dark row is no longer
+  offered, including in advanced Settings; retain its saved value for compatibility, with theme-mode deciding
+  the scheme. This supersedes DL-228's visible named-variant
   pick leaving Auto; the ten composite variants remain storage values, not ten visible Theme choices. Both controls
   redraw from the committed pair, and a refused write restores both, the dropdown's optimistic label included. In Plans, Reduced Motion names the effective state
   above (the OS preference OR the applicable Everywhere, Device and Project requests) and Reduce Animations names
