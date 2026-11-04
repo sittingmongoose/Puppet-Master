@@ -7,9 +7,12 @@ export const tests = {
    await t.emulate({reducedMotion:'no-preference'});
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
    await f.evaluate(()=>{
-    window.__activityPaint=null;
+    window.__activityPaint=null;window.__activityClickRenders=0;window.__activityClickActive=false;
+    PM56_EXT.slot('afterRender',(_ctx,info)=>{if(window.__activityClickActive&&info.phase==='app')window.__activityClickRenders++;});
+    document.addEventListener('click',()=>{window.__activityClickActive=false;},{once:true});
     document.addEventListener('click',e=>{
      if(!e.isTrusted||!e.target.closest('[data-action="open-activity"]'))return;
+     window.__activityClickActive=true;
      const start=e.timeStamp;
      const probe=()=>{
       const panel=document.querySelector('#pmRoot .activity-panel.cover');
@@ -24,6 +27,7 @@ export const tests = {
    const ms=await f.evaluate(()=>window.__activityPaint);
    t.log('input to cover frame '+i+': '+ms);
    await t.check('first click painted within 500 ms '+i,ms<=500);
+   await t.equal('cover click avoids full transcript render '+i,await f.evaluate(()=>window.__activityClickRenders),0);
    await t.painted('#pmRoot .activity-panel.cover');
   }
  },
