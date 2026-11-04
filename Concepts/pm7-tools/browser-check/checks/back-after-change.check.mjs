@@ -453,7 +453,13 @@ const pickOther = async (A, which = 'first') => {
     if (which === 'last') return null;
     const f = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
     return f ? { field: f.id, value: f.value } : null; }, which);
-  if (!c) return null;
+  if (!c) {
+    /* A found Server is the only card on s-wait. Its address link exposes a real editable alternative. */
+    if (which === 'first' && (await A.snap()).screen === 's-wait' && await A.has('manualOn')) {
+      await A.click('manualOn'); return pickOther(A, which);
+    }
+    return null;
+  }
   if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
      sent instead: this row judges what a pick does, the click-reachability of every control is the audit's) */
