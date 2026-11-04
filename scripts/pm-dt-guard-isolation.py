@@ -267,6 +267,9 @@ def other_corpus(dt, c, f, schemas):
                           ('forged_storage_metadata', [a, b, dict(e, sequence_id=e['sequence_id'] + 1)]),
                           ('forged_source', [a, dict(b, owner_outcome_ref=b['owner_outcome_ref'] + '-forged'), e])]:
         result.append(('history/' + label, lambda values=values: dt.historical_read(c, *values, schemas, ctx)['result'], 'retained'))
+    typed_context = copy.deepcopy(ctx)
+    typed_context['authenticated_original']['event']['sequence_id'] = True
+    result.append(('history/forged_original_storage_type', lambda: dt.historical_read(c, a, b, e, schemas, typed_context)['result'], 'retained'))
     invalid_event = dict(e, sequence_id='invalid-sequence')
     invalid_ctx = dict(ctx, authenticated_original={'prepared': a, 'completed': b, 'event': invalid_event})
     result.append(('history/envelope_schema', lambda: dt.historical_read(c, a, b, invalid_event, schemas, invalid_ctx)['result'], 'retained'))

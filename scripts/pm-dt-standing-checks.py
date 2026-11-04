@@ -150,7 +150,7 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
             exec(compile(ast.fix_missing_locations(tree), '<only historical withdrawal guard>', 'exec'), dt.__dict__, namespace)
             weakened_historical = namespace['historical_read']
         elif reader_fault == 'forged':
-            weakened_historical = relaxed(historical, "original != context['authenticated_original']")
+            weakened_historical = relaxed(historical, "source_bytes(prepared) != source_bytes(context['authenticated_original']['prepared'])")
         def changed_historical(c, a, b, e, schemas, context):
             if c['event_type'] == name:
                 if reader_fault == 'replay_history' and e['replay_policy'] == 'projector_replay_only':

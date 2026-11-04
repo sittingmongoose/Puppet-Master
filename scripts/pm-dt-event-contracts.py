@@ -520,9 +520,9 @@ def recovery(c, f, case, schemas=None):
     if source_valid(c, prepared, completed, event, schemas,
                     case.get('resolved_payload'), case.get('payload_ref_verified', False)) != 'accepted':
         return unavailable
-    if prepared != original['prepared'] or completed != original['completed']:
+    if source_bytes(prepared) != source_bytes(original['prepared']) or source_bytes(completed) != source_bytes(original['completed']):
         return unavailable
-    if event != original['event']:
+    if canonical(event) != canonical(original['event']):
         return unavailable
     if not case['completed_present']:
         # Only finalize from the authenticated original outcome; never rerun it.
@@ -532,9 +532,9 @@ def recovery(c, f, case, schemas=None):
     if not case['receipt_custody'] or not case['full_flush']:
         return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
     receipt = f['first_append_receipt']
-    if receipt['event_id'] != event['event_id'] or receipt['sequence_id'] != event['sequence_id']:
+    if canonical([receipt['event_id'], receipt['sequence_id']]) != canonical([event['event_id'], event['sequence_id']]):
         return unavailable
-    if receipt != original['receipt']:
+    if canonical(receipt) != canonical(original['receipt']):
         return unavailable
     return {'result': 'original', 'external_effects': 0, 'append_count': 0, 'value': {'event': f['event_record'], 'receipt': f['first_append_receipt']}}
 
@@ -589,8 +589,9 @@ def historical_read(c, prepared, completed, event, schemas, context):
             or context['deleted'] or not context['source_present'] or not context['owner_proven']
             or not context['versions_supported']):
         return unavailable
-    original = {'prepared': prepared, 'completed': completed, 'event': event}
-    if original != context['authenticated_original']:
+    if (source_bytes(prepared) != source_bytes(context['authenticated_original']['prepared'])
+            or source_bytes(completed) != source_bytes(context['authenticated_original']['completed'])
+            or canonical(event) != canonical(context['authenticated_original']['event'])):
         return unavailable
     if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
         return unavailable
@@ -617,6 +618,9 @@ def historical_results(c, f, schemas):
     forged_event = dict(event, correlation_id='forged-correlation')
     results['forged_event'] = read(e=forged_event)
     results['forged_storage_metadata'] = read(e=dict(event, sequence_id=event['sequence_id'] + 1))
+    typed_context = copy.deepcopy(context)
+    typed_context['authenticated_original']['event']['sequence_id'] = True
+    results['forged_original_storage_type'] = read(ctx=typed_context)
     forged_source = copy.deepcopy(completed); forged_source['owner_outcome_ref'] += '-forged'
     results['forged_source'] = read(b=forged_source)
     ref_event = dict(event, payload={}, payload_ref='payload:fixture-verified-pack-body')
@@ -750,6 +754,10 @@ def recovery_mutations(c, f):
         yield stage['case'] + '/prepare_commitment', bad, stage['input']
         bad = copy.deepcopy(f); bad['completed_source']['owner_outcome_ref'] += '-forged'
         yield stage['case'] + '/authenticated_owner', bad, stage['input']
+        bad = copy.deepcopy(f); bad['recovery_original']['prepared']['owner_revision'] = True
+        yield stage['case'] + '/authenticated_owner_type', bad, stage['input']
+        bad = copy.deepcopy(f); bad['recovery_original']['event']['sequence_id'] = True
+        yield stage['case'] + '/authenticated_storage_type', bad, stage['input']
         for field, value in [('sequence_id', f['event_record']['sequence_id'] + 1),
                              ('observed_at_utc', '2026-11-05T00:00:00Z'),
                              ('persisted_at_utc', '2026-11-05T00:00:00Z')]:
@@ -765,13 +773,15 @@ def recovery_mutations(c, f):
         bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
         yield stage['case'] + '/envelope_schema', bad, stage['input']
         if stage['input']['append_issued']:
-            for field, value in [('event_id', 'evt_dt_wrong_receipt'), ('sequence_id', f['first_append_receipt']['sequence_id'] + 1)]:
+            for field, value in [('event_id', 'evt_dt_wrong_receipt'), ('sequence_id', f['first_append_receipt']['sequence_id'] + 1), ('sequence_id', True)]:
                 bad = copy.deepcopy(f); bad['first_append_receipt'][field] = value
                 bad['recovery_original']['receipt'] = copy.deepcopy(bad['first_append_receipt'])
-                yield stage['case'] + '/receipt_' + field, bad, stage['input']
+                yield stage['case'] + '/receipt_' + field + ('_boolean' if type(value) is bool else ''), bad, stage['input']
             for field in ['manifest_generation', 'byte_offset', 'durable_end_offset']:
                 bad = copy.deepcopy(f); bad['first_append_receipt'][field] += 1
                 yield stage['case'] + '/first_receipt_' + field, bad, stage['input']
+            bad = copy.deepcopy(f); bad['first_append_receipt']['segment_generation'] = True
+            yield stage['case'] + '/first_receipt_boolean_generation', bad, stage['input']
 
 
 def technical_checks(c, f, schemas, check):
