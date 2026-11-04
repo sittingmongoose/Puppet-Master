@@ -4788,6 +4788,15 @@
     "PS-030",
     "PS-045",
     "UCC-217",
+    "CV-550",
+    "CV-551",
+    "CV-552",
+    "CV-553",
+    "CV-554",
+    "CV-555",
+    "CV-556",
+    "CV-557",
+    "CV-558",
     "F2-065",
     "F2-071",
     "F2-072",
@@ -4955,6 +4964,11 @@
     "PP-042",
     "PS-039",
     "WM-103",
+    "ATS-275",
+    "ATS-276",
+    "ATS-277",
+    "ATS-278",
+    "ATS-279",
     "F2-199",
     "PP-055",
     "F2-109",
@@ -6141,6 +6155,15 @@
     "SP-300",
     "SP-302",
     "SP-303",
+    "SP-550",
+    "SP-551",
+    "SP-552",
+    "SP-553",
+    "SP-554",
+    "SP-555",
+    "SP-556",
+    "SP-557",
+    "SP-558",
     "ACD-086",
     "GRS-047",
     "GRS-062",
@@ -15526,6 +15549,51 @@
       "edge_type": "depends_on",
       "from": "ATS-085",
       "to": "UIW-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-275",
+      "to": "CV-550"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-275",
+      "to": "CV-551"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-276",
+      "to": "CV-552"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-276",
+      "to": "CV-553"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-277",
+      "to": "CV-554"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-277",
+      "to": "CV-555"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-278",
+      "to": "CV-556"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-279",
+      "to": "CV-557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-279",
+      "to": "CV-558"
     },
     {
       "edge_type": "depends_on",
@@ -25931,6 +25999,96 @@
       "edge_type": "depends_on",
       "from": "CV-368",
       "to": "SP-323"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-550",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-550",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-551",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-551",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-552",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-552",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-553",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-553",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-554",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-554",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-555",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-555",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-556",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-556",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-557",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-557",
+      "to": "F2-213"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-558",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-558",
+      "to": "F2-213"
     },
     {
       "edge_type": "depends_on",
@@ -81994,6 +82152,186 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-550",
+      "to": "CV-550"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-550",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-550",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-550",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-551",
+      "to": "CV-551"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-551",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-551",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-551",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-552",
+      "to": "CV-552"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-552",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-552",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-552",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-553",
+      "to": "CV-553"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-553",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-553",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-553",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-554",
+      "to": "CV-554"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-554",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-554",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-554",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-555",
+      "to": "CV-555"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-555",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-555",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-555",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-556",
+      "to": "CV-556"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-556",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-556",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-556",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-557",
+      "to": "CV-557"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-557",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-557",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-557",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-558",
+      "to": "CV-558"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-558",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-558",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-558",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117208,7 +117546,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T07:47:51Z",
+  "generated_at_utc": "2026-11-04T17:36:16Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -131321,6 +131659,91 @@
       "unit_type": "acceptance_gate"
     },
     {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-275",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "ATS-275 - filesafe.command_denied, filesafe.destructive_override_denied oracles",
+        "heading_level": 3,
+        "heading_line": 7232,
+        "line": 7234,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-276",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "ATS-276 - filesafe.destructive_override_granted, filesafe.destructive_override_requested oracles",
+        "heading_level": 3,
+        "heading_line": 7275,
+        "line": 7277,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-277",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "ATS-277 - filesafe.guard_init_failed, filesafe.path_denied oracles",
+        "heading_level": 3,
+        "heading_line": 7318,
+        "line": 7320,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-278",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "ATS-278 - filesafe.policy_degraded oracles",
+        "heading_level": 3,
+        "heading_line": 7361,
+        "line": 7363,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-279",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "ATS-279 - safe_point.created, safe_point.restored oracles",
+        "heading_level": 3,
+        "heading_line": 7402,
+        "line": 7404,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "bitbucket_provider_identity",
       "gui_related": true,
       "owner_doc": "Plans/Bitbucket_Integration.md",
@@ -144358,6 +144781,159 @@
       },
       "status": "accepted",
       "unit_type": "interface_contract"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-550",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-550 - filesafe.command_denied closed contract",
+        "heading_level": 3,
+        "heading_line": 24471,
+        "line": 24473,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-551",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-551 - filesafe.destructive_override_denied closed contract",
+        "heading_level": 3,
+        "heading_line": 24521,
+        "line": 24523,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-552",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-552 - filesafe.destructive_override_granted closed contract",
+        "heading_level": 3,
+        "heading_line": 24571,
+        "line": 24573,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-553",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-553 - filesafe.destructive_override_requested closed contract",
+        "heading_level": 3,
+        "heading_line": 24622,
+        "line": 24624,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-554",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-554 - filesafe.guard_init_failed closed contract",
+        "heading_level": 3,
+        "heading_line": 24672,
+        "line": 24674,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-555",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-555 - filesafe.path_denied closed contract",
+        "heading_level": 3,
+        "heading_line": 24722,
+        "line": 24724,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-556",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-556 - filesafe.policy_degraded closed contract",
+        "heading_level": 3,
+        "heading_line": 24773,
+        "line": 24775,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-557",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-557 - safe_point.created closed contract",
+        "heading_level": 3,
+        "heading_line": 24824,
+        "line": 24826,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-558",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "CV-558 - safe_point.restored closed contract",
+        "heading_level": 3,
+        "heading_line": 24875,
+        "line": 24877,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -228068,6 +228644,159 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-550",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-550 - filesafe.command_denied persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29480,
+        "line": 29482,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-551",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-551 - filesafe.destructive_override_denied persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29537,
+        "line": 29539,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-552",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-552 - filesafe.destructive_override_granted persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29594,
+        "line": 29596,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-553",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-553 - filesafe.destructive_override_requested persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29651,
+        "line": 29653,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-554",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-554 - filesafe.guard_init_failed persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29708,
+        "line": 29710,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-555",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-555 - filesafe.path_denied persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29765,
+        "line": 29767,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-556",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-556 - filesafe.policy_degraded persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29822,
+        "line": 29824,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-557",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-557 - safe_point.created persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29879,
+        "line": 29881,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_wave2_DF",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-558",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority",
+      "source_location": {
+        "heading": "SP-558 - safe_point.restored persistence and read contract",
+        "heading_level": 3,
+        "heading_line": 29936,
+        "line": 29938,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -243374,10 +244103,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18811,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
-    "node_count": 7421,
+    "edge_count": 22019,
+    "node_count": 7444,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0

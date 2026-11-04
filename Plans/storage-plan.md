@@ -29476,3 +29476,514 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+### SP-550 - filesafe.command_denied persistence and read contract
+
+```yaml
+plan_unit_id: SP-550
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.command_denied adopts SP-286 strict full-value custody and
+  SP-278 generic index proof; storage.filesafe_command_denied_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-550
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.command_denied` only.** `CV-550` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.command_denied` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.command_denied`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.command_denied", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_command_denied_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.command_denied` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.command_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_command_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-550, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-551 - filesafe.destructive_override_denied persistence and read contract
+
+```yaml
+plan_unit_id: SP-551
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.destructive_override_denied adopts SP-286 strict full-value
+  custody and SP-278 generic index proof; storage.filesafe_destructive_override_denied_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-551
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.destructive_override_denied` only.** `CV-551` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.destructive_override_denied` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.destructive_override_denied`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.destructive_override_denied", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_destructive_override_denied_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.destructive_override_denied` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-551, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-552 - filesafe.destructive_override_granted persistence and read contract
+
+```yaml
+plan_unit_id: SP-552
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.destructive_override_granted adopts SP-286 strict full-value
+  custody and SP-278 generic index proof; storage.filesafe_destructive_override_granted_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-552
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.destructive_override_granted` only.** `CV-552` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.destructive_override_granted` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.destructive_override_granted`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.destructive_override_granted", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_destructive_override_granted_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.destructive_override_granted` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_granted` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_granted_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-552, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-553 - filesafe.destructive_override_requested persistence and read contract
+
+```yaml
+plan_unit_id: SP-553
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.destructive_override_requested adopts SP-286 strict full-value
+  custody and SP-278 generic index proof; storage.filesafe_destructive_override_requested_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-553
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.destructive_override_requested` only.** `CV-553` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.destructive_override_requested` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.destructive_override_requested`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.destructive_override_requested", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_destructive_override_requested_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.destructive_override_requested` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_requested` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_requested_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-553, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-554 - filesafe.guard_init_failed persistence and read contract
+
+```yaml
+plan_unit_id: SP-554
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.guard_init_failed adopts SP-286 strict full-value custody
+  and SP-278 generic index proof; storage.filesafe_guard_init_failed_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-554
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.guard_init_failed` only.** `CV-554` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.guard_init_failed` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.guard_init_failed`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.guard_init_failed", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_guard_init_failed_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.guard_init_failed` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.guard_init_failed` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_guard_init_failed_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-554, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-555 - filesafe.path_denied persistence and read contract
+
+```yaml
+plan_unit_id: SP-555
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.path_denied adopts SP-286 strict full-value custody and SP-278
+  generic index proof; storage.filesafe_path_denied_history_read.v1@1.0.0 is passive
+  with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-555
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.path_denied` only.** `CV-555` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.path_denied` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.path_denied`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.path_denied", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_path_denied_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.path_denied` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.path_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_path_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-555, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-556 - filesafe.policy_degraded persistence and read contract
+
+```yaml
+plan_unit_id: SP-556
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: filesafe.policy_degraded adopts SP-286 strict full-value custody and
+  SP-278 generic index proof; storage.filesafe_policy_degraded_history_read.v1@1.0.0
+  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-556
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.policy_degraded` only.** `CV-556` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `filesafe.policy_degraded` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `filesafe.policy_degraded`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "filesafe.policy_degraded", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.filesafe_policy_degraded_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `filesafe.policy_degraded` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `filesafe.policy_degraded` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_policy_degraded_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-556, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-557 - safe_point.created persistence and read contract
+
+```yaml
+plan_unit_id: SP-557
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: safe_point.created adopts SP-286 strict full-value custody and SP-278
+  generic index proof; storage.safe_point_created_history_read.v1@1.0.0 is passive
+  with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-557
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `safe_point.created` only.** `CV-557` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `safe_point.created` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `safe_point.created`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "safe_point.created", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.safe_point_created_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `safe_point.created` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `safe_point.created` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.safe_point_created_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-557, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+
+### SP-558 - safe_point.restored persistence and read contract
+
+```yaml
+plan_unit_id: SP-558
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: safe_point.restored adopts SP-286 strict full-value custody and SP-278
+  generic index proof; storage.safe_point_restored_history_read.v1@1.0.0 is passive
+  with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- CV-558
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `safe_point.restored` only.** `CV-558` owns semantics and closed payload. A per-family search of current non-generated Plans Markdown/JSON (FileSafe, Contracts, Storage, Decision Log, central registries, payload and application resources) found partial semantic minima, but no exact versioned history-reader binding, identity recipe, SP-286 adoption or withdrawal protocol. Reuse existing `event_record_index` projector and SP-278 checkpoint; existing safe_point_record and safe_point_restore_transaction remain their own canonical/projection owners, not new EventRecord-derived mutation authority.
+
+**Ordered producer and custody.** `safe_point.restored` explicitly adopts SP-286/CV-339 first-AppendReceipt custody, its strict full-value v2 successor, and SP-336/SP-347 current group-commit rules. First establish authentic accepted owner operation and immutable source (safe-point manifest/body record for creation; exact restore journal/equality outcome for restoration; checked guard decision or override request/receipt for security). Persist original intent and prepared full event before append. Use the ordinary SeglogFrameV2 append path; this safety record uses barrier durability. Append only after independent registry admission, settle original first receipt through full-value resolution, then publish dependent terminal receipt/outbox and allow any otherwise authorized continuation. A denied operation stays denied even if audit append is unavailable. No grant or mutation proceeds on an unacknowledged prerequisite. Missing source/receipt/dedupe fences rather than reconstructing an acknowledgement. On crash reconcile the same original operation and SP-286 custody before dispatch; never append replacement history for uncertain issued work.
+
+**Identity and replay.** In Project scope set idempotency_key to `filesafe@2:` + lowercase hex(UTF-8 operation_id); in application scope use CV-366 exactly: `application@1:` + hex(UTF-8 server_id) + `:` + hex(UTF-8 operation_id). Storage lifetime dedupe tuple is (scope_partition, exact event_type `safe_point.restored`, idempotency_key), with Project partition using Storage's reversible project~base64url rule. event_id is `evt_df_` + SHA-256 hex of RFC8785 JSON array ["df-event-v2", scope_partition, "safe_point.restored", idempotency_key]. Use CV-339 producer_semantic_digest over the complete semantic envelope, not payload alone. Equal identity/equal digest resolves original full EventRecord and first receipt; unequal digest is a conflict. A missing authoritative dedupe mapping is dedupe_unavailable with zero effect. Replay never reruns a command, initializes a guard, requests/grants an override, captures a snapshot, restores paths, changes a hold or renews an expiry.
+
+**Exact consumer and checkpoint.** `storage.safe_point_restored_history_read.v1@1.0.0` is the existing FileSafe event-history inspection path's newly named ephemeral consumer. It reads only `safe_point.restored` from SP-278's `projector.storage.event_record_index@1.0.0`; the consumer adopts SP-278 by name including complete generic CURRENT-selected source proof and nine-field durable read token (no persisted redb_snapshot_id). family_checkpoint = none_required: this history reader persists no frontier or read model; every invocation starts with verified current generic coverage. Generic index and its existing checkpoint schema/key/value remain `Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint`; SP-278 owns atomic redb projection plus complete frontier CAS and durable generic token, rebuild and source generation fences. A read acquires a fresh live redb snapshot and validates all ten live-token fields against the nine stored fields, full generic coverage, source selection and supported payload before returning any row; stale/incomplete/withdrawn source returns unavailable. No guessed zero cursor, local checkpoint or sibling consumer substitutes. FileSafe/Executor mutation recovery uses the original manifest/journal/receipt owners, never this passive history consumer.
+
+**Redaction and custody.** Snapshot bodies stay off-worktree under FileSafe's exact snapshot custody; SP-337 owns packed blobs and body addressing. Events contain only sanitized previews, non-secret identities, bounded reason/diagnostic text, refs and hashes: never raw command credentials, environment, file bytes or secret path material. Original guarded input stays only in its owner custody, not a second event body. FileSafe checks actor authorization and exact Host/root at admission and on every body read; hash/ref possession grants no access. Storage's coherent backup includes original source, source holds, seglog and SP-286 full-value receipt custody under the same backup/restore epoch. Restore of older state cannot recapture missing original work or replay effects. A deleted/inaccessible body is unavailable; history cannot recreate it or defeat a deletion/hold. No independent body deletion policy is authored.
+
+**Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
+
+**Withdrawal and rebuild.** Cut off new `safe_point.restored` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.safe_point_restored_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286

@@ -24467,3 +24467,457 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+### CV-550 - filesafe.command_denied closed contract
+
+```yaml
+plan_unit_id: CV-550
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.command_denied owns the prepared closed 2.0.0 payload and
+  exact original-source, producer, scope and transition joins. The checked whole normalized
+  segment is denied before spawn. Preserve segment index and actual denial code; denial
+  never grants an override or runs the command.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.command_denied` only.** Current governing behavior: FileSafe F2-041, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_command_denied_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `BaseRunner command-string guard before spawn` is the sole semantic producer. The checked whole normalized segment is denied before spawn. Preserve segment index and actual denial code; denial never grants an override or runs the command. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-550` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-550, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-551 - filesafe.destructive_override_denied closed contract
+
+```yaml
+plan_unit_id: CV-551
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.destructive_override_denied owns the prepared closed 2.0.0
+  payload and exact original-source, producer, scope and transition joins. A rejected
+  request emits denial and leaves the original guarded command blocked. Missing authentication
+  may omit operator/auth realm; absence never becomes anonymous permission.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.destructive_override_denied` only.** Current governing behavior: FileSafe F2-052, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_destructive_override_denied_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe authenticated destructive-override evaluator` is the sole semantic producer. A rejected request emits denial and leaves the original guarded command blocked. Missing authentication may omit operator/auth realm; absence never becomes anonymous permission. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-551` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-551, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-552 - filesafe.destructive_override_granted closed contract
+
+```yaml
+plan_unit_id: CV-552
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.destructive_override_granted owns the prepared closed 2.0.0
+  payload and exact original-source, producer, scope and transition joins. Only an
+  authenticated operator, exact authorized scope, reason and future expiry can yield
+  a grant. The event is audit of the original receipt, never execution authority by
+  itself. Expired, mismatched or changed-root grants cannot authorize a command.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.destructive_override_granted` only.** Current governing behavior: FileSafe F2-052, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_destructive_override_granted_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe authenticated destructive-override evaluator` is the sole semantic producer. Only an authenticated operator, exact authorized scope, reason and future expiry can yield a grant. The event is audit of the original receipt, never execution authority by itself. Expired, mismatched or changed-root grants cannot authorize a command. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-552` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-552, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-553 - filesafe.destructive_override_requested closed contract
+
+```yaml
+plan_unit_id: CV-553
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.destructive_override_requested owns the prepared closed 2.0.0
+  payload and exact original-source, producer, scope and transition joins. Record
+  the authenticated request before evaluation. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 alone
+  is never a grant; requested scope and duration cannot broaden the accepted scope.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.destructive_override_requested` only.** Current governing behavior: FileSafe F2-052, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_destructive_override_requested_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe destructive-override request intake` is the sole semantic producer. Record the authenticated request before evaluation. PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 alone is never a grant; requested scope and duration cannot broaden the accepted scope. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-553` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-553, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-554 - filesafe.guard_init_failed closed contract
+
+```yaml
+plan_unit_id: CV-554
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.guard_init_failed owns the prepared closed 2.0.0 payload
+  and exact original-source, producer, scope and transition joins. On initialization
+  failure block the affected capability; no disabled fallback. Embedded known-destructive
+  baseline does not make a failed authoritative guard healthy.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.guard_init_failed` only.** Current governing behavior: FileSafe F2-024, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_guard_init_failed_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe guard initialization path` is the sole semantic producer. On initialization failure block the affected capability; no disabled fallback. Embedded known-destructive baseline does not make a failed authoritative guard healthy. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-554` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-554, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-555 - filesafe.path_denied closed contract
+
+```yaml
+plan_unit_id: CV-555
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.path_denied owns the prepared closed 2.0.0 payload and exact
+  original-source, producer, scope and transition joins. Canonicalize existing path
+  or nearest existing parent, verify actual root and recheck TOCTOU before effect.
+  Refusal leaves the file untouched and preserves the denial code and permission/scope
+  refs.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.path_denied` only.** Current governing behavior: FileSafe F2-213, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_path_denied_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe path guard before file effect` is the sole semantic producer. Canonicalize existing path or nearest existing parent, verify actual root and recheck TOCTOU before effect. Refusal leaves the file untouched and preserves the denial code and permission/scope refs. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-555` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-555, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-556 - filesafe.policy_degraded closed contract
+
+```yaml
+plan_unit_id: CV-556
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: filesafe.policy_degraded owns the prepared closed 2.0.0 payload and
+  exact original-source, producer, scope and transition joins. Valid only while authoritative
+  enforcement is intact; an advisory failure or embedded authoritative fallback can
+  be reported. Missing or empty allowlists, roots, unresolved canonical paths or failed
+  init require refusal, never a degraded success.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `filesafe.policy_degraded` only.** Current governing behavior: FileSafe CV-245, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/filesafe_policy_degraded_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe policy loader advisory/fallback diagnostic path` is the sole semantic producer. Valid only while authoritative enforcement is intact; an advisory failure or embedded authoritative fallback can be reported. Missing or empty allowlists, roots, unresolved canonical paths or failed init require refusal, never a degraded success. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-556` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-556, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-557 - safe_point.created closed contract
+
+```yaml
+plan_unit_id: CV-557
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: safe_point.created owns the prepared closed 2.0.0 payload and exact
+  original-source, producer, scope and transition joins. Publish only after immutable
+  manifest and blobs verify and the safe_point_record is durably committed. The capture
+  precedes mutation; worktree-bound writes carry all four worktree fields. Failed
+  or unsupported capture never permits mutation.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `safe_point.created` only.** Current governing behavior: FileSafe F2-213, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/safe_point_created_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe pre-mutation safe-point writer` is the sole semantic producer. Publish only after immutable manifest and blobs verify and the safe_point_record is durably committed. The capture precedes mutation; worktree-bound writes carry all four worktree fields. Failed or unsupported capture never permits mutation. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-557` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-557, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045
+
+
+
+### CV-558 - safe_point.restored closed contract
+
+```yaml
+plan_unit_id: CV-558
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: safe_point.restored owns the prepared closed 2.0.0 payload and exact
+  original-source, producer, scope and transition joins. Publish only the journal-proven
+  outcome. restored_clean requires target equality, restore_failed pre-restore equality,
+  restore_skipped preflight equality without mutation, restore_refused no mutation,
+  recovery_required keeps fences. restored_with_conflicts is forbidden. Restart reconciles
+  the same transaction before dispatch.
+gui_related: false
+gui_classification_reason: Event authority and storage contracts; no presentation
+  change.
+depends_on:
+- DL-045
+- F2-213
+unblocks: []
+acceptance_criteria:
+- The exact family remains unadmitted until independent admission.
+- Exact source, scope, retry, read and withdrawal joins fail closed.
+validation_surfaces:
+- python3 scripts/pm_filesafe_event_contracts.py
+risk_class: event_authority
+reasoning_tier: high
+context_scope: ea_wave2_DF
+implementation_surfaces:
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens: []
+negative_constraints:
+- No event registry append, retention decision, or native admission.
+```
+
+**Newly authored owner contract under DL-045 for `safe_point.restored` only.** Current governing behavior: FileSafe F2-213, F2-213; Contracts safe-point and fail-closed security payloads. Schema `Plans/event_payloads/safe_point_restored_v2.schema.json#`, version 2.0.0, is closed and selects this family only. Current Project minima are retained without nullable widening; this new edition carries explicit application roots required by F2-213/CV-366. It is prepared without admission; no current native writer is enabled.
+
+**Producer and transition.** `FileSafe exact-replace restore coordinator` is the sole semantic producer. Publish only the journal-proven outcome. restored_clean requires target equality, restore_failed pre-restore equality, restore_skipped preflight equality without mutation, restore_refused no mutation, recovery_required keeps fences. restored_with_conflicts is forbidden. Restart reconciles the same transaction before dispatch. Preserve the original operation_id allocated at accepted intake, source receipt/journal and timestamp through restart; no observer, log parser, Client click or EventRecord reader can manufacture accepted source. The native binding remains specified_unimplemented until authentic original owner evidence is available. `SP-558` supplies the ordered first-receipt barrier, identity, custody and history reader.
+
+**Scope and joins.** application_or_project using the exact CV-365 WorkflowScopeV2 at scope, plus execution_context for actual Computer/Host/Environment and known thread/run/root identity/generation/canonical absolute working_directory. In a pre-context denial or startup diagnostic, inapplicable thread/run/root/cwd are explicit null and no effect is authorized; application mutation/grant paths require their genuine non-null admitted roots and execution context. Application project_id is null; Project requires its real project_id. Payload project_id equals scope.project_id and run_id equals execution_context.run_id, where present; envelope scope and project_id equal scope, envelope run_id equals execution_context.run_id, occurred_at_utc equals ts, payload_schema_id equals the schema's $id, and inline payload validates this exact root. Project safe points require non-null node_id/attempt_id; application safe points carry null for inapplicable Orchestrator ids, never invented nodes. Worktree-bound creation requires worktree_id/worktree_path/branch_name/HEAD_sha together and joins all four to the actual captured manifest. requested_scope/authorized_scope joins project/run/thread/Host/root to scope and normalized command identity to the actual request; a grant's scope must be a subset of the request and expiry must be after issue and no later than the accepted duration. Permissions and FileSafe still revalidate before any effect.
+
+**Compatibility.** Legacy minima and FileSafe snapshot wrapper names are compatibility inputs only, not independent event admission; no historic record is restamped to this edition. Unsupported payload versions are unavailable/quarantined. An application record uses CV-366's original application source and distinct idempotency tuple; nulling a Project record is forbidden. No current registration, Project-to-app recapture or cross-Project fallback follows.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-558, ContractName:Plans/FileSafe.md#F2-213, DecisionID:DL-045

@@ -1,0 +1,147 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scope": {
+      "$ref": "pm.shared_integration_runtime.command_contracts.schema.v1#/$defs/WorkflowScopeV2"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "degraded_component": {
+      "type": "string",
+      "minLength": 1
+    },
+    "degradation_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authoritative_enforcement_intact": {
+      "const": true
+    },
+    "fallback_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "worktree_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "execution_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thread_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "computer_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "host_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "root_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "root_generation": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "working_directory": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "thread_id",
+        "run_id",
+        "computer_id",
+        "host_id",
+        "environment_id",
+        "root_id",
+        "root_generation",
+        "working_directory"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "scope",
+    "ts",
+    "degraded_component",
+    "degradation_reason",
+    "authoritative_enforcement_intact",
+    "project_id",
+    "execution_context"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/filesafe_policy_degraded/2.0.0",
+  "title": "filesafe.policy_degraded prepared closed payload; not admission"
+}
