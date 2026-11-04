@@ -2176,6 +2176,562 @@
           }
         }
       ]
+    },
+    "monthly_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc",
+        "cutoff_ref",
+        "cutoff_sha256",
+        "month"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.memory_monthly_summary_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.summarize_monthly"
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "started",
+            "effect_committed",
+            "completed"
+          ]
+        },
+        "started_event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^evt_mem_[0-9a-f]{64}$",
+          "minLength": 72,
+          "maxLength": 72
+        },
+        "completed_event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^evt_mem_[0-9a-f]{64}$",
+          "minLength": 72,
+          "maxLength": 72
+        },
+        "result_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 74,
+          "maxLength": 74,
+          "pattern": "^memresult_[0-9a-f]{64}$"
+        },
+        "result_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "status": {
+          "enum": [
+            null,
+            "succeeded",
+            "failed"
+          ]
+        },
+        "started_occurred_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])",
+          "maxLength": 64
+        },
+        "completed_occurred_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])",
+          "maxLength": 64
+        },
+        "cutoff_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cutoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "month": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+          "minLength": 7,
+          "maxLength": 7
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "phase": {
+              "const": "accepted"
+            },
+            "started_event_id": {
+              "type": "null"
+            },
+            "completed_event_id": {
+              "type": "null"
+            },
+            "result_ref": {
+              "type": "null"
+            },
+            "result_sha256": {
+              "type": "null"
+            },
+            "status": {
+              "type": "null"
+            },
+            "completed_occurred_at_utc": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "phase": {
+              "const": "started"
+            },
+            "started_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "completed_event_id": {
+              "type": "null"
+            },
+            "result_ref": {
+              "type": "null"
+            },
+            "result_sha256": {
+              "type": "null"
+            },
+            "status": {
+              "type": "null"
+            },
+            "completed_occurred_at_utc": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "phase": {
+              "const": "effect_committed"
+            },
+            "started_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "completed_event_id": {
+              "type": "null"
+            },
+            "result_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "status": {
+              "enum": [
+                "succeeded",
+                "failed"
+              ]
+            },
+            "completed_occurred_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$(?![\\s\\S])"
+            }
+          }
+        },
+        {
+          "properties": {
+            "phase": {
+              "const": "completed"
+            },
+            "started_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "completed_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "result_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "status": {
+              "enum": [
+                "succeeded",
+                "failed"
+              ]
+            },
+            "completed_occurred_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$(?![\\s\\S])"
+            }
+          }
+        }
+      ]
+    },
+    "prune_archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "project_id",
+        "operation_id",
+        "command_id",
+        "request_sha256",
+        "source_revision_sha256",
+        "phase",
+        "started_event_id",
+        "completed_event_id",
+        "result_ref",
+        "result_sha256",
+        "status",
+        "started_occurred_at_utc",
+        "completed_occurred_at_utc",
+        "cutoff_ref",
+        "cutoff_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.memory_prune_archive_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.prune_archive"
+        },
+        "request_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "phase": {
+          "enum": [
+            "accepted",
+            "started",
+            "effect_committed",
+            "completed"
+          ]
+        },
+        "started_event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^evt_mem_[0-9a-f]{64}$",
+          "minLength": 72,
+          "maxLength": 72
+        },
+        "completed_event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^evt_mem_[0-9a-f]{64}$",
+          "minLength": 72,
+          "maxLength": 72
+        },
+        "result_ref": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 74,
+          "maxLength": 74,
+          "pattern": "^memresult_[0-9a-f]{64}$"
+        },
+        "result_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "status": {
+          "enum": [
+            null,
+            "succeeded",
+            "failed"
+          ]
+        },
+        "started_occurred_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])",
+          "maxLength": 64
+        },
+        "completed_occurred_at_utc": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "pattern": "Z$(?![\\s\\S])",
+          "maxLength": 64
+        },
+        "cutoff_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cutoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "phase": {
+              "const": "accepted"
+            },
+            "started_event_id": {
+              "type": "null"
+            },
+            "completed_event_id": {
+              "type": "null"
+            },
+            "result_ref": {
+              "type": "null"
+            },
+            "result_sha256": {
+              "type": "null"
+            },
+            "status": {
+              "type": "null"
+            },
+            "completed_occurred_at_utc": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "phase": {
+              "const": "started"
+            },
+            "started_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "completed_event_id": {
+              "type": "null"
+            },
+            "result_ref": {
+              "type": "null"
+            },
+            "result_sha256": {
+              "type": "null"
+            },
+            "status": {
+              "type": "null"
+            },
+            "completed_occurred_at_utc": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "phase": {
+              "const": "effect_committed"
+            },
+            "started_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "completed_event_id": {
+              "type": "null"
+            },
+            "result_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "status": {
+              "enum": [
+                "succeeded",
+                "failed"
+              ]
+            },
+            "completed_occurred_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$(?![\\s\\S])"
+            }
+          }
+        },
+        {
+          "properties": {
+            "phase": {
+              "const": "completed"
+            },
+            "started_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "completed_event_id": {
+              "type": "string",
+              "pattern": "^evt_mem_[0-9a-f]{64}$",
+              "minLength": 72,
+              "maxLength": 72
+            },
+            "result_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "result_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "minLength": 64,
+              "maxLength": 64
+            },
+            "status": {
+              "enum": [
+                "succeeded",
+                "failed"
+              ]
+            },
+            "completed_occurred_at_utc": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "Z$(?![\\s\\S])"
+            }
+          }
+        }
+      ]
     }
   }
 }

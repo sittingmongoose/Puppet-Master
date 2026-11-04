@@ -403,7 +403,8 @@ Required operations:
 3. Verification sweep: re-evaluate verification_state for all gists
 4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
 5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
-6. Prune/archive: archive or delete very low-activation gists (policy-driven; never delete pinned)
+6. Prune/archive: archive very low-activation gists only (DL-402). Monthly summary and prune only archive; deletion is only by the user. Monthly summaries keep their originals archived with all EvidenceRefs. Neither job archives or merges a pinned memory; pins still permit verification, index rebuilds and out-of-date marking.
+   ContractRef: ContractName:Plans/Decision_Log.md#DL-402
 7. Store compaction (amended 2026-10-31, DL-270): follow SP-340's store compaction under the maintenance lease, only while PM is idle and fragmentation passes its threshold: the derived memory redb file is rebuilt, and `assistant_memory.redb` is compacted by copying its live records into a new file swapped in during a brief pause, then the reclaimed bytes are verified. Storage health shows usage, budget, reclaimable bytes and the last compaction (SP-340); the reclaim action is the existing `cmd.storage.compaction.request`, started from there.
 
 Rule: All maintenance operations MUST run in-process and MUST NOT depend on external services.
@@ -411,6 +412,9 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-
 
 Rule: Maintenance operations MUST be user-invokable in GUI and callable by internal maintenance jobs with explicit success/failure status.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+Rule: Monthly summary and prune/archive MUST NOT run automatically or from the Memory panel until cutoffs exist (DL-403). Their two panel buttons MUST be unavailable and explain that approved cutoffs are missing. The memory owner proposes exact age and activation-score cutoffs for Jared to decide; none is selected here.
+ContractRef: ContractName:Plans/Decision_Log.md#DL-403
 
 ---
 

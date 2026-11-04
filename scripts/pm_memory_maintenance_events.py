@@ -917,7 +917,7 @@ def run_checkpoint_joins(fixtures, families):
 def main():
     contracts = load('Plans/memory_maintenance_contracts.json'); fixtures = load('Plans/memory_maintenance_event_fixtures.json')
     registered = {x['event_type'] for x in load('Plans/event_family_registry.json')['families']}
-    assert len(contracts['families']) == 8 and len(contracts['blocked_rows']) == 4
+    assert len(contracts['families']) == 8 and len(contracts['blocked_rows']) == 0
     assert not registered.intersection(x['event_type'] for x in contracts['families'])
     for filename in ('event_payloads', 'operation', 'rebuild_target'):
         Draft202012Validator.check_schema(load('Plans/memory_maintenance_' + filename + '.schema.json'))

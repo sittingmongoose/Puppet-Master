@@ -7200,7 +7200,11 @@
     "WM-097",
     "ATS-057",
     "SP-317",
+    "CV-658",
+    "SP-638",
     "ATS-315",
+    "CV-659",
+    "SP-639",
     "CS-087",
     "UCC-170",
     "WM-094",
@@ -7210,6 +7214,7 @@
     "F3-151",
     "F3-152",
     "G-030",
+    "ATS-316",
     "CDRY-022",
     "WM-063",
     "G-031",
@@ -15716,6 +15721,31 @@
       "edge_type": "depends_on",
       "from": "ATS-315",
       "to": "SP-637"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-316",
+      "to": "ATS-315"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-316",
+      "to": "CV-658"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-316",
+      "to": "CV-659"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-316",
+      "to": "SP-638"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-316",
+      "to": "SP-639"
     },
     {
       "edge_type": "depends_on",
@@ -26201,6 +26231,66 @@
       "edge_type": "depends_on",
       "from": "CV-657",
       "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-658",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-658",
+      "to": "CV-656"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-658",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-658",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-658",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-658",
+      "to": "SP-636"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-659",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-659",
+      "to": "CV-657"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-659",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-659",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-659",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-659",
+      "to": "SP-637"
     },
     {
       "edge_type": "depends_on",
@@ -82464,6 +82554,66 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-638",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-638",
+      "to": "CV-656"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-638",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-638",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-638",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-638",
+      "to": "SP-636"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-639",
+      "to": "CV-339"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-639",
+      "to": "CV-657"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-639",
+      "to": "DL-045"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-639",
+      "to": "SP-278"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-639",
+      "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-639",
+      "to": "SP-637"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SQR-002",
       "to": "SQR-001"
     },
@@ -117678,7 +117828,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T20:54:29Z",
+  "generated_at_utc": "2026-11-04T21:37:55Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -128587,8 +128737,8 @@
       "source_location": {
         "heading": "AMS-001 - Assistant-Only Memory Subsystem (Canonical SSOT) Source-Preserving PlanUnit",
         "heading_level": 3,
-        "heading_line": 576,
-        "line": 578,
+        "heading_line": 580,
+        "line": 582,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128604,8 +128754,8 @@
       "source_location": {
         "heading": "AMS-002 - Assistant Memory SSOT Authority",
         "heading_level": 3,
-        "heading_line": 627,
-        "line": 629,
+        "heading_line": 631,
+        "line": 633,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128621,8 +128771,8 @@
       "source_location": {
         "heading": "AMS-003 - Assistant Memory Scope Separation",
         "heading_level": 3,
-        "heading_line": 674,
-        "line": 676,
+        "heading_line": 678,
+        "line": 680,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128638,8 +128788,8 @@
       "source_location": {
         "heading": "AMS-004 - Assistant Memory Local Storage Boundary",
         "heading_level": 3,
-        "heading_line": 725,
-        "line": 727,
+        "heading_line": 729,
+        "line": 731,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128655,8 +128805,8 @@
       "source_location": {
         "heading": "AMS-005 - Memory Provider Capability Boundary",
         "heading_level": 3,
-        "heading_line": 769,
-        "line": 771,
+        "heading_line": 773,
+        "line": 775,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128672,8 +128822,8 @@
       "source_location": {
         "heading": "AMS-006 - EvidenceRef Pointer Only Model",
         "heading_level": 3,
-        "heading_line": 821,
-        "line": 823,
+        "heading_line": 825,
+        "line": 827,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128689,8 +128839,8 @@
       "source_location": {
         "heading": "AMS-007 - Assistant Memory Physical Stores",
         "heading_level": 3,
-        "heading_line": 870,
-        "line": 872,
+        "heading_line": 874,
+        "line": 876,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128706,8 +128856,8 @@
       "source_location": {
         "heading": "AMS-008 - MemoryGist Canonical Record",
         "heading_level": 3,
-        "heading_line": 923,
-        "line": 925,
+        "heading_line": 927,
+        "line": 929,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128723,8 +128873,8 @@
       "source_location": {
         "heading": "AMS-009 - Memory Prompt Injection Summary Boundary",
         "heading_level": 3,
-        "heading_line": 974,
-        "line": 976,
+        "heading_line": 978,
+        "line": 980,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128740,8 +128890,8 @@
       "source_location": {
         "heading": "AMS-010 - MemoryGist GUI Operations Canonical Writes",
         "heading_level": 3,
-        "heading_line": 1017,
-        "line": 1019,
+        "heading_line": 1021,
+        "line": 1023,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128757,8 +128907,8 @@
       "source_location": {
         "heading": "AMS-011 - Memory Claims Atomic Model",
         "heading_level": 3,
-        "heading_line": 1056,
-        "line": 1058,
+        "heading_line": 1060,
+        "line": 1062,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128774,8 +128924,8 @@
       "source_location": {
         "heading": "AMS-012 - Memory Retrieval Indexes",
         "heading_level": 3,
-        "heading_line": 1096,
-        "line": 1098,
+        "heading_line": 1100,
+        "line": 1102,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128791,8 +128941,8 @@
       "source_location": {
         "heading": "AMS-013 - Memory Write Then Index Order",
         "heading_level": 3,
-        "heading_line": 1144,
-        "line": 1146,
+        "heading_line": 1148,
+        "line": 1150,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128808,8 +128958,8 @@
       "source_location": {
         "heading": "AMS-014 - Memory Verification Rules",
         "heading_level": 3,
-        "heading_line": 1185,
-        "line": 1187,
+        "heading_line": 1189,
+        "line": 1191,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128825,8 +128975,8 @@
       "source_location": {
         "heading": "AMS-015 - AutoRunBoundary Memory Trigger",
         "heading_level": 3,
-        "heading_line": 1236,
-        "line": 1238,
+        "heading_line": 1240,
+        "line": 1242,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128842,8 +128992,8 @@
       "source_location": {
         "heading": "AMS-016 - AutoMilestone Memory Trigger",
         "heading_level": 3,
-        "heading_line": 1280,
-        "line": 1282,
+        "heading_line": 1284,
+        "line": 1286,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128859,8 +129009,8 @@
       "source_location": {
         "heading": "AMS-017 - AutoMilestone GUI Done Source",
         "heading_level": 3,
-        "heading_line": 1322,
-        "line": 1324,
+        "heading_line": 1326,
+        "line": 1328,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128876,8 +129026,8 @@
       "source_location": {
         "heading": "AMS-018 - Memory Capsule Injection Boundary",
         "heading_level": 3,
-        "heading_line": 1358,
-        "line": 1360,
+        "heading_line": 1362,
+        "line": 1364,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128893,8 +129043,8 @@
       "source_location": {
         "heading": "AMS-019 - Per Turn Memory Retrieval Injection",
         "heading_level": 3,
-        "heading_line": 1409,
-        "line": 1411,
+        "heading_line": 1413,
+        "line": 1415,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128910,8 +129060,8 @@
       "source_location": {
         "heading": "AMS-020 - Memory Activation Scoring",
         "heading_level": 3,
-        "heading_line": 1452,
-        "line": 1454,
+        "heading_line": 1456,
+        "line": 1458,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128927,8 +129077,8 @@
       "source_location": {
         "heading": "AMS-021 - Gist Review Panel",
         "heading_level": 3,
-        "heading_line": 1494,
-        "line": 1496,
+        "heading_line": 1498,
+        "line": 1500,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128944,8 +129094,8 @@
       "source_location": {
         "heading": "AMS-022 - Memory Maintenance Operations",
         "heading_level": 3,
-        "heading_line": 1544,
-        "line": 1546,
+        "heading_line": 1548,
+        "line": 1550,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128961,8 +129111,8 @@
       "source_location": {
         "heading": "AMS-023 - Memory Maintenance GUI Invocation",
         "heading_level": 3,
-        "heading_line": 1588,
-        "line": 1590,
+        "heading_line": 1592,
+        "line": 1594,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128978,8 +129128,8 @@
       "source_location": {
         "heading": "AMS-024 - Memory Integration Boundary Intro",
         "heading_level": 3,
-        "heading_line": 1627,
-        "line": 1629,
+        "heading_line": 1631,
+        "line": 1633,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -128995,8 +129145,8 @@
       "source_location": {
         "heading": "AMS-025 - Assistant Prompt Builder Memory Routing",
         "heading_level": 3,
-        "heading_line": 1668,
-        "line": 1670,
+        "heading_line": 1672,
+        "line": 1674,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129012,8 +129162,8 @@
       "source_location": {
         "heading": "AMS-026 - Non Assistant NullMemoryProvider Enforcement",
         "heading_level": 3,
-        "heading_line": 1708,
-        "line": 1710,
+        "heading_line": 1712,
+        "line": 1714,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129029,8 +129179,8 @@
       "source_location": {
         "heading": "AMS-027 - Child Continuity Canonical Sources",
         "heading_level": 3,
-        "heading_line": 1749,
-        "line": 1751,
+        "heading_line": 1753,
+        "line": 1755,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129046,8 +129196,8 @@
       "source_location": {
         "heading": "AMS-028 - Crew Shared State Coordination Boundary",
         "heading_level": 3,
-        "heading_line": 1793,
-        "line": 1795,
+        "heading_line": 1797,
+        "line": 1799,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129063,8 +129213,8 @@
       "source_location": {
         "heading": "AMS-029 - Deterministic Defaults Section Anchor",
         "heading_level": 3,
-        "heading_line": 1833,
-        "line": 1835,
+        "heading_line": 1837,
+        "line": 1839,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129080,8 +129230,8 @@
       "source_location": {
         "heading": "AMS-030 - Core Memory Defaults",
         "heading_level": 3,
-        "heading_line": 1868,
-        "line": 1870,
+        "heading_line": 1872,
+        "line": 1874,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129097,8 +129247,8 @@
       "source_location": {
         "heading": "AMS-031 - Kind Half Life Defaults",
         "heading_level": 3,
-        "heading_line": 1909,
-        "line": 1911,
+        "heading_line": 1913,
+        "line": 1915,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129114,8 +129264,8 @@
       "source_location": {
         "heading": "AMS-032 - Verification Default Configuration",
         "heading_level": 3,
-        "heading_line": 1955,
-        "line": 1957,
+        "heading_line": 1959,
+        "line": 1961,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129131,8 +129281,8 @@
       "source_location": {
         "heading": "AMS-033 - Project Scoped Memory Config Keys",
         "heading_level": 3,
-        "heading_line": 1996,
-        "line": 1998,
+        "heading_line": 2000,
+        "line": 2002,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129148,8 +129298,8 @@
       "source_location": {
         "heading": "AMS-034 - Memory Compression Threshold Override Note",
         "heading_level": 3,
-        "heading_line": 2048,
-        "line": 2050,
+        "heading_line": 2052,
+        "line": 2054,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129165,8 +129315,8 @@
       "source_location": {
         "heading": "AMS-035 - Backend Memory Acceptance Criteria",
         "heading_level": 3,
-        "heading_line": 2088,
-        "line": 2090,
+        "heading_line": 2092,
+        "line": 2094,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129182,8 +129332,8 @@
       "source_location": {
         "heading": "AMS-036 - GUI Memory Acceptance Criteria",
         "heading_level": 3,
-        "heading_line": 2136,
-        "line": 2138,
+        "heading_line": 2140,
+        "line": 2142,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129199,8 +129349,8 @@
       "source_location": {
         "heading": "AMS-037 - Assistant Memory Non Goals",
         "heading_level": 3,
-        "heading_line": 2176,
-        "line": 2178,
+        "heading_line": 2180,
+        "line": 2182,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129216,8 +129366,8 @@
       "source_location": {
         "heading": "AMS-038 - Runtime Owner Reference Map",
         "heading_level": 3,
-        "heading_line": 2220,
-        "line": 2222,
+        "heading_line": 2224,
+        "line": 2226,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129233,8 +129383,8 @@
       "source_location": {
         "heading": "AMS-039 - Plan Local Obligation Boundary",
         "heading_level": 3,
-        "heading_line": 2262,
-        "line": 2264,
+        "heading_line": 2266,
+        "line": 2268,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129250,8 +129400,8 @@
       "source_location": {
         "heading": "AMS-040 - Assistant Memory Owner Consumer Map",
         "heading_level": 3,
-        "heading_line": 2302,
-        "line": 2304,
+        "heading_line": 2306,
+        "line": 2308,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129267,8 +129417,8 @@
       "source_location": {
         "heading": "AMS-041 - Assistant Memory PlanUnits Section Anchor",
         "heading_level": 3,
-        "heading_line": 2343,
-        "line": 2345,
+        "heading_line": 2347,
+        "line": 2349,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129284,8 +129434,8 @@
       "source_location": {
         "heading": "AMS-042 - P1-MEMORY-TIERING-CONTRACT",
         "heading_level": 3,
-        "heading_line": 2398,
-        "line": 2400,
+        "heading_line": 2402,
+        "line": 2404,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129301,8 +129451,8 @@
       "source_location": {
         "heading": "AMS-043 - P1-MEMORY-STORE-CRUD-VERSION-CITATIONS",
         "heading_level": 3,
-        "heading_line": 2497,
-        "line": 2499,
+        "heading_line": 2501,
+        "line": 2503,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129318,8 +129468,8 @@
       "source_location": {
         "heading": "Claim-Level Verification And Notebook Boundary Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2570,
-        "line": 2576,
+        "heading_line": 2574,
+        "line": 2580,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129335,8 +129485,8 @@
       "source_location": {
         "heading": "Claim-Level Verification And Notebook Boundary Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2570,
-        "line": 2612,
+        "heading_line": 2574,
+        "line": 2616,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129352,8 +129502,8 @@
       "source_location": {
         "heading": "Claim-Level Verification And Notebook Boundary Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 2570,
-        "line": 2646,
+        "heading_line": 2574,
+        "line": 2650,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129369,8 +129519,8 @@
       "source_location": {
         "heading": "AMS-047 - Memory Preview, Out Of Date Display Group, And In-Chat Traces",
         "heading_level": 3,
-        "heading_line": 2694,
-        "line": 2696,
+        "heading_line": 2698,
+        "line": 2700,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129386,8 +129536,8 @@
       "source_location": {
         "heading": "AMS-048 - Gist Edit And Half-Life Link",
         "heading_level": 3,
-        "heading_line": 2779,
-        "line": 2781,
+        "heading_line": 2783,
+        "line": 2785,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129403,8 +129553,8 @@
       "source_location": {
         "heading": "AMS-049 - Gist Review Display Name",
         "heading_level": 3,
-        "heading_line": 2818,
-        "line": 2820,
+        "heading_line": 2822,
+        "line": 2824,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129420,8 +129570,8 @@
       "source_location": {
         "heading": "AMS-050 - Locked-Rule Change Proposal",
         "heading_level": 3,
-        "heading_line": 2858,
-        "line": 2860,
+        "heading_line": 2862,
+        "line": 2864,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129437,8 +129587,8 @@
       "source_location": {
         "heading": "AMS-051 - Taught Rules Included In A Reply",
         "heading_level": 3,
-        "heading_line": 2899,
-        "line": 2901,
+        "heading_line": 2903,
+        "line": 2905,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129454,8 +129604,8 @@
       "source_location": {
         "heading": "AMS-052 - Export Memory",
         "heading_level": 3,
-        "heading_line": 2939,
-        "line": 2941,
+        "heading_line": 2943,
+        "line": 2945,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129471,8 +129621,8 @@
       "source_location": {
         "heading": "AMS-053 - What Counts As Following A Taught Rule",
         "heading_level": 3,
-        "heading_line": 2994,
-        "line": 2996,
+        "heading_line": 2998,
+        "line": 3000,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129488,8 +129638,8 @@
       "source_location": {
         "heading": "AMS-054 - Thread-Private App Memory And Explicit Carry-Over",
         "heading_level": 3,
-        "heading_line": 3056,
-        "line": 3058,
+        "heading_line": 3060,
+        "line": 3062,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129505,8 +129655,8 @@
       "source_location": {
         "heading": "AMS-100 - memory.dedup_sweep.completed semantic contract",
         "heading_level": 3,
-        "heading_line": 3152,
-        "line": 3154,
+        "heading_line": 3156,
+        "line": 3158,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129522,8 +129672,8 @@
       "source_location": {
         "heading": "AMS-101 - memory.dedup_sweep.started semantic contract",
         "heading_level": 3,
-        "heading_line": 3204,
-        "line": 3206,
+        "heading_line": 3208,
+        "line": 3210,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129539,8 +129689,8 @@
       "source_location": {
         "heading": "AMS-102 - memory.index.lexical.rebuild.completed semantic contract",
         "heading_level": 3,
-        "heading_line": 3256,
-        "line": 3258,
+        "heading_line": 3260,
+        "line": 3262,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129556,8 +129706,8 @@
       "source_location": {
         "heading": "AMS-103 - memory.index.lexical.rebuild.started semantic contract",
         "heading_level": 3,
-        "heading_line": 3308,
-        "line": 3310,
+        "heading_line": 3312,
+        "line": 3314,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129573,8 +129723,8 @@
       "source_location": {
         "heading": "AMS-104 - memory.index.semantic.rebuild.completed semantic contract",
         "heading_level": 3,
-        "heading_line": 3360,
-        "line": 3362,
+        "heading_line": 3364,
+        "line": 3366,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129590,8 +129740,8 @@
       "source_location": {
         "heading": "AMS-105 - memory.index.semantic.rebuild.started semantic contract",
         "heading_level": 3,
-        "heading_line": 3412,
-        "line": 3414,
+        "heading_line": 3416,
+        "line": 3418,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129607,8 +129757,8 @@
       "source_location": {
         "heading": "AMS-106 - memory.verification_sweep.completed semantic contract",
         "heading_level": 3,
-        "heading_line": 3464,
-        "line": 3466,
+        "heading_line": 3468,
+        "line": 3470,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -129624,8 +129774,8 @@
       "source_location": {
         "heading": "AMS-107 - memory.verification_sweep.started semantic contract",
         "heading_level": 3,
-        "heading_line": 3516,
-        "line": 3518,
+        "heading_line": 3520,
+        "line": 3522,
         "path": "Plans/assistant-memory-subsystem.md"
       },
       "status": "accepted",
@@ -131938,6 +132088,23 @@
         "heading_level": 3,
         "heading_line": 7233,
         "line": 7235,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_DMEM_card1b_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-316",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_oracle",
+      "source_location": {
+        "heading": "ATS-316 - Card 1b maintenance oracles",
+        "heading_level": 3,
+        "heading_line": 7292,
+        "line": 7294,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -145113,6 +145280,40 @@
         "heading_level": 3,
         "heading_line": 24791,
         "line": 24793,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_DMEM_card1b_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-658",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-658 - memory.prune_archive.completed Card 1b contract",
+        "heading_level": 3,
+        "heading_line": 24836,
+        "line": 24838,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_DMEM_card1b_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-659",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "CV-659 - memory.prune_archive.started Card 1b contract",
+        "heading_level": 3,
+        "heading_line": 24980,
+        "line": 24982,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -228963,6 +229164,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "ea_DMEM_card1b_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-638",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-638 - memory.monthly_summary.completed Card 1b contract",
+        "heading_level": 3,
+        "heading_line": 29937,
+        "line": 29939,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ea_DMEM_card1b_20261104",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-639",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_contract",
+      "source_location": {
+        "heading": "SP-639 - memory.monthly_summary.started Card 1b contract",
+        "heading_level": 3,
+        "heading_line": 30084,
+        "line": 30086,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "scheduling_precedence",
       "gui_related": true,
       "owner_doc": "Plans/Scheduling_and_Quota_Resume.md",
@@ -244269,10 +244504,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18837,
+    "depends_on_edge_count": 18866,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22045,
-    "node_count": 7446,
+    "edge_count": 22074,
+    "node_count": 7451,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
