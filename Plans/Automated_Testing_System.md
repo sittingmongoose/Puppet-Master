@@ -110,7 +110,7 @@ Acceptance coverage must prove effective-policy receipts, visible-session receip
 
 ## GUI web development and smoke-test workflow addendum (2026-07-07)
 
-The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
+The Leptos web GUI development workflow (DL-139; it replaces the Slint/WASM web GUI) uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Because the web GUI is drawn with browser elements, smoke tests and state capture drive and read the page's own elements, and the same fixtures and behavioral scenarios also run through the Slint desktop, with each interface's screenshots checked against its own visual baselines, because the two share behavior, not pixels (F3-583). The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 
 ### ATS-023 - Web GUI Dev Preview And Smoke Tests
 
@@ -124,8 +124,7 @@ canonical_text: >-
   automation smoke test that drives and reads the page's own elements, screenshots/state-capture, deterministic state
   hooks, and fast rebuild/reload; the same fixtures and behavioral scenarios also run through the Slint desktop, and
   each interface's screenshots are checked against its own visual baselines. Production builds must not
-  enable dev/test, MCP, live-preview, fixture, or browser automation features unless explicit configuration enables the
-  capability and records permission/audit receipts.
+  enable dev/test, MCP, live-preview or browser automation features unless explicit configuration enables the capability and records permission/audit receipts. Fixture mode is excluded from this exception. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 gui_related: true
 gui_classification_reason: This unit defines user-visible web GUI development preview controls, screenshots, and smoke-test evidence.
 depends_on:
@@ -135,16 +134,15 @@ depends_on:
 unblocks:
 - F3-417
 acceptance_criteria:
-- The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage.
-- The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines.
-- Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection.
-- Production builds keep dev/test, MCP, live-preview, fixture, and browser automation controls disabled unless explicit configuration enables the capability.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.
+- "The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage."
+- "The shared fixtures and behavioral scenarios also run through the Slint desktop, and screenshots of the web and desktop interfaces are captured and each is checked against its own interface's visual baselines."
+- "Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection."
+- "Production builds keep dev/test, MCP, live-preview and browser automation controls disabled unless explicit configuration enables the capability; fixture mode is never available in production."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec."
+- "Fixture-mode tests use isolated labelled deterministic state in both GUI targets, with no prototype scenario picker, product run-mode switch, production admission, readiness, production receipt or real-work credit."
 validation_surfaces:
-- python3 scripts/pm-gui-asset-policy.py
-- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
-- python3 scripts/pm-plans-verify.py validate-implementation-readiness
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-gui-asset-policy.py"
+- "scripts/pm-plans-verify.py"
 risk_class: web_gui_dev_test_authority_leak
 reasoning_tier: high
 context_scope: gui_platform_currentness_repair
@@ -172,6 +170,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Production builds must not enable dev/test/MCP/live-preview features unless explicitly configured."
 - "Browser-only WASM must not claim direct OS authority."
+- "Do not ship fixture mode in production, offer a prototype scenario picker or treat fixture state/captures as real owner state, production receipts or readiness evidence."
 stale_retired_dispositions:
 - "DL-139 retires the Slint/WASM web GUI this workflow was first written for; the workflow now serves the Leptos web GUI."
 owner_hints:
@@ -6049,25 +6048,22 @@ plan_unit_id: ATS-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Automated_Testing_System.md
-canonical_text: >-
-  Test-build observability: development and test builds of both the Slint desktop and the Leptos web GUI
-  (DL-139, F3-583) expose to test agents the active screen, the focused control, the text selection, the scroll
-  position, every dispatched command with its result, frame timing, redraw activity, memory growth, and the
-  requested and effective renderer with any fallback reason (F3-033). Production builds of either interface never
-  include this surface, and no production configuration can enable it.
+canonical_text: |-
+  Test-build observability: development and test builds of both the Slint desktop and the Leptos web GUI (DL-139, F3-583) expose to test agents the active screen, the focused control, the text selection, the scroll position, every dispatched command with its result, frame timing, redraw activity, memory growth, and the requested and effective renderer with any fallback reason (F3-033). Production builds of either interface never include this surface, and no production configuration can enable it. Fixture-mode observations are labelled developer/test evidence only: they neither admit fixture data into production nor confer readiness, production receipt or real-work credit. No prototype scenario picker or product run-mode switch is included.
 gui_related: true
 gui_classification_reason: "Defines what test agents can observe of the visible desktop and web interfaces in development and test builds."
 split_recommended: false
 depends_on: [DL-139, ATS-023, F3-033, F3-583]
 unblocks: []
 acceptance_criteria:
-  - "In a development or test build of each interface, a test agent can read every listed item for the current window or page."
-  - "The renderer report names the requested renderer, the effective renderer and the fallback reason, including a software GPU adapter routed to the Skia CPU raster."
-  - "A production build of either interface contains no part of this surface, and no configuration enables it there."
-  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- "In a development or test build of each interface, a test agent can read every listed item for the current window or page."
+- "The renderer report names the requested renderer, the effective renderer and the fallback reason, including a software GPU adapter routed to the Skia CPU raster."
+- "A production build of either interface contains no part of this surface, and no configuration enables it there."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+- "Fixture-mode observations distinguish test inputs/results from real owner state and confer no production admission, readiness, production receipt or real-work credit."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: test_observability_gap_or_production_leak
 reasoning_tier: high
 context_scope: gui_stack_skia_leptos
@@ -6086,8 +6082,9 @@ preserved_exact_tokens:
   - "requested and effective renderer"
   - "fallback reason"
 negative_constraints:
-  - "Do not ship this surface in production builds or let a production configuration enable it."
-  - "Do not treat observability output by itself as runtime, visual or performance acceptance."
+- "Do not ship this surface in production builds or let a production configuration enable it."
+- "Do not treat observability output by itself as runtime, visual or performance acceptance."
+- "Do not turn fixture-mode observability into a prototype scenario picker, product run-mode switch or production-evidence path."
 owner_boundary_notes:
   - "ATS-023's production-configuration exception for dev/test controls does not extend to this surface."
 owner_hints:

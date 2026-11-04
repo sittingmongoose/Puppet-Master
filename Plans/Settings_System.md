@@ -3261,8 +3261,7 @@ canonical_text: >-
   and commands-shortcuts; one System workspace, Server & Project Location, presents server-claim-bootstrap, servers-hosts-environments,
   clients-continuity, project-hosting-files, project-sync-move-copy, ssh-remote, and remote-access; Single Owners
   and Browser & SCM governance are Advanced disclosures; Back Seat Driver is its own kit manager. Domain switches
-  never blank (first frame at least 85 percent of settled brightness), built-in sounds play as labelled demonstration
-  tones, and All Settings scrolls with the page while staying variable-height virtualized. The 350 px Details
+  never blank (first frame at least 85 percent of settled brightness), built-in sounds preview their selected available asset or admitted synthesized recipe through F3-405’s shared player and provenance rules, and All Settings scrolls with the page while staying variable-height virtualized. The 350 px Details
   inspector uses SSYS-063: visible labelled Close, exact context, Used everywhere except sentence, Where it applies,
   Choosing here changes target, existing explanations/choices, Recent changes and For experts. Origin-word actions
   replace the question icon; no side stripes, new manager kit or extra Advanced disclosure is added.
@@ -3271,16 +3270,17 @@ gui_classification_reason: Governs the shared manager kit, workspace grouping, s
 depends_on: [SSYS-032, SSYS-005, SSYS-006, SSYS-015, SSYS-024]
 unblocks: []
 acceptance_criteria:
-  - Every manager workspace mounts through the shared kit with zero header-level action buttons, at most six tabs, and one Advanced disclosure per view.
-  - Registry keys, routes, detail ids, command ids, and the settings inventory are unchanged; every workspace carries data-manager-key.
-  - A domain switch's first frame is at least 85 percent of settled brightness; every built-in sound row plays a labelled demonstration tone; All Settings has no nested scroller; no page errors occur.
-  - Panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration.
-  - (USER-SETTINGS-MANAGER-REFRESH-20260909) State renders as dot-plus-text status tokens and no capsule pill remains except keyboard keys; every select is a themed listbox and every menu shares its popout motion; rosters scroll inside their manager block; manager-topic canonical settings render inline inside their manager before its Advanced disclosure and every concept id renders exactly once (SSYS-035).
+- "Every manager workspace mounts through the shared kit with zero header-level action buttons, at most six tabs, and one Advanced disclosure per view."
+- "Registry keys, routes, detail ids, command ids, and the settings inventory are unchanged; every workspace carries data-manager-key."
+- "A domain switch's first frame is at least 85 percent of settled brightness; sound previews follow F3-405’s provenance and actual-playback rules; All Settings has no nested scroller; no page errors occur."
+- "Panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration."
+- "(USER-SETTINGS-MANAGER-REFRESH-20260909) State renders as dot-plus-text status tokens and no capsule pill remains except keyboard keys; every select is a themed listbox and every menu shares its popout motion; rosters scroll inside their manager block; manager-topic canonical settings render inline inside their manager before its Advanced disclosure and every concept id renders exactly once (SSYS-035)."
+- "Sound preview requires an explicit gesture, source/license/version/duration/hash metadata and the shared player. Playing and Stop follow actual playback; replacement has no overlap and navigation/Project/view disposal cleans up. Unavailable or undecodable audio has a non-audio failure state, no unrelated substitute and no false delivery credit; real Pip and Guided Tour cues remain F3-405 consumers."
 validation_surfaces:
-  - "Settings manager acceptance: canonical rows and routes, shared kit, at least 85 percent first-frame brightness, labelled sounds, page scrolling, and no page errors."
-  - "Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions or sound play, with settling within the specified spring duration."
-  - "SSYS-035 placement acceptance: each live setting once, exact manager and tab home, Details and search return, and inline refresh."
-  - python3 scripts/pm-plans-verify.py run-gates
+- "future Settings manager acceptance: canonical rows and routes, shared kit, at least 85 percent first-frame brightness, labelled sounds, page scrolling, and no page errors."
+- "future Settings motion evidence: no blank frames during manager, inspector, domain and tab transitions or sound play, with settling within the specified spring duration."
+- "future SSYS-035 placement acceptance: each live setting once, exact manager and tab home, Details and search return, and inline refresh."
+- "scripts/pm-plans-verify.py"
 risk_class: manager_kit_regression_or_registry_drift
 reasoning_tier: high
 context_scope: settings_manager_presentation

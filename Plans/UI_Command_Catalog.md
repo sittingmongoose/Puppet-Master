@@ -93,7 +93,7 @@ The following command IDs are development-preview and automated-test controls on
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
 | `cmd.gui_dev_preview.reload` | Reload GUI preview | Reloads the local static web route or native preview surface after a configured dev/test rebuild. | `dev_preview_enabled && explicit_dev_or_test_build` | `domain_action` |
-| `cmd.gui_dev_preview.fixture_mode.set` | Set GUI fixture mode | Selects an approved deterministic fixture state for GUI smoke tests, screenshots, state hooks, or replay. | `dev_preview_enabled && fixture_mode_available && explicit_dev_or_test_build` | `domain_action` |
+| `cmd.gui_dev_preview.fixture_mode.set` | Set GUI fixture mode | Selects isolated labelled deterministic developer/test state for GUI smoke tests, screenshots, state hooks or replay; no prototype scenario picker, product run mode, production admission, readiness or production receipt credit. | `dev_preview_enabled && fixture_mode_available && explicit_dev_or_test_build` | `domain_action` |
 | `cmd.gui_dev_preview.capture_state` | Capture GUI state | Captures screenshot, visible state, and deterministic state-hook output for browser/native GUI smoke evidence. | `dev_preview_enabled && state_capture_available && explicit_dev_or_test_build` | `domain_action` |
 | `cmd.gui_dev_preview.daemon_capabilities.inspect` | Inspect daemon capabilities | Shows trusted local daemon capability probe results, degraded reasons, and test-hook availability without enabling a capability. | `dev_preview_enabled && trusted_local_daemon_probe_available && explicit_dev_or_test_build` | `shell_view` |
 
@@ -8432,9 +8432,8 @@ owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   GUI development-preview command controls are limited to cmd.gui_dev_preview.reload,
   cmd.gui_dev_preview.fixture_mode.set, cmd.gui_dev_preview.capture_state, and
-  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only,
-  are compiled out or disabled in production unless explicitly configured, and must not be reused as production
-  runtime, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container commands.
+  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only and
+  must not be reused as production runtime, terminal, filesystem, browser automation, CEF, tray, native-window or process/container commands. Other development-preview controls are compiled out or disabled in production unless explicitly configured; cmd.gui_dev_preview.fixture_mode.set is always compiled out of production. It selects isolated labelled deterministic developer/test state only. Fixture mode is a developer and test tool for building Puppet Master, not a prototype scenario picker or a product run-mode switch. Deterministic fixture data stays isolated and labelled; it cannot enter production owner state, satisfy production admission, or earn readiness, production receipt or real-work credit. No production configuration enables fixture mode.
 gui_related: true
 gui_classification_reason: This unit defines user-visible development-preview GUI controls and command IDs.
 depends_on:
@@ -8442,13 +8441,14 @@ depends_on:
 - F3-417
 unblocks: []
 acceptance_criteria:
-- Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection.
-- Production builds disable or omit these controls unless explicit configuration enables the matching dev/test surface.
-- The commands do not grant OS-owned capabilities and do not replace production runtime command families.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created.
+- "Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection."
+- "Production builds disable or omit other dev-preview controls unless explicit configuration enables the matching dev/test surface; fixture mode is always absent and no production configuration enables it."
+- "The commands do not grant OS-owned capabilities and do not replace production runtime command families."
+- "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created."
+- "The fixture command selects isolated labelled developer/test data only, without a prototype scenario picker, product run-mode switch, production admission, readiness or production receipt credit."
 validation_surfaces:
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-plans-verify.py"
+- "scripts/pm-plan-index.py"
 risk_class: dev_preview_command_authority_leak
 reasoning_tier: high
 context_scope: gui_platform_currentness_repair
@@ -8470,6 +8470,7 @@ preserved_exact_tokens:
 negative_constraints:
 - "Do not invent production runtime commands for dev-preview workflow."
 - "Do not let dev-preview commands grant PTY, filesystem, process/container, CEF, tray, native-window, or browser automation authority."
+- "Do not let fixture_mode.set select prototype scenarios, enable a product run mode, admit fixture data to production or produce readiness/production receipt credit."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/FinalGUISpec.md
@@ -14674,7 +14675,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 
 | Surface | What it is | Rows it produces |
 |---|---|---|
-| `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, PM_WORK items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
+| `run_dock` | The one to three lines above the composer that carry live runs and needs-you items; transcript-backed items follow ACD-476’s offscreen rule, owner-projected Work items use their own identity. | `cmd.collaboration.open`, `cmd.questionnaire.resume`, `cmd.chat.processes.open` |
 | `wonderer_workspace` | The BrainStorm Wonderer workspace, an editor-pane document like the run view (CWR-020). | `cmd.brainstorm.synthesize_plan`, `cmd.collaboration.pause`, `cmd.collaboration.resume`, `cmd.collaboration.research_lead` (DL-218) |
 | `questionnaire_card` | The existing questionnaire host's question and What we agreed cards; this surface ID is newly registered by UCC-206 under DL-218. | `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.grill_me.wrap_up`, `cmd.questionnaire.grill_me.confirm`, `cmd.questionnaire.grill_me.keep_going` |
 | `memory_proposal_line` | The one in-chat line that proposes a memory for review (AMS-047). | `cmd.chat.teach.open_memory` |
@@ -17711,8 +17712,7 @@ canonical_text: >-
   web.index.enable for the search index. They open Settings and reveal the owner row without writing a value or
   controlling a service. The popover has close/Escape/outside closure, return focus and the common overlay/Glass
   plate; unavailable owner navigation says why. G6 confines Clear finished producers to the thread Processes
-  view and panel Processes tab. PM7_WORK_UI and PM_WORK demonstrate these routes in the concept; they are
-  adapters to the stable catalog identities, not replacement native commands or Event Authority admission.
+  view and panel Processes tab. All Work consumers use the stable catalog identities without a replacement command family or implicit Event Authority admission.
   D2/D7, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): composer run_dock Review/Show is
   an additional producer of cmd.chat.processes.open for a process or scheduled item, preserving
   Project/thread/work identity and selecting that item in Processes. Agent Review selects the existing Subagents
@@ -17730,7 +17730,7 @@ canonical_text: >-
   is not PID Stop and never enters WorkTarget. Rerun reuses cmd.terminal.rerun for a new invocation through the
   terminal owner, with an explicit new-session request when needed; Restart keeps cmd.work.restart for
   restartable live server/db/watcher work. Concept W.restart/W.stop adapters do not replace those native owner
-  routes. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live
+  routes. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live
   process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that
   thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or
   returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At
@@ -17755,12 +17755,12 @@ acceptance_criteria:
   - "The nine work/navigation command IDs match the closed schema enum and each has exactly one canonical production-intent handler."
   - "Navigation/view-local clear are distinguished from runtime mutations; no stop_all alias or delete-record Clear Finished appears."
   - "Existing terminal/owner/schedule routes preserve exact identities, and deferred Home/shortcut/event producers stay absent."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q12 amends G4: every Project’s Resources includes This computer and Puppet Master’s own services, which are shared and belong to no individual Project, alongside that Project’s own servers. An empty Project says that nothing in this Project is running, above the shared rows; it does not look empty or report another Project’s work as its own. Shared machines show only environments with running work. Metadata/freshness is available on tab entry; the existing visible-only 2 s sampling owner remains. Permission, exact host/environment identity and stale disclosure remain authoritative; shared read scope creates no Stop/Restart/Stop all or service-control authority."
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -17773,6 +17773,8 @@ node_compile_hint:
 source_lineage:
 - reports/pm7-build-20261029/IDS.md
 - Concepts/Icon-Concepts/Opus5.5icon/README.md
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+- "DL-260 source lineage only (no product API): PM7_WORK_UI/PM_WORK, clearFinished platform/thread:<id> and canSendInput/answer were concept route/view adapters; native owners retain exact command, view, prompt, generation and permission checks."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

@@ -24627,30 +24627,8 @@ plan_unit_id: ACD-439
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector
-  popouts, the header chrome menus, and the context status module - share one corner-origin
-  sprout motion contract: each popout sprouts from and collapses into the corner or edge
-  nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform
-  closed scale and closing in roughly 220ms with opacity held until late followed by a short
-  fade. Search-driven size changes in the model and persona popouts spring the height with
-  overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent,
-  Debug, Plan, and Deep Plan options with no search field, while model and persona popouts
-  keep search. Under reduced motion, open and close render as instant show/hide. The
-  single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single sprout
-  implementation for every menu; chat menus.js, Usage PMU.menu and Home PMW.menu delegate to it. This build
-  removes their former duplicates while retaining this unit’s visible motion/focus contract. L8 B, PM7 Step4,
-  2026-10-30: the shared implementation is window.PM6_SPROUT in base/script/pm7-sprout.js with
-  base/style/pm7-sprout.css, registered as pm7-sprout-js/css. Its contract is open(el, afterOpen, anchor,
-  opts), close(el, done, opts), isOpen, aim, resize, morph, bounce, keep and reduced; pm-sprout/pm-sprout-edge opt in and
-  the owner writes is-open/is-closing/is-size-bounce and six --pm6-sprout-* values. Legacy selector adapters
-  may keep their names only while using that same lifecycle. Title, chat/worktree/sidecar, Settings, rail
-  PMR.menu/filterMenu, Usage PMU.menu, Home PMW.menu, PMMenu/File Manager and live notification inbox
-  #pmnPanel all consume it; there is no inbox exemption. The standalone chat reads the same owner files.
-  Preserve each trigger’s opening origin/fade, one speed-scaled close timeline, last-relevant-transition
-  completion with cancellation/reopen guards and bounded fallback, and drag hold even for motion already in
-  flight. DR-079 also owns the shared origin/shown/instant/fade inputs and Home's morph geometry adapter;
-  chat does not recreate those operations. Shared presentation APIs create no new product command or saved key.
+canonical_text: |-
+  Chat transient popouts - the model, mode, persona, effort, and thoroughness selector popouts, the header chrome menus, and the context status module - share one corner-origin sprout motion contract: each popout sprouts from and collapses into the corner or edge nearest its trigger, opening in roughly 300ms with overshoot easing from a non-uniform closed scale and closing in roughly 220ms with opacity held until late followed by a short fade. Search-driven size changes in the model and persona popouts spring the height with overshoot and a brief size-bounce. The modes popout opens directly on its Ask, Agent, Debug, Plan, and Deep Plan options with no search field, while model and persona popouts keep search. Under reduced motion, open and close render as instant show/hide. The single-overlay invariant of ACD-438 is preserved. L8 B, Jared 2026-10-30: DR-079 is the single menu sprout lifecycle for chat, Usage, Home and every other menu consumer. Chat retains this unit's visible motion, search, focus and single-overlay contracts and delegates origin/fade, timely painted entrance completion, close completion with cancellation/reopen guards and bounded fallback, instant/Reduced Motion settle, in-flight drag/hidden gates, resize/morph and teardown to DR-079. No chat-specific lifecycle, script registration, selector, class or JavaScript signature is required. Shared presentation creates no new product command or saved key.
 gui_related: true
 gui_classification_reason: Defines visible open/close motion and search behavior for chat popouts.
 split_recommended: false
@@ -24663,8 +24641,8 @@ acceptance_criteria:
   - "At most one popout, flyout, or fan-out is open at a time per ACD-438, and reduced motion renders open and close as instant show/hide."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-  - "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: chat_header_contract_drift
 reasoning_tier: standard
 context_scope: assistant_chat_header
@@ -24677,6 +24655,7 @@ source_lineage:
   - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
   - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
   - "/mnt/Cursor/share/puppet-master/2026-10-29-pm7-build-decisions/README.md — Jared's answers (2026-10-30)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM7 used window.PM6_SPROUT, pm7-sprout.js/css, pm7-sprout-js/css, open/close/isOpen/aim/resize/morph/bounce/keep/reduced, --pm6-sprout-* inputs and the menu adapters listed in DR-079. These source spellings do not define product APIs."
 preserved_exact_tokens:
   - "corner-origin"
   - "sprout"
@@ -26849,8 +26828,7 @@ canonical_text: 'Chat motion has one voice per theme family (DL-106): Basic, Fri
   answer says whether a look''s cover hides the page; a surface it hides draws nothing new until the cover lifts, and
   a selection chip waits only for a real cover, never for a merely busy page. A move begun in a frame that was drawn
   late starts from its beginning once frames come on time again, at most six frames later or until a page-change hold
-  ends, so no move is spent before it is seen. In the concept these are PM_BUSY, the pm-idle event, PM_LOOK_COVERED and
-  PM_START_ON_SHOWN. Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
+  ends, so no move is spent before it is seen. One shared presentation owner supplies busy/idle, look-cover and on-time entrance gates to all consumers. Amended 2026-10-17 (DL-219, DL-222): a page change may hold while the arriving page is still drawing
   its first screen. The leaving page stays, with the click''s motion still running, until the arrival is ready or about
   1.5 s from the click''s own frame, whichever is first; then the entrance plays from the start, and the exit takes over
   from the opacity the click''s fade has reached (F3-464; amended 2026-10-17, review r1). That hold is the covering transition
@@ -26881,9 +26859,7 @@ canonical_text: 'Chat motion has one voice per theme family (DL-106): Basic, Fri
   pauses hidden/offscreen/during drags. Loader uses family periods and reduced-motion breath/blink exception of F3-662,
   no travel. App chirps use the one master player and existing chat mute, default off as a Pip part. Main-button pointer/keyboard
   acknowledgement is within 100 ms with no busy stall/deferral workaround and no double commit; disabled oops never activates.
-  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared PM_BUSY signal also names drag, after cover
-  reasons so a cover retains priority. PM_BUSY.drag() reads the five shared body drag classes; PM_BUSY.idle(fn, timeout)
-  defers a request made during a drag and rechecks a callback that lands in one, resubmitting after pm-idle. No idle
+  X2/L8, PM7 final GUI alignment f99ad183d2, 2026-10-30 (F3-3): the shared busy signal also names drag, after cover reasons so a cover retains priority. The shared idle-work owner defers requests made during a drag, rechecks callbacks that arrive during a drag and resubmits them after the drag gate clears. No idle
   job runs inside a held drag. This helper does not make a hidden tab busy by itself or waive caller visibility, other
   busy/cover, interaction and animation gates. No new command, binding, setting or event family is introduced. QA round
   2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q1/Q2: onboarding sound defaults on under general.interaction.sound-effects,
@@ -26935,8 +26911,8 @@ acceptance_criteria:
   value wins when it binds; a genuinely refused bound write remains refused. An unavailable Settings projection never
   fabricates a saved value or authorizes a write.'
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-- python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: chat_motion_and_sound_drift
 reasoning_tier: high
 context_scope: chat_motion_sound
@@ -26982,6 +26958,7 @@ source_lineage:
   source lineage; not native certification)
 - /mnt/Cursor/share/puppet-master/2026-10-16-p1000-speed/IDLE-WARM-RULE.md, SHA-256 9a79df01751fbd98f1b4d597d40e520e662b5d584e97ef9094c27dd8aa55736d
   (Jared, 2026-10-17 10:27Z, no platform-specific acceptance; source lineage)
+- "DL-260 source lineage only (no product API or implementation obligation): PM_BUSY/PM_BUSY.drag()/PM_BUSY.idle(fn, timeout), pm-idle, PM_LOOK_COVERED, PM_START_ON_SHOWN and the shared body drag classes were concept motion helpers."
 preserved_exact_tokens:
 - DL-138
 - Basic
@@ -27043,16 +27020,15 @@ canonical_text: 'The dock is a composer-adjacent surface of at most three one-li
   per-reply files row replace the stream footer pill''s helpers and files chips (ACD-482, DL-129). Amended 2026-10-29
   (D2/D8/D9; PM7): A process prompt is a needs-you dock item, live process work contributes to live runs; both are views
   of the same owner identity, not duplicate attention. Process stop differs from reply Stop; delivery never wakes a stopped
-  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): activity-panel.js registers
-  one PM56_PMX.dock.provide(workDock) provider over the selected thread’s PM_WORK process/agent/scheduled items. needsYou
+  thread. D2/D7/D9, PM7 Step4 final-source alignment, 2026-10-30 (integration e9b15abc64): One shared work dock provider reads the selected thread’s owner-projected process, agent and scheduled items. needsYou
   items are needs lines with Review, live processes are live lines with current time, and the next pending scheduled
   run is comingup. These items have no transcript card to wait offscreen for; existing transcript-backed providers retain
-  their visibility rules. [data-work-time] is patched by the same tick owner. Review/Show for a process or scheduled
+  their visibility rules. Visible work times update through the shared tick owner. Review/Show for a process or scheduled
   item reuses cmd.chat.processes.open with that exact item selected; an agent Review selects its existing Subagents Activity
   Detail row as local view state, not cmd.agents.open_thread and not a direct permission/answer/stop action. D7: Native
   owner-row selection must bind signed owner identity, thread and generation as CS-106 requires; the concept is not evidence
   that this stronger guard exists. Process/scheduled Review already passes the item ID. QA round 2, Jared 2026-10-30;
-  DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run
+  DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run
   a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work
   identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain
@@ -27076,10 +27052,10 @@ acceptance_criteria:
   - "Every dock sentence is the producing owner's sentence; the dock holds no copy of owner state."
   - "The dock reserves its own space and never covers transcript content."
   - "A Chat Room's pacing, exhaustion or stop-condition wait, manual pause and every Grill Me session's current Confirm use yourmove (CWR-044); questions, approvals and failures use needs. Between automatic rounds it shows as live only when no existing user gate or manual pause requires attention."
-  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
+  - "QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry and remain until the owning question/input is answered. One next-expiry timer requests a redraw; it owns no work, schedule or persisted state and expiry never stops/cancels/deletes work. Existing dock priority, at-most-three budget and transcript visibility gates remain; full work remains reachable through Activity and the panel. Q14/H9: Glass’s Activity bar and composer dock lines join Activity Detail, panel, System status, Stop/Quit list, History and hover/attachment cards on the persona/model menu’s near-opaque plate. The needs line keeps its warm wash over that plate. Settings dialogs and drawers flatten that same menu tint over the look’s ground so background labels cannot read through; ordinary panes keep their existing material. This is consumer treatment, no global Glass token change or extra backdrop-filter."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
 risk_class: attention_surface_duplicates_owner_state
 reasoning_tier: high
 context_scope: chat_composer_stack
@@ -27096,6 +27072,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.3 C14-C15, 4.5 G-10, 7.4, 7.8"
   - "IMPACT-REGISTER B-ACD-10, B-ACD-08 (reference only)"
   - "Plans/Decision_Log.md DL-231 (a finished Chat Room round is no longer the user's move, 2026-10-21)"
+  - "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+  - "DL-260 source lineage only (no product API or implementation obligation): activity-panel.js registered PM56_PMX.dock.provide(workDock) over PM_WORK and patched [data-work-time]; these were concept provider/DOM spellings."
 preserved_exact_tokens:
   - "dock"
   - "AttentionItem"

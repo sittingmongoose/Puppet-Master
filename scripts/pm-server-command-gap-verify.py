@@ -37,7 +37,8 @@ MATERIALIZED_SCHEMA_PATHS = (
 # Content-addressed identity of the accepted canonical registry bytes.
 # USER-PROJECT-UNARCHIVE-REGISTRY-20260911: only row 128 moves from local-only
 # presentation to a Project-owner registry mutation; packet identity hashes stay fixed.
-EXPECTED_CANONICAL_REGISTRY_SHA256 = "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae"
+# 2026-11-04: P2-01 aligns Settings Transfer and Saved setups consumer labels; packet identity is unchanged.
+EXPECTED_CANONICAL_REGISTRY_SHA256 = "d33aef98ef2c440bbc93ca72c9a81f6508ff0fb5010037a0cb59c7923d72fa6d"
 EXPECTED_GAP_REGISTER_SHA256 = "e2b7436ae822004909b73be65078556e2a61a5827dc2ffe2e7e404d68df2c1af"
 EXPECTED_PACKET_CENSUS_SHA256 = "f9be848f2cb80eaf5e05df338392279b454e5c23d4b7fc4be6ed32326c87064b"
 EXPECTED_PARTITION = {
