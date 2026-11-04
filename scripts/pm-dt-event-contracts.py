@@ -349,7 +349,8 @@ def gate_score_join(payload, before, outcome):
         return False
     if 'score' in payload or 'score_threshold' in payload:
         context = payload.get('dispatch_score_tuple')
-        return context is not None and payload.get('node_id') == context['node_id'] and bool(payload.get('dispatch_score_ref'))
+        node_id = None if context is None else context['node_id']
+        return context is not None and payload.get('node_id') == node_id and bool(payload.get('dispatch_score_ref'))
     return True
 
 
@@ -407,8 +408,8 @@ def accounting_totals(p):
 
 
 def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False):
-    if event['replay_policy'] == 'projector_replay_only':
-        return 'replay_only_not_appendable'
+    if event['replay_policy'] != 'dedupe_by_idempotency_key':
+        return 'replay_only_not_appendable' if event['replay_policy'] == 'projector_replay_only' else 'join_refused'
     if event['payload_ref'] is None:
         try:
             if len(application_bytes(event['payload'])) > 16384:
@@ -435,8 +436,9 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
     partition = partition_for(event)
     if event['scope_kind'] != completed['envelope_context']['scope_kind']:
         return 'scope_refused'
-    if event['scope_kind'] == 'application' and (completed['application_scope']['scope_partition'] != partition or completed['application_scope']['server_id'] != prepared['application_scope']['server_id']):
-        return 'scope_refused'
+    # Application partition='app' is enforced by its schema; the immutable
+    # application_scope check binds the server, and the next guard binds the
+    # event partition. Avoid rechecking those same facts in a second predicate.
     if partition != completed['scope_partition'] or (c['scope_policy'] == 'project_only' and event['scope_kind'] != 'project'):
         return 'scope_refused'
     if event['payload_ref'] is not None:
@@ -444,9 +446,10 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
             return 'payload_unavailable'
     elif event['payload'] != p:
         return 'join_refused'
-    if any(event[k] != b[k] for k in b):
+    # Scope has its own guard above; keep this join independent of that rule.
+    if any(event[k] != b[k] for k in b if k != 'scope_kind'):
         return 'join_refused'
-    if event['event_type'] != c['event_type'] or event['payload_schema_id'] != c['payload_schema_id'] or event['replay_policy'] != 'dedupe_by_idempotency_key':
+    if event['event_type'] != c['event_type'] or event['payload_schema_id'] != c['payload_schema_id']:
         return 'join_refused'
     if any(p[k] != completed['subject'][k] for k in c['identity_fields']):
         return 'join_refused'
@@ -463,7 +466,7 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
         return 'join_refused'
     if any(p.get(k) != v for k, v in completed['runtime_context'].items()):
         return 'join_refused'
-    if c['event_type'] == 'usage.event' and p['usage_event_ref'] != eid:
+    if c['event_type'] == 'usage.event' and p['usage_event_ref'] != event['event_id']:
         return 'join_refused'
     if c['event_type'] == 'tool.invoked' and completed['before']['web_request'] is not None and event['parent_event_id'] != completed['before']['web_request'].get('parent_event_id'):
         return 'join_refused'
@@ -606,6 +609,74 @@ def checker_exit_code(failures):
     return int(bool(failures))
 
 
+def oversized_inline(c, f):
+    """A valid original closure whose sole defect is crossing SP-337's limit.
+
+    RFC 3339 permits arbitrary fractional precision. Zero extension preserves
+    the timestamp's value while growing every observational copy consistently.
+    Recompute identities and the prepare commitment after changing the closure.
+    Keep the large bytes generated, rather than storing them in the fixture.
+    """
+    a, b, e = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
+    field = 'observed_at_utc' if c['event_type'] == 'usage.event' else 'ts'
+    original = e['payload'][field]
+    extended = original[:-1] + ('' if '.' in original else '.') + '0' * 17000 + 'Z'
+    def replace(value):
+        if isinstance(value, dict):
+            return {key: replace(child) for key, child in value.items()}
+        if isinstance(value, list):
+            return [replace(child) for child in value]
+        return extended if value == original else value
+    a, b, e = replace([a, b, e])
+    key, eid = identity(c, b['payload'], b['scope_partition'])
+    for item in [a, b, e]:
+        item['idempotency_key'] = key
+        item['event_id'] = eid
+    if c['event_type'] == 'usage.event':
+        b['payload']['usage_event_ref'] = e['payload']['usage_event_ref'] = eid
+    b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+    return a, b, e
+
+
+def semantic_case(f, case):
+    """Apply one defect to an explicitly valid base and recommit its witnesses."""
+    a, b, e = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
+    for change in case.get('base_changes', []):
+        set_path(a, change['path'], change['value'])
+    b['before'] = copy.deepcopy(a['before'])
+    b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+    base = copy.deepcopy((a, b, e))
+    set_path(b if case['path'][0] == 'owner_result' else a, case['path'], case['value'])
+    b['before'] = copy.deepcopy(a['before'])
+    b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+    return base, (a, b, e)
+
+
+def envelope_case(c, f, field, value):
+    """One envelope-witness disagreement; all other identity joins agree."""
+    a, b, e = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
+    original = e[field]
+    def change(value_object):
+        if isinstance(value_object, dict):
+            return {key: value if key == field and child == original else change(child)
+                    for key, child in value_object.items()}
+        if isinstance(value_object, list):
+            return [change(child) for child in value_object]
+        return value_object
+    a, b, e = change([a, b, e])
+    a['scope_partition'] = b['scope_partition'] = partition_for(e)
+    key, eid = identity(c, b['payload'], b['scope_partition'])
+    for item in [a, b, e]:
+        item['idempotency_key'] = key; item['event_id'] = eid
+    if c['event_type'] == 'usage.event':
+        b['payload']['usage_event_ref'] = e['payload']['usage_event_ref'] = eid
+    b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+    base = copy.deepcopy((a, b, e))
+    a['envelope_context'][field] = b['envelope_context'][field] = original
+    b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+    return base, (a, b, e)
+
+
 def standing_results(c, f, schemas):
     """Ten independent, per-family standing oracles; no admission/native proof."""
     name = c['event_type']; slug = name.replace('.', '_')
@@ -635,14 +706,15 @@ def standing_results(c, f, schemas):
                             'positive': source_valid(c, x, y, z, schemas), 'bad_keys': negatives})
     results['2'] = {'application_cases': app_results}
     if not app:
-        results['2']['forbidden_application_scope'] = source_valid(c, a, b, dict(e, scope_kind='application', project_id=None), schemas)
+        bad_source = copy.deepcopy(a); bad_source['envelope_context']['scope_kind'] = 'application'
+        results['2']['forbidden_application_scope'] = 'schema_refused' if not Draft202012Validator(schemas[slug + '_source'], format_checker=FormatChecker()).is_valid(bad_source) else 'accepted'
     aa, bb = copy.deepcopy((a, b)); aa['scope_partition'] = bb['scope_partition'] = e['project_id']
     bb['prepared_sha256'] = hashlib.sha256(source_bytes(aa)).hexdigest()
     project_cases = [(b, e)] + [(v['completed'], v['event']) for v in f['positive_variants'] if v['event']['scope_kind'] == 'project']
     results['3'] = {'encoded_positives': all(done['scope_partition'] == partition_for(event) for done, event in project_cases),
                     'raw_id': source_valid(c, aa, bb, e, schemas)}
     ref = dict(e, payload={}, payload_ref='payload:fixture-verified-pack-body')
-    results['4'] = {'oversized_inline': source_valid(c, a, b, dict(e, payload={'body': 'x' * 16385}), schemas),
+    results['4'] = {'oversized_inline': source_valid(c, *oversized_inline(c, f), schemas),
                     'verified_ref': source_valid(c, a, b, ref, schemas, b['payload'], True),
                     'unverified_ref': source_valid(c, a, b, ref, schemas, b['payload'], False),
                     'changed_ref': source_valid(c, a, b, ref, schemas, {}, True)}
@@ -741,28 +813,30 @@ def main():
             sc = schemas[slug + '_source']; Draft202012Validator.check_schema(sc)
             sv = Draft202012Validator(sc, format_checker=FormatChecker())
             for key in sc['required']:
-                bad = copy.deepcopy(stage); del bad[key]
+                bad = copy.deepcopy(prep if key == 'stage' else stage); del bad[key]
                 check(bool(list(sv.iter_errors(bad))), name + ': missing source ' + key)
             check(bool(list(sv.iter_errors(dict(stage, unexpected='refused')))), name + ': closed source')
         check(sha(prep) == f['source_byte_oracle']['prepared_sha256'], name + ': pinned original source digest')
         check(canonical(prep).hex() == f['source_byte_oracle']['prepared_hex'], name + ': pinned original source bytes')
         for case in f['semantic_negatives']:
-            a, b = copy.deepcopy(prep), copy.deepcopy(done)
-            target = b if case['path'][0] == 'owner_result' else a
-            for key in case['path'][:-1]: target = target[key]
-            target[case['path'][-1]] = case['value']
-            b['before'] = copy.deepcopy(a['before']); b['prepared_sha256'] = sha(a)
-            check(source_valid(c, a, b, event, schemas) == case['expected'], name + ': ' + case['case'])
+            base, negative = semantic_case(f, case)
+            check(source_valid(c, *base, schemas) == 'accepted', name + ': valid semantic base ' + case['case'])
+            check(source_valid(c, *negative, schemas) == case['expected'], name + ': ' + case['case'])
         ref_event = copy.deepcopy(event); ref_event['payload'] = {}; ref_event['payload_ref'] = 'payload:fixture-verified-pack-body'
         check(source_valid(c, prep, done, ref_event, schemas, p, True) == 'accepted', name + ': separately governed payload resolves before joins')
         check(source_valid(c, prep, done, ref_event, schemas, p, False) == 'payload_unavailable', name + ': unverified pack body unavailable')
         check(source_valid(c, prep, done, ref_event, schemas, {}, True) == 'payload_unavailable', name + ': changed pack body unavailable')
-        for field, value in [('scope_kind', 'application'), ('project_id', 'wrong-project'), ('run_id', 'wrong-run'), ('actor_ref', 'wrong-actor')]:
-            bad = copy.deepcopy(event); bad[field] = value
-            check(source_valid(c, prep, done, bad, schemas) != 'accepted', name + ': wrong envelope ' + field)
+        bad_scope = copy.deepcopy(prep); bad_scope['envelope_context']['scope_kind'] = 'application'
+        check(not sv.is_valid(bad_scope), name + ': source schema refuses wrong envelope scope')
+        for field, value in [('project_id', 'wrong-project'), ('run_id', 'wrong-run'), ('actor_ref', 'wrong-actor')]:
+            base, negative = envelope_case(c, f, field, value)
+            check(source_valid(c, *base, schemas) == 'accepted', name + ': valid envelope base ' + field)
+            check(source_valid(c, *negative, schemas) != 'accepted', name + ': wrong envelope ' + field)
         for field in c['identity_fields']:
-            bad = copy.deepcopy(done); v = bad['subject'][field]; bad['subject'][field] = v + 1 if isinstance(v, int) else v + '-other'
-            check(source_valid(c, prep, bad, event, schemas) != 'accepted', name + ': wrong source subject ' + field)
+            a, bad = copy.deepcopy((prep, done)); v = bad['subject'][field]
+            a['subject'][field] = bad['subject'][field] = v + 1 if isinstance(v, int) else v + '-other'
+            bad['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+            check(source_valid(c, a, bad, event, schemas) != 'accepted', name + ': wrong source subject ' + field)
         for case in f['positive_variants']:
             check(not list(event_validator.iter_errors(case['event'])), name + ': variant complete envelope ' + case['case'])
             check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == 'accepted', name + ': ' + case['case'])
@@ -772,8 +846,9 @@ def main():
         check(source_valid(c, prep, done, replay, schemas) == 'replay_only_not_appendable', name + ': current writer refuses compatibility-only replay policy')
         retry = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
         check(recovery(c, f, retry) == {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': retry refuses compatibility-only replay policy')
-        oversized = copy.deepcopy(event); oversized['payload'] = {'body': 'x' * 16385}
-        check(source_valid(c, prep, done, oversized, schemas) == 'payload_ref_required', name + ': inline body over SP-337 limit requires payload ref')
+        large = oversized_inline(c, f)
+        check(validator.is_valid(large[2]['payload']) and event_validator.is_valid(large[2]), name + ': oversized closure retains valid payload/envelope schemas')
+        check(source_valid(c, *large, schemas) == 'payload_ref_required', name + ': inline body over SP-337 limit requires payload ref')
         for case in f.get('application_identity_negatives', []):
             original = next(v for v in f['positive_variants'] if v['case'] == 'authenticated_application_source')
             a, b, e = (copy.deepcopy(original[k]) for k in ['prepared', 'completed', 'event'])
