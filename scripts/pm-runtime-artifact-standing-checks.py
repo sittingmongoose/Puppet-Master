@@ -10,6 +10,7 @@ import contextlib
 import copy
 import hashlib
 import io
+import importlib.util
 import json
 from pathlib import Path
 import sys
@@ -19,13 +20,13 @@ import types
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = ROOT / 'scripts/pm-runtime-artifact-event-drafts.py'
+SPEC = importlib.util.spec_from_file_location('dr_guard_isolation', ROOT / 'scripts/pm-runtime-artifact-guard-isolation.py')
+ISOLATION = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(ISOLATION)
 
 
 def module(source=None):
-    result = types.ModuleType('dr_standing_trial')
-    result.__file__ = str(CHECKER)
-    exec(compile(source or CHECKER.read_text(), str(CHECKER), 'exec'), result.__dict__)
-    return result
+    return ISOLATION.module(source or CHECKER.read_text())
 
 
 def run(name, standing, configure=None, source=None, selected=None):
@@ -34,6 +35,8 @@ def run(name, standing, configure=None, source=None, selected=None):
     families = [r['event_type'] for r in m.load('Plans/runtime_artifact_event_drafts.json')['rows']]
     if configure:
         configure(m)
+    # Input injections must be preflighted AFTER configure changes the loader.
+    m.SchemaReferences = m._raw_SchemaReferences
     output = io.StringIO()
     started = time.monotonic()
     with contextlib.redirect_stdout(output):
@@ -129,7 +132,7 @@ def unresolved_reference(location, ref):
 
 
 def remove_provider_hash_guard(m):
-    def historical_validator(schema, definition=None):
+    def historical_validator(schema, definition=None, **kwargs):
         if definition:
             schema = dict(schema, **{'$ref': '#/$defs/' + definition})
         return m.ExactValidator(schema, format_checker=m.FormatChecker())
@@ -154,6 +157,8 @@ def main():
         ('S3_remove_stored_partition_join',3,None,source.replace("and custody['scope_partition'] == scope_partition(candidate['project_id'])",'and True')),
         ('S4_remove_oversized_inline_refusal',4,None,source.replace('if len(rfc8785.dumps(payload)) > INLINE_LIMIT:','if False:')),
         ('S4_remove_stored_inline_limit',4,None,source.replace("len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT",'True')),
+        ('S11_remove_only_pack_digest',11,None,source.replace('or blake3(body).hexdigest() != digest','')),
+        ('S11_remove_only_restore_ordinal',11,None,source.replace("candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1",'True'),['runtime_artifact.restore_point']),
         ('S5_remove_fullmatch_guards',5,remove_exact_guard,None),
         ('S6_compare_Storage_metadata',6,storage_in_semantic,None),
         ('S7_accept_every_checkpoint',7,lambda m:setattr(m,'checkpoint_matches',lambda *a:True),None),
@@ -168,6 +173,8 @@ def main():
         ('S9_external_document_unresolved',9,unresolved_reference('optional_property','DR_DOES_NOT_EXIST.schema.json#/$defs/missing'),None),
         ('S9_external_fragment_unresolved',9,unresolved_reference('optional_property','https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json#/$defs/DR_MISSING'),None),
         ('S10_reject_retained_history_on_live_change',10,history_rejects_live_change,None),
+        ('S10_current_writer_overlay_on_historical_originals',10,None,source.replace('validation=validation','validation=CURRENT_WRITER'),['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']),
+        ('S11_remove_historical_decoder_selection',11,None,ISOLATION.GUARDS['H05'][1](source),['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']),
         ('S10_ignore_withdrawal',10,None,source.replace("if source['withdrawn'] or not source['authorized']:","if not source['authorized']:")),
         ('S10_ignore_forged_source',10,None,source.replace("if not source['source_valid'] or not source['receipt_valid']:",'if False:')),
         ('earlier_B1_wrong_index_retention',None,inputs(lambda m,p,v:[r.__setitem__('index_retention_policy_ref','RP-PROJECTION-3GEN') for r in v['rows']] if p=='Plans/runtime_artifact_event_drafts.json' else None),None),

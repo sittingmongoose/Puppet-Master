@@ -13,6 +13,7 @@ from pathlib import Path
 import re
 import struct
 import sys
+from types import SimpleNamespace
 from urllib.parse import urldefrag, urljoin
 
 from blake3 import blake3
@@ -24,6 +25,7 @@ from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 
 from pm_event_index_binding import binding_digest
+from pm_runtime_artifact_guard_cases import accepted as guard_accepted, cases as guard_cases
 
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16384
@@ -42,6 +44,8 @@ PROVIDER_HASH_PATHS = {
     'runtime_artifact.cost_usage': ('type_payload', 'authority', 'provider_payload_hash'),
     'runtime_artifact.tool_llm_trace': ('type_payload', 'raw_payload', 'provider_payload_hash'),
 }
+CURRENT_WRITER = 'current-writer'
+HISTORICAL_V1 = 'historical-v1-before-provider-hash'
 
 
 class SchemaReferences:
@@ -158,10 +162,12 @@ def load(path):
     return json.loads((ROOT / path).read_text())
 
 
-def validator(schema, definition=None):
+def validator(schema, definition=None, *, validation=CURRENT_WRITER):
     # CV-526/CV-537 current-writer lexical overlays. Historical schema files and
     # explicitly versioned historical decoders retain their original contracts.
-    if schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
+    if validation not in (CURRENT_WRITER, HISTORICAL_V1):
+        raise ValueError('unsupported historical decoder')
+    if validation == CURRENT_WRITER and schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
                              'pm.runtime_artifact.tool_llm_trace.schema.v1'):
         schema = copy.deepcopy(schema)
         digest = {'type': ['string', 'null'], 'pattern': '^sha256:[0-9a-f]{64}$',
@@ -257,7 +263,7 @@ def unique_object(pairs):
     return result
 
 
-def decode(row, event, packs):
+def decode(row, event, packs, *, validation=CURRENT_WRITER):
     """Validate actual fixture EventRecord and its resolved unchanged logical schema."""
     if list(EVENT_VALIDATOR.iter_errors(event)):
         raise ValueError('invalid EventRecord')
@@ -285,7 +291,7 @@ def decode(row, event, packs):
         if rfc8785.dumps(payload) != body or len(body) <= INLINE_LIMIT:
             raise ValueError('noncanonical storage route')
     schema = load(row['payload_schema_ref'])
-    if list(validator(schema).iter_errors(payload)):
+    if list(validator(schema, validation=validation).iter_errors(payload)):
         raise ValueError('invalid logical payload')
     if payload['project_id'] != event['project_id']:
         raise ValueError('Project join')
@@ -318,8 +324,8 @@ def inspect(row, payload, source):
     return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'
 
 
-def full_value_matches(candidate, original, result, custody):
-    if (not stored_event_valid(candidate) or not stored_event_valid(original['event'])
+def full_value_matches(candidate, original, result, custody, *, validation=CURRENT_WRITER):
+    if (not stored_event_valid(candidate, validation=validation) or not stored_event_valid(original['event'], validation=validation)
             or list(RECEIPT_VALIDATOR.iter_errors(result['first_append_receipt']))
             or list(CUSTODY_VALIDATOR.iter_errors(custody)) or list(RESULT_VALIDATOR.iter_errors(result))
             or list(CUSTODY_VALIDATOR.iter_errors(original['custody']))
@@ -340,7 +346,7 @@ def full_value_matches(candidate, original, result, custody):
             and semantic_digest(candidate) == custody['producer_semantic_digest'])
 
 
-def stored_event_valid(event):
+def stored_event_valid(event, *, validation=CURRENT_WRITER):
     """Lexical/schema validation of original copies, without changing hash domains."""
     if list(EVENT_VALIDATOR.iter_errors(event)):
         return False
@@ -351,8 +357,26 @@ def stored_event_valid(event):
     for row in load('Plans/runtime_artifact_event_drafts.json')['rows']:
         if event['event_type'] == row['event_type'] and event['payload_schema_id'] == row['payload_schema_id']:
             return (len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT
-                    and validator(load(row['payload_schema_ref'])).is_valid(event['payload']))
+                    and validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload']))
     return False
+
+
+def resolve_history(row, original, source, packs, *, decoder):
+    """Explicit historical route over assumed-authentic ORIGINAL custody.
+
+    No current-writer fallback, new receipt or rehash/rewrite of retained data.
+    Source/receipt authentication is modeled by the source adapter, as in inspect.
+    """
+    if decoder != HISTORICAL_V1:
+        return 'unavailable'
+    try:
+        event = original['event']
+        payload = decode(row, event, packs, validation=decoder)
+        if not full_value_matches(event, source['authenticated_original'], original['result'], original['custody'], validation=decoder):
+            return 'unavailable'
+        return inspect(row, payload, source)
+    except (ValueError, KeyError, TypeError, UnicodeError):
+        return 'unavailable'
 
 
 def scope_partition(project_id):
@@ -641,6 +665,43 @@ def standing_oracles(check, row, full, first, fixtures, references):
     for case in fixtures['history_cases']:
         source = source_for(row, full['payload']); source.update(case['overrides'])
         check(event, 'S10_' + case['id'], inspect(row, full['payload'], source) == case['expected'])
+    historical_source = history_source_for(row,full['payload'],first)
+    historical_source['current_live_state'] = {'owner_active':False,'status':'deleted','revision':999}
+    original_bytes = value_bytes(first)
+    check(event,'S10_original_custody_full_resolution',resolve_history(row,first,historical_source,{},decoder=HISTORICAL_V1)
+          == 'metadata_and_authorized_refs' and value_bytes(first) == original_bytes)
+
+    for case in fixtures['historical_originals']['cases']:
+        if case['event_type'] != event:
+            continue
+        original = copy.deepcopy(case['original'])
+        before = value_bytes(original)
+        packs = {k: dict(v, body=v['body'].encode()) for k,v in case['packs'].items()}
+        source = history_source_for(row, case['logical_payload'], original)
+        source['current_live_state'] = {'owner_active': False, 'status': 'deleted', 'revision': 999}
+        label = 'S10_older_original_' + case['route']
+        check(event, label + '_preserved', resolve_history(row, original, source, packs, decoder=HISTORICAL_V1)
+              == 'metadata_and_authorized_refs' and value_bytes(original) == before)
+        check(event, label + '_full_value', full_value_matches(original['event'], original,
+              original['result'], original['custody'], validation=HISTORICAL_V1))
+        current = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+        check(event, label + '_current_write_refused', current.append(original['event'], True) == 'invalid' and not current.scoped)
+        for flag in ('withdrawn', 'authorized', 'source_valid', 'receipt_valid'):
+            bad_source = copy.deepcopy(source); bad_source[flag] = flag == 'withdrawn'
+            check(event, label + '_' + flag + '_refused', resolve_history(row, original, bad_source, packs,
+                  decoder=HISTORICAL_V1) == 'unavailable')
+        for decoder in ('unknown-decoder', CURRENT_WRITER):
+            check(event, label + '_' + decoder + '_refused', resolve_history(row,original,source,packs,decoder=decoder) == 'unavailable')
+        deleted = dict(source, body_deleted=True)
+        check(event, label + '_body_deleted', resolve_history(row,original,deleted,packs,decoder=HISTORICAL_V1) == 'metadata_only')
+        forged = copy.deepcopy(original); forged['custody']['original_event_value_commitment']['sha256'] = '0'*64
+        check(event, label + '_forged_custody_refused', resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        forged = copy.deepcopy(original); forged['event']['observed_at_utc'] = '2026-07-03T00:00:00Z'
+        check(event, label + '_forged_event_refused', resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        forged = copy.deepcopy(original); forged['custody']['group_digest'] = '0'*64
+        check(event, label + '_forged_well_formed_custody_refused',resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        forged = copy.deepcopy(original); forged['result']['first_append_receipt']['acknowledged_at_utc'] = '2026-07-03T00:00:00Z'
+        check(event,label + '_forged_well_formed_receipt_refused',resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
 
     if event in PROVIDER_HASH_PATHS:
         path = PROVIDER_HASH_PATHS[event]
@@ -730,6 +791,15 @@ def source_for(row, payload):
                 authorized=True, source_valid=True, receipt_valid=True, withdrawn=False, body_deleted=False)
 
 
+def history_source_for(row, payload, authentic_original):
+    """Freeze the synthetic source adapter's independently authenticated read.
+
+    Caller-supplied candidate/custody is compared to this original, never used
+    to authenticate itself. Real authentication/receipt issuance stays NOT_RUN.
+    """
+    return dict(source_for(row,payload),authenticated_original=copy.deepcopy(authentic_original))
+
+
 def rejected(action):
     try:
         action()
@@ -770,7 +840,7 @@ def main():
     document = load('Plans/runtime_artifact_event_drafts.json')
     fixtures = load('Plans/runtime_artifact_event_drafts.fixtures.json')
     references = SchemaReferences()
-    failures, counts = [], {}
+    failures, counts, unresolved_families = [], {}, set()
     def check(family, name, passed):
         counts[family] = counts.get(family, 0) + 1
         if not passed:
@@ -803,6 +873,7 @@ def main():
                                        CHECKPOINT_SCHEMA.split('#')[0]])
         check(event, 'S9_schema_reference_preflight' + (': ' + '; '.join(ref_errors) if ref_errors else ''), not ref_errors)
         if ref_errors:
+            unresolved_families.add(event)
             continue  # Fail closed before any payload or optional branch is visited.
         check(event, 'prepared_contract', row['outcome'] == 'register (prepared)')
         check(event, 'index_retention', row['index_retention_policy_ref'] == index_policy == 'RP-EVENT-INDEX-SOURCE')
@@ -839,6 +910,7 @@ def main():
         first = model.append(full, admission=True)
         check(event, 'full_first_receipt', isinstance(first, dict) and full_value_matches(full, first, first['result'], first['custody']))
         if not isinstance(first, dict):
+            unresolved_families.add(event)
             continue  # Invalid positive inputs must produce a structured failure, never false success.
         standing_oracles(check, row, full, first, fixtures, references)
         replay = model.append(copy.deepcopy(full), admission=True)
@@ -915,14 +987,20 @@ def main():
         check(event, 'review_17000_summary_externalized', decode(row, candidate, packs) == large and candidate['payload_ref'] is not None)
         packed = copy.deepcopy(packs)
         digest = PACK_REF.fullmatch(candidate['payload_ref']).group(1)
-        for name, update in [('missing_pack',None), ('corrupt_pack',{'body':b'{}'}), ('unsynced_pack',{'durable':False}), ('unauthorized_pack',{'authorized':False})]:
+        # Digest corruption preserves reachability, size, JSON canonicality and
+        # the logical schema. Missing bytes and size faults have separate cases.
+        corrupt = copy.deepcopy(large); corrupt['summary'] = 'y' + corrupt['summary'][1:]
+        corrupt_body = rfc8785.dumps(corrupt)
+        check(event, 'corrupt_pack_other_guards_valid', len(corrupt_body) == len(packed[digest]['body'])
+              and valid.is_valid(corrupt) and rfc8785.dumps(json.loads(corrupt_body)) == corrupt_body)
+        for name, update in [('missing_pack',None), ('corrupt_pack',{'body':corrupt_body}), ('unsynced_pack',{'durable':False}), ('unauthorized_pack',{'authorized':False})]:
             broken = copy.deepcopy(packed)
             if update is None:
                 del broken[digest]
             else:
                 broken[digest].update(update)
             check(event, name, rejected(lambda: decode(row, candidate, broken)))
-        for name, ref in [('wrong_digest',candidate['payload_ref'].replace(digest,'0'*64)),
+        for name, ref in [('missing_digest',candidate['payload_ref'].replace(digest,'0'*64)),
                           ('wrong_size',candidate['payload_ref'].replace(':'+str(len(rfc8785.dumps(large)))+':', ':1:')),
                           ('wrong_media',candidate['payload_ref'].replace('application/json','text/plain')),
                           ('S5_pack_reference_LF',candidate['payload_ref']+'\n')]:
@@ -936,7 +1014,7 @@ def main():
         wrong = copy.deepcopy(large); wrong['artifact_type'] = 'wrong_type'
         bad = copy.deepcopy(full); bad['payload'],bad['payload_ref'] = storage_form(wrong, packs)
         check(event, 'external_schema_dispatch', rejected(lambda: decode(row, bad, packs)))
-        for name, body in [('duplicate_json_key', b'{"summary":"'+b'x'*17000+b'","summary":"duplicate"}'),
+        for name, body in [('duplicate_json_key', rfc8785.dumps(large)[:-1]+b',"summary":"'+b'x'*17000+b'"}'),
                            ('noncanonical_json', json.dumps(large, indent=2).encode())]:
             digest_bad = blake3(body).hexdigest(); packs[digest_bad] = dict(body=body,durable=True,authorized=True)
             bad = copy.deepcopy(full); bad['payload'] = {}; bad['payload_ref'] = f'pm.payload_pack.v1:blake3:{digest_bad}:{len(body)}:application/json'
@@ -979,6 +1057,9 @@ def main():
             check(event, 'successor_replay', isinstance(second,dict) and model.append(copy.deepcopy(successor),True) is second and len(model.scoped)==2)
             for field,value in [('producer_sequence_id',0),('producer_sequence_id',2),('parent_event_id',None),('parent_event_id','other-event')]:
                 bad = copy.deepcopy(successor); bad[field] = value
+                if field == 'producer_sequence_id':
+                    bad['idempotency_key'] = identity(event, bad['payload'], value)
+                check(event, 'stale_predecessor_dispatch_'+field+'_'+str(value), decode(row,bad,packs) == bad['payload'])
                 check(event, 'stale_predecessor_'+field+'_'+str(value), not observation_admissible(bad,full,row,packs,source))
             for flag in ('proof_valid','predecessor_complete','snapshot_current'):
                 bad_source = dict(source); bad_source[flag] = False
@@ -1000,6 +1081,11 @@ def main():
             for flag in ('mutates_source_thread','mutates_source_branch','mutates_source_worktree','mutates_git_index','mutates_runtime_safe_points','restores_files'):
                 broken = copy.deepcopy(payload); broken['type_payload']['workspace_effects'][flag]=True
                 check(event, 'no_source_effect_' + flag, bool(list(valid.iter_errors(broken))))
+    boundary = SimpleNamespace(**globals())
+    boundary.SchemaReferences = lambda: references
+    for guard, family, name, positive, negative in guard_cases(boundary, excluded=unresolved_families):
+        check(family, 'S11_' + guard + '_' + name + '_positive', guard_accepted(lambda: positive(boundary)))
+        check(family, 'S11_' + guard + '_' + name + '_negative', not guard_accepted(lambda: negative(boundary)))
     print(json.dumps(dict(status='fail' if failures else 'pass', cases=sum(counts.values()), per_family=counts,
                           failures=failures, native_execution='NOT_RUN', admission='NONE',
                           scope='static full-envelope/schema/receipt/hash and bounded source/append/observation models'),indent=2))
