@@ -2730,8 +2730,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const stage=document.querySelector('#pmRoot .chat-stage');
     if(!stage||activityDocked()||activityDockLayout){ renderApp(); return; }
     const old=stage.querySelector('.activity-panel');
-    if(old) old.remove();
-    stage.insertAdjacentHTML('beforeend',renderActivityPanel('cover'));
+    const panel=document.createElement('template');panel.innerHTML=renderActivityPanel('cover');
+    if(old) pmPatchNode(old,panel.content.firstElementChild);
+    else stage.appendChild(panel.content.firstElementChild);
     const bar=stage.querySelector('.activity-wrap');
     if(bar){const tpl=document.createElement('template');tpl.innerHTML=renderActivityBar();pmPatchNode(bar,tpl.content.firstElementChild);}
     fitActivityTabs();
