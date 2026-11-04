@@ -175,21 +175,54 @@
   window.PM_BUSY = function busy() { const why = busyNow(); if (why) busyArm(); return why; };
   window.PM_BUSY.ended = busyEnded;
   window.PM_BUSY.drag = dragging;
-  /* the shared admission for idle work (F3-3): a held drag defers it to the spell's end; the spell is armed by asking */
-  const afterDrag = (ask) => { window.PM_BUSY(); window.addEventListener('pm-idle', ask, { once: true }); };
+  /* the shared admission for idle work (F3-3): a held drag defers it to the spell's end; the spell is armed by asking.
+     An idle request already made when a drag begins is taken back at that moment (dragHolds, from the body-class
+     observer below) and asked again after it, so no idle callback of a parked job lands inside the drag, not even one
+     that would only park itself (SW-17: Usage's warm build re-polled every idle period of a held drag). The result is a
+     handle: cancel() drops the job wherever it is (asked, or parked for the drag's end). */
+  const idleAsked = new Set(), idleParked = new Set();
+  let idleWaiting = false;
+  const idleResume = () => {
+    idleWaiting = false;
+    if (dragging()) { idleWait(); return; }
+    const jobs = [...idleParked]; idleParked.clear();
+    for (const job of jobs) if (!job.dead) job.ask();
+  };
+  const idleWait = () => { if (idleWaiting) return; idleWaiting = true; window.PM_BUSY(); window.addEventListener('pm-idle', idleResume, { once: true }); };
+  const idlePark = (job) => { idleParked.add(job); idleWait(); };
+  const dragHolds = () => {
+    if (!idleAsked.size || !dragging()) return;
+    const jobs = [...idleAsked]; idleAsked.clear();
+    for (const job of jobs) { job.drop(); idlePark(job); }
+  };
   window.PM_BUSY.idle = function idleWhenStill(fn, timeout) {
-    if (typeof fn !== 'function') return;
-    const ask = () => {
-      const run = (dl) => { if (dragging()) { afterDrag(ask); return; } fn(dl); };
-      if (window.requestIdleCallback) window.requestIdleCallback(run, timeout ? { timeout } : undefined);
-      else setTimeout(() => run({ timeRemaining: () => 50, didTimeout: true }), 0);
+    if (typeof fn !== 'function') return null;
+    const job = { dead: false, id: 0, timer: 0 };
+    const run = (dl) => {
+      job.id = 0; job.timer = 0; idleAsked.delete(job);
+      if (job.dead) return;
+      if (dragging()) { idlePark(job); return; }
+      fn(dl);
     };
-    if (dragging()) afterDrag(ask); else ask();
+    job.ask = () => {
+      if (job.dead) return;
+      if (dragging()) { idlePark(job); return; }
+      idleAsked.add(job);
+      if (window.requestIdleCallback) job.id = window.requestIdleCallback(run, timeout ? { timeout } : undefined);
+      else job.timer = setTimeout(() => run({ timeRemaining: () => 50, didTimeout: true }), 0);
+    };
+    job.drop = () => {
+      if (job.id && window.cancelIdleCallback) window.cancelIdleCallback(job.id);
+      if (job.timer) clearTimeout(job.timer);
+      job.id = 0; job.timer = 0; idleAsked.delete(job);
+    };
+    job.ask();
+    return { cancel() { job.dead = true; job.drop(); idleParked.delete(job); } };
   };
   /* a spell begins or ends: an attribute on html (NieR's own for a switch that paints), a cover added to or taken
      from the body */
   try {
-    const seen = new MutationObserver(() => { if (busySpell) busyEnded(); else if (busyNow()) busyArm(); });
+    const seen = new MutationObserver(() => { dragHolds(); if (busySpell) busyEnded(); else if (busyNow()) busyArm(); });
     seen.observe(busyRoot, { attributes: true, attributeFilter: BUSY_ATTRS.map((a) => a[0]).concat(['data-o55-nier']) });
     // the body's class: a drag starting or ending (DRAG_CLASSES) begins or ends a spell
     const watchBody = () => { if (document.body) seen.observe(document.body, { childList: true, attributes: true, attributeFilter: ['class'] }); };
