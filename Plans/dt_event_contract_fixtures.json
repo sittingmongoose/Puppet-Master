@@ -6837,7 +6837,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -6882,7 +6883,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "1e386700ee899a8a6e45deadbcad0bc5c607bdbb392721c893b645096381ec3a",
               "row_count": 2,
@@ -7782,7 +7784,7 @@
               }
             },
             "examined_through_sequence_id": 2,
-            "last_applied_event_id": "evt_dt_acccbf50e92331e6c4509c3fe6ad08ea8814511805f5b6fe23f54bd862738925",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -8359,7 +8361,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -15423,7 +15425,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -15468,7 +15471,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "dd9ad7fb316f2bedbaf6ef7429af245ed68602e20f7abd68b645596eb208fe65",
               "row_count": 2,
@@ -16368,7 +16372,7 @@
               }
             },
             "examined_through_sequence_id": 3,
-            "last_applied_event_id": "evt_dt_c444012c45b7356f1de4e3285503a686c20de5ff48a686840001f1c59ad0acac",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -16944,7 +16948,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -23921,7 +23925,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -23966,7 +23971,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "70fdc6b6e63f78f3a7eb89fad3113ecc41d5fc8be359abe833dbe5adbf869889",
               "row_count": 2,
@@ -24866,7 +24872,7 @@
               }
             },
             "examined_through_sequence_id": 4,
-            "last_applied_event_id": "evt_dt_953b33707efbf1761acf63584b61f1a14f51269ccafd48556f39cc9ab085bb39",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -25440,7 +25446,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -32415,7 +32421,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -32460,7 +32467,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "7ec66058cbc1aaf15ab4bc56dd7d796fc0fad3a0ee0f6bb4ecc2c9caa5db998f",
               "row_count": 2,
@@ -33360,7 +33368,7 @@
               }
             },
             "examined_through_sequence_id": 5,
-            "last_applied_event_id": "evt_dt_10dcf061cd5a6ae4a9dff09eee417ae1e24d80bc4fa1d0e5b267257ef1eaa2a2",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -33933,7 +33941,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -41218,7 +41226,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -41263,7 +41272,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "7058cacb6f5147cfc440daf862aac0fd75983c99616b883b584f8d472c9ac100",
               "row_count": 2,
@@ -42163,7 +42173,7 @@
               }
             },
             "examined_through_sequence_id": 6,
-            "last_applied_event_id": "evt_dt_84bcff53752177590feae78acaf1030ba7f595dd16db39e9cb3dd0157a883caf",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -49982,7 +49992,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -50027,7 +50038,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "802c990d7e66312c3c87a42f0a95d184b201bbd8b19c1b1fb36c7aa8d89fd4fe",
               "row_count": 2,
@@ -50927,7 +50939,7 @@
               }
             },
             "examined_through_sequence_id": 7,
-            "last_applied_event_id": "evt_dt_65c488bc863fb0451daf38faa4d0be91f11c9104db248ccf390b9bc250346bef",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -52455,7 +52467,7 @@
               "evaluation_state": "allocated",
               "inputs_ref": "gate-inputs-1",
               "evaluation_id": "evaluation-1",
-              "score_threshold": null,
+              "score_threshold": -77,
               "dispatch_score_ref": null,
               "dispatch_score_tuple": null
             },
@@ -52500,11 +52512,11 @@
               "evaluation_state": "allocated",
               "inputs_ref": "gate-inputs-1",
               "evaluation_id": "evaluation-1",
-              "score_threshold": null,
+              "score_threshold": -77,
               "dispatch_score_ref": null,
               "dispatch_score_tuple": null
             },
-            "prepared_sha256": "4f75f53bc32b85e6fb8bd9f51d2b3150976cbac2ef1329c87beefcf0362af5a6",
+            "prepared_sha256": "f35bf0358b74e57c79a3407e441eaea80ba0fc4db298a86d22f42a44e7379723",
             "owner_outcome_ref": "outcome:gate_evaluation_started:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.gate_evaluation_started.v1",
@@ -52532,7 +52544,7 @@
             "runtime_context": {},
             "owner_result": {
               "event_type": "gate.evaluation_started",
-              "score": null
+              "score": 123.5
             }
           },
           "event": {
@@ -52737,7 +52749,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -59993,7 +60005,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -60038,7 +60051,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "619c3faf437b01c5cb17a4f09299dd62bd1b0164a19499a628fd78b3a34ecde6",
               "row_count": 2,
@@ -60938,7 +60952,7 @@
               }
             },
             "examined_through_sequence_id": 8,
-            "last_applied_event_id": "evt_dt_989ccf55763fabf1dd3c7f8811ffa9b651813081c9d3b956fbcecbe088bc8bd7",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -62544,7 +62558,7 @@
               "evaluation_state": "started",
               "evaluation_id": "evaluation-1",
               "gate_id": "GATE-012",
-              "score_threshold": null,
+              "score_threshold": -77,
               "dispatch_score_ref": null,
               "dispatch_score_tuple": null
             },
@@ -62589,11 +62603,11 @@
               "evaluation_state": "started",
               "evaluation_id": "evaluation-1",
               "gate_id": "GATE-012",
-              "score_threshold": null,
+              "score_threshold": -77,
               "dispatch_score_ref": null,
               "dispatch_score_tuple": null
             },
-            "prepared_sha256": "99e6780be67bed6468f6fc755b15270c5aef2a79ff05d8b03bb9bbc3390dc45c",
+            "prepared_sha256": "7955738bf5e40e7afabb3f5b19cf94981d815aa306c754d0b1038f195f1e9c3c",
             "owner_outcome_ref": "outcome:gate_failed:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.gate_failed.v1",
@@ -62630,7 +62644,7 @@
                 "report-1"
               ],
               "failure_reason_code": "predicate_failed",
-              "score": null
+              "score": 123.5
             }
           },
           "event": {
@@ -62843,7 +62857,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -70099,7 +70113,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -70144,7 +70159,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "89dabf8a1feba309aee036969cca78267afb32cfd325b5a08bb60bfb1e763952",
               "row_count": 2,
@@ -71044,7 +71060,7 @@
               }
             },
             "examined_through_sequence_id": 9,
-            "last_applied_event_id": "evt_dt_6736f5138b770e94cd64de7f3175895d34d0e79d878ee07fb16c5c75da84d07f",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -72638,7 +72654,7 @@
               "evaluation_state": "started",
               "evaluation_id": "evaluation-1",
               "gate_id": "GATE-012",
-              "score_threshold": null,
+              "score_threshold": -77,
               "dispatch_score_ref": null,
               "dispatch_score_tuple": null
             },
@@ -72683,11 +72699,11 @@
               "evaluation_state": "started",
               "evaluation_id": "evaluation-1",
               "gate_id": "GATE-012",
-              "score_threshold": null,
+              "score_threshold": -77,
               "dispatch_score_ref": null,
               "dispatch_score_tuple": null
             },
-            "prepared_sha256": "e2b3d13fb51750c8c1c75a7836635053c4cf654dc8f8068c345f2df90a941d4e",
+            "prepared_sha256": "de22918d9c46fcdf9b83293620222d6c138b9a60d0d3167bd2223ce0489bf6b9",
             "owner_outcome_ref": "outcome:gate_passed:revision-2",
             "payload": {
               "schema_id": "pm.event_payload.gate_passed.v1",
@@ -72723,7 +72739,7 @@
                 "report-1"
               ],
               "all_predicates_pass": true,
-              "score": null
+              "score": 123.5
             }
           },
           "event": {
@@ -72934,7 +72950,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -79800,7 +79816,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -79845,7 +79862,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "114f9280b1a48e77db5f00808dbe8b51268227937efe4ded4c7b0fffab30a0fc",
               "row_count": 2,
@@ -80745,7 +80763,7 @@
               }
             },
             "examined_through_sequence_id": 10,
-            "last_applied_event_id": "evt_dt_b26fe70a07bcf4fb7d60211a7828b493a5fe1424787608a86c7efb55342ae0b6",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -81320,7 +81338,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -88332,7 +88350,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -88377,7 +88396,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "a80b60b200cfc823c1cda1c7caded45ea9f8902c40268a37ae3eed4ef283683a",
               "row_count": 2,
@@ -89277,7 +89297,7 @@
               }
             },
             "examined_through_sequence_id": 11,
-            "last_applied_event_id": "evt_dt_1eae005113e16bbe5514442bb85929677e586570f2cec4d93f66e2ce40a962d5",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -97549,7 +97569,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -97594,7 +97615,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "b494337e32c4ce022cc8d8eef671aea0fda45ff0c208314179662b0104e1945a",
               "row_count": 2,
@@ -98494,7 +98516,7 @@
               }
             },
             "examined_through_sequence_id": 12,
-            "last_applied_event_id": "evt_dt_a6edf52de60bb0552f2ff3c394c7e8d5c151c261653188a4d1b38789fbdd8d49",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -109527,7 +109549,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -109572,7 +109595,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "4af2e7e96ca4f5686b946b436ae92e79196fd918484ea7cf7818729cba426150",
               "row_count": 2,
@@ -110472,7 +110496,7 @@
               }
             },
             "examined_through_sequence_id": 13,
-            "last_applied_event_id": "evt_dt_b598a6bd9a86a09292e8966d119fc5638f520721d0c30e86fc89e8541b4ca4a3",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -118104,7 +118128,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -118149,7 +118174,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "73239541c45e7cb18368e971a6f7b21280a0ed290e4cfe749c66e39e0899c7e6",
               "row_count": 2,
@@ -119049,7 +119075,7 @@
               }
             },
             "examined_through_sequence_id": 14,
-            "last_applied_event_id": "evt_dt_826dee25ad1106ac74c0e2481f728d0054bb19050adb38322ad79cf56b68450d",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -128525,7 +128551,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -128570,7 +128597,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "a7991674a49a361d3629b8fca0c2863d77978a754b2068de10c0d11b9044638e",
               "row_count": 2,
@@ -129470,7 +129498,7 @@
               }
             },
             "examined_through_sequence_id": 15,
-            "last_applied_event_id": "evt_dt_d0df2cec42bd53a294c4766238363b3e44365c3ef1c646985b8be015bc5d1818",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -134608,7 +134636,16 @@
             "prior_settlement_status"
           ],
           "value": "settled",
-          "expected": "transition_refused"
+          "expected": "transition_refused",
+          "base_changes": [
+            {
+              "path": [
+                "before",
+                "prior_usage_event_ref"
+              ],
+              "value": "evt_dt_retained_prior_usage"
+            }
+          ]
         },
         {
           "case": "unproven_parent_run",
@@ -150067,7 +150104,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -150112,7 +150150,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "4dda9ed3e2e607eb949009fbcbd7b7ad7c4173aac7b4801374bf020e698ae8a9",
               "row_count": 2,
@@ -151012,7 +151051,7 @@
               }
             },
             "examined_through_sequence_id": 16,
-            "last_applied_event_id": "evt_dt_d06fc65ebbbd2bfa20ceb31cec1390ba2c416aa46931638688c03339b9283a41",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -162185,7 +162224,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -162230,7 +162270,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "c731a18cd04c2e0da6df172c4d44ec6ac93b15e7cbebb9b0f7b459faeaf0219b",
               "row_count": 2,
@@ -163130,7 +163171,7 @@
               }
             },
             "examined_through_sequence_id": 17,
-            "last_applied_event_id": "evt_dt_071dc3981eef51da1730171256e6803ecf6f43f56459b43c8753c6865aa0ff83",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -163706,7 +163747,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -170658,7 +170699,8 @@
                 "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                 "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                 "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-              }
+              },
+              "redb_snapshot_id": "forbidden"
             },
             "scope_partition": "project~cHJvamVjdC0x",
             "source_verified": true,
@@ -170703,7 +170745,8 @@
                   "durable_watermarks_sha256": "6ec0cec3a33b49b4b265563e542362dc655c27899dddb279110a6c4c19bf0745",
                   "excluded_ranges_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e",
                   "retired_inputs_sha256": "ec4ca17b2a65c07d8cac0ad93e1746bf1ef3e4da11825f2f3dede786ba644e3e"
-                }
+                },
+                "redb_snapshot_id": "forbidden"
               },
               "row_set_sha256": "5b0f5e6ef5e1f6efd916b9766c8067b4b5e297ff6eab8ee8d56e5a29765fe34f",
               "row_count": 2,
@@ -171603,7 +171646,7 @@
               }
             },
             "examined_through_sequence_id": 18,
-            "last_applied_event_id": "evt_dt_fa0db3b9363b317e24a504ebd9e3c12e35111c5c9735c82767460ad2ab46ee31",
+            "last_applied_event_id": "forged-event",
             "filter_complete": true,
             "state": "current",
             "health": "healthy",
@@ -172182,7 +172225,7 @@
         },
         "2": {
           "application_cases": [],
-          "forbidden_application_scope": "scope_refused"
+          "forbidden_application_scope": "schema_refused"
         },
         "3": {
           "encoded_positives": true,
@@ -172381,7 +172424,7 @@
     },
     {
       "case": "non_bmp",
-      "bytes": "{\"value\":\"😀\"}",
+      "bytes": "{\"value\":\"\ud83d\ude00\"}",
       "accepted": true
     },
     {
@@ -172406,7 +172449,7 @@
     },
     {
       "case": "bom",
-      "bytes": "﻿{\"n\":1}",
+      "bytes": "\ufeff{\"n\":1}",
       "accepted": false
     },
     {

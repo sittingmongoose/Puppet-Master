@@ -138929,7 +138929,10 @@
                             "web_operation": {
                               "const": "search"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -138947,7 +138950,10 @@
                             "web_operation": {
                               "const": "read"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -138966,7 +138972,10 @@
                             "web_operation": {
                               "const": "extract"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -138984,7 +138993,10 @@
                             "web_operation": {
                               "const": "research"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -139003,7 +139015,10 @@
                             "web_operation": {
                               "const": "crawl"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -139021,7 +139036,10 @@
                             "web_operation": {
                               "const": "map"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -139338,7 +139356,10 @@
                             "provider_fallback_occurred": {
                               "const": true
                             }
-                          }
+                          },
+                          "required": [
+                            "provider_fallback_occurred"
+                          ]
                         },
                         "then": {
                           "required": [
@@ -139440,7 +139461,10 @@
                             "webmap"
                           ]
                         }
-                      }
+                      },
+                      "required": [
+                        "tool_name"
+                      ]
                     },
                     "then": {
                       "required": [
@@ -140177,7 +140201,10 @@
                                 "web_operation": {
                                   "const": "search"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -140195,7 +140222,10 @@
                                 "web_operation": {
                                   "const": "read"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -140214,7 +140244,10 @@
                                 "web_operation": {
                                   "const": "extract"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -140232,7 +140265,10 @@
                                 "web_operation": {
                                   "const": "research"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -140251,7 +140287,10 @@
                                 "web_operation": {
                                   "const": "crawl"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -140269,7 +140308,10 @@
                                 "web_operation": {
                                   "const": "map"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -140586,7 +140628,10 @@
                                 "provider_fallback_occurred": {
                                   "const": true
                                 }
-                              }
+                              },
+                              "required": [
+                                "provider_fallback_occurred"
+                              ]
                             },
                             "then": {
                               "required": [
@@ -141231,7 +141276,10 @@
                               "web_operation": {
                                 "const": "search"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -141249,7 +141297,10 @@
                               "web_operation": {
                                 "const": "read"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -141268,7 +141319,10 @@
                               "web_operation": {
                                 "const": "extract"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -141286,7 +141340,10 @@
                               "web_operation": {
                                 "const": "research"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -141305,7 +141362,10 @@
                               "web_operation": {
                                 "const": "crawl"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -141323,7 +141383,10 @@
                               "web_operation": {
                                 "const": "map"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -141640,7 +141703,10 @@
                               "provider_fallback_occurred": {
                                 "const": true
                               }
-                            }
+                            },
+                            "required": [
+                              "provider_fallback_occurred"
+                            ]
                           },
                           "then": {
                             "required": [
@@ -141742,7 +141808,10 @@
                               "webmap"
                             ]
                           }
-                        }
+                        },
+                        "required": [
+                          "tool_name"
+                        ]
                       },
                       "then": {
                         "required": [
@@ -142209,7 +142278,10 @@
                                   "web_operation": {
                                     "const": "search"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -142227,7 +142299,10 @@
                                   "web_operation": {
                                     "const": "read"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -142246,7 +142321,10 @@
                                   "web_operation": {
                                     "const": "extract"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -142264,7 +142342,10 @@
                                   "web_operation": {
                                     "const": "research"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -142283,7 +142364,10 @@
                                   "web_operation": {
                                     "const": "crawl"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -142301,7 +142385,10 @@
                                   "web_operation": {
                                     "const": "map"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -142618,7 +142705,10 @@
                                   "provider_fallback_occurred": {
                                     "const": true
                                   }
-                                }
+                                },
+                                "required": [
+                                  "provider_fallback_occurred"
+                                ]
                               },
                               "then": {
                                 "required": [
@@ -151614,7 +151704,10 @@
                             "web_operation": {
                               "const": "search"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -151632,7 +151725,10 @@
                             "web_operation": {
                               "const": "read"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -151651,7 +151747,10 @@
                             "web_operation": {
                               "const": "extract"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -151669,7 +151768,10 @@
                             "web_operation": {
                               "const": "research"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -151688,7 +151790,10 @@
                             "web_operation": {
                               "const": "crawl"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -151706,7 +151811,10 @@
                             "web_operation": {
                               "const": "map"
                             }
-                          }
+                          },
+                          "required": [
+                            "web_operation"
+                          ]
                         },
                         "then": {
                           "properties": {
@@ -152023,7 +152131,10 @@
                             "provider_fallback_occurred": {
                               "const": true
                             }
-                          }
+                          },
+                          "required": [
+                            "provider_fallback_occurred"
+                          ]
                         },
                         "then": {
                           "required": [
@@ -152125,7 +152236,10 @@
                             "webmap"
                           ]
                         }
-                      }
+                      },
+                      "required": [
+                        "tool_name"
+                      ]
                     },
                     "then": {
                       "required": [
@@ -152988,7 +153102,10 @@
                                 "web_operation": {
                                   "const": "search"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -153006,7 +153123,10 @@
                                 "web_operation": {
                                   "const": "read"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -153025,7 +153145,10 @@
                                 "web_operation": {
                                   "const": "extract"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -153043,7 +153166,10 @@
                                 "web_operation": {
                                   "const": "research"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -153062,7 +153188,10 @@
                                 "web_operation": {
                                   "const": "crawl"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -153080,7 +153209,10 @@
                                 "web_operation": {
                                   "const": "map"
                                 }
-                              }
+                              },
+                              "required": [
+                                "web_operation"
+                              ]
                             },
                             "then": {
                               "properties": {
@@ -153397,7 +153529,10 @@
                                 "provider_fallback_occurred": {
                                   "const": true
                                 }
-                              }
+                              },
+                              "required": [
+                                "provider_fallback_occurred"
+                              ]
                             },
                             "then": {
                               "required": [
@@ -154042,7 +154177,10 @@
                               "web_operation": {
                                 "const": "search"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -154060,7 +154198,10 @@
                               "web_operation": {
                                 "const": "read"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -154079,7 +154220,10 @@
                               "web_operation": {
                                 "const": "extract"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -154097,7 +154241,10 @@
                               "web_operation": {
                                 "const": "research"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -154116,7 +154263,10 @@
                               "web_operation": {
                                 "const": "crawl"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -154134,7 +154284,10 @@
                               "web_operation": {
                                 "const": "map"
                               }
-                            }
+                            },
+                            "required": [
+                              "web_operation"
+                            ]
                           },
                           "then": {
                             "properties": {
@@ -154451,7 +154604,10 @@
                               "provider_fallback_occurred": {
                                 "const": true
                               }
-                            }
+                            },
+                            "required": [
+                              "provider_fallback_occurred"
+                            ]
                           },
                           "then": {
                             "required": [
@@ -154553,7 +154709,10 @@
                               "webmap"
                             ]
                           }
-                        }
+                        },
+                        "required": [
+                          "tool_name"
+                        ]
                       },
                       "then": {
                         "required": [
@@ -155020,7 +155179,10 @@
                                   "web_operation": {
                                     "const": "search"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -155038,7 +155200,10 @@
                                   "web_operation": {
                                     "const": "read"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -155057,7 +155222,10 @@
                                   "web_operation": {
                                     "const": "extract"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -155075,7 +155243,10 @@
                                   "web_operation": {
                                     "const": "research"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -155094,7 +155265,10 @@
                                   "web_operation": {
                                     "const": "crawl"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -155112,7 +155286,10 @@
                                   "web_operation": {
                                     "const": "map"
                                   }
-                                }
+                                },
+                                "required": [
+                                  "web_operation"
+                                ]
                               },
                               "then": {
                                 "properties": {
@@ -155429,7 +155606,10 @@
                                   "provider_fallback_occurred": {
                                     "const": true
                                   }
-                                }
+                                },
+                                "required": [
+                                  "provider_fallback_occurred"
+                                ]
                               },
                               "then": {
                                 "required": [
