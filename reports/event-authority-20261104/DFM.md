@@ -312,7 +312,7 @@ Each determination below applies independently to all twelve families. `family-c
 | `python3 scripts/pm-filemanager-event-contracts.py` | 0, final exact committed inputs: 12 families / 2,775 cases / native NOT_RUN |
 | `guard-audit.py` / `schema-audit.py` / `key-guards.py` | 0 each: 1,769 / 478 / 96 distinct negatives isolated; no residual rejection |
 | `lookup-isolation.py` / `settlement-regression.py` | 0 each: twelve missing-pack flips / all 36 original reviewer settlements reject |
-| `harness-audit.py` | 0: all 14 real assertions isolated, all other validators enabled |
+| `harness-final-sites.py` / `merge-harness.py` | 0: all 14 real assertions isolated with other validators enabled; initial sequential runner deliberately stopped (143) after eight completed sites |
 | `astra-probes.py` / `numeric-probes.py` / `grade-coverage-probes.py` | 0 each: 396 / 144 expected outcomes and twelve detected false-PASS claims, zero failures |
 | Unchanged cycle-1 / cycle-2 / cycle-3 probes | 0 each; 136 cycle-2 and 1,071 cycle-3 probes retain expected results |
 | `prior-graph.py` / `prior-astra.py` / `failure-oracles.py` | 0 each: 72 graph faults / 172 expected outcomes / twelve real false-success process refusals |
@@ -332,7 +332,7 @@ IDs used: **F-150–F-161, SP-560, CV-560, ATS-280**. New IDs: **none**. No pm-m
 
 No Plans Markdown or schema rule changes; derived regeneration is not required. Existing shard bodies and index validate unchanged. No governance lock/evidence/currentness edition is regenerated.
 
-Evidence and reproduction drivers: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM/fix5/`. Every cited artifact is pinned by path and SHA-256 in `evidence-manifest.json` (SHA-256 `4c1d1894350105e07d4b81f648fbce8149b8e075a2b78a53f8f2a7eb8a47c343`). Reports/self-grade overwrite the parent DFM copies. Unneeded logs are removed; the sparse detached worktree is removed after the final branch push.
+Evidence and reproduction drivers: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DFM/fix5/`. Every cited artifact is pinned by path and SHA-256 in `evidence-manifest.json` (SHA-256 `48b471b52af87c0a49ee21ae86bb06270b7af4b2088841168175cee293be9d82`). Reports/self-grade overwrite the parent DFM copies. Unneeded logs are removed; the sparse detached worktree is removed after the final branch push.
 
 | Key artifact | SHA-256 |
 |---|---|
