@@ -7,6 +7,8 @@
 // is inside the stage's visible crop (the tube or paper, cut by every box that clips it and by the window), Pip's head
 // is above the tube's foot (Retro Light's printer, the command line), the sign is inside the crop and above that foot,
 // and no resting prop covers Pip's head. Asleep Pip (Welcome before you arrive) rests above the foot at 740 and 1280x500.
+// 'retro props every screen': each setup screen opened fresh at 860, 740 and 1280x500, every resting prop inside the crop,
+// above the foot and off Pip's head (FO-50's c-ready server; the props Retro's crop and the foot band move).
 // Both surfaces (--set sandbox picks one); --set motion=reduce runs it under Reduced Motion.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/retro-stage-fit.check.mjs --set page=<build>
 const LOOKS = ['retro-light', 'retro-dark'];
@@ -26,7 +28,7 @@ const SAMPLE = async () => {
 	if (!st) return { err: 'no stage' };
 	const R = (e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; };
 	const out = (a, c) => Math.max(c.l - a.l, a.r - c.r, c.t - a.t, a.b - c.b);
-	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, propOnHead: 0 }, seen = { sign: 0 };
+	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0 }, seen = { sign: 0, props: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
 	while (performance.now() - t0 < 600) {
@@ -44,15 +46,19 @@ const SAMPLE = async () => {
 		worst.headFoot = Math.max(worst.headFoot, head.b - foot);
 		const props = [...st.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
 		for (const p of props) {
-			const q = R(p.el);
+			const q = R(p.el), name = `${p.spec.kind}:${p.spec.slot || (p.spec.stack != null ? 'stack' + p.spec.stack : '')}`;
 			if (p.spec.kind === 'sign') { seen.sign++; worst.sign = Math.max(worst.sign, out(q, c)); worst.signFoot = Math.max(worst.signFoot, q.b - foot); }
+			seen.props++;
+			const o = out(q, c), fo = q.b - foot;
+			if (o > worst.prop) { worst.prop = o; who.prop = name; }
+			if (fo > worst.propFoot) { worst.propFoot = fo; who.propFoot = name; }
 			const ix = Math.min(q.r, head.r) - Math.max(q.l, head.l), iy = Math.min(q.b, head.b) - Math.max(q.t, head.t);
-			if (ix > 0 && iy > 0) worst.propOnHead = Math.max(worst.propOnHead, Math.min(ix, iy));
+			if (ix > 0 && iy > 0 && Math.min(ix, iy) > worst.propOnHead) { worst.propOnHead = Math.min(ix, iy); who.propOnHead = name; }
 		}
 		last = { crop: [c.l, c.t, c.r, c.b].map(Math.round), pip: [pip.l, pip.t, pip.r, pip.b].map(Math.round), foot: Math.round(foot) };
 	}
 	const r1 = (v) => (v < -1e8 ? null : Math.round(v * 10) / 10);
-	return { theme: st.theme, layout: st.layoutName, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), propOnHead: r1(worst.propOnHead), last };
+	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), who, last };
 };
 
 // the tube powered on (the paper fed in, the line opened) and its stepped draw caught up
@@ -61,7 +67,7 @@ const settle = async (t, f) => {
 	await f.waitForTimeout(450);
 };
 
-async function judge(t, f, tag, { sign = true } = {}) {
+async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await settle(t, f);
 	const r = await f.evaluate(`(${SAMPLE.toString()})()`);
 	if (r.err) return t.check(`${tag}: the stage`, false, r.err);
@@ -74,9 +80,19 @@ async function judge(t, f, tag, { sign = true } = {}) {
 		await t.check(`${at}: the sign inside the visible crop`, r.sign <= 1, `${r.sign} px outside; ${why}`);
 		await t.check(`${at}: the sign above the tube's foot (printer, command line)`, r.signFoot <= 0.5, `${r.signFoot} px into it; ${why}`);
 	}
-	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.propOnHead} px; ${why}`);
+	if (props && r.propFrames > 0) {
+		await t.check(`${at}: every resting prop inside the visible crop`, r.prop <= 1, `${r.who.prop} ${r.prop} px outside; ${why}`);
+		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
+	}
+	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}`);
 	return r;
 }
+
+// every resting prop where it will stay: settled on its spring and all but still
+const propsAtRest = (f) => f.waitForFunction(() => {
+	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+	return !!st && [...st.props.values()].every((p) => p.state === 'out' || (p.settled && Math.abs(p.a) < .01 && Math.abs(p.lenv) < 2 && Math.abs(p.axv) < 2));
+}, null, { timeout: 9000 }).catch(() => {});
 
 // the look, as the window's look menu picks it (the page's own theme switch does not reach an open setup window)
 async function stageLook(t, f, look) {
@@ -134,6 +150,34 @@ async function fit(t, mode) {
 	await t.viewport(1920, 1080);
 }
 
+// every screen, opened fresh at the sizes where Retro's crop moves the props (860 portrait, narrow 740, short 1280x500):
+// Pip whole, every resting prop inside the crop and above the foot, none over Pip's head (FO-50's c-ready server over the
+// fitted compact Pip; the blocks, QR and house the printer covered at 740). --set screens=name,c-ready walks some.
+const SCREENS = ['welcome', 'look', 'where', 'c-route', 'c-review', 'c-ready', 's-kind', 's-ready', 'begin', 'name', 'like', 'nas-find', 'online-service', 'online-details', 'safe', 'away', 'review', 'creating', 'protect', 'ai', 'ready'];
+const CROPPED = [[860, 768], [740, 768], [1280, 500]];
+async function everyScreen(t, mode) {
+	const reduce = t.args.motion === 'reduce', list = t.args.screens ? String(t.args.screens).split(',') : SCREENS;
+	for (const look of LOOKS) {
+		for (const [w, h] of CROPPED) {
+			await t.viewport(w, h);
+			const f = await frameFor(t, mode);
+			await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
+			await stageLook(t, f, look);
+			for (const scr of list) {
+				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
+				// a screen opened straight may route on (protect without a backup place set): judged where it lands
+				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
+				if (!ok) { await t.check(`${mode} ${look} ${scr} ${w}x${h}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
+				await f.waitForTimeout(300);
+				const now = await f.evaluate(() => window.O55.S.sess.screen);
+				await propsAtRest(f);
+				await judge(t, f, `${mode} ${look} ${scr}${now !== scr ? ` (opened as ${now})` : ''} ${w}x${h}`, { sign: false, props: true });
+			}
+		}
+	}
+	await t.viewport(1920, 1080);
+}
+
 // --set film=1: for a recording (which refuses viewport changes), the page in one frame of the window, resized by its
 // frame: Name in each Retro look (--set look=retro-light for one), down through the layouts and back up, each size marked
 // and held, the same measures judged once it settles. Normal surface only.
@@ -162,5 +206,7 @@ async function film(t) {
 
 export const tests = {
 	'retro stage fit normal': (t) => (t.args.film ? film(t) : on('normal', fit)(t)),
-	'retro stage fit sandbox': (t) => (t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t))
+	'retro stage fit sandbox': (t) => (t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t)),
+	'retro props every screen normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', everyScreen)(t)),
+	'retro props every screen sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', everyScreen)(t))
 };
