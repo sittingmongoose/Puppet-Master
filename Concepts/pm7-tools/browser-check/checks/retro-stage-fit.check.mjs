@@ -28,7 +28,7 @@ const SAMPLE = async () => {
 	if (!st) return { err: 'no stage' };
 	const R = (e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; };
 	const out = (a, c) => Math.max(c.l - a.l, a.r - c.r, c.t - a.t, a.b - c.b);
-	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0 }, who = {};
+	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0, colWords: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
 	while (performance.now() - t0 < 600) {
@@ -56,6 +56,7 @@ const SAMPLE = async () => {
 				for (const q of rg.getClientRects()) {
 					const wq = { l: Math.max(q.left, c.l), t: Math.max(q.top, c.t), r: Math.min(q.right, c.r), b: Math.min(q.bottom, c.b) };
 					if (wq.r - wq.l < 1 || wq.b - wq.t < 1) continue;
+					if (wq.r > pip.l && wq.l < pip.r) seen.colWords++;
 					for (const part of [hand, head]) {
 						const ix = Math.min(part.r, wq.r) - Math.max(part.l, wq.l), iy = Math.min(part.b, wq.b) - Math.max(part.t, wq.t);
 						if (ix > 0 && iy > 0 && Math.min(ix, iy) > worst.words) { worst.words = Math.min(ix, iy); who.words = `${part === hand ? 'hand' : 'head'} over "${nd.textContent.trim().slice(0, 28)}"`; }
@@ -79,7 +80,7 @@ const SAMPLE = async () => {
 		last = { crop: [c.l, c.t, c.r, c.b].map(Math.round), pip: [pip.l, pip.t, pip.r, pip.b].map(Math.round), foot: Math.round(foot) };
 	}
 	const r1 = (v) => (v < -1e8 ? null : Math.round(v * 10) / 10);
-	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
+	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), colWords: seen.colWords, pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
 };
 
 // the tube powered on (the paper fed in, the line opened) and its stepped draw caught up
@@ -109,6 +110,7 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
 	// FO-55: drawn smaller only where the span cannot hold it (.77, Retro Light at 740, the lead's call): never under 75%
 	await t.check(`${at}: Pip drawn at no less than 75% of its size`, r.pipK >= .75, `scale ${r.pipK}`);
+	await t.check(`${at}: Pip drawn smaller only under the stage's words`, r.pipK >= 1 || r.colWords > 0, `scale ${r.pipK}, no words over its column`);
 	if (r.pipK < 1) t.log(`${at}: Pip drawn at ${r.pipK} of its size`);
 	return r;
 }
