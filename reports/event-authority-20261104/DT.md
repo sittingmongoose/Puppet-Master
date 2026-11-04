@@ -1,102 +1,116 @@
-# DT — tools, gates and approvals, 2026-11-04
+# DT-P2 — Event Authority technical closure, 2026-11-04
 
-Branch: `plans/ea-w2-tools-gates-approvals-20261104`. Base: `be4766513ff71776346fc73b84f2542990f955af`. Worktree: `/home/sittingmongoose/pm-worktrees/DT` (left for integration).
+Branch: `plans/ea-w2-tools-gates-approvals-20261104`. First-pass head: `713241763c90de78a7b8f8777da75d0bb05a3031`. Assessed implementation head: `d5cbc5d5d5a32a3dba2c398c158a9ac99e6b5d83`. The publication commit adds only reports; all source hashes in the self-grade identify the same final contracts. Worktree: `/home/sittingmongoose/pm-worktrees/DT-p2`, left for the lead.
 
-**Result: 17 separate technical drafts, each PARTIAL and NOT READY for admission; one row blocked on Jared.** No registry membership or admission records were written. This does not meet the wave's full-contract completion bar: the specific technical gaps below must close before these can be called fully prepared. No exclusions were claimed.
+**17 families now PASS every technical criterion.** Ten have 11/12 PASS and seven have 10/12 PASS. Every prepared family's membership stays ABSENT. The seven explicit retention markers stay PARTIAL for RT. `tool.custom_headless.skipped` stays product-blocked; DT drafts no duplicate of DS15. These are normative self-grades, not independent review, admission or native implementation evidence. Native execution is NOT_RUN throughout.
 
-The draft contracts live in `Plans/dt_event_contracts.json`, closed payload/checkpoint definitions in `Plans/dt_event_contracts.schema.json`, payload cases in `Plans/dt_event_contract_fixtures.json`, and `scripts/pm-dt-event-contracts.py`. Each family has its own CV and SP unit. `DT-self-grade.json` uses the twelve-cell grading format with exact current line/quote evidence; membership remains ABSENT. Native execution is NOT_RUN.
+## Per-family before and after
 
-## Per-row disposition and grade
+| Family | Before PASS/12 | After PASS/12 | Remaining non-PASS cells |
+|---|---:|---:|---|
+| `approval.requested` | 8 | 11 | membership_version ABSENT |
+| `approval.granted` | 8 | 11 | membership_version ABSENT |
+| `approval.denied` | 8 | 11 | membership_version ABSENT |
+| `approval.timeout` | 8 | 11 | membership_version ABSENT |
+| `config.migrated` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `gate.evaluation_started` | 8 | 11 | membership_version ABSENT |
+| `gate.failed` | 8 | 11 | membership_version ABSENT |
+| `gate.passed` | 8 | 11 | membership_version ABSENT |
+| `requirements.clarification_requested` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `run.background_enqueued` | 8 | 11 | membership_version ABSENT |
+| `tool.denied` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `tool.execution_completed` | 8 | 11 | membership_version ABSENT |
+| `tool.execution_started` | 8 | 11 | membership_version ABSENT |
+| `tool.invoked` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `usage.event` | 5 | 10 | membership_version ABSENT; retention PARTIAL |
+| `worktree.created` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `worktree.deleted` | 7 | 10 | membership_version ABSENT; retention PARTIAL |
+| `tool.custom_headless.skipped` | 1 | 1 | Product-blocked; exact cells below |
 
-| Row | Outcome | Self-grade | Owner units | Retention |
-|---|---|---|---|---|
-| `approval.requested` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-600, SP-580, ATS-290 | RP-AUTHORITY-INDEFINITE |
-| `approval.granted` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-601, SP-581, ATS-290 | RP-AUTHORITY-INDEFINITE |
-| `approval.denied` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-602, SP-582, ATS-291 | RP-AUTHORITY-INDEFINITE |
-| `approval.timeout` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-603, SP-583, ATS-291 | RP-AUTHORITY-INDEFINITE |
-| `config.migrated` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-604, SP-584, ATS-292 | PENDING_RETENTION_DECISION |
-| `gate.evaluation_started` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-605, SP-585, ATS-292 | RP-RUNTIME-365D |
-| `gate.failed` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-606, SP-586, ATS-293 | RP-RUNTIME-365D |
-| `gate.passed` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-607, SP-587, ATS-293 | RP-RUNTIME-365D |
-| `requirements.clarification_requested` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-608, SP-588, ATS-294 | PENDING_RETENTION_DECISION |
-| `run.background_enqueued` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-609, SP-589, ATS-294 | RP-RUNTIME-365D |
-| `tool.denied` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-610, SP-590, ATS-295 | PENDING_RETENTION_DECISION |
-| `tool.execution_completed` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-611, SP-591, ATS-295 | RP-RUNTIME-365D |
-| `tool.execution_started` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-612, SP-592, ATS-296 | RP-RUNTIME-365D |
-| `tool.invoked` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-613, SP-593, ATS-296 | PENDING_RETENTION_DECISION |
-| `usage.event` | Draft, not admission-ready | 5/12 PASS; 6 PARTIAL, 1 ABSENT | CV-614, SP-594, ATS-297 | PENDING_RETENTION_DECISION |
-| `worktree.created` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-615, SP-595, ATS-297 | PENDING_RETENTION_DECISION |
-| `worktree.deleted` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-616, SP-596, ATS-298 | PENDING_RETENTION_DECISION |
-| `tool.custom_headless.skipped` | Blocked on Jared | 1/12 PASS; 3 PARTIAL, 8 ABSENT | N2-066 | PENDING_RETENTION_DECISION |
+## Closed technical cells
 
-## Technical gaps before admission
+Each of the 17 families has its own exact CV/SP owner text, source schemas, physical custody rows and fixture objects. There is no sibling-derived contract or shared multi-family admission. `Plans/dt_event_contracts.json` is the per-family route map; `Plans/dt_event_contracts.schema.json` closes payload, source and checkpoint values; `Plans/dt_event_contract_fixtures.json` contains the complete values, transitions, byte oracles and expected outcomes.
 
-- **Original producer/source custody:** exact producer/admission identifiers and first-receipt ordering are drafted, but the original immutable input/result source codecs and atomic source publication/adoption need exact per-source closure. A reference string alone does not prove it.
-- **Checkpoint oracles:** the typed per-family checkpoint and explicit SP-278 adoption are drafted, but concrete full checkpoint values and positive/negative empty-prefix, coverage, withdrawal and restore fixtures remain to be authored.
-- **Semantic oracles:** 445 static checks cover payload closure, identity isolation and retry/conflict models. Each family's transition/recovery/custody/retention obligations are named, but concrete vectors for those boundaries remain missing. The self-grade marks producer, consumers_checkpoints and positive_negative_oracles PARTIAL for every drafted row; native NOT_RUN alone is not the reason.
+**Original source and producer.** Each actual producer now has a named `resolve_original` request/result contract and separate immutable prepared/completed source stages, with closed `before` prerequisites and completed `owner_result`. Preparing never guesses an outcome. SP-131 defines durable promotion; same-path changed bytes fence. The original owner commits its result under the allocated identity; a missing/uncertain result is unavailable, never a repeated external effect. Completed source durability precedes append, and SP-286/CV-339 full-value v2 plus SP-336/SP-347 barrier receipt precede dependent publication. Every original source, referenced outcome/body and first receipt joins one mandatory coherent backup closure. Older/incomplete restores fence mutation and disclose unavailable. Normal append/read explicitly adopts Case L-2/SP-026/SP-236 and SP-337's payload-store boundary. Payload refs resolve before schema/identity checks and unverified/changed bodies refuse.
 
-- **Usage payload/joins:** usage.event additionally needs complete closed UF-085 provider cost/quota/pricing slots and concrete event-ref/original-observation/settlement join vectors. Its closed_payload_schema and scope_identity cells are PARTIAL too.
+**Identity and source codecs.** Project subjects use the existing Storage `project~base64url` partition and exact string-array identity recipe; integer subjects become unsigned decimal strings to preserve u64 identity. New `pm.dt.source.json.v1` defines exact sorted UTF-8 source bytes, finite plain decimal normalization and duplicate-key/Unicode/nonfinite refusal. Applicable application sources are distinct `.application.v1` siblings and reuse current CV-366 `WorkflowScopeV2`, actual server/original-operation identity, `application@1` keys and `pm.application.physical_messagepack.v1`; they do not silently share the Project recipe or relax a frozen Project resource. Actual app graph/role admission remains mandatory; unsupported roles are unavailable. The new source files are physical custody contracts, not an installed native service.
 
-## Newly authored bindings and search evidence
+**Checkpoint and consumers.** Every existing exact consumer independently adopts SP-278/DL-076. Its full schema/value, nine-field durable token, null empty prefix, globally examined cursor, exact last match, source-proof row-set/count/range join, final source/admission/lease/access/deletion checks and whole-value CAS are explicit. Fixtures distinguish globally empty source from nonempty prefixes with no family match. Failed CAS, gaps, transplanted rows, unknown versions, changed frontier/source, withdrawal and missing retained source preserve the exact old checkpoint. Governed reinstall/rebuild is explicit; held generations never authorize source eviction.
 
-`DT-binding-search.json` records an independent exact-name search for each drafted family, its current partial owners, negative evidence, and every new identifier. Scope: live top-level canonical Plans markdown/JSON/JSONL and exact referenced owners; generated shards, audits, ledgers, evidence and migration inputs were excluded. This scoped search is not a claim about every archived source package.
+**Semantic oracles.** The static checker passes 2,981 assertions across independent family fixtures, including original source stages and bytes, wrong/missing joins, all family-specific predecessor/outcome refusals, original full-value retry/conflict, crash boundaries, restore loss, concrete checkpoint publication/refusal, deletion/permission races, withdrawal and known/pending retention gates. Prepared/completed outcome separation and explicit lifecycle tables are independently stated for every family. The original-owner and SP-278 authentication adapters are assumed by the static models. The fixtures also name each concrete native crash/race obligation; they do not execute filesystem durability, seglog wire, redb CAS, provider/Git operations or native owner authentication.
 
-The following are **newly authored owner contracts under DL-045**, not discovered pre-existing identifiers. Version is 1.0.0 throughout. Identity recipes use per-family original subject values listed in the companion, scope partition and event type, with RFC 8785/SHA-256; SP-286/CV-339 full-value first receipts and SP-278/DL-076 durable tokens are explicitly adopted per family. No sibling binding is used as this family's evidence.
+**usage.event.** CV-614 now carries complete closed cost, provider minor-unit, per-bucket pricing, quota/window/reset/cooldown and display-policy slots, reusing the existing cost-usage artifact definitions and tightening their extension bags for the event wire. Flat cost fields are equality mirrors, not extra charges. `usage_event_ref` equals the computed event ID; original observation/hash, provider attempt, actual runtime attempt, account/billing/provider identity and parent/retry links and the actual parent_run_id join are tested. Unknown quantities remain null. Every source class and settlement state has concrete cases, including accepted partials, adjustment replacement, separate billed retries, inclusive/exclusive buckets, BYOK/subscription suppression and missing quota/cost. UF-108/SP-341 daily totals remain canonical, committed before detail expiry and preserved after derived loss; older restore discloses totals lost after backup. No live JSONL or raw-event page scan is introduced.
 
-| Family | Append admission | Operating consumer | Checkpoint key / value family |
+## Newly authored bindings and per-family searches
+
+`DT-binding-search.json` retains the first-pass search and adds an independent current-source search for every family. Scope: live top-level Plans markdown/JSON/JSONL plus exact owners; generated shards, ledgers, audits/evidence and DT companions are excluded from recovered-binding evidence. The checked source/codec/publication roles were absent outside the DT draft. Existing SP-131, SP-278, SP-286/CV-339, SP-336/337/347 and CV-366 definitions are reused by name. This search is bounded evidence, not a claim about every archived package.
+
+The 17 original append/consumer/checkpoint IDs from the first pass remain exact. New original-source bindings are listed below; each resolver is the exact producer method plus `.resolve_original`, with the closed request/result signature in its SP/CV unit.
+
+| Family | Original producer / resolver prefix | Project source family | Additional app source family |
 |---|---|---|---|
-| `approval.requested` | `storage.dt.approval_requested.append.v1@1.0.0` | `storage.dt.approval_requested.reader.v1@1.0.0` | `projector.checkpoint.dt.approval_requested:{storage_instance_id}:{scope_partition}` / `dt_approval_requested_checkpoint` |
-| `approval.granted` | `storage.dt.approval_granted.append.v1@1.0.0` | `storage.dt.approval_granted.reader.v1@1.0.0` | `projector.checkpoint.dt.approval_granted:{storage_instance_id}:{scope_partition}` / `dt_approval_granted_checkpoint` |
-| `approval.denied` | `storage.dt.approval_denied.append.v1@1.0.0` | `storage.dt.approval_denied.reader.v1@1.0.0` | `projector.checkpoint.dt.approval_denied:{storage_instance_id}:{scope_partition}` / `dt_approval_denied_checkpoint` |
-| `approval.timeout` | `storage.dt.approval_timeout.append.v1@1.0.0` | `storage.dt.approval_timeout.reader.v1@1.0.0` | `projector.checkpoint.dt.approval_timeout:{storage_instance_id}:{scope_partition}` / `dt_approval_timeout_checkpoint` |
-| `config.migrated` | `storage.dt.config_migrated.append.v1@1.0.0` | `storage.dt.config_migrated.reader.v1@1.0.0` | `projector.checkpoint.dt.config_migrated:{storage_instance_id}:{scope_partition}` / `dt_config_migrated_checkpoint` |
-| `gate.evaluation_started` | `storage.dt.gate_evaluation_started.append.v1@1.0.0` | `storage.dt.gate_evaluation_started.reader.v1@1.0.0` | `projector.checkpoint.dt.gate_evaluation_started:{storage_instance_id}:{scope_partition}` / `dt_gate_evaluation_started_checkpoint` |
-| `gate.failed` | `storage.dt.gate_failed.append.v1@1.0.0` | `storage.dt.gate_failed.reader.v1@1.0.0` | `projector.checkpoint.dt.gate_failed:{storage_instance_id}:{scope_partition}` / `dt_gate_failed_checkpoint` |
-| `gate.passed` | `storage.dt.gate_passed.append.v1@1.0.0` | `storage.dt.gate_passed.reader.v1@1.0.0` | `projector.checkpoint.dt.gate_passed:{storage_instance_id}:{scope_partition}` / `dt_gate_passed_checkpoint` |
-| `requirements.clarification_requested` | `storage.dt.requirements_clarification_requested.append.v1@1.0.0` | `storage.dt.requirements_clarification_requested.reader.v1@1.0.0` | `projector.checkpoint.dt.requirements_clarification_requested:{storage_instance_id}:{scope_partition}` / `dt_requirements_clarification_requested_checkpoint` |
-| `run.background_enqueued` | `storage.dt.run_background_enqueued.append.v1@1.0.0` | `storage.dt.run_background_enqueued.reader.v1@1.0.0` | `projector.checkpoint.dt.run_background_enqueued:{storage_instance_id}:{scope_partition}` / `dt_run_background_enqueued_checkpoint` |
-| `tool.denied` | `storage.dt.tool_denied.append.v1@1.0.0` | `storage.dt.tool_denied.reader.v1@1.0.0` | `projector.checkpoint.dt.tool_denied:{storage_instance_id}:{scope_partition}` / `dt_tool_denied_checkpoint` |
-| `tool.execution_completed` | `storage.dt.tool_execution_completed.append.v1@1.0.0` | `storage.dt.tool_execution_completed.reader.v1@1.0.0` | `projector.checkpoint.dt.tool_execution_completed:{storage_instance_id}:{scope_partition}` / `dt_tool_execution_completed_checkpoint` |
-| `tool.execution_started` | `storage.dt.tool_execution_started.append.v1@1.0.0` | `storage.dt.tool_execution_started.reader.v1@1.0.0` | `projector.checkpoint.dt.tool_execution_started:{storage_instance_id}:{scope_partition}` / `dt_tool_execution_started_checkpoint` |
-| `tool.invoked` | `storage.dt.tool_invoked.append.v1@1.0.0` | `storage.dt.tool_invoked.reader.v1@1.0.0` | `projector.checkpoint.dt.tool_invoked:{storage_instance_id}:{scope_partition}` / `dt_tool_invoked_checkpoint` |
-| `usage.event` | `storage.dt.usage_event.append.v1@1.0.0` | `storage.dt.usage_event.reader.v1@1.0.0` | `projector.checkpoint.dt.usage_event:{storage_instance_id}:{scope_partition}` / `dt_usage_event_checkpoint` |
-| `worktree.created` | `storage.dt.worktree_created.append.v1@1.0.0` | `storage.dt.worktree_created.reader.v1@1.0.0` | `projector.checkpoint.dt.worktree_created:{storage_instance_id}:{scope_partition}` / `dt_worktree_created_checkpoint` |
-| `worktree.deleted` | `storage.dt.worktree_deleted.append.v1@1.0.0` | `storage.dt.worktree_deleted.reader.v1@1.0.0` | `projector.checkpoint.dt.worktree_deleted:{storage_instance_id}:{scope_partition}` / `dt_worktree_deleted_checkpoint` |
+| `approval.requested` | `HITLBlockedEpisodeOwner.requested` | `dt_approval_requested_source` | `—` |
+| `approval.granted` | `HITLBlockedEpisodeOwner.granted` | `dt_approval_granted_source` | `—` |
+| `approval.denied` | `HITLBlockedEpisodeOwner.denied` | `dt_approval_denied_source` | `—` |
+| `approval.timeout` | `HITLBlockedEpisodeOwner.timeout` | `dt_approval_timeout_source` | `—` |
+| `config.migrated` | `SettingsMigrationCoordinator.branch_granularity` | `dt_config_migrated_source` | `dt_config_migrated_application_source` |
+| `gate.evaluation_started` | `ProgressionGateRunner.evaluation_started` | `dt_gate_evaluation_started_source` | `—` |
+| `gate.failed` | `ProgressionGateRunner.failed` | `dt_gate_failed_source` | `—` |
+| `gate.passed` | `ProgressionGateRunner.passed` | `dt_gate_passed_source` | `—` |
+| `requirements.clarification_requested` | `RequirementsQualityGate.request_clarification` | `dt_requirements_clarification_requested_source` | `—` |
+| `run.background_enqueued` | `BackgroundRunQueue.enqueue` | `dt_run_background_enqueued_source` | `dt_run_background_enqueued_application_source` |
+| `tool.denied` | `ToolDispatcher.denied` | `dt_tool_denied_source` | `dt_tool_denied_application_source` |
+| `tool.execution_completed` | `ToolRunner.execution_completed` | `dt_tool_execution_completed_source` | `dt_tool_execution_completed_application_source` |
+| `tool.execution_started` | `ToolRunner.execution_started` | `dt_tool_execution_started_source` | `dt_tool_execution_started_application_source` |
+| `tool.invoked` | `ToolDispatcher.completed_invocation` | `dt_tool_invoked_source` | `dt_tool_invoked_application_source` |
+| `usage.event` | `UsageTracker.normalize_finish_step` | `dt_usage_event_source` | `dt_usage_event_application_source` |
+| `worktree.created` | `WorktreeLifecycleOwner.created` | `dt_worktree_created_source` | `—` |
+| `worktree.deleted` | `WorktreeLifecycleOwner.deleted` | `dt_worktree_deleted_source` | `—` |
 
-Each family also has the distinct payload/checkpoint schema identifiers and references listed in `Plans/dt_event_contracts.json`. All 17 checkpoint values are derived, use MessagePack, the existing event_log derived budget and 16 KiB ceiling, RP-PROJECTION-3GEN, exact previous-value CAS and verified source coverage. Storage registry entries are contracts only, not installed native families.
+Each Project file key is `storage/event-sources/dt/<exact_slug>/{event_id}/{stage}.json`, with the family's own closed source definition; each app sibling uses the separate `.../<exact_slug>/application/{event_id}/{stage}.msgpack` and its own exact schema ID. The route map records every literal key/schema. The 24 new canonical source families have independent storage-registry recovery/restore/profile rows; no event-family registry row is appended. Their retention is the same event's co-retained dependency or explicit unresolved marker. None selects a new deadline/count/deletion policy. Existing 17 checkpoint rows change only their mirrored checkpoint schema's real empty-prefix nullability; their existing policy remains RP-PROJECTION-3GEN.
 
-## Retention and premise checks
+## Premise checks and DS15 overlap
 
-- **Approval families:** current CV-366 explicitly preserves Orchestrator node/blocked_sequence approval events and separates thread/tool/target chat-tool approvals. CV-355 still binds tool_use_id to the actual waiting tool. Thus approval.requested/granted/denied/timeout are distinct exact families; no alias exclusion follows from DL-300's admission of chat-tool families. Case L-3 explicitly assigns Approval indefinite retention, bound to existing RP-AUTHORITY-INDEFINITE.
-- **Runtime gate/run/tool execution:** Case L-3 explicitly names Runtime/run/node/attempt. gate.evaluation_started, gate.failed, gate.passed, run.background_enqueued, tool.execution_started and tool.execution_completed bind the existing RP-RUNTIME-365D class without changing limits or clocks. Project-native gates remain Project-only.
-- **Pending:** config.migrated, requirements.clarification_requested, tool.denied, tool.invoked, usage.event, worktree.created and worktree.deleted retain PENDING_RETENTION_DECISION. The held custom-headless row also retains the marker. config.migrated's candidate is migration/recovery operational history, but application counting is unresolved; tool/worktree/clarification rows have runtime, authority/audit, operational or chat-content candidates (Case L-3). usage.event's window is already decided by current SP-341/UF-108 (ai.usage.usage-retention, 90-day default; daily totals forever), but the exact structured policy object is absent from today's retention_policies. RT owns binding it; DT creates no new policy and selects no cap or bucket.
-- **DL-045 premise:** every one of the 17 drafted exact names is still in its current exact approved scope. Current live owners continue to require their underlying behaviors. This permits technical drafting only, not new product decisions.
-- **DL-076 premise:** today's SP-278 adoption and durable token contract retain the nine-field persisted token and exclude redb_snapshot_id. DT preserves that current rule.
-- **Older retention answers:** no August/September retention answer was extended or applied to a new family. No failed old-answer premise was silently reused. SP-341/UF-108's newer JSONL retirement and detailed-usage rules remain controlling.
+- **DL-045:** every drafted exact name remains in the current approved 285-family scope, and its live semantic owner still specifies the behavior. The new identities, custody, checkpoint and recovery mechanics are technical definitions only.
+- **CV-355/CV-366 and DL-300:** node/blocked-sequence approvals remain distinct from thread/tool/target chat-tool approvals. No duplicate chat-tool engine, alias exclusion or new approval decision is introduced.
+- **CV-366:** the first pass's generic app recipe was insufficient. This pass reuses actual server/original-operation identity and a distinct app source/physical codec. It does not change CV-366 or enroll an unsupported app graph.
+- **DL-076:** the current durable token still has nine fields; no persisted `redb_snapshot_id` is allowed.
+- **Case L-3, UF-108/SP-341:** the existing approval/runtime classes and newer Usage/JSONL rules remain controlling. No old August/September retention answer is extended. No old decision answer failed its premise and was then applied.
 
-## Question for Jared
+**DS15 inspected:** `origin/plans/ea-w2-section15-newtools-20261104` at `e237aebb940767dbb323010fcf029a4df25391a5`, report `reports/event-authority-20261104/DS15.md`, contract N2-218. Its newly authored sentence selects only the first Doctor invocation per Project, including after key appearance/removal. Current `Plans/newtools.md:510` says only `Emit tool.custom_headless.skipped seglog event on first Doctor run`; the exact source phrase is backtick-quoted in canon. The per-Project reset/frequency selection is not settled by that existing sentence. N2-218 is a draft, not a recorded Jared answer. DT keeps the question and writes no second source/schema/fixture contract for this family.
 
-**tool.custom_headless.skipped:** `Plans/newtools.md:494-513` says absent tools.custom_headless emits on the "first Doctor run". Does this mean once per Project lifetime, once per configuration revision, or once per absent-key episode? What resets eligibility after key/config removal or restore? This selects visible emission frequency; DT has not answered it, minted a binding for it or excluded it. No decision card or Decision Log entry is authored.
+**Exact outstanding question:** Is skipped eligible only on a Project's first-ever Doctor invocation, or on the first invocation that observes `tools.custom_headless` absent? If the first invocation has the key, may a later absence emit? What resets eligibility across a configuration revision, key removal/re-addition, Project import/clone or older restore? This chooses user-visible emission frequency and reset semantics, reserved to Jared by DL-045.
 
-## Shared-file hunks and ids
+## Every remaining non-PASS cell
 
-- `Plans/Contracts_V0.md`: append CV-600 through CV-616, one separate payload/identity/compatibility contract per family.
-- `Plans/storage-plan.md`: append SP-580 through SP-596, one separate producer/reader/checkpoint/custody contract per family.
-- `Plans/Automated_Testing_System.md`: append ATS-290 through ATS-298; each names its individual family obligations.
-- `Plans/storage_value_registry.json`: append 17 dt_*_checkpoint rows and 17 corresponding storage_profile.family_profiles entries; existing rows/profiles are preserved.
-- Generated shards change only automated_testing_system, contracts_v0, storage-plan and storage_value_registry; generated .plan_index files update as a whole. No unrelated owner document changed.
+- **membership_version — ABSENT for all 18 rows.** No membership/version admission is written. Batch integration owns it.
+- **retention — PARTIAL for seven prepared families:** `config.migrated`, `requirements.clarification_requested`, `tool.denied`, `tool.invoked`, `usage.event`, `worktree.created`, `worktree.deleted`. Each retains `PENDING_RETENTION_DECISION`; RT owns the structured event/source assignment. Usage duration is already decided by UF-108/SP-341; its missing structured mapping is not a new duration question. Other pending candidates remain those cited by the first pass; this worker selects none.
+- **tool.custom_headless.skipped — product-blocked:** `producer`, `replay_idempotency`, `transitions` remain PARTIAL; `closed_payload_schema`, `scope_identity`, `retention`, `redaction_custody`, `consumers_checkpoints`, `compatibility_withdrawal`, `positive_negative_oracles` remain ABSENT, in addition to absent membership. All depend on the single frequency/reset question above; DT does not manufacture them around an unapproved answer. `owner_doc` remains PASS. RT also owns this row's pending retention marker.
 
-Ids used: **SP-580..596, CV-600..616, ATS-290..298**. Unused assigned ids: SP-597..599, CV-617..619, ATS-299. No other prefixes minted. Before drafting, all fetched origin refs were checked for allocated SP-580..599/CV-600..619/ATS-290..299 plan_unit_id definitions: none existed. No mailbox or subagent was used.
+There are no other non-PASS cells. Counts: 181 PASS, 10 PARTIAL, 25 ABSENT across 216 cells. All evidence quotes/line ranges were revalidated mechanically against the implementation head. The report-only publication does not change those contract hashes.
 
-## Checks and evidence
+## Shared-file hunks, IDs and validation
 
-Check outputs are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/`. Exact SHA-256 values are in `DT-evidence-sha256.json` beside this report. `currentness-sha256.txt` confirms all 15 ignored currentness files matched the shared checkout before indexing.
+- **Contracts_V0.md:** extend only DT's CV-600..616, independently per family.
+- **storage-plan.md:** extend only DT's SP-580..596 with independent custody, source codec, checkpoint, lifecycle and app sibling adoption.
+- **Automated_Testing_System.md:** extend only DT's ATS-290..298, with separate exact-family paragraphs.
+- **storage_value_registry.json:** mirror each existing DT checkpoint's legitimate null empty-prefix cursor; append 17 Project source and seven distinct app source rows plus matching physical profiles. Existing non-DT rows/profiles retain their values. No critical/MVP set or existing policy object is changed.
+- **Derived files:** regenerated via repo scripts. Only `automated_testing_system`, `contracts_v0`, `storage-plan`, `storage_value_registry` shard groups changed; the whole plan index regenerated with the 15-file ignored currentness edition SHA-256 matched first. No unrelated source shard changed.
 
-- DT static checker: exit 0; 445 checks, 17 families, pass.
-- Storage registry JSON Schema: exit 0; no errors.
-- Storage recovery self-test: exit 0; pass.
-- Storage profile checker: exit 1; 41 missing profiles on the base and the draft, zero new missing profiles. `profile-baseline-comparison.json` lists exact names and baseline commit. Other threads' missing profiles were not edited.
-- Shard generation, index generation, shard check and index validation: see final machine-parsed statuses in `DT-checks.json`. Validation status is parsed from the top level.
-- An initial index generation failed on missing ATS source_lineage metadata; fixed. An interim shard check failed because the registry changed after generation; regenerated. Neither interim result is presented as a final pass.
+**IDs used remain SP-580..596, CV-600..616, ATS-290..298. No new PlanUnit IDs minted.** SP-597..599, CV-617..619 and ATS-299 remain unused. First-pass allocation evidence remains in the earlier report/search; no other lane's units are edited.
 
-No main push, landing lock, reseal, registry append, admission record, Decision Log entry, frozen validator change, protected governance edit, .gitignore change or test-file edit. Branch remains for lead integration; governance currentness/readiness is not certified.
+| Check | Exit | Result |
+|---|---:|---|
+| DT contract oracles | 0 | 2,981 assertions / 17 families PASS |
+| Storage registry JSON Schema | 0 | PASS |
+| Storage recovery self-test | 0 | PASS |
+| Storage profile checker | 1 | Same 41 pre-existing missing profiles as first-pass head; zero new errors |
+| Shard generation | 0 | PASS; four edited owner groups only |
+| Plan index generation | 0 | PASS |
+| Shard check | 0 | PASS |
+| Plan index validation | 0 | Top-level JSON status PASS |
+| Self-grade evidence check | 0 | All 216 cells' current quote/line evidence PASS |
+
+Evidence and SHA-256 manifest: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/`, with pass-2 logs under `pass2/`; exact paths and SHA-256 values are in `DT-evidence-sha256.json`. The first-pass report/self-grade are retained under `pass2/DT-before.*`. Aggregate landing checks, independent review and native execution are not claimed by these targeted draft checks.
+
+No main push, landing lock, reseal, .gitignore edit, event registry append, admission record, Decision Log entry, auto-decision change, frozen validator edit, protected evidence edit, test-file edit, pm-mail or subagent. The branch is pushed to both configured origin destinations; the worktree remains for lead integration. Generated currentness/readiness does not confer governance clearance.
