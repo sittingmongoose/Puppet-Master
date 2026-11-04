@@ -193,6 +193,7 @@ def build():
     suite = Suite()
     gate, context = created.candidate_gate(ROOT)
     suite.weakeners['identifier_end_of_input'] = no_pattern_guard
+    suite.weakeners['browser_compatibility_projector_validation']=lambda:patch.object(gate.ReplayOracle,'consume',source_without_guard(gate.ReplayOracle.consume,'self.contract_failures'))
     suite.weakeners['eager_reference_closure'] = no_eager_guard
     @contextmanager
     def no_browser_replay_guard():
@@ -211,6 +212,16 @@ def build():
         model = created if family.endswith('created') else reset
         check = model.creation_preflight_failures if model is created else model.reset_preflight_failures
         suite.positive(family + ':valid_writer', lambda b=base, check=check: not check(**b))
+        retained=copy.deepcopy(base);retained['event']['schema_version']='2.0.0'
+        def project_retained(b=retained):
+            oracle=gate.ReplayOracle()
+            outcome=oracle.consume(b['event'],b['witness']['producer_component'],context)
+            return outcome=='projected_no_effect' and oracle.executed_effects==0
+        suite.positive(family+':generic_projector_retained_2_reader',project_retained)
+        suite.negative(family+':retained_2_not_a_fresh_writer','governed_envelope_successor',lambda b=retained,check=check:not check(**b))
+        malformed=copy.deepcopy(retained);malformed['event']['payload']['unadmitted_field']=True
+        suite.negative(family+':generic_projector_unknown_payload_field','browser_compatibility_projector_validation',lambda b=malformed:gate.ReplayOracle().consume(b['event'],b['witness']['producer_component'],context)=='projected_no_effect')
+
         replay = copy.deepcopy(base); replay['event']['replay_policy']='projector_replay_only'
         suite.negative(family + ':replay_only', 'browser_writer_replay_policy', lambda b=replay, check=check: not check(**b))
         for n in load('Plans/event_authority_ds_round2_fixtures.json')['inline_boundaries']:
