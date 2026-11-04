@@ -277,91 +277,82 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 45,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-denied",
+            "F12-current-dependency-verifier-001-current-reader-only-positive",
+            "F12-current-dependency-verifier-001-current-reader-denied",
+            "F12-current-dependency-reviewer-001-current-reader-only-positive",
+            "F12-current-dependency-reviewer-001-current-reader-denied",
+            "F12-current-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-current-dependency-safe_point_id-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-denied",
+            "F12-replay-only-dependency-verifier-001-current-reader-only-positive",
+            "F12-replay-only-dependency-verifier-001-current-reader-denied",
+            "F12-replay-only-dependency-reviewer-001-current-reader-only-positive",
+            "F12-replay-only-dependency-reviewer-001-current-reader-denied",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "attempt.completed",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-500",
+            "line": 29494,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": true,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -621,91 +612,94 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 57,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-permission_snapshot_id-001-current-reader-only-positive",
+            "F12-current-dependency-permission_snapshot_id-001-current-reader-denied",
+            "F12-current-dependency-requested_model_snapshot_id-001-current-reader-only-positive",
+            "F12-current-dependency-requested_model_snapshot_id-001-current-reader-denied",
+            "F12-current-dependency-effective_model_snapshot_id-001-current-reader-only-positive",
+            "F12-current-dependency-effective_model_snapshot_id-001-current-reader-denied",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-denied",
+            "F12-current-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-current-dependency-safe_point_id-001-current-reader-denied",
+            "F12-current-dependency-requested_account_snapshot_id-001-current-reader-only-positive",
+            "F12-current-dependency-requested_account_snapshot_id-001-current-reader-denied",
+            "F12-current-dependency-effective_account_snapshot_id-001-current-reader-only-positive",
+            "F12-current-dependency-effective_account_snapshot_id-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-permission_snapshot_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-permission_snapshot_id-001-current-reader-denied",
+            "F12-replay-only-dependency-requested_model_snapshot_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-requested_model_snapshot_id-001-current-reader-denied",
+            "F12-replay-only-dependency-effective_model_snapshot_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-effective_model_snapshot_id-001-current-reader-denied",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-denied",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-denied",
+            "F12-replay-only-dependency-requested_account_snapshot_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-requested_account_snapshot_id-001-current-reader-denied",
+            "F12-replay-only-dependency-effective_account_snapshot_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-effective_account_snapshot_id-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "attempt.started",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-501",
+            "line": 29552,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -965,91 +959,78 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 41,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-detail_ref-001-current-reader-only-positive",
+            "F12-current-dependency-detail_ref-001-current-reader-denied",
+            "F12-current-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-current-dependency-safe_point_id-001-current-reader-denied",
+            "F12-current-dependency-anchor_ref-001-current-reader-only-positive",
+            "F12-current-dependency-anchor_ref-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-detail_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-detail_ref-001-current-reader-denied",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-denied",
+            "F12-replay-only-dependency-anchor_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-anchor_ref-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "node.blocked",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-502",
+            "line": 29610,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -1309,91 +1290,78 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 41,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-verifier-001-current-reader-only-positive",
+            "F12-current-dependency-verifier-001-current-reader-denied",
+            "F12-current-dependency-artifact-001-current-reader-only-positive",
+            "F12-current-dependency-artifact-001-current-reader-denied",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-verifier-001-current-reader-only-positive",
+            "F12-replay-only-dependency-verifier-001-current-reader-denied",
+            "F12-replay-only-dependency-artifact-001-current-reader-only-positive",
+            "F12-replay-only-dependency-artifact-001-current-reader-denied",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "node.completed",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-503",
+            "line": 29668,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": true,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -1653,91 +1621,74 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 37,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-execution_unit_context_ref-001-current-reader-only-positive",
+            "F12-current-dependency-execution_unit_context_ref-001-current-reader-denied",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-current-dependency-runtime_snapshot_ref-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-execution_unit_context_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-execution_unit_context_ref-001-current-reader-denied",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-runtime_snapshot_ref-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "node.started",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-504",
+            "line": 29726,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -1997,91 +1948,66 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 29,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "node.unblocked",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-505",
+            "line": 29784,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -2341,91 +2267,70 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 33,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-evidence_ref-001-current-reader-only-positive",
+            "F12-current-dependency-evidence_ref-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-evidence_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-evidence_ref-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "plan.decomposition_degraded",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-506",
+            "line": 29842,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -2685,91 +2590,66 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 29,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "remediation.resolved",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-507",
+            "line": 29902,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -3029,91 +2909,66 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 29,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "remediation.spawned",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-508",
+            "line": 29960,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -3373,91 +3228,74 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 37,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-usage_ref-001-current-reader-only-positive",
+            "F12-current-dependency-usage_ref-001-current-reader-denied",
+            "F12-current-dependency-result_ref-001-current-reader-only-positive",
+            "F12-current-dependency-result_ref-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-usage_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-usage_ref-001-current-reader-denied",
+            "F12-replay-only-dependency-result_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-result_ref-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "run.completed",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-509",
+            "line": 30018,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -3717,91 +3555,70 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 33,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-detail_ref-001-current-reader-only-positive",
+            "F12-current-dependency-detail_ref-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-detail_ref-001-current-reader-only-positive",
+            "F12-replay-only-dependency-detail_ref-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "run.graph_integrity_failed",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-510",
+            "line": 30076,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -4061,91 +3878,66 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 29,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "run.node_backoff_expired",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-511",
+            "line": 30134,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -4425,91 +4217,66 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 29,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "run.node_backoff_started",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-512",
+            "line": 30192,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -4789,91 +4556,66 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 29,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "run.node_ready",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-513",
+            "line": 30250,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -5133,91 +4875,70 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 33,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-current-dependency-safe_point_id-001-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-only-positive",
+            "F12-replay-only-dependency-safe_point_id-001-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "run.node_retry_scheduled",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-514",
+            "line": 30308,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -5542,91 +5263,70 @@
           "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
-          "status": "FIXED",
-          "positive_case": "S10-history-valid-after-live-transition",
-          "negative_cases": [
-            {
-              "case": "S10-withdrawn-reader",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "reader_withdrawn"
-            },
-            {
-              "case": "S10-missing-retained-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "source_unavailable"
-            },
-            {
-              "case": "S10-deleted-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event_deleted"
-            },
-            {
-              "case": "S10-unauthorized-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "event access"
-            },
-            {
-              "case": "S10-foreign-Project",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Project"
-            },
-            {
-              "case": "S10-foreign-Storage",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "history Storage root"
-            },
-            {
-              "case": "S10-forged-event",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "inline logical payload join"
-            },
-            {
-              "case": "S10-coherently-forged-original-source",
-              "expected": "reject",
-              "actual": "reject",
-              "reason": "retained original source custody"
-            }
+          "status": "PASS_FINITE_STATIC_MODEL",
+          "historical_cases": 33,
+          "fresh_current_reader_cases": [
+            "F12-current-pack-current-reader-only-positive",
+            "F12-current-pack-current-reader-denied",
+            "F12-current-fresh-pack-deleted_at",
+            "F12-current-fresh-pack-project_id",
+            "F12-current-fresh-pack-storage_instance_id",
+            "F12-current-fresh-pack-durable",
+            "F12-current-dependency-wake-002-current-reader-only-positive",
+            "F12-current-dependency-wake-002-current-reader-denied",
+            "F12-replay-only-pack-current-reader-only-positive",
+            "F12-replay-only-pack-current-reader-denied",
+            "F12-replay-only-fresh-pack-deleted_at",
+            "F12-replay-only-fresh-pack-project_id",
+            "F12-replay-only-fresh-pack-storage_instance_id",
+            "F12-replay-only-fresh-pack-durable",
+            "F12-replay-only-dependency-wake-002-current-reader-only-positive",
+            "F12-replay-only-dependency-wake-002-current-reader-denied"
           ],
-          "full_checker": "144 history cases + 144 later-live writer controls pass",
-          "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
-          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs.",
-          "retained_replay_only_case": "F11-retained-replay-only-history",
-          "foreign_policy_case": "F11-retained-foreign-policy"
+          "owner_access_evidence": {
+            "event_type": "scheduler.pass",
+            "path": "Plans/storage-plan.md",
+            "unit": "SP-515",
+            "line": 30366,
+            "quote": "At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime."
+          },
+          "original_lifecycle_remains_historical": true,
+          "fresh_body_reads_required": true,
+          "native_execution": "NOT_RUN"
         },
         "11": {
           "status": "PASS_FINITE_STATIC_MODEL",
           "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
-          "scope": "Singleton or necessary named duplicate-set sensitivity; exact prerequisite/schema refusals tested before dependent dereferences; native NOT_RUN.",
           "summary": {
-            "sites": 172,
-            "single_negative_sites": 160,
+            "sites": 175,
+            "single_negative_sites": 163,
             "single_trace_schema_sites": 1,
             "named_duplicate_sites": 11,
             "unproved_sites": 0,
-            "negative_cases": 3227,
-            "single_site_evaluations": 555044,
+            "negative_cases": 3741,
+            "single_site_evaluations": 654675,
             "trace_scenarios": 230,
-            "trace_site_evaluations": 39560,
+            "trace_site_evaluations": 40250,
             "extra_trace_mutations": 8,
-            "masked_guard_case_instances": 510,
+            "masked_guard_case_instances": 588,
             "masked_classifications": {
               "SAME_MISSING_OBJECT_EXACT_PREDICATE": 140,
-              "NAMED_DUPLICATE_SET": 336,
+              "NAMED_DUPLICATE_SET": 414,
               "SAME_TIMESTAMP_SCHEMA_PREDICATE_PARSER": 4,
               "SAME_MISSING_OR_INVALID_FIELD_SCHEMA_BOUNDARY": 30
             },
             "unproved_guard_case_instances": 0,
             "nonempty_named_sets": 20,
-            "native_execution": "NOT_RUN"
-          }
+            "native_execution": "NOT_RUN",
+            "fresh_read_route_sites": 2,
+            "fresh_read_route_evaluations": 7482,
+            "total_boundary_sites": 177,
+            "total_boundary_negative_evaluations": 662157,
+            "total_boundary_trace_evaluations": 40710,
+            "exact_enum_keyword_cli_proofs": 2
+          },
+          "enum_negative_rebuilt": false,
+          "exact_missing_object_predicates_and_schema_boundaries_are_not_full_capture_acceptance": true
         }
       },
       "native_execution": "NOT_RUN",
@@ -5634,5 +5334,5 @@
     }
   ],
   "native_execution": "NOT_RUN",
-  "graded_source_head": "2de4b3704aa75707f271a4d9467cfbd963491152"
+  "graded_source_head": "c56f378b88082a2bfc960d00cf3d8f611585add4"
 }
