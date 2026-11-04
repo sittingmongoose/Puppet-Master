@@ -514,16 +514,22 @@
       };
       return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, v.y0, v.y1)];
     }
-    // how far Pip's drawn head reaches below the point it hangs from, in stage units (null until it has been measured)
-    pipHB() { return this.pipBB && this.vis ? (this.pipBB.h[1] + this.pipBB.h[3] - 31.5) * this.L.s : null; }
+    /* how far Pip's drawn head reaches around the point it hangs from, turned by ang (asleep it tilts), in stage units:
+       [left, top, right, bottom]; null until it has been measured */
+    pipReach(ang) {
+      if (!this.pipBB || !this.vis) return null;
+      const h = this.pipBB.h, s = this.L.s, c = Math.cos(ang || 0), n = Math.sin(ang || 0);
+      const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => { const u = (x - 32) * s, v = (y - 31.5) * s; return [u * c - v * n, u * n + v * c]; });
+      return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))];
+    }
     // Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit)
     pipHead() {
-      const ps = this.ps, Lay = this.L, s = Lay.s, hb = this.pipHB();
-      if (!ps || hb == null) return null;
-      const h = this.pipBB.h; let y = ps.Ct.y + Lay.rope;
+      const ps = this.ps, Lay = this.L, s = Lay.s, r = ps && this.pipReach(ps.tiltT);
+      if (!r) return null;
+      let y = ps.Ct.y + Lay.rope;
       if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
-      if (y + hb > this.vis.y1) y = this.vis.y1 - hb;
-      return [ps.Ct.x + (h[0] - 32) * s, y + (h[1] - 31.5) * s, ps.Ct.x + (h[0] + h[2] - 32) * s, y + hb];
+      if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
+      return [ps.Ct.x + r[0], y + r[1], ps.Ct.x + r[2], y + r[3]];
     }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
@@ -939,8 +945,8 @@
       const headH = 28 * Lay.s;
       if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
       /* (and on the lowest floor a person can see: a narrow window's Retro tube crops the stage's floor away, FO-51) */
-      const hb = this.pipHB();
-      if (hb != null && H[1] + hb > this.vis.y1) H = [H[0], this.vis.y1 - hb];
+      const reach = this.pipReach(ang);
+      if (reach && H[1] + reach[3] > this.vis.y1) H = [H[0], this.vis.y1 - reach[3]];
       this.H = H; this.ang = ang;
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
