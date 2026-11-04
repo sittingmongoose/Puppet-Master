@@ -175,7 +175,14 @@
        true of the tokens it then asked for); what a token reaches is said in its form, before it is pasted */
     /* (signed in with a token: the reach was said before the paste and is no longer shown, so the lead no longer points
        below, final-onb FO-32) */
-    lead: (S) => { const si = SI(S); return T(si.kind !== 'forge' ? 'online.signin.leadCloud' : methodsOf(S, si)[0] === 'token' ? (si.state === 'done' ? 'online.signin.leadTokenDone' : 'online.signin.leadToken') : 'online.signin.lead', { name: si.name }); },
+    /* (the way in on show, not only the service's first: Use an access token instead on a server that also signs in in the
+       browser said "{name}'s page shows the access it asks for" over the token form and after the token signed in, a page
+       that never opened, FO-32's variant) */
+    lead: (S) => {
+      const si = SI(S); if (si.kind !== 'forge') return T('online.signin.leadCloud', { name: si.name });
+      const first = methodsOf(S, si)[0] === 'token', byToken = si.state === 'done' ? first || md(S).forge_auth_method === 'token' : first || si.state === 'token';
+      return T(!byToken ? 'online.signin.lead' : si.state === 'done' ? 'online.signin.leadTokenDone' : 'online.signin.leadToken', { name: si.name });
+    },
     body(S) {
       const si = SI(S), env = si.kind === 'forge' ? world(S) : { accounts: [], signup: true }, methods = methodsOf(S, si);
       /* a server with no sign-in app for Puppet Master (another Forgejo or Gitea server) signs in with an access token */
