@@ -22,6 +22,7 @@ from referencing import Registry, Resource
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = (
     'Plans/assistant_chat_contract_fixtures.json',
+    'Plans/developer_session_application_contract_fixtures.json',
     'Plans/assistant_memory_contract_fixtures.json',
     'Plans/assistant_plan_runtime_contract_fixtures.json',
     'Plans/automation_authority_contract_fixtures.json',
@@ -48,7 +49,7 @@ SCHEMAS = tuple('Plans/' + name + '.schema.json' for name in (
     'azure_devops_setup_contracts', 'backup_restore_system_contracts',
     'collaborative_workflows_contracts', 'computer_use_contracts',
     'coordination_event_admission', 'coordination_event_payloads', 'coordination_projection_contracts',
-    'cross_project_access_contracts', 'editor_appearance', 'event_family_registry',
+    'cross_project_access_contracts', 'developer_session_application_contracts', 'editor_appearance', 'event_family_registry',
     'event_payload_context_compaction_completed', 'execution_unit_context',
     'final_gui_interaction_contracts', 'forge_integration_contracts', 'git_adapter_command_contracts',
     'guided_tour_contracts', 'home_layout_event_contracts', 'home_workspace_layout_v2',
@@ -472,7 +473,7 @@ def graph_failures(corpus):
     unhashed = {k: v for k, v in graph.items() if k != 'graph_sha256'}
     if semantic_hash('source_graph', unhashed) != graph['graph_sha256']:
         errors.append('source graph digest')
-    if len(graph['methods']) != 15 or len(graph['resources']) != 10:
+    if len(graph['methods']) != 17 or len(graph['resources']) != 11:
         errors.append('source graph method/resource census')
     for group, key in (('resources', 'retrieval_uri'), ('methods', 'interface_id'), ('graphs', 'graph_id')):
         ids = [r[key] for r in graph[group]]
@@ -715,6 +716,9 @@ def semantic_outcome(predicate, record, corpus, pack, case):
         return record['outcome']
     if predicate == 'automation.final_dispatch':
         return publication_outcome(record)
+    if predicate == 'developer_session.exact_owner':
+        owner = pack.get('developer_session_owner_sources', {}).get(case.get('owner_source_id'))
+        return 'accept' if owner is not None and record == owner and not scope_failures(record) else 'refuse'
     if predicate == 'move.draft_cutover_join':
         source = pack.get('move_draft_owner_source')
         if source is None:

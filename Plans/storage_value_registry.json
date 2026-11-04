@@ -122842,6 +122842,240 @@
         ]
       },
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE"
+    },
+    {
+      "family_id": "dev_session_record_application",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "dev_session_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(dev_session_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.dev_session_record.application.v1",
+      "value_schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordStorageApplicationV1",
+      "owner_doc": "Plans/storage-plan.md#SP-349",
+      "producer": [
+        "DebugSessionBroker application sole writer; specified_unimplemented"
+      ],
+      "consumers": [
+        "debug session broker read/checkpoint, BRS-033 backup/restore, owner retention"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
+      "migration": "Explicit new application family; Project resource/key/hash unchanged.",
+      "retention_compaction": "canonical; RP-DEBUG-30D with independent legal/recovery/backup holds. Restore never revives a kernel, adapter or lease.",
+      "retention_policy_ref": "RP-DEBUG-30D",
+      "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
+      "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.dev_session_record.application.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "scope": {
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+              },
+              {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                }
+              }
+            ]
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/Plans/developer_session_application_contracts.schema.json#/$defs/DebugSessionRecordApplicationV1"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-349",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-139",
+          "Plans/Backup_Restore_System.md#BRS-033"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-349",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-139",
+          "Plans/Backup_Restore_System.md#BRS-033"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-349",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-139",
+          "Plans/Backup_Restore_System.md#BRS-033"
+        ]
+      }
+    },
+    {
+      "family_id": "eval_session_record_application",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "eval_session_record.application.v1:{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(eval_session_id)}",
+      "compatibility_key_shapes": [],
+      "value_schema_id": "pm.storage_value.eval_session_record.application.v1",
+      "value_schema_ref": "Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordStorageApplicationV1",
+      "owner_doc": "Plans/storage-plan.md#SP-349",
+      "producer": [
+        "EvalSessionBroker application sole writer; specified_unimplemented"
+      ],
+      "consumers": [
+        "eval session broker read/checkpoint, BRS-033 backup/restore, owner retention"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "storage_instance_id",
+        "server_id",
+        "scope",
+        "record"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [],
+      "replay_behavior": "Exact original-result read only; no current source recapture, scope substitution or effect.",
+      "migration": "Explicit new application family; Project resource/key/hash unchanged.",
+      "retention_compaction": "canonical; RP-DEBUG-30D with independent legal/recovery/backup holds. Restore never revives a kernel, adapter or lease.",
+      "retention_policy_ref": "RP-DEBUG-30D",
+      "redaction_no_secret_rule": "Protected credential/screen/private cross-thread data never exposed; SP-337 refs for values above 16 KiB.",
+      "legacy_canonical_crosswalk_status": "CV-366/SP-349/351/352 exact app edition; native unavailable until complete adoption.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "storage_instance_id",
+          "server_id",
+          "scope",
+          "record"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.eval_session_record.application.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "storage_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "server_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "scope": {
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+              },
+              {
+                "properties": {
+                  "scope_kind": {
+                    "const": "application"
+                  }
+                }
+              }
+            ]
+          },
+          "record": {
+            "$ref": "https://puppetmaster.local/Plans/developer_session_application_contracts.schema.json#/$defs/EvalSessionRecordApplicationV1"
+          }
+        }
+      },
+      "recovery_disposition": {
+        "authority_class": "canonical_non_rebuildable",
+        "strategy": "restore_from_mandatory_backup",
+        "source_family_ids": [],
+        "source_refs": [
+          "Plans/storage-plan.md#SP-349",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-140",
+          "Plans/Backup_Restore_System.md#BRS-033"
+        ],
+        "backup_required": true,
+        "data_loss_if_unavailable": true,
+        "user_disclosure_required": true
+      },
+      "migration_disposition": {
+        "mode": "store_coordinator",
+        "canonical_write_key_only": true,
+        "compatibility_keys_read_only": false,
+        "ambiguity_policy": "fail_closed",
+        "source_refs": [
+          "Plans/storage-plan.md#SP-349",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-140",
+          "Plans/Backup_Restore_System.md#BRS-033"
+        ]
+      },
+      "restore_disposition": {
+        "mode": "mandatory_backup",
+        "transaction_family_id": null,
+        "outcome_owner_ref": null,
+        "mutation_fence_on_unresolved": true,
+        "source_refs": [
+          "Plans/storage-plan.md#SP-349",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-140",
+          "Plans/Backup_Restore_System.md#BRS-033"
+        ]
+      }
     }
   ],
   "storage_profile": {
@@ -125030,6 +125264,20 @@
         "storage_group": "settings_and_layout",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "moves from JSON text to MessagePack at its next schema version (SP-339)",
+        "max_value_bytes": 16384
+      },
+      "dev_session_record_application": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "eval_session_record_application": {
+        "redb_file": "canonical",
+        "storage_group": "projects_and_sources",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "unchanged",
         "max_value_bytes": 16384
       }
     },
