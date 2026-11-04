@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2690-L3279
+Source lines: L2690-L3285
 
-Source SHA256: `9ebce5022051b1505a60d893d0c9eb76e17f4b14704037d30724884f32323dde`
+Source SHA256: `1072cbedb42411edcca5d98d79dd4bff551e7612ef4950692de2a3c4deeb173c`
 
 ---
 
@@ -549,7 +549,13 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.g
   source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
 
 
-  DL-407 coverage requires complete immutable MemoryGist before/after facts. changed_fields is exactly
+  DL-407 coverage requires complete immutable MemoryGist before/after facts. Before computing any delta,
+  validate every resolved record against all required MemoryGist fields in section 3.1, including kind, claims,
+  summary and access_count; identity and exact scope live in the independently joined record metadata.
+  Two matching projections with the same required field omitted are incomplete sources and refuse on append,
+  retry and history. Optional absence remains distinct from explicit null; never supply defaults to repair a source.
+  Validate exact field types before values, including booleans versus numbers and complete claim objects.
+  changed_fields is exactly
   the set of canonical semantic fields whose values differ, including presence versus absence; it is never a
   manually selected subset. Revision is checked separately and is not a semantic field. Payload previous_pinned,
   pinned, previous_verification_state, verification_state, source and evidence_refs equal their resolved facts.

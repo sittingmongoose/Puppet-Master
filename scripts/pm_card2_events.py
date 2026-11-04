@@ -10,6 +10,7 @@ import base64
 import copy
 import json
 import hashlib
+import rfc8785
 from datetime import datetime
 import re
 from functools import lru_cache
@@ -138,7 +139,7 @@ def rule(name, paths, predicate):
     PATHS[name] = set(paths.split())
 
 
-rule('scenario_path', '*', lambda c:c.get('path') not in {'append','retry','history','no_event'})
+rule('scenario_path', '*', lambda c:type(c.get('path')) is not str or c['path'] not in {'append','retry','history','no_event'})
 rule('scenario_shape', '*', lambda c: ('event' in c)!=(c.get('path')!='no_event'))
 
 def event_views(c):
@@ -149,7 +150,12 @@ def event_views(c):
 
 
 def event_rule(name, predicate, paths='append retry history'):
-    rule(name, paths, lambda c: any(predicate(e, c) for e in event_views(c)))
+    # Payload field predicates have no value to inspect until an object exists.
+    # The two structural schema guards always inspect the original value.
+    rule(name, paths, lambda c: any(predicate(e, c) for e in event_views(c)
+         if name in {'envelope_schema','payload_schema','payload_fullmatch','inline_size','inline_reference',
+                     'scope_partition','private_thread','lineage_shape'} or name.startswith('lineage_')
+         or type(e.get('payload')) is dict))
 
 
 def payload_schema(e):
@@ -178,6 +184,65 @@ def strict_equal(a,b):
     return a==b
 
 
+# §3.1 required semantic facts; identity/scope/revision are the resolved
+# record metadata checked by record_* and source_* below. Optional absence is
+# preserved, never filled with null or a default to make an incomplete record pass.
+MEMORY_REQUIRED_FACTS = {
+    'kind': str, 'status': str, 'pinned': bool, 'verification_state': str,
+    'created_at': str, 'updated_at': str, 'last_access_at': str,
+    'access_count': int, 'half_life_days': (int, type(None)), 'tags': list, 'claims': list,
+    'summary': str, 'evidence_refs': list, 'source': str,
+    'embedding_version': str, 'embed_text_hash': str, 'text_hash': str,
+}
+MEMORY_OPTIONAL_FACTS = {
+    'details': (str, type(None)), 'run_id': (str, type(None)),
+    'thread_id': (str, type(None)), 'claim_support': (list,),
+    'currentness': (str,), 'deleted': (bool,),
+}
+
+
+def memory_facts_bad(facts):
+    if type(facts) is not dict or not MEMORY_REQUIRED_FACTS.keys() <= facts.keys():
+        return True
+    for key, value in facts.items():
+        kinds = MEMORY_REQUIRED_FACTS.get(key, MEMORY_OPTIONAL_FACTS.get(key, ()))
+        if type(kinds) is not tuple:
+            kinds = (kinds,)
+        if type(value) not in kinds:
+            return True
+    if facts['access_count'] < 0 or (facts['half_life_days'] is not None and facts['half_life_days'] < 1):
+        return True
+    if facts['kind'] not in {'CurrentThread','Blocker','Constraint','Outcome','Handoff','Note','Decision','Preference','Landmine'}:
+        return True
+    if facts['status'] not in {'Active','Done','Archived'} or facts['verification_state'] not in {'Unverified','Verified','Discarded'}:
+        return True
+    if facts['source'] not in {'AutoRunBoundary','AutoMilestone','UserManual','Import'}:
+        return True
+    if any(not timestamp_valid(facts[k]) for k in ['created_at','updated_at','last_access_at']):
+        return True
+    if any(re.fullmatch('[0-9a-f]{64}',facts[k]) is None for k in ['embed_text_hash','text_hash']):
+        return True
+    if not facts['embedding_version'] or not facts['claims']:
+        return True
+    for key in ['tags', 'evidence_refs', 'claim_support']:
+        if key in facts and any(type(v) is not str for v in facts[key]):
+            return True
+    # Claim bodies stay in the memory owner. This witness verifies complete
+    # structural facts, not natural-language entailment or evidence authority.
+    for claim in facts['claims']:
+        if type(claim) is not dict or any(type(claim.get(k)) is not str
+                                        for k in ['claim_id', 'text', 'created_at']):
+            return True
+        if not claim['claim_id'] or not claim['text'] or not timestamp_valid(claim['created_at']):
+            return True
+    return False
+
+
+def semantic_digest(e):
+    """The adopted EventRecord RFC 8785 recipe, not a Python equality proxy."""
+    return hashlib.sha256(rfc8785.dumps({k: e[k] for k in SEMANTIC_FIELDS})).hexdigest()
+
+
 def exact_delta(c):
     before, after = records(c)
     # Absence is distinct from a field with a null value. The canonical revision
@@ -188,7 +253,7 @@ def exact_delta(c):
 
 
 def source_metadata(e, c, key):
-    return e['payload'][key] != c['owner'][key]
+    return not strict_equal(e['payload'][key],c['owner'][key])
 
 
 @lru_cache(maxsize=4096)
@@ -212,7 +277,7 @@ event_rule('payload_fullmatch', lambda e,c: fullmatch_bad(e['event_type'],json.d
 event_rule('inline_size', lambda e,c: len(binding_bytes(e['payload'])) > 16384)
 event_rule('inline_reference', lambda e,c: e['payload_ref'] is not None)
 for key in ['scope_kind', 'project_id', 'thread_id']:
-    event_rule('scope_' + key, lambda e,c,k=key: e[k] != e['payload'][k])
+    event_rule('scope_' + key, lambda e,c,k=key: not strict_equal(e[k],e['payload'][k]))
 event_rule('scope_schema', lambda e,c: e['payload_schema_id'] != e['payload']['schema_id'] or
            e['payload']['schema_id'] != family(e)['application_payload_schema_id' if e['scope_kind']=='application' else 'payload_schema_id'])
 event_rule('scope_partition', lambda e,c: c['scope_partition'] != partition(e))
@@ -222,22 +287,22 @@ for key in ['storage_instance_id', 'server_id', 'computer_id', 'thread_id', 'pro
     event_rule('source_' + key, lambda e,c,k=key: source_metadata(e,c,k))
 event_rule('lineage_shape', lambda e,c: (e['run_id'] is None)!=(e['attempt_id'] is None) or (e['run_id'] is None and e['node_id'] is not None))
 for key in ['run_id', 'node_id', 'attempt_id']:
-    event_rule('lineage_' + key, lambda e,c,k=key: e[k] != c['owner'][k])
+    event_rule('lineage_' + key, lambda e,c,k=key: not strict_equal(e[k],c['owner'][k]))
 for payload_key, owner_key in [('owner_operation_id','operation_id'), ('owner_change_id','change_id'),
                                ('revision_before','before_revision'), ('revision_after','after_revision'),
                                ('before_record_ref','before_record_ref'), ('after_record_ref','after_record_ref')]:
-    event_rule('source_' + payload_key, lambda e,c,p=payload_key,o=owner_key: e['payload'][p] != c['owner'][o])
+    event_rule('source_' + payload_key, lambda e,c,p=payload_key,o=owner_key: not strict_equal(e['payload'][p],c['owner'][o]))
 event_rule('source_subject', lambda e,c: e['payload'].get('gist_id',e['payload'].get('browser_session_id')) != c['owner']['subject_id'])
 event_rule('source_workspace', lambda e,c: 'workspace_id' in e['payload'] and e['payload']['workspace_id'] != c['owner']['workspace_id'])
-rule('source_authentic', 'append retry history', lambda c: not c['owner']['authentic'])
-rule('source_committed', 'append retry history', lambda c: not c['owner']['committed'])
-rule('current_stop', 'append retry', lambda c: not c['live']['stop_generation_current'])
+rule('source_authentic', 'append retry history', lambda c: c['owner']['authentic'] is not True)
+rule('source_committed', 'append retry history', lambda c: c['owner']['committed'] is not True)
+rule('current_stop', 'append retry', lambda c: c['live']['stop_generation_current'] is not True)
 rule('record_resolution', 'append retry history', lambda c: any(ref is not None and ref not in c['source_records']
      for ref in [c['owner']['before_record_ref'],c['owner']['after_record_ref']]))
 # Record resolution failures short circuit only dependent rules, never unrelated
 # guards. This prevents malformed/unresolved sources from being dereferenced.
 for key in ['subject_id','storage_instance_id','server_id','computer_id','project_id','thread_id','scope_kind','run_id','node_id','attempt_id']:
-    rule('record_' + key, 'append retry history', lambda c,k=key: any(r is not None and r[k] != c['owner'][k] for r in records(c)))
+    rule('record_' + key, 'append retry history', lambda c,k=key: any(r is not None and not strict_equal(r[k],c['owner'][k]) for r in records(c)))
 rule('record_revision', 'append retry history', lambda c: any(r is not None and not strict_equal(r['revision'],c['owner'][k])
      for r,k in zip(records(c),['before_revision','after_revision'])))
 rule('record_ref', 'append retry history', lambda c: any(r is not None and r['record_ref'] != c['owner'][k]
@@ -250,7 +315,7 @@ event_rule('memory_command', lambda e,c: e['event_type']=='memory.gist_state_cha
            (not c['command'].startswith('RealMemoryProvider.') if e['payload']['operation']=='automatic'
             else c['command'] != MEMORY_COMMAND[e['payload']['operation']]))
 event_rule('revision_step', lambda e,c: e['payload']['revision_after'] != e['payload']['revision_before']+1)
-rule('real_change', 'append retry history', lambda c: not c['owner']['real_change'])
+rule('real_change', 'append retry history', lambda c: c['owner']['real_change'] is not True)
 
 
 def transition_bad(e, c):
@@ -267,7 +332,7 @@ def transition_bad(e, c):
     if n=='browser.session.takeover_state_changed': return p['previous_takeover_state']==p['takeover_state'] or 'takeover_state' not in p['changed_fields']
     if n=='memory.gist_state_changed':
         op=p['operation']
-        if op=='verify': return not c['owner']['verification_succeeded'] or c['owner']['verification_request_only'] or p['verification_state']!='Verified'
+        if op=='verify': return c['owner']['verification_succeeded'] is not True or c['owner']['verification_request_only'] is not False or p['verification_state']!='Verified'
         if op=='pin': return p['previous_pinned'] or not p['pinned'] or 'pinned' not in p['changed_fields']
         if op=='unpin': return not p['previous_pinned'] or p['pinned'] or 'pinned' not in p['changed_fields']
         if op=='discard': return p['previous_verification_state']=='Discarded' or p['verification_state']!='Discarded' or 'verification_state' not in p['changed_fields']
@@ -278,7 +343,10 @@ event_rule('transition', transition_bad)
 event_rule('verification_support', lambda e,c: e['event_type']=='memory.gist_state_changed' and
            e['payload']['verification_state']=='Verified' and
            (e['payload']['operation']=='verify' or e['payload']['previous_verification_state']!='Verified') and
-           not c['owner']['manual_override'] and (not e['payload']['evidence_refs'] or not c['owner']['claim_support_current']))
+           (type(c['owner']['manual_override']) is not bool or type(c['owner']['claim_support_current']) is not bool or
+            (c['owner']['manual_override'] is False and (not e['payload']['evidence_refs'] or c['owner']['claim_support_current'] is not True))))
+rule('memory_source_shape', 'append retry history', lambda c: c['event']['event_type']=='memory.gist_state_changed' and
+     any(r is not None and memory_facts_bad(r['facts']) for r in records(c)))
 event_rule('memory_delta', lambda e,c: e['event_type']=='memory.gist_state_changed' and
            (not exact_delta(c) or sorted(e['payload']['changed_fields']) != exact_delta(c)))
 for payload_key, fact_key, side in [('previous_pinned','pinned',0),('pinned','pinned',1),
@@ -297,17 +365,18 @@ for payload_key,fact_key,side in [('previous_session_class','session_class',0),(
 event_rule('browser_delta', lambda e,c: e['event_type'].startswith('browser.session.') and
            e['event_type']!='browser.session.created' and sorted(e['payload']['changed_fields'])!=exact_delta(c))
 
-rule('double_record', 'append retry', lambda c: any(o['owner_operation_id']==c['event']['payload']['owner_operation_id'] and
+rule('double_record', 'append retry', lambda c: type(c['other_events']) is not list or (type(c['event']['payload']) is dict and any(o['owner_operation_id']==c['event']['payload']['owner_operation_id'] and
      o['change_id']==c['event']['payload']['owner_change_id'] and
      o['event_type'].startswith(('browser.workspace.','browser.controller_lease.') if c['event']['event_type'].startswith('browser.session.') else ('memory.gist.',))
-     for o in c['other_events']))
+     for o in c['other_events'])))
 # Only the candidate is a current writer. Historical original policy is never
 # passed to this guard, even during a current retry.
 rule('replay_only', 'append retry', lambda c: c['event']['replay_policy'] != contract(c)['replay_policy'])
 event_rule('idempotency', lambda e,c: e['idempotency_key'] != expected_key(e))
 event_rule('event_identity', lambda e,c: e['event_id'] != expected_event_id(e))
-rule('first_receipt', 'append', lambda c: c['publication']['terminal_published'] and not c['publication']['append_receipt_issued'])
-rule('storage_authentic', 'retry history', lambda c: not c['storage']['authentic'])
+rule('first_receipt', 'append', lambda c: type(c['publication']['terminal_published']) is not bool or type(c['publication']['append_receipt_issued']) is not bool or
+     (c['publication']['terminal_published'] and not c['publication']['append_receipt_issued']))
+rule('storage_authentic', 'retry history', lambda c: c['storage']['authentic'] is not True)
 # The original observation is compared to a Storage-owned record, not itself.
 rule('original_record', 'retry', lambda c: not strict_equal(c['retry']['original_event'],c['storage']['event']))
 rule('historical_record', 'history', lambda c: not strict_equal(c['event'],c['storage']['event']))
@@ -315,10 +384,10 @@ for key in ['event_id','sequence_id','observed_at_utc','persisted_at_utc']:
     rule('storage_' + key, 'retry history', lambda c,k=key: not strict_equal(c['storage']['receipt'][k],c['storage']['event'][k]))
 for key in ['observed_at_utc','persisted_at_utc']:
     rule('storage_format_'+key, 'retry history', lambda c,k=key: not isinstance(c['storage']['event'][k],str) or not FormatChecker().conforms(c['storage']['event'][k],'date-time'))
-rule('storage_receipt_issued', 'retry history', lambda c: not c['storage']['receipt']['issued'])
-rule('retry', 'retry', lambda c: c['retry']['effects'] != 0 or c['retry']['result'] !=
+rule('storage_receipt_issued', 'retry history', lambda c: c['storage']['receipt']['issued'] is not True)
+rule('retry', 'retry', lambda c: type(c['retry']['effects']) is not int or c['retry']['effects'] != 0 or type(c['retry']['dedupe_available']) is not bool or c['retry']['result'] !=
      ('dedupe_unavailable' if not c['retry']['dedupe_available'] else
-      'original' if all(strict_equal(c['event'][k],c['storage']['event'][k]) for k in SEMANTIC_FIELDS) else 'idempotency_conflict'))
+      'original' if semantic_digest(c['event']) == semantic_digest(c['storage']['event']) else 'idempotency_conflict'))
 
 
 @lru_cache(maxsize=4096)
@@ -336,7 +405,8 @@ def t(c): return c['reader']['index_read_token']
 
 rule('token_schema','history',token_schema_bad)
 rule('token_observation','history',lambda c:t(c)!=c['reader']['current_index_read_token'])
-rule('snapshot','history',lambda c:c['reader']['snapshot_id']!=c['reader']['current_snapshot_id'])
+rule('snapshot','history',lambda c:type(c['reader']['snapshot_id']) is not str or type(c['reader']['current_snapshot_id']) is not str or
+     c['reader']['snapshot_id']!=c['reader']['current_snapshot_id'])
 rule('token_storage','history',lambda c:t(c)['storage_instance_id']!=c['event']['payload']['storage_instance_id'])
 rule('token_source_identity','history',lambda c:t(c)['source_selection']['storage_instance_id']!=t(c)['storage_instance_id'])
 rule('token_key','history',lambda c:t(c)['checkpoint_key']!='event_record_index_checkpoint.v1:'+t(c)['storage_instance_id'])
@@ -344,7 +414,7 @@ rule('token_ref','history',lambda c:t(c)['checkpoint_ref']!=t(c)['checkpoint_key
 rule('token_dataset','history',lambda c:t(c)['index_dataset_name']!='event_record_index.v2@'+t(c)['generation_id'])
 rule('reader_partition','history',lambda c:c['reader']['scope_partition']!=c['scope_partition'])
 for key in ['event_id','event_type','sequence_id']:
-    rule('reader_'+key,'history',lambda c,k=key:c['reader'][k]!=c['event'][k])
+    rule('reader_'+key,'history',lambda c,k=key:not strict_equal(c['reader'][k],c['event'][k]))
 # Hash raw control bytes, and use the existing SP-278 canonical MessagePack
 # binding codec for owner adapter values. No local JSON hashing substitutes.
 SOURCE_BYTES = ['current_bytes_sha256','manifest_bytes_sha256']
@@ -370,18 +440,19 @@ def generation_source(reader):
 rule('generation_identity','history',lambda c:t(c)['generation_id']!='eig_'+binding_digest(generation_source(c['reader'])))
 rule('anchor_storage','history',lambda c:c['reader']['anchor']['source_selection']['storage_instance_id']!=t(c)['storage_instance_id'])
 rule('frontier_selection','history',lambda c:not strict_equal(c['reader']['frontier']['source_selection'],t(c)['source_selection']))
-rule('historical_authentic','history',lambda c:not c['reader']['authentic_historical_source'])
-rule('withdrawn','retry history',lambda c:c['storage']['withdrawn'])
-rule('reader_withdrawn','history',lambda c:c['reader']['withdrawn'])
-rule('access','history',lambda c:not c['reader']['access_allowed'])
-rule('deleted_disclosure','history',lambda c:c['reader']['deleted_content_requested'])
+rule('historical_authentic','history',lambda c:c['reader']['authentic_historical_source'] is not True)
+rule('withdrawn','retry history',lambda c:c['storage']['withdrawn'] is not False)
+rule('reader_withdrawn','history',lambda c:c['reader']['withdrawn'] is not False)
+rule('access','history',lambda c:c['reader']['access_allowed'] is not True)
+rule('deleted_disclosure','history',lambda c:c['reader']['deleted_content_requested'] is not False)
 rule('reader_effect','history',lambda c:c['reader']['side_effects']!=[])
-rule('family_checkpoint','history',lambda c:c['reader']['family_checkpoint']!=c['reader']['prior_family_checkpoint'])
-rule('command_only_count','no_event',lambda c:c['event_count']!=0)
-rule('command_only_result','no_event',lambda c:not c['command_result_retained'])
+rule('family_checkpoint','history',lambda c:c['reader']['family_checkpoint'] is not None or c['reader']['prior_family_checkpoint'] is not None)
+rule('command_only_count','no_event',lambda c:type(c['event_count']) is not int or c['event_count']!=0)
+rule('command_only_result','no_event',lambda c:c['command_result_retained'] is not True)
 rule('command_only_command','no_event',lambda c:c['command']!='cmd.chat.memory.verify')
 rule('command_only_outcome','no_event',lambda c:c['outcome'] not in ['requested','failed','success_without_real_change'])
-rule('command_only_delta','no_event',lambda c:c['before_facts']!=c['after_facts'])
+rule('command_only_source_shape','no_event',lambda c:memory_facts_bad(c['before_facts']) or memory_facts_bad(c['after_facts']))
+rule('command_only_delta','no_event',lambda c:not strict_equal(c['before_facts'],c['after_facts']))
 rule('command_only_verified','no_event',lambda c:c['outcome']=='success_without_real_change' and c['before_facts']['verification_state']!='Verified')
 
 
@@ -389,11 +460,12 @@ GUARDS_ORIGINAL_RESOLUTION = GUARDS['record_resolution']
 
 def failures(c):
     result=[]
+    valid_path=type(c.get('path')) is str and c['path'] in {'append','retry','history','no_event'}
     for name,guard in GUARDS.items():
-        if name=='scenario_shape' and c.get('path') not in {'append','retry','history','no_event'}: continue
-        if name not in ['scenario_path','scenario_shape'] and (c.get('path') not in {'append','retry','history','no_event'} or ('event' in c)!=(c.get('path')!='no_event')): continue
+        if name=='scenario_shape' and not valid_path: continue
+        if name not in ['scenario_path','scenario_shape'] and (not valid_path or ('event' in c)!=(c.get('path')!='no_event')): continue
         if '*' not in PATHS[name] and c.get('path') not in PATHS[name]: continue
-        if name != 'record_resolution' and name.startswith(('record_', 'memory_delta','memory_fact_','browser_fact_','browser_delta')) and GUARDS_ORIGINAL_RESOLUTION(c): continue
+        if name != 'record_resolution' and name.startswith(('record_', 'memory_source_shape', 'memory_delta','memory_fact_','browser_fact_','browser_delta')) and GUARDS_ORIGINAL_RESOLUTION(c): continue
         try:
             if guard(c): result.append(name)
         except (KeyError,TypeError,ValueError,IndexError,StopIteration,AttributeError):
@@ -415,6 +487,14 @@ def run(fixtures=None):
     for name in ['card2_event_payloads.schema.json','event_record.schema.json','event_record_index_checkpoint.schema.json']:
         local_refs_resolve(load(name))
     fixtures=fixtures or load('card2_event_fixtures.json')
+    # json.loads consumes the entire number, so 01/00/-01 never enter an
+    # identity, canonical digest or retry as an alternative spelling.
+    for case in fixtures.get('parse_rejections', []):
+        try:
+            json.loads(case['json_number'])
+        except json.JSONDecodeError:
+            continue
+        raise ValueError('non-JSON number accepted: ' + case['id'])
     bases={c['id']:c for c in fixtures['positives']+fixtures['no_event_cases']}
     errors=[]; negatives=[]; table=[]
     for c in bases.values():
