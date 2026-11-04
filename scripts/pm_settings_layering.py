@@ -128,7 +128,9 @@ def check(root=ROOT, corpus=None):
         if ('careful_order' in layer) != (layer['combine'] == 'more_careful'):
             errors.append(row['id'] + ': protective order mismatch')
     scalar_safety = [r for r in rows.values() if r['layering'].get('careful_order') == ['deny', 'ask', 'allow']]
-    if len(scalar_safety) != 3:
+    if {r['id'] for r in scalar_safety} != {
+            'safety.rules.default-tool-permission', 'safety.approvals.doom-loop-action',
+            'safety.protection.external-dir-action', 'safety.rules.computer-use'}:
         errors.append('scalar safety census')
     theme = [r['id'] for r in rows.values() if r['layering']['atomic_group'] == 'theme_pair']
     if set(theme) != {'general.visual.theme', 'general.visual.theme-mode'}:

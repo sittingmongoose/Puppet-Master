@@ -39500,18 +39500,23 @@
         "No project"
       ],
       "layering": {
-        "home": "computer",
+        "home": "everywhere",
         "may_differ_by": [
-          "computer"
+          "everywhere",
+          "computer",
+          "project"
         ],
         "computer_key": "execution_host",
-        "combine": "most_specific",
+        "combine": "more_careful",
         "atomic_group": null,
         "not_offered": {
-          "everywhere": "about_hardware",
-          "device": "about_hardware",
-          "project": "about_hardware"
-        }
+          "device": "not_about_the_screen"
+        },
+        "careful_order": [
+          "deny",
+          "ask",
+          "allow"
+        ]
       },
       "options": [
         "deny",
