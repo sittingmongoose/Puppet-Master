@@ -1861,7 +1861,10 @@
           ]
         },
         "decision": {
-          "const": "approved"
+          "enum": [
+            "approved",
+            null
+          ]
         },
         "status": {
           "enum": [
@@ -1871,8 +1874,11 @@
           ]
         },
         "event_types": {
-          "const": [
-            "node.unblocked"
+          "enum": [
+            [
+              "node.unblocked"
+            ],
+            []
           ]
         },
         "owner_receipt_ref": {
@@ -1885,7 +1891,44 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "done"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "decision": {
+                "const": "approved"
+              },
+              "event_types": {
+                "const": [
+                  "node.unblocked"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "decision": {
+                "const": null
+              },
+              "event_types": {
+                "const": []
+              }
+            }
+          }
+        }
+      ],
+      "description": "Re-check R1 (2026-11-04): only a completed approved node decision (status done) records the decision and node.unblocked; refused and stale outcomes record no decision and no event (HITL-038)."
     },
     "RuntimeApproveV3ToolResult": {
       "type": "object",
@@ -2094,7 +2137,10 @@
           ]
         },
         "decision": {
-          "const": "declined"
+          "enum": [
+            "declined",
+            null
+          ]
         },
         "status": {
           "enum": [
@@ -2116,7 +2162,42 @@
           "minLength": 1,
           "maxLength": 256
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "done"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "decision": {
+                "const": "declined"
+              },
+              "event_types": {
+                "const": []
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "decision": {
+                "const": null
+              },
+              "event_types": {
+                "const": []
+              }
+            }
+          }
+        }
+      ],
+      "description": "Re-check R1 (2026-11-04): only a completed declined node decision (status done) records the decision; refused and stale outcomes record no decision and no event (HITL-038)."
     },
     "RuntimeDeclineV3ToolResult": {
       "type": "object",

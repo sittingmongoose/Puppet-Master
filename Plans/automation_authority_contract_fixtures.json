@@ -5956,6 +5956,348 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-refused-no-unblock",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "refused",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-refused-reject-unblock",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "refused",
+        "event_types": [
+          "node.unblocked"
+        ],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-refused-reject-claimed-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "approved",
+        "status": "refused",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-decline-node-refused-no-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.decline",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "refused",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-decline-node-refused-reject-claimed-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.decline",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "declined",
+        "status": "refused",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-stale-no-unblock",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "stale",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-stale-reject-unblock",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "stale",
+        "event_types": [
+          "node.unblocked"
+        ],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-stale-reject-claimed-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "approved",
+        "status": "stale",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-decline-node-stale-no-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.decline",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "stale",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-decline-node-stale-reject-claimed-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.decline",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "declined",
+        "status": "stale",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.decline",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-done-reject-missing-unblock",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": "approved",
+        "status": "done",
+        "event_types": [],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-recheck-runtime-approve-node-done-reject-null-decision",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeApproveV3Result",
+      "record": {
+        "approval_kind": "orchestrator_node",
+        "command_id": "cmd.runtime.approve",
+        "run_id": "run-a",
+        "node_id": "node-a",
+        "blocked_sequence": 1,
+        "attempt_id": null,
+        "decision": null,
+        "status": "done",
+        "event_types": [
+          "node.unblocked"
+        ],
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.runtime.approve",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
