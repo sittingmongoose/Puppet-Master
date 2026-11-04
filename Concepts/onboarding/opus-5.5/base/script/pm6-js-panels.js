@@ -883,12 +883,16 @@
         try { popInput.focus(); popInput.select(); } catch (e0) {}
       }
     }
+    /* focus that was inside the pop goes back to the button that opened it (SW-07: Escape left it on the page body), or to
+       the inline field when a wider bar has put the button away; as the project menu's close does (projectMenuClose) */
     function closePop() {
       if (!popOpen && !window.PM6_SPROUT.isOpen(pop)) return;
+      var had = pop.contains(document.activeElement);
       popOpen = false;
       btn.setAttribute('aria-expanded', 'false');
       if (popInput && inline) inline.value = popInput.value || inline.value;
       window.PM6_SPROUT.close(pop);
+      if (had) try { (btn.hidden ? inline : btn).focus({ preventScroll: true }); } catch (e0) {}
     }
 
     window.PM_TB_SEARCH = {
