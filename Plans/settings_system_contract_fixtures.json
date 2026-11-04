@@ -9048,6 +9048,773 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-claimed-everywhere-no-project",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": true,
+        "project_id": null,
+        "look_pairs": {
+          "everywhere": {
+            "theme": "Glass Light",
+            "theme_mode": "Light"
+          }
+        },
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "Glass Light",
+            "theme_mode": "Light",
+            "reduce_motion": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-claimed-device-no-project",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": true,
+        "project_id": null,
+        "look_pairs": {
+          "everywhere": {
+            "theme": "Glass Light",
+            "theme_mode": "Light"
+          },
+          "device": {
+            "theme": "NieR Dark",
+            "theme_mode": "Dark"
+          }
+        },
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "NieR Dark",
+            "theme_mode": "Dark",
+            "reduce_motion": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-claimed-project-pair",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": true,
+        "project_id": "project-a",
+        "look_pairs": {
+          "device": {
+            "theme": "NieR Dark",
+            "theme_mode": "Dark"
+          },
+          "project": {
+            "theme": "Friendly Light",
+            "theme_mode": "Light"
+          }
+        },
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "Friendly Light",
+            "theme_mode": "Light",
+            "reduce_motion": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-no-project-ignores-old-project-pair",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": true,
+        "project_id": null,
+        "look_pairs": {
+          "device": {
+            "theme": "NieR Dark",
+            "theme_mode": "Dark"
+          },
+          "project": {
+            "theme": "Friendly Light",
+            "theme_mode": "Light"
+          }
+        },
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "NieR Dark",
+            "theme_mode": "Dark",
+            "reduce_motion": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-claimed-absent-look",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": true,
+        "project_id": null,
+        "look_pairs": {},
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "Basic Dark",
+            "theme_mode": "Dark",
+            "reduce_motion": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-claimed-os-motion-before-first-paint",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": true,
+        "project_id": null,
+        "look_pairs": {
+          "device": {
+            "theme": "Retro Light",
+            "theme_mode": "Light"
+          }
+        },
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": true,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "Retro Light",
+            "theme_mode": "Light",
+            "reduce_motion": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-preclaim-ephemeral-fallback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": false,
+        "project_id": null,
+        "look_pairs": {
+          "device": {
+            "theme": "NieR Dark",
+            "theme_mode": "Dark"
+          }
+        },
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": false,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "Basic Dark",
+            "theme_mode": "Dark",
+            "reduce_motion": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-preclaim-os-motion",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "claimed_context": false,
+        "project_id": null,
+        "look_pairs": {},
+        "motion": {
+          "setting_id": "general.visual.reduce-animations",
+          "everywhere_own": null,
+          "computer_own": null,
+          "device_own": null,
+          "project_own": null,
+          "requested_value": 6,
+          "os_reduce_motion": true,
+          "expected_setting_revision": 1,
+          "actual_setting_revision": 1,
+          "selected_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "eligible_ids": [
+            "ai.usage.max-tool-rounds"
+          ],
+          "theme_pair_revisions": {
+            "theme": 1,
+            "theme_mode": 1
+          },
+          "selected_account_id": "account-a",
+          "authenticated_account_id": "account-a",
+          "source_host_id": "host-a",
+          "destination_host_id": "host-a",
+          "credential_bytes_present": false
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_first_paint",
+          "expected": {
+            "theme": "Basic Dark",
+            "theme_mode": "Dark",
+            "reduce_motion": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-ready-project-underlay",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "path": "project",
+        "project_id": "project-a",
+        "owner_complete": true,
+        "last_block_landed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_ready_destination",
+          "expected": "Planning Wizard"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-ready-later-underlay",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "path": "later",
+        "project_id": null,
+        "owner_complete": true,
+        "last_block_landed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_ready_destination",
+          "expected": "No project"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-ready-later-with-project-refuses",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "path": "later",
+        "project_id": "project-a",
+        "owner_complete": true,
+        "last_block_landed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_ready_destination",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-ready-project-without-commit-refuses",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "path": "project",
+        "project_id": null,
+        "owner_complete": true,
+        "last_block_landed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_ready_destination",
+          "expected": "refuse"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-ready-owner-incomplete",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "path": "later",
+        "project_id": null,
+        "owner_complete": false,
+        "last_block_landed": true
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_ready_destination",
+          "expected": "wait"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-ready-block-not-landed",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/setting_value",
+      "record": {
+        "path": "project",
+        "project_id": "project-a",
+        "owner_complete": true,
+        "last_block_landed": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.onboarding_ready_destination",
+          "expected": "wait"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-projects-folder-host-relative-factory",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.execution.projects-folder",
+        "everywhere_own": null,
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": {
+            "kind": "execution_host_home_relative",
+            "relative_path": "Projects"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-projects-folder-selected-computer-own",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.execution.projects-folder",
+        "everywhere_own": null,
+        "computer_own": {
+          "kind": "absolute",
+          "path": "/srv/work/Projects"
+        },
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": {
+            "kind": "absolute",
+            "path": "/srv/work/Projects"
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-projects-folder-everywhere-refuses",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.execution.projects-folder": {
+            "kind": "execution_host_home_relative",
+            "relative_path": "Projects"
+          }
+        },
+        "source_by_setting_id": {
+          "code.execution.projects-folder": "explicit"
+        },
+        "setting_revisions": {
+          "code.execution.projects-folder": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-projects-folder-project-refuses",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.execution.projects-folder": {
+            "kind": "execution_host_home_relative",
+            "relative_path": "Projects"
+          }
+        },
+        "source_by_setting_id": {
+          "code.execution.projects-folder": "explicit"
+        },
+        "setting_revisions": {
+          "code.execution.projects-folder": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f16-projects-folder-device-refuses",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.execution.projects-folder": {
+            "kind": "execution_host_home_relative",
+            "relative_path": "Projects"
+          }
+        },
+        "source_by_setting_id": {
+          "code.execution.projects-folder": "explicit"
+        },
+        "setting_revisions": {
+          "code.execution.projects-folder": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
