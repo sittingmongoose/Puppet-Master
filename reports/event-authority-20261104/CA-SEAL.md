@@ -1,6 +1,6 @@
 # CA-SEAL branch report: the DL-412 seal-check change, 2026-11-04
 
-Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 is by CA-SEAL-FIX2 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
+Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 was by CA-SEAL-FIX2 (Codex). Fix round 3 is by CA-SEAL-FIX3 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
 
 ## What this branch does
 
@@ -58,7 +58,7 @@ None minted. The receipt and the record cite DL-412 (CA-DL's entry). The test pa
 
 No `Plans/*.md` owner document changed, so no shard or index regeneration was needed. The tracked validator output receipt was never written: every run used a scratch tree.
 
-## Review round 1: findings and responses
+## Historical review round 1: findings and responses
 
 Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW.md` (Sol, NOT_READY at `d67201e885`). Both blocking findings are fixed. No finding is disputed and none needed Jared. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/` (fix round 1 at the top level, the reviewed round under `round0/`).
 
@@ -133,10 +133,10 @@ All runs used scratch trees; no checkout's tracked output receipt was written.
 2. **Landing order.** The branch lands after `plans/ea-cards1-answers-20261104` (DL-412).
 3. **The test patch.** It lands as a separate commit in the same landing as the validator, after DL-413's `.gitignore` line (`66af5d0d67`) is on `main`. Without it the holding-bucket test fails 41 entries instead of today's 2.
 4. **The DL-300 records.** The record writer chooses and documents the truthful step. The commit that appended the three rows is `102a7e99e8`, and that step also changed eleven Goal rows.
-5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2 (this worker), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
+5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2, CA-SEAL-FIX3 (Codex), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
 6. **The seal exclusion is procedural.** The receipt's checked `seal_applier_forbidden_tasks` remains exactly the author and lander. Its validator guard is unchanged. The seal applier must separately enforce the full participant exclusion above.
 
-## Review round 2: findings and responses
+## Historical review round 2: findings and responses
 
 Astra review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-astra.md`, NOT_READY at `616345d688`. Both findings are fixed. None is disputed or stopped for Jared. This round changes exactly five paths from that head: the validator, its audit spec, the new DL-412 receipt, this report and the amendment. No test is committed before DL-413's allowance; the fixture patch remains a separate commit required in the same landing.
 
@@ -222,3 +222,104 @@ Fixture patch: `fix2/test-patch/test_event_authority_holding_bucket.dl412.patch`
 Compact run summary: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix2/results/fix2-summary.json`, SHA-256 `a93e8ab5732a4c9d39060c660533ffc6872cc8837164539aecbcb0741ceb1c5a`. It pins the detailed differential, numeric, guard and mutation results. Scratch helpers preserve each reviewer's probe logic with only local roots, validator/receipt overlays and the fixture-patch pin changed. Setup corrections (missing scratch temp directory, CRLF whitespace handling, source-section selection and scratch-mutation syntax/evaluation order) were fixed in the harness before these retained results; they changed no production rule. The currentness copy's 15 file hashes match despite unsupported permission-preservation metadata on the source share.
 
 **Family grades before → after:** N/A → N/A; no families are admitted or graded, no self-grade JSON applies. **Bindings:** none. **Ids minted:** none; DL-998 and DL-999 remain fixture-only. DL-412 is cited as the existing authority, not authored here. Landing prerequisites remain the DL-412/DL-413 dependencies, real lander receipt and ordered pre/post reviews. No seal is applied.
+
+## Review round 3: Astra findings and responses (CA-SEAL-FIX3)
+
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-astra-2.md`, NOT_READY at `e4d8ad23ee7a9d9d57b841779ee17bcd6dc434b7`. The earlier `REVIEW-astra.md` and both evidence probes were also read. **AS2-01 and AS2-02 are fixed in `27f3912208`.** Nothing is disputed or stopped for Jared. Earlier round results above are historical; this section states the current behavior.
+
+**AS2-01 — Where:** validator `strict_step_record` (line 272), `registry_step_record_scan` (line 323), and `registry_step_problems` (line 338). **Cause:** last-key-wins JSON loading erased conflicting keys before claim discovery. **Fix:** on the multi-family path every record-directory entry is read again using a duplicate-rejecting loader at every object depth, with decoded-key equality, strict JSON constants, object roots, exact registry state types and canonical lowercase 64-hex SHA strings. Duplicate members and duplicate foreign/rejected-file claimants fail the whole affected step, naming the file. The original `load_json` and no-field judgment are untouched.
+
+**AS2-02 — Where:** the same scanner, recursive `registry_step_claim` (line 306), and the multi-only SHA-type condition in `admission_record_problems`. **Cause:** flat extraction discarded nested, Unicode, scalar/container and rejected-file claims. **Fix:** unreadable, ambiguous or noncanonical files invalidate every step they could touch, conservatively all steps when disambiguation is impossible. Expected before/after SHA positions are canonical even inside nested claims. A strictly read foreign record mentioning either digest anywhere in keys or values fails that step; discovery traverses containers and recognizes case, whitespace, Unicode decimal/fullwidth/mathematical digits and numeric scalar text. Discovery normalization never accepts a noncanonical member hash. Inspection that exceeds recursion capacity also fails closed. Only a listed member's own strictly read matching file is exempt.
+
+A record without `registry_step_event_types` keeps exactly DL-077's original record problems, admission and ordering, including numeric SHA acceptance and its DL-077/DL-078 decision exclusion. Malformed legacy records can invalidate multi-family steps without acquiring any new problem themselves. The new receipt alone refreshes its current-validator pin; authority/card/source/prior pins, identities, null lander, checked forbidden list and false flags are unchanged. Descriptive receipt/spec text matches the code. CA-SEAL-FIX3 joins the full procedural seal-applier exclusion in both documents; the checked author/lander predicate is unchanged.
+
+### Current verification
+
+| Check | Result |
+|---|---|
+| Final patched holding-bucket suite | Exit 0; **68 methods pass**. The patch remains external pending DL-413, as a separate commit in the same landing as the validator. |
+| New class probes on reviewed `e4d8ad23ee` | Exit 1; seven new methods produce **97 failure entries**, so the patch catches the reviewed defects. |
+| Astra parser probes | All ten reproduced through admission and main: valid control accepts three; every negative rejects every member and names its file. |
+| Astra broader probe | 112 scenarios; complete truthful 43→46 step accepted, all 111 mutations reject all step members. |
+| Existing-record differential | 1,732 helper + 1,732 admission + 1,732 coexistence comparisons, zero differences. |
+| Raw-JSON legacy differential | 304 comparisons over all four existing records, with and without step records; duplicate/escaped keys, nested claims, Unicode literals, arrays, NaN and malformed hashes; zero differences. **5,500 record comparisons total.** |
+| Every unchanged fixture | 34 methods retain the same two pre-existing failures and no errors; all 125 helper outcomes match. 113 diagnostics are exact after temporary-path normalization; 12 differ only in authorized receipt-chain diagnostics/returned pin. This is not a claim of byte-identical tampered-receipt diagnostics. |
+| Old/new main on existing records | Both exit 1; outputs equal after removing generation time and the new authorized receipt input pin. |
+| Check 11 | **40 semantic guard variants × 73 isolated negatives = 2920 cells**; all intended flips and retained baseline rejection reasons verified. |
+| Shards / index | Both exit 0; top-level `status: pass`; no owner-source regeneration or governance refresh required. |
+| Scope / AST / whitespace | Only five approved paths differ from the reviewed head; CRLF preserved. All unrelated function ASTs match the reviewed validator; only the original four authorized observers differ from frozen DL-077. Protected artifacts and existing receipts/records are untouched; diff check passes. |
+
+The fixtures cover duplicates at root/side/hash/step/depth/metadata levels in both orders; member and rejected-file copies; nested hash/side claims, Unicode/fullwidth/Arabic/mathematical digits, uppercase, whitespace and trailing LF, integers/floats/booleans/null/arrays, non-JSON constants, invalid UTF-8/JSON, directories and non-JSON extensions. Two disjoint complete steps pass; an unreadable file rejects both steps; either shared digest rejects the conflicting steps.
+
+### Check 11: full lane guard-removal table
+
+Each case starts from a valid fixture. Observing receipt/assessment pins are refreshed when their source changes. The canonical-member case first establishes a valid string 7/8 step and changes only one member's representation. Canonical foreign negatives use unrelated digests so the recursive claim guard cannot mask their parser defect. Every unflipped negative retains at least one exact baseline rejection reason; the machine table records those intersections and all issues. Baseline negatives are corroborated through main.
+
+Intentional duplicate observations are weakened together: `receipt-validator_before_sha256` is the two-direction receipt bridge; `root-shape` pairs the object-root rule with state-object validation; `canonical-members-paired` removes the same exact-string constraint in the own-record helper and step-state/strict-loader path. A step case flips when a previously refused target member becomes accepted; the machine table identifies the exact accepted targets. Removing broad exclusivity or directory uncertainty can expose complete peers while a duplicated own-file guard still refuses the ambiguous member. `member-incomplete` targets its complete peers, and per-record receipt/decision cases target the defective record. No unrelated guard is used to hide a negative.
+
+| Guard weakened in scratch | Negatives that start to pass | Other negatives retain a baseline rejection reason |
+|---|---|---|
+| `foreign` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `deep-uninspectable-claim`, `duplicate-foreign`, `duplicate-member`, `foreign-Known37`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-rejected`, `foreign-ordinary`, `foreign-rejected`, `foreign-upper`, `mention-key-registry_after`, `mention-key-registry_before`, `mention-nested-registry_after`, `mention-nested-registry_before`, `mention-numeric-registry_after`, `mention-numeric-registry_before`, `mention-space-registry_after`, `mention-space-registry_before`, `mention-unicode-registry_after`, `mention-unicode-registry_before`, `mention-upper-registry_after`, `mention-upper-registry_before`, `mention-value-registry_after`, `mention-value-registry_before`, `nested-noncanonical-side`, `non-json-constant`, `non-json-file`, `outer-array`, `unreadable-json`, `unreadable-utf8` | 36 of 73 |
+| `missing` | `missing-member` | 72 of 73 |
+| `states` | `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 68 of 73 |
+| `same-description` | `same-list-and-states`, `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 67 of 73 |
+| `count` | `count-padded`, `count-short` | 71 of 73 |
+| `different-hashes` | `equal-hashes` | 72 of 73 |
+| `sorted-unique` | `shape-duplicate`, `shape-unsorted` | 71 of 73 |
+| `all-or-none` | `member-incomplete` | 72 of 73 |
+| `step-pin` | `step-receipt-pin` | 72 of 73 |
+| `decision-DL412` | `decision-DL412` | 72 of 73 |
+| `receipt-schema_id` | `receipt-schema_id` | 72 of 73 |
+| `receipt-authority_ref` | `receipt-authority_ref` | 72 of 73 |
+| `receipt-authority_section_sha256` | `receipt-authority_section_sha256` | 72 of 73 |
+| `receipt-validator_before_sha256` | `receipt-validator_before_sha256` | 72 of 73 |
+| `receipt-validator_after_sha256` | `receipt-validator_after_sha256` | 72 of 73 |
+| `receipt-record_dir` | `receipt-record_dir` | 72 of 73 |
+| `receipt-record_schema_id` | `receipt-record_schema_id` | 72 of 73 |
+| `receipt-author_task` | `receipt-author_task` | 72 of 73 |
+| `receipt-seal_authorized` | `receipt-seal_authorized` | 72 of 73 |
+| `receipt-admission_authorized` | `receipt-admission_authorized` | 72 of 73 |
+| `receipt-contract_depth_complete` | `receipt-contract_depth_complete` | 72 of 73 |
+| `receipt-prior-path` | `receipt-prior-path` | 72 of 73 |
+| `receipt-prior-sha256` | `receipt-prior-sha256` | 72 of 73 |
+| `receipt-lander-and-list` | `receipt-forbidden`, `receipt-lander-''`, `receipt-lander-None` | 70 of 73 |
+| `authority-tokens` | `authority-token-0`, `authority-token-1`, `authority-token-2`, `authority-token-3` | 69 of 73 |
+| `duplicates` | `duplicate-foreign`, `duplicate-member` | 71 of 73 |
+| `constants` | `non-json-constant` | 72 of 73 |
+| `root-shape` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `outer-array` | 66 of 73 |
+| `canonical-scan` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace` | 67 of 73 |
+| `uncertainty` | `canonical-boolean`, `canonical-nested`, `canonical-number`, `canonical-unicode`, `canonical-uppercase`, `canonical-whitespace`, `duplicate-foreign`, `duplicate-member`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-rejected`, `foreign-upper`, `nested-noncanonical-side`, `non-json-constant`, `outer-array`, `unreadable-json`, `unreadable-utf8` | 55 of 73 |
+| `recursive-claims` | `deep-uninspectable-claim`, `foreign-Known37`, `foreign-ordinary`, `foreign-rejected`, `mention-key-registry_after`, `mention-key-registry_before`, `mention-nested-registry_after`, `mention-nested-registry_before`, `mention-numeric-registry_after`, `mention-numeric-registry_before`, `mention-space-registry_after`, `mention-space-registry_before`, `mention-unicode-registry_after`, `mention-unicode-registry_before`, `mention-upper-registry_after`, `mention-upper-registry_before`, `mention-value-registry_after`, `mention-value-registry_before`, `non-json-file` | 54 of 73 |
+| `all-files` | `non-json-file` | 72 of 73 |
+| `canonical-members-paired` | `canonical-member`, `canonical-number` | 71 of 73 |
+| `claim-object-keys` | `mention-key-registry_after`, `mention-key-registry_before` | 71 of 73 |
+| `claim-list-values` | `deep-uninspectable-claim`, `mention-nested-registry_after`, `mention-nested-registry_before` | 70 of 73 |
+| `claim-case` | `mention-upper-registry_after`, `mention-upper-registry_before` | 71 of 73 |
+| `claim-whitespace` | `mention-space-registry_after`, `mention-space-registry_before` | 71 of 73 |
+| `claim-unicode-decimal` | `mention-unicode-registry_after`, `mention-unicode-registry_before` | 71 of 73 |
+| `deep-claim` | `deep-uninspectable-claim` | 72 of 73 |
+| `nested-canonical` | `nested-noncanonical-side` | 72 of 73 |
+
+### Astra recurring-defect sweep
+
+| Class | Evidence / applicability |
+|---|---|
+| Forged/contradictory identity and hashes | Member state/list/count, live-row/decision/depth pins, receipt authority and prior pins are covered by the suite and matrix; real registry hashes are read from pinned Git history in Astra's probe. |
+| Storage-assigned metadata | Not applicable: this change reads planning admission records, not runtime event payloads or Storage metadata. |
+| Historical/current-reader crossover | No-field helper/aggregator/raw-file/coexistence differential and all original fixtures preserve DL-077 judgments. |
+| Multiple interpretations | Strict parser/type/canonical checks plus recursive either-digest probes cover the entire requested representation class. |
+| Dangling schema refs | No schema or `$ref` is added or changed. |
+| Partial size limits | No event body, payload externalization or storage-size rule changes. |
+| Custody on every path | Prior/current validator and receipt bridge, authority tokens and implementation pins are tested through the full admission checker. |
+| Masked negatives | Guard table above, named duplicate pairs and retained baseline-reason intersections. |
+| Unsupported grades | Family grades **N/A → N/A**. No family, admission, native behavior or seal is graded/passed by this work. |
+
+Standing runtime checks 1–4, 6–7 and 10 are outside this checker-only change; their contracts are untouched. Standing check 5 is covered by exact full-match SHA guards and trailing-LF negatives; check 8 uses admitted sets and main's admission failures rather than treating unrelated seal exit 1 as sufficient; check 9 adds no references; check 11 is proved above.
+
+### Current pins and handoff
+
+Validator SHA-256: `74897e17da4d330e835e0d196acd8c2af6761f9fe209cec1b7689d88b7d8adf6`. New receipt SHA-256: `b1b3e8cbdba25fae91def156c661017184b0cb632e1bc36a0f7cf4e0fe566fd4`. Fixture patch SHA-256: `54037cce41156d8c4a91b3832084c203a697d6dfb809dc75906cde1c32dbcc29`.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix3/results/fix3-summary.json`, SHA-256 `5ecc849eb160a2ac06a6d63843b361803fed2e2c614fd3531432bb7f97f3483c`; full guard matrix `fix3/results/guard-matrix.json`, SHA-256 `40c079be9feead3c2735e08ffe58537409024f8de1281c59103691643d04cdfd`. Reproduction helpers, raw differential results, probe results and logs are under `fix3/`, pinned by its `SHA256SUMS`. The current patch and landing receipt writer are also copied to the top-level evidence bundle.
+
+**Ids used:** no ids minted; DL-412 is cited authority, DL-998/DL-999 remain fixture-only. **Bindings:** none. **Family grades:** N/A → N/A; no self-grade JSON applies. The DL-412/DL-413 landing prerequisites, actual lander receipt, and ordered Sol/Astra reviews before and after landing remain open. No admission, registry append, seal, main push, pm-mail or subagent occurred.
