@@ -1989,7 +1989,8 @@
       "nas-smb": {
         "enter": "Sign in to the shared folder.",
         "typing": "Into the keychain it goes.",
-        "checking": "Checking I can read it…"
+        "checking": "Checking I can read it…",
+        "done": "Signed in! I can read it."
       },
       "nas-nfs": {
         "enter": "Opening the share…",
@@ -1997,7 +1998,8 @@
       },
       "nas-mounted": {
         "enter": "Which drive is it on?",
-        "group:volume": "That drive? Easy."
+        "group:volume": "That drive? Easy.",
+        "done": "I can read that drive. All good!"
       },
       "away-setup": {
         "enter": "Let's set up the way in.",
