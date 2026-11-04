@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-CARD1B-SELF-GRADE-20261104",
+  "assessment_id": "EA-W2-DMEM-FIX5-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "e850f298670855b745b0cfe6ee75acd3cf3518f8",
+    "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -82,7 +82,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -92,8 +92,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-100",
-              "line_start": 3159,
-              "line_end": 3159,
+              "line_start": 3163,
+              "line_end": 3163,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0, prepared"
             },
             {
@@ -109,7 +109,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -136,7 +136,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -156,7 +156,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -183,7 +183,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -231,7 +231,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -251,7 +251,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -299,7 +299,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -333,7 +333,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -351,8 +351,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.dedup_sweep.completed",
               "quote": "\"name\": \"memory.dedup_sweep.completed:checkpoint-storage-positive\",",
-              "line_start": 80572,
-              "line_end": 80572
+              "line_start": 80876,
+              "line_end": 80876
             }
           ],
           "prior": {
@@ -360,7 +360,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -387,12 +387,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 13 history cases, 8 reference cases; start custody matrix 96 positive controls and 951 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -433,8 +433,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/memory.dedup_sweep.completed",
               "quote": "\"name\": \"memory.dedup_sweep.completed:completed-retry-start-missing\",",
-              "line_start": 51033,
-              "line_end": 51033
+              "line_start": 51052,
+              "line_end": 51052
             },
             {
               "path": "Plans/storage-plan.md",
@@ -454,58 +454,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.dedup_sweep.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 84718,
-              "line_end": 84718
+              "line_start": 85602,
+              "line_end": 85602
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.dedup_sweep.completed:history-withdrawn\",",
-              "line_start": 125759,
-              "line_end": 125759
+              "line_start": 126643,
+              "line_end": 126643
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.dedup_sweep.completed:standing9-dormant-missing-ref\",",
-              "line_start": 128591,
-              "line_end": 128591
+              "line_start": 129475,
+              "line_end": 129475
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -517,7 +524,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.dedup_sweep.started",
@@ -566,7 +577,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -576,8 +587,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-101",
-              "line_start": 3211,
-              "line_end": 3211,
+              "line_start": 3215,
+              "line_end": 3215,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0, prepared"
             },
             {
@@ -593,7 +604,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -620,7 +631,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -640,7 +651,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -667,7 +678,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -715,7 +726,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -735,7 +746,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -783,7 +794,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -824,7 +835,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -842,8 +853,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.dedup_sweep.started",
               "quote": "\"name\": \"memory.dedup_sweep.started:checkpoint-storage-positive\",",
-              "line_start": 80682,
-              "line_end": 80682
+              "line_start": 81060,
+              "line_end": 81060
             }
           ],
           "prior": {
@@ -851,7 +862,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -878,12 +889,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 13 history cases, 8 reference cases; start custody matrix 98 positive controls and 956 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -902,8 +913,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/1",
-              "line_start": 53742,
-              "line_end": 53742,
+              "line_start": 53818,
+              "line_end": 53818,
               "quote": "\"name\": \"memory.dedup_sweep.started:append-projector-replay-only\","
             },
             {
@@ -945,58 +956,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.dedup_sweep.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 89305,
-              "line_end": 89305
+              "line_start": 90189,
+              "line_end": 90189
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.dedup_sweep.started:history-withdrawn\",",
-              "line_start": 126098,
-              "line_end": 126098
+              "line_start": 126982,
+              "line_end": 126982
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.dedup_sweep.started:standing9-dormant-missing-ref\",",
-              "line_start": 128769,
-              "line_end": 128769
+              "line_start": 129653,
+              "line_end": 129653
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -1008,7 +1026,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.index.lexical.rebuild.completed",
@@ -1057,7 +1079,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1067,8 +1089,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-102",
-              "line_start": 3263,
-              "line_end": 3263,
+              "line_start": 3267,
+              "line_end": 3267,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0,"
             },
             {
@@ -1084,7 +1106,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -1118,7 +1140,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1138,7 +1160,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1165,7 +1187,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1220,7 +1242,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1240,7 +1262,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1288,7 +1310,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -1329,7 +1351,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1347,8 +1369,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.index.lexical.rebuild.completed",
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:checkpoint-storage-positive\",",
-              "line_start": 80797,
-              "line_end": 80797
+              "line_start": 81245,
+              "line_end": 81245
             }
           ],
           "prior": {
@@ -1356,7 +1378,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1383,12 +1405,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 14 history cases, 8 reference cases; start custody matrix 136 positive controls and 1351 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1407,8 +1429,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/2",
-              "line_start": 56700,
-              "line_end": 56700,
+              "line_start": 56776,
+              "line_end": 56776,
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:append-projector-replay-only\","
             },
             {
@@ -1429,8 +1451,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/memory.index.lexical.rebuild.completed",
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:completed-retry-start-missing\",",
-              "line_start": 58026,
-              "line_end": 58026
+              "line_start": 58121,
+              "line_end": 58121
             },
             {
               "path": "Plans/storage-plan.md",
@@ -1450,58 +1472,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 95760,
-              "line_end": 95760
+              "line_start": 96644,
+              "line_end": 96644
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:history-withdrawn\",",
-              "line_start": 126514,
-              "line_end": 126514
+              "line_start": 127398,
+              "line_end": 127398
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:standing9-dormant-missing-ref\",",
-              "line_start": 128947,
-              "line_end": 128947
+              "line_start": 129831,
+              "line_end": 129831
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -1513,7 +1542,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.index.lexical.rebuild.started",
@@ -1562,7 +1595,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1572,8 +1605,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-103",
-              "line_start": 3315,
-              "line_end": 3315,
+              "line_start": 3319,
+              "line_end": 3319,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0,"
             },
             {
@@ -1589,7 +1622,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -1623,7 +1656,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1643,7 +1676,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1670,7 +1703,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1725,7 +1758,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1745,7 +1778,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1793,7 +1826,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -1841,7 +1874,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1859,8 +1892,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.index.lexical.rebuild.started",
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:checkpoint-storage-positive\",",
-              "line_start": 80908,
-              "line_end": 80908
+              "line_start": 81431,
+              "line_end": 81431
             }
           ],
           "prior": {
@@ -1868,7 +1901,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1895,12 +1928,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 14 history cases, 8 reference cases; start custody matrix 139 positive controls and 1366 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1919,8 +1952,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/3",
-              "line_start": 60766,
-              "line_end": 60766,
+              "line_start": 60918,
+              "line_end": 60918,
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:append-projector-replay-only\","
             },
             {
@@ -1962,58 +1995,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 101962,
-              "line_end": 101962
+              "line_start": 102846,
+              "line_end": 102846
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:history-withdrawn\",",
-              "line_start": 126918,
-              "line_end": 126918
+              "line_start": 127802,
+              "line_end": 127802
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:standing9-dormant-missing-ref\",",
-              "line_start": 129125,
-              "line_end": 129125
+              "line_start": 130009,
+              "line_end": 130009
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -2025,7 +2065,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.index.semantic.rebuild.completed",
@@ -2074,7 +2118,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2084,8 +2128,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-104",
-              "line_start": 3367,
-              "line_end": 3367,
+              "line_start": 3371,
+              "line_end": 3371,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,"
             },
             {
@@ -2101,7 +2145,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -2135,7 +2179,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2155,7 +2199,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2182,7 +2226,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2237,7 +2281,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2257,7 +2301,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2305,7 +2349,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -2346,7 +2390,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2364,8 +2408,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.index.semantic.rebuild.completed",
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:checkpoint-storage-positive\",",
-              "line_start": 81023,
-              "line_end": 81023
+              "line_start": 81617,
+              "line_end": 81617
             }
           ],
           "prior": {
@@ -2373,7 +2417,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2400,12 +2444,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 14 history cases, 8 reference cases; start custody matrix 136 positive controls and 1351 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2424,8 +2468,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/4",
-              "line_start": 63700,
-              "line_end": 63700,
+              "line_start": 63852,
+              "line_end": 63852,
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:append-projector-replay-only\","
             },
             {
@@ -2446,8 +2490,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/memory.index.semantic.rebuild.completed",
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:completed-retry-start-missing\",",
-              "line_start": 65026,
-              "line_end": 65026
+              "line_start": 65197,
+              "line_end": 65197
             },
             {
               "path": "Plans/storage-plan.md",
@@ -2467,58 +2511,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 108413,
-              "line_end": 108413
+              "line_start": 109297,
+              "line_end": 109297
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:history-withdrawn\",",
-              "line_start": 127328,
-              "line_end": 127328
+              "line_start": 128212,
+              "line_end": 128212
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:standing9-dormant-missing-ref\",",
-              "line_start": 129303,
-              "line_end": 129303
+              "line_start": 130187,
+              "line_end": 130187
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -2530,7 +2581,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.index.semantic.rebuild.started",
@@ -2579,7 +2634,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2589,8 +2644,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-105",
-              "line_start": 3419,
-              "line_end": 3419,
+              "line_start": 3423,
+              "line_end": 3423,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0,"
             },
             {
@@ -2606,7 +2661,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -2640,7 +2695,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2660,7 +2715,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2687,7 +2742,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2742,7 +2797,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2762,7 +2817,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2810,7 +2865,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -2858,7 +2913,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2876,8 +2931,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.index.semantic.rebuild.started",
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:checkpoint-storage-positive\",",
-              "line_start": 81134,
-              "line_end": 81134
+              "line_start": 81803,
+              "line_end": 81803
             }
           ],
           "prior": {
@@ -2885,7 +2940,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2912,12 +2967,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 14 history cases, 8 reference cases; start custody matrix 139 positive controls and 1366 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -2936,8 +2991,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/5",
-              "line_start": 67760,
-              "line_end": 67760,
+              "line_start": 67988,
+              "line_end": 67988,
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:append-projector-replay-only\","
             },
             {
@@ -2979,58 +3034,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 114603,
-              "line_end": 114603
+              "line_start": 115487,
+              "line_end": 115487
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:history-withdrawn\",",
-              "line_start": 127726,
-              "line_end": 127726
+              "line_start": 128610,
+              "line_end": 128610
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:standing9-dormant-missing-ref\",",
-              "line_start": 129481,
-              "line_end": 129481
+              "line_start": 130365,
+              "line_end": 130365
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -3042,7 +3104,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.verification_sweep.completed",
@@ -3091,7 +3157,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3101,8 +3167,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-106",
-              "line_start": 3471,
-              "line_end": 3471,
+              "line_start": 3475,
+              "line_end": 3475,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0,"
             },
             {
@@ -3118,7 +3184,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -3145,7 +3211,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3165,7 +3231,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3192,7 +3258,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3240,7 +3306,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3260,7 +3326,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3308,7 +3374,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -3342,7 +3408,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3360,8 +3426,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.verification_sweep.completed",
               "quote": "\"name\": \"memory.verification_sweep.completed:checkpoint-storage-positive\",",
-              "line_start": 81248,
-              "line_end": 81248
+              "line_start": 81988,
+              "line_end": 81988
             }
           ],
           "prior": {
@@ -3369,7 +3435,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3396,12 +3462,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 13 history cases, 8 reference cases; start custody matrix 96 positive controls and 951 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3420,8 +3486,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/6",
-              "line_start": 70608,
-              "line_end": 70608,
+              "line_start": 70836,
+              "line_end": 70836,
               "quote": "\"name\": \"memory.verification_sweep.completed:append-projector-replay-only\","
             },
             {
@@ -3442,8 +3508,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/memory.verification_sweep.completed",
               "quote": "\"name\": \"memory.verification_sweep.completed:completed-retry-start-missing\",",
-              "line_start": 71934,
-              "line_end": 71934
+              "line_start": 72181,
+              "line_end": 72181
             },
             {
               "path": "Plans/storage-plan.md",
@@ -3463,58 +3529,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.verification_sweep.completed:phase:advance_completed@terminal_saved\",",
-              "line_start": 119451,
-              "line_end": 119451
+              "line_start": 120335,
+              "line_end": 120335
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.verification_sweep.completed:history-withdrawn\",",
-              "line_start": 128073,
-              "line_end": 128073
+              "line_start": 128957,
+              "line_end": 128957
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.verification_sweep.completed:standing9-dormant-missing-ref\",",
-              "line_start": 129659,
-              "line_end": 129659
+              "line_start": 130543,
+              "line_end": 130543
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -3526,7 +3599,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.verification_sweep.started",
@@ -3575,7 +3652,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3585,8 +3662,8 @@
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-107",
-              "line_start": 3523,
-              "line_end": 3523,
+              "line_start": 3527,
+              "line_end": 3527,
               "quote": "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0,"
             },
             {
@@ -3602,7 +3679,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -3629,7 +3706,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3649,7 +3726,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3676,7 +3753,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3724,7 +3801,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -3744,7 +3821,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3792,7 +3869,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -3833,7 +3910,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3851,8 +3928,8 @@
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/checkpoint_families/memory.verification_sweep.started",
               "quote": "\"name\": \"memory.verification_sweep.started:checkpoint-storage-positive\",",
-              "line_start": 81358,
-              "line_end": 81358
+              "line_start": 82172,
+              "line_end": 82172
             }
           ],
           "prior": {
@@ -3860,7 +3937,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3887,12 +3964,12 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read at the fix-4 source head; the start custody gate adds no new binding to this criterion beyond the cited text, and all prior citations were re-pinned."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker at the fix-4 head: 224 boundaries, 126 operation cases, 276 traces, writer suites, 129 identifier cases, checkpoint joins, 13 history cases, 8 reference cases; start custody matrix 98 positive controls and 956 negative cells for this family, all refusing exactly. Earlier findings and all ten standing checks rerun through the full checker. Native NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -3911,8 +3988,8 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/writer_families/7",
-              "line_start": 74643,
-              "line_end": 74643,
+              "line_start": 74947,
+              "line_end": 74947,
               "quote": "\"name\": \"memory.verification_sweep.started:append-projector-replay-only\","
             },
             {
@@ -3954,58 +4031,65 @@
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
               "quote": "reference_cases checks standing check 9: before any instance validation the checker walks every subschema",
-              "line_start": 7255,
-              "line_end": 7255
+              "line_start": 7257,
+              "line_end": 7257
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/start_custody_matrix",
               "quote": "\"name\": \"memory.verification_sweep.started:phase:advance_completed@terminal_saved\",",
-              "line_start": 124038,
-              "line_end": 124038
+              "line_start": 124922,
+              "line_end": 124922
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/history_families",
               "quote": "\"name\": \"memory.verification_sweep.started:history-withdrawn\",",
-              "line_start": 128412,
-              "line_end": 128412
+              "line_start": 129296,
+              "line_end": 129296
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/reference_cases",
               "quote": "\"name\": \"memory.verification_sweep.started:standing9-dormant-missing-ref\",",
-              "line_start": 129837,
-              "line_end": 129837
+              "line_start": 130721,
+              "line_end": 130721
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "start_custody_gate",
               "quote": "def start_custody_gate(state, first_start=False, writer_event=None):",
-              "line_start": 314,
-              "line_end": 314
+              "line_start": 355,
+              "line_end": 355
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "transition",
               "quote": "start_custody_gate(before, first_start=action['op'] == 'append_started')",
-              "line_start": 494,
-              "line_end": 494
+              "line_start": 554,
+              "line_end": 554
             },
             {
               "path": "scripts/pm_memory_maintenance_events.py",
               "unit": "main",
               "quote": "mirrors = require_resolved_references()",
-              "line_start": 925,
-              "line_end": 925
+              "line_start": 985,
+              "line_end": 985
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "Astra round 2 final review at 009027140a5c3ecab7df7d22214b78a92b7a4ae8",
+            "source": "Sol cycle-4 review at dc4c46c58c",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Astra round 2 B1 (terminal advance without start custody) and B2 (unresolved dormant $ref) fixed by one commit-point start custody gate and a full reference walk; matrix, history and reference oracles pass and each restored defect fails the suite."
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -4017,7 +4101,11 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN."
+      "notes": "Prepared without admission. Round-4 worker regrade after Astra round 2 (start custody gate redesign and standing check 9); final independent review remains. Membership ABSENT, retention PARTIAL, native NOT_RUN.",
+      "assessed_tree": {
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
+      }
     },
     {
       "event_type": "memory.monthly_summary.completed",
@@ -4039,8 +4127,8 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
         "SP-638",
@@ -4070,7 +4158,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4090,7 +4178,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -4110,7 +4198,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4130,7 +4218,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4150,7 +4238,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4170,7 +4258,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4190,7 +4278,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4210,7 +4298,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -4230,7 +4318,7 @@
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4250,7 +4338,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4270,12 +4358,12 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4283,14 +4371,21 @@
               "line_start": 30041,
               "line_end": 30041,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Card 1b worker grade at bc4f6fef9f",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change": "carried",
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -4325,8 +4420,8 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
         "SP-639",
@@ -4356,7 +4451,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4376,7 +4471,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -4396,7 +4491,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4416,7 +4511,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4436,7 +4531,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4456,7 +4551,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4476,7 +4571,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4496,7 +4591,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -4516,7 +4611,7 @@
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4536,7 +4631,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4556,12 +4651,12 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -4569,14 +4664,21 @@
               "line_start": 30188,
               "line_end": 30188,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Card 1b worker grade at bc4f6fef9f",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change": "carried",
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -4611,8 +4713,8 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
         "CV-658",
@@ -4642,7 +4744,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4662,7 +4764,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -4682,7 +4784,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4702,7 +4804,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4722,7 +4824,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4742,7 +4844,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -4762,7 +4864,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -4782,7 +4884,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -4802,7 +4904,7 @@
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4822,7 +4924,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4842,12 +4944,12 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -4855,14 +4957,21 @@
               "line_start": 24939,
               "line_end": 24939,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Card 1b worker grade at bc4f6fef9f",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change": "carried",
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -4897,8 +5006,8 @@
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "assessed_tree": {
-        "branch": "plans/ea-w2-memory-maintenance-20261104",
-        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+        "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+        "branch": "plans/ea-w2-memory-maintenance-20261104"
       },
       "current_owner_units": [
         "CV-659",
@@ -4928,7 +5037,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4948,7 +5057,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "producer": {
           "status": "PASS",
@@ -4968,7 +5077,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4988,7 +5097,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5008,7 +5117,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5028,7 +5137,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "retention": {
           "status": "PARTIAL",
@@ -5048,7 +5157,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -5068,7 +5177,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "transitions": {
           "status": "PASS",
@@ -5088,7 +5197,7 @@
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5108,7 +5217,7 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5128,12 +5237,12 @@
             "status": "ABSENT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change_reason": "Carried unchanged at the fix-5 source head; equivalent predicate factoring changes no product rule."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
+          "finding": "Single-defect custody inputs and the complete checker corpus pass named guard removal/restoration. Integrity and semantic binding are independent; no whole-gate no-op is evidence. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -5141,14 +5250,21 @@
               "line_start": 25083,
               "line_end": 25083,
               "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
+            },
+            {
+              "path": "scripts/pm_memory_guard_isolation.py",
+              "unit": "prove_complete",
+              "line_start": 524,
+              "line_end": 524,
+              "quote": "def prove_complete(m, semantic, matrix, fixtures, contracts, archive=None):"
             }
           ],
           "prior": {
-            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
-            "status": "ABSENT"
+            "source": "Card 1b worker grade at bc4f6fef9f",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
+          "change": "carried",
+          "change_reason": "Standing check 11 verified for this exact family; full case ids and complements are in DMEM-check11-guards.json and its SHA-pinned external proof."
         }
       },
       "remaining_gaps": [
@@ -5164,13 +5280,13 @@
       "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
     }
   ],
-  "review_round": 4,
-  "reviewed_head": "009027140a5c3ecab7df7d22214b78a92b7a4ae8",
-  "review_scope": "Card 1b: four previously held monthly_summary/prune_archive families regraded at their per-row source pin 752d9d47fa28b8c615d6677b7b8eeb60a6e300a7. The eight original family row objects remain unchanged and use the original top-level assessed_tree pin; their separate review is untouched.",
+  "review_round": 5,
+  "reviewed_head": "dc4c46c58c7462f288684a6e672febdf134e3c89",
+  "review_scope": "Standing check 11 across all twelve DMEM families; Sol cycle-4 B3 plus the four Card 1b families added at bc4f6fef9f.",
   "review_baseline_prepared_status_counts": {
-    "PASS": 72,
-    "PARTIAL": 16,
-    "ABSENT": 8
+    "PASS": 112,
+    "PARTIAL": 20,
+    "ABSENT": 12
   },
   "prepared_status_counts": {
     "ABSENT": 12,
@@ -5179,7 +5295,7 @@
   },
   "card1b_assessment": {
     "assessed_tree": {
-      "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7",
+      "commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
       "branch": "plans/ea-w2-memory-maintenance-20261104"
     },
     "scope": [
@@ -5193,11 +5309,15 @@
       "DL-403"
     ],
     "event_retention": "DL-401/G04 on origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e",
-    "source_pin_rule": "Top-level assessed_tree remains the original eight rows' source pin; each of the four Card 1b rows has its own new assessed_tree. Their old eight row objects are byte-for-byte JSON-equivalent.",
+    "source_pin_rule": "Fix 5 regrades all twelve rows at the common assessed_tree source pin; earlier decision/retention source pins remain unchanged.",
     "status_counts": {
       "ABSENT": 4,
       "PASS": 40,
       "PARTIAL": 4
     }
+  },
+  "check11_evidence": {
+    "path": "reports/event-authority-20261104/DMEM-check11-guards.json",
+    "full_proof_sha256": "b4bda65b2464b301eb5c24e241f991dcfdb86cb85e6236d7ac77d50bb83a191d"
   }
 }

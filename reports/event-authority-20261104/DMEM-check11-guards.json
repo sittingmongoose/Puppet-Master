@@ -1,0 +1,1283 @@
+{
+  "schema_id": "pm.dmem.check11.guard-summary.v1",
+  "source_commit": "5e1512a7da88d62a760e00f51d86cfbf637efa67",
+  "families": [
+    "memory.dedup_sweep.completed",
+    "memory.dedup_sweep.started",
+    "memory.index.lexical.rebuild.completed",
+    "memory.index.lexical.rebuild.started",
+    "memory.index.semantic.rebuild.completed",
+    "memory.index.semantic.rebuild.started",
+    "memory.monthly_summary.completed",
+    "memory.monthly_summary.started",
+    "memory.prune_archive.completed",
+    "memory.prune_archive.started",
+    "memory.verification_sweep.completed",
+    "memory.verification_sweep.started"
+  ],
+  "custody_matrix_cases": 13062,
+  "full_proof": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/fix5/check11.json",
+  "full_proof_sha256": "b4bda65b2464b301eb5c24e241f991dcfdb86cb85e6236d7ac77d50bb83a191d",
+  "suites": [
+    {
+      "checker": "maintenance",
+      "cases": 9620,
+      "guards": [
+        {
+          "guard": "action",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:unknown-action",
+            "memory.dedup_sweep.started:guard:unknown-action"
+          ],
+          "flip_ids_sha256": "7dfabb9afe4996171b1da458d3881832858ef3b61ef8a498fbcbc115e5ec803c",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "d199d814111e0a392244c00625cdc1b2a4673a01e1e7a885ec2a17abb06c3444",
+          "restored": true
+        },
+        {
+          "guard": "admission",
+          "negatives_that_flip": 16,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:admitted",
+            "memory.dedup_sweep.completed:guard:boundary-admitted"
+          ],
+          "flip_ids_sha256": "c6e0ee60561dabb2b453d3f1d0da74b74af89b9bdc8172210a6e76739af36119",
+          "negatives_that_stay_rejected": 9604,
+          "stay_ids_sha256": "24f6c20a4bc9c106953cb13f4b9a3b617a1ab6c2481594a314985725291e769b",
+          "restored": true
+        },
+        {
+          "guard": "artifacts",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:artifact-custody",
+            "memory.index.lexical.rebuild.started:guard:artifact-custody"
+          ],
+          "flip_ids_sha256": "fc8c6e985f72e7e9a4ccf282927d223c88d4849de08f0bf1ace8d87e51f11bb2",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "7a87abd7a724302b1486bd9caed572f75bba1632975d2ea4f9b44bd64876b46d",
+          "restored": true
+        },
+        {
+          "guard": "boundary_acceptance",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.dedup_sweep.started:guard:boundary-acceptance_durable",
+            "memory.index.lexical.rebuild.started:guard:boundary-acceptance_durable"
+          ],
+          "flip_ids_sha256": "3c1e77dd648c2e3150dcf89d5acfad6f6a46dad21a341c4977d1cd9bcf2987f7",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "3d42acd4d9ab4b5a6507dac893ff6c243a1a2fb50fce4d8f965814efde39519e",
+          "restored": true
+        },
+        {
+          "guard": "boundary_payload",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:boundary-payload-join",
+            "memory.dedup_sweep.started:guard:boundary-payload-join"
+          ],
+          "flip_ids_sha256": "197979a75f112844aff333b605f569ca73d73bb9a9c1bd303897942aa42ff01f",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "2eee5232cd03d599854db8915a30d53f05919144bbeb0aecb7ce424dc4d8c970",
+          "restored": true
+        },
+        {
+          "guard": "boundary_receipts",
+          "negatives_that_flip": 12,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:boundary-started_receipt",
+            "memory.dedup_sweep.completed:guard:boundary-effect_settled"
+          ],
+          "flip_ids_sha256": "dcc663463db2bfc4ac19c7244d6cbd3df684db9b91919c5630ee189e58aa8746",
+          "negatives_that_stay_rejected": 9608,
+          "stay_ids_sha256": "f98afebd9c68bc5aa015cef0cdc0ff4a623b4484789f2766d00f3b8ef6a34fbe",
+          "restored": true
+        },
+        {
+          "guard": "boundary_request",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:boundary-request-hash",
+            "memory.dedup_sweep.started:guard:boundary-request-hash"
+          ],
+          "flip_ids_sha256": "cfb15cd4707673a0e2b00971c2625587323cc7b1bcaaf1ac506b992155bd3205",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "81e4d68312893e581526923231ade4f2686e97a8d6238b758db282c27d0896ec",
+          "restored": true
+        },
+        {
+          "guard": "boundary_scope",
+          "negatives_that_flip": 24,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:boundary-project_id",
+            "memory.dedup_sweep.completed:guard:boundary-operation_id"
+          ],
+          "flip_ids_sha256": "7fbee7176002125c3f5cdff3fb90142a5ee41ba78635a3ef050423a8aa492460",
+          "negatives_that_stay_rejected": 9596,
+          "stay_ids_sha256": "bc1fd2a069d5b177d8ffd3eed8eede65105d276092756208c59156c9f37c34ae",
+          "restored": true
+        },
+        {
+          "guard": "boundary_snapshot",
+          "negatives_that_flip": 16,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:boundary-request_matches",
+            "memory.dedup_sweep.completed:guard:boundary-current_source"
+          ],
+          "flip_ids_sha256": "a076bb16de9de26c67347beaab615dc914c8330dc4a69251f71f51cb9fb09e8b",
+          "negatives_that_stay_rejected": 9604,
+          "stay_ids_sha256": "1ab69a89fe338a39982e5aa5b923f83c639688d0484ed92bd6cb21d6048f153b",
+          "restored": true
+        },
+        {
+          "guard": "boundary_terminal",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:boundary-terminal-missing",
+            "memory.index.lexical.rebuild.completed:guard:boundary-terminal-missing"
+          ],
+          "flip_ids_sha256": "651192aebaaa6ee6756531d8294cd16605d9f58fd4a662980ddbde0ed61afd29",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "775f33ff2666c9ecfa558824ed7af6a4bc1e1346a66b1939858496b0326ea340",
+          "restored": true
+        },
+        {
+          "guard": "checkpoint_event",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:checkpoint-foreign-event-identity",
+            "memory.dedup_sweep.started:guard:checkpoint-foreign-event-identity"
+          ],
+          "flip_ids_sha256": "6c224b09fd38802bccb238779f3dbc73588a4b7eb29b1f0b68378ba1caacb936",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "59ac6047791d7875bc4714e9d94139913dbc6086e9ddd97898ecbe2e6107288b",
+          "restored": true
+        },
+        {
+          "guard": "checkpoint_key",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:checkpoint-foreign-key",
+            "memory.dedup_sweep.started:guard:checkpoint-foreign-key"
+          ],
+          "flip_ids_sha256": "c61fd416072752657aacac902c42ca84df98232a495caa5edf47c2e09776f070",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "79b673ff484fc6c738ea043a8be96c3572fbcf9cee019039d77d1e9c51f6c06f",
+          "restored": true
+        },
+        {
+          "guard": "checkpoint_storage",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:checkpoint-foreign-storage",
+            "memory.dedup_sweep.started:guard:checkpoint-foreign-storage"
+          ],
+          "flip_ids_sha256": "66d3966412c4a67c203258c44a06d39f509d5abf1b7625066a7b9c534f59d414",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "27e95e74529c597addfd6e1db28474e554af64ed3b604bade0f0c1c6334a86f8",
+          "restored": true
+        },
+        {
+          "guard": "custody_binding",
+          "negatives_that_flip": 4630,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:value-rehashed",
+            "memory.dedup_sweep.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:operation-rehashed"
+          ],
+          "flip_ids_sha256": "d060839fc6f02696818db6cf5cb2ad6350c4431b07ed71006db93de15ca910c2",
+          "negatives_that_stay_rejected": 4990,
+          "stay_ids_sha256": "788a7b992e8ded2da87a89eb1367d71272486526d69a763cb2e7d5d46ba3d0cb",
+          "restored": true
+        },
+        {
+          "guard": "custody_digest",
+          "negatives_that_flip": 926,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:digest",
+            "memory.dedup_sweep.completed:phase:recover@started#start-append-crash-recover/3:reduced:digest"
+          ],
+          "flip_ids_sha256": "10a8a27b58aa0c1b2e5a0dc2a8d0566309ecad123be7e3485fca03140bb520c3",
+          "negatives_that_stay_rejected": 8694,
+          "stay_ids_sha256": "43236124272232bc1546a3c390ab17f5b8a86c9913d6e91685f1910640479e4a",
+          "restored": true
+        },
+        {
+          "guard": "custody_flush",
+          "negatives_that_flip": 926,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:not-flushed",
+            "memory.dedup_sweep.completed:phase:recover@started#start-append-crash-recover/3:reduced:not-flushed"
+          ],
+          "flip_ids_sha256": "492a280184909832d2949a3e49b65c877298fee0e182164726fac60a4b35b7b7",
+          "negatives_that_stay_rejected": 8694,
+          "stay_ids_sha256": "7e395542851fee2f8b717ec10cb6d9ff383c762c1b3d24289bb4e64ed77e9be6",
+          "restored": true
+        },
+        {
+          "guard": "custody_presence",
+          "negatives_that_flip": 902,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:missing",
+            "memory.dedup_sweep.completed:phase:recover@started#start-append-crash-recover/3:reduced:missing"
+          ],
+          "flip_ids_sha256": "d0e55075adde6c2d38d60619ad7e1726a750bff34166b67d7504118c1db5e456",
+          "negatives_that_stay_rejected": 8718,
+          "stay_ids_sha256": "2efdf85ce71c09cd6323511bfc4b28bccf54034aa0870161ee709df1ecd575a3",
+          "restored": true
+        },
+        {
+          "guard": "custody_shape",
+          "negatives_that_flip": 926,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:shape",
+            "memory.dedup_sweep.completed:phase:recover@started#start-append-crash-recover/3:reduced:shape"
+          ],
+          "flip_ids_sha256": "c9a1269cbe775d024db49d8653c7dbc9c4d6db75b3ef020e68ce57475bbdbbda",
+          "negatives_that_stay_rejected": 8694,
+          "stay_ids_sha256": "ea32c3ccff88d8c6c00eee85ab587eca084b6cd4bc4ad11d8cff7852bf6128eb",
+          "restored": true
+        },
+        {
+          "guard": "effect_count",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:effect-count",
+            "memory.index.lexical.rebuild.started:guard:effect-count"
+          ],
+          "flip_ids_sha256": "8b84afc1c9bc38d67475809fc839a3b31b43b1aa076106860e52dfa07c171ae2",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "e5a65da0936894e9882b5a83a00de59b44df439e94a24232f63cdded0b9b8023",
+          "restored": true
+        },
+        {
+          "guard": "effect_once",
+          "negatives_that_flip": 16,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:effect-once",
+            "memory.dedup_sweep.completed:guard:committed-effect-cannot-fail"
+          ],
+          "flip_ids_sha256": "feb31019a64d9aefbd76b1996bf5890811d86f8a9d64939bc50b5098fdc6a68b",
+          "negatives_that_stay_rejected": 9604,
+          "stay_ids_sha256": "516ae52b79aff40b99e395bcda0b5745b5930ad25992bf080975f31427eebc04",
+          "restored": true
+        },
+        {
+          "guard": "envelope_schema",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:envelope-schema",
+            "memory.dedup_sweep.started:guard:envelope-schema"
+          ],
+          "flip_ids_sha256": "876d3a937c1b4d1da7ccdd6ed358152153aaaa5e279d5aed0399080d211d30b4",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "8ae922abb1e1ef8cf51e3c7c242d958d836013ec5a33caf3da5c7bcd3ad60cd1",
+          "restored": true
+        },
+        {
+          "guard": "history_event",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:history-family",
+            "memory.dedup_sweep.started:guard:history-family"
+          ],
+          "flip_ids_sha256": "012258349c3e602d4ba9123e2f73623f8211a5fba058e330dcced0271d3b9e00",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "9dff638413e5d61206ea66f5fa74f89cd3c306a20715bfbff28a282e37b4ff3a",
+          "restored": true
+        },
+        {
+          "guard": "inline_cap",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:inline-cap",
+            "memory.dedup_sweep.started:guard:inline-cap"
+          ],
+          "flip_ids_sha256": "41d6b0e0404923651138469268f09581a3bff0a4debc2df3b5413182cc4281ee",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "28ff7f68dc763f989b0be833ffdc54c49a92a253d7014d652d2c110b6903dfbd",
+          "restored": true
+        },
+        {
+          "guard": "operation_cas",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:cas",
+            "memory.dedup_sweep.started:guard:cas"
+          ],
+          "flip_ids_sha256": "850d7870765bac89cf8c8ed48d50e791b3e068d5b7b68f2315ea341d954902b2",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "dd15f32c3be69a31ef084ea9f5aba49766fc54fe7ddd63c445904f7f36d95b7e",
+          "restored": true
+        },
+        {
+          "guard": "operation_receipt",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:started_event_id",
+            "memory.dedup_sweep.started:guard:started_event_id"
+          ],
+          "flip_ids_sha256": "c81f1e4f67edfbc35fc3a06deacfe5c15c364be3add815ae26f7d8aa7965314e",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "f0b318f31a1f6eee847c605548e8c63d3222178acebd10df0cc0640e437ab8bc",
+          "restored": true
+        },
+        {
+          "guard": "operation_result_digest",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:result_sha256",
+            "memory.dedup_sweep.started:guard:result_sha256"
+          ],
+          "flip_ids_sha256": "7b4aef5f32b5a3e0939b479b30af2f126b1b71029da0e05d0cc883c0a9594c59",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "971c624e45cf9f307495ed182640b16431c5dbbc072951d650b04d7097317598",
+          "restored": true
+        },
+        {
+          "guard": "operation_result_ref",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:result_ref",
+            "memory.dedup_sweep.started:guard:result_ref"
+          ],
+          "flip_ids_sha256": "e21e5e1517569028d1963d3c1541687925ef1efe1918e21c0312dd213ba74495",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "86a56a8feec5e1c16bd086ff38a23341c3d75c7148537dd58a2cfeabe3cacf5c",
+          "restored": true
+        },
+        {
+          "guard": "operation_schema",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:operation-schema",
+            "memory.dedup_sweep.started:guard:operation-schema"
+          ],
+          "flip_ids_sha256": "3890032b8f331f77325477df8af6be629b0e992a0fe71c5af868368cd4cbaf96",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "cb19a901e9210e35981d9b2bae755fcd7f18dd4dee9d880c4411e08e6878d745",
+          "restored": true
+        },
+        {
+          "guard": "original_input",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:append-original-value",
+            "memory.dedup_sweep.started:guard:append-original-value"
+          ],
+          "flip_ids_sha256": "a8b90d6382de0eb77ac759a50434c900204e39677ec9072e82c7d17202693e22",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "fc08701e28daaac4a40dd2ca34876bda986de00920e9f32289e57f9a7aac8f09",
+          "restored": true
+        },
+        {
+          "guard": "outcome",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:unknown-outcome",
+            "memory.dedup_sweep.started:guard:unknown-outcome"
+          ],
+          "flip_ids_sha256": "b42c885cdb45384cde4faf27893ccee23533ed236def377abdbaa7f27e0f03d5",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "faa98ef8226f6c7e6332a2ce10fb3137f783a3189952f0dfb313e6ca210e644d",
+          "restored": true
+        },
+        {
+          "guard": "partition",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:dedupe_key",
+            "memory.dedup_sweep.started:guard:dedupe_key"
+          ],
+          "flip_ids_sha256": "cd6af56ae164b389c2ca8ec08a9acfb82e9daf41ea6cbbb55245bee3c53eec04",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "15a39eb29de951ee1f216831ed67d627480a6b2c5264e3839ef587614ab14359",
+          "restored": true
+        },
+        {
+          "guard": "payload_schema",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:payload-schema",
+            "memory.dedup_sweep.started:guard:payload-schema"
+          ],
+          "flip_ids_sha256": "00e3acaa41ea6b85702def35e9dc99032875b2a320028ff5091a1ae380ac618d",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "e8096627fb33518b1a4be39faa47906fb133a342b5fe3d3069d51b398202ead2",
+          "restored": true
+        },
+        {
+          "guard": "permission_or_withdrawal",
+          "negatives_that_flip": 970,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:permission",
+            "memory.dedup_sweep.completed:guard:withdrawn"
+          ],
+          "flip_ids_sha256": "6d6da9c7cc355674550a3fdb2978b66078f3a3d3e293ab37f66e26c06322f73e",
+          "negatives_that_stay_rejected": 8650,
+          "stay_ids_sha256": "82224c8d70b1b35ef7baa0d39ab2bf650c213b76cbaaccb0dec47116fb1bb683",
+          "restored": true
+        },
+        {
+          "guard": "phase",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:append-phase",
+            "memory.dedup_sweep.started:guard:append-phase"
+          ],
+          "flip_ids_sha256": "007d8c083452f9d8da74cf3a6aaa6ca368b488e7a016926d5668836b9f29646a",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "1230c0e41625ea4aee182a8edf73b75cf31a1983b1006169c73ce472a8559982",
+          "restored": true
+        },
+        {
+          "guard": "prior_selector",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:prior-selector",
+            "memory.index.lexical.rebuild.started:guard:prior-selector"
+          ],
+          "flip_ids_sha256": "c20be2faa0e327ac58acdcb7db13623971d9c541e46474d7895f19bccb47aea1",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "449a1f34c147507eb871bf26c17e1098167a192455e928d76af95c4ad8c38fd3",
+          "restored": true
+        },
+        {
+          "guard": "producer_join",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:producer-actor",
+            "memory.dedup_sweep.started:guard:producer-actor"
+          ],
+          "flip_ids_sha256": "8a83f4603a0d5e4d7fb6be21ffb6f57e07233375fb8a0f6bd4d2c2f28f09a628",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "ba5b32110f883da0721251f3e5e4b4fa866e3dbee601b9fe1b88ac3973b6fb17",
+          "restored": true
+        },
+        {
+          "guard": "references_resolve",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:references",
+            "memory.dedup_sweep.started:guard:references"
+          ],
+          "flip_ids_sha256": "93e598cbeeda76337ff12af3cc37151e2b41e9c9dc57b16ec4caa4a5d37bc968",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "f59de69773306b49aeb6fd944c6860591b511ad0a553de4935f3140718c56af6",
+          "restored": true
+        },
+        {
+          "guard": "replay_policy",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:replay-only",
+            "memory.dedup_sweep.started:guard:replay-only"
+          ],
+          "flip_ids_sha256": "76e812529a9e21a1bbf92c5f9b8aac10b27c3d02151e3f408d8f2678829dbea8",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "22e807151bea2c4c4e83fbc8c96b247e075a4b566d2d3f352a8055b3c143a8f3",
+          "restored": true
+        },
+        {
+          "guard": "request",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:request",
+            "memory.dedup_sweep.started:guard:request"
+          ],
+          "flip_ids_sha256": "9b2d1305b1a63acf165865ea6c305fff6f0081b9901893f3458ae933914ff767",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "a194db9cb8c3bb63e12cf63b93646e173388c5ef754f1517a65066af09988a9d",
+          "restored": true
+        },
+        {
+          "guard": "selected_target",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:selected-target",
+            "memory.index.lexical.rebuild.started:guard:selected-target"
+          ],
+          "flip_ids_sha256": "f5a7e7844f8a5f1aaaf91a6553b9877c946e6f63f5aa777e394a62fb26a7772c",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "0006bbf8bfa48e9d194e16d6ecc54866d85ee822d6a8066d6947d0ddac5731b1",
+          "restored": true
+        },
+        {
+          "guard": "selector_cas",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:selector-cas",
+            "memory.index.lexical.rebuild.started:guard:selector-cas"
+          ],
+          "flip_ids_sha256": "600a443a07f64cf5d586bc6b78a8e9ef2d5da7a5cdf7902215d7cba50c9ab429",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "23b971f1a3ced3f3c77991e1ff0a9d9ae82c74091128ce8d48942524cf83a705",
+          "restored": true
+        },
+        {
+          "guard": "selector_schema",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:selector-schema",
+            "memory.index.lexical.rebuild.started:guard:selector-schema"
+          ],
+          "flip_ids_sha256": "b9553200ecda89cc7b6a9482a55207aae258a6a08624cbf8592d090bed75d03e",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "03123a9d88f1d3f4409199c8e595e7d0199c874c8b25536887bc1317ab033ca7",
+          "restored": true
+        },
+        {
+          "guard": "selector_scope",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:selector-scope",
+            "memory.index.lexical.rebuild.started:guard:selector-scope"
+          ],
+          "flip_ids_sha256": "8df2e5d1b11dac9038069c862a61441d6cdcc146d4968b6db06879b531843f01",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "c7e0e65a039ab94d102200f810eb8db58cfa17193c8b8d302d5a376071b94d8e",
+          "restored": true
+        },
+        {
+          "guard": "source",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:source",
+            "memory.dedup_sweep.started:guard:source"
+          ],
+          "flip_ids_sha256": "b3daebcaf121d10cd5af6fa2b8b608e36ce450e026c37a15297cb6733efb7cfd",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "722808128fb7c9be0b4c1e1d7eb0a05c99f2bf0c95f091a2b36f572b12de7066",
+          "restored": true
+        },
+        {
+          "guard": "target_identity",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:target_identity",
+            "memory.index.lexical.rebuild.started:guard:target_identity"
+          ],
+          "flip_ids_sha256": "86f60ce0eaeaa68bba7ab33c51183e0b9311a0e8c946da3c8544c51ef98a430c",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "58898387b54ca62da85512e3325a32f89df7c28e7fa69af532ebe22623c1d5ce",
+          "restored": true
+        },
+        {
+          "guard": "target_manifest",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:target_manifest",
+            "memory.index.lexical.rebuild.started:guard:target_manifest"
+          ],
+          "flip_ids_sha256": "33060290fef24230a591afe8c5f91016e3d831eaa5537a574e655a9b8fb51977",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "272686855c627aaaf472ecdce0eab4ec03db01ddd6573cb43709cecfaa30653f",
+          "restored": true
+        },
+        {
+          "guard": "target_order",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:target_order",
+            "memory.index.lexical.rebuild.started:guard:target_order"
+          ],
+          "flip_ids_sha256": "436afb0a0ab92393abef5594fffd731422d621d40400b6991547596db20d5cfb",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "bbfce95ac05f17fed5ec2116c2adfd1d585f4ec7206901a917f611066ee3a6dd",
+          "restored": true
+        },
+        {
+          "guard": "target_schema",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:target-schema",
+            "memory.index.lexical.rebuild.started:guard:target-schema"
+          ],
+          "flip_ids_sha256": "f8df10dfaf35d595c2a63f55b3074a3a814e12e6a047083025163dd6a631ac91",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "54ea40d050e9ee1d63032556d787388f5e4c55b48c06f7331bd7880ca78784f6",
+          "restored": true
+        },
+        {
+          "guard": "target_source",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.index.lexical.rebuild.completed:guard:target_source",
+            "memory.index.lexical.rebuild.started:guard:target_source"
+          ],
+          "flip_ids_sha256": "697a016cc8dff77d1347d89586a9053c7f7b74170c7ad61dec63b4e46e46a230",
+          "negatives_that_stay_rejected": 9616,
+          "stay_ids_sha256": "fcf4976acbcfaf2d2d0b7b8b03b53999166fb3dc75860c196df441d1a044f095",
+          "restored": true
+        },
+        {
+          "guard": "terminal_custody",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.dedup_sweep.completed:guard:terminal-receipt",
+            "memory.dedup_sweep.started:guard:terminal-receipt"
+          ],
+          "flip_ids_sha256": "523086aa8b79b1af775d945ab79738372a2f2f64bfac24d0c95312f245a4a66e",
+          "negatives_that_stay_rejected": 9612,
+          "stay_ids_sha256": "e6fa2581ec2f081c1642f135f4723c1aaf7b57369338cb55b2d453274c71477f",
+          "restored": true
+        }
+      ]
+    },
+    {
+      "checker": "archive",
+      "cases": 4914,
+      "guards": [
+        {
+          "guard": "action",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:unknown-action",
+            "memory.monthly_summary.started:guard:unknown-action"
+          ],
+          "flip_ids_sha256": "1d70c3cc1cc352ce2f47760699d0bfea0e71dfd1c25d80380669452ea2d02e70",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "b6c4c298097b79c8198f4e6351acfbe08a26414cc3e8c9a07d5137eee5452a3c",
+          "restored": true
+        },
+        {
+          "guard": "admission",
+          "negatives_that_flip": 12,
+          "flip_examples": [
+            "memory.monthly_summary.completed:not-admitted",
+            "memory.monthly_summary.started:not-admitted"
+          ],
+          "flip_ids_sha256": "f4c91b3eb2161c395c0c3538a81e34f9bfa16e989f22a4571d39d4391adcbff6",
+          "negatives_that_stay_rejected": 4902,
+          "stay_ids_sha256": "b9affad4924c81ca3e4d3d5f683e993d0f903ee142602c969b1593e7c2dc6608",
+          "restored": true
+        },
+        {
+          "guard": "boundary_acceptance",
+          "negatives_that_flip": 2,
+          "flip_examples": [
+            "memory.monthly_summary.started:guard:boundary-acceptance_durable",
+            "memory.prune_archive.started:guard:boundary-acceptance_durable"
+          ],
+          "flip_ids_sha256": "1b3ac55649f00e2f73eb120feb65957bca034827f8d22230491a8e0e9005b14f",
+          "negatives_that_stay_rejected": 4912,
+          "stay_ids_sha256": "53d56ed38a2b11b0b34019018d06614d0d5b509d0653b3900e035951bbfb26cd",
+          "restored": true
+        },
+        {
+          "guard": "boundary_payload",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:boundary-payload-join",
+            "memory.monthly_summary.started:guard:boundary-payload-join"
+          ],
+          "flip_ids_sha256": "e112899fb1641b6d2dd8dccde3319481185de58b3354e12f315f5f006d495de9",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "12f6a115010d8a8604af070c595b0265134f422577e3c490d74e7cfd53bfaf20",
+          "restored": true
+        },
+        {
+          "guard": "boundary_receipts",
+          "negatives_that_flip": 6,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:boundary-started_receipt",
+            "memory.monthly_summary.completed:guard:boundary-effect_settled"
+          ],
+          "flip_ids_sha256": "900e1069a20cdd0d1e9c794eaba2214be139f3ea66ae337f8540ad7815fee2ac",
+          "negatives_that_stay_rejected": 4908,
+          "stay_ids_sha256": "66b0ce93a5dedd7ebdd24acc860011e39c75e1f2e6ab7ead4e5db340b4455caa",
+          "restored": true
+        },
+        {
+          "guard": "boundary_request",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:boundary-request-hash",
+            "memory.monthly_summary.started:guard:boundary-request-hash"
+          ],
+          "flip_ids_sha256": "7ba2dbb59a574a665a150bbe8674374bd71310dec79c48d8c459450d3f388139",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "62d0fe9e1fcc1b4ac7c1cfb3c38f06c2a7c2af2294d0e656edb560cd1c8713e9",
+          "restored": true
+        },
+        {
+          "guard": "boundary_scope",
+          "negatives_that_flip": 12,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:boundary-project_id",
+            "memory.monthly_summary.completed:guard:boundary-operation_id"
+          ],
+          "flip_ids_sha256": "f16564e0460e8c387ab42901372bf48cfa0939804d2804d5badf646777d327bd",
+          "negatives_that_stay_rejected": 4902,
+          "stay_ids_sha256": "e646cbb3904ca59a2e085351ccc054463d458a11dc7cc31b5ba06ee5285fe0b2",
+          "restored": true
+        },
+        {
+          "guard": "boundary_snapshot",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:boundary-request_matches",
+            "memory.monthly_summary.completed:guard:boundary-current_source"
+          ],
+          "flip_ids_sha256": "2dcd1351e3636d66699e07fbbd0bad8a95b5b8ea832a4963292cd4cdaac64206",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "9f2d4b6892d9d445b3c82266031233006eb20a3af359ab2a5a2bbf56b13876ef",
+          "restored": true
+        },
+        {
+          "guard": "boundary_terminal",
+          "negatives_that_flip": 2,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:boundary-terminal-missing",
+            "memory.prune_archive.completed:guard:boundary-terminal-missing"
+          ],
+          "flip_ids_sha256": "b7ae348451cd30df13e8a4133e162746d369b4be6e988c20524839afb08ba7ca",
+          "negatives_that_stay_rejected": 4912,
+          "stay_ids_sha256": "1c8cdb52d9c5e047b03310735604cef0d1bca99a234a4dd98d4b3d69ee576087",
+          "restored": true
+        },
+        {
+          "guard": "checkpoint_event",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:checkpoint-foreign-event-identity",
+            "memory.monthly_summary.started:guard:checkpoint-foreign-event-identity"
+          ],
+          "flip_ids_sha256": "66c874df8ebdab968e18b81c63716fc52f20b8c8d42a0bfa25cd1a6609d6e99b",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "82074ca848cdc49ba06c7961dfc414a78a01d15ec0c5d9d5ea87db9b1f1e2bf2",
+          "restored": true
+        },
+        {
+          "guard": "checkpoint_key",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:checkpoint-checkpoint_key",
+            "memory.monthly_summary.started:checkpoint-checkpoint_key"
+          ],
+          "flip_ids_sha256": "aee04fa764b917ffd5e5239c5a6add8e755c97ead00aa00caf97f8679411f70c",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "9d3c54c5f99a4d1af2013255f5ad7b8f1b6724059ec4b6b2e8667ba41c36c00f",
+          "restored": true
+        },
+        {
+          "guard": "checkpoint_storage",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:checkpoint-storage_instance_id",
+            "memory.monthly_summary.started:checkpoint-storage_instance_id"
+          ],
+          "flip_ids_sha256": "335d7829da7a0f11d13593efcec8c68222348eeee6d2cbdc347fbf8b5585ff97",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "4b2a7ecd3ef19c8854e76dfd78f9df4a6b6ca56b40de1308c935e5ba22ff0a4a",
+          "restored": true
+        },
+        {
+          "guard": "custody_digest",
+          "negatives_that_flip": 760,
+          "flip_examples": [
+            "memory.monthly_summary.completed:start-custody-digest",
+            "memory.monthly_summary.started:start-custody-digest"
+          ],
+          "flip_ids_sha256": "eefabd6b781f968847917f04a882ad311934fabad56b1eeef394cca02806b561",
+          "negatives_that_stay_rejected": 4154,
+          "stay_ids_sha256": "54c0b7c2991ff0a72411edf9ff2ee54bb33fbff1768f011c1e75928600f77541",
+          "restored": true
+        },
+        {
+          "guard": "custody_flush",
+          "negatives_that_flip": 386,
+          "flip_examples": [
+            "memory.monthly_summary.completed:start-custody-not-flushed",
+            "memory.monthly_summary.started:start-custody-not-flushed"
+          ],
+          "flip_ids_sha256": "3fbbc59c7e8b0d333cf2b712593f1c9199324373370ea793a7a44a26def775ef",
+          "negatives_that_stay_rejected": 4528,
+          "stay_ids_sha256": "daff41d962b42eb1afabe038f436490ff99de697965c1c99d249f9fbf996b786",
+          "restored": true
+        },
+        {
+          "guard": "custody_presence",
+          "negatives_that_flip": 374,
+          "flip_examples": [
+            "memory.monthly_summary.completed:start-custody-missing",
+            "memory.monthly_summary.started:start-custody-missing"
+          ],
+          "flip_ids_sha256": "dba6c2d83bf34574c970ba2a4174e7e376eb74b4a07d6206c8b0d96b9752c38a",
+          "negatives_that_stay_rejected": 4540,
+          "stay_ids_sha256": "59c7397a658b7e506555139588bcfdece7c08f535b16ea5b4db067d0300c0e28",
+          "restored": true
+        },
+        {
+          "guard": "custody_shape",
+          "negatives_that_flip": 382,
+          "flip_examples": [
+            "memory.monthly_summary.completed:phase:recover@start_saved#start-append-crash-recover/2:reduced:shape",
+            "memory.monthly_summary.completed:phase:recover@started#start-append-crash-recover/3:reduced:shape"
+          ],
+          "flip_ids_sha256": "1629d5b17cccc9740ef3d2d7300a4bfcccb7bcfdfb4e35acf5912a274dc53a7f",
+          "negatives_that_stay_rejected": 4532,
+          "stay_ids_sha256": "acc57a5b841cd3f0232e1ce8772b5dc2ce9ca3bf3e6cd676a9ced66e2f6106cd",
+          "restored": true
+        },
+        {
+          "guard": "cutoff_commitment",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:cutoff-changed-hash",
+            "memory.monthly_summary.started:cutoff-changed-hash"
+          ],
+          "flip_ids_sha256": "c94512865958d28c13d74e4ce1481e59e8e88f9fcc277b26cf9e7bbfa4a114e9",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "1fe66bc74690a82e8f508ddad30566ff9eb5acb9b63b77fdeb0df2ae948681b9",
+          "restored": true
+        },
+        {
+          "guard": "cutoff_record",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:cutoff-boolean-is-not-authority",
+            "memory.monthly_summary.started:cutoff-boolean-is-not-authority"
+          ],
+          "flip_ids_sha256": "a2af3afdf3c04276abe45c98889ac5326663e80e790584e237f724571166457c",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "b570f400f1e5ee4bd830443b431fbfa72f5ae861b7f013328102d0cbcaa47119",
+          "restored": true
+        },
+        {
+          "guard": "cutoff_scope",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:cutoff-other-job",
+            "memory.monthly_summary.completed:cutoff-other-project"
+          ],
+          "flip_ids_sha256": "68db3f904d61f4aedb74c01315627bf3dd3a99d312c7e95cf39d7b709b89706f",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "531ed8d36cb18d730d3242f52ea2162985c9f599336c4afaccb7137f52de01fd",
+          "restored": true
+        },
+        {
+          "guard": "cutoffs_unavailable",
+          "negatives_that_flip": 328,
+          "flip_examples": [
+            "memory.monthly_summary.completed:automatic-cutoffs-absent",
+            "memory.monthly_summary.completed:memory-panel-cutoffs-absent"
+          ],
+          "flip_ids_sha256": "02bda8f7a7596a761bfdb43a9d7bfb49631a452f6736cd74461a9aea37efb829",
+          "negatives_that_stay_rejected": 4586,
+          "stay_ids_sha256": "8c126507f073a824c7f414c665825d77d7764975fba57dc191e3054fe179a82f",
+          "restored": true
+        },
+        {
+          "guard": "effect_once",
+          "negatives_that_flip": 12,
+          "flip_examples": [
+            "memory.monthly_summary.completed:repeated-effect",
+            "memory.monthly_summary.started:repeated-effect"
+          ],
+          "flip_ids_sha256": "66be1149cfc93eb4940a3c0f77b990fa4c3a07cf3dfc8b71cd9b49619a4c58f8",
+          "negatives_that_stay_rejected": 4902,
+          "stay_ids_sha256": "efe95c7fb5190cc05b88956feccfca33faa19946e8315bf3ca61094bc21eddab",
+          "restored": true
+        },
+        {
+          "guard": "envelope_schema",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:unknown-envelope-field",
+            "memory.monthly_summary.started:unknown-envelope-field"
+          ],
+          "flip_ids_sha256": "00483a96f341ed9baa349e56d8d5ecab8c1eea2b03683342dfc1cf890d69b74d",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "81c7070dd8971426d3a55d8f4304a7296c8eed447aed195f5dc04c16f6dcbc39",
+          "restored": true
+        },
+        {
+          "guard": "evidence_preserved",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:evidence-lost",
+            "memory.monthly_summary.started:evidence-lost"
+          ],
+          "flip_ids_sha256": "1a74a03a783eaa89af32c053a3189eb139f7313b8a80cccbe16fa6d97b6e739e",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "d12f1fda64a9ea74598fcd4bc0d1e05d124dfbf86336f7ce99f4e955365d76b9",
+          "restored": true
+        },
+        {
+          "guard": "history_event",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:history-family",
+            "memory.monthly_summary.started:guard:history-family"
+          ],
+          "flip_ids_sha256": "d4162b415e189751c8f054e19063731cb6a5a90de99707e49b60c525787c7c15",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "eb96c2724489dd7df28d2fdbb5c72955d7c47bbb0daa100c76aacc62190234c0",
+          "restored": true
+        },
+        {
+          "guard": "inline_cap",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:inline-cap",
+            "memory.monthly_summary.started:guard:inline-cap"
+          ],
+          "flip_ids_sha256": "a402089c45b3ecddf3b5fdc8c9c6734bbbf2d594256175054a1878421ab32f99",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "4f31d476f092893112b0cb302dd4a65312d3c3a3bc8e38834a460fd817c11bb7",
+          "restored": true
+        },
+        {
+          "guard": "no_extra_memories",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:extra-memory",
+            "memory.monthly_summary.started:extra-memory"
+          ],
+          "flip_ids_sha256": "e2138ace3bf7bbf2671d8764bc161370b85a12564aebaeec7cb3e022adfd48f4",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "4c526a314caee293dad77c5bef5ea848cc2f41a234c19ae568abf68fa9aff879",
+          "restored": true
+        },
+        {
+          "guard": "no_prune_summary",
+          "negatives_that_flip": 2,
+          "flip_examples": [
+            "memory.prune_archive.completed:prune-invented-summary",
+            "memory.prune_archive.started:prune-invented-summary"
+          ],
+          "flip_ids_sha256": "1df6e0f5176ed29860c1335e441ec7d71ef14ecfbfa11382027efe1685a04ebc",
+          "negatives_that_stay_rejected": 4912,
+          "stay_ids_sha256": "72e539f39d853927d8eddabd96c8c68729192dcd82d0e074cb0659823704880f",
+          "restored": true
+        },
+        {
+          "guard": "operation_cas",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:stale-cas",
+            "memory.monthly_summary.started:stale-cas"
+          ],
+          "flip_ids_sha256": "ec60668e899b40cfa4d5ff604e8b03b145488fac1b09f24e15573411aef4c173",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "16a1b4d34f694e7d67f44f0a21b4695dfb2708a2c0fc075dcde20bbbda59a023",
+          "restored": true
+        },
+        {
+          "guard": "operation_receipt",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:started_event_id",
+            "memory.monthly_summary.started:guard:started_event_id"
+          ],
+          "flip_ids_sha256": "ded18fc928cd821ca1b3b9c8dd36018c6b9db8eb58498ecb8a585ff31c9e5c27",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "c968836005066c590b63d2f104e1ffd6087eb9f2f2a997411c8d80fc86597c0e",
+          "restored": true
+        },
+        {
+          "guard": "operation_result_digest",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:result_sha256",
+            "memory.monthly_summary.started:guard:result_sha256"
+          ],
+          "flip_ids_sha256": "2a1ad9e48ca67d1cfe7f947fb3d024372f76a96e4d33fea854ae7c0684dbdc69",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "43e1daee27309a3372d50f403c70ee96012558e3a1d3435bae9a3bc628413cd3",
+          "restored": true
+        },
+        {
+          "guard": "operation_result_ref",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:result_ref",
+            "memory.monthly_summary.started:guard:result_ref"
+          ],
+          "flip_ids_sha256": "a856192c14040ccb029ac4802a5523ccc91bf0df5020a87cff4f2e18ed3c6702",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "3823ad8fb0bb4c34d093acf73aa4dd8e813f2170be4614bdc06b05a727aa251e",
+          "restored": true
+        },
+        {
+          "guard": "operation_schema",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:unknown-operation-field",
+            "memory.monthly_summary.started:unknown-operation-field"
+          ],
+          "flip_ids_sha256": "033542da18e12722d611502dcb0120d59c9e724ce40ab5371df5920960979b90",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "d413f7763f0428f128e67a2282fede03e76e09c6e4f52576cb67ecd8efe61be7",
+          "restored": true
+        },
+        {
+          "guard": "original_input",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:append-original-value",
+            "memory.monthly_summary.started:guard:append-original-value"
+          ],
+          "flip_ids_sha256": "2b873a919cd82cc6933a8f6e9f54fcb29e7ded2352cb1522197d310735e5fd8f",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "234f76b657e44bf77a816ba66c42edf381d098983da77a949cc9122d31d6dc14",
+          "restored": true
+        },
+        {
+          "guard": "originals_preserved",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:original-deleted",
+            "memory.monthly_summary.started:original-deleted"
+          ],
+          "flip_ids_sha256": "b88f14e402c477351d602d769cd6f29ee396ce941a24aac4e675a95c40623f42",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "fc855a25cab911a509426168a649ec48060c6512e92009851368123bab4d4a10",
+          "restored": true
+        },
+        {
+          "guard": "outcome",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:unknown-outcome",
+            "memory.monthly_summary.started:guard:unknown-outcome"
+          ],
+          "flip_ids_sha256": "e10471d98c3036b884d867bc3baf0d2555bcf2b27575dc66e2d0ed57eea60989",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "cc0544939bde378c17ece00c5f84edb95a880e40990831d75b223ac3d6398b6d",
+          "restored": true
+        },
+        {
+          "guard": "partition",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:raw-project-partition",
+            "memory.monthly_summary.started:raw-project-partition"
+          ],
+          "flip_ids_sha256": "b03ca9a57e969ac7d9b444fc5a3fa822b5703e4c7e29dd3cc893be0061b3dc57",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "36abcd1d378873c348dbd75fa0904dad0d90cad6a7606baf3589b37ef6d8e4bb",
+          "restored": true
+        },
+        {
+          "guard": "payload_schema",
+          "negatives_that_flip": 82,
+          "flip_examples": [
+            "memory.monthly_summary.completed:payload-extra",
+            "memory.monthly_summary.completed:payload-missing-schema_version"
+          ],
+          "flip_ids_sha256": "f2d3ff839bf48bbcd568f12432445298e088f1a1097008bff63f41e0e8060c4a",
+          "negatives_that_stay_rejected": 4832,
+          "stay_ids_sha256": "f42892e68d69471a08cb70e07fca1660a58b128a62e18c018a56c70b96c3cb9e",
+          "restored": true
+        },
+        {
+          "guard": "permission_or_withdrawal",
+          "negatives_that_flip": 420,
+          "flip_examples": [
+            "memory.monthly_summary.completed:no-permission",
+            "memory.monthly_summary.completed:withdrawn"
+          ],
+          "flip_ids_sha256": "d2f6484813e46f4b2edf2713f72e5ac8ad952294d9ac6e7fe17affca38750c97",
+          "negatives_that_stay_rejected": 4494,
+          "stay_ids_sha256": "80169edc2f45ed061535d853230809badb442a22fcd5297df50de38fb2f8c611",
+          "restored": true
+        },
+        {
+          "guard": "phase",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:guard:append-phase",
+            "memory.monthly_summary.started:guard:append-phase"
+          ],
+          "flip_ids_sha256": "199beb2747abb4f8bd831bd1a44174910243902bcfe71747aec961a9a13bb725",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "eaa38a6f5fc95f095fcb282d66f4d7d6652982fafd5265359e92dbfb03224649",
+          "restored": true
+        },
+        {
+          "guard": "pins_preserved",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:pin-archived",
+            "memory.monthly_summary.started:pin-archived"
+          ],
+          "flip_ids_sha256": "217f3f644005ea27eb8a43a899ec2e017e5cbcac7dae9c0d86bab89a850f1c2f",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "730d8454152718ac23142a5082404094bb811585ac71cb346f6d5fbd3eddf6f9",
+          "restored": true
+        },
+        {
+          "guard": "references_resolve",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:dormant-unresolved-ref",
+            "memory.monthly_summary.started:dormant-unresolved-ref"
+          ],
+          "flip_ids_sha256": "37e7df4d61b8e6a26bba0ba86eb28a4057fc34caad01ac21acb5cf977f48b147",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "3c910d058e3aeba53de3ad07557155def7b5a397c96dd7a80692d73046731727",
+          "restored": true
+        },
+        {
+          "guard": "replay_policy",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:replay-only",
+            "memory.monthly_summary.started:replay-only"
+          ],
+          "flip_ids_sha256": "695d32f74dcd386b8ca9cfefc759366c90a1de24fb2e36289e38eb093244c3d5",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "a80ce4a80fa7ede2a600871941e3db9f1f6d726f8c17121642e2fe0f6ca7369a",
+          "restored": true
+        },
+        {
+          "guard": "request",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:request-changed",
+            "memory.monthly_summary.started:request-changed"
+          ],
+          "flip_ids_sha256": "652368b8ce5f07053403d364e48bb28d7aae01ebf1c67456965b1146f825b1d1",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "98f40a1545f239f125525dbb2a701b1e9d563b2b4f7e6cbf5e721eed017a4dee",
+          "restored": true
+        },
+        {
+          "guard": "selected_archived",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:selected-not-archived",
+            "memory.monthly_summary.started:selected-not-archived"
+          ],
+          "flip_ids_sha256": "25428d6870831e94c6b36548a2da4f5eccf60be5e8ada5ec4aebba5cf2a81851",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "532ae89547d7e2b5c6b5979b8ac88a58329c6cc4dfec88b7bfecd500fcb94277",
+          "restored": true
+        },
+        {
+          "guard": "selection_exists",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:missing-selection",
+            "memory.monthly_summary.started:missing-selection"
+          ],
+          "flip_ids_sha256": "955c00801e946ee989f681f994b9070aee10b3696c4ac5ad7d8c44a238d1f83e",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "0df5ee8b541004eb9fa60f41feaca6eb932272c65099551f6fbd1a7714d47716",
+          "restored": true
+        },
+        {
+          "guard": "selection_kind",
+          "negatives_that_flip": 2,
+          "flip_examples": [
+            "memory.monthly_summary.completed:non-note-summary",
+            "memory.monthly_summary.started:non-note-summary"
+          ],
+          "flip_ids_sha256": "e24452b251dc7480a12609e0e63dd3e89e201b9b048d60b1393a32556c10f396",
+          "negatives_that_stay_rejected": 4912,
+          "stay_ids_sha256": "a34707c8d5ad3ae137c85dfab0002603acc1269d9b86aa3aebc6ea4e3f02cb70",
+          "restored": true
+        },
+        {
+          "guard": "selection_pinned",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:pinned-selection",
+            "memory.monthly_summary.started:pinned-selection"
+          ],
+          "flip_ids_sha256": "7c866bb9c61b1912baedec840117dd268aca9914671298c170e82df859eb6ec2",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "223538658ab134a1673e4e525666f01f67529cf30aa76ece9e1dc653ea57ec78",
+          "restored": true
+        },
+        {
+          "guard": "selection_unique",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:duplicate-selection",
+            "memory.monthly_summary.started:duplicate-selection"
+          ],
+          "flip_ids_sha256": "5e83b9302192d2257fdc61b3dc3ba4a793c9284161d8fc6e3949a4fb74b67fdf",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "689b8b80003b516413ab712f6608e2aab08cb0316c5e67f19e17f40c57a77949",
+          "restored": true
+        },
+        {
+          "guard": "semantic_binding",
+          "negatives_that_flip": 1930,
+          "flip_examples": [
+            "memory.monthly_summary.completed:producer-actor",
+            "memory.monthly_summary.completed:payload-source"
+          ],
+          "flip_ids_sha256": "fcee678c6095d0453f73e5af9faef893b5b267150e0f128ceeb5d0eadc1d5f5b",
+          "negatives_that_stay_rejected": 2984,
+          "stay_ids_sha256": "5ab1d95c07c45f806205fd549336552d91515bb420c993f99db787359e8a1ec9",
+          "restored": true
+        },
+        {
+          "guard": "source",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:source-changed",
+            "memory.monthly_summary.started:source-changed"
+          ],
+          "flip_ids_sha256": "534e57c613602e2464ea85c7cddbbc2f9f72d678ebe84eb23e5109ec2a9492be",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "f40d88dcdd25ef458c0435b4bcbd342fb327fc06cb2aeb783202a77a04619b3a",
+          "restored": true
+        },
+        {
+          "guard": "summary_provenance",
+          "negatives_that_flip": 2,
+          "flip_examples": [
+            "memory.monthly_summary.completed:summary-lost-evidence",
+            "memory.monthly_summary.started:summary-lost-evidence"
+          ],
+          "flip_ids_sha256": "d576ea6a5c9777f81b950dee2c76a7cb045ef11ded1eceedc0b76344c05fdb9e",
+          "negatives_that_stay_rejected": 4912,
+          "stay_ids_sha256": "5afcdca2af7c01190904924e4d29c7637b207bab35facedfdd8452117cfa5658",
+          "restored": true
+        },
+        {
+          "guard": "terminal_custody",
+          "negatives_that_flip": 8,
+          "flip_examples": [
+            "memory.monthly_summary.completed:terminal-custody",
+            "memory.monthly_summary.started:terminal-custody"
+          ],
+          "flip_ids_sha256": "3fd1e09e1c32ef1c33a10417d80c7b7682ff364e4695d2a216835497567e1284",
+          "negatives_that_stay_rejected": 4906,
+          "stay_ids_sha256": "0aa06537276cb796d9dda3b346ee8813be1fcd4d15a9cb96c893322753bde4e3",
+          "restored": true
+        },
+        {
+          "guard": "unselected_preserved",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:unselected-changed",
+            "memory.monthly_summary.started:unselected-changed"
+          ],
+          "flip_ids_sha256": "9eeb8409f91ab7449eb43c82b470dff13c8db05b4270a821d417f8376598d489",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "427d022d099cfc41f828da7bd3a2c8891cd5364a5cc0a5a2834b1c0aa7d6b9e3",
+          "restored": true
+        },
+        {
+          "guard": "versions_preserved",
+          "negatives_that_flip": 4,
+          "flip_examples": [
+            "memory.monthly_summary.completed:version-lost",
+            "memory.monthly_summary.started:version-lost"
+          ],
+          "flip_ids_sha256": "f5e7320a992453b0e862846c4b596b61a3ddda82c16dff6f7b15305859ae6602",
+          "negatives_that_stay_rejected": 4910,
+          "stay_ids_sha256": "b323a72a6423a6fb60fd6bd756e329c081ccc67540df5650bb78bde529bf7746",
+          "restored": true
+        }
+      ]
+    }
+  ]
+}
