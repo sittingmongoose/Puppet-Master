@@ -10,6 +10,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+import functools
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -889,6 +890,75 @@ def _json_pointer(doc: Any, pointer: str, ref: str) -> Any:
     return node
 
 
+def _mangle(name: str, class_name: str | None) -> str:
+    """Python's private-name mangling: inside class C, __x (not ending in __) is _C__x."""
+    if not class_name or not name.startswith("__") or name.endswith("__") or "." in name:
+        return name
+    stripped = class_name.lstrip("_")
+    return f"_{stripped}{name}" if stripped else name
+
+
+@functools.lru_cache(maxsize=16)
+def _symtable_for(source: str) -> Any:
+    import symtable  # noqa: PLC0415
+
+    return symtable.symtable(source, "<pydef>", "exec")
+
+
+def _symtable_ownership(source: str, qualname: str, ref: str) -> None:
+    """Independent check with the compiler's own symbol table, which applies name mangling and
+    global/nonlocal exactly as Python does. Every qualname component must be a name the scope it
+    is looked up in binds itself (not declared global or nonlocal there), and no class body that
+    runs with that scope may rebind it through a global (module target) or nonlocal (function
+    target) declaration. Anything it cannot establish is refused."""
+    def kind(table: Any) -> str:
+        value = table.get_type()
+        return str(getattr(value, "value", value))
+
+    def eager_classes(table: Any) -> list[Any]:
+        out: list[Any] = []
+        for child in table.get_children():
+            if kind(child) == "class":
+                out.append(child)
+                out.extend(eager_classes(child))
+        return out
+
+    try:
+        table = _symtable_for(source)
+    except (SyntaxError, ValueError) as exc:
+        raise AnchorError(f"{ref}: source does not compile: {exc}") from exc
+    class_name: str | None = None
+    parts = qualname.split(".")
+    for index, part in enumerate(parts):
+        try:
+            symbol = table.lookup(part)
+        except KeyError:
+            raise AnchorError(f"{ref}: {part!r} is not a name of the scope it is looked up in") from None
+        scope = kind(table)
+        if scope in ("class", "function") and (symbol.is_declared_global() or symbol.is_nonlocal()):
+            raise AnchorError(f"{ref}: {part!r} is declared global or nonlocal in that scope, so its definition does not belong to it")
+        if not symbol.is_assigned():
+            raise AnchorError(f"{ref}: {part!r} is not bound in the scope it is looked up in")
+        if scope in ("module", "function"):
+            for child in eager_classes(table):
+                try:
+                    other = child.lookup(part)
+                except KeyError:
+                    continue
+                redirected = other.is_declared_global() if scope == "module" else other.is_nonlocal()
+                if redirected and other.is_assigned():
+                    raise AnchorError(f"{ref}: class {child.get_name()!r} rebinds {part!r} through a {'global' if scope == 'module' else 'nonlocal'} declaration")
+        if index == len(parts) - 1:
+            return
+        matches = [child for child in table.get_children()
+                   if kind(child) in ("class", "function") and _mangle(child.get_name(), class_name) == part]
+        if len(matches) != 1:
+            raise AnchorError(f"{ref}: {part!r} names {len(matches)} class or function scopes there; expected exactly 1")
+        table = matches[0]
+        if kind(table) == "class":
+            class_name = table.get_name()
+
+
 def _python_segment(source: str, qualname: str, ref: str) -> str:
     """The source segment of the definition `qualname` names, refused unless the name is bound
     exactly once where it is looked up.
@@ -902,7 +972,9 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
     module target) or nonlocal (for a function target). A qualified component is refused when
     the body it is looked up in declares it global or nonlocal. Function and lambda bodies run
     later, if at all, and reflective mutation (exec, globals(), setattr) is not code structure:
-    both are outside the anchor's contract.
+    both are outside the anchor's contract. Names are compared after Python's private-name
+    mangling, and the compiler's symbol table independently confirms ownership
+    (_symtable_ownership); the anchor is refused when either check fails.
     """
     import ast  # noqa: PLC0415 - only pydef anchors need ast.
 
@@ -952,20 +1024,21 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
             return target_names(node.name)  # type: ignore[attr-defined]
         return []
 
-    def declares(statements: list[ast.stmt], name: str, kind: type) -> bool:
+    def declares(statements: list[ast.stmt], name: str, kind: type, cls: str | None = None) -> bool:
         """Whether a class body declares `name` global/nonlocal (blocks included, nested
         function and lambda bodies excluded: they run later, if at all)."""
         stack: list[ast.AST] = list(statements)
         while stack:
             item = stack.pop()
-            if isinstance(item, kind) and name in item.names:  # type: ignore[attr-defined]
+            if isinstance(item, kind) and name in {_mangle(n, cls) for n in item.names}:  # type: ignore[attr-defined]
                 return True
             if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
                 continue
             stack.extend(ast.iter_child_nodes(item))
         return False
 
-    def bindings(statements: list[ast.stmt], name: str, target_kind: str = "module", collect: bool = True) -> list[ast.AST]:
+    def bindings(statements: list[ast.stmt], name: str, target_kind: str = "module", collect: bool = True,
+                 cls: str | None = None) -> list[ast.AST]:
         """Every node that binds, rebinds or deletes `name` in this lexical scope: definitions,
         assignments, imports, loop/with/except targets, walrus targets (including inside
         comprehensions, which bind in the enclosing scope), match captures, del and type
@@ -980,7 +1053,7 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
             item = stack.pop()
             if isinstance(item, ast.ClassDef):
                 if collect:
-                    if item.name == name:
+                    if _mangle(item.name, cls) == name:
                         found.append(item)
                     # Decorators, bases and keywords are evaluated in this scope.
                     stack.extend(item.decorator_list)
@@ -988,11 +1061,12 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
                     stack.extend(k.value for k in item.keywords)
                 declaration = {"module": ast.Global, "function": ast.Nonlocal}.get(target_kind)
                 if declaration is not None:
-                    found.extend(bindings(item.body, name, target_kind, collect=declares(item.body, name, declaration)))
+                    found.extend(bindings(item.body, name, target_kind, collect=declares(item.body, name, declaration, item.name),
+                                          cls=item.name))
                 continue
             if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
                 if collect:
-                    if item.name == name:
+                    if _mangle(item.name, cls) == name:
                         found.append(item)
                     stack.extend(item.decorator_list)
                     stack.extend(item.args.defaults)
@@ -1003,20 +1077,23 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
                     stack.extend(item.args.defaults)
                     stack.extend(d for d in item.args.kw_defaults if d is not None)
                 continue
-            if collect and ({name, "*"} & set(bound_names(item))):
+            if collect and ({name, "*"} & {_mangle(n, cls) for n in bound_names(item)}):
                 found.append(item)
             stack.extend(ast.iter_child_nodes(item))
         return found
 
+    _symtable_ownership(source, qualname, ref)
     scope: list[ast.stmt] = list(tree.body)
     scope_kind = "module"
+    class_ctx: str | None = None
     node: ast.AST | None = None
     for part in qualname.split("."):
         # Inside a class or function body, a global/nonlocal declaration of the name moves its
         # definition out of that body, so the component would not name what the source runs.
-        if scope_kind in ("class", "function") and (declares(scope, part, ast.Global) or declares(scope, part, ast.Nonlocal)):
+        if scope_kind in ("class", "function") and (declares(scope, part, ast.Global, class_ctx)
+                                                   or declares(scope, part, ast.Nonlocal, class_ctx)):
             raise AnchorError(f"{ref}: {part!r} is declared global or nonlocal in that scope, so its definition does not belong to it")
-        hits = bindings(scope, part, scope_kind)
+        hits = bindings(scope, part, scope_kind, cls=class_ctx)
         if len(hits) != 1:
             raise AnchorError(f"{ref}: {part!r} is bound {len(hits)} times in that scope (control-flow blocks included); expected exactly 1")
         node = hits[0]
@@ -1025,6 +1102,8 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
             raise AnchorError(f"{ref}: {part!r} is not a plain definition or assignment at that level")
         scope = list(getattr(node, "body", []))
         scope_kind = "class" if isinstance(node, ast.ClassDef) else "function"
+        if isinstance(node, ast.ClassDef):
+            class_ctx = node.name
     assert node is not None
     lines = _lines(source)
     start = min([node.lineno] + [d.lineno for d in getattr(node, "decorator_list", [])]) - 1
@@ -4118,6 +4197,20 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
         (tmp / "scripts/bind.py").write_text("class C:\n    global g\n    def f():\n        return 1\n", encoding="utf-8")
         check("pydef_class_member_other_global_ignored", resolves("scripts/bind.py#pydef=C.f"))
+        # R7-B2: names are compared after private-name mangling, and the symbol table confirms ownership.
+        for name, source, ref in (
+            ("pydef_mangled_member_declared_global_fails", "class C:\n    global __f\n    def _C__f():\n        return 1\n", "C._C__f"),
+            ("pydef_mangled_intermediate_declared_global_fails", "class C:\n    global __D\n    class _C__D:\n        def f():\n            return 1\n", "C._C__D.f"),
+            ("pydef_mangled_member_declared_nonlocal_fails", "def outer():\n    _C__f = None\n    class C:\n        nonlocal __f\n        def _C__f():\n            return 1\n    return C\n", "outer.C._C__f"),
+            ("pydef_mangled_class_global_rebinding_fails", "def _C__f():\n    return 1\nclass C:\n    global __f\n    __f = 2\n", "_C__f"),
+            ("pydef_mangled_class_nonlocal_rebinding_fails", "def outer():\n    def _C__f():\n        return 1\n    class C:\n        nonlocal __f\n        __f = 2\n    return _C__f\n", "outer._C__f"),
+            ("pydef_mangled_duplicate_definition_fails", "class C:\n    def __f():\n        return 1\n    def _C__f():\n        return 2\n", "C._C__f"),
+        ):
+            (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
+            check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
+        (tmp / "scripts/bind.py").write_text("class C:\n    def __f(self):\n        return 1\n", encoding="utf-8")
+        check("pydef_mangled_method_resolves_by_runtime_name", resolves("scripts/bind.py#pydef=C._C__f")
+              and "return 1" in AnchorResolver(tmp).content("scripts/bind.py#pydef=C._C__f")[1])
         for name, source in (
             ("pydef_class_local_binding_ignored", "def f():\n    return 1\nclass C:\n    f = 2\n"),
             ("pydef_class_global_of_other_name_ignored", "def f():\n    return 1\nclass C:\n    global g\n    f = 2\n"),
