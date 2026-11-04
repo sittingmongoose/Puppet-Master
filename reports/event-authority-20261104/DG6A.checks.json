@@ -1,4 +1,7 @@
 {
+  "review_round": 1,
+  "reviewed_head": "9d3e6c8b8749378a1a5760680e39f3e5f748c02a",
+  "content_head": "7df8a1eee31772c0c38d42e77cb5b75443173b1a",
   "checks": [
     {
       "name": "alert-check",
@@ -7,21 +10,44 @@
         "scripts/pm-alert-event-contracts-check.py"
       ],
       "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/alert-check.log",
-      "sha256": "4eb9bbe8c202be0bb03f92b761cd8710acc762ba156c9ec3880e04d9308b598f"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/alert-check.log",
+      "sha256": "0151b879fb7168f1f0b8ad950518436d1111d9207011d22a0fbb5c5c25ed2264"
     },
     {
-      "name": "shard-check",
+      "name": "panel-check",
       "command": [
         "python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
+        "scripts/pm-panel-event-contracts-check.py"
       ],
       "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/shard-check.log",
-      "sha256": "23594fa75c651d0f58da0d1c722dbbc8fc490781399ad5b2c0d20f769bf54a9e"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/panel-check.log",
+      "sha256": "f538c8ad7ad4b03451a368f4ccd00da86d61e1b578034a4c0514bf3f7bc02be2"
+    },
+    {
+      "name": "profile-check",
+      "command": [
+        "python3",
+        "scripts/pm-storage-profile-check.py"
+      ],
+      "exit_code": 1,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/profile-check.log",
+      "sha256": "40ddb3b98d752262a02b59a998985687fd4c5e8058618d154800887ff2d3e696"
+    },
+    {
+      "name": "assistant-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_assistant_contract_closure.py"
+      ],
+      "exit_code": 1,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/assistant-tests.log",
+      "sha256": "2c65a13696abc19875ee6abe32009b7bb08abdcb0e2edcb63ca5ced4d1f54b82"
     },
     {
       "name": "registry-json-schema",
@@ -29,32 +55,64 @@
       "error_count": 0
     },
     {
+      "name": "profile-delta",
+      "exit_code": 0,
+      "base_error_count": 41,
+      "reviewed_error_count": 51,
+      "final_error_count": 41,
+      "errors_identical_to_base": true,
+      "lane_errors": 0
+    },
+    {
+      "name": "assistant-tests-reviewed",
+      "exit_code": 1,
+      "run": 41,
+      "failures": 2,
+      "errors": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/assistant-tests-reviewed.json",
+      "note": "Full reviewed-head suite and source-text/registry inputs read from Git objects; identical two failures as final suite."
+    },
+    {
       "name": "plan-index-validate",
       "exit_code": 0,
       "top_level_status": "pass",
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/index-validate.json"
+      "errors": [],
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/index-validate.json",
+      "sha256": "62f171d2a9040e8808832f0d4d76e657b733e10d6d3dce2b05b28a961336f8fb"
     },
     {
       "name": "assistant-contract-check",
       "exit_code": 1,
       "top_level_status": "gaps_found",
       "errors": [],
-      "note": "Browser pending admissions; no alert-native proof."
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/assistant-contract-check.json",
+      "sha256": "75187544f1f02c011382867e7a6bd8f56f69acc2eb6b53c5c8ff53155c41f52a"
     },
     {
-      "name": "assistant-tests-baseline",
-      "exit_code": 1,
-      "run": 41,
-      "failures": 3,
-      "note": "Original HEAD registry overridden in-process; unchanged schema inputs; full original three failures reproduced."
+      "name": "shards-check",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/shards-check.log",
+      "sha256": "abfd549aedd5ac498f776eb595a5f5b64b33df2906e3c32fc0683b6200995dc8"
     },
     {
-      "name": "assistant-tests-final",
-      "exit_code": 1,
-      "run": 41,
-      "failures": 2,
-      "errors": 0,
-      "note": "Both remaining failures reproduced with base registry; stale global count updated 342 -> 354 for ten-row addition (base already had 344). Explicit .gitignore ! rule confirmed."
+      "name": "self-grade-evidence",
+      "exit_code": 0,
+      "cells": 192,
+      "cell_citations": 444,
+      "note": "Every quote mechanically resolves at its current cited line; all six prepared families regraded against current content."
+    },
+    {
+      "name": "id-scan",
+      "exit_code": 0,
+      "origin_refs": 500,
+      "collisions": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/id-scan.json"
+    },
+    {
+      "name": "current-main-premises",
+      "exit_code": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix1/current-main-premises.json",
+      "note": "Nine deciding units byte-identical between reviewed head and fetched origin/main; none of the sixteen lane events admitted there."
     }
   ]
 }
