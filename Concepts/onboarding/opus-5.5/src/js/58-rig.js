@@ -1062,13 +1062,17 @@
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
+      /* the rebuilt rig is drawn in its pose before the browser can paint it, as addProp places a new prop (FA-10): a theme
+         written after this frame's draw (NieR's moment writes it from inside a frame) left the new head and control with
+         no transform for that frame, the kit's 64-unit Pip at the stage's corner (FO-40) */
+      this.render();
       requestAnimationFrame(() => this.root.classList.remove('pst-swap'));
       this.kick();
     }
     setLayout(name) {
       if (name === this.layoutName) return;
       this.layoutName = name; this.ps = null;
-      this.build(); this.direct(this.spec);
+      this.build(); this.direct(this.spec); this.render(); /* (drawn in its pose before it can be painted, as setTheme) */
     }
     setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
