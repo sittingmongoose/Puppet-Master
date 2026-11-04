@@ -1770,7 +1770,7 @@
       "availability_rule": "Eligible actionable/focusable/truncated/status target, show-tooltips policy, viewport geometry, and active hover/focus state are required.",
       "permission_gate": "Presentation only; no domain authority.",
       "disabled_reason_rule": "Keep accessible explanatory text even when visual tooltips are disabled or collision-free paint is impossible.",
-      "handler_owner": "Final GUI PMHoverTag/HoverTagController; native Slint component is not implemented.",
+      "handler_owner": "Final GUI shared hover/focus help owner (F3-523); native Slint component is not implemented.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
       "production_or_simulation": "PMConcept7 shared overlay simulation only. Product acceptance references, fixtures and structural checks do not establish native execution; native executable cases remain owed.",
