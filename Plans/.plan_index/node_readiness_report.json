@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18748,
+    "depends_on_edge_count": 18750,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21956,
+    "edge_count": 21958,
     "node_count": 7421,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T16:43:04Z",
+  "generated_at_utc": "2026-11-04T16:46:55Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -35013,8 +35013,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 27538,
-          "line": 27540,
+          "heading_line": 27562,
+          "line": 27564,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35024,8 +35024,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 27703,
-          "line": 27705,
+          "heading_line": 27727,
+          "line": 27729,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35035,8 +35035,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 27825,
-          "line": 27827,
+          "heading_line": 27849,
+          "line": 27851,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35046,8 +35046,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 27924,
-          "line": 27926,
+          "heading_line": 27948,
+          "line": 27950,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35057,8 +35057,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28294,
-          "line": 28296,
+          "heading_line": 28318,
+          "line": 28320,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35068,8 +35068,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28360,
-          "line": 28362,
+          "heading_line": 28384,
+          "line": 28386,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35079,8 +35079,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 28426,
-          "line": 28428,
+          "heading_line": 28450,
+          "line": 28452,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35090,8 +35090,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 28479,
-          "line": 28481,
+          "heading_line": 28503,
+          "line": 28505,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -46024,7 +46024,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "65bec3424aa40235b35f272539c9e423972f5f5deeebe33bae22a5bae3a2de2a",
+        "expected": "8d21c1e110398ab9ed96d9f73ad546980e5fd1b65bbbe1254cff09a4339d79a6",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
