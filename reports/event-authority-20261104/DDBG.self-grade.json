@@ -1,0 +1,2363 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-W2-DDBG-20261104",
+  "assessment_kind": "self_grade_prepared_without_admission",
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "rubric_md_sha256": "81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "assessed_tree": {
+    "branch": "plans/ea-w2-debug-20261104",
+    "commit": "6eeffc4f771ca8b29d1361bacdd1143f74598196",
+    "normative_files_sha256": {
+      "Plans/Contracts_V0.md": "2df76a4314cdec361b2012727f7f96675a0897c2249bd601f764ee44ee96593d",
+      "Plans/storage-plan.md": "9ce00ba0f6a4a0d2429a7980f37574fd485ba7495a4911e402a73dfa9ad2ce0f",
+      "Plans/Automated_Testing_System.md": "51ab8e0fb08c8aec4e24330b06d12097109e99102ea189e3e40e8cad87c891ca",
+      "Plans/debug_investigation_event_payloads.schema.json": "8d30988c91a2ca610c4b5b4b1da30c6a45166a992b188903b49dd4f54265f1c1",
+      "Plans/debug_investigation_event_fixtures.json": "37355f31326b80a0fd156150a00f83a4c63ff1f60fec42918b1e4771c24d28ea"
+    }
+  },
+  "native_execution": "NOT_RUN",
+  "rows": [
+    {
+      "event_type": "debug.investigation.context_item_added",
+      "family_id": "event-family-debug-investigation-context-item-added",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-570",
+          "line_start": 1562,
+          "line_end": 1562,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_added@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-570",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1563,
+              "line_end": 1563,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1562,
+              "line_end": 1562,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_added@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1580,
+              "line_end": 1580,
+              "quote": "Producer binding: owner.debug.investigation.context_item_added@1.0.0 is the exact emitting handler above."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1564,
+              "line_end": 1564,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/context_item_added; operation_id"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/context_item_added",
+              "line_start": 73,
+              "line_end": 73,
+              "quote": "\"$id\": \"pm.debug_investigation.context_item_added.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1590,
+              "line_end": 1590,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.context_item_added\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1594,
+              "line_end": 1594,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1587,
+              "line_end": 1587,
+              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1617,
+              "line_end": 1617,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1574,
+              "line_end": 1574,
+              "quote": "decision are frozen. item_id is fresh within investigation_id; an existing item is not added again."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1599,
+              "line_end": 1599,
+              "quote": "Consumer binding: reader.debug.investigation.context_item_added@1.0.0 is the direct transient history"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1631,
+              "line_end": 1631,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-570",
+              "line_start": 1637,
+              "line_end": 1637,
+              "quote": "history or sibling records. Positive/negative oracles are the context_item_added cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.context_item_state_changed",
+      "family_id": "event-family-debug-investigation-context-item-state-changed",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-571",
+          "line_start": 1681,
+          "line_end": 1681,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_state_changed@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-571",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1682,
+              "line_end": 1682,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1681,
+              "line_end": 1681,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.context_item_state_changed@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1698,
+              "line_end": 1698,
+              "quote": "Producer binding: owner.debug.investigation.context_item_state_changed@1.0.0 is the exact emitting handler"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1683,
+              "line_end": 1683,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/context_item_state_changed;"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/context_item_state_changed",
+              "line_start": 131,
+              "line_end": 131,
+              "quote": "\"$id\": \"pm.debug_investigation.context_item_state_changed.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1708,
+              "line_end": 1708,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.context_item_state_changed\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1712,
+              "line_end": 1712,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1705,
+              "line_end": 1705,
+              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1735,
+              "line_end": 1735,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1693,
+              "line_end": 1693,
+              "quote": "previous_state to its latest accepted state. An equal state is a no-op, not a new transition. Revocation"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1717,
+              "line_end": 1717,
+              "quote": "Consumer binding: reader.debug.investigation.context_item_state_changed@1.0.0 is the direct transient"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1749,
+              "line_end": 1749,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-571",
+              "line_start": 1755,
+              "line_end": 1755,
+              "quote": "history or sibling records. Positive/negative oracles are the context_item_state_changed cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.exported",
+      "family_id": "event-family-debug-investigation-exported",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-572",
+          "line_start": 1799,
+          "line_end": 1799,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.exported@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-572",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1800,
+              "line_end": 1800,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1799,
+              "line_end": 1799,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.exported@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1816,
+              "line_end": 1816,
+              "quote": "Producer binding: owner.debug.investigation.exported@1.0.0 is the exact emitting handler above. Under"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1801,
+              "line_end": 1801,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/exported; operation_id is"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/exported",
+              "line_start": 182,
+              "line_end": 182,
+              "quote": "\"$id\": \"pm.debug_investigation.exported.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1826,
+              "line_end": 1826,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.exported\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1830,
+              "line_end": 1830,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1823,
+              "line_end": 1823,
+              "quote": "retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1853,
+              "line_end": 1853,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1811,
+              "line_end": 1811,
+              "quote": "commit and counts are verified against that exact manifest. bundle_id and schema_id must match it. Omitted/redacted/revoked/blocked/expired"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1835,
+              "line_end": 1835,
+              "quote": "Consumer binding: reader.debug.investigation.exported@1.0.0 is the direct transient history reader for"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1867,
+              "line_end": 1867,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-572",
+              "line_start": 1873,
+              "line_end": 1873,
+              "quote": "history or sibling records. Positive/negative oracles are the exported cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.imported",
+      "family_id": "event-family-debug-investigation-imported",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-573",
+          "line_start": 1917,
+          "line_end": 1917,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.imported@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-573",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1918,
+              "line_end": 1918,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1917,
+              "line_end": 1917,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.imported@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1934,
+              "line_end": 1934,
+              "quote": "Producer binding: owner.debug.investigation.imported@1.0.0 is the exact emitting handler above. Under"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1919,
+              "line_end": 1919,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/imported; operation_id is"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/imported",
+              "line_start": 227,
+              "line_end": 227,
+              "quote": "\"$id\": \"pm.debug_investigation.imported.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1944,
+              "line_end": 1944,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.imported\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1948,
+              "line_end": 1948,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1941,
+              "line_end": 1941,
+              "quote": "retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1971,
+              "line_end": 1971,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1929,
+              "line_end": 1929,
+              "quote": "publishing the imported investigation. bundle_id/schema_id match the admitted manifest and imported_target_kind"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1953,
+              "line_end": 1953,
+              "quote": "Consumer binding: reader.debug.investigation.imported@1.0.0 is the direct transient history reader for"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1985,
+              "line_end": 1985,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-573",
+              "line_start": 1991,
+              "line_end": 1991,
+              "quote": "history or sibling records. Positive/negative oracles are the imported cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.instrumentation_state_changed",
+      "family_id": "event-family-debug-investigation-instrumentation-state-changed",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-574",
+          "line_start": 2035,
+          "line_end": 2035,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.instrumentation_state_changed@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-574",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2036,
+              "line_end": 2036,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2035,
+              "line_end": 2035,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.instrumentation_state_changed@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2054,
+              "line_end": 2054,
+              "quote": "Producer binding: owner.debug.investigation.instrumentation_state_changed@1.0.0 is the exact emitting"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2037,
+              "line_end": 2037,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/instrumentation_state_changed;"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/instrumentation_state_changed",
+              "line_start": 281,
+              "line_end": 281,
+              "quote": "\"$id\": \"pm.debug_investigation.instrumentation_state_changed.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2064,
+              "line_end": 2064,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.instrumentation_state_changed\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2068,
+              "line_end": 2068,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2061,
+              "line_end": 2061,
+              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2091,
+              "line_end": 2091,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2049,
+              "line_end": 2049,
+              "quote": "restore-point receipt and narrowed permission before any mutation. Collect and remove follow the installed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2073,
+              "line_end": 2073,
+              "quote": "Consumer binding: reader.debug.investigation.instrumentation_state_changed@1.0.0 is the direct transient"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2105,
+              "line_end": 2105,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-574",
+              "line_start": 2111,
+              "line_end": 2111,
+              "quote": "history or sibling records. Positive/negative oracles are the instrumentation_state_changed cases in"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.started",
+      "family_id": "event-family-debug-investigation-started",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-575",
+          "line_start": 2156,
+          "line_end": 2156,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.started@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-575",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2157,
+              "line_end": 2157,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2156,
+              "line_end": 2156,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.started@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2175,
+              "line_end": 2175,
+              "quote": "Producer binding: owner.debug.investigation.started@1.0.0 is the exact emitting handler above. Under"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2158,
+              "line_end": 2158,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/started; operation_id is"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/started",
+              "line_start": 364,
+              "line_end": 364,
+              "quote": "\"$id\": \"pm.debug_investigation.started.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2185,
+              "line_end": 2185,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.started\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2189,
+              "line_end": 2189,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2182,
+              "line_end": 2182,
+              "quote": "retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2212,
+              "line_end": 2212,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2167,
+              "line_end": 2167,
+              "quote": "The existing Debug investigation launch handler emits once after target selection and requested/effective"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2194,
+              "line_end": 2194,
+              "quote": "Consumer binding: reader.debug.investigation.started@1.0.0 is the direct transient history reader for"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2226,
+              "line_end": 2226,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-575",
+              "line_start": 2232,
+              "line_end": 2232,
+              "quote": "history or sibling records. Positive/negative oracles are the started cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.target_bound",
+      "family_id": "event-family-debug-investigation-target-bound",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-576",
+          "line_start": 2276,
+          "line_end": 2276,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-576",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2277,
+              "line_end": 2277,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2276,
+              "line_end": 2276,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.target_bound@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2296,
+              "line_end": 2296,
+              "quote": "Producer binding: owner.debug.investigation.target_bound@1.0.0 is the exact emitting handler above."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2278,
+              "line_end": 2278,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/target_bound; operation_id"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/target_bound",
+              "line_start": 436,
+              "line_end": 436,
+              "quote": "\"$id\": \"pm.debug_investigation.target_bound.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2306,
+              "line_end": 2306,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.target_bound\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2303,
+              "line_end": 2303,
+              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2333,
+              "line_end": 2333,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2288,
+              "line_end": 2288,
+              "quote": "and binding revision. target_bindings is a newly authored closed ref-only join, not a replacement target"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2315,
+              "line_end": 2315,
+              "quote": "Consumer binding: reader.debug.investigation.target_bound@1.0.0 is the direct transient history reader"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2347,
+              "line_end": 2347,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-576",
+              "line_start": 2353,
+              "line_end": 2353,
+              "quote": "history or sibling records. Positive/negative oracles are the target_bound cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.verification_recorded",
+      "family_id": "event-family-debug-investigation-verification-recorded",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "disposition": "CURRENT_WRITER",
+      "outcome": "prepared_without_admission",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-577",
+          "line_start": 2397,
+          "line_end": 2397,
+          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.verification_recorded@1.0.0,"
+        }
+      ],
+      "current_owner_units": [
+        "CV-577",
+        "SP-570",
+        "ATS-285",
+        "CV-123",
+        "CV-124",
+        "SP-278",
+        "SP-286"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2398,
+              "line_end": 2398,
+              "quote": "prepared without admission. CV-123/124 and section 3.5 remain the minimum semantic and ref-only owners."
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2397,
+              "line_end": 2397,
+              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly debug.investigation.verification_recorded@1.0.0,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2415,
+              "line_end": 2415,
+              "quote": "Producer binding: owner.debug.investigation.verification_recorded@1.0.0 is the exact emitting handler"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2399,
+              "line_end": 2399,
+              "quote": "Closed payload: Plans/debug_investigation_event_payloads.schema.json#/$defs/verification_recorded; operation_id"
+            },
+            {
+              "path": "Plans/debug_investigation_event_payloads.schema.json",
+              "unit": "#/$defs/verification_recorded",
+              "line_start": 484,
+              "line_end": 484,
+              "quote": "\"$id\": \"pm.debug_investigation.verification_recorded.schema.v1\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2425,
+              "line_end": 2425,
+              "quote": "Identity: idempotency_key is \"debug:\" + lowercase SHA-256 of RFC 8785 canonical JSON [\"debug.investigation.verification_recorded\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2429,
+              "line_end": 2429,
+              "quote": "immutable semantic envelope and payload under Case L-5. Same identity and digest returns the original"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2422,
+              "line_end": 2422,
+              "quote": "family or retention remains PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2452,
+              "line_end": 2452,
+              "quote": "Custody: Storage owns the immutable EventRecord and first receipt under coherent seglog/index/receipt"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2408,
+              "line_end": 2408,
+              "quote": "The investigation verifier emits after the evidence artifacts and bounded verification summary commit."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact transient reader and operating consumers; none_required family checkpoint, complete SP-278 generic source proof and existing generic atomic CAS. No persistent family result/cursor.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2434,
+              "line_end": 2434,
+              "quote": "Consumer binding: reader.debug.investigation.verification_recorded@1.0.0 is the direct transient history"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2466,
+              "line_end": 2466,
+              "quote": "Compatibility and withdrawal: writers emit only 1.0.0, no alias or sibling admission. Unknown versions"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact-family current owner contract binds this criterion; native execution is NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-577",
+              "line_start": 2472,
+              "line_end": 2472,
+              "quote": "history or sibling records. Positive/negative oracles are the verification_recorded cases in Plans/debug_investigation_event_fixtures.json"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: PENDING_RETENTION_DECISION",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [
+        "scripts/pm-debug-investigation-events.py",
+        "Plans/debug_investigation_event_fixtures.json"
+      ],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    },
+    {
+      "event_type": "debug.investigation.state_changed",
+      "family_id": "event-family-debug-investigation-state-changed",
+      "family_revision": null,
+      "registry_pointer": null,
+      "disposition": "UNDISPOSITIONED",
+      "outcome": "blocked_on_Jared",
+      "disposition_evidence": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-578",
+          "line_start": 2516,
+          "line_end": 2516,
+          "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+        }
+      ],
+      "current_owner_units": [
+        "CV-578"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Exact event is absent from the unchanged registry; prepared text is not admission.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            },
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "registry header (all family rows inspected for absence)",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"registry_revision\": \"2026-11-04.1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "owner_doc": {
+          "status": "CONFLICT",
+          "representation": "exact_normative_owner",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "11.0A",
+              "line_start": 1174,
+              "line_end": 1174,
+              "quote": "**Closed investigation lifecycle:**"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "11.0A",
+              "line_start": 1200,
+              "line_end": 1200,
+              "quote": "- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.t"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "producer": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "scope_identity": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION; candidate classes require RT/Jared decision. No lifetime assigned.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "transitions": {
+          "status": "CONFLICT",
+          "representation": "exact_normative_owner",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "11.0A",
+              "line_start": 1174,
+              "line_end": 1174,
+              "quote": "**Closed investigation lifecycle:**"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "11.0A",
+              "line_start": 1200,
+              "line_end": 1200,
+              "quote": "- `failed` pairs with `stop_reason_code = investigation.verification_failed`, `investigation.no_repro_observed`, `investigation.budget_exhausted`, `investigation.runtime_unavailable`, `investigation.t"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "CV-578 preserves the unresolved owner lifecycle conflict; no dependent contract is authored.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-578",
+              "line_start": 2516,
+              "line_end": 2516,
+              "quote": "canonical_text: 'debug.investigation.state_changed remains unadmitted and undrafted pending Jared: assistant-chat-design"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DDBG wave-2 self-assessment of current branch canon; no inherited grades."
+        }
+      },
+      "pass_count": 0,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "PRODUCT: CV-578 lifecycle failed-state owner decision",
+        "PRODUCT: retention assignment",
+        "Exact-family individual admission"
+      ],
+      "static_checks_seen": [],
+      "native_execution": "NOT_RUN",
+      "notes": "Self-grade only. Project edition; no application event admission inferred. Consumer checkpoint is intentionally transient and does not materialize the deferred debug record."
+    }
+  ],
+  "registry": {
+    "path": "Plans/event_family_registry.json",
+    "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
+    "membership": "All nine exact event types absent; registry unchanged."
+  }
+}
