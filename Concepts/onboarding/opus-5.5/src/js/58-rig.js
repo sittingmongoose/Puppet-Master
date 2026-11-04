@@ -114,7 +114,8 @@
     }
     /* ------------------------------------------------------- building */
     build() {
-      const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], Lay = this.L = LAYOUTS[this.layoutName];
+      const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], L0 = this.L0 = LAYOUTS[this.layoutName], Lay = this.L = Object.create(L0); /* (Pip's own size on it: setPipK) */
+      this.pipK = 1;
       this.dirty = true;
       /* Pip's voice and music follow the look's kit (15-sound-pip.js) */
       const vo = snd(); if (vo && vo.setTheme) vo.setTheme(this.theme);
@@ -502,7 +503,7 @@
        its own drawing's (the hand's and the head's), placed as render() places them; the margin narrows where the span
        is barely tall enough, and where it is not, the hand stays whole */
     pipFit(at) {
-      const v = this.vis, Lay = this.L, s = Lay.s;
+      const v = this.vis, Lay = this.L, L0 = this.L0 || Lay;
       if (!v || !this.gCtl || !this.gHead) return [0, 0];
       if (!this.pipBB) { const c = this.boxOf(this.gCtl), h = this.boxOf(this.gHead); if (!c || !c[2] || !h || !h[2]) return [0, 0]; this.pipBB = { c, h }; }
       const { c, h } = this.pipBB;
@@ -513,7 +514,27 @@
         if (a0 + d < v0 + pad) d = v0 + pad - a0;
         return d;
       };
-      return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, v.y0, v.y1)];
+      /* Pip hangs below the stage's own words over its column (Retro's title line, NieR's unit line: the bar crossed
+         Retro Light's SETUP LOG at 740, FO-55). Where the span left cannot hold Pip at rest with its margins it is drawn
+         smaller, just enough, at once: one size for the span, never animated (.77 in Retro Light at 740; 1 elsewhere) */
+      const s0 = L0.s, dx0 = into(at[0] + lo * s0, at[0] + hi * s0, v.x0, v.x1), X0 = at[0] + dx0 + lo * s0 - 8, X1 = at[0] + dx0 + hi * s0 + 8;
+      let y0 = v.y0;
+      (this.hdr || []).forEach((w) => { if (w.x1 > X0 && w.x0 < X1) y0 = Math.max(y0, w.y1); });
+      const k = clamp((v.y1 - y0 - 16) / (L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0), .5, 1);
+      if (Math.abs(k - (this.pipK || 1)) > .002) this.setPipK(k);
+      const s = Lay.s;
+      return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1)];
+    }
+    /* Pip drawn at k of its layout's size: its drawing and the rope it hangs on, and the strings' rest lengths */
+    setPipK(k) {
+      const L0 = this.L0, Lay = this.L;
+      this.pipK = k;
+      if (k === 1) { delete Lay.s; delete Lay.rope; } else { Lay.s = L0.s * k; Lay.rope = L0.rope * k; }
+      if (this.barPts && this.headPts) {
+        const rest = this.solveStrings({ C: { x: Lay.ctl[0], y: Lay.ctl[1] }, phi: 0, H: this.headAt(Lay.ctl[0], Lay.ctl[1], 0, 0), ang: 0, sx: 1, sy: 1 });
+        this.restLen = rest.map((r) => Math.hypot(r.E[0] - r.T[0], r.E[1] - r.T[1]));
+      }
+      this.dirty = true;
     }
     /* how far Pip's drawn head reaches around the point it hangs from, turned by ang (asleep it tilts), in stage units:
        [left, top, right, bottom]; null until it has been measured */
@@ -816,6 +837,15 @@
          from the layout, not the painted box: the paper feeding in and the tube's degauss move them for a moment) */
       const atop = (n) => { let y = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) y += e.offsetTop; return y; };
       this.screen.querySelectorAll(':scope > .pst-printer, :scope > .pst-printer > *, .pst-term-cmd').forEach((n) => { if (n.offsetHeight) vb = Math.min(vb, atop(n)); });
+      /* (and the stage's own words at its top, Retro's title line and NieR's unit line, each where it is written: Pip
+         hangs below the ones over its column, pipFit, FO-55) */
+      const aleft = (n) => { let x = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) x += e.offsetLeft; return x; };
+      this.hdr = [];
+      if (this.hudEl && k > 0) this.hudEl.querySelectorAll('.pst-term-top > span, .pst-ntop > span').forEach((n) => {
+        if (!n.offsetWidth || !n.textContent.trim()) return;
+        const x = aleft(n);
+        this.hdr.push({ x0: (x - this.map.ox) / k, x1: (x + n.offsetWidth - this.map.ox) / k, y1: (atop(n) + n.offsetHeight - this.map.oy) / k });
+      });
       this.vis = k > 0 && vr > vl && vb > vt ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k, y0: (vt - this.map.oy) / k, y1: (vb - this.map.oy) / k } : null;
       /* Pip's spot follows the new span at once, the hand and Pip together, so a resize does not swing it (pipFit) */
       if (this.ps && this.pipAt) {
