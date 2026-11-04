@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 import functools
+import os
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -265,7 +266,7 @@ def read_jsonl(path: Path, errors: list[str], *, required: bool = True) -> list[
         if required:
             errors.append(f"missing {rel(path)}")
         return rows
-    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+    for line_no, line in enumerate(_lines(path.read_text(encoding="utf-8")), 1):
         if not line.strip():
             continue
         try:
@@ -573,21 +574,68 @@ def _lines(text: str) -> list[str]:
     return lines
 
 
+_MD_FENCE_OPEN_RE = re.compile(r"^( *)(`{3,}|~{3,})(.*)$")
+_MD_ATX_RE = re.compile(r"^ {0,3}(#{1,6})(?:[ \t]+(.*?))?[ \t]*$")
+_MD_HTML_BLOCK_TAGS = (
+    "address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|"
+    "fieldset|figcaption|figure|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|iframe|legend|li|link|"
+    "main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|"
+    "title|tr|track|ul"
+)
+_MD_HTML_STARTS: tuple[tuple[Any, Any], ...] = (
+    (re.compile(r"^ {0,3}<(?:script|pre|style|textarea)(?:\s|>|$)", re.I), re.compile(r"</(?:script|pre|style|textarea)>", re.I)),
+    (re.compile(r"^ {0,3}<!--"), re.compile(r"-->")),
+    (re.compile(r"^ {0,3}<\?"), re.compile(r"\?>")),
+    (re.compile(r"^ {0,3}<![A-Za-z]"), re.compile(r">")),
+    (re.compile(r"^ {0,3}<!\[CDATA\["), re.compile(r"\]\]>")),
+    (re.compile(rf"^ {{0,3}}</?(?:{_MD_HTML_BLOCK_TAGS})(?:\s|/?>|$)", re.I), None),
+    (re.compile(r"^ {0,3}(?:<[A-Za-z][A-Za-z0-9-]*(?:\s+[A-Za-z_:][\w.:-]*(?:\s*=\s*(?:[^\s\"'=<>`]+|'[^']*'|\"[^\"]*\"))?)*\s*/?>|</[A-Za-z][A-Za-z0-9-]*\s*>)\s*$"), None),
+)
+
+
 def markdown_headings(lines: list[str]) -> list[dict[str, Any]]:
-    """Headings outside fenced code, as pm-plan-index.py reads them."""
+    """ATX headings that are section boundaries, per CommonMark block structure.
+
+    A false heading would end a section early and leave text outside its hash, so only real
+    headings count: lines in a fenced code block (closed only by the same fence character, at
+    least as long, with nothing after it) or in an HTML block (CommonMark types 1-7) are not
+    headings, and an ATX heading needs a space or the line end after its #s and at most three
+    spaces of indentation. Setext headings, headings inside block quotes or list items, and
+    indented code are not boundaries; treating them as text only makes a section longer."""
     headings: list[dict[str, Any]] = []
-    fence: str | None = None
+    fence: tuple[str, int, int] | None = None
+    html_end: Any = None
+    in_html = False
     for index, line in enumerate(lines):
-        stripped = line.lstrip()
-        if stripped.startswith("```") or stripped.startswith("~~~"):
-            marker = stripped[:3]
-            fence = None if fence == marker else marker
+        if fence is not None:
+            char, length, indent = fence
+            stripped = line.lstrip(" ")
+            run = len(stripped) - len(stripped.lstrip(char))
+            if len(line) - len(stripped) <= indent + 3 and run >= length and not stripped[run:].strip():
+                fence = None
             continue
-        if fence:
+        if in_html:
+            if html_end is None:
+                if not line.strip():
+                    in_html = False
+            elif html_end.search(line):
+                in_html, html_end = False, None
             continue
-        match = MD_HEADING_RE.match(line)
+        opened = _MD_FENCE_OPEN_RE.match(line)
+        if opened and not (opened.group(2)[0] == "`" and "`" in opened.group(3)):
+            fence = (opened.group(2)[0], len(opened.group(2)), len(opened.group(1)))
+            continue
+        for start, end in _MD_HTML_STARTS:
+            if start.match(line):
+                if end is None or not end.search(line[start.match(line).end():]):
+                    in_html, html_end = True, end
+                break
+        if in_html:
+            continue
+        match = _MD_ATX_RE.match(line)
         if match:
-            headings.append({"index": index, "level": len(match.group(1)), "title": match.group(2).strip()})
+            title = re.sub(r"(?:^|[ \t]+)#+[ \t]*$", "", match.group(2) or "").strip()
+            headings.append({"index": index, "level": len(match.group(1)), "title": title})
     return headings
 
 
@@ -1318,7 +1366,7 @@ REAUDIT_WORKER_FIELDS = ("verdict", "claim", "dependencies", "evidence", "stale_
 def raw_registry_lines(registry_path: Path) -> dict[int, str]:
     if not registry_path.exists():
         return {}
-    return {n: line for n, line in enumerate(registry_path.read_text(encoding="utf-8").splitlines(), 1)}
+    return {n: line for n, line in enumerate(_lines(registry_path.read_text(encoding="utf-8")), 1)}
 
 
 def packet_row_digest(row: dict[str, Any]) -> str:
@@ -1340,7 +1388,7 @@ def load_reaudit_records(path: Path, errors: list[str], cache: dict[str, dict[st
         if not path.is_file():
             cache[key] = {"missing": True, "records": records}
         else:
-            for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            for line_no, line in enumerate(_lines(path.read_text(encoding="utf-8")), 1):
                 if not line.strip():
                     continue
                 try:
@@ -1367,7 +1415,7 @@ def _is_sha256(value: Any) -> bool:
 def _jsonl_row_for(path: Path, line: int, closure_id: str) -> dict[str, Any] | None:
     """The one row of a review or worker output file that judges registry line `line`."""
     found = None
-    for raw in path.read_text(encoding="utf-8").splitlines():
+    for raw in _lines(path.read_text(encoding="utf-8")):
         if not raw.strip():
             continue
         try:
@@ -1555,8 +1603,9 @@ def reaudit_record_shape_problems(record: Any) -> list[str]:
     for field in ("status_now", "later_closure_id"):
         if record.get(field) is not None and not isinstance(record.get(field), str):
             out.append(f"record.{field} must be a string or null")
-    if record.get("fix") is not None and not isinstance(record.get("fix"), dict):
-        out.append("record.fix must be an object or null")
+    fix = record.get("fix")
+    if fix is not None and (not isinstance(fix, dict) or ("description" in fix and not isinstance(fix["description"], str))):
+        out.append("record.fix must be null or an object whose description is a string")
     deps = record.get("dependencies")
     if not _str_list(deps) or not deps or len(set(deps)) != len(deps):
         out.append("record.dependencies must be a non-empty list of distinct strings")
@@ -1636,7 +1685,8 @@ def validate_reaudit_record(
     if verdict not in REAUDIT_VERDICTS or reaudit.get("outcome") != verdict:
         errors.append(f"{label}: record verdict {verdict!r} must be a known verdict equal to reaudit.outcome")
         return
-    if verdict == "not_supported" and not (isinstance(record.get("fix"), dict) and str(record["fix"].get("description", "")).strip()):
+    if verdict == "not_supported" and not (isinstance(record.get("fix"), dict) and isinstance(record["fix"].get("description"), str)
+                                           and record["fix"]["description"].strip()):
         errors.append(f"{label}: a not_supported record needs a fix description")
 
     # The text the re-audit read: git at recheck_commit.
@@ -2106,13 +2156,17 @@ def validate_registry(registry_path: Path) -> dict[str, Any]:
             seen_lines.add(current)
         return current
 
+    # One representative per authenticated chain: its open leaf, or, when the chain ends in a closed
+    # row whose hashes went stale, its latest open row.
+    unresolved = [row for row in rows if row.get("closure_status") in OPEN_STATUSES and not resolved(row["_line_no"])]
+    representative: dict[int, int] = {}
+    for row in unresolved:
+        chain_leaf = leaf_of(row["_line_no"])
+        representative[chain_leaf] = max(representative.get(chain_leaf, 0), row["_line_no"])
     open_rows: list[dict[str, Any]] = []
     open_by_key: dict[str, list[str]] = {}
-    for row in rows:
-        if row.get("closure_status") in OPEN_STATUSES and not resolved(row["_line_no"]):
-            leaf = leaf_of(row["_line_no"])
-            if leaf != row["_line_no"] and rows_by_line[leaf].get("closure_status") in OPEN_STATUSES:
-                continue  # one authenticated chain, still open: its open leaf represents the finding
+    for row in unresolved:
+        if representative[leaf_of(row["_line_no"])] == row["_line_no"]:
             open_rows.append({
                 "line": row["_line_no"],
                 "closure_id": row.get("closure_id"),
@@ -2149,7 +2203,7 @@ def artifact_row_count(path: Path, errors: list[str]) -> int:
     if not path.exists():
         errors.append(f"missing source artifact {rel(path)}")
         return count
-    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+    for line_no, line in enumerate(_lines(path.read_text(encoding="utf-8")), 1):
         if not line.strip():
             continue
         try:
@@ -2784,7 +2838,7 @@ def actionable_jsonl_rows(path: Path, artifact: str, errors: list[str]) -> list[
     if not path.exists():
         errors.append(f"missing source artifact {rel(path)}")
         return rows
-    for line_no, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+    for line_no, line in enumerate(_lines(path.read_text(encoding="utf-8")), 1):
         if not line.strip():
             continue
         try:
@@ -3440,11 +3494,17 @@ def cmd_reaudit_append(args: argparse.Namespace) -> int:
         # error the candidate has that the registry does not have now blocks the append, whether
         # it names a new line, an existing line or no line at all.
         baseline = set(validate_registry(registry_path)["errors"])
-        candidate = registry_path.with_name(".reaudit-append-candidate.jsonl")
+        import tempfile  # noqa: PLC0415
+
+        # A unique candidate created exclusively next to the registry: it can never be the input
+        # registry or a file someone else owns, and only this file is removed afterwards.
+        fd, candidate_name = tempfile.mkstemp(prefix=".reaudit-append-candidate-", suffix=".jsonl", dir=str(registry_path.parent))
+        candidate = Path(candidate_name)
         try:
-            candidate.write_bytes(registry_path.read_bytes() + "".join(
-                json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in new_rows
-            ).encode("utf-8"))
+            with os.fdopen(fd, "wb") as handle:
+                handle.write(registry_path.read_bytes() + "".join(
+                    json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in new_rows
+                ).encode("utf-8"))
             report = validate_registry(candidate)
         finally:
             candidate.unlink(missing_ok=True)
@@ -4285,6 +4345,51 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         (tmp / "scripts/bind.py").write_text("def g():\n    if (f := 3):\n        pass\n\ndef f():\n    return 1\n", encoding="utf-8")
         check("pydef_walrus_in_nested_scope_ignored", "return 1" in AnchorResolver(tmp).content("scripts/bind.py#pydef=f")[1])
 
+        # Astra r1 regressions.
+        # ASTRA-1: false Markdown boundaries cannot cut text out of a section's hash.
+        for name, body in (
+            ("section_spans_shorter_fence_inside_longer_fence", "````markdown\n```\n# Example heading\n```\n````\n"),
+            ("section_spans_hash_without_space", "#not-a-heading\n"),
+            ("section_spans_html_comment_heading", "<!--\n# hidden\n-->\n"),
+            ("section_spans_html_block_heading", "<pre>\n# hidden\n</pre>\n"),
+        ):
+            md = tmp / "Plans/md.md"
+            texts = []
+            for requirement in ("The operation MUST reject unsigned input.", "The operation MAY accept unsigned input."):
+                md.write_text(f"# Doc\n\n## Rule\n\nThe rule controls admission.\n\n{body}\n{requirement}\n\n## Next\n\nOther.\n", encoding="utf-8")
+                texts.append((AnchorResolver(tmp).sha256("Plans/md.md#section=Rule"), AnchorResolver(tmp).content("Plans/md.md#section=Rule")[1]))
+            check(name, texts[0][0] != texts[1][0] and "MUST reject unsigned input" in texts[0][1], texts)
+        (tmp / "Plans/md.md").write_text("# Doc\n\n## Rule ##\n\nBody.\n", encoding="utf-8")
+        check("section_title_drops_closing_hashes", resolves("Plans/md.md#section=Rule"))
+        # ASTRA-3: open -> open -> closed chain whose closed leaf went stale is one open finding.
+        first = append_with("not_supported", evidence=missing_quote)
+        second = append_with("not_supported", rows_before=[legacy_row(), first], line=2, evidence=missing_quote, keep_records=True)
+        third = append_with("resolved_differently", rows_before=[legacy_row(), first, second], line=3, status_now="repaired", keep_records=True)
+        write_doc(SELF_TEST_DOC.replace(quote, "The claimed repair is removed and no longer present."))
+        report = validate_rows([legacy_row(), first, second, third])
+        check("stale_closed_leaf_chain_is_one_open_finding", not has(report, "duplicate open finding_key")
+              and [r["line"] for r in report["open_rows"]] == [3], report)
+        write_doc()
+        # ASTRA-4: JSONL readers split on LF only; U+2028 inside a JSON string stays in it.
+        for name, ensure_ascii in (("record_with_literal_line_separator_reads", False), ("record_with_escaped_line_separator_reads", True)):
+            uni = audit_dir / f"unicode-{int(ensure_ascii)}.jsonl"
+            uni.write_text(json.dumps({"closure_id": "x-u", "line": 7, "rationale": "split\u2028here"}, ensure_ascii=ensure_ascii) + "\n", encoding="utf-8")
+            read_errors: list[str] = []
+            loaded = load_reaudit_records(uni, read_errors, {}) or {}
+            row_found = _jsonl_row_for(uni, 7, "x-u")
+            check(name, not read_errors and loaded.get("x-u", {}).get("rationale") == "split\u2028here"
+                  and row_found is not None and row_found.get("rationale") == "split\u2028here", read_errors)
+            uni.unlink()
+        # ASTRA-5: a not_supported fix needs a non-blank string description.
+        for name, description, text in (
+            ("fix_description_null_fails", None, "description is a string"),
+            ("fix_description_number_fails", 7, "description is a string"),
+            ("fix_description_blank_fails", "   ", "needs a fix description"),
+        ):
+            row = append_with("not_supported", evidence=missing_quote, mutate=lambda rec, d=description: rec.update(fix={"kind": "small_in_scope", "description": d}))
+            report = validate_rows([legacy_row(), row])
+            check(name, has(report, text), report["errors"])
+
         # F12: the hash report reads anchor rows by their scope.
         fresh = _self_test_registry_row(closure_id="closure-fixture-fresh", hashes={
             "hash_scope": ANCHOR_SCOPE, "owner_evidence_hashes": {unit_ref: AnchorResolver(tmp).sha256(unit_ref)}})
@@ -4342,6 +4447,19 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         code, malformed = run_append()
         check("reaudit_append_reports_malformed_record", code != 0 and malformed["appended"] == 0
               and any("distinct strings" in e for e in malformed["errors"]), malformed)
+        # ASTRA-2: the append preflight never overwrites or deletes a file it does not own.
+        sibling = registry.with_name(".reaudit-append-candidate.jsonl")
+        sibling.write_text("User-owned diagnostic data.\n", encoding="utf-8")
+        append_with()
+        write_registry([legacy_row()])
+        before_registry = registry.read_bytes()
+        code, dry = run_append(dry_run=True)
+        check("reaudit_append_dry_run_keeps_registry_and_sibling", code == 0 and registry.read_bytes() == before_registry
+              and sibling.read_text() == "User-owned diagnostic data.\n", dry)
+        code, real = run_append()
+        check("reaudit_append_keeps_sibling_file", code == 0 and sibling.read_text() == "User-owned diagnostic data.\n"
+              and registry.read_bytes().startswith(before_registry), real)
+        sibling.unlink()
         # F8: an earlier append that no longer validates is reported, not skipped as done.
         append_with()
         write_registry([legacy_row()])
