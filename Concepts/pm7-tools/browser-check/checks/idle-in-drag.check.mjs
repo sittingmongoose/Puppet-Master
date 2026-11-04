@@ -10,6 +10,7 @@ const HOLD_MS = 3000;
 // installed before the page's own scripts, in every frame (the sandbox's too)
 const RECORDER = () => {
 	if (window.__pmIdleRec) return;
+	try { localStorage.clear(); } catch (_) { /* opaque surface */ }
 	const R = window.__pmIdleRec = { fired: [], jobs: [], gated: true };
 	const DRAG = ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'];
 	const inDrag = () => document.body && DRAG.some(c => document.body.classList.contains(c));
@@ -132,6 +133,7 @@ export const tests = {
 		// Request an actual census through its owner API: a previous Usage page
 		// visit in this context may legitimately have completed its initial scan.
 		await f.evaluate(() => window.PM_HOVER_TAG_CONTROLLER.scheduleScan(document.querySelector('#panel-usage')));
+		await f.waitForFunction(() => { const jobs=window.__pmIdleRec.pending(); return /\bat (?:buildSliced|lateNext|prewarmSoon|prewarm|idleStill)\b/.test(jobs.map(j=>j.stack).join('\n')); }, null, {timeout:15000}).catch(() => {});
 		const pending = await f.evaluate(() => window.__pmIdleRec.pending());
 		for (const [owner] of OWNERS.slice(0,3)) {
 			await t.check(`setup exercised: pending ${owner}`, pending.some(j=>ownerOf(j.stack)===owner), JSON.stringify(pending.map(j=>({id:j.id,owner:ownerOf(j.stack),stack:top(j.stack)}))));
