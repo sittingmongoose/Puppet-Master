@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7312
+Source lines: L6715-L7336
 
-Source SHA256: `0f3d0e3aaca6d9ff72b6c97f30f8472057dc64c60e0953c89963706a2e0d6cf0`
+Source SHA256: `52b8c961dbb21bcb37e42364fe249eccc6cf32041b68ad7beaa39e16ed5ddc16`
 
 ---
 
@@ -532,7 +532,10 @@ DCH per-family contract oracles (prepared without admission). Every non-blocked 
 
 Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and non-normalization cases), CV-366 application keys with original Server/operation identity and rejection of application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived both editions cover manual active/suspended to archived, expected/committed revision joins, existing catalog selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted predecessors, active run and absent readback. These are static contract fixtures; native command/receipt/storage execution remains NOT_RUN.
 
-Review round 2 requires all eight standing checks for every one of the seventeen families: explicit append/retry rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on every anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list with metadata-only retry positives and one mutation per included field plus global event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication joins and independent current-frontier negatives; and rejection of successful exit 0 in the failed-test family with original started/outcome joins, nonzero/timeout/process-error positives and mismatches. The full checker executes the regression cases for both payload editions and every separate checkpoint family. Dependencies for this static checker are jsonschema, msgpack, blake3 and rfc8785. Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal obligations remain NOT_RUN. No admission or retention decision follows from a static pass.
+Review rounds 2 and 3 require all ten standing checks for every one of the seventeen families: explicit append/retry rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on every anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list with metadata-only retry positives and one mutation per included field plus global event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication joins and independent current-frontier negatives; and rejection of successful exit 0 in the failed-test family with original started/outcome joins, nonzero/timeout/process-error positives and mismatches; complete schema-reference closure before fixture execution, including local/file references in optional, conditional and historical branches of selected and embedded registry schemas; and retained-original historical reads after live-state changes, with current access checks and refusal of withdrawn or forged events. The full checker executes the regression cases for both payload editions and every separate checkpoint family. Dependencies for this static checker are jsonschema, msgpack, blake3 and rfc8785. Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal obligations remain NOT_RUN. No admission or retention decision follows from a static pass.
+
+
+Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema and its selected same-ID/version schema. Both definitions independently validate current and populated-history positives and reject trailing LF in every patterned current/history identifier, digest and retirement timestamp. Schema closure is independent of which fixture branches execute; an unresolved reference fails the checker as a structured failure. scripts/pm_dch_event_regressions.py supplies a separate full-checker negative for each of the ten standing checks in each family, plus the original F1-F3 and first Astra B1-B5 regressions. Retained historical lookup verifies the original encoded event commitment, original edition, scope/identity and current source/access evidence; current lifecycle or worktree state does not redefine the historical event. This fixture witness is synthetic and grants neither native proof nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.
 
 ```yaml
 plan_unit_id: ATS-305
@@ -543,50 +546,71 @@ canonical_text: '### ATS-305 — DCH
 
 
   DCH per-family contract oracles (prepared without admission). Every non-blocked DCH row owns both Project/application
-  fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive, negates
-  every required field, extra properties, wrong version, scope mismatch, same-identity changed-content conflict
-  and cross-scope identity separation. The checker also verifies exact family adoption and absence from registry.
-  Required native oracles for EACH event: retry after lost ack returns first receipt/no second effect; crash
-  before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion
+  fixtures in Plans/dch_event_contract_fixtures.json. scripts/pm_dch_events.py validates each positive,
+  negates every required field, extra properties, wrong version, scope mismatch, same-identity changed-content
+  conflict and cross-scope identity separation. The checker also verifies exact family adoption and absence
+  from registry. Required native oracles for EACH event: retry after lost ack returns first receipt/no
+  second effect; crash before/after body, append and receipt; semantic mismatch conflict; stale/current-source/permission/deletion
   denial; SP-278 frontier CAS race and publication fencing; coherent restore/tombstone replay; unsupported
   edition; withdrawal/rebuild. These are authored obligations, NOT_RUN. Each per-family SP unit separately
-  binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal. Native
-  execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot authorize deletion.
+  binds its domain projector/checkpoint with source-order, CAS/shadow publication, replay and withdrawal.
+  Native execution remains NOT_RUN. Retention acceptance remains PENDING_RETENTION_DECISION and cannot
+  authorize deletion.
 
 
-  Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode and
-  non-normalization cases), CV-366 application keys with original Server/operation identity and rejection of
-  application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles. Every
-  Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived
-  both editions cover manual active/suspended to archived, expected/committed revision joins, existing catalog
-  selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted
+  Review round 1 adds independent CV-365 encode/decode partition equality (p1, punctuation, exact Unicode
+  and non-normalization cases), CV-366 application keys with original Server/operation identity and rejection
+  of application dch: keys, and same-operation same-result/conflicting-digest/unavailable-dedupe oracles.
+  Every Project fixture now uses project~cDE for p1; dependent identities are recomputed. For chat.thread_archived
+  both editions cover manual active/suspended to archived, expected/committed revision joins, existing
+  catalog selection/no-active-run guards, and reject automatic origin, stale/changed source, creating/already-archived/deleted
   predecessors, active run and absent readback. These are static contract fixtures; native command/receipt/storage
   execution remains NOT_RUN.
 
 
-  Review round 2 requires all eight standing checks for every one of the seventeen families: explicit append/retry
-  rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~ partitions; actual
-  MessagePack inline byte boundaries and authorized SP-337 payload-reference readback; exact-end guards on
-  every anchored identifier pattern with trailing-LF negatives; the exact producer-semantic digest field list
-  with metadata-only retry positives and one mutation per included field plus global event-ID integrity; coherent
-  Storage/source/token/key/ref/dataset/publication joins and independent current-frontier negatives; and rejection
-  of successful exit 0 in the failed-test family with original started/outcome joins, nonzero/timeout/process-error
-  positives and mismatches. The full checker executes the regression cases for both payload editions and every
-  separate checkpoint family. Dependencies for this static checker are jsonschema, msgpack, blake3 and rfc8785.
-  Native process, receipt, source-adapter, CRC, CAS, durability, custody and withdrawal obligations remain
-  NOT_RUN. No admission or retention decision follows from a static pass.'
+  Review rounds 2 and 3 require all ten standing checks for every one of the seventeen families: explicit
+  append/retry rejection of projector_replay_only; exact CV-366 application keys; encoded CV-365 project~
+  partitions; actual MessagePack inline byte boundaries and authorized SP-337 payload-reference readback;
+  exact-end guards on every anchored identifier pattern with trailing-LF negatives; the exact producer-semantic
+  digest field list with metadata-only retry positives and one mutation per included field plus global
+  event-ID integrity; coherent Storage/source/token/key/ref/dataset/publication joins and independent
+  current-frontier negatives; and rejection of successful exit 0 in the failed-test family with original
+  started/outcome joins, nonzero/timeout/process-error positives and mismatches; complete schema-reference
+  closure before fixture execution, including local/file references in optional, conditional and historical
+  branches of selected and embedded registry schemas; and retained-original historical reads after live-state
+  changes, with current access checks and refusal of withdrawn or forged events. The full checker executes
+  the regression cases for both payload editions and every separate checkpoint family. Dependencies for
+  this static checker are jsonschema, msgpack, blake3 and rfc8785. Native process, receipt, source-adapter,
+  CRC, CAS, durability, custody and withdrawal obligations remain NOT_RUN. No admission or retention decision
+  follows from a static pass.
+
+
+
+  Review round 3 requires exact object equality between every materialized DCH checkpoint value_schema
+  and its selected same-ID/version schema. Both definitions independently validate current and populated-history
+  positives and reject trailing LF in every patterned current/history identifier, digest and retirement
+  timestamp. Schema closure is independent of which fixture branches execute; an unresolved reference
+  fails the checker as a structured failure. scripts/pm_dch_event_regressions.py supplies a separate full-checker
+  negative for each of the ten standing checks in each family, plus the original F1-F3 and first Astra
+  B1-B5 regressions. Retained historical lookup verifies the original encoded event commitment, original
+  edition, scope/identity and current source/access evidence; current lifecycle or worktree state does
+  not redefine the historical event. This fixture witness is synthetic and grants neither native proof
+  nor admission. Manual archive remains manual under DL-287; the Stop record question remains unprepared.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership remains
-  absent.
-- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and outcome
-  cases applicable to this exact family; native evidence remains NOT_RUN.
+- Exact family schema, identity, scope, receipt, replay, custody and withdrawal checks pass; membership
+  remains absent.
+- Review-round-2 acceptance rejects the independently mutated forbidden policy, body, retry, source and
+  outcome cases applicable to this exact family; native evidence remains NOT_RUN.
+- All ten standing-check mutations fail the full checker for each prepared family; selected/registered
+  schemas agree exactly, every reference resolves and populated histories are exercised.
 validation_surfaces:
 - python3 scripts/pm_dch_events.py
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm_dch_event_regressions.py
 risk_class: event_authority_contract
 reasoning_tier: high
 context_scope: event_authority_dch

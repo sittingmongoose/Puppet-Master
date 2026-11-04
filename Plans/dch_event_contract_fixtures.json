@@ -1787,6 +1787,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "7a44183ea25b8ed20093b20d7bf4ecfa9eb5a7edf62c7bb2c0fb4b50e689260f",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -3483,6 +3572,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "5fe271b4ed0589b5367012a232b644e6d9fa82ea55715a7ea83638c15807abd6",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -6207,6 +6385,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "b388f4bf782829ebca0c468ca21f704defd891dc80205e8cf545a779a8f5d9a4",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -8837,6 +9104,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "8bbff59218d58e3dbeaf4ab17b4b356dfa34d0fd47dadc2618ce7276845ac278",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -11272,6 +11628,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "ee5344b4cc93ad2745d6551637639eee0173339ad49e782c35f3e9aefa6f5e9f",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -13616,6 +14061,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "15e47492a4b3568695151e5c8f5d727256fe353406bd2b9d213e4f6884be26f9",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -15647,6 +16181,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "4a42ae5aae37ed0a0904db26d20d115ab1442aa6842bb91476cd112648b3e829",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -17587,6 +18210,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "e51543972c360086945556351dede2b779330203d1194eaf37241440d85d208e",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -19314,6 +20026,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "d3d731da37b27695349c0c9ce0a932aec0a0c3fc4f6fcc51fe9db5778ad59c30",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -20947,6 +21748,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "65c8c4d0fa9e6f9090dbe6f733157eec3b7be85da165424098bd5d1f5f67914b",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -22677,6 +23567,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "c550c9ce5633281427fd3350785f9a4d42cb0d6f4451c234eade59fd0a68a8c6",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -24310,6 +25289,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "dd15cef5181d5e7f4c6296f2ceb6b35ba7c3957a4ec0705902034b88e8a5f4da",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -26082,6 +27150,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "7548045d8550450f01f89aa5b9a81723d30a8eaa7f2fa03e47581405e5f50d17",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -27757,6 +28914,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "9099cd94dbfccfa23c9a3a5e88289e2c979d2dbb8ffa0854ce8b1569619f2620",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -29487,6 +30733,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "61be1aaa7804b60223348bf1b296b813557a3ac4b99a451b9177f4163048e2cd",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -31120,6 +32455,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "e2839af1b7a5d48577768994d2fa5989c666ec341abfa30727ead682fb0ba0ee",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -32934,6 +34358,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "265750399e1607e3fc6fe849d111907ff10f632c8acbaa79a85f76b4fa9d72c3",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -34651,6 +36164,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "fbd048199a2516ce8fa24cd24defddadb58b039795b7dc82e618a30e2165acd8",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -36444,6 +38046,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "5ab9efb6487691be2de11f6875143f780fd0a717c6880d4ee81bc577b4e6d0e6",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -38140,6 +39831,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "db2d281c1574f0e8d0f4fe7702de4f580fdc6292262f15fb446388f4a142013f",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -39933,6 +41713,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "3813e1e6517a6871d9f8c866a3a5b6232b0714abe1385749ec768880a3978978",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -41629,6 +43498,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "ca3e5426728e4a4c6935efb74daadeee337569747e7624bb51853d55cd7b9f56",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -43401,6 +45359,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "422c6e7019c0e877207c966b03396abee501a002a30f0afa9bf991a967a050e9",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -45076,6 +47123,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "961d0ab4df6223a2bc0d18b9c6ddd0db22dfae157de68094049224adecae5b15",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -47252,6 +49388,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "e8dd97f5a6ab7ce0e3de1a1bb5fc2ce9b21bfa868fa4428c412681b26917fe38",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -49334,6 +51559,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "bc375a6902ab07b595bfbc9997e94cdd4b0649ca2f075bb0a49bf495772d51a7",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -51346,6 +53660,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "2e3ad2ad41bab09c6129ca7513b4d2e521228ebab9b155d3fe260a0b80abd61d",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -53267,6 +55670,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "a5d601a15a2a48616db8c0a687bda3f929266a11c0bb0a6c495a3e11ffbf7d59",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -55036,6 +57528,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "2fbdf029eb9cec30fd34cea4d4802ccdb4645a0dea70ff1dda25d2786eebdec4",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -56711,6 +59292,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "5123fd3ec128cd3a7589f9791400ac7a5f36586975ec986b09b42ef9ffbce4df",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -58462,6 +61132,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "7dbd92c4a6189b76c7919869e78f20addfda52abdd0766be7f1a38b3693df21d",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -60116,6 +62875,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "248340a9ab2f1de1aba7c8521383e0a507feb2fc9163c374a88255ea40c3cde8",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }
@@ -61846,6 +64694,95 @@
         },
         "expected_valid": false
       }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "c5bd7a76b227c06b7ad73afb3cc89710934e79fea4926064c8fdf3ece3026d8e",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
+        },
+        "expected_valid": false
+      }
     ]
   },
   {
@@ -63479,6 +66416,95 @@
           "bytes_durable": true,
           "index_durable": true,
           "readback_verified": true
+        },
+        "expected_valid": false
+      }
+    ],
+    "historical_source": {
+      "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+      "source_value_sha256": "09a8b9adcc508cedfe13b6add3024e7cf27fd4c2fde847436f556ac5f683ef70",
+      "retained": true,
+      "authorized": true,
+      "hold_access_allowed": true,
+      "deleted": false,
+      "event_withdrawn": false,
+      "live_state": {
+        "thread_state": "active",
+        "revision": 1,
+        "worktree_binding": "original"
+      }
+    },
+    "historical_oracles": [
+      {
+        "name": "retained_original",
+        "changes": {},
+        "expected_valid": true
+      },
+      {
+        "name": "later_live_state",
+        "changes": {
+          "witness.live_state": {
+            "thread_state": "suspended",
+            "revision": 99,
+            "worktree_binding": "later"
+          }
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "later_archived_live_state",
+        "changes": {
+          "witness.live_state.thread_state": "archived"
+        },
+        "expected_valid": true
+      },
+      {
+        "name": "withdrawn_event",
+        "changes": {
+          "witness.event_withdrawn": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "forged_original",
+        "changes": {
+          "record.payload.actor_ref": "pmref:fixture:forged",
+          "record.actor_ref": "pmref:fixture:forged"
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "no_retained_source",
+        "changes": {
+          "witness.retained": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "current_access_denied",
+        "changes": {
+          "witness.authorized": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "deleted_source",
+        "changes": {
+          "witness.deleted": true
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "hold_access_denied",
+        "changes": {
+          "witness.hold_access_allowed": false
+        },
+        "expected_valid": false
+      },
+      {
+        "name": "unsupported_original_edition",
+        "changes": {
+          "record.payload.schema_version": "9.0.0"
         },
         "expected_valid": false
       }

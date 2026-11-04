@@ -8,10 +8,15 @@ import json
 from pathlib import Path
 import re
 import sys
+from urllib.parse import unquote, urlparse
 import blake3
 import msgpack
 import rfc8785
 from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema.exceptions import SchemaError
+from referencing import Registry, Resource
+from referencing.exceptions import NoSuchResource, Unresolvable
+from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[1]
 STORAGE_INSTANCE = '00000000-0000-4000-8000-000000000001'
@@ -23,6 +28,86 @@ SEMANTIC_FIELDS = (
     'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
     'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload',
     'payload_ref', 'redaction_profile', 'migration')
+
+def schema_reference_errors(schema, path):
+    """Resolve the entire schema graph, even branches no positive traverses.
+
+    Use JSON Schema resource scopes/anchors, not an instance-driven walk. File
+    references are confined to the checkout; ambient network retrieval is refused.
+    """
+    retrieved_resources = {}
+    def retrieve(uri):
+        if uri in retrieved_resources:
+            return retrieved_resources[uri]
+        parsed = urlparse(uri)
+        if parsed.scheme != 'file' or parsed.netloc:
+            raise NoSuchResource(ref=uri)
+        target = Path(unquote(parsed.path)).resolve()
+        if not target.is_relative_to(ROOT):
+            raise NoSuchResource(ref=uri)
+        data = json.loads(target.read_text())
+        Draft202012Validator.check_schema(data)
+        resource = Resource.from_contents(data, default_specification=DRAFT202012)
+        retrieved_resources[uri] = resource
+        return resource
+
+    errors = []
+    seen = set()
+    try:
+        Draft202012Validator.check_schema(schema)
+        resource = Resource.from_contents(schema, default_specification=DRAFT202012)
+        registry = Registry(retrieve=retrieve).with_resource(path.resolve().as_uri(), resource).crawl()
+        def visit(current, resolver):
+            # Resolved recursive refs share the same parsed object. Each distinct
+            # resource is checked once, including every sibling/optional branch.
+            marker = id(current.contents)
+            if marker in seen:
+                return
+            seen.add(marker)
+            if isinstance(current.contents, dict):
+                for keyword in ['$ref', '$dynamicRef']:
+                    if keyword not in current.contents:
+                        continue
+                    ref = current.contents[keyword]
+                    try:
+                        resolved = resolver.lookup(ref)
+                        Draft202012Validator.check_schema(resolved.contents)
+                        child = Resource.from_contents(resolved.contents, default_specification=DRAFT202012)
+                        visit(child, resolved.resolver)
+                    except (Unresolvable, OSError, ValueError, SchemaError) as exc:
+                        errors.append(f'{keyword} {ref}: {type(exc).__name__}')
+            for child in current.subresources():
+                visit(child, resolver.in_subresource(child))
+        visit(resource, registry.resolver(path.resolve().as_uri()).in_subresource(resource))
+        # A file ref may select a fragment. Its other optional/history branches
+        # still belong to a loaded schema document and need complete closure.
+        visited_files = set()
+        while pending := set(retrieved_resources) - visited_files:
+            registry = registry.with_resources(retrieved_resources.items()).crawl()
+            for uri in sorted(pending):
+                loaded = retrieved_resources[uri]
+                visit(loaded, registry.resolver(uri).in_subresource(loaded))
+                visited_files.add(uri)
+    except (Unresolvable, OSError, ValueError, SchemaError) as exc:
+        errors.append(f'schema: {type(exc).__name__}: {exc}')
+    return errors
+
+def historical_read_valid(record, row, witness, envelope, payload_validator):
+    """Static retained-original lookup; current live state grants no authority.
+
+    The witness models independently read canonical bytes and current access,
+    not an admission or a replacement for native source/custody verification.
+    """
+    body = resolve_body(record, witness.get('payload_source'), witness['storage_instance_id'])
+    if (body is None or not envelope.is_valid(record) or not payload_validator.is_valid(body)
+            or not all(witness[k] is True for k in ['retained', 'authorized', 'hold_access_allowed'])
+            or witness['deleted'] is not False or witness['event_withdrawn'] is not False
+            or hashlib.sha256(body_bytes(record)).hexdigest() != witness['source_value_sha256']
+            or record['replay_policy'] not in ['dedupe_by_idempotency_key', 'projector_replay_only']):
+        return False
+    # Compatibility-reader policy never calls the current append/retry oracle.
+    original = {**record, 'replay_policy': 'dedupe_by_idempotency_key'}
+    return joins(original, row['event_type'], witness.get('payload_source'), witness['storage_instance_id'])
 
 def body_bytes(value):
     """SP-236 shortest MessagePack, recursively sorted exact UTF-8 map keys."""
@@ -211,10 +296,20 @@ def archive_joins(payload, source):
 def main():
     contracts = json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']
     fixtures = json.loads((ROOT/'Plans/dch_event_contract_fixtures.json').read_text())
+    checkpoints = json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text())
+    stored = json.loads((ROOT/'Plans/storage_value_registry.json').read_text())['families']
     registry = json.loads((ROOT/'Plans/event_family_registry.json').read_text())
     failures = []
     checks = 0
     per_family = {}
+    reference_results = {}
+    def reference_errors(schema, path):
+        # Per-run only: equal selected/embedded definitions have the same graph.
+        # A new main() call always re-reads and rechecks mutated inputs.
+        key = (str(path), json.dumps(schema,sort_keys=True))
+        if key not in reference_results:
+            reference_results[key] = schema_reference_errors(schema,path)
+        return reference_results[key]
     def check(ok, label):
         nonlocal checks
         checks += 1
@@ -224,6 +319,40 @@ def main():
         if not ok:
             failures.append(label)
             stats['failures'] += 1
+    def finish():
+        print(json.dumps({'status':'pass' if not failures else 'fail','checks':checks,'failures':failures,
+                          'per_family':per_family,'native_execution':'NOT_RUN',
+                          'coverage':'Static ten-standing-check suite: append, transport, retry, registry parity, complete schema-reference closure, populated histories, retained-original lookup and checkpoint relations. Source/access adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
+        return bool(failures)
+    # Preflight every selected schema before validating a single instance. In
+    # particular an empty history must not conceal an unresolved reference.
+    for row in contracts:
+        check(row['outcome'] == 'register_prepared', row['event_type'] + ': prepared candidate remains prepared')
+        if row['outcome'] == 'blocked_on_Jared':
+            continue
+        event = row['event_type']
+        schemas = [(row['payload_schema_ref'].split('#')[0], 'payload')]
+        cases = [c for c in checkpoints if c['event_type'] == event]
+        check(len(cases) == 1, event + ': one checkpoint fixture')
+        for case in cases:
+            path = case['schema_ref'].split('#')[0]
+            schema = json.loads((ROOT/path).read_text())
+            schemas.append((path, 'selected checkpoint'))
+            entries = [s for s in stored if s['value_schema_id'] == schema['$id']]
+            check(len(entries) == 1, event + ': one registered checkpoint schema')
+            for entry in entries:
+                check(entry['value_schema_ref'] == case['schema_ref']
+                      and entry['schema_version'] == schema['properties']['schema_version']['const']
+                      and entry['value_schema'] == schema,
+                      event + ': registered checkpoint exactly equals selected schema')
+                errors = reference_errors(entry['value_schema'], ROOT/path)
+                check(not errors, event + ': registered checkpoint reference closure ' + '; '.join(errors))
+        schemas.append(('Plans/event_record.schema.json', 'envelope'))
+        for path, kind in schemas:
+            errors = reference_errors(json.loads((ROOT/path).read_text()), ROOT/path)
+            check(not errors, event + ': ' + kind + ' reference closure ' + '; '.join(errors))
+    if failures:
+        return finish()
     def leaf_paths(value, path=()):
         if isinstance(value, dict):
             for k, v in value.items():
@@ -262,7 +391,6 @@ def main():
         if row['outcome']=='blocked_on_Jared':
             continue
         schema = json.loads((ROOT/row['payload_schema_ref']).read_text())
-        Draft202012Validator.check_schema(schema)
         validator = Draft202012Validator(schema, format_checker=FormatChecker())
         cases = [f for f in fixtures if f['event_type']==event]
         check(len(cases)==2, event+': two editions')
@@ -349,6 +477,13 @@ def main():
             check(retry_outcome(record,retry)=='original_result',event+': excluded Storage metadata '+key)
         schema=json.loads((ROOT/next(r['payload_schema_ref'] for r in contracts if r['event_type']==event)).read_text())
         validator=Draft202012Validator(schema,format_checker=FormatChecker())
+        row=next(r for r in contracts if r['event_type']==event)
+        for oracle in case['historical_oracles']:
+            combined={'record':record,'witness':case['historical_source']}
+            for path,value in oracle['changes'].items():
+                combined=changed(combined,tuple(path.split('.')),value)
+            check(historical_read_valid(combined['record'],row,combined['witness'],envelope,validator)
+                  ==oracle['expected_valid'],event+': historical '+oracle['name'])
         for transport in case['transport_oracles']:
             candidate=transport['record']; source=transport.get('source')
             body=resolve_body(candidate,source)
@@ -399,12 +534,20 @@ def main():
                     for part in parts[:-1]: target=target[part]
                     target[parts[-1]]=value
                 check((validator.is_valid(p) and archive_joins(p,source))==oracle['expected_valid'],event+': archive '+oracle['name'])
-    for case in json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text()):
+    for case in checkpoints:
         schema=json.loads((ROOT/case['schema_ref'].split('#')[0]).read_text())
         validator=Draft202012Validator(schema, format_checker=FormatChecker())
         row=next(r for r in contracts if r['event_type']==case['event_type'])
         check(validator.is_valid(case['valid']) and checkpoint_joins(case['valid'],case['source'],row,case['key']), case['event_type']+': checkpoint positive')
-        trailing_lf_checks(case['valid'],schema,validator,case['event_type']+': checkpoint')
+        entry=next(s for s in stored if s['value_schema_id']==schema['$id'])
+        # Both real definitions, and both empty and populated histories, are
+        # exercised independently even though preflight also requires equality.
+        for kind, definition in [('selected',schema),('registered',entry['value_schema'])]:
+            actual=Draft202012Validator(definition,format_checker=FormatChecker())
+            for name,value in [('current',case['valid']),('populated history',case['with_history'])]:
+                check(actual.is_valid(value) and checkpoint_joins(value,case['source'],row,case['key']),
+                      case['event_type']+': '+kind+' checkpoint '+name+' positive')
+                trailing_lf_checks(value,definition,actual,case['event_type']+': '+kind+' checkpoint '+name)
         for name in case['negative_cases']:
             invalid=copy.deepcopy(case['valid'])
             if name=='persisted_redb_snapshot_id': invalid['source_token']['redb_snapshot_id']='forbidden'
@@ -419,10 +562,7 @@ def main():
                 combined=changed(combined,tuple(path.split('.')),value)
             check((validator.is_valid(combined['value']) and checkpoint_joins(combined['value'],combined['source'],row,combined['key']))
                   ==oracle['expected_valid'],case['event_type']+': checkpoint join '+oracle['name'])
-    print(json.dumps({'status':'pass' if not failures else 'fail','checks':checks,'failures':failures,
-                      'per_family':per_family,'native_execution':'NOT_RUN',
-                      'coverage':'Static append-policy, payload transport, semantic retry, schema, identity, original-test-outcome and checkpoint relational fixtures. Source adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
-    return bool(failures)
+    return finish()
 
 if __name__=='__main__':
     sys.exit(main())
