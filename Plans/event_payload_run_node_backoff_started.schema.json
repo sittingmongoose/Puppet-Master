@@ -19,7 +19,7 @@
     "ts": {
       "type": "string",
       "format": "date-time",
-      "pattern": "Z$"
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])"
     },
     "run_id": {
       "type": "string",
@@ -53,7 +53,7 @@
     "backoff_until_utc": {
       "type": "string",
       "format": "date-time",
-      "pattern": "Z$"
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z(?![\\s\\S])"
     },
     "retry_count": {
       "type": "integer",

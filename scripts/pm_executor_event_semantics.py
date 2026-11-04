@@ -4,6 +4,7 @@ import copy
 import base64
 import hashlib
 import json
+import re
 from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -13,6 +14,8 @@ import msgpack
 from blake3 import blake3
 
 ROOT = Path(__file__).resolve().parents[1]
+DATE_TIME_CHECKER = jsonschema.FormatChecker()
+DATE_TIME = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})')
 
 
 def require(condition, reason):
@@ -37,7 +40,14 @@ def at(value, path):
 
 def schema_validate(path, value):
     schema = json.loads((ROOT / path).read_text())
-    jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(value)
+    checker = jsonschema.FormatChecker()
+    checker.checks('date-time')(valid_timestamp)
+    jsonschema.Draft202012Validator(schema, format_checker=checker).validate(value)
+
+
+def valid_timestamp(value):
+    return (isinstance(value, str) and DATE_TIME.fullmatch(value) is not None
+            and DATE_TIME_CHECKER.conforms(value, 'date-time'))
 
 
 def validate_append_policy(contract, policy):
@@ -108,6 +118,7 @@ def source_observation(adapter, records):
 
 
 def instant(value):
+    require(valid_timestamp(value), 'whole-string source timestamp')
     result = datetime.fromisoformat(value)
     require(result.tzinfo is not None, 'source clock timezone')
     return result
@@ -193,6 +204,7 @@ def validate_score_domain(ready, selected):
     for score in ready + [item['score_tuple'] for item in selected]:
         require(type(score['manual_priority']) is int and 0 <= score['manual_priority'] <= 100,
                 'scheduler manual_priority integer 0..100')
+        require(valid_timestamp(score['ready_since_utc']), 'whole-string score timestamp')
 
 
 def validate_capture(contract, payload, capture):
@@ -451,7 +463,7 @@ def mutate(value, changes):
 def main():
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     families = json.loads((ROOT / 'Plans/executor_event_semantic_fixtures.json').read_text())['families']
-    failures, count, traces, score_cases = [], 0, 0, 0
+    failures, count, traces, score_cases, schema_cases = [], 0, 0, 0, 0
     require(set(families) == {c['event_type'] for c in contracts}, 'fixture family closure')
     for contract in contracts:
         family = families[contract['event_type']]
@@ -479,7 +491,19 @@ def main():
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+        for case in family.get('schema_cases', []):
+            schema_cases += 1
+            try:
+                # Test each schema's exact-end guard independently of our stricter
+                # format checker and of every relational/source comparison.
+                schema = json.loads((ROOT / contract['schema_ref']).read_text())
+                jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(case['payload'])
+                result = 'accept'
+            except (ValueError, jsonschema.ValidationError):
+                result = 'reject'
+            if result != case['expected']:
+                failures.append([contract['event_type'], case['case'], result])
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 

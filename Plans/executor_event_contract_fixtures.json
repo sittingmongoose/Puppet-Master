@@ -46563,6 +46563,1134 @@
         "viewer": "viewer-001"
       },
       "expected": "reject"
+    },
+    {
+      "event_type": "attempt.completed",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "terminal_state": "done",
+        "retry_count": 1,
+        "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+        "success": true
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "attempt_state": "active",
+          "work_reconciled": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1,
+          "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "done",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "success": true
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "attempt.started",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "scheduler_lane": "remediation",
+        "permission_snapshot_id": "permission_snapshot_id-001",
+        "requested_model_snapshot_id": "requested_model_snapshot_id-001",
+        "effective_model_snapshot_id": "effective_model_snapshot_id-001",
+        "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "attempt_state": "admitted",
+          "snapshots_durable": true,
+          "baseline_valid": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1,
+          "permission_snapshot_id": "permission_snapshot_id-001",
+          "requested_model_snapshot_id": "requested_model_snapshot_id-001",
+          "effective_model_snapshot_id": "effective_model_snapshot_id-001",
+          "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "scheduler_lane": "remediation",
+            "permission_snapshot_id": "permission_snapshot_id-001",
+            "requested_model_snapshot_id": "requested_model_snapshot_id-001",
+            "effective_model_snapshot_id": "effective_model_snapshot_id-001",
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "node.blocked",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "node_id": "node_id-001",
+        "replan_generation": 1,
+        "blocked_sequence": 1,
+        "blocked_reason_code": "permission_denied",
+        "allowed_action_ids": [],
+        "preserved_local_work": true
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": 1,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "episode_state": "new",
+          "cause_current": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "node_id": "node_id-001",
+          "replan_generation": 1,
+          "blocked_sequence": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "replan_generation": 1,
+            "blocked_sequence": 1,
+            "blocked_reason_code": "permission_denied",
+            "allowed_action_ids": [],
+            "preserved_local_work": true
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "node.completed",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "result_outcome": "done",
+        "evidence_refs": [],
+        "artifact_refs": []
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "node_state": "verified",
+          "verification_evidence_valid": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "result_outcome": "done",
+            "evidence_refs": [],
+            "artifact_refs": []
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "node.started",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "node_state": "queued",
+          "dependencies_satisfied": true,
+          "attempt_admitted": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "node.unblocked",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "replan_generation": 1,
+        "blocked_sequence": 1,
+        "resolution": "approval_granted"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": 1,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "episode_state": "unresolved",
+          "resolution_evidence_durable": true,
+          "recovery_anchor_release_permitted": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "replan_generation": 1,
+          "blocked_sequence": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "replan_generation": 1,
+            "blocked_sequence": 1,
+            "resolution": "approval_granted"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "plan.decomposition_degraded",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "source_stage": "source_stage-001",
+        "reason_code": "reason_code-001",
+        "original_shape": "original_shape-001",
+        "degraded_shape": "degraded_shape-001",
+        "evidence_ref": "evidence_ref-001"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": null,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "graph_state": "pre_lock",
+          "degradation_evidence_valid": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "source_stage": "source_stage-001",
+            "reason_code": "reason_code-001",
+            "original_shape": "original_shape-001",
+            "degraded_shape": "degraded_shape-001",
+            "evidence_ref": "evidence_ref-001"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "remediation.resolved",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "child_attempt_id": "child_attempt_id-001",
+        "remediation_root_id": "remediation_root_id-001",
+        "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+        "remediation_generation": 1,
+        "replan_generation": 1,
+        "finding_refs": [],
+        "resolution": "fixed"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": "remediation_parent_attempt_id-001",
+        "source_facts": {
+          "remediation_state": "active",
+          "child_terminal": true,
+          "resolution_evidence_durable": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "child_attempt_id": "child_attempt_id-001",
+          "remediation_root_id": "remediation_root_id-001",
+          "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+          "remediation_generation": 1,
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "child_attempt_id": "child_attempt_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "remediation_generation": 1,
+            "replan_generation": 1,
+            "finding_refs": [],
+            "resolution": "fixed"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "remediation.spawned",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "child_attempt_id": "child_attempt_id-001",
+        "remediation_root_id": "remediation_root_id-001",
+        "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+        "remediation_generation": 1,
+        "replan_generation": 1,
+        "finding_refs": [],
+        "parent_failure_class": "provider_transient"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": "remediation_parent_attempt_id-001",
+        "source_facts": {
+          "parent_state": "classified_failure",
+          "remediation_budget_available": true,
+          "child_admitted": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "child_attempt_id": "child_attempt_id-001",
+          "remediation_root_id": "remediation_root_id-001",
+          "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+          "remediation_generation": 1,
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "child_attempt_id": "child_attempt_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "remediation_generation": 1,
+            "replan_generation": 1,
+            "finding_refs": [],
+            "parent_failure_class": "provider_transient"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "run.completed",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "replan_generation": 1,
+        "terminal_outcome": "terminal_outcome-001"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "run_state": "active",
+          "work_reconciled": true,
+          "terminal_evidence_valid": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "replan_generation": 1,
+            "terminal_outcome": "terminal_outcome-001"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "run.graph_integrity_failed",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "replan_generation": 1,
+        "reason_code": "reason_code-001",
+        "detail_ref": "detail_ref-001"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "run_state": "active",
+          "integrity_check_failed": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "replan_generation": 1,
+            "reason_code": "reason_code-001",
+            "detail_ref": "detail_ref-001"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "run.node_backoff_expired",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "failure_class": "provider_transient"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "backoff_state": "active",
+          "timer_matches_original": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "failure_class": "provider_transient"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "run.node_backoff_started",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "attempt_id": "attempt_id-001",
+        "replan_generation": 1,
+        "failure_class": "provider_transient",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "retry_count": 1
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": "attempt_id-001",
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "prior_attempt_state": "classified_failure",
+          "retry_budget_available": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "attempt_id": "attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "attempt_id": "attempt_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "failure_class": "provider_transient",
+            "backoff_until_utc": "2026-11-04T12:00:00Z",
+            "retry_count": 1
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "run.node_ready",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "replan_generation": 1,
+        "ready_since_utc": "2026-11-04T12:00:00Z",
+        "wake_reason": "prerequisite_resolved"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "readiness_state": "not_ready",
+          "dependencies_satisfied": true,
+          "spec_lock_valid": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "replan_generation": 1,
+            "ready_since_utc": "2026-11-04T12:00:00Z",
+            "wake_reason": "prerequisite_resolved"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "run.node_retry_scheduled",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "node_id": "node_id-001",
+        "prior_attempt_id": "prior_attempt_id-001",
+        "replan_generation": 1,
+        "retry_count": 1,
+        "failure_class": "provider_transient"
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "prior_attempt_state": "classified_failure",
+          "retry_budget_available": true,
+          "baseline_valid": true
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "node_id": "node_id-001",
+          "prior_attempt_id": "prior_attempt_id-001",
+          "replan_generation": 1
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "node_id": "node_id-001",
+            "prior_attempt_id": "prior_attempt_id-001",
+            "replan_generation": 1,
+            "retry_count": 1,
+            "failure_class": "provider_transient"
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
+    },
+    {
+      "event_type": "scheduler.pass",
+      "case": "F7-shape-LF-ts",
+      "payload": {
+        "schema_version": "1.0.0",
+        "project_id": "project_id-001",
+        "event_sequence": 1,
+        "ts": "2026-11-04T12:00:00Z\n",
+        "run_id": "run_id-001",
+        "thread_id": "thread_id-001",
+        "replan_generation": 1,
+        "scheduler_pass_id": "scheduler_pass_id-001",
+        "wake_reason": "prerequisite_resolved",
+        "available_slots": 1,
+        "ready_nodes": [],
+        "selected_nodes": [],
+        "non_selected_nodes": []
+      },
+      "context": {
+        "admitted": true,
+        "current_project_id": "project_id-001",
+        "current_generation": 1,
+        "graph_locked": false,
+        "source_refs_valid": true,
+        "read_authorized": true,
+        "deletion_fenced": false,
+        "receipt_available": true,
+        "writer_withdrawn": false,
+        "predicate_valid": true,
+        "now_utc": "2026-11-04T12:00:00Z",
+        "backoff_until_utc": "2026-11-04T12:00:00Z",
+        "packaging_passed": true,
+        "expected_blocked_sequence": null,
+        "expected_attempt_id": null,
+        "expected_parent_attempt_id": null,
+        "source_facts": {
+          "wake_set_state": "pending",
+          "pass_already_committed": false
+        },
+        "source_bindings": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replan_generation": 1,
+          "scheduler_pass_id": "scheduler_pass_id-001"
+        },
+        "envelope": {
+          "project_id": "project_id-001",
+          "run_id": "run_id-001",
+          "thread_id": "thread_id-001",
+          "replay_policy": "dedupe_by_idempotency_key",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z\n",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "replan_generation": 1,
+            "scheduler_pass_id": "scheduler_pass_id-001",
+            "wake_reason": "prerequisite_resolved",
+            "available_slots": 1,
+            "ready_nodes": [],
+            "selected_nodes": [],
+            "non_selected_nodes": []
+          },
+          "payload_ref": null,
+          "storage_instance_id": "store-001"
+        },
+        "source_child_success": true,
+        "payload_packs": {},
+        "viewer": "viewer-001"
+      },
+      "expected": "reject"
     }
   ]
 }
