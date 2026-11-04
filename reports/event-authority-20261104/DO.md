@@ -1,6 +1,6 @@
-# DO — Event Authority review round 1, 2026-11-04
+# DO — Event Authority review round 2, 2026-11-04
 
-Branch `plans/ea-w2-orchestrator-20261104`; fix worker DO-FIX1. Owner/code revision `644a3df9c97ffc19c76924a02641cb852852f7ef` repairs reviewed head `942679dd84606c684faa520d1f73c8e2fc6a5a43`. All 25 are self-graded prepared under the lane's retention exception: **10 PASS, retention PARTIAL, membership ABSENT per family**. This is specification preparation; native execution remains NOT_RUN. No admission, event-family append, Decision Log entry, main push or reseal.
+Branch `plans/ea-w2-orchestrator-20261104`; current fix worker DO-FIX2. Round-2 response below supersedes the affected round-1 grades only. Historical round-1 account follows. Owner/code revision `644a3df9c97ffc19c76924a02641cb852852f7ef` repairs reviewed head `942679dd84606c684faa520d1f73c8e2fc6a5a43`. All 25 are self-graded prepared under the lane's retention exception: **10 PASS, retention PARTIAL, membership ABSENT per family**. This is specification preparation; native execution remains NOT_RUN. No admission, event-family append, Decision Log entry, main push or reseal.
 
 ## Review round 1: findings and responses
 
@@ -110,3 +110,35 @@ Paths plus SHA-256 below identify the retained result evidence. Raw checks, repa
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/index-generate.json` | `14ae5e716300a5bd14cc688998f874b37a360fe08f54a2ae6ed81fca75df082c` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/shard-check.json` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-1/index-validate.json` | `e171e02450dc2ac597de625533555d3701ab6f61f6a3f63ac016cfa5a64d02c5` |
+
+## Review round 2: findings and responses
+
+- **DO-C2-01 — fixed (`c886f97d8f1cf947e599571c9ff71cbd9d6b36d1`).** **Where:** `Plans/orchestrator_event_payloads.schema.json:235`, generated copy `Plans/storage_value_registry.json:11797`, fixtures and DO checker. **Why:** Python `$` matches before a final LF, so the pattern alone accepted a 72-character reference. **Fix:** the authoritative BLAKE3 field now requires both `minLength: 71` and `maxLength: 71`. Rebuilt the stored member with `pm_coordination_events.expected_svr_rows()`; no original member or other registry field changes. The checker requires the exact bounds and eight negative suffix cases per scope: LF, CR, CRLF, space, hex, nonhex, NUL and Unicode line separator. All sixteen vectors run against both the payload and the actual stored composition (32 validation assertions). No rule was weakened. Verify with `python3 scripts/pm-orchestrator-event-contracts.py`.
+
+**Affected-cell regrade only:** `crew.board_message_posted.closed_payload_schema` and `.positive_negative_oracles` each **PARTIAL → PASS**, against REVIEW-cycle2.md rather than the old self-grade. That family moves from 8 PASS / 3 PARTIAL / 1 ABSENT to 10 PASS / 1 PARTIAL / 1 ABSENT. Other 24 families and other ten posted cells are carried unchanged. Totals: **248 PASS / 27 PARTIAL / 25 ABSENT → 250 PASS / 25 PARTIAL / 25 ABSENT**, zero conflicts; prepared under the lane retention exception **24/25 → 25/25**. Membership remains ABSENT, retention PARTIAL, native NOT_RUN. No new ID, binding, admission or policy decision.
+
+**Pattern sweep:** recursively searched every definition in the DO payload schema and all three corresponding stored board definitions. Exactly two anchored-pattern occurrences (authoritative BLAKE3 field and stored copy), both now fenced at 71 characters. The inherited coordination source contains 43 anchored patterns; these belong to the original coordination families outside DO. They are recorded by JSON pointer in `pattern-audit.json` as integration follow-ups, preserving the original eight members as required by the lane. Examples include lineage platform / last_applied_event_id, path_hash, non_secret_ref and idempotency patterns. No outside-lane schema was changed.
+
+**Verification:** full DO checker exits 0, status pass, 25 families / 2,235 assertions. The review's mutation appending LF to both referenced-body `valid_payloads` now exits 1 with maxLength failure; separate application-only and Project-only mutations each exit 1 too. All mutations restored in finally blocks. Shard generation/check exit 0. Index generation/validation have parsed top-level pass. The complete coordination checker exits 1 with the same two pre-existing failures as e3a99cf338; baseline and fixed stdout are byte-identical. Integrity checks prove only the reference bounds changed in the source schema/registry, all 308 prior grade quotations still resolve, and only storage-value-registry shards changed. `git diff --check` exits 0.
+
+**Resources and procedure:** before checkout, 22 GB available RAM and 135 GB free root disk met the 6/50 GB floors. Sparse detached worktree `~/pm-worktrees/DO-fix2` from local clone at e3a99cf338; fetched origin, no pm-mail, subagents, admission, registry append, Decision Log, main push or governance edit. All 15 copied ignored currentness files verified SHA-equal before index generation. No Plans Markdown owner needed amendment: OSI-681 already specifies the exact reference. Derived registry shards and index regenerated normally. One initial baseline probe overlaid only the old registry and detected expected source/copy disagreement; rerun with both old source inputs yielded the byte-identical two-failure baseline. Final generation ran with all fixed inputs restored.
+
+**IDs used:** none new; existing OSI-681 / SP-720 / ATS-360 context only. Existing lane allocation remains OSI-680..704, SP-720..722 and ATS-360. Retention Q1/Q3 and other previously named integration obligations remain open. The pushed detached worktree is removed at completion.
+
+**Round-2 external evidence:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/fix-round-2/`; complete-byte hashes follow after verification.
+
+| Evidence filename (under the round-2 directory above) | SHA-256 |
+|---|---|
+| `contracts-check.json` | `b64dc5054fe2449a0ebedad74cc412c8d14352047c9467544b98cf7c6b454b71` |
+| `probe.py` | `0aab9c3c15ff34c624b9275316a26415baa2674631de52be3b43d66a3638e807` |
+| `probe-results.json` | `1d87528541207030c68eb675718b74f3b987ebf88a585495034fdb735911a3dc` |
+| `pattern-audit.json` | `afa6a092fc4d67c329700648f6259b883f0cc00de5681b1d1494c2b2dd3265aa` |
+| `integrity.json` | `b13d7203213dead3f93fe3d04ea9fe1b8fdaf5bd80916ed53e182219d5722732` |
+| `regrade.json` | `b9d64985e3c7acfe9e2ddbe44f05212e1848dad62fd7b4ad6673fc7bdaf5a3e0` |
+| `currentness.json` | `bff89fc88c53bba8f8f10d8c971bbaafcf44533863363b102767089c02d89e9f` |
+| `shard-generate.json` | `0097f44a100929b5fcc967352e31e0a28f4a8974cb0027f58fdf4df24ed776d3` |
+| `shard-check.json` | `d697ac77c260ee1fbe5007467d179c832c4c197ffc685d08b78f338e04ff7fdc` |
+| `index-generate.json` | `7f1587f916ff9ed1e3e779229fe7657def3539570b1d9c53bc5e248914329d6e` |
+| `index-validate.json` | `afb4ecf617bbcc044505b08a6fda5c9dd7575e5889df89e4db8e41852e246388` |
+| `coordination.json` | `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d` |
+| `coordination-baseline.json` | `a7a906d97e05afa3eec03aded40a2428d67c353bc3292400bddad104e8584b8d` |

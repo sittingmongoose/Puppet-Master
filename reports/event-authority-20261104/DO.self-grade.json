@@ -365,7 +365,7 @@
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681 preserves OSI-299/SP-337 event-inline content and closed BLAKE3 references, with UTF-8 byte boundaries and both-scope positive/negative cases.",
+          "finding": "OSI-681 exact BLAKE3 spelling enforced with minLength=maxLength=71; 16 trailing-character negatives exercise source payload and stored composition. Full checker passes 2,235 assertions; LF-corrupted positives fail in each scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -380,14 +380,26 @@
               "line_start": 32212,
               "line_end": 32212,
               "quote": "**Body join.** OSI-299 and SP-337 require this event itself to carry exactly one of `content` (sanitized text of at most 16,384 UTF-8 bytes, inclusive) or `content_ref` (closed object with `"
+            },
+            {
+              "path": "Plans/orchestrator_event_payloads.schema.json",
+              "line_start": 238,
+              "line_end": 238,
+              "quote": "\"minLength\": 71,"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "line_start": 249,
+              "line_end": 249,
+              "quote": "assert ref_id['minLength'] == ref_id['maxLength'] == 71"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW.md",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle2.md",
+            "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Review round 1 fixes the current owner/schema/fixture conflict."
+          "change_reason": "DO-C2-01: exact 71-character bounds in source/stored schema, both-scope trailing-character negatives through both validators, and full-CLI malformed-positive mutation now rejected."
         },
         "scope_identity": {
           "status": "PASS",
@@ -539,7 +551,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681 explicitly supports this exact-family criterion in the current tree; native execution remains NOT_RUN.",
+          "finding": "OSI-681 exact BLAKE3 spelling enforced with minLength=maxLength=71; 16 trailing-character negatives exercise source payload and stored composition. Full checker passes 2,235 assertions; LF-corrupted positives fail in each scope. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -554,14 +566,26 @@
               "line_start": 29493,
               "line_end": 29493,
               "quote": "**Oracles.** ATS-360 and python3 scripts/pm-orchestrator-event-contracts.py validate both scope editions against this actual coordination_event_records member, exact key/member census, sourc"
+            },
+            {
+              "path": "Plans/orchestrator_event_payloads.schema.json",
+              "line_start": 238,
+              "line_end": 238,
+              "quote": "\"minLength\": 71,"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "line_start": 249,
+              "line_end": 249,
+              "quote": "assert ref_id['minLength'] == ref_id['maxLength'] == 71"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW.md",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle2.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Review round 1 fixes the current owner/schema/fixture conflict."
+          "change_reason": "DO-C2-01: exact 71-character bounds in source/stored schema, both-scope trailing-character negatives through both validators, and full-CLI malformed-positive mutation now rejected."
         }
       },
       "remaining_gaps": [
@@ -6660,24 +6684,24 @@
   ],
   "assessed_tree": {
     "branch": "plans/ea-w2-orchestrator-20261104",
-    "base": "942679dd84606c684faa520d1f73c8e2fc6a5a43",
-    "source_head": "644a3df9c97ffc19c76924a02641cb852852f7ef",
+    "base": "e3a99cf338fc8beaff889a3f0caf3ab2779b03af",
+    "source_head": "c886f97d8f1cf947e599571c9ff71cbd9d6b36d1",
     "source_sha256": {
       "Plans/orchestrator-subagent-integration.md": "dd21f711108a3d492d7911a4fcf10b603e22945722cc0f04069ce2ef993fb3ba",
       "Plans/storage-plan.md": "5f3ee059c099a9dc734f46172c08067883366c393fc0734abdacb3b9669e6c6d",
       "Plans/Automated_Testing_System.md": "f061e18456a46990c3926d8c38bf1f28c50dea324b4d1c0deba858eac8ee6cbb",
-      "Plans/orchestrator_event_payloads.schema.json": "0fc270129a28e151474f25c5e649bdafe0372cf1b6d449e7a75a5a33ca79eba4",
-      "Plans/orchestrator_event_contract_fixtures.json": "bd70f3e0aac7e6091f0b38c70cbbbea0fedbc0ac2201956e8cc4555c7a529182",
-      "Plans/storage_value_registry.json": "da532a2ab2014c3b418adec42cf8ea24642b7b564fa4de5079161ebeedc09fad",
-      "scripts/pm-orchestrator-event-contracts.py": "90e27f4a6e8f6f32d3c721c15c32d3beb4becb339bd42983232c56cc955379c1",
+      "Plans/orchestrator_event_payloads.schema.json": "7626b4bd2c2590c583b4065a654dc6f9c1e3468213cd1d281e1d610a4cd1f667",
+      "Plans/orchestrator_event_contract_fixtures.json": "0096455b0ada56de8b4f54454a3d08bd1632df4b852a03502cc8c130aa234d84",
+      "Plans/storage_value_registry.json": "1de50b70bd90e99a51b77f46c6be605f3114a442094f217f0cd29af8a3035b2d",
+      "scripts/pm-orchestrator-event-contracts.py": "4117f6a517d586401a61ce1c15b65522dde68f9dc97696c96eaadc66106bd45a",
       "scripts/pm_coordination_events.py": "9d677c12c0fb842653e7054b837d00a2a82e7729282af24f2f6c711eaf0f0a37"
     }
   },
-  "review_round": 1,
+  "review_round": 2,
   "before_review_status_counts": {
     "ABSENT": 25,
-    "PASS": 179,
-    "PARTIAL": 50,
-    "CONFLICT": 46
-  }
+    "PASS": 248,
+    "PARTIAL": 27
+  },
+  "round_2_scope": "Only crew.board_message_posted.closed_payload_schema and positive_negative_oracles regraded; all other family/cell records carried unchanged."
 }
