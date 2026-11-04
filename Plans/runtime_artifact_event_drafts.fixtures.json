@@ -2952,5 +2952,10 @@
         "compatibility_event_type": null
       }
     }
+  },
+  "append_policy_refusals": {
+    "projector_replay_only": "replay_only_not_appendable",
+    "append_once": "invalid",
+    "dedupe_by_event_id": "invalid"
   }
 }

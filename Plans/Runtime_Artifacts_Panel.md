@@ -2525,12 +2525,15 @@ owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
   Runtime Artifacts owns exactly 19 Option 2 runtime_artifact.* semantic transitions and their closed
   per-type payload schemas. Every transition is project-scoped, recommends RP-AUTHORITY-INDEFINITE for
-  later storage adjudication, uses the exact dedupe tuple [event_type, project_id, artifact_id,
-  schema_id], rejects unhandled secrets, inline previews, private chain-of-thought, unknown fields, and
+  later storage adjudication, uses the exact four-member tuple [event_type, project_id, artifact_id,
+  schema_id] for the 18 other families' event dedupe and for runtime_artifact.restore_point grouping;
+  RAP-113 additionally binds each original source-backed restore observation's producer_sequence_id
+  to its event idempotency key while preserving point identity, visible rows and action authority.
+  Every transition rejects unhandled secrets, inline previews, private chain-of-thought, unknown fields, and
   generic subtype routing, and can be produced only by the named domain owner after durable artifact
   materialization. This owner/schema closure does not register a family or authorize EventRecord append,
   dispatch, projection, checkpoint advance, replay, retention execution, runtime implementation,
-  buildability, or PNC-019. The original 19 Project transition codecs/dedupe tuples are not relaxed.
+  buildability, or PNC-019. Original Project transition codecs and the other 18 dedupe tuples are not relaxed.
   Approved app artifacts require separate exact scope-aware payload/identity editions and explicit
   per-family registration; absent native writer remains non-emitting. Scope extension never registers or
   certifies an event by itself.

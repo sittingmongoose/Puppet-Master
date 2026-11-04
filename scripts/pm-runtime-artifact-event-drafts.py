@@ -60,6 +60,13 @@ def identity(event, payload, revision=None):
     return prefix + hashlib.sha256(b''.join(struct.pack('>I', len(v)) + v for v in encoded)).hexdigest()
 
 
+def grouping_identity(event, payload):
+    """RAP-113's four-member artifact group, without the observation ordinal."""
+    members = [event, payload['project_id'], payload['artifact_id'], payload['schema_id']]
+    encoded = [v.encode('utf-8', errors='strict') for v in members]
+    return 'ra1:' + hashlib.sha256(b''.join(struct.pack('>I', len(v)) + v for v in encoded)).hexdigest()
+
+
 def semantic_digest(event):
     # The exact Contracts §1.2 producer-owned preimage, including required nulls.
     return hashlib.sha256(rfc8785.dumps({k: event[k] for k in SEMANTIC_FIELDS})).hexdigest()
@@ -206,6 +213,12 @@ class AppendModel:
             return 'unavailable'
         if list(EVENT_VALIDATOR.iter_errors(event)):
             return 'invalid'
+        # Replay policy is deliberately outside the canonical semantic digest.
+        # Validate it before either global or scoped dedupe can return success.
+        if event['replay_policy'] == 'projector_replay_only':
+            return 'replay_only_not_appendable'
+        if event['replay_policy'] != 'dedupe_by_idempotency_key':
+            return 'invalid'
         digest = semantic_digest(event)
         if event['event_id'] in self.global_ids and self.global_ids[event['event_id']] != digest:
             return 'idempotency_conflict'
@@ -258,6 +271,8 @@ def observation_admissible(candidate, previous, row, packs, source):
     try:
         payload = decode(row, candidate, packs)
     except (ValueError, KeyError):
+        return False
+    if candidate['correlation_id'] != grouping_identity(row['event_type'], payload):
         return False
     if payload['type_payload'] != source['canonical_point']:
         return False
@@ -339,6 +354,16 @@ def main():
         check(event, 'lost_ack_exact_result', first is replay and len(model.scoped) == 1)
         alternate = copy.deepcopy(full); alternate['event_id'] += '-other-delivery'
         check(event, 'alternate_event_id_returns_original', model.append(alternate, admission=True) is first and len(model.scoped) == 1)
+        for policy, expected in fixtures['append_policy_refusals'].items():
+            bad = copy.deepcopy(full); bad['replay_policy'] = policy
+            fresh = AppendModel(row, packs, receipt, fixtures['custody_template'])
+            before = copy.deepcopy((model.scoped, model.global_ids))
+            check(event, 'policy_schema_valid_' + policy, not list(EVENT_VALIDATOR.iter_errors(bad)))
+            check(event, 'policy_digest_unchanged_' + policy, semantic_digest(bad) == semantic_digest(full))
+            check(event, 'fresh_policy_refused_' + policy, fresh.append(bad, True) == expected and not fresh.scoped and not fresh.global_ids)
+            check(event, 'retry_policy_refused_' + policy, model.append(bad, True) == expected and (model.scoped, model.global_ids) == before)
+            bad['event_id'] += '-other-delivery'
+            check(event, 'alternate_id_policy_refused_' + policy, model.append(bad, True) == expected and (model.scoped, model.global_ids) == before)
         check(event, 'withdrawal_no_append', model.append(full) == 'withdrawn' and len(model.scoped) == 1)
         check(event, 'unproven_source_no_append', model.append(full, True, False) == 'unavailable' and len(model.scoped) == 1)
         check(event, 'dedupe_unavailable_no_append', model.append(full, True, True, False) == 'unavailable' and len(model.scoped) == 1)
@@ -423,12 +448,29 @@ def main():
         external_model = AppendModel(row, packed, receipt, fixtures['custody_template'])
         external = external_model.append(candidate, True)
         check(event, 'external_full_receipt_replay', isinstance(external,dict) and full_value_matches(candidate,external,external['result'],external['custody']) and external_model.append(copy.deepcopy(candidate),True) is external)
+        for policy, expected in fixtures['append_policy_refusals'].items():
+            bad = copy.deepcopy(candidate); bad['replay_policy'] = policy
+            fresh = AppendModel(row, packed, receipt, fixtures['custody_template'])
+            before = copy.deepcopy((external_model.scoped, external_model.global_ids))
+            check(event, 'external_fresh_policy_refused_' + policy, fresh.append(bad, True) == expected and not fresh.scoped and not fresh.global_ids)
+            check(event, 'external_retry_policy_refused_' + policy, external_model.append(bad, True) == expected and (external_model.scoped, external_model.global_ids) == before)
         if event.endswith('.restore_point'):
             source = dict(proof_valid=True, predecessor_complete=True, snapshot_current=True, canonical_point=payload['type_payload'])
             check(event, 'first_observation', observation_admissible(full,None,row,packs,source))
+            check(event, 'grouping_known_answer', grouping_identity(event, payload) == full['correlation_id'])
+            other_group = copy.deepcopy(payload); other_group['artifact_id'] += '-other-group'
+            for name, correlation in [('incorrect', 'not-the-ra1-grouping-key'), ('cross_group', grouping_identity(event, other_group))]:
+                bad = copy.deepcopy(full); bad['correlation_id'] = correlation
+                check(event, 'first_' + name + '_correlation_schema_valid', decode(row, bad, packs) == payload)
+                check(event, 'first_' + name + '_correlation_refused', not observation_admissible(bad,None,row,packs,source))
             successor = copy.deepcopy(fixtures['restore_successor'])
             source['canonical_point'] = successor['payload']['type_payload']
             check(event, 'next_lifecycle_observation', observation_admissible(successor,full,row,packs,source))
+            for name, correlation in [('incorrect', 'not-the-ra1-grouping-key'), ('cross_group', grouping_identity(event, other_group))]:
+                bad = copy.deepcopy(successor); bad['correlation_id'] = correlation
+                check(event, 'next_' + name + '_correlation_refused', not observation_admissible(bad,full,row,packs,source))
+                predecessor = copy.deepcopy(full); predecessor['correlation_id'] = correlation
+                check(event, 'matching_wrong_' + name + '_correlations_refused', not observation_admissible(bad,predecessor,row,packs,source))
             check(event, 'same_point_artifact_new_event_identity', successor['payload']['artifact_id'] == payload['artifact_id'] and successor['payload']['type_payload']['restore_point_id'] == payload['type_payload']['restore_point_id'] and successor['idempotency_key'] != full['idempotency_key'])
             second = model.append(successor,True)
             check(event, 'successor_replay', isinstance(second,dict) and model.append(copy.deepcopy(successor),True) is second and len(model.scoped)==2)
