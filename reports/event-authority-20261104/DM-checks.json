@@ -1,49 +1,151 @@
 {
-  "assessment_id": "EA-DM-FIX4-20261104",
-  "code_head": "70302c381703c315ab93e0b3155c0bbd269f2472",
+  "assessment_id": "EA-DM-FIX5-SELF-20261104",
+  "code_head": "7ec6476fbe1e2b6b50ba24c61dcd861219643ecc",
   "native_execution": "NOT_RUN",
   "checks": [
     {
-      "command": "python3 -B scripts/pm-small-owner-events.py",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/checker.txt",
-      "sha256": "cd0507aa9d9199b4919f412092b5f799fd9f6ed186b67db94e67aa32a319d92b"
+      "name": "complete eight-family checker",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "9,735 assertions",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/full-checker.log",
+      "sha256": "373557794922c5b0ef4d52fd66fe773df424be082cb733caaed52d470173c215"
     },
     {
-      "command": "python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json>",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/guard-removal.json",
-      "sha256": "e87073d656dd98084c6cbe0d8c87eede540f63f8da70c7dadbfd953d336a6bb1"
+      "name": "whole-lane check 11",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "445/445 mutants; 2,192 independent negatives; exact flip/complement sets; zero mutation errors",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/guard-removal.json",
+      "sha256": "fa19d7f1882b7ca90b0780b6a024edc4196d7eff3731383e71b5e43a9a71fa31"
     },
     {
-      "command": "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/shards-check.json",
+      "name": "narrow new retry guard proof",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "8/8/18 flips; 2184/2184/2174 still rejected",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/retry-guard-removal.json",
+      "sha256": "a44c80833c6b50802efa0f85ba085042470c333846310e15318bc31b557dfae0"
+    },
+    {
+      "name": "previous guard equivalence",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "442 original rules have identical edits and flip sets",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/prior-guard-comparison.json",
+      "sha256": "33862461634ab7f33d5ce82462572c293ad82734c4774f8e9105b0fdd8d88185"
+    },
+    {
+      "name": "existing witness equivalence",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "2,174 existing positive/negative tuples and acceptance predicates unchanged; 18 witnesses added",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/catalogue-equivalence.json",
+      "sha256": "ac9e1b84ead7de326c5a9e6f0cd3f103633b5ce559bef67526fd278ee7cb11a9"
+    },
+    {
+      "name": "independent prior regressions",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "1,111/1,111 assertions across all eight families",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/prior-regressions.json",
+      "sha256": "cd63f40d2778684299e611cffda8dec4fc96997bd00aee4e3c68b8d7a54e26b9"
+    },
+    {
+      "name": "independent Astra classes 1 to 10",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "212 observations; both context families; all 56 authentic foreign retry pairs refuse",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/context-probes.json",
+      "sha256": "bb0d16bfcfb0183d84a4b31629873bdfb80ccfce84a0283588e9a2ef2c97415a"
+    },
+    {
+      "name": "failure exit oracles",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "8 child exits 1; every matcher rejects supplied success exit 0",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/failure-oracles.json",
+      "sha256": "d1dc645a03c40a6fe721f0f7c413304a800566564e6d40013e60a836d777682e"
+    },
+    {
+      "name": "Settings DL-408 audit",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "111 checks / 13 original application quotes; exact original application unchanged",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/settings-audit.json",
+      "sha256": "57d5fa4cfd9eca93979f9d2cadc563d1fa98d38e92bec0dd1acfc0c4e3695c53"
+    },
+    {
+      "name": "current citations, historical captures and scope",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "783 checks / 260 current citations / 22 explicit historical captures",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/source-scope-audit.json",
+      "sha256": "8f54a451b70921a0f4296484b35085e7a65cdfbb6f24ade87196193ae0b0bf4d"
+    },
+    {
+      "name": "shard check",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "99 documents / 3,092 shards; no prose or derived edits in round 5",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/shard-check.json",
       "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
     },
     {
-      "command": "python3 -B scripts/pm-plan-index.py validate",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/index-validate.json",
-      "sha256": "5a475fa0e9b0667414da462ab010694dff4dddc99302ea51af4b0f4760dabc7d"
+      "name": "initial index validation without currentness",
+      "exit_code": 1,
+      "status": "fail",
+      "detail": "missing ignored currentness input changes readiness expectation; corrected setup, not a product failure",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/index-validation.json",
+      "sha256": "f153b8e4fd24b5ceb1da05da2fa62119c8559e92d67f283df104b6ba6176bb8f"
     },
     {
-      "command": "python3 -B -m unittest discover -s tests -p test_pm_touch_closure_source.py -k DryGuardConsumerTests",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/dry-guard-tests.txt",
-      "sha256": "513fe22c2d2e8c3f5299f9ddcabd5b8e3aee0c2359737da373bce682ba1d950a"
+      "name": "index validation with currentness",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": "15 copied currentness inputs hash-match; readiness remains blocked",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/index-validation-currentness.json",
+      "sha256": "9cbcebe67ad410c81730fc8fbc297b661702886fb30d328769f169ed8c25b35d"
     },
     {
-      "command": "fix4 scope and unchanged Settings audit",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/scope.json",
-      "sha256": "5363668b7a3526335b1571413174e80c5d157a2fcd2e1406577ec1f9a3417671"
+      "name": "Settings layering checker",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": null,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/settings-layering.json",
+      "sha256": "d38e86560c3cea1f45370aa1e8aa9564729b3f5f97bac6cde7f9c831e0106da7"
     },
     {
-      "command": "fix4/failure-exits.py: eight corrupted-witness child runs and success-exit guard checks",
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/failure-exits.json",
-      "sha256": "997f66614a00e7add24e6b17d3c88eea54f590dc68e14f4a7c0a1cbbf4ec6787"
+      "name": "DRY consumer tests",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "10 tests",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/dry-tests.log",
+      "sha256": "87f122ea0091227e3be5e12cd125e11f3ab0d955658f5e0238f155188ea74b13"
+    },
+    {
+      "name": "Storage recovery self-test",
+      "exit_code": 0,
+      "status": "pass",
+      "detail": null,
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/storage-recovery.json",
+      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    },
+    {
+      "name": "Storage profile checker",
+      "exit_code": 1,
+      "status": "fail",
+      "detail": "41 pre-existing errors; byte-identical comparison output",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/storage-profile.json",
+      "sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b"
+    },
+    {
+      "name": "profile baseline comparison",
+      "exit_code": 0,
+      "status": "PASS",
+      "detail": "SHA-256 89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix5/profile-comparison.json",
+      "sha256": "f8253618948fb962873d6f21a234d66fa00395ff8559d3854ca618a0d9df8bd5"
     }
   ]
 }

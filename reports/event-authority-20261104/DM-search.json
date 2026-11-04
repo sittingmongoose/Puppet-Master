@@ -11,7 +11,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 584,
-        "quote": "| `Plans/Formatters_System.md` | \u2014 | `format.applied` | \u2014 |"
+        "quote": "| `Plans/Formatters_System.md` | — | `format.applied` | — |"
       },
       {
         "path": "Plans/Formatters_System.md",
@@ -78,7 +78,9 @@
           "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
           "file_sha256": "1e1137eede2e6e732168145fe3b419f09221f233e22577f68f8f575109de3215"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -96,7 +98,9 @@
           "file_sha256": "1e1137eede2e6e732168145fe3b419f09221f233e22577f68f8f575109de3215"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -108,7 +112,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 599,
-        "quote": "| `Plans/Source_Control_System.md` | \u2014 | `git.clone.completed` | \u2014 |"
+        "quote": "| `Plans/Source_Control_System.md` | — | `git.clone.completed` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -145,7 +149,9 @@
           "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
           "file_sha256": "b1bbb04d7b7780813223e79def07752da5fb20ac7bfc2f22dc37b3a74328f4f3"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -163,7 +169,9 @@
           "file_sha256": "b1bbb04d7b7780813223e79def07752da5fb20ac7bfc2f22dc37b3a74328f4f3"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -215,7 +223,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 587,
-        "quote": "| `Plans/LSPSupport.md` | \u2014 | `lsp.server.lifecycle_changed` | \u2014 |"
+        "quote": "| `Plans/LSPSupport.md` | — | `lsp.server.lifecycle_changed` | — |"
       }
     ],
     "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
@@ -247,7 +255,9 @@
           "quote": "lsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
           "file_sha256": "fcc933158055321626fb1064b5b0d8996f18fd196a64ac7472c2a851d12403b2"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -265,7 +275,9 @@
           "file_sha256": "fcc933158055321626fb1064b5b0d8996f18fd196a64ac7472c2a851d12403b2"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -277,7 +289,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 588,
-        "quote": "| `Plans/Models_System.md` | \u2014 | `model.catalog_refreshed` | \u2014 |"
+        "quote": "| `Plans/Models_System.md` | — | `model.catalog_refreshed` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -350,7 +362,9 @@
           "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
           "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -368,7 +382,9 @@
           "file_sha256": "c6cd41c46c03d7b614f9e8f5abec217df68ee9031d92810a853e903f3e4562ee"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -380,7 +396,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 593,
-        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
+        "quote": "| `Plans/Project_System.md` | — | `project.added`, `project.created` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -417,7 +433,9 @@
           "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
           "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -435,7 +453,9 @@
           "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -447,7 +467,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 593,
-        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
+        "quote": "| `Plans/Project_System.md` | — | `project.added`, `project.created` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -484,7 +504,9 @@
           "quote": "project.created append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
           "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -502,7 +524,9 @@
           "file_sha256": "be92511c3d96f2695ebfea1f9c9ab9ce8f7711e89d401866425982888a6079c1"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -514,7 +538,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 598,
-        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
+        "quote": "| `Plans/Settings_System.md` | — | `settings.theme.updated`, `settings.updated` | — |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -650,7 +674,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 598,
-        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
+        "quote": "| `Plans/Settings_System.md` | — | `settings.theme.updated`, `settings.updated` | — |"
       },
       {
         "path": "Plans/Settings_System.md",
@@ -756,7 +780,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 594,
-        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
+        "quote": "| `Plans/Prompt_Pipeline.md` | — | `subagent.context_rehydrated`, `subagent.context_shrunk` | — |"
       }
     ],
     "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
@@ -804,7 +828,9 @@
           "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
           "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -822,7 +848,9 @@
           "file_sha256": "58341e5737539893ca9fab26cc61998197d257bc380cf2bf040fd07a99b13076"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
@@ -859,7 +887,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 594,
-        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
+        "quote": "| `Plans/Prompt_Pipeline.md` | — | `subagent.context_rehydrated`, `subagent.context_shrunk` | — |"
       }
     ],
     "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
@@ -907,7 +935,9 @@
           "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
           "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
         }
-      ]
+      ],
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "review_round_3": {
       "searched_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
@@ -925,7 +955,9 @@
           "file_sha256": "58341e5737539893ca9fab26cc61998197d257bc380cf2bf040fd07a99b13076"
         }
       ],
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "current_evidence_capture_revision": "fb0cac9bd45b983c1fe03118d5641788c6a4f166",
+      "current_evidence_capture_note": "Historical repair capture at the explicit revision; original hashes and anchors remain source lineage, not current verification. Current citations are in DM-self-grade.json."
     },
     "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
     "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
