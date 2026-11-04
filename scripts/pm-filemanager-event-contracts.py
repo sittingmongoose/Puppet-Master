@@ -96,6 +96,16 @@ def same_value(left, right):
     return left == right
 
 
+def validate_project_scope(project_id, expected_project_id, label):
+    if project_id != expected_project_id:
+        raise ValueError(label)
+
+
+def validate_original_payload(payload, original_payload, label):
+    if not same_value(payload, original_payload):
+        raise ValueError(label)
+
+
 # Reuse the repository's canonical MessagePack encoder for this suite's closed integer-only
 # fixture domain. Native arbitrary EventRecord encoding remains SP-026/SP-236's obligation.
 _codec_spec = importlib.util.spec_from_file_location("pm_readiness_codec", ROOT / "scripts/pm-implementation-readiness.py")
@@ -116,10 +126,14 @@ def payload_reference(value):
     return f"pm-payload-ref:v1:blake3:{blake3(body).hexdigest()}:{len(body)}:application/vnd.msgpack"
 
 
-def resolve_payload(reference, payload_rows):
+def validate_payload_reference(reference):
     if not isinstance(reference, str) or not re.fullmatch(
             r"pm-payload-ref:v1:blake3:[0-9a-f]{64}:[1-9][0-9]*:application/vnd.msgpack", reference):
         raise ValueError("invalid SP-337 reference")
+
+
+def resolve_payload(reference, payload_rows):
+    validate_payload_reference(reference)
     value = payload_rows[reference]
     if reference != payload_reference(value):
         raise ValueError("SP-337 bytes/hash/size mismatch")
@@ -160,7 +174,7 @@ def semantic_body(event):
 def validate_writer(event):
     if event["replay_policy"] == "projector_replay_only":
         raise ValueError("replay_only_not_appendable")
-    if event["replay_policy"] != "dedupe_by_idempotency_key":
+    elif event["replay_policy"] != "dedupe_by_idempotency_key":
         raise ValueError("filemanager writer replay policy")
 
 
@@ -214,6 +228,13 @@ def synchronize_fixture(name, payload, trace, external_body=True, external_opera
     m["retry_event"] = copy.deepcopy(event)
     m["result"] = {k: copy.deepcopy(stored[k]) for k in
                    ("first_append_receipt", "original_segment_ref", "original_event_value_commitment")}
+    old_key = m["append_key"]
+    m["append_key"] = ("event_append_receipt_custody.v1:" + stored["storage_instance_id"] + ":" +
+                       hashlib.sha256(event["event_id"].encode()).hexdigest())
+    if old_key != m["append_key"]:
+        del m["append_rows"][old_key]
+        m["append_rows"][m["append_key"]] = stored
+    m["checkpoint_binding"]["event_id"] = event["event_id"]
     control = m["control_rows"][m["control_key"]]
     m["final_operation"], m["final_control"], m["final_append"] = map(copy.deepcopy, (op, control, stored))
     m["operation_rows"][m["operation_key"]] = (
@@ -224,6 +245,40 @@ def synchronize_fixture(name, payload, trace, external_body=True, external_opera
     m["backup_binding"] = copy.deepcopy({
         "operation": m["final_operation_value"], "control": control, "append": stored,
         "storage_instance_id": op["storage_instance_id"], "payload_rows": m["payload_rows"]})
+
+
+def fixture_copies(trace):
+    """Construct observational copies; never called by a contract validator."""
+    model = trace["custody_model"]
+    operation = model["operation_rows"][model["operation_key"]]
+    control = model["control_rows"][model["control_key"]]
+    append = model["append_rows"][model["append_key"]]
+    logical = lambda value: model["payload_rows"][value["value_ref"]] if "value_ref" in value else value
+    model["final_operation"], model["final_control"], model["final_append"] = map(
+        copy.deepcopy, (logical(operation), logical(control), append))
+    model["final_operation_value"], model["final_control_value"] = map(copy.deepcopy, (operation, control))
+    model["final_payload_rows"] = copy.deepcopy(model["payload_rows"])
+    model["backup_binding"] = copy.deepcopy(dict(operation=operation, control=control, append=append,
+        storage_instance_id=logical(operation)["storage_instance_id"], payload_rows=model["payload_rows"]))
+
+
+def fixture_event(trace, event):
+    """Recompute fixture commitments/copies after a non-digest event mutation."""
+    model = trace["custody_model"]
+    stored = model["append_rows"].pop(model["append_key"])
+    stored["event_id"], stored["idempotency_key"] = event["event_id"], event["idempotency_key"]
+    stored["first_append_receipt"]["event_id"] = event["event_id"]
+    stored["original_event_value_commitment"] = full_value_commitment(event)
+    stored["producer_semantic_digest"] = hashlib.sha256(json.dumps(
+        semantic_body(event), sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+    model["append_key"] = ("event_append_receipt_custody.v1:" + stored["storage_instance_id"] + ":" +
+                           hashlib.sha256(event["event_id"].encode()).hexdigest())
+    model["append_rows"][model["append_key"]] = stored
+    model["request"] = {"event": copy.deepcopy(event)}
+    model["retry_event"] = copy.deepcopy(event)
+    model["result"] = {k: copy.deepcopy(stored[k]) for k in
+                       ("first_append_receipt", "original_segment_ref", "original_event_value_commitment")}
+    model["checkpoint_binding"]["event_id"] = event["event_id"]
 
 
 def terminal_fixture_proof(trace, before):
@@ -269,6 +324,16 @@ def boundary_case(row, case):
     name, scenario = row["event_type"], case["scenario"]
     p, t = copy.deepcopy(row["payload"]), copy.deepcopy(row["trace"])
     m = t["custody_model"]
+    if scenario == "api":
+        validators = {fn.__name__: fn for fn in (
+            validate_payload_reference, resolve_payload, resolve_value, event_body,
+            validate_writer, validate_profile, validate_operation_transition,
+            validate_control_transition, validate_original_models, validate_case,
+            validate_snapshot_subjects, validate_complete_event)}
+        validator = validators[case["validator"]]
+        # A boundary probe carries its accepting control and changes one invariant.
+        validator(*copy.deepcopy(case["valid_args"]), **copy.deepcopy(case.get("valid_kwargs", {})))
+        return validator(*copy.deepcopy(case["args"]), **copy.deepcopy(case.get("kwargs", {})))
     if scenario == "schema-reference":
         documents = schema_documents()
         path = "event_payloads/file_manager/" + name.replace(".", "_") + ".schema.json"
@@ -279,13 +344,22 @@ def boundary_case(row, case):
     if scenario.startswith("profile-"):
         registry = json.loads((ROOT / "Plans/storage_value_registry.json").read_text())
         profiles = registry["storage_profile"]["family_profiles"]
-        if scenario == "profile-schema-header":
+        if scenario == "profile-budget":
+            profile = profiles[case["family"]]
+            next(g for g in registry["storage_profile"]["groups"]
+                 if g["group_id"] == profile["storage_group"])["canonical_budget_bytes"] = 1
+        elif scenario == "profile-schema-header":
             entry = next(f for f in registry["families"] if f["family_id"] == case["family"])
             entry["value_schema"]["properties"]["schema_id"] = {"enum": [entry["value_schema_id"]]}
         elif scenario == "profile-missing":
             del profiles[case["family"]]
         else:
             profiles[case["family"]][case["field"]] = case["value"]
+            if case["field"] == "storage_group":
+                # The profile assignment is wrong; the selected group's budget is
+                # deliberately coherent so it is not a second refusal boundary.
+                group = next(g for g in registry["storage_profile"]["groups"] if g["group_id"] == case["value"])
+                group["canonical_budget_bytes"] = 2147483648
         return validate_profile(registry, case["family"])
     if scenario.startswith("terminal-"):
         original = next(c for c in row["transition_cases"] if c["name"] == "effect-to-history")
@@ -302,17 +376,22 @@ def boundary_case(row, case):
         elif scenario == "terminal-semantic-proof":
             proof["custody_model"]["resolver"] = "storage.first_append_receipt.resolve.v2"
         elif scenario == "terminal-wrong-witness":
-            proof["custody_model"]["result"]["original_event_value_commitment"]["sha256"] = "0" * 64
+            model = proof["custody_model"]
+            model["append_rows"][model["append_key"]]["original_event_value_commitment"]["sha256"] = "0" * 64
         elif scenario == "terminal-replay-only":
             after["complete_event"]["replay_policy"] = "projector_replay_only"
         elif scenario == "terminal-substituted-original":
             model = proof["custody_model"]
-            model["operation_rows"][model["operation_key"]]["recovery_epoch"] += 1
+            model["operation_rows"][model["operation_key"]]["revision"] += 1
         elif scenario == "terminal-already-published-original":
             model = proof["custody_model"]
             model["operation_rows"][model["operation_key"]] = copy.deepcopy(after)
         else:
             raise AssertionError("unknown terminal case")
+        if proof is not None:
+            if scenario != "terminal-wrong-witness":
+                fixture_event(proof, after["complete_event"])
+            fixture_copies(proof)
         return validate_operation_transition(before, after, proof)
     if scenario.startswith("physical-"):
         definition = case["definition"]
@@ -353,7 +432,12 @@ def boundary_case(row, case):
             storage = {"before": before, "after": stored_value("family_control", after, packs),
                        "payload_rows": packs}
             if scenario == "control-changed-referent":
-                packs[storage["after"]["value_ref"]]["reader_enabled"] = False
+                ref = storage["after"]["value_ref"]
+                parts = ref.split(":")
+                parts[3] = ("0" if parts[3][0] != "0" else "1") + parts[3][1:]
+                bad = ":".join(parts)
+                packs[bad] = packs.pop(ref)
+                storage["after"]["value_ref"] = bad
         validate_control_transition(before, after, before["last_admitted_sequence"],
                                     after["drain_operation_keys"], storage)
         if scenario == "control-large-reference-reader":
@@ -373,16 +457,18 @@ def boundary_case(row, case):
         m = t["custody_model"]
         if scenario == "pack-missing":
             m["payload_rows"] = {}
-        elif scenario == "pack-changed":
-            next(iter(m["payload_rows"].values()))["evidence_refs"][0] += "a"
-        elif scenario == "pack-wrong-size":
-            ref = m["request"]["event"]["payload_ref"]
-            bad = ref.replace(":" + str(case.get("bytes", INLINE_LIMIT + 1)) + ":", ":99999:")
-            changed = copy.deepcopy(m["final_operation"])
-            changed["complete_event"]["payload_ref"] = bad
-            m["payload_rows"][bad] = copy.deepcopy(m["payload_rows"][ref])
-            m["operation_rows"][m["operation_key"]] = stored_value(
-                "operation_custody", changed, m["payload_rows"])
+        elif scenario in {"pack-changed", "pack-wrong-size"}:
+            physical = m["operation_rows"][m["operation_key"]]
+            ref = physical["value_ref"]
+            parts = ref.split(":")
+            if scenario == "pack-changed":
+                parts[3] = ("0" if parts[3][0] != "0" else "1") + parts[3][1:]
+            else:
+                parts[4] = "99999"
+            bad = ":".join(parts)
+            m["payload_rows"][bad] = m["payload_rows"].pop(ref)
+            physical["value_ref"] = bad
+            fixture_copies(t)
         elif scenario == "pack-backup-missing":
             m["backup_binding"]["payload_rows"] = {}
         elif scenario == "pack-late-change":
@@ -401,6 +487,7 @@ def boundary_case(row, case):
         m["retry_event"]["event_id"] = "evt_unrelated"
     elif scenario == "raw-project-partition":
         m["append_rows"][m["append_key"]]["scope_partition"] = p["project_id"]
+        fixture_copies(t)
     elif scenario.startswith("checkpoint-"):
         field = scenario.removeprefix("checkpoint-")
         m["checkpoint_binding"][field] = 999 if field == "recovery_epoch" else "foreign"
@@ -471,6 +558,13 @@ def control_key(row):
             ":" + row["event_type"] + ":" + row["family_revision"])
 
 
+def validate_path_coverage(paths, required_paths, label):
+    # Accepted and settled snapshots obey the same coverage invariant. Keep one
+    # enforcement point so an isolated coverage mutation tests that invariant.
+    if len(paths) != len(required_paths) or {p["path_ref"] for p in paths} != required_paths:
+        raise ValueError(label + " path coverage")
+
+
 def validate_snapshot_subjects(event_type, payload, operation):
     """Join represented original facts; semantic flags cannot attest these relations."""
     kind, action = event_type.split(".")
@@ -525,22 +619,42 @@ def validate_snapshot_subjects(event_type, payload, operation):
             raise ValueError("rename original parent/basename")
 
 
+def validate_complete_event(event_type, payload, context, event, payload_rows, *,
+                            include_body=True, label="original complete event join"):
+    if ((include_body and not same_value(event_body(event, payload_rows), payload)) or event["event_type"] != event_type or
+            event["project_id"] != payload["project_id"] or event["scope_kind"] != "project" or
+            event["correlation_id"] != payload["correlation_id"] or
+            event["occurred_at_utc"] != payload["ts"] or event["payload_schema_id"] != payload["schema_id"] or
+            (event["event_id"], event["idempotency_key"]) != identity(event_type, payload, context)):
+        raise ValueError(label)
+
+
+def validate_operation_edge(before, after, terminal=False):
+    expected = {"accepted": "effect_settled", "effect_settled": "history_settled"}
+    permitted = (expected.get(before["phase"]) == after["phase"] or
+                 (before["phase"] == "accepted" and after["phase"] == "no_event_settled"))
+    if terminal:
+        permitted = before["phase"] == "effect_settled" and after["phase"] == "history_settled"
+    if not permitted or after["revision"] != before["revision"] + 1:
+        raise ValueError("operation CAS/phase")
+
+
+def validate_operation_immutables(before, after):
+    immutable = set(before) - {"phase", "revision", "settlement", "complete_event", "first_append_receipt", "noncompletion"}
+    if any(not same_value(before[k], after[k]) for k in immutable):
+        raise ValueError("changed accepted original")
+    if before["settlement"] is not None and not same_value(before["settlement"], after["settlement"]):
+        raise ValueError("changed settled original")
+
+
 def validate_operation_transition(before, after, proof=None, storage=None):
     storage = storage or {}
     for label, row in (("before", before), ("after", after)):
         resolved = resolve_value("operation_custody", storage.get(label, row), storage.get("payload_rows", {}))
         if not same_value(resolved, row):
             raise ValueError("operation physical resolution differs")
-    expected = {"accepted": "effect_settled", "effect_settled": "history_settled"}
-    permitted = (expected.get(before["phase"]) == after["phase"] or
-                 (before["phase"] == "accepted" and after["phase"] == "no_event_settled"))
-    if not permitted or after["revision"] != before["revision"] + 1:
-        raise ValueError("operation CAS/phase")
-    immutable = set(before) - {"phase", "revision", "settlement", "complete_event", "first_append_receipt", "noncompletion"}
-    if any(not same_value(before[k], after[k]) for k in immutable):
-        raise ValueError("changed accepted original")
-    if before["settlement"] is not None and not same_value(before["settlement"], after["settlement"]):
-        raise ValueError("changed settled original")
+    validate_operation_edge(before, after)
+    validate_operation_immutables(before, after)
     if after["phase"] == "no_event_settled":
         return  # No event/payload/receipt may be attached; the closed schema enforces this.
     payload = after["settlement"]["payload"]
@@ -554,21 +668,14 @@ def validate_operation_transition(before, after, proof=None, storage=None):
     if after["phase"] == "history_settled":
         event = after["complete_event"]
         validate_writer(event)
-        if (event["event_type"] != after["event_type"] or
-                event["project_id"] != after["project_id"] or event["scope_kind"] != "project" or
-                event["correlation_id"] != payload["correlation_id"] or
-                event["occurred_at_utc"] != payload["ts"] or
-                event["payload_schema_id"] != payload["schema_id"] or
-                (event["event_id"], event["idempotency_key"]) != identity(after["event_type"], payload, after)):
-            raise ValueError("terminal original EventRecord join")
+        validate_complete_event(after["event_type"], payload, after, event, {},
+                                include_body=False, label="terminal original EventRecord join")
         if proof is None:
             raise ValueError("terminal strict full-value proof missing")
-        model = proof["custody_model"]
-        selected = resolve_value("operation_custody", model["operation_rows"][model["operation_key"]],
-                                 model["payload_rows"])
-        if not same_value(selected, before):
-            raise ValueError("terminal selected original differs from before")
-        validate_case(after["event_type"], payload, proof, operation_candidate=after)
+        # The proof-dependent joins have no operands when the optional input is absent.
+        if proof is not None:
+            validate_case(after["event_type"], payload, proof, operation_candidate=after,
+                          transition_before=before)
 
 
 def validate_control_transition(before, after, issued_sequence, drain_keys, storage=None):
@@ -605,26 +712,36 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
         raise ValueError("withdrawn authority rewritten")
 
 
-def validate_original_models(event_type, payload, trace, *, operation_candidate=None):
+def validate_original_models(event_type, payload, trace, *, operation_candidate=None, transition_before=None):
     model = trace["custody_model"]  # Synthetic canonical tables; native origin remains NOT_RUN.
     physical_operation = model["operation_rows"][model["operation_key"]]
     selected_operation = resolve_value("operation_custody", physical_operation, model["payload_rows"])
     row = selected_operation if operation_candidate is None else operation_candidate
     validate_shape("filemanager_operation_contracts.schema.json", "operation_custody", row)
     if operation_candidate is not None:
-        immutable = set(selected_operation) - {"phase", "revision", "complete_event", "first_append_receipt"}
-        if (selected_operation["phase"] != "effect_settled" or row["phase"] != "history_settled" or
-                row["revision"] != selected_operation["revision"] + 1 or
-                any(not same_value(row[k], selected_operation[k]) for k in immutable)):
-            raise ValueError("terminal candidate changed selected original")
+        before = selected_operation if transition_before is None else transition_before
+        validate_operation_edge(before, row, terminal=True)
+        validate_operation_immutables(before, row)
+        if transition_before is not None and not same_value(selected_operation, transition_before):
+            raise ValueError("terminal selected original differs from before")
     if model["operation_key"] != operation_key(row) or payload["receipt_ref"] != receipt_ref(row):
         raise ValueError("operation physical identity")
-    if any(row[k] != trace[k] for k in ("storage_instance_id", "recovery_epoch", "project_id")):
+    validate_project_scope(row["project_id"], trace["project_id"], "operation original epoch/scope")
+    if any(row[k] != trace[k] for k in ("storage_instance_id", "recovery_epoch")):
         raise ValueError("operation original epoch/scope")
     if row["event_type"] != event_type or row["operation_id"] != payload["operation_id"]:
         raise ValueError("operation family/identity")
-    if row["phase"] != "history_settled" or not same_value(row["settlement"]["payload"], payload):
+    if row["phase"] != "history_settled":
         raise ValueError("unsettled or changed original payload")
+    # All remaining joins consume a historical complete event and issued receipt.
+    if row["phase"] == "history_settled":
+        validate_historical_operation(event_type, payload, trace, model, row,
+                                      physical_operation, selected_operation)
+
+
+def validate_historical_operation(event_type, payload, trace, model, row,
+                                  physical_operation, selected_operation):
+    validate_original_payload(payload, row["settlement"]["payload"], "unsettled or changed original payload")
     for k in ("command_id", "handler_target", "correlation_id", "origin"):
         if row["accepted_command"][k] != payload[k]:
             raise ValueError("original command join")
@@ -636,16 +753,14 @@ def validate_original_models(event_type, payload, trace, *, operation_candidate=
     paths = row["settlement"]["path_snapshots"]
     required_paths = set(payload["affected_path_refs"] +
                          [payload[k] for k in ("source_path_ref", "destination_path_ref") if k in payload])
-    if len(paths) != len(required_paths) or {p["path_ref"] for p in paths} != required_paths:
-        raise ValueError("original path coverage")
+    validate_path_coverage(paths, required_paths, "original")
     for p in paths:
         if (p["project_id"] != payload["project_id"] or
                 p["path_snapshot_revision"] != payload["path_snapshot_revision"] or
                 (p["node_ref"] is None) != (p["node_kind"] == "absent")):
             raise ValueError("original path join")
     accepted_paths = row["accepted_path_snapshots"]
-    if len(accepted_paths) != len(paths) or {p["path_ref"] for p in accepted_paths} != required_paths:
-        raise ValueError("accepted path coverage")
+    validate_path_coverage(accepted_paths, required_paths, "accepted")
     for p in paths:
         original = next(a for a in accepted_paths if a["path_ref"] == p["path_ref"])
         if any(original[k] != p[k] for k in ("project_id", "path_snapshot_revision", "computer_id",
@@ -654,12 +769,7 @@ def validate_original_models(event_type, payload, trace, *, operation_candidate=
     validate_snapshot_subjects(event_type, payload, row)
     event = row["complete_event"]
     validate_writer(event)
-    if (not same_value(event_body(event, model["payload_rows"]), payload) or event["event_type"] != event_type or
-            event["project_id"] != payload["project_id"] or event["scope_kind"] != "project" or
-            event["correlation_id"] != payload["correlation_id"] or
-            event["occurred_at_utc"] != payload["ts"] or event["payload_schema_id"] != payload["schema_id"] or
-            (event["event_id"], event["idempotency_key"]) != identity(event_type, payload, row)):
-        raise ValueError("original complete event join")
+    validate_complete_event(event_type, payload, row, event, model["payload_rows"])
     if model["resolver"] != "storage.first_append_receipt.resolve_full_value.v1":
         raise ValueError("semantic proof is not full-value proof")
     request, result = model["request"], model["result"]
@@ -741,10 +851,9 @@ def identity(event_type, payload, context):
     return "evt_" + event_type.replace(".", "_") + "_" + digest, event_type + ":" + digest
 
 
-def validate_case(event_type, payload, trace, *, operation_candidate=None):
+def validate_case(event_type, payload, trace, *, operation_candidate=None, transition_before=None):
     validate_shape("event_payloads/file_manager/" + event_type.replace(".", "_") + ".schema.json", "", payload)
-    if payload["project_id"] != trace["project_id"]:
-        raise ValueError("scope mismatch")
+    validate_project_scope(payload["project_id"], trace["project_id"], "scope mismatch")
     kind, action = event_type.split(".")
     root = "node" if kind == "file" else "folder"
     if action == "copied" and payload["result_" + root + "_ref"] == payload["source_" + root + "_ref"]:
@@ -756,8 +865,7 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None):
             raise ValueError("foreign path scope")
     if any(not p.startswith("pm-path-ref:v1:project:") for p in payload["affected_path_refs"]):
         raise ValueError("foreign affected path scope")
-    if not same_value(trace["original_payload"], payload):
-        raise ValueError("unequal original custody")
+    validate_original_payload(payload, trace["original_payload"], "unequal original custody")
     if trace["stages"] != ["effect_settled", "receipt_settled", "append", "first_ack", "terminal"]:
         raise ValueError("invalid ordering")
     if not trace["original_first_receipt_resolved"]:
@@ -794,7 +902,8 @@ def validate_case(event_type, payload, trace, *, operation_candidate=None):
     expected = identity(event_type, payload, trace)
     if tuple(trace["retry_identity"]) != expected:
         raise ValueError("retry identity changed")
-    validate_original_models(event_type, payload, trace, operation_candidate=operation_candidate)
+    validate_original_models(event_type, payload, trace, operation_candidate=operation_candidate,
+                             transition_before=transition_before)
     return expected
 
 
@@ -813,6 +922,11 @@ def negative_case(row, case):
     if case.get("schema_only"):
         return validate_shape("event_payloads/file_manager/" + row["event_type"].replace(".", "_") +
                               ".schema.json", "", p)
+    if "schema_target" in case:
+        target = t["custody_model"]
+        for key in case["schema_target"]["path"]:
+            target = target[key]
+        return validate_shape(case["schema_target"]["document"], case["schema_target"]["definition"], target)
     return validate_case(row["event_type"], p, t)
 
 
@@ -826,6 +940,21 @@ def check_negative_reason(case, error):
                   if isinstance(error, jsonschema.ValidationError) else None)
         if actual != case["expected_schema"]:
             raise AssertionError("schema negative masked: " + case["name"]) from error
+
+
+def transition_case(row, case):
+    args = case["args"]
+    if case.get("schema_only"):
+        value = args[1]
+        for key in case.get("schema_path", []):
+            value = value[key]
+        return validate_shape("filemanager_operation_contracts.schema.json",
+                              case.get("schema_definition", "operation_custody" if case["kind"] == "operation"
+                                       else "family_control"), value)
+    validator = validate_operation_transition if case["kind"] == "operation" else validate_control_transition
+    if case.get("proof_source") == "original_trace":
+        return validator(*args, proof=terminal_fixture_proof(row["trace"], args[0]))
+    return validator(*args)
 
 
 def main():
@@ -851,13 +980,8 @@ def main():
             else:
                 raise AssertionError(name + ": accepted negative " + case["name"])
         for case in row["transition_cases"]:
-            args = case["args"]
-            validator = validate_operation_transition if case["kind"] == "operation" else validate_control_transition
             try:
-                if case.get("proof_source") == "original_trace":
-                    validator(*args, proof=terminal_fixture_proof(trace, args[0]))
-                else:
-                    validator(*args)
+                transition_case(row, case)
             except (ValueError, KeyError, jsonschema.ValidationError) as error:
                 if case["valid"]:
                     raise AssertionError(name + ": rejected positive transition " + case["name"])
