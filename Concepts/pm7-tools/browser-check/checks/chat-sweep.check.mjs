@@ -33,7 +33,10 @@ export const tests = {
   await t.viewport(1177,900); const f=await t.app.open();
   await f.locator('#pmRoot [data-action="open-activity"]').first().click();
   await t.page.waitForTimeout(800);
-  const r=await f.evaluate(()=>({w:document.querySelector('#pmRoot .chat-stage').getBoundingClientRect().width, cover:!!document.querySelector('#pmRoot .activity-panel[data-mode="cover"]')}));
-  t.log(JSON.stringify(r)); await t.check('messages at least 360 or covered',r.w>=360||r.cover);
+  for(const w of [740,860,1024,1120,1136,1137,1138,1176,1177,1178,1280,1390,1920]) {
+   await t.viewport(w,900);await t.page.waitForTimeout(200);
+   const r=await f.evaluate(()=>({w:document.querySelector('#pmRoot .chat-stage').getBoundingClientRect().width,cover:!!document.querySelector('#pmRoot .activity-panel.cover')}));
+   t.log(w+' '+JSON.stringify(r));await t.check(w+' messages at least 360 or covered',r.w>=360||r.cover);
+  }
  }
 };
