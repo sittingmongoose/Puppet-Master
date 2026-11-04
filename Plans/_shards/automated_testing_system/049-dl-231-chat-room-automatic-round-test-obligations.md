@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7289
+Source lines: L6715-L7343
 
-Source SHA256: `c153c2ecfe53dc15c73336a44d19de20c56053fa491bea4f878173d5ea3301c6`
+Source SHA256: `021fcd93f97feacb654ee8dc965bab4ba9bd2cd1058dcb34f6c8f6f9b10d6d67`
 
 ---
 
@@ -582,4 +582,58 @@ source_lineage:
 preserved_exact_tokens: []
 negative_constraints:
 - No admission, deletion-policy decision, app-scope expansion or native proof.
+```
+
+
+### ATS-316 - Card 1b maintenance oracles
+
+```yaml
+plan_unit_id: ATS-316
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: For memory.monthly_summary.started, memory.monthly_summary.completed, memory.prune_archive.started
+  and memory.prune_archive.completed, each at 1.0.0, execute scripts/pm_memory_archive_events.py against Plans/memory_archive_event_fixtures.json.
+  Each exact family adopts ATS-315 and the SP-636/SP-637 first-start-custody model by explicit SP-638/SP-639/CV-658/CV-659
+  adoption, not sibling admission. Test the closed separate payload and operation definitions, full EventRecord
+  2.0.0, encoded Project partition, storage-assigned retry-field exclusion, replay-only refusal, both terminal outcomes,
+  CAS, start receipt on all writer/effect/recovery/history paths and SP-278 storage joins. Test cutoff refusal for
+  automatic, Memory-panel and direct invocation with no operation/effect/append/output; buttons unavailable with
+  a reason; synthetic approval control never selects cutoff values. Historical originals stay readable with current
+  cutoffs absent and source/request/counters changed, but forgery, access revocation and withdrawal refuse. Archive
+  oracles preserve originals, all evidence refs and pins and reject deletion/merging a pin. Every negative is derived
+  from an intact control; run the whole negative corpus with each logical guard removed, report negatives that flip
+  and all others that remain rejected, and restore the guard. A failed oracle must produce a nonzero process exit;
+  unresolved refs including dormant branches fail. Bounds enforce 16 KiB and trailing LF rejection. Physical transactions,
+  receipts, flushes and native GUI execution are NOT_RUN. No admission or numeric cutoff is authorized.
+gui_related: true
+gui_classification_reason: Includes unavailable Memory-panel button contract.
+depends_on:
+- ATS-315
+- SP-638
+- SP-639
+- CV-658
+- CV-659
+unblocks: []
+acceptance_criteria:
+- All four families pass the static suite with exact refusal, unchanged state and no output.
+- Each guard-removal row proves its own negatives flip and all other negatives remain rejected.
+validation_surfaces:
+- python3 scripts/pm_memory_archive_events.py
+risk_class: event_authority_oracle
+reasoning_tier: high
+context_scope: ea_DMEM_card1b_20261104
+implementation_surfaces:
+- scripts/pm_memory_archive_events.py
+- Plans/memory_archive_event_fixtures.json
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-card1b-search.json
+preserved_exact_tokens:
+- cutoffs_unavailable
+- NOT_RUN
+negative_constraints:
+- No selected cutoff, admission or native proof.
 ```

@@ -197,26 +197,6 @@
       "payload_schema_id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started"
     }
   ],
-  "blocked_rows": [
-    {
-      "event_type": "memory.monthly_summary.completed",
-      "outcome": "blocked_on_Jared",
-      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
-    },
-    {
-      "event_type": "memory.monthly_summary.started",
-      "outcome": "blocked_on_Jared",
-      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
-    },
-    {
-      "event_type": "memory.prune_archive.completed",
-      "outcome": "blocked_on_Jared",
-      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
-    },
-    {
-      "event_type": "memory.prune_archive.started",
-      "outcome": "blocked_on_Jared",
-      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
-    }
-  ]
+  "blocked_rows": [],
+  "card1b_prepared_contracts_ref": "Plans/memory_archive_contracts.json"
 }

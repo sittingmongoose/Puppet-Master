@@ -474,6 +474,314 @@
           "const": "cmd.chat.memory.verification_sweep"
         }
       }
+    },
+    "memory_monthly_summary_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "cutoff_ref",
+        "cutoff_sha256",
+        "month"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.monthly_summary.started"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.summarize_monthly"
+        },
+        "cutoff_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cutoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "month": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+          "minLength": 7,
+          "maxLength": 7
+        }
+      }
+    },
+    "memory_monthly_summary_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "started_event_id",
+        "status",
+        "result_ref",
+        "result_sha256",
+        "cutoff_ref",
+        "cutoff_sha256",
+        "month"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.monthly_summary.completed"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.summarize_monthly"
+        },
+        "started_event_id": {
+          "type": "string",
+          "pattern": "^evt_mem_[0-9a-f]{64}$",
+          "minLength": 72,
+          "maxLength": 72
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ]
+        },
+        "result_ref": {
+          "type": "string",
+          "minLength": 74,
+          "maxLength": 74,
+          "pattern": "^memresult_[0-9a-f]{64}$"
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "cutoff_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cutoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "month": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$",
+          "minLength": 7,
+          "maxLength": 7
+        }
+      }
+    },
+    "memory_prune_archive_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "cutoff_ref",
+        "cutoff_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.prune_archive.started"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.prune_archive"
+        },
+        "cutoff_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cutoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
+    },
+    "memory_prune_archive_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "started_event_id",
+        "status",
+        "result_ref",
+        "result_sha256",
+        "cutoff_ref",
+        "cutoff_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.prune_archive.completed"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 64
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.prune_archive"
+        },
+        "started_event_id": {
+          "type": "string",
+          "pattern": "^evt_mem_[0-9a-f]{64}$",
+          "minLength": 72,
+          "maxLength": 72
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ]
+        },
+        "result_ref": {
+          "type": "string",
+          "minLength": 74,
+          "maxLength": 74,
+          "pattern": "^memresult_[0-9a-f]{64}$"
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        },
+        "cutoff_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "cutoff_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
+        }
+      }
     }
   }
 }
