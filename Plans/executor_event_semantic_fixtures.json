@@ -8010,6 +8010,124 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "pre-attempt-envelope-null-is-not-omission",
+          "changes": [
+            {
+              "path": "payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "payload/requires_safe_point_restore",
+              "delete": true
+            },
+            {
+              "path": "payload/failure_class",
+              "delete": true
+            },
+            {
+              "path": "payload/timeout_class",
+              "delete": true
+            },
+            {
+              "path": "payload/wait_state_class",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/operation/body/failure_class",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/timeout_class",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/wait_state_class",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/requires_safe_point_restore",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "799c6e5d414e7887bc675607cc7701c2167c71e03934791175c1fd82d6484c67"
+            },
+            {
+              "path": "capture/records/attempt",
+              "delete": true
+            },
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "b3b000a458410e2d98b82919ac818af78411cc2cb534b7bd7fc518bc5284342d"
+            },
+            {
+              "path": "capture/expected_revisions/attempt",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/requires_safe_point_restore",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/failure_class",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/timeout_class",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/wait_state_class",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -14813,6 +14931,40 @@
             {
               "path": "capture/records/episode/sha256",
               "value": "c9f102c923d595e02a1311368fad25c3a9b7f65004214b2feac7c199fdcf9cec"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "pre-attempt-envelope-null-is-not-omission",
+          "changes": [
+            {
+              "path": "payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/attempt",
+              "delete": true
+            },
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "cd11fc197d2c4c7d8a80f944bc0327894b6bf5e644c891d1547af2fb1e9fb064"
+            },
+            {
+              "path": "capture/expected_revisions/attempt",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/attempt_id",
+              "delete": true
             }
           ],
           "expected": "reject"

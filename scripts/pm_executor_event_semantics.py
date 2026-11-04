@@ -165,7 +165,7 @@ def validate_capture(contract, payload, capture):
         require(payload.get('attempt_id') == episode_attempt, 'episode attempt presence')
         if episode_attempt is None:
             expected_slots.discard('attempt')
-            require(capture['envelope'].get('attempt_id') is None, 'pre-attempt envelope')
+            require('attempt_id' not in capture['envelope'], 'pre-attempt envelope omission')
         else:
             require(records['attempt']['body']['attempt_id'] == episode_attempt, 'episode attempt record')
     require(set(records) == expected_slots, 'source record set')
