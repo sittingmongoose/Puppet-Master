@@ -477,6 +477,8 @@
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
         const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
+        const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
         this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
         for (let it = 0; it < 6 && obs.length; it++) {
@@ -514,6 +516,15 @@
     }
     // how far Pip's drawn head reaches below the point it hangs from, in stage units (null until it has been measured)
     pipHB() { return this.pipBB && this.vis ? (this.pipBB.h[1] + this.pipBB.h[3] - 31.5) * this.L.s : null; }
+    // Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit)
+    pipHead() {
+      const ps = this.ps, Lay = this.L, s = Lay.s, hb = this.pipHB();
+      if (!ps || hb == null) return null;
+      const h = this.pipBB.h; let y = ps.Ct.y + Lay.rope;
+      if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
+      if (y + hb > this.vis.y1) y = this.vis.y1 - hb;
+      return [ps.Ct.x + (h[0] - 32) * s, y + (h[1] - 31.5) * s, ps.Ct.x + (h[0] + h[2] - 32) * s, y + hb];
+    }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
        at a narrow window; NieR's box sits over the column): its blocks were cut at the bottom, or under NieR's words */
@@ -973,6 +984,7 @@
          that lands before it talks is already below it) */
       if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
+      this.pipKeep = this.pipHead();
       this.renderN = (this.renderN || 0) + 1;
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
