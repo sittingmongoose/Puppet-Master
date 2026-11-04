@@ -523,8 +523,12 @@
       (this.hdr || []).forEach((w) => { if (w.x1 > X0 && w.x0 < X1 && w.y1 > y0) { y0 = w.y1; cut = true; } });
       const k = cut ? clamp((v.y1 - y0 - 16) / (L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0), .5, 1) : 1;
       if (Math.abs(k - (this.pipK || 1)) > .002) this.setPipK(k);
-      const s = Lay.s;
-      return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1)];
+      const s = Lay.s, dy = into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1);
+      /* (and the bar rocks, while Pip works, only as far as the room above it: its ends rose 2.6 px past Retro Dark's tube
+         at 740 on Creating, the span there barely holding Pip at rest) */
+      const room = at[1] + dy + (c[1] - 14.5) * s - y0, halfW = Math.max(Math.abs(c[0] - 32), Math.abs(c[0] + c[2] - 32)) * s;
+      this.rockMax = Math.min(.12, Math.asin(clamp(room / (halfW || 1), 0, 1)));
+      return [into(at[0] + lo * s, at[0] + hi * s, v.x0, v.x1), dy];
     }
     /* Pip drawn at k of its layout's size: its drawing and the rope it hangs on, and the strings' rest lengths */
     setPipK(k) {
@@ -637,6 +641,7 @@
       // asleep: the hand lowers until Pip rests on the floor (kept while the wake is pending)
       const asleep = pip.pose === 'asleep' || !!this.sleepZ;
       /* (its spot fitted to what a person can see, as the props are: pipFit) */
+      this.work = !!pip.work; /* (before the fit: how far the bar may rock) */
       const fo = this.pipOff = this.pipFit(at); this.pipAt = at;
       this.ps.Ct.x = at[0] + fo[0]; this.ps.Ct.y = at[1] + fo[1] + (asleep ? Lay.rope * .72 : 0);
       this.ps.asleep = asleep;
@@ -936,7 +941,7 @@
       if (red) { ps.tilt = ps.tiltT; ps.phi = 0; }
       else {
         const tA = 90 * (ps.tiltT - ps.tilt) - 10 * ps.tiltv; ps.tiltv += tA * dt; ps.tilt += ps.tiltv * dt;
-        const phiT = this.work ? Math.sin(this.t * 4.2) * .12 : ps.asleep ? .08 : 0;
+        const phiT = this.work ? Math.sin(this.t * 4.2) * (this.rockMax == null ? .12 : this.rockMax) : ps.asleep ? .08 : 0;
         ps.phi += (phiT - ps.phi) * Math.min(1, dt * 6);
       }
       // eyes follow what Pip is looking at
