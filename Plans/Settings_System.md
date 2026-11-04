@@ -5183,7 +5183,7 @@ canonical_text: >-
   store. The gallery uses SSYS-009's preview/apply transaction over this exact id, as do any other owner-approved
   entry points; an unknown requested id is refused without a write, while a stale stored id is drawn using Look's
   own and disclosed. general.visual.glass-background-mode is retired after the coordinated 2026-10-15 publication,
-  drawn nowhere and interpreted only by SP-333's migration. The old Mesh/Depth/Minimal choices do not become catalog
+  drawn nowhere; SP-333 preserves actual owner-committed choices and excludes discovered concept preferences from product migration. The old Mesh/Depth/Minimal choices do not become catalog
   aliases. Glass transparency stays a separate family-gated value. The wallpaper catalog is DR-073's one registry;
   its options are not copied into a page-local list. The combined concept publication is recorded in DL-203; native
   acceptance remains separate. Jared’s 2026-10-14 follow-up settles the replacement family’s selection contract:

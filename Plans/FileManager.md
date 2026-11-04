@@ -4949,8 +4949,7 @@ canonical_text: >-
   Concepts/PMConcept7.html: explorer/changed/open segmented tabs, a measured-height tree
   animator with full keyboard tree model, hover quick actions per row kind,
   multi-select with a selection bar, type-ahead filter, hide-ignored toggle,
-  collapse-all, worktree root menu, and the sprout context menu whose hook id
-  remains fileContextMenu. The context menu's Delete affordance follows the F2-205
+  collapse-all, worktree root menu, and the sprout context menu. The context menu's Delete affordance follows the F2-205
   trash-first decision (OS-trash soft delete with undo toast; permanent delete
   stays behind the fail-closed confirm; explicit disclosure when trash is
   impossible), and Open with / Copy path submenu entries keep their c2 command
@@ -4980,7 +4979,6 @@ source_lineage:
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (winning files concept; source-lineage-only)"
 - "Plans/FileSafe.md (F2-205 trash-first delete decision)"
 preserved_exact_tokens:
-- "fileContextMenu"
 - "explorer"
 - "changed"
 - "open"

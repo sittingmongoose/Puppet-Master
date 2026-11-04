@@ -1489,9 +1489,7 @@ APR-021, APR-022, APR-029, APR-030, APR-051, APR-052, APR-053, APR-054, and APR-
 - **Authentic Mode Entry Paths:** Review must enter through the primary mode menu and its sidecars.
   BrainStorm must enter through Deep Plan sidecars. Neither mode may be bypassed or launched via
   disconnected demo hooks. Retained v2 and Additive Correction v4 contracts are fully preserved.
-- **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demonstration
-  cards display findings, static analysis, and code reviews without rendering interactive mutation
-  controls or misleading action buttons.
+Read-only inspection presents findings, static analysis and code review without interactive mutation controls or misleading execution states.
 
 ```yaml
 plan_unit_id: CWR-014
@@ -1637,20 +1635,19 @@ status: accepted
 owner_doc: Plans/Collaborative_Workflows.md
 canonical_text: >-
   Review and BrainStorm enter through their designated product mode menu and sidecar paths, preserving
-  retained v2 and correction-v4 semantics without bypasses. Read-only demonstration fixtures present
-  inspection findings and static analysis without interactive mutation controls or misleading execution
-  states.
+  retained v2 and correction-v4 semantics without bypasses. These mode entry paths preserve read-only inspection
+  of findings, static analysis and code review without interactive mutation controls or misleading execution states.
 gui_related: true
-gui_classification_reason: Governs canonical mode entry completeness and read-only demonstration semantics.
+gui_classification_reason: Governs mode entry and read-only inspection semantics.
 depends_on: [CWR-014]
 unblocks: []
 acceptance_criteria:
   - Review enters via primary mode menu; BrainStorm enters via Deep Plan sidecar.
   - Retained v2 and correction-v4 semantics remain fully intact.
-  - Read-only fixtures render findings without interactive mutation buttons.
+  - Read-only inspection presents findings without mutation controls.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
-risk_class: mode_entry_bypass_or_demo_mutation_leak
+risk_class: mode_entry_bypass_or_read_only_mutation_leak
 reasoning_tier: standard
 context_scope: collaborative_mode_entry
 implementation_surfaces:
@@ -1665,9 +1662,9 @@ source_lineage:
   - APR-067
 preserved_exact_tokens:
   - "mode entry"
-  - "read-only demonstration"
+  - "read-only inspection"
 negative_constraints:
-  - Do not expose interactive mutation controls on read-only demo fixtures.
+  - Do not expose mutation controls on read-only inspection surfaces.
 owner_hints:
   - Plans/Collaborative_Workflows.md
 ```
