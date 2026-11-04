@@ -107,7 +107,9 @@ const poseAtRest = (f) => f.waitForFunction(() => {
 async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await settle(t, f);
 	await poseAtRest(f);
-	const r = await f.evaluate(`(${SAMPLE.toString()})()`);
+	let r = await f.evaluate(`(${SAMPLE.toString()})()`);
+	// an idle wiggle or swing that began inside the sample left too few resting frames: once Pip rests again, sample again
+	if (!r.err && r.restFrames < 8) { await poseAtRest(f); const r2 = await f.evaluate(`(${SAMPLE.toString()})()`); if (!r2.err && r2.restFrames > r.restFrames) r = r2; }
 	if (r.err) return t.check(`${tag}: the stage`, false, r.err);
 	const at = `${tag} [${r.theme} ${r.layout}${r.asleep ? ', asleep' : ''}${r.low ? ', low-resource' : ''}${r.reduced ? ', reduced' : ''}]`;
 	const why = JSON.stringify(r.last);
