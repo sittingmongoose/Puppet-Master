@@ -1,5 +1,6 @@
 // SW-06, SW-28, SW-29, FO-56, FO-57: the words used by the look screen and Pip parts editor.
 import { readFileSync } from 'node:fs';
+import { reachableMenuLines } from '../helpers/look-menu-lines.mjs';
 const canon = JSON.parse(readFileSync(new URL('../../../../Plans/pip_parts.json', import.meta.url), 'utf8')).parts.map(({id, help}) => ({id, help}));
 const targets = [["common", "tour"], ["common", "enter"], ["common", "startOver"], ["chrome", "lookMenu"], ["chrome", "sound"], ["chrome", "close"], ["chrome", "resume"], ["chrome", "lookFamily:basic"], ["chrome", "lookFamily:friendly"], ["chrome", "lookFamily:glass"], ["chrome", "lookFamily:retro"], ["chrome", "lookFamily:nier"], ["chrome", "lookMode:light"], ["chrome", "lookMode:dark"], ["chrome", "lookNier:nier"], ["chrome", "lookNierAdjust:nier-adjust"], ["welcome", "skipAll"], ["look", "pickFamily:basic"], ["look", "pickFamily:friendly"], ["look", "pickFamily:glass"], ["look", "pickFamily:retro"], ["look", "pickFamily:nier"], ["look", "group:pickMode"], ["look", "pickNier"], ["look", "adjustNier"]];
 export default async function (t) {
@@ -48,6 +49,7 @@ export default async function (t) {
     await t.check(`FO-57 ${family}: current action routes line and face`, scene.say === expected && scene.pip.mood === {basic:'watch',friendly:'happy',glass:'wonder',retro:'happy',nier:'watch'}[family]);
     await t.check(`SW-06 ${family}: hover shows its preview line`, !!bubble && bubble === expected && !/am i glass now|in it goes/i.test(bubble));
   }
+  await t.emulate({ reducedMotion: 'reduce' });
   const menuIds = ['lookFamily:basic','lookFamily:friendly','lookFamily:glass','lookFamily:retro','lookFamily:nier','lookMode:light','lookMode:dark','lookNierAdjust:nier-adjust'];
   for (const [width,height] of [[1280,500],[740,768]]) {
     await t.viewport(width,height);
@@ -68,6 +70,11 @@ export default async function (t) {
           const body = await note.textContent();
           const marker = await note.getAttribute('data-written');
           observations.push({id, body, expected, marker, ok:body === expected && marker === id + '|' + mode});
+          const reach = await reachableMenuLines(t, f, id);
+          observations.push(reach);
+          if (width === 1280 && family === 'basic' && themeMode === 'dark' && mode === 'ELI5' && id === 'lookFamily:nier') {
+            await t.shot('fo56-short-menu-wheel', 'Every NieR note line is reachable by wheel inside the stationary window');
+          }
           if (id === 'lookFamily:basic') {
             for (const other of [mode === 'ELI5' ? 'Expert' : 'ELI5', mode]) {
               // Settings can change wording while this note remains open; a header click closes the menu.
@@ -80,7 +87,7 @@ export default async function (t) {
           await q.click();
         }
         t.log(JSON.stringify({width,height,family,themeMode,mode,observations}));
-        await t.check(`FO-56 ${width}x${height} ${family}/${themeMode} ${mode}: every reachable inline note written`, observations.every(x => x.ok));
+        await t.check(`FO-56 ${width}x${height} ${family}/${themeMode} ${mode}: every note written and every painted line reachable by wheel`, observations.every(x => x.ok));
         await f.locator('.o55-lookbtn').click();
       }
     }
