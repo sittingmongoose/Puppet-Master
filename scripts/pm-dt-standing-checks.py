@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Fault-inject all ten standing checks into the complete DT checker.
 
-Each fault affects one family. Checks 1..7 call the unmodified complete main
-with an in-memory model fault; check 8 uses a real failing subprocess. Nothing
-is written to the repository. Authentication adapters remain assumed.
+Each fault affects one family. Checks 1..7 and 10 call the complete main with
+an in-memory model fault; check 8 uses a real failing subprocess and check 9
+injects invalid schemas. Nothing is written to the repository. Authentication
+adapters remain assumed.
 """
 import argparse
 import contextlib
@@ -30,6 +31,7 @@ CASES = {
     '7': 'checkpoint publishes a coherent foreign storage identity',
     '8': 'pinned family identity oracle is wrong; process must exit 1',
     '9': 'unvisited timestamp alternative contains an unresolved schema reference',
+    '10': 'historical reader rechecks the live operation instead of its retained original',
 }
 
 
@@ -42,8 +44,9 @@ def failure_probe(name):
     return dt.main()
 
 
-def run_fault(name, number, ref_location='timestamp'):
+def run_fault(name, number, ref_location='timestamp', reader_fault='live_state'):
     source = dt.source_valid; checkpoint = dt.checkpoint_result; digest = dt.producer_semantic_digest
+    historical = dt.historical_read
     original_load = dt.load
     if number == '9':
         document = copy.deepcopy(original_load('Plans/dt_event_contracts.schema.json'))
@@ -96,6 +99,16 @@ def run_fault(name, number, ref_location='timestamp'):
 
     dt.source_valid = bad_source
     dt.checkpoint_result = bad_checkpoint
+    if number == '10':
+        def bad_historical(c, a, b, e, schemas, context):
+            if c['event_type'] == name:
+                if reader_fault == 'live_state' and context['live_before'] is not None and not dt.transition(name, b['payload'], context['live_before'], b['owner_result']):
+                    return {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
+                if ((reader_fault == 'withdrawn' and context['withdrawn']) or
+                        (reader_fault == 'forged' and e != context['authenticated_original']['event'])):
+                    return {'result': 'retained', 'value': e, 'external_effects': 0, 'append_count': 0}
+            return historical(c, a, b, e, schemas, context)
+        dt.historical_read = bad_historical
     if number == '6':
         dt.producer_semantic_digest = lambda event: dt.sha(event) if event['event_type'] == name else digest(event)
     out = io.StringIO()
@@ -106,6 +119,7 @@ def run_fault(name, number, ref_location='timestamp'):
     finally:
         dt.source_valid = source; dt.checkpoint_result = checkpoint; dt.producer_semantic_digest = digest
         dt.load = original_load
+        dt.historical_read = historical
     return code, result
 
 
@@ -161,7 +175,7 @@ def main():
     failures.extend('schema reference control: ' + name for name, passed in controls.items() if not passed)
     for name in families:
         row = {}
-        for number in map(str, range(1, 10)):
+        for number in map(str, range(1, 11)):
             if number == '8':
                 process = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--failure-probe', name],
                                          cwd=ROOT, capture_output=True, text=True, timeout=120)
@@ -192,12 +206,25 @@ def main():
                 if any(value['status'] != 'pass' for value in locations.values()):
                     rejected = False
                     row[number]['status'] = 'fail'
+            if number == '10':
+                reader_faults = {}
+                for reader_fault in ['withdrawn', 'forged']:
+                    child_code, child = run_fault(name, number, reader_fault=reader_fault)
+                    passed = (child_code == 1 and child['status'] == 'fail'
+                              and child['checks'] == baseline_result['checks']
+                              and name + ': standing check 10' in child['failures'])
+                    reader_faults[reader_fault] = {'status': 'pass' if passed else 'fail', 'exit_code': child_code,
+                                                   'failures': child['failures']}
+                row[number]['additional_faults'] = reader_faults
+                if any(value['status'] != 'pass' for value in reader_faults.values()):
+                    rejected = False
+                    row[number]['status'] = 'fail'
             if not rejected:
                 failures.append(name + ': standing check ' + number + ' failed to reject fault')
         results[name] = row
         print(name + ': ' + ', '.join(k + '=' + v['status'] for k, v in row.items()), file=sys.stderr, flush=True)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(families),
-                      'full_checker_runs': 1 + 12 * len(families), 'per_family': results,
+                      'full_checker_runs': 1 + 15 * len(families), 'per_family': results,
                       'reference_controls': controls,
                       'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return int(bool(failures))

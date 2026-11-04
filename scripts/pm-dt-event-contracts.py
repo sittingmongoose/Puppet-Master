@@ -544,12 +544,70 @@ def checkpoint_result(c, old, proposed, context, schema):
     return 'published'
 
 
+def historical_read(c, prepared, completed, event, schemas, context):
+    """Inspect a retained original under SP-580..596, without live admission.
+
+    The original-owner adapter supplies the authenticated immutable closure;
+    authentication itself remains assumed, exactly as for recovery/checkpoints.
+    Current disclosure guards still apply. Live operation state is not evidence
+    about whether an earlier operation was valid at its original occurrence.
+    """
+    unavailable = {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
+    if (not context['reader_installed'] or context['withdrawn'] or not context['permission']
+            or context['deleted'] or not context['source_present'] or not context['owner_proven']
+            or not context['versions_supported']):
+        return unavailable
+    original = {'prepared': prepared, 'completed': completed, 'event': event}
+    if original != context['authenticated_original']:
+        return unavailable
+    if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
+        return unavailable
+    if source_valid(c, prepared, completed, event, schemas,
+                    context.get('resolved_payload'), context.get('payload_ref_verified', False)) != 'accepted':
+        return unavailable
+    return {'result': 'retained', 'value': event, 'external_effects': 0, 'append_count': 0}
+
+
+def historical_results(c, f, schemas):
+    """Check 10: authentic history survives later lifecycle changes only."""
+    prepared, completed, event = (copy.deepcopy(f[key]) for key in ['prepared_source', 'completed_source', 'event_record'])
+    context = dict(f['historical_reader_oracle']['context'],
+                   authenticated_original={'prepared': prepared, 'completed': completed, 'event': event},
+                   live_before=copy.deepcopy(f['historical_reader_oracle']['live_before']))
+    def read(a=prepared, b=completed, e=event, ctx=context):
+        result = historical_read(c, a, b, e, schemas, ctx)
+        return {'result': result['result'], 'exact_value': result['value'] == e if result['result'] == 'retained' else result['value'] is None,
+                'external_effects': result['external_effects'], 'append_count': result['append_count']}
+    results = {'live_transition_no_longer_valid': not transition(c['event_type'], completed['payload'], context['live_before'], completed['owner_result']),
+               'changed_live_state': read(), 'live_state_unavailable': read(ctx=dict(context, live_before=None))}
+    for key in ['withdrawn', 'permission', 'deleted', 'source_present', 'owner_proven', 'reader_installed', 'versions_supported']:
+        results[key] = read(ctx=dict(context, **{key: not context[key]}))
+    forged_event = dict(event, correlation_id='forged-correlation')
+    results['forged_event'] = read(e=forged_event)
+    results['forged_storage_metadata'] = read(e=dict(event, sequence_id=event['sequence_id'] + 1))
+    forged_source = copy.deepcopy(completed); forged_source['owner_outcome_ref'] += '-forged'
+    results['forged_source'] = read(b=forged_source)
+    ref_event = dict(event, payload={}, payload_ref='payload:fixture-verified-pack-body')
+    ref_context = dict(context, authenticated_original={'prepared': prepared, 'completed': completed, 'event': ref_event},
+                       resolved_payload=completed['payload'], payload_ref_verified=True)
+    results['verified_payload_ref'] = read(e=ref_event, ctx=ref_context)
+    results['unverified_payload_ref'] = read(e=ref_event, ctx=dict(ref_context, payload_ref_verified=False))
+    results['changed_payload_ref'] = read(e=ref_event, ctx=dict(ref_context, resolved_payload={}))
+    # Also cover all Project/application/operation positives with frozen originals.
+    results['variants'] = []
+    for variant in f['positive_variants']:
+        a, b, e = (variant[key] for key in ['prepared', 'completed', 'event'])
+        ctx = dict(context, authenticated_original={'prepared': a, 'completed': b, 'event': e})
+        results['variants'].append({'case': variant['case'], **read(a, b, e, ctx)})
+    return results
+
+
 def checker_exit_code(failures):
     return int(bool(failures))
 
 
 def standing_results(c, f, schemas):
-    """Eight independent, per-family standing oracles; no admission/native proof."""
+    """Ten independent, per-family standing oracles; no admission/native proof."""
     name = c['event_type']; slug = name.replace('.', '_')
     a, b, e = (copy.deepcopy(f[k]) for k in ['prepared_source', 'completed_source', 'event_record'])
     replay = dict(e, replay_policy='projector_replay_only')
@@ -620,6 +678,8 @@ def standing_results(c, f, schemas):
     results['7'] = {'positive_matches_event': all(v['proposed']['storage_instance_id'] == v['proposed']['index_read_token']['storage_instance_id'] == v['proposed']['index_read_token']['source_selection']['storage_instance_id'] == b['storage_instance_id'] for v in f['checkpoint_cases'] if v['expected'] == 'published'),
                     'mismatches': mismatches}
     results['8'] = {'clean_exit': checker_exit_code([]), 'failure_exit': checker_exit_code([name + ': negative case'])}
+    results['9'] = {'all_schema_references_resolved': True}  # Whole-bundle preflight in main.
+    results['10'] = historical_results(c, f, schemas)
     return results
 
 
@@ -663,7 +723,7 @@ def main():
                 check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
         identifier_checks(c, f, schemas, check)
         standing[name] = standing_results(c, f, schemas)
-        for number in map(str, range(1, 9)):
+        for number in map(str, range(1, 11)):
             check(standing[name][number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
         validator = Draft202012Validator(schemas[slug], format_checker=FormatChecker())
         check(not list(validator.iter_errors(p)), name + ': positive payload')

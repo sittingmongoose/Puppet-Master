@@ -8416,6 +8416,131 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "non_tool_blocked_episode",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "episode_state": "resolved",
+          "request_kind": "tool",
+          "allowed_action_ids": [
+            "approve",
+            "deny"
+          ],
+          "tool_use_id": "tool-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -16876,6 +17001,135 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "non_tool_blocked_episode",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "episode_state": "resolved",
+          "request_event_id": "request-1",
+          "request_kind": "tool",
+          "allowed_action_ids": [
+            "approve",
+            "deny"
+          ],
+          "tool_use_id": "tool-1",
+          "human_authenticated": true,
+          "paused": true,
+          "revoked": true
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -25243,6 +25497,128 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "non_tool_blocked_episode",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "episode_state": "resolved",
+          "request_event_id": "request-1",
+          "request_kind": "tool",
+          "tool_use_id": "tool-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -33614,6 +33990,129 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "non_tool_blocked_episode",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "episode_state": "resolved",
+          "request_event_id": "request-1",
+          "request_kind": "tool",
+          "tool_use_id": "tool-1",
+          "deadline_at_utc": "2026-11-03T23:59:00Z"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -42350,6 +42849,142 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "migration_per_phase",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "migration_per_task",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "first_load": false,
+          "source_ref": "legacy-config-1",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "legacy_value": "single"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -52159,6 +52794,137 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "scored_gate_dispatch_context",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "signed_numeric_gate_values_preserve_dispatch_tuple",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "evaluation_state": "completed",
+          "inputs_ref": "gate-inputs-1",
+          "evaluation_id": "evaluation-1",
+          "score_threshold": null,
+          "dispatch_score_ref": null,
+          "dispatch_score_tuple": null
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -62134,6 +62900,137 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "scored_gate_dispatch_context",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "signed_numeric_gate_values_preserve_dispatch_tuple",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "evaluation_state": "completed",
+          "evaluation_id": "evaluation-1",
+          "gate_id": "GATE-012",
+          "score_threshold": null,
+          "dispatch_score_ref": null,
+          "dispatch_score_tuple": null
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -72094,6 +72991,137 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "scored_gate_dispatch_context",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "signed_numeric_gate_values_preserve_dispatch_tuple",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "evaluation_state": "completed",
+          "evaluation_id": "evaluation-1",
+          "gate_id": "GATE-012",
+          "score_threshold": null,
+          "dispatch_score_ref": null,
+          "dispatch_score_tuple": null
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -80349,6 +81377,121 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "report_status": "PASS",
+          "report_ref": "report-1",
+          "question_ids": [],
+          "wizard_id": "wizard-1",
+          "thread_id": "thread-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -88813,6 +89956,130 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "queue_state": "consumed",
+          "enqueue_id": "enqueue-1",
+          "queue_record_ref": "queue-1",
+          "scope_ref": "scope-1",
+          "host_ref": "host-1",
+          "root_ref": "root-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -100863,6 +102130,153 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "user_denial",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "headless_denial",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "policy_decision": "allow",
+          "dispatch_state": "completed",
+          "denial_reason_code": "policy_denied",
+          "blocked_reason_code": "permission_denied",
+          "failure_class": null,
+          "allowed_action_ids": [
+            "open_details",
+            "abort_run"
+          ],
+          "headless_denied": false,
+          "permission_snapshot_id": "permission-snapshot-1",
+          "executed_at_all": false,
+          "blocked_sequence": 1,
+          "approval_scope_key": "fixture-id",
+          "denial_origin": "policy"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -109737,6 +111151,147 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "completion_error",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "completion_cancelled",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "completion_timeout",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "execution_state": "completed",
+          "start_event_id": "start-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -118170,6 +119725,128 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "execution_state": "completed",
+          "policy_decision": "deny",
+          "schema_valid": true,
+          "hooks_pass": true
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -132263,6 +133940,182 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "failed_attempt_is_counted_as_error",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "web_map_edges_and_ref",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "web_read_source_and_body_refs",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "web_extract_content_ref",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "web_research_summary_refs",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "batch_parent",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "batch_url_1",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "batch_url_2",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "dispatch_state": "completed",
+          "web_request": null
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -153324,6 +155177,326 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [
+            {
+              "case": "authenticated_application_source",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "settlement_streaming_partial",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "settlement_settled",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "settlement_adjusted",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "settlement_failed",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "settlement_unknown",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "source_provider_header",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "source_cli_reported",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "source_local_estimated",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "source_pricing_estimated",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "source_unknown",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "new_billed_retry_preserves_parent",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "hidden_byok",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "hidden_subscription",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_fixed",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_billing",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_session",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_unknown",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_disabled",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_not_exposed",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "quota_unknown",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "missing_evidence_stays_unknown",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "actual_child_run_preserves_parent_run_and_record",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "absent_provider_account",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "unknown_without_account",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "local_without_account",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "cli_without_account",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            },
+            {
+              "case": "application_absent_provider_account",
+              "result": "retained",
+              "exact_value": true,
+              "external_effects": 0,
+              "append_count": 0
+            }
+          ],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "observation_ref": "provider-observation-1",
+          "observation_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "usage_record_id": "usage-1",
+          "dedupe_key": "provider-response-1",
+          "provider_attempt_ref": "provider-attempt-1",
+          "parent_usage_record_id": null,
+          "prior_settlement_status": "settled",
+          "prior_usage_event_ref": "later-settlement",
+          "account_id": "later-account",
+          "billing_entity_id": "billing-1",
+          "provider_account_ref": "provider-account-1",
+          "accepted_partial": false,
+          "parent_run_id": null
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -161590,6 +163763,124 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "allocation_state": "deleted",
+          "allocation_ref": "allocation-1",
+          "branch_name": "work/fixture",
+          "worktree_path": "worktrees/fixture",
+          "repo_id": "repo-1",
+          "lane_id": "lane-1",
+          "package_id": "package-1",
+          "run_id": "run-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     },
@@ -169948,6 +172239,131 @@
         "8": {
           "clean_exit": 0,
           "failure_exit": 1
+        },
+        "9": {
+          "all_schema_references_resolved": true
+        },
+        "10": {
+          "live_transition_no_longer_valid": true,
+          "changed_live_state": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "live_state_unavailable": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "withdrawn": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "permission": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "deleted": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "source_present": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "owner_proven": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "reader_installed": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "versions_supported": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_event": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_storage_metadata": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "forged_source": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "variants": [],
+          "verified_payload_ref": {
+            "result": "retained",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "unverified_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          },
+          "changed_payload_ref": {
+            "result": "unavailable",
+            "exact_value": true,
+            "external_effects": 0,
+            "append_count": 0
+          }
+        }
+      },
+      "historical_reader_oracle": {
+        "live_before": {
+          "allocation_state": "created",
+          "allocation_ref": "allocation-1",
+          "elapsed_grace_ms": 30000,
+          "active_lock_refs": [
+            "later-lock"
+          ],
+          "safe_point_refs": [],
+          "terminal_session_refs": [],
+          "editor_session_refs": [],
+          "blocked_recovery_refs": [],
+          "file_lock_checked": true,
+          "repo_id": "repo-1",
+          "lane_id": "lane-1",
+          "package_id": "package-1",
+          "run_id": "run-1"
+        },
+        "context": {
+          "reader_installed": true,
+          "withdrawn": false,
+          "permission": true,
+          "deleted": false,
+          "source_present": true,
+          "owner_proven": true,
+          "versions_supported": true
         }
       }
     }
@@ -169965,7 +172381,7 @@
     },
     {
       "case": "non_bmp",
-      "bytes": "{\"value\":\"\ud83d\ude00\"}",
+      "bytes": "{\"value\":\"😀\"}",
       "accepted": true
     },
     {
@@ -169990,7 +172406,7 @@
     },
     {
       "case": "bom",
-      "bytes": "\ufeff{\"n\":1}",
+      "bytes": "﻿{\"n\":1}",
       "accepted": false
     },
     {
