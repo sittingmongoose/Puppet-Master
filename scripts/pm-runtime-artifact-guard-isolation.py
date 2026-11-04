@@ -12,6 +12,7 @@ import contextlib
 import hashlib
 import io
 import json
+import pickle
 from pathlib import Path
 import sys
 import types
@@ -21,6 +22,8 @@ from pm_runtime_artifact_guard_cases import accepted, cases
 ROOT=Path(__file__).resolve().parents[1]
 CHECKER=ROOT/'scripts/pm-runtime-artifact-event-drafts.py'
 VALIDATION_CACHE={}
+CODEC_CACHE={}
+PURE_CACHE={}
 
 
 def module(source,references=None):
@@ -34,8 +37,34 @@ def module(source,references=None):
         return cache[path]
     m.load=load
     tree=ast.parse(source)
+    # Cache only this pure, unchanged-byte codec, keyed by its exact source and
+    # exact JSON input types/bytes. No acceptance or refusal result is cached.
+    codec_source=next(ast.get_source_segment(source,n) for n in tree.body
+        if isinstance(n,ast.FunctionDef) and n.name=='value_bytes')
+    codec_key=hashlib.sha256(codec_source.encode()).hexdigest()
+    raw_codec=m.value_bytes
+    def codec(value):
+        # Pickle is only an in-memory typed cache key; it is never decoded.
+        # It preserves bool/int/float, signed zero, bytes and container types.
+        key=(codec_key,pickle.dumps(value,protocol=5))
+        if key not in CODEC_CACHE:CODEC_CACHE[key]=raw_codec(value)
+        return CODEC_CACHE[key]
+    m.value_bytes=codec
+    def pure(name,raw):
+        def cached(value):
+            key=(name,pickle.dumps(value,protocol=5))
+            if key not in PURE_CACHE:PURE_CACHE[key]=raw(value)
+            return PURE_CACHE[key]
+        return cached
+    # Pure byte/hash functions only. Guard decisions and expected answers are
+    # always executed. The separate raw-module proof uses none of these caches.
+    m.rfc8785=types.SimpleNamespace(dumps=pure('rfc8785.dumps',m.rfc8785.dumps))
+    m.binding_digest=pure('binding_digest',m.binding_digest)
+    semantic_source=next(ast.get_source_segment(source,n) for n in tree.body
+        if isinstance(n,ast.FunctionDef) and n.name=='semantic_digest')
+    m.semantic_digest=pure(('semantic_digest',semantic_source,m.SEMANTIC_FIELDS),m.semantic_digest)
     lexical=hashlib.sha256(''.join(ast.get_source_segment(source,n) for n in tree.body
-        if isinstance(n,ast.FunctionDef) and n.name in ('exact_pattern','exact_pattern_properties')).encode()).hexdigest()
+        if isinstance(n,ast.FunctionDef) and n.name in ('exact_pattern','exact_pattern_properties','canonical_numbers','source_agreement','copied_pairs','validator')).encode()).hexdigest()
     class MemoValidator:
         """Pure schema evaluation cached by exact code/schema/instance bytes.
 
@@ -101,7 +130,7 @@ def expr(key,function,old,new='True',label=None):
 def block(key,function,contains,label=None):
     GUARDS[key]=(label or function+': '+contains,lambda s:condition(s,function,contains))
 
-block('D01','decode','EVENT_VALIDATOR')
+block('D01','decode','event_validator.iter_errors')
 block('D02','decode',"row['payload_schema_id']")
 block('D03','decode',"event['scope_kind']")
 block('D04','decode','len(rfc8785.dumps(payload))')
@@ -140,7 +169,7 @@ expr('F10','full_value_matches',"receipt == custody['first_append_receipt']")
 expr('F11','full_value_matches',"receipt['event_id'] == candidate['event_id'] == custody['event_id']")
 expr('F12','full_value_matches',"result == original['result']")
 expr('F13','full_value_matches',"custody == original['custody']")
-block('V01','stored_event_valid','EVENT_VALIDATOR')
+block('V01','stored_event_valid','event_validator.iter_errors')
 block('V02','stored_event_valid',"event['scope_kind']")
 expr('V03','stored_event_valid',"bool(PACK_REF.fullmatch(event['payload_ref']))")
 expr('V04','stored_event_valid',"event['payload'] == {}")
@@ -148,8 +177,8 @@ expr('V05','stored_event_valid',"len(rfc8785.dumps(event['payload'])) <= INLINE_
 expr('V06','stored_event_valid',"validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload'])")
 # Unknown dispatch returns the final False, not a forged matching row.
 expr('V07','stored_event_valid','\n    return False','\n    return True')
-block('A01','append','not admission')
-block('A02','append','not source_valid')
+block('A01','append','admission is not True')
+block('A02','append','source_valid is not True')
 GUARDS['A03']=('append: replay policy before dedupe (both refusal branches)',lambda s:condition(condition(s,'append',"== 'projector_replay_only'"),'append',"!= 'dedupe_by_idempotency_key'"))
 block('A04','append',"event['event_id'] in self.global_ids")
 expr('A05','append',"original['custody']['producer_semantic_digest'] == digest")
@@ -174,7 +203,7 @@ block('C08','checkpoint_matches',"selection['current_bytes_sha256']")
 block('C09','checkpoint_matches',"anchor['source_selection'] != selection")
 block('C10','checkpoint_matches',"coverage['last_frame']")
 block('C11','checkpoint_matches',"segment['scan_start_offset']")
-expr('C12','checkpoint_matches',"bundle['datasets'] == {token['index_dataset_name']: dataset}")
+expr('C12','checkpoint_matches',"value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset})")
 expr('C13','checkpoint_matches',"frontier['index_row_count'] == 1")
 expr('C14','checkpoint_matches',"frontier['index_row_set_sha256'] == binding_digest(dict(\n                    domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)]))")
 block('O01','observation_admissible',"source['proof_valid']")
@@ -196,6 +225,29 @@ block('I01','identity','type(revision)')
 block('I02','value_bytes','not math.isfinite')
 block('I03','value_bytes','type(value) not in')
 block('S06','validator','validation not in')
+expr('H07','inspect',"return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable'", "return 'metadata_and_authorized_refs'")
+block('N01','numeric_walk','not math.isfinite(value)')
+expr('B01','source_agreement','copy != source','False')
+block('B02','decode',"raw is False")
+block('B03','decode',"evidence['provider_payload_hash'] != expected")
+expr('S07','validator',"return ExactValidator(schema, format_checker=FormatChecker())", '''schema = copy.deepcopy(schema)
+    # Isolate the same primitive-type rule at its concrete witness leaves.
+    # Keep nullable-union and format dispatch tags: dropping those too makes
+    # valid oneOf inputs ambiguous, which is a broken positive control.
+    for field in ('artifact_id', 'sequence_id'):
+        if field in schema.get('properties', {}):
+            leaf = schema['properties'][field]
+            while '$ref' in leaf:
+                target = schema
+                for part in leaf['$ref'].removeprefix('#/').split('/'):
+                    target = target[part.replace('~1','/').replace('~0','~')]
+                leaf = target
+            leaf = dict(leaf)
+            leaf.pop('type', None)
+            schema['properties'][field] = leaf
+    if schema.get('type') == 'boolean':
+        schema.pop('type')
+    return ExactValidator(schema, format_checker=FormatChecker())''', label='primitive JSON type at artifact_id, sequence_id and boolean scalar witness leaves; union/format tags retained')
 
 
 def evaluate(suite,m):
@@ -209,6 +261,7 @@ def main():
     outcomes=evaluate(suite,baseline)
     baseline_bad=[list(k)+[list(v)] for k,v in outcomes.items() if v!=(True,False)]
     print('baseline pairs: '+str(len(outcomes))+', failures: '+str(len(baseline_bad)),file=sys.stderr,flush=True)
+    if baseline_bad: print(json.dumps(baseline_bad), file=sys.stderr, flush=True)
     rows=[]
     for guard,(label,mutate) in GUARDS.items():
         if args.case and args.case not in guard:continue

@@ -153,8 +153,111 @@ def exact_pattern_properties(validator_, patterns, instance, schema):
                         yield ValidationError('identifier key must match the entire value', path=[key])
 
 
+def canonical_numbers(validator, enabled, instance, schema):
+    if not enabled:
+        return
+    def numeric_walk(value, path):
+        if type(value) is float:
+            if not math.isfinite(value) or value.is_integer():
+                yield ValidationError('current numbers require integer form for integral values', path=path)
+        elif type(value) is dict:
+            for key, child in value.items():
+                yield from numeric_walk(child, path + [key])
+        elif type(value) is list:
+            for index, child in enumerate(value):
+                yield from numeric_walk(child, path + [index])
+    yield from numeric_walk(instance, [])
+
+
+def copied_pairs(payload):
+    """Yield (rule, copied value, source/recomputed value), without coercion.
+
+    Missing optional copies add no identity. Explicit null is a value and must
+    agree. Session and action provenance, snapshots at different times, parent
+    and child usage, and streaming delta/cumulative are distinct source roles.
+    """
+    body = payload['type_payload']
+    family = payload['artifact_type']
+    if family == 'browser_recording':
+        for action in body['actions']:
+            yield 'browser_session', action['browser_session_id'], body['browser_session_id']
+            page = action.get('page_representation')
+            if page is not None:
+                if 'page_representation_ref' in action:
+                    yield 'browser_page', action['page_representation_ref'], page['page_representation_id']
+                for field in ('screenshot_artifact_ref', 'pdf_artifact_ref', 'console_ref', 'network_ref'):
+                    if field in action and field in page:
+                        yield 'browser_page', action[field], page[field]
+                if 'redaction_profile_id' in page:
+                    yield 'browser_page', page['redaction_profile_id'], body['redaction_profile_id']
+        return
+    refs = body['refs']
+    for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id', 'receipt_refs'):
+        if field in payload and field in refs:
+            yield 'usage_refs' if family == 'cost_usage' else 'trace_refs', payload[field], refs[field]
+    if family == 'cost_usage':
+        for field in ('usage_event_ref', 'usage_record_id'):
+            yield 'usage_refs', refs[field], body[field]
+        for field in ('run_id', 'attempt_id', 'thread_id', 'node_id'):
+            if field in refs:
+                yield 'usage_refs', refs[field], payload.get(field)
+        yield 'usage_refs', refs['raw_payload_ref'], body['authority']['raw_payload_ref']
+        usage = body['usage']
+        yield 'usage_aliases', body['reasoning_tokens'], usage['reasoning_tokens']
+        if 'total_tokens' in body:
+            yield 'usage_aliases', body['total_tokens'], usage['provider_total']
+        semantics = usage['counting_semantics']
+        caches = [usage[k] for k in ('cache_read', 'cache_write', 'cache_write_1h')]
+        if semantics['input_total_includes_cache'] == 'yes' and all(type(v) is int for v in [usage['input_total'], *caches]):
+            yield 'usage_input', usage['input_non_cached'], usage['input_total'] - sum(caches)
+        if semantics['output_total_includes_reasoning'] == 'yes' and all(type(usage[k]) is int for k in ('output_total', 'reasoning_tokens')):
+            yield 'usage_output', usage['output_visible'], usage['output_total'] - usage['reasoning_tokens']
+        if semantics['provider_total_semantics'] == 'derived_input_plus_output':
+            total = None if any(usage[k] is None for k in ('input_total', 'output_total')) else usage['input_total'] + usage['output_total']
+            yield 'usage_total', usage['provider_total'], total
+        costs = body['cost'].get('bucket_costs_microdollars')
+        if costs and all(type(v) is int for v in costs.values()):
+            yield 'usage_cost', body['cost']['cost_microdollars'], sum(costs.values())
+        source_class = body['authority']['source_class']
+        for field, classes in (
+                ('is_provider_reported', ('provider_reported', 'provider_header')),
+                ('is_cli_reported', ('cli_reported',)),
+                ('is_local_context_estimate', ('local_estimated',)),
+                ('is_estimated', ('local_estimated', 'pricing_estimated'))):
+            yield 'usage_flags', body['flags'][field], source_class in classes
+    elif family == 'tool_llm_trace':
+        for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id'):
+            yield 'trace_refs', refs[field], body[field]
+        yield 'trace_refs', refs['raw_payload_ref'], body['raw_payload']['raw_payload_ref']
+        for field in ('usage_event_ref', 'usage_record_id'):
+            yield 'trace_settlement', body['settlement'][field], body[field]
+        if body['raw_payload']['redaction_status'] in ('redacted', 'not_needed'):
+            yield 'trace_flags', body['flags']['redacted'], body['raw_payload']['redaction_status'] == 'redacted'
+        if body['usage_event_ref'] is not None or body['usage_record_id'] is not None:
+            yield 'trace_flags', body['flags']['usage_observed'], True
+        if body['settlement'].get('quota_artifact_ref') is not None or refs.get('quota_refs'):
+            yield 'trace_flags', body['flags']['quota_observed'], True
+        if body['retry']['relation'] == 'none':
+            yield 'trace_retry', body['retry']['parent_trace_ref'], None
+        elif body['retry']['relation'] in ('retry_of', 'escalation_of', 'resume_of'):
+            yield 'trace_retry', body['retry']['parent_trace_ref'] is not None, True
+
+
+def source_agreement(validator, family, instance, schema):
+    # Scalar/shape refusals belong to the unchanged closed schema. This overlay
+    # establishes agreement only after those fields have their declared types.
+    try:
+        pairs = list(copied_pairs(instance))
+    except (KeyError, TypeError, AttributeError):
+        return
+    for rule, copy, source in pairs:
+        if copy != source:
+            yield ValidationError(rule + ': source/copy disagreement')
+
+
 ExactValidator = validators.extend(Draft202012Validator, {
     'pattern': exact_pattern, 'patternProperties': exact_pattern_properties,
+    'drCanonicalNumbers': canonical_numbers, 'drSourceAgreement': source_agreement,
 })
 
 
@@ -167,6 +270,8 @@ def validator(schema, definition=None, *, validation=CURRENT_WRITER):
     # explicitly versioned historical decoders retain their original contracts.
     if validation not in (CURRENT_WRITER, HISTORICAL_V1):
         raise ValueError('unsupported historical decoder')
+    if validation == HISTORICAL_V1:
+        schema = {k: v for k, v in schema.items() if k not in ('drCanonicalNumbers', 'drSourceAgreement')}
     if validation == CURRENT_WRITER and schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
                              'pm.runtime_artifact.tool_llm_trace.schema.v1'):
         schema = copy.deepcopy(schema)
@@ -179,6 +284,12 @@ def validator(schema, definition=None, *, validation=CURRENT_WRITER):
         fields['provider_payload_hash'] = {'allOf': [fields['provider_payload_hash'], digest]}
     if definition:
         schema = dict(schema, **{'$ref': '#/$defs/' + definition})
+    if validation == CURRENT_WRITER:
+        schema = dict(schema, drCanonicalNumbers=True)
+        if schema.get('$id') in ('pm.runtime_artifact.browser_recording.schema.v1',
+                                'pm.runtime_artifact.cost_usage.schema.v1',
+                                'pm.runtime_artifact.tool_llm_trace.schema.v1'):
+            schema['drSourceAgreement'] = schema['$id']
     return ExactValidator(schema, format_checker=FormatChecker())
 
 
@@ -246,6 +357,10 @@ def commitment(event):
 
 
 def storage_form(payload, packs):
+    # Refuse before JSON can collapse an integral float into an integer. Both
+    # storage routes must apply the same producer-input representation rule.
+    if list(canonical_numbers(None, True, payload, {})):
+        raise ValueError('noncanonical producer number')
     body = rfc8785.dumps(payload)
     if len(body) <= INLINE_LIMIT:
         return copy.deepcopy(payload), None
@@ -263,9 +378,10 @@ def unique_object(pairs):
     return result
 
 
-def decode(row, event, packs, *, validation=CURRENT_WRITER):
+def decode(row, event, packs, *, validation=CURRENT_WRITER, raw_sources=None):
     """Validate actual fixture EventRecord and its resolved unchanged logical schema."""
-    if list(EVENT_VALIDATOR.iter_errors(event)):
+    event_validator = EVENT_VALIDATOR if validation == CURRENT_WRITER else validator(EVENT_VALIDATOR.schema, validation=validation)
+    if list(event_validator.iter_errors(event)):
         raise ValueError('invalid EventRecord')
     if event['event_type'] != row['event_type'] or event['payload_schema_id'] != row['payload_schema_id']:
         raise ValueError('wrong family/schema')
@@ -282,7 +398,7 @@ def decode(row, event, packs, *, validation=CURRENT_WRITER):
             raise ValueError('wrong reference/placeholder')
         digest, size = match.groups()
         source = packs.get(digest)
-        if not source or not source['durable'] or not source['authorized']:
+        if not source or source['durable'] is not True or source['authorized'] is not True:
             raise ValueError('pack unavailable')
         body = source['body']
         if len(body) != int(size) or blake3(body).hexdigest() != digest:
@@ -293,6 +409,19 @@ def decode(row, event, packs, *, validation=CURRENT_WRITER):
     schema = load(row['payload_schema_ref'])
     if list(validator(schema, validation=validation).iter_errors(payload)):
         raise ValueError('invalid logical payload')
+    if validation == CURRENT_WRITER and row['event_type'] in PROVIDER_HASH_PATHS:
+        evidence = payload['type_payload']['authority' if row['event_type'].endswith('.cost_usage') else 'raw_payload']
+        if raw_sources is None:
+            fixtures = load('Plans/runtime_artifact_event_drafts.fixtures.json')
+            original = fixtures['positive_payloads'][row['event_type']]['type_payload']
+            original = original['authority' if row['event_type'].endswith('.cost_usage') else 'raw_payload']
+            raw_sources = {original['raw_payload_ref']: fixtures['provider_hash_source_utf8'][row['event_type']].encode('utf-8')}
+        raw = raw_sources.get(evidence['raw_payload_ref'], False)
+        if raw is False or (raw is not None and type(raw) is not bytes):
+            raise ValueError('provider source unavailable')
+        expected = None if raw is None else 'sha256:' + hashlib.sha256(raw).hexdigest()
+        if evidence['provider_payload_hash'] != expected:
+            raise ValueError('provider source digest')
     if payload['project_id'] != event['project_id']:
         raise ValueError('Project join')
     for field in ('run_id', 'attempt_id', 'thread_id', 'node_id'):
@@ -313,23 +442,28 @@ def decode(row, event, packs, *, validation=CURRENT_WRITER):
 
 def inspect(row, payload, source):
     """Original source/body checks retained; full-envelope checks run separately."""
-    if source['withdrawn'] or not source['authorized']:
+    if source['withdrawn'] is not False or source['authorized'] is not True:
         return 'unavailable'
-    if not source['source_valid'] or not source['receipt_valid']:
+    if source['source_valid'] is not True or source['receipt_valid'] is not True:
         return 'unavailable'
     if source['project_id'] != payload['project_id'] or source['event_type'] != row['event_type']:
         return 'identity_conflict'
-    if source['original_payload'] != payload:
+    if value_bytes(source['original_payload']) != value_bytes(payload):
         return 'identity_conflict'
-    return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'
+    return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable'
 
 
 def full_value_matches(candidate, original, result, custody, *, validation=CURRENT_WRITER):
+    receipt_validator, custody_validator, result_validator = RECEIPT_VALIDATOR, CUSTODY_VALIDATOR, RESULT_VALIDATOR
+    if validation != CURRENT_WRITER:
+        receipt_validator = validator(RECEIPT_SCHEMA, 'AppendReceipt', validation=validation)
+        custody_validator = validator(RECEIPT_SCHEMA, 'custody_v2', validation=validation)
+        result_validator = validator(RECEIPT_SCHEMA, 'full_value_result', validation=validation)
     if (not stored_event_valid(candidate, validation=validation) or not stored_event_valid(original['event'], validation=validation)
-            or list(RECEIPT_VALIDATOR.iter_errors(result['first_append_receipt']))
-            or list(CUSTODY_VALIDATOR.iter_errors(custody)) or list(RESULT_VALIDATOR.iter_errors(result))
-            or list(CUSTODY_VALIDATOR.iter_errors(original['custody']))
-            or list(RESULT_VALIDATOR.iter_errors(original['result']))):
+            or list(receipt_validator.iter_errors(result['first_append_receipt']))
+            or list(custody_validator.iter_errors(custody)) or list(result_validator.iter_errors(result))
+            or list(custody_validator.iter_errors(original['custody']))
+            or list(result_validator.iter_errors(original['result']))):
         return False
     receipt = result['first_append_receipt']
     stored = original['event']
@@ -348,7 +482,8 @@ def full_value_matches(candidate, original, result, custody, *, validation=CURRE
 
 def stored_event_valid(event, *, validation=CURRENT_WRITER):
     """Lexical/schema validation of original copies, without changing hash domains."""
-    if list(EVENT_VALIDATOR.iter_errors(event)):
+    event_validator = EVENT_VALIDATOR if validation == CURRENT_WRITER else validator(EVENT_VALIDATOR.schema, validation=validation)
+    if list(event_validator.iter_errors(event)):
         return False
     if event['scope_kind'] != 'project' or event['replay_policy'] != 'dedupe_by_idempotency_key':
         return False
@@ -385,15 +520,16 @@ def scope_partition(project_id):
 
 class AppendModel:
     """Hypothetical admitted append only; registry absence still refuses by default."""
-    def __init__(self, row, packs, receipt, custody):
+    def __init__(self, row, packs, receipt, custody, raw_sources=None):
         self.row, self.packs = row, packs
         self.receipt, self.custody = receipt, custody
+        self.raw_sources = raw_sources
         self.scoped, self.global_ids = {}, {}
 
     def append(self, event, admission=False, source_valid=True, dedupe_available=True):
-        if not admission:
+        if admission is not True:
             return 'withdrawn'
-        if not source_valid or not dedupe_available:
+        if source_valid is not True or dedupe_available is not True:
             return 'unavailable'
         if list(EVENT_VALIDATOR.iter_errors(event)):
             return 'invalid'
@@ -411,8 +547,8 @@ class AppendModel:
             original = self.scoped[key]
             return original if original['custody']['producer_semantic_digest'] == digest else 'idempotency_conflict'
         try:
-            decode(self.row, event, self.packs)
-        except (ValueError, KeyError, UnicodeError):
+            decode(self.row, event, self.packs, raw_sources=self.raw_sources)
+        except (ValueError, KeyError, UnicodeError, TypeError):
             return 'invalid'
         receipt = copy.deepcopy(self.receipt)
         receipt.update(event_id=event['event_id'], sequence_id=event['sequence_id'])
@@ -483,16 +619,18 @@ def checkpoint_matches(row, event, original, bundle):
             source_selection=selection, redb_snapshot_id=source['redb_snapshot_id'])
         if generation != expected_generation or token != expected_token or node['index_dataset_name'] != token['index_dataset_name']:
             return False
-        if not full_value_matches(event, original, original['result'], custody) or source['event'] != event:
+        if not full_value_matches(event, original, original['result'], custody) or value_bytes(source['event']) != value_bytes(event):
             return False
         partition = scope_partition(event['project_id'])
         if (source['scope_partition'] != partition or custody['scope_partition'] != partition
                 or source['event_value_sha256'] != hashlib.sha256(value_bytes(event)).hexdigest()
-                or source['source_locator'] != {k: receipt[k] for k in ('segment_generation','segment_name','byte_offset','sequence_id')}
+                or value_bytes(source['source_locator']) != value_bytes({k: receipt[k] for k in ('segment_generation','segment_name','byte_offset','sequence_id')})
                 or selection['selected_segment_generation'] != receipt['segment_generation']):
             return False
         manifest, current = source['manifest'], source['current']
-        if (selection['current_bytes_sha256'] != hashlib.sha256(value_bytes(current)).hexdigest()
+        if (type(current['selected_segment_generation']) is not int
+                or any(type(manifest[k]) is not int for k in ('selected_segment_generation','manifest_generation','recovery_epoch'))
+                or selection['current_bytes_sha256'] != hashlib.sha256(value_bytes(current)).hexdigest()
                 or selection['manifest_bytes_sha256'] != hashlib.sha256(value_bytes(manifest)).hexdigest()
                 or current['selected_segment_generation'] != selection['selected_segment_generation']
                 or manifest['selected_segment_generation'] != selection['selected_segment_generation']
@@ -549,7 +687,7 @@ def checkpoint_matches(row, event, original, bundle):
             persisted_at_utc=event['persisted_at_utc'], redaction_profile=event['redaction_profile'],
             source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=False)
         dataset = {row_key: expected_row}
-        return (bundle['datasets'] == {token['index_dataset_name']: dataset}
+        return (value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset})
                 and frontier['index_row_count'] == 1
                 and frontier['index_row_set_sha256'] == binding_digest(dict(
                     domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)])))
@@ -731,7 +869,7 @@ def standing_oracles(check, row, full, first, fixtures, references):
     check(event,'S10_original_custody_full_resolution',resolve_history(row,first,historical_source,{},decoder=HISTORICAL_V1)
           == 'metadata_and_authorized_refs' and value_bytes(first) == original_bytes)
 
-    for case in fixtures['historical_originals']['cases']:
+    for case in fixtures['historical_originals']['cases'] + fixtures['historical_numeric_originals']['cases']:
         if case['event_type'] != event:
             continue
         original = copy.deepcopy(case['original'])
@@ -768,6 +906,10 @@ def standing_oracles(check, row, full, first, fixtures, references):
         adopted = validator(load(schema_path))
         for name, digest in fixtures['provider_hash_values'].items():
             permitted = name in ('valid', 'unknown')
+            if name == 'valid':
+                digest = at_path(full['payload'], path)
+            evidence = full['payload']['type_payload']['authority' if event.endswith('.cost_usage') else 'raw_payload']
+            raw_sources = ({evidence['raw_payload_ref']: None} if name == 'unknown' else None)
             for route in ('inline', 'packed'):
                 bad = copy.deepcopy(full); set_path(bad['payload'], path, digest)
                 check(event, 'S5_provider_hash_schema_' + name + '_' + route,
@@ -777,8 +919,8 @@ def standing_oracles(check, row, full, first, fixtures, references):
                     bad['payload']['summary'] = 'x' * 17000
                     bad['payload'], bad['payload_ref'] = storage_form(bad['payload'], packs)
                 check(event, 'S5_provider_hash_decode_' + name + '_' + route,
-                      rejected(lambda: decode(row, bad, packs)) != permitted)
-                model = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'])
+                      rejected(lambda: decode(row, bad, packs, raw_sources=raw_sources)) != permitted)
+                model = AppendModel(row, packs, fixtures['first_append_receipts'][event], fixtures['custody_template'], raw_sources=raw_sources)
                 result = model.append(bad, True)
                 check(event, 'S5_provider_hash_append_' + name + '_' + route,
                       isinstance(result, dict) == permitted and bool(model.scoped) == permitted)
@@ -870,7 +1012,7 @@ def rejected(action):
 
 def observation_admissible(candidate, previous, row, packs, source):
     """Ordinal/predecessor/source model; not a native owner fence or read proof."""
-    if not source['proof_valid'] or not source['predecessor_complete'] or not source['snapshot_current']:
+    if source['proof_valid'] is not True or source['predecessor_complete'] is not True or source['snapshot_current'] is not True:
         return False
     try:
         payload = decode(row, candidate, packs)
