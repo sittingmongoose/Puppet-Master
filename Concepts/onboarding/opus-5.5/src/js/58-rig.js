@@ -202,7 +202,7 @@
         + '<span class="pst-tip-h"></span><span class="pst-tip-t" aria-hidden="true"></span><span class="pst-tip-sr o55-sr"></span>';
       if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, tipHtml);
       else { const nt = this.hudEl.querySelector('.pst-ntip'); nt.innerHTML = tipHtml; }
-      if (this.tipData) this.showTip(true);
+      if (this.tipData) { this.showTip(true); if (this.relayout && this.tipEl()) this.tipEl().getAnimations().forEach((a) => a.finish()); }
       this.buildPip();
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
@@ -211,7 +211,8 @@
       this.ghosts = [];
       this.syncDefs();
       this.measure(); this.remeasureAt = now() + 0.9; /* (and once the window's opening has settled) */
-      if (this.tube) this.powerOn();
+      /* the look's entrance plays on first show and on a look switch, not on a new layout (stayOn, SW-23) */
+      if (this.tube) { if (this.relayout) this.stayOn(); else this.powerOn(); }
     }
     syncDefs() { this.defs.innerHTML = this.backDefs + this.pen.defs(); }
     hudHtml() {
@@ -622,7 +623,7 @@
       this.loopSnd('power', Math.min(1, this.power / 2));
       // a new screen's line starts at once; changes within a screen take their turn (see say)
       const fresh = spec.sayNow || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
-      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh);
+      if (spec.say !== undefined && !this.sleepZ) { if (this.relayout && spec.say && spec.say === this.saying) this.sayKept(spec.say); else this.say(spec.say, null, fresh); }
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
@@ -690,6 +691,17 @@
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
         { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+    }
+    /* a new layout: the line Pip has said stays on the new bubble, whole and at once: not typed or voiced again, its box
+       not popping in again (SW-23). Its time on screen runs on from when it was said */
+    sayKept(text) {
+      const b = this.bubble;
+      clearTimeout(this.sayT); this.sayNext = null;
+      if (this.typeT) this.typeT.cancel();
+      b.classList.remove('typing'); b.classList.add('on');
+      b.getAnimations().forEach((a) => a.finish());
+      this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
+      this.btext.firstChild.textContent = text;
     }
     // the line in Pip's voice (O55.sound.pip through O55.pipVoice): { ms, cps } for the typing
     voice(text, mood) {
@@ -1114,7 +1126,7 @@
     setTheme(theme) {
       if (theme === this.theme) return;
       this.theme = theme;
-      this.booted = false;
+      this.booted = false; this.decoded = null;
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
@@ -1124,7 +1136,12 @@
     setLayout(name) {
       if (name === this.layoutName) return;
       this.layoutName = name; this.ps = null;
-      this.build(); this.direct(this.spec);
+      /* a new layout rebuilds the stage in its new shape; what it already shows stays as it was, finished: the tube on,
+         Pip's line whole, the command line and NieR's label as they read. No entrance plays again (SW-23) */
+      const okEl = this.hudEl && this.hudEl.querySelector('.pst-term-ok');
+      this.cmdWas = this.cmdText; this.okWas = okEl ? okEl.textContent : '';
+      this.relayout = true;
+      try { this.build(); this.direct(this.spec); } finally { this.relayout = false; }
     }
     setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
