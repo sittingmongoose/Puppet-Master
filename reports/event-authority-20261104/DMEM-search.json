@@ -17,7 +17,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -33,6 +33,13 @@
       ],
       "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-630 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -53,7 +60,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -69,6 +76,13 @@
       ],
       "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-631 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -89,7 +103,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -105,6 +119,13 @@
       ],
       "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-632 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -125,7 +146,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -141,6 +162,13 @@
       ],
       "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-633 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -161,7 +189,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -177,6 +205,13 @@
       ],
       "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-634 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -197,7 +232,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -213,6 +248,13 @@
       ],
       "negative_evidence": "No concrete durable target descriptor or selector was found for this exact rebuild family. SP-632..635 promised recording without a representable value.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-635 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -228,7 +270,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
@@ -251,7 +293,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
@@ -274,7 +316,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
@@ -292,7 +334,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
@@ -315,7 +357,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -331,6 +373,13 @@
       ],
       "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-636 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   },
   {
@@ -351,7 +400,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 604,
-        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+        "text": "| `Plans/assistant-memory-subsystem.md` | — | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | — |"
       }
     ],
     "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence.",
@@ -367,6 +416,13 @@
       ],
       "negative_evidence": "No operation-instance validation or stateful CAS/crash/no-repeat oracle was found for this exact family.",
       "newly_authored": "Phase-valid operation, frozen original result and static semantic oracles; rebuilds additionally bind durable target/selector custody under DL-045."
+    },
+    "review_round_2": {
+      "head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+      "scope": "Each exact family searched independently across live top-level Plans Markdown/JSON and its own SP unit; no ledgers, generated indexes, shards or governance outputs.",
+      "hits": [],
+      "negative_evidence": "Own SP unit has no selected replay_policy or payload_schema_id. No pre-existing exact-family current-writer binding found. Reuse Contracts_V0.md EventRecord 2.0.0 and replay_only_not_appendable refusal, the existing family payload definition, and Storage section 2.2.5 project partition.",
+      "newly_authored_owner_contract": "SP-637 selects dedupe_by_idempotency_key and the exact payload definition URI; no envelope field list or compatibility writer is introduced."
     }
   }
 ]

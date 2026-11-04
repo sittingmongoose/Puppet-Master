@@ -3,6 +3,7 @@
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
+import base64
 import hashlib
 import importlib.util
 import json
@@ -127,11 +128,73 @@ def payload_from(row, suffix):
 def full_value(row, suffix):
     event = event_type(row, suffix)
     event_id, key = identity(event, row['storage_instance_id'], row['project_id'], row['operation_id'])
-    # Complete synthetic envelope. This deliberately does not impersonate a native AppendReceipt codec.
+    # Reduced phase-model value; the independent writer suite below checks canonical EventRecord boundaries.
     return {'event_id': event_id, 'event_type': event, 'idempotency_key': key,
             'scope_kind': 'project', 'project_id': row['project_id'], 'correlation_id': row['operation_id'],
             'causation_event_id': row['started_event_id'] if suffix == 'completed' else None,
             'payload_ref': None, 'payload': payload_from(row, suffix)}
+
+
+def scope_partition(project):
+    return 'project~' + base64.urlsafe_b64encode(project.encode('utf-8')).decode('ascii').rstrip('=')
+
+
+def canonical_value(row, suffix):
+    """Synthetic complete EventRecord, not a physical receipt or storage clock allocator."""
+    value = full_value(row, suffix)
+    value.update(schema_id='pm.event.v0', schema_version='2.0.0',
+                 thread_id=None, run_id=None, node_id=None, attempt_id=None,
+                 actor_ref='component:MemoryMaintenance', requested_account_ref=None,
+                 effective_account_ref=None, occurred_at_utc=row[suffix + '_occurred_at_utc'],
+                 observed_at_utc=row[suffix + '_occurred_at_utc'],
+                 persisted_at_utc=row[suffix + '_occurred_at_utc'],
+                 sequence_id=1 if suffix == 'started' else 2, producer_sequence_id=None,
+                 parent_event_id=None,
+                 payload_schema_id=load('Plans/memory_maintenance_event_payloads.schema.json')['$id']
+                 + '#/$defs/' + value['event_type'].replace('.', '_'),
+                 redaction_profile='no_secrets', replay_policy='dedupe_by_idempotency_key',
+                 migration={k: None for k in ('migrated_from_schema_id', 'migrated_from_schema_version',
+                                              'migration_id', 'compatibility_event_type')})
+    return value
+
+
+@lru_cache(maxsize=1)
+def envelope_validator():
+    return Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker())
+
+
+def append_current(before, value, event):
+    """Independent current-writer boundary; append/retry never executes a maintenance effect."""
+    state = deepcopy(before); row = state['operation']
+    require(envelope_validator().is_valid(value), 'invalid_event_record')
+    require(value['replay_policy'] != 'projector_replay_only', 'replay_only_not_appendable')
+    require(value['replay_policy'] == 'dedupe_by_idempotency_key', 'replay_policy_mismatch')
+    require(state['admitted'], 'not_admitted')
+    require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+    require(valid_operation(row, operation_name(event)), 'invalid_operation')
+    suffix = event.rsplit('.', 1)[1]
+    expected = canonical_value(row, suffix)
+    # Validate dispatch and all producer-owned joins separately from Storage's three assigned fields.
+    storage_fields = {'sequence_id', 'observed_at_utc', 'persisted_at_utc'}
+    producer_fields = set(expected) - storage_fields
+    same_identity = (value['event_id'], value['idempotency_key']) == (expected['event_id'], expected['idempotency_key'])
+    require(all(value[k] == expected[k] for k in producer_fields),
+            'idempotency_conflict' if state['original'] is not None and same_identity else 'envelope_join')
+    require(validator('Plans/memory_maintenance_event_payloads.schema.json',
+                      event.replace('.', '_')).is_valid(value['payload']), 'invalid_payload')
+    require(len(_CODEC.binding_bytes(value['payload'])) <= 16384, 'inline_payload_too_large')
+    key = [scope_partition(row['project_id']), event, value['idempotency_key']]
+    require(state['dedupe_key'] == key, 'scope_partition_mismatch')
+    if state['original'] is not None:
+        original = state['original']['full_value']
+        require(original_matches(state['original'], original) and envelope_validator().is_valid(original)
+                and all(original[k] == value[k] for k in producer_fields), 'original_value_changed')
+        return state, deepcopy(original)
+    require(row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'), 'wrong_phase')
+    require(suffix == 'started' or custody(state, 'started'), 'start_receipt_missing')
+    state['original'] = retained(value)
+    state['append_count'] += 1
+    return state, deepcopy(value)
 
 
 def retained(value):
@@ -172,8 +235,13 @@ def accept(payload, contract, context):
                 return False
             if not original_matches(originals.get(event_type(row, 'started')), full_value(row, 'started')):
                 return False
-        elif not context['acceptance_durable']:
-            return False
+        else:
+            if not context['acceptance_durable']:
+                return False
+            # Only the accepted pre-append phase may lack first-start custody.
+            if (row['phase'] != 'accepted' or row['started_event_id'] is not None) and not original_matches(
+                    originals.get(event), full_value(row, 'started')):
+                return False
         original = originals.get(event)
         if original is not None and not original_matches(original, full_value(row, suffix)):
             return False
@@ -291,12 +359,15 @@ def transition(before, action):
         require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
         suffix = action['event_type'].rsplit('.', 1)[1]
         require(action['event_type'] == event_type(row, suffix) and custody(state, suffix), 'original_missing')
+        require(custody(state, 'started'), 'start_receipt_missing')
         output = deepcopy(state['originals'][action['event_type']]['full_value'])
         require(action['value'] == output, 'original_value_changed')
     elif op == 'crash':
         state['volatile'] = None
     elif op == 'recover':
         # Restart uses only durable originals and the frozen selected target, never a replacement candidate.
+        require(state['permission'] and not state['withdrawn'], 'permission_or_withdrawal')
+        require(custody(state, 'started'), 'start_receipt_missing')
         if row['phase'] == 'accepted':
             require(custody(state, 'started'), 'start_receipt_missing')
             state, _ = transition(state, {'op': 'advance_started', 'expected_operation': deepcopy(row)})
@@ -351,7 +422,11 @@ def run_stateful(fixtures, families):
                     'terminal-before-start', 'advance-before-receipt', 'changed-original-terminal',
                     'changed-retry-clock', 'changed-request', 'permission-refusal', 'withdrawal-refusal',
                     'settled-failure-original', 'failed-retry-no-effect', 'changed-retained-full-value',
-                    'lost-retained-full-value'}
+                    'lost-retained-full-value', 'completed-recovery-permission-refusal',
+                    'completed-recovery-withdrawal-refusal', 'completed-recovery-original',
+                    'completed-recovery-lost-start'}
+        if event.endswith('.started'):
+            required |= {'completed-retry-lost-start'}
         required |= ({'prepare-swap-crash-convergence', 'prepared-recovery-selects-once',
                       'unprepared-swap', 'repeated-swap-refused', 'unselected-success-refused',
                       'stale-source-before-swap', 'missing-artifact-after-swap',
@@ -384,6 +459,38 @@ def run_stateful(fixtures, families):
     return counts, schema_count, trace_count
 
 
+def run_writers(fixtures, families):
+    counts = {}
+    required = {'append-retry-original', 'retry-storage-clock-original', 'retry-semantic-conflict',
+                'append-projector-replay-only', 'retry-projector-replay-only',
+                'invalid-envelope-version', 'missing-replay-policy', 'wrong-payload-schema',
+                'wrong-envelope-project', 'wrong-envelope-correlation', 'wrong-envelope-causation',
+                'raw-project-partition', 'event-type-trailing-lf'}
+    for family in fixtures['writer_families']:
+        event = family['event_type']; assert event in families and event not in counts
+        cases = family['cases']; names = [c['name'] for c in cases]
+        assert len(names) == len(set(names)) and {event + ':' + n for n in required} <= set(names)
+        states = family['states']; counts[event] = 0
+        for case in cases:
+            state = patch(states[case['initial']], case.get('edits', []))
+            for step in case['steps']:
+                before = deepcopy(state)
+                try:
+                    after, output = append_current(state, step['value'], event)
+                except Refusal as error:
+                    assert step.get('refusal') == str(error), (case['name'], str(error))
+                    assert state == before, (case['name'], 'refusal mutated durable state')
+                else:
+                    assert 'refusal' not in step, (case['name'], 'expected refusal')
+                    assert after == states[step['after']], (case['name'], 'wrong append state')
+                    assert output == step['output'], (case['name'], 'wrong original')
+                    assert after['effect_count'] == before['effect_count'] == 0
+                    state = after
+                counts[event] += 1
+    assert set(counts) == set(families)
+    return counts
+
+
 def main():
     contracts = load('Plans/memory_maintenance_contracts.json'); fixtures = load('Plans/memory_maintenance_event_fixtures.json')
     registered = {x['event_type'] for x in load('Plans/event_family_registry.json')['families']}
@@ -403,6 +510,10 @@ def main():
             assert identity(*args) != identity(event, args[1], 'other-project', args[3])
     assert set(counts) == set(families)
     stateful, schema_count, trace_count = run_stateful(fixtures, families)
+    writers = run_writers(fixtures, families)
+    for case in fixtures['identifier_cases']:
+        result = validator(case['schema'], case['definition']).is_valid(case['value'])
+        assert result == case['valid'], case['name']
     values = load('Plans/storage_value_registry.json')['families']; ops = load('Plans/memory_maintenance_operation.schema.json')
     target_schemas = load('Plans/memory_maintenance_rebuild_target.schema.json')['$defs']
     own_values = [v for v in values if v['family_id'] in ['memory_' + n + '_operation' for n in OP_NAMES]
@@ -414,14 +525,20 @@ def main():
         assert value['value_schema'] == {**ops['$defs'], **target_schemas}[value['value_schema_ref'].rsplit('/', 1)[1]]
     for contract in families.values():
         assert contract['membership'] == 'ABSENT' and contract['retention_policy_ref'] == 'PENDING_RETENTION_DECISION'
+        assert contract['replay_policy'] == 'dedupe_by_idempotency_key'
+        assert contract['payload_schema_id'] == (load('Plans/memory_maintenance_event_payloads.schema.json')['$id']
+                                                + '#/$defs/' + contract['event_type'].replace('.', '_'))
         for path in [contract['semantic_owner'], contract['storage_owner'], contract['payload_owner']]:
             filename, unit = path.split('#'); assert 'plan_unit_id: ' + unit in (ROOT / filename).read_text()
         filename, unit = contract['storage_owner'].split('#')
         section = (ROOT / filename).read_text().split('### ' + unit + ' - ', 1)[1].split('\n### ', 1)[0]
         for token in ('SP-278', 'SP-286', 'CV-339', contract['consumer_id'], contract['event_type']):
             assert token in section
+        for token in (contract['payload_schema_id'], contract['replay_policy'], 'replay_only_not_appendable'):
+            assert token in section
     print(json.dumps({'status': 'pass', 'families': counts, 'boundary_cases': sum(counts.values()),
                       'operation_cases': schema_count, 'stateful_traces': trace_count, 'stateful_steps': stateful,
+                      'current_writer_steps': writers, 'identifier_cases': len(fixtures['identifier_cases']),
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 
 
