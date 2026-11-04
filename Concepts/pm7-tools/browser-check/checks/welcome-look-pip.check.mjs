@@ -144,7 +144,11 @@ export default async function (t) {
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	const reps = Math.max(1, +(t.args.reps || 1));
 	const btn = f.locator('#pm-o55-onboarding .o55-lookslot .o55-lookbtn');
-	const menuOpen = async () => { if (!(await f.locator('#pm-o55-onboarding .o55-lookmenu').count())) { await btn.click(); await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 }); await f.waitForTimeout(350); } };
+	// the look change has finished (the page's cover, NieR's moment and the window's reveal) before the menu is touched again
+	const quiet = () => f.waitForFunction(() => !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy())
+		&& !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !window.O55.S.vt, null, { timeout: 30000 }).catch(() => {});
+	const press = async (loc) => { await quiet(); await loc.click({ timeout: 30000 }); };
+	const menuOpen = async () => { if (!(await f.locator('#pm-o55-onboarding .o55-lookmenu').count())) { await press(btn); await f.waitForSelector('#pm-o55-onboarding .o55-lookmenu', { timeout: 5000 }); await f.waitForTimeout(350); } };
 	const rows = [], bad = [], tally = {}, dumps = [], causes = [];
 	let changes = 0, frames = 0;
 	for (let rep = 0; rep < reps; rep++) for (const look of looks) {
@@ -157,9 +161,11 @@ export default async function (t) {
 			await menuOpen();
 			const sel = `#pm-o55-onboarding .o55-lookmenu [data-o55-do="${act}"][data-arg="${arg}"]`;
 			const nier = arg === 'nier' || (await f.evaluate(() => window.O55.theme().nier));
+			await quiet();
+			await f.locator(sel).click({ trial: true, timeout: 30000 });   // actionable first, so the frames read begin at the click
 			await arm(f, nier ? NIER_FRAMES : FRAMES);
 			t.mark(`${look}: ${kind} ${arg}`);
-			await f.locator(sel).click();
+			await f.locator(sel).click({ timeout: 30000 });
 			const fr = await collect(f);
 			if (t.args.dump) dumps.push({ look, kind, arg, frames: fr });   // --set dump=<file.json>: every frame read, for review
 			// the causes, read off the page in each look: Pip's head group has no transition of its own; the bubble is placed with
@@ -178,7 +184,7 @@ export default async function (t) {
 			await f.waitForTimeout(500);
 		}
 		// the menu is closed between looks, as a person leaves it
-		if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) { await btn.click(); await f.waitForTimeout(300); }
+		if (await f.locator('#pm-o55-onboarding .o55-lookmenu').count()) { await press(btn); await f.waitForTimeout(300); }
 		await f.waitForTimeout(600);
 	}
 	if (t.args.dump) (await import('node:fs')).writeFileSync(String(t.args.dump), JSON.stringify(dumps));
