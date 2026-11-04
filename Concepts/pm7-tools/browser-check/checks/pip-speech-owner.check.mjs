@@ -49,7 +49,8 @@ const SAMPLER = ([root, L]) => {
 		const b = document.querySelector(root + ' .pst-bubble'), on = b && b.querySelector('.pst-bt-on'), cs = b && getComputedStyle(b);
 		const text = b && on && b.classList.contains('on') && cs.visibility !== 'hidden' && parseFloat(cs.opacity) > 0.1 ? on.textContent.trim() : '';
 		let st = null, stale = null;
-		if (layer && SETS[scr] && window.O55.S.open && !layer.matches('.o55-hold, .o55-entering')) {
+		/* (judged while the step comes in too: the bubble on the stage shows its line from the screen's first render) */
+		if (layer && SETS[scr] && window.O55.S.open) {
 			const set = SETS[scr](), valid = set.valid[(st = domState(scr, layer))] || [];
 			const invalid = Object.keys(set.op).filter((n) => !valid.includes(n)).map((n) => set.op[n]).filter((x) => typeof x === 'string' && x);
 			const allowed = Object.values(set.lines).concat(valid.map((n) => set.op[n])).filter((x) => typeof x === 'string' && x && !invalid.includes(x));
@@ -94,7 +95,8 @@ async function openAt(t, f, screen) {
 const settled = (f, screen) => f.waitForFunction(([L, s]) => { const l = document.querySelector(L); return !!l && l.getAttribute('data-screen') === s && window.O55.S.sess.screen === s && !document.documentElement.hasAttribute('data-o55-vt') && !l.matches('.o55-hold, .o55-entering'); }, [LAYER, screen], { timeout: 15000 }).then(() => true, () => false);
 /* the step's own check (70-screens-nas.js checkKey) is in this state */
 const checkIs = (f, screen, state, timeout = 15000) => f.waitForFunction(([s, want]) => {
-	const S = window.O55.S, k = window.O55.nas.checkKey(S, s), st = k ? (S.sess.ops || {})[k] : null;
+	/* (a build from before checkKey knew the SSH install reads the install's own key) */
+	const S = window.O55.S, k = window.O55.nas.checkKey(S, s) || (s === 'nas-install' ? (S.sess.nas || {}).opKey : null), st = k ? (S.sess.ops || {})[k] : null;
 	return want === 'none' ? !st : !!st && st.state === want;
 }, [screen, state], { timeout, polling: 'raf' }).then(() => true, () => false);
 /* Pip has begun typing this line: at least `n` of its letters are on show (all of it under Reduced Motion) */
@@ -104,7 +106,12 @@ const typing = (f, text, n, timeout = 6000) => f.waitForFunction(([root, text, n
 }, [ROOT, text, n], { timeout, polling: 'raf' }).then((h) => h.jsonValue(), () => null);
 const tx = (f, k) => f.evaluate((k) => window.O55.t(k), k);
 async function clickIn(f, sel) { const el = f.locator(`${LAYER} ${sel}`).first(); await el.scrollIntoViewIfNeeded(); await el.click(); }
-async function typeIn(t, f, bind, text) { await clickIn(f, `[data-o55-bind="${bind}"]`); await t.page.keyboard.press('End'); await t.page.keyboard.type(text, { delay: 30 }); }
+/* typed at the end of the field; a password is typed afresh (what is in it is selected first) */
+async function typeIn(t, f, bind, text) {
+	await clickIn(f, `[data-o55-bind="${bind}"]`);
+	await t.page.keyboard.press(bind === 'pw' ? 'ControlOrMeta+A' : 'End');
+	await t.page.keyboard.type(text, { delay: 20 });
+}
 const primaryDo = (f) => f.evaluate((L) => { const p = document.querySelector(L + ' .o55-primary'); return p ? p.getAttribute('data-o55-do') + (p.disabled || p.getAttribute('aria-disabled') === 'true' ? ':off' : ':on') : null; }, LAYER);
 async function begin(t, f, look, mode, screen) {
 	await t.app.look(look);
@@ -142,7 +149,7 @@ export default async function (t) {
 			await clickIn(f, '.o55-primary');
 			const ran = await checkIs(f, 'nas-smb', 'running', 4000);
 			await typeIn(t, f, 'user', '3');
-			await t.page.waitForTimeout(2200);
+			await t.page.waitForTimeout(1800);
 			await t.check(`${tag} smb 2: the edit while checking leaves the step unchecked`, ran && /^check:/.test(await primaryDo(f)), await primaryDo(f));
 			await verdict(t, f, `${tag} smb 2 account edited while the check runs`, ['nas-smb:running', 'nas-smb:unchecked']);
 			/* 3. quick successive presses: Check access, the password retyped and Check access again at once */
@@ -163,10 +170,13 @@ export default async function (t) {
 				await typing(f, await tx(f, 'pip.oops.nas.smb.wrong'), 6);
 				await typeIn(t, f, 'pw', 'correct horse');
 				await clickIn(f, '.o55-primary');
+				/* the field to edit is in hand while the check runs, so the edit lands as the cheer's first letters type */
+				await checkIs(f, 'nas-smb', 'running', 4000);
+				await clickIn(f, `[data-o55-bind="${input}"]`); await t.page.keyboard.press(input === 'pw' ? 'ControlOrMeta+A' : 'End');
 				const passed = await checkIs(f, 'nas-smb', 'done');
 				const at = await typing(f, cheer, 3);
+				await t.page.keyboard.type(input === 'domain' ? 'W' : '4');
 				await t.mark(`${tag} cheer begins, ${input} edited`);
-				await typeIn(t, f, input, input === 'domain' ? 'W' : '4');
 				await t.page.waitForTimeout(1500);
 				await t.check(`${tag} smb 4 (${input}): refused, then right, and the cheer had begun when ${input} was edited`, refused && passed && !!at && /^check:/.test(await primaryDo(f)), JSON.stringify({ refused, passed, typedAtEdit: at, primary: await primaryDo(f) }));
 				await verdict(t, f, `${tag} smb 4 retry cheer, then ${input} edited as it begins`, ['nas-smb:failed', 'nas-smb:done', 'nas-smb:unchecked']);
@@ -179,7 +189,7 @@ export default async function (t) {
 			await clickIn(f, '.o55-primary');
 			await checkIs(f, 'nas-smb', 'running', 4000);
 			await typeIn(t, f, 'user', '5');
-			await t.page.waitForTimeout(2200);
+			await t.page.waitForTimeout(1800);
 			await verdict(t, f, `${tag} smb 5 retry, account edited while it runs`, ['nas-smb:failed', 'nas-smb:running', 'nas-smb:unchecked']);
 		});
 		if (only.includes('drive') || only.includes('nfs')) await t.step(`${tag} · drive, nfs`, async () => {
