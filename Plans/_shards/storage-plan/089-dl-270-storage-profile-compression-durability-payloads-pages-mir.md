@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L30070
+Source lines: L28057-L30072
 
-Source SHA256: `a42955e62371e783bb25b7d5b21cbaf75a46832d96ccf5f3ad3c501518267a23`
+Source SHA256: `85b21d66e2f53cd7652c3e8071119768691d7caeede4165ee08cd5e7a2da1db7`
 
 ---
 
@@ -1572,7 +1572,8 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: filesafe.destructive_override_granted adopts SP-286 strict full-value
   custody and SP-278 generic index proof; storage.filesafe_destructive_override_granted_history_read.v1@1.0.0
-  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+  is passive with none_required family checkpoint. Event-history retention uses
+  RP-AUTHORITY-INDEFINITE under the existing Case L-3 exact-kind default.
 gui_related: false
 gui_classification_reason: Event authority and storage contracts; no presentation
   change.
@@ -1836,7 +1837,8 @@ status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: filesafe.policy_degraded adopts SP-286 strict full-value custody and
   SP-278 generic index proof; storage.filesafe_policy_degraded_history_read.v1@1.0.0
-  is passive with none_required family checkpoint. Retention remains PENDING_RETENTION_DECISION.
+  is passive with none_required family checkpoint. Event-history retention uses
+  RP-OPERATIONAL-2555D under the existing Case L-3 exact-kind default.
 gui_related: false
 gui_classification_reason: Event authority and storage contracts; no presentation
   change.
