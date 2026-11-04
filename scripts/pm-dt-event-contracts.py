@@ -15,6 +15,10 @@ from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
+from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCER_FIELDS = (
     'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
@@ -27,6 +31,78 @@ PRODUCER_FIELDS = (
 
 def load(path):
     return json.loads((ROOT / path).read_text())
+
+
+def schema_reference_errors(documents, mirrors=()):
+    """Resolve every schema reference, including unused branches and resources.
+
+    Resources retain their document root and nested $id/anchor context. Local
+    external bundles are loaded without network access and walked in full too.
+    Storage mirrors use their declared source schema's root, not the row object.
+    """
+    pending = []
+    errors = []
+
+    def resource(value):
+        return Resource.from_contents(value, default_specification=DRAFT202012)
+
+    def retrieve(uri):
+        nonlocal registry
+        parsed = urlsplit(uri)
+        if parsed.scheme != 'file' or parsed.netloc not in ['', 'localhost']:
+            raise ValueError('schema resource is not in the local bundle: ' + uri)
+        path = Path(unquote(parsed.path)).resolve()
+        relative = path.relative_to(ROOT.resolve()).as_posix()
+        value = resource(load(relative))
+        registry = registry.with_resource(uri, value)
+        if value.id():
+            registry = registry.with_resource(value.id(), value)
+        registry = registry.crawl()
+        pending.append((relative, value, uri))
+        return value
+
+    registry = Registry(retrieve=retrieve)
+    for path, document in documents.items():
+        value = resource(document)
+        uri = (ROOT / path).as_uri()
+        registry = registry.with_resource(uri, value)
+        if value.id():
+            registry = registry.with_resource(value.id(), value)
+        pending.append((path, value, uri))
+    registry = registry.crawl()
+    for label, schema, source_ref in mirrors:
+        source_path = source_ref.split('#', 1)[0]
+        base = documents[source_path].get('$id', (ROOT / source_path).as_uri())
+        pending.append((label, resource(schema), base))
+    visited = set()
+
+    def walk(label, value, resolver, enter=True):
+        if enter:
+            resolver = resolver.in_subresource(value)
+        marker = (id(value.contents), resolver._base_uri)
+        if marker in visited:
+            return
+        visited.add(marker)
+        if isinstance(value.contents, dict):
+            for keyword in ['$ref', '$dynamicRef']:
+                if keyword not in value.contents:
+                    continue
+                ref = value.contents[keyword]
+                try:
+                    resolved = resolver.lookup(ref)
+                    # A reference to a scalar is not a usable JSON Schema.
+                    if not isinstance(resolved.contents, (dict, bool)):
+                        raise ValueError('reference target is not a schema')
+                    walk(label + ' -> ' + ref, resource(resolved.contents), resolved.resolver, enter=False)
+                except (Unresolvable, ValueError, TypeError) as exc:
+                    errors.append(label + ': ' + keyword + '=' + str(ref) + ': ' + type(exc).__name__)
+            for index, child in enumerate(value.subresources()):
+                walk(label + '/subschema/' + str(index), child, resolver)
+
+    while pending:
+        label, value, uri = pending.pop(0)
+        walk(label, value, registry.resolver(uri))
+    return errors
 
 
 def canonical(value):
@@ -549,7 +625,8 @@ def standing_results(c, f, schemas):
 
 def main():
     contracts = load('Plans/dt_event_contracts.json')['families']
-    schemas = load('Plans/dt_event_contracts.schema.json')['$defs']
+    schema_document = load('Plans/dt_event_contracts.schema.json')
+    schemas = schema_document['$defs']
     fixtures = {f['event_type']: f for f in load('Plans/dt_event_contract_fixtures.json')['families']}
     registered = {f['event_type'] for f in load('Plans/event_family_registry.json')['families']}
     storage_schemas = {f['value_schema_ref']: f for f in load('Plans/storage_value_registry.json')['families']}
@@ -562,7 +639,21 @@ def main():
         checks += 1
         if not ok:
             failures.append(message)
-    event_validator = Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker())
+    event_schema = load('Plans/event_record.schema.json')
+    documents = {'Plans/dt_event_contracts.schema.json': schema_document,
+                 'Plans/event_record.schema.json': event_schema}
+    mirrors = [(row['family_id'], row['value_schema'], ref) for ref, row in storage_schemas.items()
+               if ref.startswith('Plans/dt_event_contracts.schema.json#')]
+    reference_errors = schema_reference_errors(documents, mirrors)
+    if reference_errors:
+        # No fixture may hide an invalid schema behind a successful alternative.
+        for c in contracts:
+            check(False, c['event_type'] + ': unresolved schema reference; see schema_reference_errors')
+        print(json.dumps({'status': 'fail', 'families': len(contracts), 'checks': checks,
+                          'failures': failures, 'schema_reference_errors': reference_errors,
+                          'native_execution': 'NOT_RUN'}, indent=2))
+        return checker_exit_code(failures)
+    event_validator = Draft202012Validator(event_schema, format_checker=FormatChecker())
     for c in contracts:
         start = checks
         name = c['event_type']; slug = name.replace('.', '_'); f = fixtures[name]; p = f['valid_payload']
