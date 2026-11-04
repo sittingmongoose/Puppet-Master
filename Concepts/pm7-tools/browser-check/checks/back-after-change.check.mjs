@@ -439,11 +439,13 @@ const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
 const pickOther = async (A, which = 'first') => {
+  /* Read choices after the screen's own entrance completes; an entering card can still have opacity zero. */
+  await A.frame().waitForFunction(() => !document.querySelector('.o55-pane > .o55-layer.o55-entering, .o55-pane > .o55-layer.o55-hold, .o55-pane > .o55-layer.o55-out'), null, { timeout: 8000 });
   const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
     const NAV = ['loc:network', 'storage:network_location']; /* (a pick that is itself a step on: the files place on a NAS opens the NAS steps, on This computer's Name and on a Server's) */
     /* (truly on show: not in a closed sheet or an inert part, and with a size and visibility of its own) */
     const shown = (b) => { const r = b.getBoundingClientRect(), cs = getComputedStyle(b); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && Number(cs.opacity) > 0 && !b.closest('.o55-sheet:not([data-open="true"])') && !b.closest('[inert]') && !b.closest('[aria-hidden="true"]'); };
-    const all = [...new Set([sheet, l].filter(Boolean).flatMap((x) => [...x.querySelectorAll('[role="radio"]')]))].filter((b) => shown(b) && b.getAttribute('aria-checked') !== 'true' && b.getAttribute('aria-disabled') !== 'true' && !b.disabled && !NAV.includes(b.getAttribute('data-o55-do') + ':' + b.getAttribute('data-arg')));
+    const all = [...new Set([sheet, l].filter(Boolean).flatMap((x) => [...x.querySelectorAll('[role="radio"], [data-o55-do="cd"]')]))].filter((b) => shown(b) && b.getAttribute('aria-checked') !== 'true' && (b.getAttribute('data-o55-do') !== 'cd' || (O55.S.sess.screen === 'nas-folder' && b.getAttribute('data-arg') !== O55.S.sess.nas.at)) && b.getAttribute('aria-disabled') !== 'true' && !b.disabled && !NAV.includes(b.getAttribute('data-o55-do') + ':' + b.getAttribute('data-arg')));
     document.querySelectorAll('[data-kit-pick]').forEach((x) => x.removeAttribute('data-kit-pick'));
     /* (which: 'first' or 'last' of the alternatives; 'last' answers only when there is a second one: SW-41) */
     if (which === 'last' && all.length < 2) return null;
@@ -551,7 +553,7 @@ export const tests = {
      every eligible screen, or nopick:begin to require failure after other screens really were picked. */
   async 'SW-41 · every Back-walk picker must offer a change'(t) {
     await flow(t, 'SW-41 online new copy Back walk', async (A, bad) => {
-      await RICH.find(([kind]) => kind === 'online new copy')[1](A); await A.screen('review');
+      await RICH.find(([kind]) => kind === (t.args.rich || 'online new copy'))[1](A); await A.screen('review');
       const w = await pickBackWalk(A, bad, 'SW-41');
       if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41: Back stopped on ${w.seq[w.seq.length - 1]}`);
       t.log(`SW-41 Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}`);
