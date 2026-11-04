@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18743,
+    "depends_on_edge_count": 18745,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21947,
-    "node_count": 7420,
+    "edge_count": 21953,
+    "node_count": 7421,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3204,
+    "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-03T23:53:34Z",
+  "generated_at_utc": "2026-11-04T01:24:35Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -41725,10 +41725,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7420,
+  "plan_unit_count": 7421,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2742,
+      "high": 2743,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -42936,7 +42936,7 @@
       "event_authority_and_false_completion": 1,
       "event_authority_binding_scope_expansion": 1,
       "event_authority_checkpoint_approval_drift": 1,
-      "event_authority_checkpoint_drift": 1,
+      "event_authority_checkpoint_drift": 2,
       "event_authority_decision_drift": 1,
       "event_authority_drift": 1,
       "event_authority_payload_depth_drift": 1,
@@ -45863,7 +45863,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7203,
+      "accepted": 7204,
       "retired": 194,
       "superseded": 23
     },
@@ -45896,7 +45896,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 173,
+      "decision": 174,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46006,7 +46006,7 @@
       {
         "actual": "4ffde4e80c0671c7240c65b7903e6cabc0c6112bc88afc3fc2faca2a044370fe",
         "error": "pnc019_source_hash_stale",
-        "expected": "65c9d2df4966d24ffb4baa700ac778a25ca6620a2866873c3359f66c0cd59a95",
+        "expected": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653",
         "source_path": "Plans/event_family_registry.json"
       },
       {
@@ -46030,7 +46030,7 @@
       {
         "actual": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
         "error": "pnc019_source_hash_stale",
-        "expected": "eb232949f8f76253803cce3b7db99a1ae551658c9cb288c740bb219d074fc83d",
+        "expected": "ad0a82616f88d996b5506bd96662ec61c1fad5b2ba4be0a91306fc9963e32c3e",
         "source_path": "Plans/storage_value_registry.json"
       },
       {
@@ -46096,7 +46096,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "7542cdac292405ec0d9b7b644ad7c345cadca822d36c710cd3c6729120274f32",
+        "expected": "34fbf59930d68d0a45f5887a0fb507b8caaf7336e69dcc00a5ba834983747c81",
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
@@ -46563,35 +46563,6 @@
       },
       {
         "error": "event_authority_currentness_live_registry_drift"
-      },
-      {
-        "actual_checkpoint": {
-          "registered_kernel_rows": 46,
-          "registry_revision": "2026-10-09.1",
-          "registry_schema_id": "pm.event_family_registry.v1",
-          "registry_schema_version": "2.0.0"
-        },
-        "denominator_status": "UNKNOWN_OPEN",
-        "error": "event_authority_checkpoint_changed_requires_fresh_approval",
-        "evidence_currentness": "live_rehashed_fail_closed_currentness_audit",
-        "evidence_refs": [
-          {
-            "artifact_id": "EVENT_FAMILY_DENOMINATOR_STATUS.json",
-            "claim": "UNKNOWN_OPEN current status",
-            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/EVENT_FAMILY_DENOMINATOR_STATUS.json"
-          },
-          {
-            "artifact_id": "GROUP_ARTIFACT_MANIFEST.json",
-            "claim": "252 unique row-local findings quarantined without registry or checkpoint advance",
-            "custody_path": "Plans/.audits/event-authority-2026-08-13-currentness/adjudication/GROUP_ARTIFACT_MANIFEST.json"
-          }
-        ],
-        "expected_checkpoint": {
-          "registered_kernel_rows": 43,
-          "registry_revision": "2026-10-09.1",
-          "registry_schema_id": "pm.event_family_registry.v1",
-          "registry_schema_version": "2.0.0"
-        }
       },
       {
         "bulk_registration_allowed": false,

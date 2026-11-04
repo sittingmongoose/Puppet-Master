@@ -2588,6 +2588,7 @@
     "F3-277",
     "F3-281",
     "F3-282",
+    "DL-300",
     "F-067",
     "F3-464",
     "F3-471",
@@ -29415,6 +29416,16 @@
       "edge_type": "depends_on",
       "from": "DL-273",
       "to": "DL-272"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-300",
+      "to": "DL-188"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-300",
+      "to": "DL-292"
     },
     {
       "edge_type": "depends_on",
@@ -111248,6 +111259,26 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "DL-300",
+      "to": "CV-366"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-300",
+      "to": "GRS-086"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-300",
+      "to": "PS-145"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-300",
+      "to": "SSYS-060"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "DP-063",
       "to": "ATS-018"
     },
@@ -117162,7 +117193,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-03T23:53:33Z",
+  "generated_at_utc": "2026-11-04T01:24:34Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -152285,6 +152316,23 @@
       },
       "status": "accepted",
       "unit_type": "decision_record"
+    },
+    {
+      "context_scope": "projects_refresh_pass2_20261103",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-300",
+      "reasoning_tier": "high",
+      "risk_class": "event_authority_checkpoint_drift",
+      "source_location": {
+        "heading": "DL-300 - Event Authority Admits The App Scope Editions And Three New Families",
+        "heading_level": 3,
+        "heading_line": 21037,
+        "line": 21039,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
     },
     {
       "context_scope": "plan_standardization",
@@ -243311,12 +243359,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18743,
+    "depends_on_edge_count": 18745,
     "downstream_blocked_node_count": 0,
-    "edge_count": 21947,
-    "node_count": 7420,
+    "edge_count": 21953,
+    "node_count": 7421,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 3204,
+    "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []
