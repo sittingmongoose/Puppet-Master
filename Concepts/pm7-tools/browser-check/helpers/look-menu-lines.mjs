@@ -13,20 +13,19 @@ export async function reachableMenuLines(t, f, id) {
     let top = w.top + win.clientTop, bottom = top + win.clientHeight, left = w.left + win.clientLeft, right = left + win.clientWidth;
     for (let el = note; el && el !== win; el = el.parentElement) {
       const style = getComputedStyle(el), r = el.getBoundingClientRect();
-      if (/hidden|clip|auto|scroll/.test(style.overflowY)) { top = Math.max(top,r.top+el.clientTop); bottom = Math.min(bottom,r.top+el.clientTop+el.clientHeight); }
-      if (/hidden|clip|auto|scroll/.test(style.overflowX)) { left = Math.max(left,r.left+el.clientLeft); right = Math.min(right,r.left+el.clientLeft+el.clientWidth); }
+      if (/hidden|clip|auto|scroll/.test(style.overflowY)) { top = Math.max(top,r.top+el.clientTop); bottom = Math.min(bottom,r.bottom-el.clientTop); }
+      if (/hidden|clip|auto|scroll/.test(style.overflowX)) { left = Math.max(left,r.left+el.clientLeft); right = Math.min(right,r.right-el.clientLeft); }
     }
     const lines = [];
     if (note) {
       const walker = document.createTreeWalker(note, NodeFilter.SHOW_TEXT);
       let node;
-      while ((node = walker.nextNode())) for (let i = 0; i < node.length; i++) {
-        if (!node.textContent[i].trim()) continue;
-        const range = document.createRange(); range.setStart(node, i); range.setEnd(node, i + 1);
-        const r = range.getBoundingClientRect();
-        let line = lines.find(l => Math.abs(l.y - r.top) < 1);
-        if (!line) { line = {y:r.top, bottom:r.bottom, left:r.left, right:r.right}; lines.push(line); }
-        line.left = Math.min(line.left,r.left); line.right = Math.max(line.right,r.right);
+      while ((node = walker.nextNode())) {
+        if (!node.textContent.trim()) continue;
+        const range = document.createRange(); range.selectNodeContents(node);
+        // A Range rect represents a painted line even on Friendly's rotated card.
+        // Grouping single glyphs by y invents extra lines on a tilted baseline.
+        for (const r of range.getClientRects()) lines.push({y:r.top, bottom:r.bottom, left:r.left, right:r.right});
       }
     }
     return {scroll:scroller.scrollTop, presentation:inline ? 'inline' : 'stage', bounded:m.top >= h.bottom - 1 && m.bottom <= w.bottom - win.clientTop + 1,
