@@ -178,7 +178,7 @@ The patch does five things:
 - `PostAugustAdmissionTests` records the three DL-300 families as one multi-family step: fixture states 43 -> 46, a fixture-only decision entry `DL-999` naming them, and the families in a separate `RECORDED` list. `POST` is unchanged, so `test_pm_coordination_events`'s check that `POST[3:]` equals the admitted coordination rows still holds.
 - `HoldingBucketTests` gains `test_holding_pin_follows_the_dl412_receipt_chain`.
 - A new `MultiFamilyStepTests` class adds 22 tests. Fix round 1 replaced one of the original 17 and added five; they are listed below.
-- All 34 existing tests keep their assertions.
+- All 34 existing test methods remain. Four of them have their fixture expectations extended: their expected sets and iteration move from `POST` to `RECORDED`, so they also cover the three step members. No protection of older records is weakened.
 
 | Run | Result |
 |---|---|
@@ -193,7 +193,7 @@ The patch does five things:
 | `test_pm_pnc019_currentness` (currentness edition copied in, 15 files, hashes match the share) | 1 failure, exit 1: 22 `event_authority_currentness_source_drift` entries for Plans documents edited since the 2026-08-13 edition. None names a file this branch changes. |
 | `pm-shard-plans.py --check` | exit 0, pass |
 | `pm-plan-index.py validate` | exit 0, `status: pass` |
-| `pm-plans-verify.py lint-path-refs` | exit 1: 12 `implementation_surface_missing_or_untyped` in `Plans/.plan_index/plan_units.jsonl`, which this branch does not change. None names a file of this branch. |
+| `pm-plans-verify.py lint-path-refs` (round 0, full checkout) | exit 1: 12 `implementation_surface_missing_or_untyped` in `Plans/.plan_index/plan_units.jsonl`, which this branch does not change. None names a file of this branch. Fix round 1's sparse checkout reports 14: the same 12 plus `BPM-009` and `DL-055`, which name `.claude/CLAUDE.md`, a path that checkout leaves out (`CA-SEAL.md`). |
 
 Negative cases the patched tests run through the changed check:
 - a missing member record;
