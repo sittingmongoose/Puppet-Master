@@ -268,9 +268,9 @@
         "initiator_surface": "scrubbed",
         "target_kind": "dev_session",
         "target_locator_summary": "scrubbed",
-        "requested_mode_overlay": "scrubbed",
-        "effective_mode_overlay": "scrubbed",
-        "runtime_mode": "ask"
+        "requested_mode_overlay": "debug",
+        "effective_mode_overlay": "debug",
+        "runtime_mode": "regular"
       },
       "project_id": "p1",
       "checks": [

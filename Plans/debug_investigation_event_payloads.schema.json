@@ -343,14 +343,28 @@
           "maxLength": 2048
         },
         "requested_mode_overlay": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
+          "enum": [
+            "none",
+            "plan",
+            "deep_plan",
+            "debug",
+            "interview",
+            "brainstorm",
+            "crew"
+          ],
+          "$comment": "Closed by Plans/assistant-chat-design.md 'Canonical enum closure' (requested_mode_overlay/effective_mode_overlay)."
         },
         "effective_mode_overlay": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
+          "enum": [
+            "none",
+            "plan",
+            "deep_plan",
+            "debug",
+            "interview",
+            "brainstorm",
+            "crew"
+          ],
+          "$comment": "Closed by Plans/assistant-chat-design.md 'Canonical enum closure' (requested_mode_overlay/effective_mode_overlay)."
         },
         "runtime_mode": {
           "enum": [
@@ -361,6 +375,51 @@
           ]
         }
       },
+      "allOf": [
+        {
+          "$comment": "Debug Mode persists requested_mode_overlay = debug and effective_mode_overlay = debug (Plans/assistant-chat-design.md 1.0B).",
+          "if": {
+            "properties": {
+              "requested_mode_overlay": {
+                "const": "debug"
+              }
+            },
+            "required": [
+              "requested_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "debug"
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Debug remains execution-capable: no stable Debug + ask; debug normalizes to regular, or yolo only by explicit opt-in (Plans/assistant-chat-design.md 1.0B, 1.0C).",
+          "if": {
+            "properties": {
+              "effective_mode_overlay": {
+                "const": "debug"
+              }
+            },
+            "required": [
+              "effective_mode_overlay"
+            ]
+          },
+          "then": {
+            "properties": {
+              "runtime_mode": {
+                "enum": [
+                  "regular",
+                  "yolo"
+                ]
+              }
+            }
+          }
+        }
+      ],
       "$id": "pm.debug_investigation.started.schema.v1"
     },
     "target_bound": {

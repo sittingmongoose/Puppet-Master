@@ -49,6 +49,23 @@ def main():
         for bad in [dict(payload, raw_log_dump='secret'), dict(payload, schema_version='2.0.0')]:
             check(not validator.is_valid(bad), event + ': closed payload/version')
             checks += 1
+        if name == 'started':
+            # Closed overlay enum and Debug runtime resolution (assistant-chat-design.md 1.0B, 1.0C, enum closure).
+            mode_negatives = [
+                dict(payload, requested_mode_overlay='not_a_mode'),
+                dict(payload, effective_mode_overlay='scrubbed'),
+                dict(payload, requested_mode_overlay='debug', effective_mode_overlay='plan'),
+                dict(payload, effective_mode_overlay='debug', runtime_mode='ask'),
+                dict(payload, effective_mode_overlay='debug', runtime_mode='plan'),
+                dict(payload, requested_mode_overlay='debug', effective_mode_overlay='debug', runtime_mode='ask'),
+            ]
+            for bad in mode_negatives:
+                check(not validator.is_valid(bad), event + ': forbidden mode tuple ' + json.dumps([bad['requested_mode_overlay'], bad['effective_mode_overlay'], bad['runtime_mode']]))
+                checks += 1
+            check(payload['requested_mode_overlay'] == payload['effective_mode_overlay'] == 'debug' and payload['runtime_mode'] in ('regular', 'yolo'), event + ': positive case is a legal resolved Debug tuple')
+            for ok in [dict(payload, runtime_mode='yolo'), dict(payload, requested_mode_overlay='none', effective_mode_overlay='none', runtime_mode='ask')]:
+                check(validator.is_valid(ok), event + ': legal mode tuple accepted ' + json.dumps([ok['requested_mode_overlay'], ok['effective_mode_overlay'], ok['runtime_mode']]))
+                checks += 1
         original_key, original_id = identity(event, case['project_id'], payload)
         check([original_key, original_id] == case['expected_identity'], event + ': exact identity vector')
         check(identity(event, 'other-project', payload) != (original_key, original_id), event + ': scope substitution')
