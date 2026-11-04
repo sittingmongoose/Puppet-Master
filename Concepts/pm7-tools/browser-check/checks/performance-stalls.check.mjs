@@ -33,6 +33,7 @@ export default async function(t) {
   }
  });
  const f = await t.app.open();
+ if(t.args.page)await t.equal('loaded requested source',new URL(f.url()).pathname,new URL(t.args.page,'file://').pathname);
  await t.app.look('basic-dark');
  const cdp = await t.page.context().newCDPSession(t.page);
  await cdp.send('Tracing.start', {categories:'devtools.timeline,v8.execute,blink.user_timing,disabled-by-default-devtools.timeline.stack', transferMode:'ReturnAsStream'});
