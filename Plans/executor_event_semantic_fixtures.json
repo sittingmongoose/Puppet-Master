@@ -82,9 +82,11 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "b6eda33e18b23b0ec73ee3a324ec749558c51f36684659867d6ec8294a32a4d2"
+              "sha256": "5dbab94b9c230340c17b3a2d944392bcb2ee7974d0a023398a0a0809552305f4"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -357,12 +359,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "27eaf17a7f0ff73454983983ed723c89c6ded102801b778bb1b5d1429a8c7e66"
+              "value": "89f5564afc430ddbfc0b2c0f1cc0f282e1c596f735a6ba7be793b7d2e6914fc0"
             }
           ],
           "expected": "reject"
@@ -483,12 +487,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "bf7a9db1377c5a132d3d5e56b4f655626018f638e52f9ae0ef5e47f42c7b7303"
+              "value": "6776ebdfaf2b9a191ea440a0a0f9cdf5f43d5be2b36bef267e0a28625d7948f9"
             }
           ],
           "expected": "reject"
@@ -512,12 +518,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "7e6ca8f67c74ad7695c43bac63301b5cd5a05a9560e680857b0484a4ef920936"
+              "value": "6a2e364568d3a0de466b6356bfcd9a632f418c545d097858ffcac7e72b476e80"
             }
           ],
           "expected": "reject"
@@ -570,12 +578,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "84dc7dcbf73e7f6200d4b780682c133b3f12eb6bc25ef4f552e4ef89eb764303"
+              "value": "2bf8a68a79065280afd8098af4a99253504549a42ca510c82d8fee726257d53d"
             }
           ],
           "expected": "reject"
@@ -597,12 +607,14 @@
                 "reviewer_result_refs": [],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "ffbdf7158133a99ffec35c780ad543ad194c2e285b35c9b4052d3384f8ed8443"
+              "value": "2c5707e6e8e76c13416847ade0cc0e059ac76b6cee5589b99fc75ae66a1f40a9"
             }
           ],
           "expected": "reject"
@@ -657,12 +669,14 @@
                 ],
                 "remediation_root_id": "foreign",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "c7c2ee580ae83b26d165348bdf49c82742849796c368bad929dee8b7fc42b341"
+              "value": "c9b498a2899ac54397e1d6fe16dafcfd5bc40b29a47187574040b2b5286cd834"
             }
           ],
           "expected": "reject"
@@ -686,12 +700,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "b2bb83108db2b12624676724ed9dd6667cfc546fb7dfcda778a4e42ffe996d4c"
+              "value": "2cc83dde89be90c13526c15e6f34f4a51d78b7d8ce8ba3255cf232855b4cf6fa"
             }
           ],
           "expected": "reject"
@@ -715,12 +731,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "14b1331f2b456aa26b0a06c444d228261db94d6c1a74262483ca38d8e6a72c5b"
+              "value": "4ac77eec663139ddf03ee465d77f9b70e8e59a2614d4f2fecca26f15a8970e7c"
             }
           ],
           "expected": "reject"
@@ -744,12 +762,14 @@
                 ],
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "329c14d1adf2a4364c26c8aca215607d3509b1a4d5d8394be1c6773d7cdbe3d7"
+              "value": "67a31729146c5c131f1de8c151e9138d7e865f94c5a2cce7b1fb515925335490"
             }
           ],
           "expected": "reject"
@@ -2075,8 +2095,6 @@
                       "event_sequence": 1,
                       "terminal_state": "done",
                       "retry_count": 1,
-                      "failure_class": "verification_failed",
-                      "backoff_until_utc": "2026-11-04T12:00:00Z",
                       "verification_result_refs": [
                         "verifier-001"
                       ],
@@ -2086,9 +2104,11 @@
                       "remediation_root_id": "remediation_root_id-001",
                       "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
                       "success": true,
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "f45cb4aa28f43b75a3842cd97ecfb6a18cc8e3866506a7885b32e041022e0bc1"
+                    "sha256": "bb003c9d9aaa88fb28543f33894d4ade3f9858a26c72f861f2bfc6397e57b178"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -2431,6 +2451,136 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-backoff_until_utc",
+          "changes": [
+            {
+              "path": "payload/backoff_until_utc",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/backoff_until_utc",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-reviewer_result_refs",
+          "changes": [
+            {
+              "path": "payload/reviewer_result_refs",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/reviewer_result_refs",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-verification_result_refs",
+          "changes": [
+            {
+              "path": "payload/verification_result_refs",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/verification_result_refs",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-safe_point_id",
+          "changes": [
+            {
+              "path": "payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-failure_class",
+          "changes": [
+            {
+              "path": "payload/failure_class",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/failure_class",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-remediation_parent_attempt_id",
+          "changes": [
+            {
+              "path": "payload/remediation_parent_attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/remediation_parent_attempt_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-remediation_root_id",
+          "changes": [
+            {
+              "path": "payload/remediation_root_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/remediation_root_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -2668,9 +2818,11 @@
                 "event_sequence": 1,
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "54612af176abe404d5f8825e741dd319256b9a90eeaabb21c9d431615b0a779e"
+              "sha256": "b74fd3674b7a5eee57783d2ec11779c6928cece3dfc8c176b6cd16f8de3c5915"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -2980,12 +3132,14 @@
                 "event_sequence": 2,
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "16dc67bac7642ec835fc99608e4f96493ab100402e9770ab7437387f5add37d5"
+              "value": "90d7f38407bb3468138f41eda1fe6503be3bd7732743cc5623aa7a192ce01357"
             }
           ],
           "expected": "reject"
@@ -3324,12 +3478,14 @@
                 "event_sequence": 1,
                 "remediation_root_id": "foreign",
                 "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "bcce6dac2c518141e5fea43a25f2cade1b4340a3158d252277d207d366b6c4ea"
+              "value": "9b7513a681c39ad699bb0c0c828ee317def361c29fc22117c008982979397c05"
             }
           ],
           "expected": "reject"
@@ -3343,12 +3499,14 @@
                 "event_sequence": 1,
                 "remediation_root_id": "remediation_root_id-001",
                 "remediation_parent_attempt_id": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "dbc59e5951549660c7ef7612db0c2b68a072e67fa6667010b23fe7ca7499abfd"
+              "value": "f49c8f9598e893c11bd5f8d49348c730498821d09f5e25c44939baca98bb06d0"
             }
           ],
           "expected": "reject"
@@ -5098,6 +5256,238 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-safe_point_id",
+          "changes": [
+            {
+              "path": "payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-remediation_parent_attempt_id",
+          "changes": [
+            {
+              "path": "payload/remediation_parent_attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/remediation_parent_attempt_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-remediation_root_id",
+          "changes": [
+            {
+              "path": "payload/remediation_root_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/remediation_root_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-effective_account_snapshot_id",
+          "changes": [
+            {
+              "path": "payload/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/effective_account_snapshot_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-requested_account_snapshot_id",
+          "changes": [
+            {
+              "path": "payload/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/requested_account_snapshot_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "omit-required-account-snapshot-from-source-requested_account_snapshot_id",
+          "changes": [
+            {
+              "path": "payload/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/body/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/sha256",
+              "value": "848f1dc60ab613902e362f5d284ce6319ecb103635ef6d558de9bbf40d9130d7"
+            },
+            {
+              "path": "capture/dependency_refs/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/requested_account_snapshot_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "omit-required-account-snapshot-from-source-effective_account_snapshot_id",
+          "changes": [
+            {
+              "path": "payload/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/body/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/sha256",
+              "value": "b5304a106959deb8e16a1e66c7d33be5c2d87243348740e5a2342bfe0a245352"
+            },
+            {
+              "path": "capture/dependency_refs/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/effective_account_snapshot_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "no-account-identity-no-invented-account-snapshots",
+          "changes": [
+            {
+              "path": "payload/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "payload/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/body/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/body/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/execution/body/requested_account_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/execution/body/effective_account_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/execution/body/requested_account_binding",
+              "value": "none"
+            },
+            {
+              "path": "capture/records/execution/sha256",
+              "value": "6ca60352b35f28a4e462ecb25dd3bcaa3436c3e78578928e7b7c132dd7a12889"
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/body/requested_account_id",
+              "value": null
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/body/effective_account_id",
+              "value": null
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/body/requested_account_binding",
+              "value": "none"
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/sha256",
+              "value": "8bf41597235aca96d41ed32d79d6e97486762cf951e8d3f027c7bf0affce954b"
+            },
+            {
+              "path": "capture/dependency_refs/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/effective_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/requested_account_snapshot_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/effective_account_snapshot_id",
+              "delete": true
+            }
+          ],
+          "expected": "accept"
         }
       ],
       "traces": [
@@ -5358,9 +5748,11 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "d4bc368c7f1009b842cc7883ad38657b550d9bf737b1637b047cef686d547520"
+              "sha256": "f3930ff657769afdc9afcc691ba675263e0b26f6de1e3f1dbc013af9b5fc5d88"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -5591,12 +5983,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "a83550bb22aa8ae8a7886ffc9b1a922a238794cbebe0d87cdac9ab28459f7fea"
+              "value": "00733866f9ad5b0af437baa8f7746ef8458ae3332b49e40a653d13f86127b34d"
             }
           ],
           "expected": "reject"
@@ -5724,12 +6118,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "0d0204f031533ba84eb6e6f7b204d19844423636845ec5dff79a5f079f2d0d51"
+              "value": "4736f7002fdeac98ab98870f7c2bfe81ce2515928588789e11b7e2b7bc1c99b6"
             }
           ],
           "expected": "reject"
@@ -5755,12 +6151,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "c0fcac93973a234d8fd05df010c0e64ad095e179b75c2aa049e135f6bac9bec0"
+              "value": "bd75adbff66569f5e32c35ea85cc6ba1f52808ad35330916713034685f9a2bda"
             }
           ],
           "expected": "reject"
@@ -5789,12 +6187,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "49f58bb3c702e7b114613fa2a24b67a9c767f52027dafe29c759705d0f5beb6e"
+              "value": "6570d47b402e3f3e4e3d10b72a16d74609c0f204ebacb598a930a7464564ee53"
             }
           ],
           "expected": "reject"
@@ -5839,12 +6239,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "fe85974f8cce009625c72b90654a6f6d9c34d47624e8c1915b699bee4e81fd35"
+              "value": "1a19165e146393c581bc12c2efe8edeb22251acca5151d1e33989874acd078a0"
             }
           ],
           "expected": "reject"
@@ -5873,12 +6275,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "foreign",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "2807bb3f44c91bd703d2ad73c8959d0a2f242dcc860aa64e6c06eddb974519f4"
+              "value": "610dcc88f2fc3b0280f6b2f6328d0d566efb932184759716788785542130f01b"
             }
           ],
           "expected": "reject"
@@ -5907,12 +6311,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "1c2747bd50e543c64169759dffa508e93e6f505d50285fd3c3eae79d9956720f"
+              "value": "56c9cc10d14c24995fbf8cd2eb54b1f8734eaf43ad57cf8c8fb490551180bca3"
             }
           ],
           "expected": "reject"
@@ -5941,12 +6347,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "20351effd2b73b96e1408ad18629f9fa79043ae467854f190fb0c4efc6c3c7c1"
+              "value": "f0d940620eb85d5457cfc8359f8a3ae611a0592a7750e2dacce5c201ad96f737"
             }
           ],
           "expected": "reject"
@@ -5973,12 +6381,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "05b4157d339aa41ce51db9095945e162955f47b012fa19f01b5adab64006914e"
+              "value": "cb3bc0ccc5094e74bbc915e10a736ba6fd54ab8f45e037ba757a3cf2120074e9"
             }
           ],
           "expected": "reject"
@@ -6007,12 +6417,14 @@
                 "requires_safe_point_restore": false,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "635a17f9b9937c6b9e80bd076b475b88a3700f31271178f492c3a2ca86b14f75"
+              "value": "37cadb13b8ed39d5ae394e189087d567e76a4a7221c3d2443f1224f19882cd27"
             }
           ],
           "expected": "reject"
@@ -6041,12 +6453,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "75f34d5ace2b6b6e45e76b589f8de604bcd4473ab9ae96d4a245d835faa747ed"
+              "value": "b238323ea7a89a59e8bbea44f9d044263510857015714aa2000f4c11915e4e3f"
             }
           ],
           "expected": "reject"
@@ -6075,12 +6489,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "8fdfb79cf64df457310a0e92dea267926ac4abdefb28babb189669c9ec7419c4"
+              "value": "5149bf811981cb3bd84eec45f7feef157e031c8358ab50a641bbf10f75645341"
             }
           ],
           "expected": "reject"
@@ -6109,12 +6525,14 @@
                 "requires_safe_point_restore": true,
                 "safe_point_id": "safe_point_id-001",
                 "anchor_ref": "anchor_ref-001",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "a29ddb2c78bc5e5d70d631245ddfd149ebc0bce0c87a2a7d7875ce03cb5f4b93"
+              "value": "acacd594e5b3c8e2f31a22b3c025e967b0cf964a5b15e7d4727c578264c22ce6"
             }
           ],
           "expected": "reject"
@@ -7077,7 +7495,12 @@
                   "open_details",
                   "retry_now"
                 ],
-                "preserved_local_work": true
+                "preserved_local_work": true,
+                "detail_ref": "detail_ref-001",
+                "auth_realm": "provider-account",
+                "missing_scopes": [
+                  "read"
+                ]
               }
             },
             {
@@ -7128,19 +7551,15 @@
                       ],
                       "preserved_local_work": true,
                       "detail_ref": "detail_ref-001",
-                      "failure_class": "auth_expired",
-                      "timeout_class": "inactivity_timeout",
-                      "wait_state_class": "approval_wait",
                       "auth_realm": "provider-account",
                       "missing_scopes": [
                         "read"
                       ],
-                      "requires_safe_point_restore": true,
-                      "safe_point_id": "safe_point_id-001",
-                      "anchor_ref": "anchor_ref-001",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "d4bc368c7f1009b842cc7883ad38657b550d9bf737b1637b047cef686d547520"
+                    "sha256": "799c6e5d414e7887bc675607cc7701c2167c71e03934791175c1fd82d6484c67"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -7248,7 +7667,9 @@
                     ]
                   }
                 },
-                "dependency_refs": {},
+                "dependency_refs": {
+                  "detail_ref": "detail_ref-001"
+                },
                 "transition": {
                   "observed_payload": {
                     "schema_version": "1.0.0",
@@ -7265,7 +7686,12 @@
                       "open_details",
                       "retry_now"
                     ],
-                    "preserved_local_work": true
+                    "preserved_local_work": true,
+                    "detail_ref": "detail_ref-001",
+                    "auth_realm": "provider-account",
+                    "missing_scopes": [
+                      "read"
+                    ]
                   },
                   "event_sequence": 1,
                   "revision": 1,
@@ -7351,6 +7777,236 @@
             {
               "path": "capture/records/node/sha256",
               "value": "05ef6b3eb3e5be41e1ce88e840911a0041c51de46e5b28b2039fc5343c417508"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-wait_state_class",
+          "changes": [
+            {
+              "path": "payload/wait_state_class",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/wait_state_class",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-timeout_class",
+          "changes": [
+            {
+              "path": "payload/timeout_class",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/timeout_class",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-safe_point_id",
+          "changes": [
+            {
+              "path": "payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-attempt_id",
+          "changes": [
+            {
+              "path": "payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/attempt_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-missing_scopes",
+          "changes": [
+            {
+              "path": "payload/missing_scopes",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/missing_scopes",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-auth_realm",
+          "changes": [
+            {
+              "path": "payload/auth_realm",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/auth_realm",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-failure_class",
+          "changes": [
+            {
+              "path": "payload/failure_class",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/failure_class",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-detail_ref",
+          "changes": [
+            {
+              "path": "payload/detail_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/detail_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/detail_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-requires_safe_point_restore",
+          "changes": [
+            {
+              "path": "payload/requires_safe_point_restore",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/requires_safe_point_restore",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-anchor_ref",
+          "changes": [
+            {
+              "path": "payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/anchor_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omit-attempt-backed-episode",
+          "changes": [
+            {
+              "path": "payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/attempt",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/attempt_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "fabricated-attempt-for-pre-attempt-episode",
+          "changes": [
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "b3b000a458410e2d98b82919ac818af78411cc2cb534b7bd7fc518bc5284342d"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "episode-attempt-presence-unknown",
+          "changes": [
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "ec7b5f18b932d487625746fe7e73f0e6dd9f231b7cecd6fe79178c6f6e5b510b"
             }
           ],
           "expected": "reject"
@@ -7592,9 +8248,11 @@
                 "artifact_refs": [
                   "artifact-001"
                 ],
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "05200c8b46f91bd1dc4edceefc89fc4c266120ea8065629ca2d9478d2ad66681"
+              "sha256": "a9702052ac08b30346d138a3e183d081f01865cfa977523785f1fc5b32cc5b31"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -7839,12 +8497,14 @@
                 "artifact_refs": [
                   "artifact-001"
                 ],
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "6237fafcecebe87df3b3399082a59439b3c2757cdd4e2b2ae1889364b4f2aca9"
+              "value": "0bc9a2975012bd4b5f1f441f3bec7a2944deff3b56b64fcfe1ebdbf9fcbb4550"
             }
           ],
           "expected": "reject"
@@ -7938,12 +8598,14 @@
                 "artifact_refs": [
                   "artifact-001"
                 ],
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "234bc384ef2f14fbbb9955fcf9593044c6151eb1f42fdcc3458290e59bc65eaa"
+              "value": "0c65d83f2942436ccef327d100058fb9f195e0e788457350ce6744ebe438f3ff"
             }
           ],
           "expected": "reject"
@@ -7960,12 +8622,14 @@
                 "artifact_refs": [
                   "artifact-001"
                 ],
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "423e58b1d3a4d466f66fd12933d1a5ac5366b727ae55958721fdc6253e83b21b"
+              "value": "3169d6ca77f9e5a7317a2899eea1bda7929c1f66e899162f109d4ddac0241836"
             }
           ],
           "expected": "reject"
@@ -7982,12 +8646,14 @@
                   "verifier-001"
                 ],
                 "artifact_refs": [],
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "1c520cb2a2395bcf0460ced9cad899178de6093c3757c0e8a865c8e0c0ebe83a"
+              "value": "5b3d359e7092c5e0562bd3808e125d57338917d793573ddf520eff4e608c46eb"
             }
           ],
           "expected": "reject"
@@ -9243,9 +9909,11 @@
                       "artifact_refs": [
                         "artifact-001"
                       ],
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "f3981edee2dd2ea9be24e5ac7e682aa703ab547fc42c152872b73e680b25eb06"
+                    "sha256": "df68de3d0e2a770752499a084014f483a2359d3e64332a98adee47f940c5e639"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -9569,6 +10237,52 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-runtime_snapshot_ref",
+          "changes": [
+            {
+              "path": "payload/runtime_snapshot_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/runtime_snapshot_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/runtime_snapshot_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -9794,9 +10508,11 @@
               },
               "body": {
                 "event_sequence": 1,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "3218a1748b05b744009989d3b2e0ed20acb00a3cd7eb8e357252dbc107692050"
+              "sha256": "ead62ac0212d0286fbd89a2e97d0748896f1fea13846f0d47c00c0185d19e740"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -10040,12 +10756,14 @@
               "path": "capture/records/operation/body",
               "value": {
                 "event_sequence": 2,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "30e7389ccef30132dcde856a1a565160bc36f6e98f82005ea1eddc3532a32d7e"
+              "value": "94ac852b29d6a8ba294de024e3c0088c2127ba566c06d9a4dcf7d5052981db9a"
             }
           ],
           "expected": "reject"
@@ -11964,6 +12682,70 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-execution_unit_context_ref",
+          "changes": [
+            {
+              "path": "payload/execution_unit_context_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/execution_unit_context_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/execution_unit_context_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-runtime_snapshot_ref",
+          "changes": [
+            {
+              "path": "payload/runtime_snapshot_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/runtime_snapshot_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/runtime_snapshot_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -12190,9 +12972,11 @@
               "body": {
                 "event_sequence": 1,
                 "resolution": "approval_granted",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "342ec1cba57dab12885ee50a51aa92f8e99d64324c0b7e53c7eeefbc44cce184"
+              "sha256": "79671d21afc632322661b90db567e6a71f3d5fbdb6b824d247512f8e80ac727b"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -12269,9 +13053,10 @@
                 ],
                 "resolution": "approval_granted",
                 "prerequisite_state": "resolved",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               },
-              "sha256": "c9f102c923d595e02a1311368fad25c3a9b7f65004214b2feac7c199fdcf9cec"
+              "sha256": "96d9af2ab1eb2d83f0de7e8faf894d8535905db5a09c747a5723ec2ff9aa66dc"
             }
           },
           "expected_revisions": {
@@ -12353,12 +13138,14 @@
               "value": {
                 "event_sequence": 2,
                 "resolution": "approval_granted",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "3660b4035f4f645df66abea635d8186e2af2b8f8cea9944e0913c4c41847f8cc"
+              "value": "628e7e9e8baf10825a73ee1e453998dde78d45a38fd8206794cb089957e7489d"
             }
           ],
           "expected": "reject"
@@ -12438,12 +13225,13 @@
                 ],
                 "resolution": "approval_granted",
                 "prerequisite_state": "resolved",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               }
             },
             {
               "path": "capture/records/episode/sha256",
-              "value": "79c42c2ea15bf16e341a8aaf7695fae1537cec9d51422f3ad5f721e9dd2b007c"
+              "value": "438a33cab806cfa1fa6c4f02bc9e4f81a212ec50927332f1231e9457a61cb8e5"
             }
           ],
           "expected": "reject"
@@ -12456,12 +13244,14 @@
               "value": {
                 "event_sequence": 1,
                 "resolution": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "46e753296381230bfdcee7642be9753ce3987190eac69721e9b1d6ea78abd559"
+              "value": "e7ee5bba7cf534daae435b5196622cbc2717d4c629044e8ebea244552b92b192"
             }
           ],
           "expected": "reject"
@@ -12838,6 +13628,14 @@
             {
               "path": "payload/attempt_id",
               "delete": true
+            },
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "cd11fc197d2c4c7d8a80f944bc0327894b6bf5e644c891d1547af2fb1e9fb064"
             }
           ],
           "expected": "reject"
@@ -13118,12 +13916,13 @@
                 ],
                 "resolution": "approval_granted",
                 "prerequisite_state": "resolved",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               }
             },
             {
               "path": "capture/records/episode/sha256",
-              "value": "0c2f7b9c6c770f03f0ab866322207de3cbcafbbca54e308319fb4036ccec82a6"
+              "value": "6314bfa9b4286e18ed51273fc88f700be2038e4698271e4924db546454bbdceb"
             }
           ],
           "expected": "reject"
@@ -13145,12 +13944,13 @@
                 ],
                 "resolution": "approval_granted",
                 "prerequisite_state": "resolved",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               }
             },
             {
               "path": "capture/records/episode/sha256",
-              "value": "fa66112824464869d5c12a72d375c6d58691dd1c14ba04d5f77438ed3b67d645"
+              "value": "90603646d8a4fe6dc87b0eb20a72bc497362c69e0ca67cccc3a655de9dec56ca"
             }
           ],
           "expected": "reject"
@@ -13221,12 +14021,13 @@
                 ],
                 "resolution": "approval_granted",
                 "prerequisite_state": "resolved",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               }
             },
             {
               "path": "capture/records/episode/sha256",
-              "value": "8f1aa0a655e32261f3c8333c182f6ada7638b0029db3dbf05f07a7fac92d1671"
+              "value": "dea16239254de8a8f8c68694deeb43482a2e2224438812848ce848b8d16008f3"
             }
           ],
           "expected": "reject"
@@ -13248,12 +14049,13 @@
                 ],
                 "resolution": "approval_granted",
                 "prerequisite_state": "pending",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               }
             },
             {
               "path": "capture/records/episode/sha256",
-              "value": "05dc5d2e2829e5b88c97113708e80f4e6e7cd90dbdc600156fa11ac3e752c650"
+              "value": "53e0296e7a3f6aebc4d97c920f94a97fd65e73aebb506fc8633a6f5eefe56cee"
             }
           ],
           "expected": "reject"
@@ -13275,12 +14077,13 @@
                 ],
                 "resolution": "safe_point_restored",
                 "prerequisite_state": "resolved",
-                "restore_result": "not_required"
+                "restore_result": "not_required",
+                "attempt_id": "attempt_id-001"
               }
             },
             {
               "path": "capture/records/episode/sha256",
-              "value": "2007f6df3fa23510b74f6f556f859b2712f5bb0f2bb220fcf645e0678b9f577e"
+              "value": "8b9cdbecbebbffb4faab39bb54079ea7a33551a66904e2a3e8b84a02ce17df44"
             }
           ],
           "expected": "reject"
@@ -13345,9 +14148,11 @@
                     "body": {
                       "event_sequence": 1,
                       "resolution": "safe_point_restored",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "0a88a47dab8a586d6a7caeef828164865e5bf4213848292cd0348c893316a628"
+                    "sha256": "baf9108462ce78ef0c7924a2ab658c8a6f7468f48fa162e8b47c75373d1535cb"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -13424,9 +14229,10 @@
                       ],
                       "resolution": "safe_point_restored",
                       "prerequisite_state": "resolved",
-                      "restore_result": "committed"
+                      "restore_result": "committed",
+                      "attempt_id": "attempt_id-001"
                     },
-                    "sha256": "4ec6350a25bb21e0b166f52cf7ee586c6040572c0f9e14bbd6552aabb6ba87e4"
+                    "sha256": "4825ca9f74b7fd42a27b1e2dff137bdc0a8c8b0fdf4d280bd77aed3bc38a5ddc"
                   }
                 },
                 "expected_revisions": {
@@ -13541,9 +14347,11 @@
                     "body": {
                       "event_sequence": 1,
                       "resolution": "safe_point_restored",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "0a88a47dab8a586d6a7caeef828164865e5bf4213848292cd0348c893316a628"
+                    "sha256": "baf9108462ce78ef0c7924a2ab658c8a6f7468f48fa162e8b47c75373d1535cb"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -13620,9 +14428,10 @@
                       ],
                       "resolution": "safe_point_restored",
                       "prerequisite_state": "resolved",
-                      "restore_result": "pending"
+                      "restore_result": "pending",
+                      "attempt_id": "attempt_id-001"
                     },
-                    "sha256": "91ac0fb12e3c7c8978768f28c34e1278a8a91a42045543fa12c584389fbd6e3d"
+                    "sha256": "7d67d6b88b401247bf33b82ad1d0f0f6cc1481a2d828e89c02f23e9d5a94e8a8"
                   }
                 },
                 "expected_revisions": {
@@ -13735,9 +14544,11 @@
                     "body": {
                       "event_sequence": 1,
                       "resolution": "approval_granted",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "342ec1cba57dab12885ee50a51aa92f8e99d64324c0b7e53c7eeefbc44cce184"
+                    "sha256": "79671d21afc632322661b90db567e6a71f3d5fbdb6b824d247512f8e80ac727b"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -13910,6 +14721,98 @@
             {
               "path": "capture/records/node/sha256",
               "value": "05ef6b3eb3e5be41e1ce88e840911a0041c51de46e5b28b2039fc5343c417508"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-attempt_id",
+          "changes": [
+            {
+              "path": "payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/attempt_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omit-attempt-backed-episode",
+          "changes": [
+            {
+              "path": "payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/attempt",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/attempt_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "fabricated-attempt-for-pre-attempt-episode",
+          "changes": [
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "value": null
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "cd11fc197d2c4c7d8a80f944bc0327894b6bf5e644c891d1547af2fb1e9fb064"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "episode-attempt-presence-unknown",
+          "changes": [
+            {
+              "path": "capture/records/episode/body/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/episode/sha256",
+              "value": "c9f102c923d595e02a1311368fad25c3a9b7f65004214b2feac7c199fdcf9cec"
             }
           ],
           "expected": "reject"
@@ -14138,9 +15041,11 @@
                 "reason_code": "reason_code-001",
                 "original_shape": "original_shape-001",
                 "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "evidence_ref-001"
+                "evidence_ref": "evidence_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "44336918d76123974456663b9b9409414a094cd629e1ae11a3f7f46c67a3adc5"
+              "sha256": "6d147f04913535ce0e8aa7fa2904973ff3150844d2ab2744a3d46e4663e39d47"
             },
             "decomposition": {
               "owner": "Plans/Executor_Protocol.md",
@@ -14253,12 +15158,14 @@
                 "reason_code": "reason_code-001",
                 "original_shape": "original_shape-001",
                 "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "evidence_ref-001"
+                "evidence_ref": "evidence_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "1a591ee5dce590e59758befa291ff59e7f21e1f03e20391c8274aa25c61804bd"
+              "value": "9f11c2d22e91f1e5347f4d03c01868ec890ee834550c5300250f60211cf0d01d"
             }
           ],
           "expected": "reject"
@@ -14274,12 +15181,14 @@
                 "reason_code": "reason_code-001",
                 "original_shape": "original_shape-001",
                 "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "evidence_ref-001"
+                "evidence_ref": "evidence_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "ea12e7c0bdd61fcb8ef8096266f617309c3e5c4b098963ef5923891d28337950"
+              "value": "66c55794d72e0cbf6e63ac0f7a663ad5ce920797d65e99c41020b2a88ac3c757"
             }
           ],
           "expected": "reject"
@@ -14295,12 +15204,14 @@
                 "reason_code": "foreign",
                 "original_shape": "original_shape-001",
                 "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "evidence_ref-001"
+                "evidence_ref": "evidence_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "b9d86d9161027c20fccf72d4a72cdcf204a8377835c1fe193af51af85b97dc36"
+              "value": "82e13e2a3fcf740827eede6b297e38d1c4e1e5e44f09ed57da3b12eed214265f"
             }
           ],
           "expected": "reject"
@@ -14316,12 +15227,14 @@
                 "reason_code": "reason_code-001",
                 "original_shape": "foreign",
                 "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "evidence_ref-001"
+                "evidence_ref": "evidence_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "df0c2370c52d0609a812228fc99ad64639f01de9fbf78a36e09d8352457512ee"
+              "value": "0f06d2235f8ca32551cfeec7c5426aef17780425a5082924be0b09ae1cd5f23a"
             }
           ],
           "expected": "reject"
@@ -14337,12 +15250,14 @@
                 "reason_code": "reason_code-001",
                 "original_shape": "original_shape-001",
                 "degraded_shape": "foreign",
-                "evidence_ref": "evidence_ref-001"
+                "evidence_ref": "evidence_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "7411c652617258f8f5abc3ea1adb51f28b9b86a710cab06dc29c558b5f7d3502"
+              "value": "3d01c344498b5a2c75f18384be339b4d1e1cafa4750afd7b7a17c72ad21ec7cf"
             }
           ],
           "expected": "reject"
@@ -14358,12 +15273,14 @@
                 "reason_code": "reason_code-001",
                 "original_shape": "original_shape-001",
                 "degraded_shape": "degraded_shape-001",
-                "evidence_ref": "foreign"
+                "evidence_ref": "foreign",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "9760381245fce6af41b76606f95abe3b8f0771cc5de12f14fe55995c5c2589e5"
+              "value": "98135a13b77117d0570071abf689e5df09ab1a36d43e2822421c116524a5cbda"
             }
           ],
           "expected": "reject"
@@ -14852,6 +15769,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -15081,9 +16026,11 @@
                 "event_sequence": 1,
                 "finding_refs": [],
                 "resolution": "fixed",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "c550bf83b87290625fa7e70fc48d1867e9bcd07a94daaa812d4b7f308a45f7c9"
+              "sha256": "85346c3c7517ccd5ee06d3db6e5036ba2cdff2c0689b3b25c2b5dc313a41206f"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -15277,12 +16224,14 @@
                 "event_sequence": 2,
                 "finding_refs": [],
                 "resolution": "fixed",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "b1ffeff4440caad4e6a73a90ea6339adfb25711189fe3257fd1fd09d2d9d2653"
+              "value": "66111b9f865af5174418905a9b53d7897c83b742af0834db35530e369e8ad24e"
             }
           ],
           "expected": "reject"
@@ -15456,12 +16405,14 @@
                   "foreign"
                 ],
                 "resolution": "fixed",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "42cf41cda23a2086430ffc2ce8845893c8176ac3f72a67f131602f725102e895"
+              "value": "ba389c3f97f6b1851d8f9a03cf6abfa266aabfcd95a5d4e344242338196dabcb"
             }
           ],
           "expected": "reject"
@@ -15475,12 +16426,14 @@
                 "event_sequence": 1,
                 "finding_refs": [],
                 "resolution": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "126529db5e77bd12ba6d620c44af45a25663df454d8b8b9717dd0b845fe722af"
+              "value": "b2b2217f774b13cb3c415bd0ec0b970db0567c1f9de8577f171410bbabf2b552"
             }
           ],
           "expected": "reject"
@@ -16307,9 +17260,11 @@
                       "event_sequence": 1,
                       "finding_refs": [],
                       "resolution": "superseded",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "8d0cb679a7f9d318d0a2efc9f4868da61e4c9d4cb2dd1d0a048a9ff63476ca22"
+                    "sha256": "2630e4fbdc84f10495ce6bf3ecad4f1348601245a4a83ba1dfdf8e468935ac78"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -16538,9 +17493,11 @@
                       "event_sequence": 1,
                       "finding_refs": [],
                       "resolution": "abandoned",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "9e2d7b2bb6b255b300dfb424e35bccb97cc608e6d62fa439658cfdf341f03587"
+                    "sha256": "6c3f482266078c2934a9258deac22361fa16b4d9f09b2f157f2f7058bdf6b5ed"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -16769,9 +17726,11 @@
                       "event_sequence": 1,
                       "finding_refs": [],
                       "resolution": "replan_required",
-                      "source_request_id": "request-001"
+                      "source_request_id": "request-001",
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "8505eba8c5d480a31135ee4deb7b892b42a22cb266d9c296e14c95851cc59009"
+                    "sha256": "b4591af50ac42f5f56a8419dcb45ee736adb7a0db81b0833d17103e0afcdd56a"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -17164,6 +18123,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -17393,9 +18380,11 @@
                 "event_sequence": 1,
                 "finding_refs": [],
                 "parent_failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "cd1569bcddd6df9f75d25f84e1c8d1f38075fca4cec40b15a14eedd599a6d72a"
+              "sha256": "e86929117384c68e94ef6bd4fc23977f307de8708a4ffbb2048dd3fb05128acf"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -17589,12 +18578,14 @@
                 "event_sequence": 2,
                 "finding_refs": [],
                 "parent_failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "5935dd3c169bed40dbe46cb3542d56f8ab24ed4205d67e461665bfa91408af4c"
+              "value": "9bb7bf51466030c7ccec50d41ec0e23446289009fdecc23d33a2fc28200ec897"
             }
           ],
           "expected": "reject"
@@ -17768,12 +18759,14 @@
                   "foreign"
                 ],
                 "parent_failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "acc092d873e374749f48b35f611a28cca751b8438419ca68a41446097fa955b5"
+              "value": "5cc2ac5ef1fe541957c9776a7a20beebb1b151ce5ecbd823baae4c301aea4538"
             }
           ],
           "expected": "reject"
@@ -17787,12 +18780,14 @@
                 "event_sequence": 1,
                 "finding_refs": [],
                 "parent_failure_class": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "620dc3451109bf767970c2011015f7f2edcb32a37275000f9d6f990eb46f617f"
+              "value": "a2da28ce2fe669be6fff077dd40b40772a979bce9675675e478b2005a515ce1e"
             }
           ],
           "expected": "reject"
@@ -18758,6 +19753,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -18983,9 +20006,11 @@
                 "event_sequence": 1,
                 "terminal_outcome": "terminal_outcome-001",
                 "usage_ref": "usage_ref-001",
-                "result_ref": "result_ref-001"
+                "result_ref": "result_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "e8941eb22b8dcf52d6a7b23050fd3af480fb4d7e12d520cbedd78c97ff80562d"
+              "sha256": "873eb95da35a2b5ef451d7ce5601ef04bfa01ff27f2fe40740c57142d31e52e9"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -19113,12 +20138,14 @@
                 "event_sequence": 2,
                 "terminal_outcome": "terminal_outcome-001",
                 "usage_ref": "usage_ref-001",
-                "result_ref": "result_ref-001"
+                "result_ref": "result_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "e1ee799862ad775c639c58354b4efb2780cdf05bb7258884376efba55360b753"
+              "value": "8bfdbf39cf7139a736a2a9fd7b06f6620154f4100652b84d100b5579d6d9c436"
             }
           ],
           "expected": "reject"
@@ -19174,12 +20201,14 @@
                 "event_sequence": 1,
                 "terminal_outcome": "foreign",
                 "usage_ref": "usage_ref-001",
-                "result_ref": "result_ref-001"
+                "result_ref": "result_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "6a5d2222b91fccb90ee4df8e01d953f43e83c0808b1e1698256735fac3538d7b"
+              "value": "0054e02f2f0f53e0d32c7ee3390178bdc39690e8b1a9a9bb3e0ef1db7839473c"
             }
           ],
           "expected": "reject"
@@ -19193,12 +20222,14 @@
                 "event_sequence": 1,
                 "terminal_outcome": "terminal_outcome-001",
                 "usage_ref": "foreign",
-                "result_ref": "result_ref-001"
+                "result_ref": "result_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "f1a12ca2a29fb252c9789fe5e3c4a17e2060018a17099381273f92b951ebc3e4"
+              "value": "4e056ffc7a58abf0b606b0df47ba9896ec971494fb58460928e44111605ad6f3"
             }
           ],
           "expected": "reject"
@@ -19212,12 +20243,14 @@
                 "event_sequence": 1,
                 "terminal_outcome": "terminal_outcome-001",
                 "usage_ref": "usage_ref-001",
-                "result_ref": "foreign"
+                "result_ref": "foreign",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "39c759635689ed142f4d68252ed35db2849cae859e6556b93a4fc076ae33ac1c"
+              "value": "b59426d40cf5a10f29a805a2c3ba8d539ca0b1529b522f1ee69d2cd982306135"
             }
           ],
           "expected": "reject"
@@ -19823,6 +20856,70 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-usage_ref",
+          "changes": [
+            {
+              "path": "payload/usage_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/usage_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/usage_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-result_ref",
+          "changes": [
+            {
+              "path": "payload/result_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/result_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/result_ref",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -20046,9 +21143,11 @@
               "body": {
                 "event_sequence": 1,
                 "reason_code": "reason_code-001",
-                "detail_ref": "detail_ref-001"
+                "detail_ref": "detail_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "a24eaa96a76e007977306117802d6e9f3ad757db609eaf3c1aa367d5b511f43b"
+              "sha256": "89176122b8133876a59cac6a73f244bfd7cb0d6359ee07b7e196d6c7a6bbcd2a"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -20159,12 +21258,14 @@
               "value": {
                 "event_sequence": 2,
                 "reason_code": "reason_code-001",
-                "detail_ref": "detail_ref-001"
+                "detail_ref": "detail_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "eb7f962f17e20af3f1285eab5a285ee938a51349a505e32534a4d2dd9d9c46a8"
+              "value": "366284f6231de6c0ffef2bbda6d8fe08e3e6acb93d6f3e12b7e550b9b22ef890"
             }
           ],
           "expected": "reject"
@@ -20217,12 +21318,14 @@
               "value": {
                 "event_sequence": 1,
                 "reason_code": "foreign",
-                "detail_ref": "detail_ref-001"
+                "detail_ref": "detail_ref-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "615686e68e24c348151ca1f7496a3f5bac47c9a79ddf5a825bf1dda7bcb5fda6"
+              "value": "3dca32ed5c134e7640f330a4d03c98245f1564342204f58ebb14b58ff08cc568"
             }
           ],
           "expected": "reject"
@@ -20235,12 +21338,14 @@
               "value": {
                 "event_sequence": 1,
                 "reason_code": "reason_code-001",
-                "detail_ref": "foreign"
+                "detail_ref": "foreign",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "a55765ac7fab24c0de86fa771beee669ce634db2b94ba54f6e70e0d31b1cb50b"
+              "value": "ee33f83affef50134480dd37ff86bc49cbafcfc55684cbf356ccc3d6b6356e30"
             }
           ],
           "expected": "reject"
@@ -20753,6 +21858,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -20978,9 +22111,11 @@
               "body": {
                 "event_sequence": 1,
                 "failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "2ea6f9f45236b0192778af2050da3f437712f76d63e0ad3998518de37c68f0c3"
+              "sha256": "4b446bc473e09ced2ead99988dd79c19db8bd2e6d441b8b84ba7479e0feeba02"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -21136,12 +22271,14 @@
               "value": {
                 "event_sequence": 2,
                 "failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "6931430428c33026ea18b7725a7c66e1f4e9f11991c01ad1de92a18794b0e1c3"
+              "value": "8e0c96c968752c942513017375175b43425b1ca5bed32d68ecfb57896950b689"
             }
           ],
           "expected": "reject"
@@ -21228,12 +22365,14 @@
               "value": {
                 "event_sequence": 1,
                 "failure_class": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "e6ac682ca35d992a11e6039fa07a818872d60c09995378e3239412fd2b7cab41"
+              "value": "a057ace501ac191ec94bbf4f0eaef5e8d761c6fb0697245a0ee80acd9d02ab97"
             }
           ],
           "expected": "reject"
@@ -22048,6 +23187,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -22277,9 +23444,11 @@
                 "failure_class": "provider_transient",
                 "backoff_until_utc": "2026-11-04T12:00:00Z",
                 "retry_count": 1,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "4e38825c79e8602998a59985728ca61fae5eba51fbabaa85b7fabe5c8b0cac4d"
+              "sha256": "a8ab17302e2cf025119a2f5d0b17c0aee584abeeff3e09adea07d2e040516ac0"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -22439,12 +23608,14 @@
                 "failure_class": "provider_transient",
                 "backoff_until_utc": "2026-11-04T12:00:00Z",
                 "retry_count": 1,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "c59582233d1145933a6f1ae43a11110a9640db75711c4518ae93dabc2c8025f3"
+              "value": "483316cf894b9a6e7b6adad94e959a9a65c2101f03049280f12b64df90fb5847"
             }
           ],
           "expected": "reject"
@@ -22533,12 +23704,14 @@
                 "failure_class": "foreign",
                 "backoff_until_utc": "2026-11-04T12:00:00Z",
                 "retry_count": 1,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "b53759a405814c6a0b42455ce1760481107c4814d1f2c0f951b7344f4246a255"
+              "value": "a4eb2eca5ff5b13e5dd35c10e220ca25c247c5babae0ba9744daba1025ab3737"
             }
           ],
           "expected": "reject"
@@ -22553,12 +23726,14 @@
                 "failure_class": "provider_transient",
                 "backoff_until_utc": "foreign",
                 "retry_count": 1,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "29cda439c2b71a1e339434b9fb9bdd73dc59ee21f191307a945f8fd66a8bdb54"
+              "value": "cda88ef706965d4ae56b7f00e36b481236426c1ca07baa864188adfd2e6bc61c"
             }
           ],
           "expected": "reject"
@@ -22573,12 +23748,14 @@
                 "failure_class": "provider_transient",
                 "backoff_until_utc": "2026-11-04T12:00:00Z",
                 "retry_count": 2,
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "cfd664f6cd8a17e1cac6eb65a17b5f136dbce20d96cf5c633ce9ce43711cc543"
+              "value": "924eef81f5b82dad9389587c2df6e9a4c72869e49d12bc2fd95394dca6777785"
             }
           ],
           "expected": "reject"
@@ -23370,6 +24547,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -23595,9 +24800,11 @@
                 "event_sequence": 1,
                 "ready_since_utc": "2026-11-04T12:00:00Z",
                 "wake_reason": "prerequisite_resolved",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "de858d328a908db0a3ff5d02b1c9350e37ab0045f93ae00e09038b701ecb5084"
+              "sha256": "93548af98aff1184f45880f6d45f875db56544f92f042a0b6d1b27fd001e7974"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -23719,12 +24926,14 @@
                 "event_sequence": 2,
                 "ready_since_utc": "2026-11-04T12:00:00Z",
                 "wake_reason": "prerequisite_resolved",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "05353995dabe68a917ef05aa464293b53f3de6ac126f237904a3ff6430b8486f"
+              "value": "b271186274611ae106b232fe583b7756019ba95092284b64dc32b88b085a8f8b"
             }
           ],
           "expected": "reject"
@@ -23802,12 +25011,14 @@
                 "event_sequence": 1,
                 "ready_since_utc": "foreign",
                 "wake_reason": "prerequisite_resolved",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "cd74b3f6d141b1c997deecab5e54e299a312a4e1d20666320d1d08998b1ccc8e"
+              "value": "2396eced6ddaa99136eb1eba96d7e92ccce25ebc83a0cd7ee327c877f07c705c"
             }
           ],
           "expected": "reject"
@@ -23821,12 +25032,14 @@
                 "event_sequence": 1,
                 "ready_since_utc": "2026-11-04T12:00:00Z",
                 "wake_reason": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "2faba27c6b68878cf220d658f34f68232a977d1c910952305ca049c62bf23799"
+              "value": "276e89f9fa58c9577b5a8440ccc11eb58ea405b0ce7ec959dfbf223d7675e86b"
             }
           ],
           "expected": "reject"
@@ -24527,6 +25740,34 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -24754,9 +25995,11 @@
                 "event_sequence": 1,
                 "retry_count": 1,
                 "failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "f697327cf441a6aad515dacae16b8599c0fcd454de36734389422879c051754c"
+              "sha256": "9d82c8c2ce1954bbbde393d4f1b28a236b2c61a993670a43950af46440c037f2"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -24947,12 +26190,14 @@
                 "event_sequence": 2,
                 "retry_count": 1,
                 "failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "b4bcd2bfc8a208099aa8dbb9dfb3712350718463e1ffdbad6b047e8b63e48a6a"
+              "value": "4673b10e3c337413358505e900c4625baaac2a7d12f3fbb72407b106f958a4af"
             }
           ],
           "expected": "reject"
@@ -25048,12 +26293,14 @@
                 "event_sequence": 1,
                 "retry_count": 2,
                 "failure_class": "provider_transient",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "19241d36bda7a93460e33c1b1a26f415fda99c1cf5247e11a6d1935b4a365335"
+              "value": "6df7cb78380ebe3dddf27e2c002c621d2d6cea3b4fb3406f404191eb6d63f4e0"
             }
           ],
           "expected": "reject"
@@ -25067,12 +26314,14 @@
                 "event_sequence": 1,
                 "retry_count": 1,
                 "failure_class": "foreign",
-                "source_request_id": "request-001"
+                "source_request_id": "request-001",
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "65f21d92445f3410da958a19f2144fbae4133294f666cacf39a6b664074ce27e"
+              "value": "2f013e7422b3d358a26677c95064c8396e6b3d370baa651b1955f2287e0cbafd"
             }
           ],
           "expected": "reject"
@@ -26010,6 +27259,52 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-safe_point_id",
+          "changes": [
+            {
+              "path": "payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -26321,9 +27616,11 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               },
-              "sha256": "5a05f73420d60cb2b3c3b1582f9b27abe1d4c22a88c6ad7fb9e8895ce72f1d46"
+              "sha256": "7c136e4e869d8fb84bc382f6165dc5ccb7c94a5e01a10f7410b11755c4fd07a9"
             },
             "run": {
               "owner": "Plans/Executor_Protocol.md",
@@ -26561,12 +27858,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "1b047129a6b39c8285a45d9c861ecb1db90cc02a4f4ace2485328f334176b69d"
+              "value": "8549c1737e1fe209cf90b8239634b239fc4f0e3c1de3e0534e0cbcd4b6e1d5c1"
             }
           ],
           "expected": "reject"
@@ -26676,12 +27975,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "c5709bdb351050f49a054a699323a3e9746dab00d0392c8846df51b06fad4155"
+              "value": "f6e56b1d73856c4dcc95942341bd0e625a0c16b9d1449b8b51635bfb75228e25"
             }
           ],
           "expected": "reject"
@@ -26737,12 +28038,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "6457ef1801a23c1dc1b9ac737b8892081f5cfb100b506891ce36ec3c74246773"
+              "value": "0495df5f171c29d95b6e7cd8ed6ec63e37ca7089a69ad085c1bb3639dc5dd264"
             }
           ],
           "expected": "reject"
@@ -26798,12 +28101,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "08341943dcb0dfc51740a1e59cfeb3e8fd347feb37428a22ea66976486ee5070"
+              "value": "74106e8e99748f59f58ab166b48e17cdf184c355af9b12532a6ed0443c60302d"
             }
           ],
           "expected": "reject"
@@ -26844,12 +28149,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "eb121b9a1f468c133f17522267c65672eae76418a7c2a417409bc93ec14d8530"
+              "value": "824384ceb992d765f2ff479069e7a41aab9f01e4205ea98bc426fb76aa222c74"
             }
           ],
           "expected": "reject"
@@ -26893,12 +28200,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "8611692ca2ce107d5ccce3651c3ea913395d0493b94d015c01394037aa3f6168"
+              "value": "b1cddf79c6da02d6acfaddeef5dd7bd69d5274d4079f9eae65229b8c3b08df64"
             }
           ],
           "expected": "reject"
@@ -26948,12 +28257,14 @@
                 ],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "b496ebcd575c2ec8eeb303156be8b79774a0060d18ac15f2f05cf5a251637086"
+              "value": "04eba3e416ceac9ac1eb3cc21e22e39d41c4c91de4c7edb81bf3e37809ef797a"
             }
           ],
           "expected": "reject"
@@ -27007,12 +28318,14 @@
                 "coalesced_wake_reasons": [
                   "capacity_available"
                 ],
-                "wake_event_refs": []
+                "wake_event_refs": [],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "81691bbf927a090085738c584b7b83192347d8c099a922664543f2606eaa2d62"
+              "value": "fe423450053f3a164d2f94192cece131e98c2529f6068a40771b091b79dc7685"
             }
           ],
           "expected": "reject"
@@ -27066,12 +28379,14 @@
                 "coalesced_wake_reasons": [],
                 "wake_event_refs": [
                   "wake-002"
-                ]
+                ],
+                "schema_version": "1.0.0",
+                "observed_at_utc": "2026-11-04T12:00:00Z"
               }
             },
             {
               "path": "capture/records/operation/sha256",
-              "value": "0ebc99347f57d7dc5e03167ba5d158ca9b438c0363b7d19c3229852905443892"
+              "value": "9a930a21c5f8da9b1ae482cb1dd188b4ccc0049625cdeed4d918cb13c7910eca"
             }
           ],
           "expected": "reject"
@@ -27907,9 +29222,11 @@
                       ],
                       "wake_event_refs": [
                         "wake-002"
-                      ]
+                      ],
+                      "schema_version": "1.0.0",
+                      "observed_at_utc": "2026-11-04T12:00:00Z"
                     },
-                    "sha256": "0dd2acfe63aebac6685937b63fd00dfbc6c9624e771135b5602bdd28a6a8c531"
+                    "sha256": "c31631638961801ab791bf82279a14c5e00e17c74ed51397de22863b21b8bb41"
                   },
                   "run": {
                     "owner": "Plans/Executor_Protocol.md",
@@ -28054,6 +29371,62 @@
                   "publish"
                 ]
               }
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-wake_event_refs",
+          "changes": [
+            {
+              "path": "payload/wake_event_refs",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/wake_event_refs",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-omission-real-source-coalesced_wake_reasons",
+          "changes": [
+            {
+              "path": "payload/coalesced_wake_reasons",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/coalesced_wake_reasons",
+              "delete": true
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-ts",
+          "changes": [
+            {
+              "path": "payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            },
+            {
+              "path": "capture/transition/observed_payload/ts",
+              "value": "2026-11-04T12:00:01Z"
+            }
+          ],
+          "expected": "reject"
+        },
+        {
+          "case": "coupled-change-original-schema_version",
+          "changes": [
+            {
+              "path": "payload/schema_version",
+              "value": "1.0.1"
+            },
+            {
+              "path": "capture/transition/observed_payload/schema_version",
+              "value": "1.0.1"
             }
           ],
           "expected": "reject"

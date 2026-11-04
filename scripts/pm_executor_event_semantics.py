@@ -37,6 +37,21 @@ def schema_validate(path, value):
     jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(value)
 
 
+def source_observation(adapter, records):
+    """Derive values and absence from complete owner reads, never the event mirror."""
+    observed = {}
+    for field, path in adapter['joins'].items():
+        try:
+            value = at(records, path)
+        except KeyError:
+            continue
+        # The episode's explicit null means no attempt existed at this transition.
+        if field == 'attempt_id' and value is None:
+            continue
+        observed[field] = value
+    return observed
+
+
 def validate_capture(contract, payload, capture):
     """Check normalized owner reads, independently joined parents, and committed post-state.
 
@@ -59,9 +74,13 @@ def validate_capture(contract, payload, capture):
     records = capture['records']
     expected_slots = set(adapter['source_records'])
     if contract['event_type'] in ('node.blocked', 'node.unblocked'):
-        if 'attempt_id' not in payload:
+        episode_attempt = records['episode']['body']['attempt_id']
+        require(payload.get('attempt_id') == episode_attempt, 'episode attempt presence')
+        if episode_attempt is None:
             expected_slots.discard('attempt')
             require(capture['envelope'].get('attempt_id') is None, 'pre-attempt envelope')
+        else:
+            require(records['attempt']['body']['attempt_id'] == episode_attempt, 'episode attempt record')
     require(set(records) == expected_slots, 'source record set')
     for slot, owner in adapter['source_records'].items():
         if slot not in expected_slots:
@@ -76,15 +95,26 @@ def validate_capture(contract, payload, capture):
     for field, path in adapter['joins'].items():
         if field in payload:
             require(payload[field] == at(records, path), 'source join ' + field)
+    original = source_observation(adapter, records)
+    require(original == payload, 'complete source observation/presence')
+    if contract['event_type'] == 'attempt.started':
+        execution = records['execution']['body']
+        account_relevant = (execution.get('requested_account_id') is not None
+                            or execution.get('effective_account_id') is not None
+                            or execution['requested_account_binding'] != 'none')
+        if account_relevant:
+            require(all(execution.get(field) for field in
+                        ('requested_account_snapshot_id', 'effective_account_snapshot_id')),
+                    'account interpretation requires original snapshots')
     if 'node' in records:
         node, run = records['node']['body'], records['run']['body']
         require(node['workgraph_id'] == run['workgraph_id']
                 and node['workgraph_revision'] == run['workgraph_revision'], 'installed graph join')
         require(node['source_request_id'] == records['operation']['body']['source_request_id'], 'materialization request join')
     transition = capture['transition']
-    # The original reserved observation determines conditional presence. Comparing
-    # only present event fields would let omission hide auth/timeout/recovery facts.
-    require(transition['observed_payload'] == payload, 'conditional presence/original observation')
+    # Retain the mirror consistency check, but authenticate its complete field set
+    # against the independently hashed source records above.
+    require(transition['observed_payload'] == original, 'conditional presence/original observation')
     require(transition['event_sequence'] == payload['event_sequence'], 'reserved sequence')
     require(transition['revision'] == records[adapter['transition_record']]['revision'], 'transition revision')
     require(transition['before'] == records[adapter['transition_record']]['body']['state'], 'source predecessor')

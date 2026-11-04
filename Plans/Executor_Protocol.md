@@ -9136,6 +9136,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9155,7 +9157,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `remediation_root_id` | `operation.body.remediation_root_id` |
 | `remediation_parent_attempt_id` | `operation.body.remediation_parent_attempt_id` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `attempt.completed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9242,6 +9244,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9260,7 +9264,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `requested_account_snapshot_id` | `execution.body.requested_account_snapshot_id` |
 | `effective_account_snapshot_id` | `execution.body.effective_account_snapshot_id` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `attempt.started` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9270,7 +9274,7 @@ The lifecycle table for `attempt.started` is exhaustive for this prepared versio
 
 Owner predicates, independently evaluated from the source records: `execution.body.snapshot_commit=durable`; `execution.body.baseline=verified`; `execution.body.permission=current`.
 
-Frozen permission/model/account/runtime and baseline commits plus the SP-286 barrier receipt precede worker spawn. Policy counters increment once for the original attempt; retries return its first result.
+When the frozen source has a requested/effective account identity or requested_account_binding other than none, both original requested_account_snapshot_id and effective_account_snapshot_id are required (the existing CV snapshot-identifier rule). A source without those interpretation facts may omit nonexistent account snapshots. Frozen permission/model/account/runtime and baseline commits plus the SP-286 barrier receipt precede worker spawn. Policy counters increment once for the original attempt; retries return its first result.
 
 Ordering barrier for `attempt.started`: admission -> immutable dependency commit -> immutable body commit -> append -> original first receipt -> owner revision CAS/post-state -> publication/dependent effects. Adopt **SP-286/CV-339 full-value v2** and SP-336/SP-347 durability, with the existing pre-execution barrier where required. The post-state revision is the expected original revision plus one and retains the same reserved sequence; a losing CAS publishes nothing. Original terminal/dispatch effect accounting is `{"counter_increments": 1, "worker_dispatches": 1}`. This is an oracle accounting view, not new stored state. Replay performs zero new effects, reuses original semantic bytes and returns the first receipt/result. Crash recovery may reconcile the original committed operation after writer cutoff but cannot admit a new operation. Native transaction/flush/interleaving proof remains NOT_RUN.
 
@@ -9346,6 +9350,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9356,7 +9362,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `blocked_reason_code` | `operation.body.blocked_reason_code` |
 | `allowed_action_ids` | `operation.body.allowed_action_ids` |
 | `preserved_local_work` | `operation.body.preserved_local_work` |
-| `attempt_id` | `attempt.body.attempt_id` |
+| `attempt_id` | `episode.body.attempt_id` (explicit null forbids payload/envelope/attempt slot; otherwise join the exact attempt record) |
 | `detail_ref` | `operation.body.detail_ref` |
 | `failure_class` | `operation.body.failure_class` |
 | `timeout_class` | `operation.body.timeout_class` |
@@ -9367,7 +9373,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `safe_point_id` | `operation.body.safe_point_id` |
 | `anchor_ref` | `operation.body.anchor_ref` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `node.blocked` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9453,6 +9459,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9464,7 +9472,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `artifact_refs` | `operation.body.artifact_refs` |
 | `runtime_snapshot_ref` | `execution.body.runtime_snapshot_ref` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `node.completed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9551,6 +9559,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9560,7 +9570,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `execution_unit_context_ref` | `execution.body.execution_unit_context_ref` |
 | `runtime_snapshot_ref` | `execution.body.runtime_snapshot_ref` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `node.started` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9646,6 +9656,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9653,9 +9665,9 @@ Every payload field below has this independently bound source read. Dot paths na
 | `replan_generation` | `run.body.replan_generation` |
 | `blocked_sequence` | `episode.body.blocked_sequence` |
 | `resolution` | `operation.body.resolution` |
-| `attempt_id` | `attempt.body.attempt_id` |
+| `attempt_id` | `episode.body.attempt_id` (explicit null forbids payload/envelope/attempt slot; otherwise join the exact attempt record) |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `node.unblocked` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9738,6 +9750,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `source_stage` | `operation.body.source_stage` |
@@ -9746,7 +9760,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `degraded_shape` | `operation.body.degraded_shape` |
 | `evidence_ref` | `operation.body.evidence_ref` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `plan.decomposition_degraded` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9834,6 +9848,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9846,7 +9862,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `finding_refs` | `operation.body.finding_refs` |
 | `resolution` | `operation.body.resolution` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `remediation.resolved` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -9937,6 +9953,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -9949,7 +9967,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `finding_refs` | `operation.body.finding_refs` |
 | `parent_failure_class` | `operation.body.parent_failure_class` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `remediation.spawned` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10032,6 +10050,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10040,7 +10060,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `usage_ref` | `operation.body.usage_ref` |
 | `result_ref` | `operation.body.result_ref` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `run.completed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10123,6 +10143,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10130,7 +10152,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `reason_code` | `operation.body.reason_code` |
 | `detail_ref` | `operation.body.detail_ref` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `run.graph_integrity_failed` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10216,6 +10238,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10224,7 +10248,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `replan_generation` | `run.body.replan_generation` |
 | `failure_class` | `operation.body.failure_class` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `run.node_backoff_expired` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10310,6 +10334,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10320,7 +10346,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `backoff_until_utc` | `operation.body.backoff_until_utc` |
 | `retry_count` | `operation.body.retry_count` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `run.node_backoff_started` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10404,6 +10430,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10412,7 +10440,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `ready_since_utc` | `operation.body.ready_since_utc` |
 | `wake_reason` | `operation.body.wake_reason` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `run.node_ready` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10498,6 +10526,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10508,7 +10538,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `failure_class` | `operation.body.failure_class` |
 | `safe_point_id` | `execution.body.safe_point_id` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `run.node_retry_scheduled` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
@@ -10592,6 +10622,8 @@ Every payload field below has this independently bound source read. Dot paths na
 
 | Payload field | Required owner-read equality |
 |---|---|
+| `schema_version` | `operation.body.schema_version` |
+| `ts` | `operation.body.observed_at_utc` |
 | `project_id` | `project.body.project_id` |
 | `event_sequence` | `operation.body.event_sequence` |
 | `run_id` | `run.body.run_id` |
@@ -10606,7 +10638,7 @@ Every payload field below has this independently bound source read. Dot paths na
 | `coalesced_wake_reasons` | `operation.body.coalesced_wake_reasons` |
 | `wake_event_refs` | `operation.body.wake_event_refs` |
 
-The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
+Derive the complete original observation from every independently hashed owner-read equality in this table, including schema_version and the immutable first observation timestamp. An absent optional owner fact forbids inventing that field; an existing fact requires its field even when both the submitted payload and its capture mirror omit it. The mirror must equal that source-derived observation and is never its own presence authority. The original reserved observation determines conditional **presence as well as value**: schema optionality never permits omitting a real verification/reviewer, auth realm/missing scope, timeout/wait, safe-point restore, remediation or requested/effective snapshot fact. Require exact original payload bytes/observation, including first ts and sequence. Resolve every present `_ref`, `_snapshot_id`, safe_point_id and every evidence-list item through its existing owner; require exact scope/root, retained body/hash, fresh viewer authorization and lawful-deletion status. Runtime snapshot/execution context joins compare actual run/thread/node/attempt plus lane_id, package_id, seam_id, worktree_id, requested/effective account, requested_account_binding, operational_identity, approval_scope_key and permission_snapshot_id where the existing owner carries them. Requested/effective model, Persona, provider, mode/strategy and all resolution refs come from the whole immutable runtime owner, never current Settings. No ref is retrieval authority.
 
 The lifecycle table for `scheduler.pass` is exhaustive for this prepared version. States are normalized reads of the existing owner lifecycle, not a new canonical enum. Every row additionally requires the exact source revision/parents, reserved event_sequence and all listed owner predicates; any other predecessor, successor, stale generation or conditional discriminator rejects.
 
