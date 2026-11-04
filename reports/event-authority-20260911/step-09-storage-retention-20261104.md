@@ -73,7 +73,7 @@ September wrote "The run, transcript message, proposal and finding records are n
 
 ### 2.6 Re-pinned citations
 
-Rows and the application record cite only lines at the branch tip. Every other citation the September branch carried moved as follows:
+The new binding citations this branch appends to the rows, and the application record's anchors, cite lines at the branch tip. Citation-check entries the rows and both ledgers already carried from earlier applications are history: they are kept as written and some now point at moved or blank lines (for example `Plans/storage-plan.md:17269`, see the table). Every citation the September branch carried moved as follows:
 
 | What | September (base `63cf2cb97f` or its tip) | Today (tip) |
 |---|---|---|
@@ -211,3 +211,13 @@ Carried from September, unchanged in substance (lines re-pinned):
 | `a666b3aeed` | Case L-3 assignments for DL-084, DL-085, DL-086 and DL-092 (SR-03, SR-07) |
 | `fa84affa02` | The 25 rows, both ledgers and the application record |
 | this commit | This report |
+
+## Review round 1 (Sol 6.1 max, LANDING_READY_WITH_NOTES)
+
+Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/B2-sol/REVIEW.md`. Fix by the stream E lead, report text only.
+- **B2-01, should fix, fixed.** Section 2.6 now says only the new binding citations and the application-record anchors were re-pinned; earlier citation-check entries in the rows and ledgers stay as historical evidence and may have drifted. No row field or historical evidence was rewritten.
+- **B2-02, note.** Q2 stays open for Jared: DL-092 reserved run, transcript-message, proposal and finding retention, and SP-351's `RP-RUNTIME-365D` table entries are not his answer. This branch assigns only the event histories and neither changes nor relies on those entries.
+- **B2-03, note.** The onboarding census test fails on `main` before the changed assertion (section 6).
+- **B2-04, note.** Governance reseal and the later per-family admissions remain separate work.
+- **Q1 and Q3.** The review finds the bounded reading of SP-349/SP-351 defensible (Q1) and the 2026-09-25 confirmation carrying over within the same scope and families (Q3).
+
