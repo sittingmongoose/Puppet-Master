@@ -4523,7 +4523,14 @@
       ]
     },
     "ChatMoveApplyResultScopeV2": {
-      "$ref": "https://puppetmaster.local/Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveCreateApplyResultV2"
+        }
+      ]
     },
     "AttachmentDetailsV3Request": {
       "type": "object",
@@ -6001,6 +6008,160 @@
             "properties": {
               "persisted_rule_mutation": {
                 "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ChatMoveCreateApplyResultV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "operation_id",
+        "draft_id",
+        "draft_revision",
+        "draft_sha256",
+        "status",
+        "destination_project_id",
+        "creation_operation_ref",
+        "cutover_manifest",
+        "report_ref",
+        "owner_receipt_refs",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.chat.move_create_apply.result.v2"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "draft_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "preview_refused",
+            "creation_pending",
+            "project_registered",
+            "completed",
+            "cancelled",
+            "recovery_required"
+          ]
+        },
+        "destination_project_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "creation_operation_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cutover_manifest": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveCutoverManifestV2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "report_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "owner_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "completed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "destination_project_id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "creation_operation_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "cutover_manifest": {
+                "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveCutoverManifestV2"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "preview_refused"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "destination_project_id": {
+                "const": null
+              },
+              "creation_operation_ref": {
+                "const": null
+              },
+              "cutover_manifest": {
+                "const": null
               }
             }
           }
