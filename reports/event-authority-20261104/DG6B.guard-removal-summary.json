@@ -1,23 +1,23 @@
 {
   "status": "pass",
-  "fixed_contract_head": "96cff41a8263e49644328eb23611c1dd5d135152",
-  "guard_groups": 51,
-  "refusal_classifications": 52,
-  "negative_count": 2324,
-  "fixture_negative_count": 1245,
+  "fixed_contract_head": "51aff0e2358dc21bb2a822556b7b745315c6d567",
+  "guard_groups": 54,
+  "refusal_classifications": 55,
+  "negative_count": 2647,
+  "fixture_negative_count": 1568,
   "unexpected_flips_or_survivors": 0,
   "full_checker_restored": "pass",
   "native_execution": "NOT_RUN",
   "full_evidence": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix4/guard-removal.json",
-    "sha256": "c2df6c3c3ccc41b8a0740fed332ad2af0c7f7db0d8da58b124e13fa312994217"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/fix5/guard-removal.json",
+    "sha256": "b671106779621413bda703371f9e5b15e08a4036ec2d5c75850b8cab6dcf83f8"
   },
   "input_sha256": {
-    "scripts/pm-dg6b-event-contracts.py": "b328f6b5d117b9bfd254e63d80a0619d05232fefbe4234f158ea413d5d3eefe9",
+    "scripts/pm-dg6b-event-contracts.py": "a16a85674b730adf934c13333e2f27ba3b9988301e78390bbea37fa21b399428",
     "scripts/pm-dg6b-guard-proof.py": "59ce4139d9ca21f1413dd0474aad6c489e42103ae7550b7ed2e4e9f7dee4df67",
-    "Plans/dg6b_event_contract_fixtures.json": "a76ad4f02c9ad51fdbf25f93ca05536a3ac570acae412d6f88d23dc54cb8dfa4",
+    "Plans/dg6b_event_contract_fixtures.json": "8c9c81034bf0facc62d7cded79e2f2228bac82d8a20fbe70c2dde475b132c2ce",
     "Plans/dg6b_event_contracts.schema.json": "a907834a59ee2638208d35e1d951a3168c747fb41b3d0983f785a7eee066ce9e",
-    "reports/event-authority-20261104/DG6B.self-grade.json": "d8a4e00a4d8f0def23c162aa78483deb1aabcba949465a9eb1e2b748d521f6a9"
+    "reports/event-authority-20261104/DG6B.self-grade.json": "48e981f5eb3a2aa60efe5822a3a6ef1699321d867a39cc85b9ddef7c90b3713f"
   },
   "rows": [
     {
@@ -25,11 +25,11 @@
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 203
+          "line": 224
         },
         {
-          "function": "append_contract",
-          "line": 479
+          "function": "record_contract",
+          "line": 513
         }
       ],
       "flips": 25,
@@ -37,50 +37,50 @@
         "append_invalid/source_access_revoked",
         "semantic_invalid/source_access_revoked"
       ],
-      "stays_rejected": 2299
+      "stays_rejected": 2622
     },
     {
       "guard": "cadence",
       "source_locations": [
         {
           "function": "semantic",
-          "line": 170
+          "line": 191
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "semantic/cadence"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "cas",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 217
+          "line": 238
         },
         {
           "function": "persona_semantic",
-          "line": 247
+          "line": 268
         },
         {
           "function": "persona_semantic",
-          "line": 251
+          "line": 272
         }
       ],
       "flips": 3,
       "flip_label_selectors": [
         "semantic_invalid/stale_cas"
       ],
-      "stays_rejected": 2321
+      "stays_rejected": 2644
     },
     {
       "guard": "checkpoint_schema",
       "source_locations": [
         {
-          "function": "append_contract",
-          "line": 519
+          "function": "record_contract",
+          "line": 553
         }
       ],
       "flips": 76,
@@ -90,14 +90,14 @@
         "append_invalid/checkpoint_trailing_lf_generation_id",
         "append_invalid/persisted_snapshot_forbidden"
       ],
-      "stays_rejected": 2248
+      "stays_rejected": 2571
     },
     {
       "guard": "checkpoint_storage_join",
       "source_locations": [
         {
-          "function": "append_contract",
-          "line": 523
+          "function": "record_contract",
+          "line": 557
         }
       ],
       "flips": 57,
@@ -106,46 +106,46 @@
         "append_invalid/wrong_checkpoint_source_storage",
         "append_invalid/wrong_checkpoint_storage"
       ],
-      "stays_rejected": 2267
+      "stays_rejected": 2590
     },
     {
       "guard": "confirmation",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 215
+          "line": 236
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "semantic_invalid/unconfirmed_delete"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "creation_source",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 245
+          "line": 266
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "extra/creation_source"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "current_writer_policy",
       "source_locations": [
         {
           "function": "append_contract",
-          "line": 466
+          "line": 485
         },
         {
           "function": "append_contract",
-          "line": 468
+          "line": 487
         }
       ],
       "flips": 38,
@@ -153,111 +153,112 @@
         "append_invalid/replay_only_append",
         "append_invalid/wrong_current_replay_policy"
       ],
-      "stays_rejected": 2286
+      "stays_rejected": 2609
     },
     {
       "guard": "definition_writer",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 208
+          "line": 229
         }
       ],
       "flips": 5,
       "flip_label_selectors": [
         "extra/definition_writer"
       ],
-      "stays_rejected": 2319
+      "stays_rejected": 2642
     },
     {
       "guard": "envelope_source_join",
       "source_locations": [
         {
-          "function": "append_contract",
-          "line": 504
+          "function": "record_contract",
+          "line": 538
         },
         {
-          "function": "append_contract",
-          "line": 508
+          "function": "record_contract",
+          "line": 542
         }
       ],
-      "flips": 57,
+      "flips": 76,
       "flip_label_selectors": [
         "append_invalid/wrong_actor",
         "append_invalid/wrong_schema_route",
-        "append_invalid/wrong_time"
+        "append_invalid/wrong_time",
+        "history_cases/history_event_type_substitution"
       ],
-      "stays_rejected": 2267
+      "stays_rejected": 2571
     },
     {
       "guard": "event_record_schema",
       "source_locations": [
         {
-          "function": "append_contract",
-          "line": 471
+          "function": "record_contract",
+          "line": 505
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "extra/event_record_schema"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "failure_error_reason",
       "source_locations": [
         {
           "function": "expect_failure",
-          "line": 538
+          "line": 565
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "wrong_reason_cannot_prove_failure"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "failure_oracle",
       "source_locations": [
         {
           "function": "expect_failure",
-          "line": 540
+          "line": 567
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "success_cannot_prove_failure"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "fixture_family_coverage",
       "source_locations": [
         {
           "function": "preparation_contract",
-          "line": 636
+          "line": 663
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "preparation/fixture_family_coverage"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "grade_family_coverage",
       "source_locations": [
         {
           "function": "preparation_contract",
-          "line": 638
+          "line": 665
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "preparation/grade_family_coverage"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "historical_access",
@@ -267,12 +268,14 @@
           "line": 134
         }
       ],
-      "flips": 38,
+      "flips": 76,
       "flip_label_selectors": [
         "history_cases/history_access_current",
-        "history_cases/history_body_deleted"
+        "history_cases/history_body_deleted",
+        "history_cases/replay_only_history_access_current",
+        "history_cases/replay_only_history_body_deleted"
       ],
-      "stays_rejected": 2286
+      "stays_rejected": 2571
     },
     {
       "guard": "historical_provenance",
@@ -282,13 +285,61 @@
           "line": 130
         }
       ],
-      "flips": 57,
+      "flips": 114,
       "flip_label_selectors": [
         "history_cases/history_admitted_when_written",
         "history_cases/history_authentic",
-        "history_cases/history_retained"
+        "history_cases/history_retained",
+        "history_cases/replay_only_history_admitted_when_written",
+        "history_cases/replay_only_history_authentic",
+        "history_cases/replay_only_history_retained"
       ],
-      "stays_rejected": 2267
+      "stays_rejected": 2533
+    },
+    {
+      "guard": "historical_storage_join",
+      "source_locations": [
+        {
+          "function": "historical_storage_contract",
+          "line": 155
+        }
+      ],
+      "flips": 38,
+      "flip_label_selectors": [
+        "history_cases/history_storage_scope_partition",
+        "history_cases/history_storage_storage_instance_id"
+      ],
+      "stays_rejected": 2609
+    },
+    {
+      "guard": "historical_storage_record",
+      "source_locations": [
+        {
+          "function": "historical_storage_contract",
+          "line": 157
+        }
+      ],
+      "flips": 57,
+      "flip_label_selectors": [
+        "history_cases/history_storage_observed_at_utc_substitution",
+        "history_cases/history_storage_persisted_at_utc_substitution",
+        "history_cases/history_storage_sequence_id_substitution"
+      ],
+      "stays_rejected": 2590
+    },
+    {
+      "guard": "historical_storage_source",
+      "source_locations": [
+        {
+          "function": "historical_storage_contract",
+          "line": 152
+        }
+      ],
+      "flips": 19,
+      "flip_label_selectors": [
+        "history_cases/history_storage_authenticated"
+      ],
+      "stays_rejected": 2628
     },
     {
       "guard": "historical_withdrawn",
@@ -298,55 +349,77 @@
           "line": 132
         }
       ],
-      "flips": 38,
+      "flips": 76,
       "flip_label_selectors": [
         "history_cases/history_family_withdrawn",
-        "history_cases/history_reader_current"
+        "history_cases/history_reader_current",
+        "history_cases/replay_only_history_family_withdrawn",
+        "history_cases/replay_only_history_reader_current"
       ],
-      "stays_rejected": 2286
+      "stays_rejected": 2571
     },
     {
       "guard": "home_scope",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 199
+          "line": 220
         },
         {
           "function": "persona_semantic",
-          "line": 201
+          "line": 222
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "semantic_invalid/project_home_in_no_project"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "idempotency_conflict",
       "source_locations": [
         {
           "function": "append_contract",
-          "line": 530
+          "line": 494
         }
       ],
       "flips": 162,
       "flip_label_selectors": [
-        "caller_semantic_change/*",
+        "caller_semantic_change/actual_actor_override",
+        "caller_semantic_change/actual_attempt_override",
+        "caller_semantic_change/actual_node_override",
+        "caller_semantic_change/actual_project_receipt",
+        "caller_semantic_change/actual_project_whole_version",
+        "caller_semantic_change/actual_run_override",
+        "caller_semantic_change/actual_thread_override",
+        "caller_semantic_change/application_original",
+        "caller_semantic_change/authenticated_reference_transport",
+        "caller_semantic_change/blocking_pre_attempt_start",
+        "caller_semantic_change/blocking_pre_node_dispatch",
+        "caller_semantic_change/blocking_pre_tool_invoke",
+        "caller_semantic_change/distinct_id_duplicate",
+        "caller_semantic_change/library_no_project",
+        "caller_semantic_change/max_utf8_server_and_operation",
+        "caller_semantic_change/operation_16383_bytes",
+        "caller_semantic_change/operation_16384_bytes",
+        "caller_semantic_change/operation_16385_bytes",
+        "caller_semantic_change/project_selection_of_library",
+        "caller_semantic_change/read_only_source_with_current_event_writer",
+        "caller_semantic_change/schema_valid_16385_byte_reference",
         "retry_cases/caller_causation_event_id",
         "retry_cases/caller_correlation_id",
         "retry_cases/caller_parent_event_id",
         "retry_cases/caller_producer_sequence_id"
       ],
-      "stays_rejected": 2162
+      "stays_rejected": 2485
     },
     {
       "guard": "idempotency_key",
       "source_locations": [
         {
-          "function": "append_contract",
-          "line": 497
+          "function": "record_contract",
+          "line": 531
         }
       ],
       "flips": 95,
@@ -357,62 +430,63 @@
         "append_invalid/application_key_uppercase_hex",
         "append_invalid/legacy_application_key"
       ],
-      "stays_rejected": 2229
+      "stays_rejected": 2552
     },
     {
       "guard": "identity",
       "source_locations": [
         {
           "function": "semantic",
-          "line": 160
+          "line": 181
         },
         {
-          "function": "append_contract",
-          "line": 495
+          "function": "record_contract",
+          "line": 529
         }
       ],
-      "flips": 21,
+      "flips": 40,
       "flip_label_selectors": [
+        "history_cases/history_event_id_substitution",
         "semantic/identity",
         "semantic/scope"
       ],
-      "stays_rejected": 2303
+      "stays_rejected": 2607
     },
     {
       "guard": "inline_body_too_large",
       "source_locations": [
         {
           "function": "transport",
-          "line": 444
+          "line": 465
         }
       ],
       "flips": 20,
       "flip_label_selectors": [
         "append_invalid/schema_valid_16385_byte_inline",
-        "transport/*"
+        "transport/16k_plus_one"
       ],
-      "stays_rejected": 2304
+      "stays_rejected": 2627
     },
     {
       "guard": "mirror",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 211
+          "line": 232
         }
       ],
       "flips": 4,
       "flip_label_selectors": [
         "semantic_invalid/mirror_write"
       ],
-      "stays_rejected": 2320
+      "stays_rejected": 2643
     },
     {
       "guard": "observation_only_hook",
       "source_locations": [
         {
           "function": "semantic",
-          "line": 165
+          "line": 186
         }
       ],
       "flips": 2,
@@ -420,7 +494,7 @@
         "semantic/post_attempt_complete",
         "semantic/post_tool_invoke"
       ],
-      "stays_rejected": 2322
+      "stays_rejected": 2645
     },
     {
       "guard": "operation_schema",
@@ -435,28 +509,111 @@
         },
         {
           "function": "stage_contract",
-          "line": 404
+          "line": 425
         }
       ],
       "flips": 344,
       "flip_label_selectors": [
-        "operation_schema/*"
+        "operation_schema/actual_actor_override/LF/actor_ref",
+        "operation_schema/actual_actor_override/LF/idempotency_key",
+        "operation_schema/actual_actor_override/replay_only",
+        "operation_schema/actual_actor_override/wrong_scope_key",
+        "operation_schema/actual_attempt_override/LF/actor_ref",
+        "operation_schema/actual_attempt_override/LF/idempotency_key",
+        "operation_schema/actual_attempt_override/replay_only",
+        "operation_schema/actual_attempt_override/wrong_scope_key",
+        "operation_schema/actual_node_override/LF/actor_ref",
+        "operation_schema/actual_node_override/LF/idempotency_key",
+        "operation_schema/actual_node_override/replay_only",
+        "operation_schema/actual_node_override/wrong_scope_key",
+        "operation_schema/actual_project_receipt/LF/actor_ref",
+        "operation_schema/actual_project_receipt/LF/idempotency_key",
+        "operation_schema/actual_project_receipt/replay_only",
+        "operation_schema/actual_project_receipt/wrong_scope_key",
+        "operation_schema/actual_project_whole_version/LF/actor_ref",
+        "operation_schema/actual_project_whole_version/LF/idempotency_key",
+        "operation_schema/actual_project_whole_version/replay_only",
+        "operation_schema/actual_project_whole_version/wrong_scope_key",
+        "operation_schema/actual_run_override/LF/actor_ref",
+        "operation_schema/actual_run_override/LF/idempotency_key",
+        "operation_schema/actual_run_override/replay_only",
+        "operation_schema/actual_run_override/wrong_scope_key",
+        "operation_schema/actual_thread_override/LF/actor_ref",
+        "operation_schema/actual_thread_override/LF/idempotency_key",
+        "operation_schema/actual_thread_override/replay_only",
+        "operation_schema/actual_thread_override/wrong_scope_key",
+        "operation_schema/application_original/LF/actor_ref",
+        "operation_schema/application_original/LF/idempotency_key",
+        "operation_schema/application_original/replay_only",
+        "operation_schema/application_original/wrong_scope_key",
+        "operation_schema/authenticated_reference_transport/LF/actor_ref",
+        "operation_schema/authenticated_reference_transport/LF/idempotency_key",
+        "operation_schema/authenticated_reference_transport/replay_only",
+        "operation_schema/authenticated_reference_transport/wrong_scope_key",
+        "operation_schema/blocking_pre_attempt_start/LF/actor_ref",
+        "operation_schema/blocking_pre_attempt_start/LF/idempotency_key",
+        "operation_schema/blocking_pre_attempt_start/replay_only",
+        "operation_schema/blocking_pre_attempt_start/wrong_scope_key",
+        "operation_schema/blocking_pre_node_dispatch/LF/actor_ref",
+        "operation_schema/blocking_pre_node_dispatch/LF/idempotency_key",
+        "operation_schema/blocking_pre_node_dispatch/replay_only",
+        "operation_schema/blocking_pre_node_dispatch/wrong_scope_key",
+        "operation_schema/blocking_pre_tool_invoke/LF/actor_ref",
+        "operation_schema/blocking_pre_tool_invoke/LF/idempotency_key",
+        "operation_schema/blocking_pre_tool_invoke/replay_only",
+        "operation_schema/blocking_pre_tool_invoke/wrong_scope_key",
+        "operation_schema/distinct_id_duplicate/LF/actor_ref",
+        "operation_schema/distinct_id_duplicate/LF/idempotency_key",
+        "operation_schema/distinct_id_duplicate/replay_only",
+        "operation_schema/distinct_id_duplicate/wrong_scope_key",
+        "operation_schema/library_no_project/LF/actor_ref",
+        "operation_schema/library_no_project/LF/idempotency_key",
+        "operation_schema/library_no_project/replay_only",
+        "operation_schema/library_no_project/wrong_scope_key",
+        "operation_schema/max_utf8_server_and_operation/LF/actor_ref",
+        "operation_schema/max_utf8_server_and_operation/LF/idempotency_key",
+        "operation_schema/max_utf8_server_and_operation/replay_only",
+        "operation_schema/max_utf8_server_and_operation/wrong_scope_key",
+        "operation_schema/operation_16383_bytes/LF/actor_ref",
+        "operation_schema/operation_16383_bytes/LF/idempotency_key",
+        "operation_schema/operation_16383_bytes/replay_only",
+        "operation_schema/operation_16383_bytes/wrong_scope_key",
+        "operation_schema/operation_16384_bytes/LF/actor_ref",
+        "operation_schema/operation_16384_bytes/LF/idempotency_key",
+        "operation_schema/operation_16384_bytes/replay_only",
+        "operation_schema/operation_16384_bytes/wrong_scope_key",
+        "operation_schema/operation_16385_bytes/LF/actor_ref",
+        "operation_schema/operation_16385_bytes/LF/idempotency_key",
+        "operation_schema/operation_16385_bytes/replay_only",
+        "operation_schema/operation_16385_bytes/wrong_scope_key",
+        "operation_schema/project_selection_of_library/LF/actor_ref",
+        "operation_schema/project_selection_of_library/LF/idempotency_key",
+        "operation_schema/project_selection_of_library/replay_only",
+        "operation_schema/project_selection_of_library/wrong_scope_key",
+        "operation_schema/read_only_source_with_current_event_writer/LF/actor_ref",
+        "operation_schema/read_only_source_with_current_event_writer/LF/idempotency_key",
+        "operation_schema/read_only_source_with_current_event_writer/replay_only",
+        "operation_schema/read_only_source_with_current_event_writer/wrong_scope_key",
+        "operation_schema/schema_valid_16385_byte_reference/LF/actor_ref",
+        "operation_schema/schema_valid_16385_byte_reference/LF/idempotency_key",
+        "operation_schema/schema_valid_16385_byte_reference/replay_only",
+        "operation_schema/schema_valid_16385_byte_reference/wrong_scope_key"
       ],
-      "stays_rejected": 1980
+      "stays_rejected": 2303
     },
     {
       "guard": "operation_schema_binding",
       "source_locations": [
         {
           "function": "preparation_contract",
-          "line": 650
+          "line": 677
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "preparation/operation_schema_binding"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "operation_source_join",
@@ -475,7 +632,7 @@
         "operation_cases/authenticated_but_wrong_effect_receipt_ref",
         "operation_cases/authenticated_but_wrong_payload"
       ],
-      "stays_rejected": 2286
+      "stays_rejected": 2609
     },
     {
       "guard": "operation_value_too_large",
@@ -491,81 +648,82 @@
         "operation_cases/review_exact_16898_byte_inline_operation",
         "stage_cases/physical_byte_stage_16385"
       ],
-      "stays_rejected": 2303
+      "stays_rejected": 2626
     },
     {
       "guard": "original_payload_conflict",
       "source_locations": [
         {
           "function": "semantic",
-          "line": 162
+          "line": 183
         }
       ],
       "flips": 13,
       "flip_label_selectors": [
         "semantic/original_payload"
       ],
-      "stays_rejected": 2311
+      "stays_rejected": 2634
     },
     {
       "guard": "original_server_required",
       "source_locations": [
         {
           "function": "original_server_required",
-          "line": 154
+          "line": 175
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "original_server_required"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "original_source_join",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 224
+          "line": 245
         },
         {
           "function": "persona_semantic",
-          "line": 236
+          "line": 257
         },
         {
           "function": "persona_semantic",
-          "line": 238
+          "line": 259
         },
         {
           "function": "persona_semantic",
-          "line": 228
+          "line": 249
         },
         {
           "function": "persona_semantic",
-          "line": 234
+          "line": 255
         },
         {
           "function": "persona_semantic",
-          "line": 265
+          "line": 286
         },
         {
           "function": "persona_semantic",
-          "line": 269
+          "line": 290
         },
         {
           "function": "persona_semantic",
-          "line": 272
+          "line": 293
         },
         {
-          "function": "append_contract",
-          "line": 481
+          "function": "record_contract",
+          "line": 515
         }
       ],
-      "flips": 72,
+      "flips": 91,
       "flip_label_selectors": [
         "append_invalid/receipt_substitution",
         "append_invalid/unrelated_original_source",
         "history_cases/history_forged_original",
+        "history_cases/replay_only_history_forged_original",
         "semantic_invalid/changed_runtime_snapshot",
         "semantic_invalid/frozen_timestamp_changed",
         "semantic_invalid/recomputed_effective_identity",
@@ -573,36 +731,36 @@
         "semantic_invalid/revision_substitution",
         "semantic_invalid/subject_substitution"
       ],
-      "stays_rejected": 2252
+      "stays_rejected": 2556
     },
     {
       "guard": "override_lineage",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 260
+          "line": 281
         },
         {
           "function": "persona_semantic",
-          "line": 263
+          "line": 284
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "semantic_invalid/coherent_wrong_lineage_owner"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "partition",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 196
+          "line": 217
         },
         {
           "function": "partition_contract",
-          "line": 377
+          "line": 398
         }
       ],
       "flips": 48,
@@ -612,7 +770,7 @@
         "stage_cases/invalid_project_partition_'project:project-one'",
         "stage_cases/invalid_project_partition_'project~cHJvamVjdC1vbmU\\n'"
       ],
-      "stays_rejected": 2276
+      "stays_rejected": 2599
     },
     {
       "guard": "payload_ref_integrity",
@@ -631,7 +789,7 @@
         },
         {
           "function": "transport",
-          "line": 451
+          "line": 472
         }
       ],
       "flips": 342,
@@ -642,16 +800,19 @@
         "operation_cases/operation_reference_byte_size",
         "operation_cases/operation_reference_bytes_hex",
         "operation_cases/operation_reference_media_type",
-        "transport/*"
+        "transport/*/blake3_id",
+        "transport/*/byte_size",
+        "transport/*/bytes_hex",
+        "transport/*/media_type"
       ],
-      "stays_rejected": 1982
+      "stays_rejected": 2305
     },
     {
       "guard": "payload_ref_unavailable",
       "source_locations": [
         {
           "function": "reference_available",
-          "line": 457
+          "line": 478
         }
       ],
       "flips": 190,
@@ -660,20 +821,21 @@
         "operation_cases/operation_reference_access_current",
         "operation_cases/operation_reference_durable",
         "stage_cases/operation_reference_missing",
-        "transport/*"
+        "transport/*/access_current",
+        "transport/*/durable"
       ],
-      "stays_rejected": 2134
+      "stays_rejected": 2457
     },
     {
       "guard": "payload_schema",
       "source_locations": [
         {
           "function": "stage_contract",
-          "line": 399
+          "line": 420
         },
         {
-          "function": "append_contract",
-          "line": 474
+          "function": "record_contract",
+          "line": 508
         }
       ],
       "flips": 266,
@@ -682,70 +844,70 @@
         "payload_schema/*",
         "stage_cases/coherent_retired_tier"
       ],
-      "stays_rejected": 2058
+      "stays_rejected": 2381
     },
     {
       "guard": "payload_transport_join",
       "source_locations": [
         {
-          "function": "append_contract",
-          "line": 512
+          "function": "record_contract",
+          "line": 546
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "extra/payload_transport_join"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "prepared_membership",
       "source_locations": [
         {
           "function": "preparation_contract",
-          "line": 642
+          "line": 669
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "preparation/prepared_membership"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "protected",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 213
+          "line": 234
         }
       ],
       "flips": 4,
       "flip_label_selectors": [
         "semantic_invalid/protected_id_mutation"
       ],
-      "stays_rejected": 2320
+      "stays_rejected": 2643
     },
     {
       "guard": "reach",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 221
+          "line": 242
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "semantic_invalid/only_projects_in_no_project"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "resolution_schema",
       "source_locations": [
         {
           "function": "resolution_contract",
-          "line": 283
+          "line": 304
         }
       ],
       "flips": 6,
@@ -757,54 +919,54 @@
         "resolution/missing/runtime_snapshot_sha256",
         "resolution/requested_persona_id"
       ],
-      "stays_rejected": 2318
+      "stays_rejected": 2641
     },
     {
       "guard": "retention_pending",
       "source_locations": [
         {
           "function": "preparation_contract",
-          "line": 647
+          "line": 674
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "preparation/retention_pending"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "retry_identity",
       "source_locations": [
         {
           "function": "append_contract",
-          "line": 528
+          "line": 492
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "extra/retry_identity"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "scope",
       "source_locations": [
         {
           "function": "semantic",
-          "line": 158
+          "line": 179
         },
         {
           "function": "persona_semantic",
-          "line": 192
+          "line": 213
         },
         {
-          "function": "append_contract",
-          "line": 483
+          "function": "record_contract",
+          "line": 517
         },
         {
-          "function": "append_contract",
-          "line": 487
+          "function": "record_contract",
+          "line": 521
         }
       ],
       "flips": 16,
@@ -813,14 +975,14 @@
         "semantic/scope",
         "semantic_invalid/server_substitution"
       ],
-      "stays_rejected": 2308
+      "stays_rejected": 2631
     },
     {
       "guard": "selected_result_schema",
       "source_locations": [
         {
           "function": "selected_result_contract",
-          "line": 278
+          "line": 299
         }
       ],
       "flips": 2,
@@ -828,53 +990,53 @@
         "selected_result/effective_persona_id",
         "selected_result/requested_persona_id"
       ],
-      "stays_rejected": 2322
+      "stays_rejected": 2645
     },
     {
       "guard": "source_trust",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 219
+          "line": 240
         },
         {
           "function": "persona_semantic",
-          "line": 253
+          "line": 274
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "semantic_invalid/unverified_import"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "unadmitted_disposition",
       "source_locations": [
         {
           "function": "preparation_contract",
-          "line": 640
+          "line": 667
         }
       ],
       "flips": 19,
       "flip_label_selectors": [
         "preparation/unadmitted_disposition"
       ],
-      "stays_rejected": 2305
+      "stays_rejected": 2628
     },
     {
       "guard": "unknown_oracle_stage",
       "source_locations": [
         {
           "function": "stage_contract",
-          "line": 406
+          "line": 427
         }
       ],
       "flips": 1,
       "flip_label_selectors": [
         "unknown_oracle_stage"
       ],
-      "stays_rejected": 2323
+      "stays_rejected": 2646
     },
     {
       "guard": "unresolved_schema_ref",
@@ -886,29 +1048,32 @@
       ],
       "flips": 57,
       "flip_label_selectors": [
-        "schema_graph/*"
+        "schema_graph/dormant_ref",
+        "schema_graph/unused/$dynamicRef",
+        "schema_graph/unused/$ref"
       ],
-      "stays_rejected": 2267
+      "stays_rejected": 2590
     },
     {
       "guard": "writer",
       "source_locations": [
         {
           "function": "persona_semantic",
-          "line": 206
+          "line": 227
         },
         {
-          "function": "append_contract",
-          "line": 477
+          "function": "record_contract",
+          "line": 511
         }
       ],
-      "flips": 25,
+      "flips": 44,
       "flip_label_selectors": [
         "append_invalid/withdrawn_event_writer",
+        "history_cases/history_original_not_admitted_writer",
         "semantic_invalid/withdrawn_event_writer",
         "semantic_invalid/writer_stale"
       ],
-      "stays_rejected": 2299
+      "stays_rejected": 2603
     }
   ]
 }
