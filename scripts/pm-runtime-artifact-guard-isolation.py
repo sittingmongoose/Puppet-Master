@@ -217,7 +217,8 @@ def main():
         # unrelated negative: append uses full_value's schema precondition;
         # historical resolution uses its exact authenticated custody equality.
         linked={'F01':{'A07'},'F13':{'H06'}}.get(guard,set())
-        own=[k for k in outcomes if k[0] in {guard}|linked]
+        forwarded=lambda k: guard=='F11' and k[0]=='C06' and k[2]=='shipped_wrong_custody_event'
+        own=[k for k in outcomes if k[0] in {guard}|linked or forwarded(k)]
         flips=[k for k in own if actual[k]==(True,True)]
         masked=[k for k in own if actual[k]!=(True,True)]
         cross=[k for k in outcomes if k not in own and actual[k]!=(True,False)]
@@ -229,7 +230,8 @@ def main():
             report=json.loads(stream.getvalue())
         passed=bool(own) and not masked and not cross and not baseline_bad
         if args.full_checker:passed=passed and code==1 and report['status']=='fail'
-        row=dict(guard=guard,rule=label,pass_=passed,linked_same_rule_guards=sorted(linked),negatives_that_flip=flips,masked=masked,
+        linked_names=sorted(linked)+(['C06:shipped_wrong_custody_event'] if guard=='F11' else [])
+        row=dict(guard=guard,rule=label,pass_=passed,linked_same_rule_guards=linked_names,negatives_that_flip=flips,masked=masked,
             negatives_that_stay_rejected=stayed,cross_flips=cross,
             mutant_sha256=hashlib.sha256(altered.encode()).hexdigest(),
             full_checker_exit=code,full_checker_failures=report['failures'] if report else None)
