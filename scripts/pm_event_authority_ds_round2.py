@@ -14,7 +14,7 @@ import textwrap
 from datetime import datetime
 import subprocess
 import sys
-from contextlib import contextmanager, ExitStack
+from contextlib import contextmanager, ExitStack, nullcontext
 from pathlib import Path
 from unittest.mock import patch
 from jsonschema import Draft202012Validator, FormatChecker
@@ -156,6 +156,8 @@ class Suite:
                         exceptions.append({'case': name, 'exception': repr(exc)})
             expected = {name for name, owner, fn in self.negatives if owner == guard}
             holds = set(flipped) == expected and not exceptions
+            if not holds:
+                failures.append({'guard':guard,'counterfactual_did_not_match_own_negative_cohort':True})
             table.append({'guard': guard, 'negatives_that_flip': flipped,
                           'negatives_that_stay_rejected': stayed, 'expected_flips': sorted(expected),
                           'exceptions': exceptions, 'status': 'pass' if holds else 'partial'})
@@ -198,7 +200,7 @@ def build():
     @contextmanager
     def no_browser_replay_guard():
         with ExitStack() as stack:
-            for instance in (gate,reset.sibling('pm-browser-event-admission')):
+            for instance in (gate,reset.sibling('pm-browser-event-admission',ROOT)):
                 stack.enter_context(patch.object(instance,'candidate_failures',source_without_guard(instance.candidate_failures,"event.get('replay_policy')")))
             yield
     suite.weakeners['browser_writer_replay_policy'] = no_browser_replay_guard
@@ -393,7 +395,9 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path);ap.add_argument('--self-test',action='store_true');ap.add_argument('--inject-invalid-positive',action='store_true');args=ap.parse_args()
     if args.self_test:
         proc=subprocess.run([sys.executable,'-B',__file__,'--inject-invalid-positive'],capture_output=True,text=True)
-        result={'status':'pass' if proc.returncode==1 else 'fail','injected_bad_positive_exit_code':proc.returncode}
+        control=Suite();control.negative('nonflipping_negative','claimed_guard',lambda:False);control.weakeners['claimed_guard']=nullcontext
+        nonflip_refused=control.run()['status']=='fail'
+        result={'status':'pass' if proc.returncode==1 and nonflip_refused else 'fail','injected_bad_positive_exit_code':proc.returncode,'nonflipping_guard_control_refused':nonflip_refused}
         print(json.dumps(result));return int(result['status']!='pass')
     suite=build()
     if args.inject_invalid_positive:
