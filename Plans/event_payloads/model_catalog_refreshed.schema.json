@@ -33,8 +33,11 @@
       "type": "array",
       "items": {
         "type": "string",
-        "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-        "maxLength": 256
+        "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+        "maxLength": 256,
+        "not": {
+          "pattern": "[\\r\\n]"
+        }
       },
       "maxItems": 128,
       "uniqueItems": true
@@ -84,5 +87,6 @@
     "provider_id",
     "account_id",
     "completed_at_utc"
-  ]
+  ],
+  "$comment": "Closed logical body, also validated after SP-337 payload_ref resolution. Inline canonical MessagePack body is at most 16384 bytes; array cardinality is not a byte-size admission rule."
 }

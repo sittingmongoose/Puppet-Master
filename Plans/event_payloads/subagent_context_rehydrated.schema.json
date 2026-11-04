@@ -53,8 +53,11 @@
       "type": "array",
       "items": {
         "type": "string",
-        "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-        "maxLength": 256
+        "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+        "maxLength": 256,
+        "not": {
+          "pattern": "[\\r\\n]"
+        }
       },
       "minItems": 1,
       "maxItems": 128,
@@ -62,8 +65,11 @@
     },
     "effective_context_ref": {
       "type": "string",
-      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-      "maxLength": 256
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
     },
     "occurred_at_utc": {
       "type": "string",
@@ -83,5 +89,6 @@
     "source_refs",
     "effective_context_ref",
     "occurred_at_utc"
-  ]
+  ],
+  "$comment": "Closed logical body, also validated after SP-337 payload_ref resolution. Inline canonical MessagePack body is at most 16384 bytes; array cardinality is not a byte-size admission rule."
 }

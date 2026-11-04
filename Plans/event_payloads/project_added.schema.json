@@ -24,8 +24,11 @@
     },
     "stable_config_ref": {
       "type": "string",
-      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-      "maxLength": 256
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
     },
     "registration_kind": {
       "type": "string",
@@ -34,8 +37,11 @@
     },
     "operation_receipt_ref": {
       "type": "string",
-      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-      "maxLength": 256
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
     },
     "completed_at_utc": {
       "type": "string",

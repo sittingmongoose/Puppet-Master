@@ -24,8 +24,11 @@
     },
     "file_path": {
       "type": "string",
-      "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$",
-      "maxLength": 1024
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$(?![\\s\\S])(?![\\s\\S])",
+      "maxLength": 1024,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
     },
     "diff_bytes": {
       "type": "integer",
@@ -39,13 +42,19 @@
     },
     "tool_output_ref": {
       "type": "string",
-      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-      "maxLength": 256
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
     },
     "formatted_output_ref": {
       "type": "string",
-      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
-      "maxLength": 256
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$(?![\\s\\S])(?![\\s\\S])",
+      "maxLength": 256,
+      "not": {
+        "pattern": "[\\r\\n]"
+      }
     }
   },
   "required": [

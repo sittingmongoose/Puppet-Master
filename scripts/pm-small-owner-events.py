@@ -4,6 +4,10 @@ import copy
 import hashlib
 import json
 import base64
+try:
+    from blake3 import blake3
+except ImportError:
+    raise SystemExit('pm-small-owner-events requires the blake3 Python package for exact SP-337 byte oracles')
 from datetime import datetime
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
@@ -19,6 +23,7 @@ def utc_datetime(value):
         return False
 
 ROOT = Path(__file__).resolve().parents[1]
+INLINE_LIMIT = 16 * 1024
 
 
 def digest(event, instance, payload):
@@ -160,14 +165,55 @@ def scope_partition(event):
     return 'project~' + base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('=')
 
 
+def application_key(server_id, operation_id):
+    # CV-366: exact UTF-8 bytes, no hashing, trimming or normalization.
+    return 'application@1:' + server_id.encode('utf-8').hex() + ':' + operation_id.encode('utf-8').hex()
+
+
+def payload_descriptor(body):
+    raw = canonical_fixture_msgpack(body)
+    return {'blake3_id': blake3(raw).hexdigest(), 'byte_size': len(raw), 'media_type': 'application/msgpack'}
+
+
+def payload_reference(descriptor):
+    # EventRecord's existing payload_ref is a string. This family-owned binding
+    # serializes the SP-337 descriptor; it changes no envelope field or codec.
+    return json.dumps(descriptor, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+
+
+def resolved_payload(event, schema, storage=None):
+    body = event['payload']
+    if event['payload_ref'] is None:
+        if len(canonical_fixture_msgpack(body)) > INLINE_LIMIT:
+            return None
+    else:
+        if body != {} or not isinstance(storage, dict):
+            return None
+        if not all(storage.get(k) is True for k in (
+            'pack_synced', 'index_synced', 'source_present', 'permission_current',
+            'deletion_clear', 'hold_allows_disclosure',
+        )):
+            return None
+        body = storage.get('body')
+        if not isinstance(body, dict):
+            return None
+        descriptor = payload_descriptor(body)
+        if descriptor['byte_size'] <= INLINE_LIMIT or storage.get('descriptor') != descriptor:
+            return None
+        if event['payload_ref'] != payload_reference(descriptor):
+            return None
+    return body if Draft202012Validator(schema, format_checker=FORMATS).is_valid(body) else None
+
+
 def valid_event(row, event, original):
     envelope = json.loads((ROOT / 'Plans/event_record.schema.json').read_text())
     payload_schema = json.loads((ROOT / row['schema']).read_text())
     ev = Draft202012Validator(envelope, format_checker=FORMATS)
-    pv = Draft202012Validator(payload_schema, format_checker=FORMATS)
-    if not ev.is_valid(event) or not pv.is_valid(event.get('payload')):
+    if not ev.is_valid(event):
         return False
-    payload = event['payload']
+    payload = resolved_payload(event, payload_schema, original.get('payload_storage'))
+    if payload is None:
+        return False
     time_field, profile, owner = FAMILY_BINDINGS[row['event_type']]
     if original.get('owner') != owner or original.get('operation_id') != payload['operation_id']:
         return False
@@ -188,18 +234,30 @@ def valid_event(row, event, original):
     if event['redaction_profile'] != profile or event['replay_policy'] != 'dedupe_by_idempotency_key':
         return False
     identity = digest(row['event_type'], original['storage_instance_id'], payload)
-    if event['event_id'] != 'evt_' + identity or event['idempotency_key'] != row['event_type'] + ':' + identity:
+    key = row['event_type'] + ':' + identity
+    if event['scope_kind'] == 'application':
+        server_id = original.get('server_id')
+        if not isinstance(server_id, str) or not server_id:
+            return False
+        key = application_key(server_id, original['operation_id'])
+    if event['event_id'] != 'evt_' + identity or event['idempotency_key'] != key:
         return False
-    if event['payload_ref'] is not None or any(v is not None for v in event['migration'].values()):
+    if any(v is not None for v in event['migration'].values()):
         return False
     if row['event_type'].startswith('subagent.') and event['run_id'] != payload['run_id']:
         return False
     return True
 
 
+def append_policy_refusal(event):
+    return 'replay_only_not_appendable' if event.get('replay_policy') == 'projector_replay_only' else None
+
+
 def publication(row, state):
     """Fixture append adapter: no owner effects are invoked or undone."""
     outcome = {'durable_events': 0, 'receipt': None, 'terminal': False, 'owner_effects': 0}
+    if append_policy_refusal(state['event']) is not None:
+        return outcome
     if not all(state[k] for k in ADMISSION_GATES):
         return outcome
     original = state['original_operation']
@@ -215,6 +273,11 @@ def publication(row, state):
     # from it; row presence is never an additional issuance phase.
     outcome['durable_events'] = 1
     if state['receipt_delivery']:
+        # Issuance is protected by the committed original full-value authority.
+        # A foreign/mutated delivery cannot publish success or undo its frame.
+        replay = resolve_full_value(row, state['event'], state['committed_authority'])
+        if replay is None or replay[1] != state['first_append_receipt']:
+            return outcome
         outcome['receipt'] = copy.deepcopy(state['first_append_receipt'])
         outcome['terminal'] = state['terminal_delivery']
     return outcome
@@ -230,7 +293,7 @@ def resolve_original(row, incoming, authority):
     payload_schema = json.loads((ROOT / row['schema']).read_text())
     if not Draft202012Validator(envelope, format_checker=FORMATS).is_valid(authority['stored_event']):
         return None
-    if not Draft202012Validator(payload_schema, format_checker=FORMATS).is_valid(authority['stored_event']['payload']):
+    if resolved_payload(authority['stored_event'], payload_schema, authority.get('payload_storage')) is None:
         return None
     stored, receipt, result = authority['stored_event'], authority['stored_custody']['first_append_receipt'], authority['original_append_result']
     custody = authority['stored_custody']
@@ -257,6 +320,16 @@ def resolve_full_value(row, requested, authority):
     if commitment['sha256'] != hashlib.sha256(full_value_preimage(requested)).hexdigest() or commitment['sha256'] != hashlib.sha256(full_value_preimage(authority['stored_event'])).hexdigest():
         return None
     return replay
+
+
+def current_retry(row, incoming, authority):
+    """Current writer policy admission precedes immutable semantic resolution."""
+    if append_policy_refusal(incoming) is not None:
+        return (append_policy_refusal(incoming), None, 0)
+    if incoming.get('replay_policy') != 'dedupe_by_idempotency_key':
+        return ('identity_conflict_without_effect', None, 0)
+    result = resolve_original(row, incoming, authority)
+    return ('return_original_without_effect', result, 0) if result is not None else ('identity_conflict_without_effect', None, 0)
 
 
 def reader_result(row, state):
@@ -292,6 +365,38 @@ def patched(value, patches):
     return result
 
 
+def boundary_state(row, case):
+    """Materialize the exact authored synthetic body; never native authority."""
+    body = copy.deepcopy(row['positive_payload'])
+    body[case['array_field']] = [
+        'ref:' + f'{i:03d}' + ':' + 'x' * (length - 8)
+        for i, length in enumerate(case['ref_lengths'])
+    ]
+    assert len(canonical_fixture_msgpack(body)) == case['body_bytes']
+    state = copy.deepcopy(row['publication_positive'])
+    state['original_operation']['result_payload'] = copy.deepcopy(body)
+    if case['mode'] == 'inline':
+        state['event']['payload'] = body
+    else:
+        descriptor = payload_descriptor(body)
+        storage = dict(body=body, descriptor=copy.deepcopy(descriptor), **{k: True for k in (
+            'pack_synced', 'index_synced', 'source_present', 'permission_current',
+            'deletion_clear', 'hold_allows_disclosure',
+        )})
+        state['event']['payload'] = {}
+        state['event']['payload_ref'] = payload_reference(descriptor)
+        state['original_operation']['payload_storage'] = storage
+    # Synthetic original append custody for this prospective accepted result.
+    authority = state['committed_authority']
+    authority['stored_event'] = copy.deepcopy(state['event'])
+    if case['mode'] != 'inline':
+        authority['payload_storage'] = copy.deepcopy(storage)
+    custody = authority['stored_custody']
+    custody['producer_semantic_digest'] = producer_digest(state['event'])
+    custody['original_event_value_commitment']['sha256'] = hashlib.sha256(full_value_preimage(state['event'])).hexdigest()
+    return patched(state, case.get('patches', []))
+
+
 def run_exact_family(row):
     count = 0
     def check(condition, label):
@@ -315,7 +420,10 @@ def run_exact_family(row):
         check(not valid_event(row, bad, original), case['case_id'])
     for case in row['original_operation_negatives']:
         bad = copy.deepcopy(original)
-        bad[case['field']] = case['value']
+        if case.get('delete'):
+            del bad[case['field']]
+        else:
+            bad[case['field']] = case['value']
         check(not valid_event(row, event, bad), case['case_id'])
     # Every producer-semantic field is frozen, including nulls and payload.
     for case in row['semantic_mutations']:
@@ -326,6 +434,55 @@ def run_exact_family(row):
 
     for variant in row['scope_variants']:
         check(valid_event(row, variant['event'], variant['original_operation']), 'independent scope/original variant')
+    check(any(c.get('value') == 'projector_replay_only' and c.get('field') == 'replay_policy' for c in row['envelope_negatives']), 'authored replay-only append negative')
+    historical = row['historical_reader_only']
+    historical_event = historical['stored_event']
+    check(append_policy_refusal(historical_event) == 'replay_only_not_appendable', 'append replay-only exact refusal')
+    check(resolve_full_value(row, historical_event, historical) == (historical['original_append_result'], historical['first_append_receipt']), 'immutable historical replay-only read preserved')
+    check(current_retry(row, historical_event, historical) == ('replay_only_not_appendable', None, 0), 'even genuine historical replay-only original cannot become a current retry')
+    if event['scope_kind'] == 'project':
+        check(row['receipt_authority']['stored_custody']['scope_partition'] == scope_partition(event), 'encoded project partition')
+    if event['scope_kind'] == 'application':
+        check(event['idempotency_key'] == application_key(original['server_id'], original['operation_id']), 'CV-366 exact key')
+    for case in row['writer_retry_cases']:
+        incoming = copy.deepcopy(event)
+        incoming.update(copy.deepcopy(case['event_overrides']))
+        decision, result, effects = current_retry(row, incoming, row['receipt_authority'])
+        check(decision == case['expected'] and effects == 0, case['case_id'])
+        check((result is not None) == (case['expected'] == 'return_original_without_effect'), case['case_id'] + ': original receipt only')
+    check(any(c['event_overrides'].get('replay_policy') == 'projector_replay_only' for c in row['writer_retry_cases']), 'authored replay-only retry negative')
+    for case in row['publication_receipt_cases']:
+        state = patched(row['publication_positive'], case['patches'])
+        before = copy.deepcopy(state)
+        check(publication(row, state) == case['expected'], case['case_id'])
+        check(state == before, case['case_id'] + ': immutable publication authority')
+    check(set(event_receipt_fields(row)) <= {c.get('field') for c in row['publication_receipt_cases']}, 'all receipt publication joins covered')
+    for case in row['payload_boundary_cases']:
+        state = boundary_state(row, case)
+        check(valid_event(row, state['event'], state['original_operation']) == case['valid'], case['case_id'] + ': body admission')
+        actual = publication(row, state)
+        check(actual['durable_events'] == int(case['valid']) and actual['terminal'] == case['valid'], case['case_id'] + ': publication')
+        if case['valid']:
+            authority = state['committed_authority']
+            check(resolve_full_value(row, state['event'], authority) == (authority['original_append_result'], authority['first_append_receipt']), case['case_id'] + ': full original value')
+            damaged = copy.deepcopy(authority)
+            if 'payload_storage' in damaged:
+                damaged['payload_storage']['source_present'] = False
+                check(resolve_full_value(row, state['event'], damaged) is None, case['case_id'] + ': missing external source unavailable')
+    for case in row['pattern_negatives']:
+        schema = json.loads((ROOT / row['schema']).read_text())
+        check(not Draft202012Validator(schema, format_checker=FORMATS).is_valid(patched(row['positive_payload'], case['patches'])), case['case_id'])
+    schema = json.loads((ROOT / row['schema']).read_text())
+    def patterns(node):
+        if isinstance(node, dict):
+            if 'pattern' in node and node['pattern'].startswith('^'):
+                check(node['pattern'].endswith('(?![\\s\\S])') or node.get('minLength') == node.get('maxLength') is not None, 'every anchored identifier pattern has full-match guard or exact length')
+            for child in node.values():
+                patterns(child)
+        elif isinstance(node, list):
+            for child in node:
+                patterns(child)
+    patterns(schema)
     for case in row['admission_cases']:
         state = copy.deepcopy(row['publication_positive'])
         state.update(copy.deepcopy(case['overrides']))
@@ -408,7 +565,12 @@ def run_exact_family(row):
         time_field, profile, _ = FAMILY_BINDINGS[row['event_type']]
         check('redaction_profile=' + profile in text and 'redacted_refs_only' not in text.replace('profile (including redacted_refs_only)', ''), 'owner profile ' + owner['unit'])
         check('occurred_at_utc equals payload.' + time_field in text and 'correlation_id is the non-empty' in text and 'actor_ref is the non-empty' in text, 'owner joins ' + owner['unit'])
+        check('replay_only_not_appendable' in text and '16 KiB' in text and 'publication' in text, 'standing owner checks ' + owner['unit'])
     return count
+
+
+def event_receipt_fields(row):
+    return row['publication_positive']['first_append_receipt'].keys()
 
 
 def main():
