@@ -7,10 +7,19 @@ import base64
 import hashlib
 import importlib.util
 import json
+from urllib.parse import urljoin
 from jsonschema import Draft202012Validator, FormatChecker
+from referencing import Registry
+from referencing.exceptions import Unresolvable
+import referencing.jsonschema as _REFERENCING_SPECS
 
 ROOT = Path(__file__).resolve().parents[1]
 OP_NAMES = ('dedup_sweep', 'index_lexical_rebuild', 'index_semantic_rebuild', 'verification_sweep')
+# Every schema document this checker validates against; each is reference-checked before any instance validation.
+SCHEMA_DOCUMENTS = ('Plans/memory_maintenance_event_payloads.schema.json', 'Plans/memory_maintenance_operation.schema.json',
+                    'Plans/memory_maintenance_rebuild_target.schema.json', 'Plans/event_record.schema.json',
+                    'Plans/event_record_index_checkpoint.schema.json')
+REGISTRY_DOCUMENT = 'Plans/storage_value_registry.json'
 _CODEC_SPEC = importlib.util.spec_from_file_location('_dmem_binding_codec', ROOT / 'scripts/pm_event_index_binding.py')
 _CODEC = importlib.util.module_from_spec(_CODEC_SPEC)
 _CODEC_SPEC.loader.exec_module(_CODEC)
@@ -70,10 +79,119 @@ def event_type(row, phase):
     return 'memory.' + commands[row['command_id']] + '.' + phase
 
 
+# Standing check 9: every $ref in every applicator branch resolves, whether or not a fixture visits it.
+SCHEMA_KEYWORDS = {'additionalProperties', 'items', 'contains', 'propertyNames', 'not', 'if', 'then', 'else',
+                   'unevaluatedItems', 'unevaluatedProperties', 'contentSchema', 'additionalItems'}
+SCHEMA_ARRAY_KEYWORDS = {'allOf', 'anyOf', 'oneOf', 'prefixItems'}
+SCHEMA_MAP_KEYWORDS = {'properties', 'patternProperties', 'dependentSchemas', '$defs', 'definitions'}
+DATA_KEYWORDS = {'const', 'enum', 'default', 'examples'}
+REFERENCE_KEYWORDS = ('$ref', '$dynamicRef')
+
+
+def document_uri(path, doc):
+    return doc['$id'] if isinstance(doc, dict) and isinstance(doc.get('$id'), str) else 'urn:pm-dmem:' + path
+
+
+def schema_registry(documents):
+    """Offline registry of exactly these documents: an unknown document is unresolvable, never retrieved."""
+    registry = Registry()
+    for path, doc in documents.items():
+        # The registry data file declares its own $schema; every walked schema here is Draft 2020-12.
+        registry = registry.with_resource(document_uri(path, doc), _REFERENCING_SPECS.DRAFT202012.create_resource(doc))
+    return registry.crawl()
+
+
+def unresolved_references(documents, roots=None):
+    """Walk every subschema (base URI follows nested $id) and resolve every reference; return the failures."""
+    registry = schema_registry(documents); failures = []
+
+    def schema(node, base, where):
+        if not isinstance(node, dict):
+            if not isinstance(node, bool):
+                failures.append({'location': where, 'error': 'not_a_schema'})
+            return
+        if '$id' in node:
+            if not isinstance(node['$id'], str):
+                failures.append({'location': where + '/$id', 'error': 'non_string_id'}); return
+            base = urljoin(base, node['$id'])
+        for key in REFERENCE_KEYWORDS:
+            if key in node:
+                ref = node[key]
+                try:
+                    if not isinstance(ref, str):
+                        raise Unresolvable(ref=repr(ref))
+                    registry.resolver(base_uri=base).lookup(ref)
+                except Unresolvable as error:
+                    failures.append({'location': where + '/' + key, 'ref': ref, 'base': base,
+                                     'error': type(error).__name__})
+        for key, value in node.items():
+            here = where + '/' + key
+            if key in DATA_KEYWORDS or key in REFERENCE_KEYWORDS or key == '$id':
+                continue
+            if key in SCHEMA_KEYWORDS:
+                schema(value, base, here)
+            elif key in SCHEMA_ARRAY_KEYWORDS:
+                if not isinstance(value, list):
+                    failures.append({'location': here, 'error': 'not_a_schema_array'}); continue
+                for i, item in enumerate(value):
+                    schema(item, base, here + '/' + str(i))
+            elif key in SCHEMA_MAP_KEYWORDS:
+                if not isinstance(value, dict):
+                    failures.append({'location': here, 'error': 'not_a_schema_map'}); continue
+                for name, item in value.items():
+                    schema(item, base, here + '/' + name)
+            else:
+                unknown(value, base, here)
+
+    def unknown(value, base, where):
+        # Unknown/annotation keywords fail closed: any nested object is walked as a possible schema.
+        if isinstance(value, dict):
+            schema(value, base, where)
+        elif isinstance(value, list):
+            for i, item in enumerate(value):
+                unknown(item, base, where + '/' + str(i))
+
+    for path, doc in documents.items():
+        for pointer, node in (roots or {}).get(path, [('', doc)]):
+            schema(node, document_uri(path, doc), path + '#' + pointer)
+    return failures
+
+
+def checked_documents():
+    return {path: load(path) for path in SCHEMA_DOCUMENTS}
+
+
+def require_resolved_references():
+    documents = checked_documents()
+    failures = unresolved_references(documents)
+    # The registry mirrors are separate documents: a local reference there must resolve in the registry itself.
+    registry = load(REGISTRY_DOCUMENT)
+    roots = {REGISTRY_DOCUMENT: [('/families/' + str(i) + '/value_schema', v['value_schema'])
+                                 for i, v in enumerate(registry['families']) if v['family_id'] in own_value_ids()]}
+    failures += unresolved_references({**documents, REGISTRY_DOCUMENT: registry}, roots={
+        **{path: [] for path in documents}, **roots})
+    assert not failures, ('unresolved_schema_reference', failures)
+    return len(roots[REGISTRY_DOCUMENT])
+
+
+def own_value_ids():
+    return ['memory_' + n + '_operation' for n in OP_NAMES] + ['memory_index_lexical_selector',
+                                                               'memory_index_semantic_selector']
+
+
+@lru_cache(maxsize=1)
+def checked_registry():
+    return schema_registry(checked_documents())
+
+
 @lru_cache(maxsize=None)
 def validator(path, definition):
-    schema = load(path)['$defs'][definition]
-    return Draft202012Validator(schema, format_checker=FormatChecker())
+    # Select the definition inside its own document so every reference keeps the document's base URI.
+    doc = load(path)
+    if definition not in doc['$defs']:
+        raise KeyError(definition)
+    return Draft202012Validator({'$ref': document_uri(path, doc) + '#/$defs/' + definition},
+                                registry=checked_registry(), format_checker=FormatChecker())
 
 
 @pure
@@ -493,6 +611,26 @@ def read_history(before, event):
     return deepcopy(state['originals'][event]['full_value'])
 
 
+def run_reference_cases(fixtures, families):
+    """Per-family dormant/active/nested-base/cross-document reference mutations run through the walker."""
+    counts = {}
+    required = {'standing9-dormant-missing-ref', 'standing9-active-missing-ref', 'standing9-dormant-resolving-ref',
+                'standing9-nested-id-base', 'standing9-cross-document-ref', 'standing9-cross-document-missing',
+                'standing9-unknown-document', 'standing9-operation-dormant-missing-ref'}
+    for case in fixtures['reference_cases']:
+        event = case['event_type']; assert event in families, case['name']
+        documents = deepcopy(checked_documents())
+        target = documents[case['document']]['$defs'][case['definition']]
+        target.update(deepcopy(case['merge']))
+        failures = unresolved_references(documents)
+        assert (not failures) == case['resolves'], (case['name'], failures)
+        if not case['resolves']:
+            assert all(f.get('ref') == case['expected_unresolved'] for f in failures) and failures, (case['name'], failures)
+        counts.setdefault(event, set()).add(case['name'].split(':', 1)[1])
+    assert set(counts) == set(families) and all(required <= names for names in counts.values()), counts
+    return {event: len(names) for event, names in counts.items()}
+
+
 MATRIX_DEFECTS = ('missing', 'digest', 'value-unhashed', 'operation-rehashed', 'identity-rehashed',
                   'phase-rehashed', 'payload-rehashed', 'not-flushed', 'shape', 'withdrawn')
 MATRIX_MODELS = ('phase', 'writer', 'boundary', 'reader')
@@ -783,7 +921,10 @@ def main():
     assert not registered.intersection(x['event_type'] for x in contracts['families'])
     for filename in ('event_payloads', 'operation', 'rebuild_target'):
         Draft202012Validator.check_schema(load('Plans/memory_maintenance_' + filename + '.schema.json'))
+    # Standing check 9 before any instance validation: dormant branches cannot hide an unresolved reference.
+    mirrors = require_resolved_references()
     families = {x['event_type']: x for x in contracts['families']}; counts = {}
+    references = run_reference_cases(fixtures, families)
     for case in fixtures['cases']:
         event = case['event_type']; result = accept(case['payload'], families[event], case['context'])
         assert result == case['accepted'], case['name']
@@ -841,6 +982,7 @@ def main():
                       'current_writer_steps': writers, 'identifier_cases': len(fixtures['identifier_cases']),
                       'generic_checkpoint_identity_cases': checkpoints,
                       'start_custody_matrix': matrix, 'history_cases': history,
+                      'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))
 
 

@@ -128585,5 +128585,1431 @@
         }
       ]
     }
+  ],
+  "reference_cases": [
+    {
+      "name": "memory.dedup_sweep.completed:standing9-dormant-missing-ref",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-active-missing-ref",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-dormant-resolving-ref",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_dedup_sweep_completed"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-nested-id-base",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_dedup_sweep_completed"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_dedup_sweep_completed"
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-cross-document-ref",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/dedup_sweep"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-cross-document-missing",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-unknown-document",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.dedup_sweep.completed:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.dedup_sweep.completed",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "dedup_sweep",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-dormant-missing-ref",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-active-missing-ref",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-dormant-resolving-ref",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_dedup_sweep_started"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-nested-id-base",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_dedup_sweep_started"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_dedup_sweep_started"
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-cross-document-ref",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/dedup_sweep"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-cross-document-missing",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-unknown-document",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_dedup_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.dedup_sweep.started:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.dedup_sweep.started",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "dedup_sweep",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-dormant-missing-ref",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-active-missing-ref",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-dormant-resolving-ref",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_lexical_rebuild_completed"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-nested-id-base",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_lexical_rebuild_completed"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_index_lexical_rebuild_completed"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-cross-document-ref",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/index_lexical_rebuild"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-cross-document-missing",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-unknown-document",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.completed:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "index_lexical_rebuild",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-dormant-missing-ref",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-active-missing-ref",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-dormant-resolving-ref",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_lexical_rebuild_started"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-nested-id-base",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_lexical_rebuild_started"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_index_lexical_rebuild_started"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-cross-document-ref",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/index_lexical_rebuild"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-cross-document-missing",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-unknown-document",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_lexical_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.index.lexical.rebuild.started:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.index.lexical.rebuild.started",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "index_lexical_rebuild",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-dormant-missing-ref",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-active-missing-ref",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-dormant-resolving-ref",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_semantic_rebuild_completed"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-nested-id-base",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_semantic_rebuild_completed"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_index_semantic_rebuild_completed"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-cross-document-ref",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/index_semantic_rebuild"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-cross-document-missing",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-unknown-document",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.completed:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "index_semantic_rebuild",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-dormant-missing-ref",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-active-missing-ref",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-dormant-resolving-ref",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_semantic_rebuild_started"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-nested-id-base",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_index_semantic_rebuild_started"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_index_semantic_rebuild_started"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-cross-document-ref",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/index_semantic_rebuild"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-cross-document-missing",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-unknown-document",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_index_semantic_rebuild_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.index.semantic.rebuild.started:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.index.semantic.rebuild.started",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "index_semantic_rebuild",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-dormant-missing-ref",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-active-missing-ref",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-dormant-resolving-ref",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_verification_sweep_completed"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-nested-id-base",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_verification_sweep_completed"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_verification_sweep_completed"
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-cross-document-ref",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/verification_sweep"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-cross-document-missing",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-unknown-document",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_completed",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.verification_sweep.completed:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.verification_sweep.completed",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "verification_sweep",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-dormant-missing-ref",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-active-missing-ref",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "$ref": "#/$defs/review_missing"
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-dormant-resolving-ref",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_verification_sweep_started"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-nested-id-base",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "$id": "review-nested.schema.json",
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/memory_verification_sweep_started"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/memory_verification_sweep_started"
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-cross-document-ref",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/verification_sweep"
+            }
+          }
+        ]
+      },
+      "resolves": true
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-cross-document-missing",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/memory_maintenance_operation.schema.json#/$defs/review_missing"
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-unknown-document",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_event_payloads.schema.json",
+      "definition": "memory_verification_sweep_started",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "https://puppetmaster.local/Plans/review_absent.schema.json#/$defs/x"
+    },
+    {
+      "name": "memory.verification_sweep.started:standing9-operation-dormant-missing-ref",
+      "event_type": "memory.verification_sweep.started",
+      "document": "Plans/memory_maintenance_operation.schema.json",
+      "definition": "verification_sweep",
+      "merge": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation_id": {
+                  "const": "review-unseen-operation"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/$defs/review_missing"
+            }
+          }
+        ]
+      },
+      "resolves": false,
+      "expected_unresolved": "#/$defs/review_missing"
+    }
   ]
 }
