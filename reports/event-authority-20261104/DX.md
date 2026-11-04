@@ -1,87 +1,91 @@
-# DX-P2 — Event Authority technical closure
+# DX-FIX1 — Event Authority review round 1
 
-Branch: `plans/ea-w2-executor-20261104`. First-pass/restart head: `d1c0c8616b194db30dc470e775fc2e230b9856b7`; fetched remote had not advanced, so no failed-attempt pushed work existed to continue. Worktree: `/home/sittingmongoose/pm-worktrees/DX-p2`, detached and sparse (`Plans scripts reports tests`). Final head: the commit containing this report; external receipt `drafts/DX/head.txt`.
+Branch: `plans/ea-w2-executor-20261104`. Reviewed starting head: `9906491aa0e99271ae8fc4c3139f261ee6d46f38`. Graded canonical/checker head: `4aec2b48014b9faf7c783f3142d9a811c9c0ad75`. The subsequent report-only commit has the exact same graded source bytes; `drafts/DX/head.txt` is the final pushed head receipt. Worktree: `/home/sittingmongoose/pm-worktrees/DX-fix1`, detached and sparse (`Plans scripts reports tests`), from the VM local clone. No landing is authorized.
 
-**Outcome:** 48 technical cells upgraded across 16 independent prepared contracts. Fourteen families have 11 PASS / 0 PARTIAL / 1 ABSENT. Two have 10 PASS / 1 PARTIAL / 1 ABSENT, stopped on Jared's classification/retention decision. All 16 membership_version cells remain ABSENT. No family was admitted or excluded. PASS means authored normative depth and passing static oracles; native execution remains NOT_RUN. Independent grading/review remains the lead's next step.
+**Outcome:** 15 of 16 families PASS AS PREPARED in this self-grade, versus 5 of 16 in the independent review. F1–F4 are fixed with source-preserving independent counterexamples. Ten oracle cells and scheduler retention upgrade from the independent review; totals are **175 PASS / 1 PARTIAL / 16 ABSENT**. All sixteen membership/version cells remain ABSENT. `plan.decomposition_degraded` retains only its genuine retention decision stop. Native execution remains **NOT_RUN** throughout; these are normative contracts and static oracles. Separate independent re-review and family-by-family admission remain required.
 
-| Family | EP / CV / SP | Before PASS / PARTIAL / ABSENT | After PASS / PARTIAL / ABSENT |
+Counts below are PASS / PARTIAL / ABSENT. The before column uses the independent 192-cell REGRADE, not the superseded drafting overgrade.
+
+| Family | Independent review before | Self-grade after fixes | Verdict |
 |---|---|---|---|
-| `attempt.completed` | EP-210 / CV-500 / SP-500 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `attempt.started` | EP-211 / CV-501 / SP-501 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `node.blocked` | EP-212 / CV-502 / SP-502 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `node.completed` | EP-213 / CV-503 / SP-503 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `node.started` | EP-214 / CV-504 / SP-504 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `node.unblocked` | EP-215 / CV-505 / SP-505 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `plan.decomposition_degraded` | EP-216 / CV-506 / SP-506 | 7 / 4 / 1 | 10 / 1 / 1 |
-| `remediation.resolved` | EP-217 / CV-507 / SP-507 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `remediation.spawned` | EP-218 / CV-508 / SP-508 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `run.completed` | EP-219 / CV-509 / SP-509 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `run.graph_integrity_failed` | EP-220 / CV-510 / SP-510 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `run.node_backoff_expired` | EP-221 / CV-511 / SP-511 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `run.node_backoff_started` | EP-222 / CV-512 / SP-512 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `run.node_ready` | EP-223 / CV-513 / SP-513 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `run.node_retry_scheduled` | EP-224 / CV-514 / SP-514 | 8 / 3 / 1 | 11 / 0 / 1 |
-| `scheduler.pass` | EP-225 / CV-515 / SP-515 | 7 / 4 / 1 | 10 / 1 / 1 |
+| `attempt.completed` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `attempt.started` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.blocked` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.completed` | 11 / 0 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.started` | 11 / 0 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `node.unblocked` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `plan.decomposition_degraded` | 10 / 1 / 1 | 10 / 1 / 1 | HOLD — RETENTION DECISION |
+| `remediation.resolved` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `remediation.spawned` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.completed` | 11 / 0 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.graph_integrity_failed` | 11 / 0 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_backoff_expired` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_backoff_started` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_ready` | 11 / 0 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `run.node_retry_scheduled` | 10 / 1 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
+| `scheduler.pass` | 9 / 2 / 1 | 11 / 0 / 1 | PASS AS PREPARED |
 
-## Cells still not PASS and exact questions
+## Review round 1: findings and responses
 
-- **All 16 — membership_version ABSENT:** no registry append or admission record is authorized. Separate family-by-family integration/admission is required.
-- **scheduler.pass — retention PARTIAL / PENDING_RETENTION_DECISION:** Should `scheduler.pass` be classified as runtime history kept for one year after the run finishes, or ordinary telemetry kept for 90 days?
-- **plan.decomposition_degraded — retention PARTIAL / PENDING_RETENTION_DECISION:** Should the pre-lock `plan.decomposition_degraded` record be kept for seven years as an operational record, or indefinitely as authority/source lineage; if a run-based policy is chosen, what existing lifecycle anchor applies when its payload has no run_id?
+- **F1 — fixed** (`bca9fb92c6`, envelope-omission follow-up `b139ae2b27`). Where: scripts/pm_executor_event_semantics.py:41, scripts/pm_executor_event_semantics.py:166; family-local mappings in EP-210..225 and `Plans/executor_event_contracts.json`. Cause: a coupled payload/mirror omission bypassed comparisons of present fields. Fix: derive the complete payload, including version and original first observation ts, from independently hashed owner reads. An absent fact forbids inventing its field; an existing fact requires it. Both block and unblock select required attempt slots from the original episode, including explicit no-attempt evidence; null in an envelope does not satisfy required omission. The existing whole observation and mirror checks remain. Account-bearing attempt start requires its original requested/effective snapshots. Corrected `node.blocked` pre-attempt positive removes only truly absent failed-attempt/timeout/restore facts from the original source and retains real auth evidence. Corrected completed-success positive has no stale failure/backoff facts in its original operation. Verify: full semantics checker; coupled-omission-real-source cases for all optional facts, original-clock/version counterexamples, both attempt-backed episode omission negatives, both null-envelope negatives, and true no-account/pre-attempt positives. The 72 first F1 additions and two final omission cases preserve all original case names/expected outcomes.
+- **F2 — fixed** (`b5a8fefab6`). Where: scripts/pm_executor_event_semantics.py:270, EP-217/218, both remediation adapter `generation_ceiling` objects. Cause: the ceiling checked `generation`, while the payload joined `remediation_generation`. Fix: bind both normalized fields and compare the actual joined remediation generation directly with its actual ceiling, preserving the old ceiling guard. Verify: each family's independent rehashed divergent-generation counterexample (`remediation_generation=99`, normalized generation 1, ceiling 3), a second divergence, and a valid generation exactly at ceiling; full semantics checker passes.
+- **F3 — fixed** (`25fde70fad`, immediate-policy follow-up `4aec2b4801`). Where: scripts/pm_executor_event_semantics.py:62; family-local closure at Plans/Executor_Protocol.md:10264, and corresponding EP-222/224 paragraphs and adapter objects. Cause: mutable limit values and observation-only deadline checks bypassed current classified owner policy. Fix: reuse EP-032 and SP-238 exactly, with independent original failure/attempt, per-error counter identity, policy provenance, response/failure/scheduling clocks, Retry-After and refresh/client-rebuild evidence. Limits are transient=3, rate_limited=3, structured-output=2, auth-refresh=1, Storage interrupted=3 and transient_busy=1 after exactly 250 ms. Actual used must be an integer in range and match the source per-error counter; the payload retry ordinal is used+1 where present. Deadlines prove 1s/2s/4s, Retry-After/30s fallback, immediate classified retry, and refresh ordering. Storage adapter retries keep the actual attempt and forbid new Executor attempts; storage scheduling has zero Executor successor admissions. Those effect counts are a static accounting view of the existing no-new-attempt rule, not new stored counters. Verify: 266 additional full checker cases cover every class limit and negative bound, widened limits (including source-consistent 99/100), independent wrong original deadlines, original clocks/counters/provenance/parents, both header forms and fallback, refresh failures, all nonretryable Storage classes, early expiry and Storage effects. The follow-up rejects timed backoff for the matrix’s none/immediate policies (including zero/expired Retry-After); sixteen newly authored timer cases are negative, while their valid immediate scheduling counterparts remain covered. Every original 1,346 case expectation is unchanged.
+- **F4 — fixed** (`43e7f77452`). Where: Plans/event_payload_scheduler_pass.schema.json:73, CV-515, EP-225 and scripts/pm_executor_event_semantics.py:138. Cause: both score shapes and source oracle accepted any integer. Fix: enforce existing integer 0..100 inclusive at both schema locations and normalized original scores; default 50 is documented and explicit scores remain required-present. Verify: separate lower/upper negatives for each schema shape, source-consistent full captures, valid 0/50/100, boolean/fractional negatives and 14 isolated normalized source-score cases through the full checker.
+- **Q1 — fixed; no Jared question remains** (`90f95892fd`). Where: Plans/storage-plan.md:30308, scheduler companion retention ref, EP-225. Verified current premise at Contracts_V0:712, Storage Scheduler Runtime addendum:2165–2186, SP-198, Case L-3 and the exact existing runtime catalog. These explicit classifications still match fetched main (nine quote checks in retention-premise.json). Bind `RP-RUNTIME-365D@1.0.0`: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, stronger holds, latest-25 terminal-run preservation and successor compaction. Keep `RP-PROJECTION-3GEN` checkpoint and `RP-EVENT-INDEX-SOURCE` index assignments separate. The policy catalog and event registry remain unchanged.
+- **Q2 — stopped for Jared; question corrected** (`90f95892fd`). Where: Plans/storage-plan.md:29811. Exact question: **Should `plan.decomposition_degraded` be kept for seven years as non-authority operational degradation history under RP-OPERATIONAL-2555D@1.0.0, with terminal_transition explicitly anchored to the original durably committed decomposition/degradation result, or indefinitely as audit authority/source lineage under RP-AUTHORITY-INDEFINITE@1.0.0?**
+  **Review recommendation, not applied:** select seven-year non-authority operational degradation history and explicitly approve the original committed-result `terminal_transition` mapping. Indefinite audit/source lineage remains a real alternative. Preserve independently governed source/graph/evidence bodies and all stronger holds. `PENDING_RETENTION_DECISION` remains in SP-506 and its companion; neither candidate, proposed anchor nor expiry/count eviction is authorized. No fabricated run or extension of DL-069's SafePoint-only clock is used.
+- **Review note — integration item:** the runtime-vocabulary suite still fails only `test_release_verifies_selected_renderer_order_without_reopening_choice`, for the missing FinalGUISpec phrase `Skia compiled in and selected by default`. The test and GUI owner are byte-identical to fetched main. This is the review's existing failure and remains outside DX paths; no repair is mixed into this branch. Evidence: runtime-baseline.json and runtime-vocabulary-summary.txt in the check receipt.
 
-Those questions are stopped in SP-515 and SP-506 respectively. DL-045 reserves classification/retention/deletion choices to Jared. `surveys/RT/TABLE.md#G28` recommends Run year and seven years respectively; these are proposals, not answers. No policy, lifecycle anchor, count bucket or expiry grant was selected. Generic SP-278 index/checkpoint retention keeps its existing assignments. No other technical cell remains PARTIAL.
+## Bindings, premise checks and scope
 
-## Pass-two newly authored bindings and source evidence
+Every original emitter, family-local history reader, source adapter, identity recipe, SP-278 projector/checkpoint/token and SP-286/CV-339 full-value-v2 receipt binding is reused. No new versioned identifier, PlanUnit ID, persisted value family, consumer, projector, checkpoint, policy, command or event admission is created by this fix round.
 
-Every family independently re-searched live top-level `Plans/*.md` and `Plans/*.json` at the fetched first-pass head. Shards, ledger source memory and audits were excluded as authority. Existing exact EP/CV/SP emitter, reader, identity, SP-278 generic projector/checkpoint, SP-286/CV-339 full-value-v2 custody and current SP-336/SP-347 durability are reused. DL-045's exact Executor scope table still lists all 16 names; no DL-046/DL-090 expansion is needed. Search evidence captures all hits and per-family negative evidence: the first-pass source_facts/source_bindings shape fixtures did not define concrete owner-read roles/parents/revisions, conditional presence, complete transition/post-state tables or recovery/withdrawal trace cases. Each missing adapter is expressly labelled newly authored in its own EP unit.
+The newly authored normalized read mappings are explicitly owner prose: schema_version and immutable first timestamp from each family's existing original reserved operation; block/unblock actual episode attempt presence; and, independently for each of the three retry families, original `failure` records and policy/timing/counter provenance (plus the actual `prior_attempt` read for retry scheduling). These are captures of already specified owner state under native fences, not new persisted records or replacement runtime schemas. The sixteen current-canon observation searches and three separate retry searches include their own scope, existing matches and negative evidence. They reuse current owner policy and original operation definitions rather than a sibling's binding. The existing first/pass-two per-family source search lineage is retained below.
 
-| Family | Newly authored unpersisted source adapter | Relational cases / traces |
-|---|---|---|
-| `attempt.completed` | `executor.attempt_completed.source_adapter.v1@1.0.0` | 111 / 6 |
-| `attempt.started` | `executor.attempt_started.source_adapter.v1@1.0.0` | 135 / 6 |
-| `node.blocked` | `executor.node_blocked.source_adapter.v1@1.0.0` | 112 / 6 |
-| `node.completed` | `executor.node_completed.source_adapter.v1@1.0.0` | 93 / 6 |
-| `node.started` | `executor.node_started.source_adapter.v1@1.0.0` | 108 / 6 |
-| `node.unblocked` | `executor.node_unblocked.source_adapter.v1@1.0.0` | 81 / 6 |
-| `plan.decomposition_degraded` | `executor.plan_decomposition_degraded.source_adapter.v1@1.0.0` | 49 / 6 |
-| `remediation.resolved` | `executor.remediation_resolved.source_adapter.v1@1.0.0` | 97 / 6 |
-| `remediation.spawned` | `executor.remediation_spawned.source_adapter.v1@1.0.0` | 93 / 6 |
-| `run.completed` | `executor.run_completed.source_adapter.v1@1.0.0` | 59 / 6 |
-| `run.graph_integrity_failed` | `executor.run_graph_integrity_failed.source_adapter.v1@1.0.0` | 50 / 6 |
-| `run.node_backoff_expired` | `executor.run_node_backoff_expired.source_adapter.v1@1.0.0` | 75 / 6 |
-| `run.node_backoff_started` | `executor.run_node_backoff_started.source_adapter.v1@1.0.0` | 76 / 6 |
-| `run.node_ready` | `executor.run_node_ready.source_adapter.v1@1.0.0` | 59 / 6 |
-| `run.node_retry_scheduled` | `executor.run_node_retry_scheduled.source_adapter.v1@1.0.0` | 83 / 6 |
-| `scheduler.pass` | `executor.scheduler_pass.source_adapter.v1@1.0.0` | 65 / 6 |
+DL-045 still lists these sixteen exact Executor families and reserves new product choices; DL-076/SP-278's nine-field token, SP-286/CV-339 v2 and SP-336/SP-347 durability remain adopted by name. No August/September retention answer is generalized. Current explicit runtime classification, rather than an event-name prefix or RT proposal, closes scheduler retention. The pre-lock decomposition payload still has no run identity and no current exact assignment distinguishes its two real classes; that cell remains PARTIAL.
 
-The adapter objects independently enumerate source owner slots, payload/source joins, required parent refs, current revision predicates, lifecycle tables, before/after CAS, effect accounting and optional evidence-list resolution. Pre-attempt block/unblock cases omit an invented attempt. Materialized node_id joins to EP-105 WorkNodeRecord.worknode_id with original request and installed graph revision. Runtime joins preserve package/seam/lane/worktree, requested/effective account, role/permission scope and whole immutable runtime/context owner precedence. These are test capture views, never new persisted records or replacement runtime schemas. Source facts are obtained through actual owners under their fences, not caller flags. No new physical family, consumer, projector, checkpoint, command or retention policy was created in pass two.
+**Changed owner hunks:** EP-210..225's complete observation mappings; EP-211 account presence; EP-212/215 episode attempts; EP-217/218 generation ceiling; EP-221/222/224 retry policy/source reads; EP-225 priority and runtime-retention routing; CV-515's score-domain shape; SP-506's two-candidate pending question and SP-515's exact runtime assignment. No ATS owner edit is needed: existing ATS-250..257 obligations remain. All generated shard changes belong only to the three edited owners; global index outputs are generated by repository tools. No unrelated owner's generated body changed.
 
-## Premise checks
+**IDs used/reused:** EP-210..225, CV-500..515, SP-500..515, ATS-250..257 (56 existing IDs; only CV-515 and SP-506/515 have prose changes outside EP). No ID is minted. No forbidden file, test file, registry, policy catalog, admission/Decision Log entry, frozen validator, Spec Lock or evidence bundle changed. No pm-mail, subagent, landing lock, main push or reseal occurred.
 
-- **DL-045:** its 285-family permission still includes these exact 16 names and permits only technical bindings for already specified behavior. Product decisions remain stopped.
-- **Current semantic owners:** Contracts current exact payload minima, canonical remediation resolution values, first-pass separate schemas and EP-105 WorkNode materialization remain the source. No legacy project_plan_node/WorkNodeRequest is promoted to canonical runtime identity.
-- **Sequence and receipt:** current Executor Event Dedup Key Sequence Fallback still supersedes the old timestamp tuple. The unchanged per-family recipe reserves event_sequence once and preserves first bytes. SP-286/CV-339 v2 and SP-336/SP-347 govern original receipt/flush custody.
-- **Storage scope:** Case L-5 requires project~base64url_no_pad(UTF8(project_id)); the new static oracle uses that actual encoding, with foreign-partition cases.
-- **Retention:** Case L-3 still directly names Runtime/run/node/attempt for the 14 bound rows. No old answer is applied to scheduler.pass or pre-lock decomposition. RT G28 proposals remain undecided. Failed historical-answer premises: none applied; no old decision is extended.
+## Verification and evidence
 
-## Shared-file hunks and IDs
+`DX.checks.json` records commands, exit codes, parsed top-level statuses, evidence paths and SHA-256 values. All F1–F4 repairs ran through the full semantic checker; all original 1,346 case names and expected outcomes are retained, with 353 added source/transition cases and 14 isolated source-score cases. The final checks are:
 
-- **Executor_Protocol.md:** only EP-210..225, each now contains its own source-read/identity table, lifecycle table, conditions and ordering barrier.
-- **Contracts_V0.md:** only CV-500..515, each adds its exact adapter route and unchanged schema/import authority boundary.
-- **storage-plan.md:** only SP-500..515, each adds its own recovery/withdrawal trace obligations; SP-506/SP-515 retain the decision stop and exact question.
-- **Automated_Testing_System.md:** only ATS-250..257, 16 independently named semantic acceptance paragraphs.
-- **Companions:** `Plans/executor_event_contracts.json` adds 16 independent semantic_adapter objects; `Plans/executor_event_semantic_fixtures.json` and `scripts/pm_executor_event_semantics.py` supply static source/transition and receipt traces. Existing 552 shape/identity fixtures and checker remain unchanged. No storage_value_registry.json edit, new stored value or test-file edit.
-- **IDs used:** existing EP-210..225, CV-500..515, SP-500..515, ATS-250..257. No new PlanUnit/DL IDs. The 16 new source-adapter identifiers were checked against all fetched origin contract blobs (494 remote refs, no collision). Original block collision proof remains first-pass lineage below.
+| Check | Exit/result |
+|---|---|
+| Full semantic checker | 0 / top-level pass; 1,699 source/transition + 14 source-score + 96 traces |
+| Shape/identity checker | 0 / top-level pass; 563 fixtures + 80 identity/replay cases |
+| Review counterprobes | 0 / top-level pass; all 13 forbidden inputs rejected, corrected source-positive accepted |
+| Event-index tests | 0 / all 14 tests pass |
+| Runtime-vocabulary tests | 1 / 9 tests, one pre-existing GUI phrase failure; byte-identical baseline proved |
+| Shard generation/check after every markdown change | 0 / top-level pass; three edited owner directories only |
+| Plan-index generate and final validate | 0 / parsed top-level pass; readiness remains blocked, no governance clearance |
+| Scope/regression and whitespace checks | pass; eight intended canonical/checker paths, allowed derived files, no forbidden drift |
 
-## Validation and limits
+Initial resources: 17 GB available memory, 110 GB free disk, above both 6 GB/50 GB hard stops. The worktree stayed sparse. Before index generation the ignored currentness edition was copied from the shared checkout; all fifteen source/destination hashes matched and explicit sha256sum confirmation was recorded. No native complete owner read, append/receipt codec/flush/crash, transaction CAS, backup/restore or deletion/withdrawal execution is claimed. These remain NOT_RUN obligations under the existing owners. No WorkNode, readiness or governance seal follows. The pushed detached worktree is removed at handoff.
 
-Final commands, exit codes, parsed top-level JSON statuses, raw output paths and SHA-256 values are in `DX.checks.json`. The new source/transition suite passes 1346 cases and 96 receipt/replay/withdrawal traces; the unchanged checker passes 552 fixture cases and 80 identity/replay checks. Generic event-index tests pass (14 tests). The runtime-vocabulary suite retains its one pre-existing FinalGUISpec renderer-phrase failure; both that owner file and the test are byte-identical to origin/main, recorded in pass2-runtime-baseline.json. No unrelated repair was made.
+Evidence receipts (path plus SHA-256):
 
-The 15-file ignored currentness edition was copied from the shared checkout before index generation and every source/destination SHA-256 matched, with explicit sha256sum confirmation. Derived shards/indexes are regenerated by repo scripts only; only the four edited owners may change shards. Index generate/validate statuses must be read at the top level. No test file is added because .gitignore has no named ! exception for a new DX test.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/currentness-copy.json` — `97f0aba3bd0d844c9663e5f22539d6c43ca711138551fc43a3d8ebbd069a56a8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/currentness-final.json` — `c8a379a5310e80b54cea282e240b1bd43f93b36f2856ea5e746070482cf14150`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/verify_deliverables.py` — `fd78b10265763e295311cd7937baaf1d755ed82c289ae5a32cebd479d7b3fc1a`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/retention-premise.json` — `c89cf8dc5d25f2f7de1b0a45759c28ad05eabca9c9fa68e4847728f89761fe52`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/runtime-baseline.json` — `1573f09ec97e87fa8a566b104d93528733a331b7441ff27a1e9456ca3907f754`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/scope-and-regression.json` — `2d446b9ead7337e189e76f4698da9c54286f1aecae7588c433807d9366d5e231`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/observation-source-search.json` — `90855db2b9c6f9230149a241b46b4ec017e04604b18c809c60899a902f895849`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/retry-source-search.json` — `e07c160ab019963576603c76b9b714c7e237021622ed2280d868e89f334ce941`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix1/review_probes_after.py` — `dc04794df8ee6ed3e80d88e3ad377c6d65a363942ff301979ca5e3a2b563c527`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/REVIEW.md` — `99486117c3b2c983fbdfd5058acce64cd0101ab7cdb9f751510e6242cc14776d`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/REGRADE.json` — `e873ee804df768fb8edf154e0cc5a5de76ba548a9e3ce829292d9823666b5ef7`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/PROBES.py` — `27913071c782d33d467485189c856eb8bc2583e10e6bd54d696e2ca98b1fedf8`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DX-sol/PROBES.json` — `152e71e35df2ce552f59ae8f41784ad50b04c85cee6a14f8cf070064b0869ad6`.
 
-Native complete owner reads/schema validation, actual source adapters, SeglogFrameV2/receipt codec/flush/crash recovery, SP-278 transaction CAS/source translation, coherent backup/restore and permission/deletion/withdrawal concurrency remain authored NOT_RUN obligations. The finite model's generation/frontier token is not a persisted SP-278 token. No native PASS, registration, readiness or governance clearance follows. Initial resources were 21 GB available RAM / 42 GB free disk; disk was checked again before generation. No pm-mail, subagents, landing lock, main push, reseal, frozen validator, event registry, admission/Decision Log record or forbidden-file edits.
+## Original contract binding/search lineage
 
-## Newly authored bindings and per-family search
+The following source-dated first/pass-two per-family searches support the reused original bindings. Their earlier grades are superseded by the 192-cell round-1 comparison above.
+
+### First-pass independent binding searches
 
 Each row below independently searched all live top-level Plans markdown/JSON before writing. Generated shards, ledger source memory and historical audits were excluded as authority. The search captured every exact-name hit with its source line/text. Existing EventRecord, runtime snapshot/execution context, Case L-5 dedupe, SP-278 generic index and SP-286/CV-339 full-value receipt contracts are reused. No family borrows a sibling identity. New emitter/reader/version and hash recipe are labeled newly authored owner contracts. No new projector/checkpoint ID, physical family or retention policy was created.
 
