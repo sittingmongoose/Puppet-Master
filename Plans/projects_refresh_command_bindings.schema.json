@@ -1575,10 +1575,10 @@
                 "const": "handlers::assistant_chat::move_preview"
               },
               "request_schema_ref": {
-                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewRequest"
+                "const": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewRequestScopeV2"
               },
               "result_schema_ref": {
-                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMovePreviewResult"
+                "const": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMovePreviewResultScopeV2"
               },
               "row_id": {
                 "const": "catalog.chat_move_preview"
@@ -1603,10 +1603,10 @@
                 "const": "handlers::assistant_chat::move_apply"
               },
               "request_schema_ref": {
-                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveApplyRequest"
+                "const": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyRequestScopeV2"
               },
               "result_schema_ref": {
-                "const": "Plans/assistant_chat_contracts.schema.json#/$defs/ChatMoveResult"
+                "const": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ChatMoveApplyResultScopeV2"
               },
               "row_id": {
                 "const": "catalog.chat_move_apply"
