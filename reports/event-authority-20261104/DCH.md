@@ -1,3 +1,132 @@
+# DCH-FIX3 — final fix round, 2026-11-04
+
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `eb4bac6e61d0faeb38540c7d5c041e5889a6029c`. Fix commit: `26fa366c5638a23685141bdd30cca8a46d4d7356`. Exact original maximum-array regression extension: `318444509707c627e6a4ca703c06371249c7c6dd`. The following report commit changes only the report and self-grade.
+
+**Worker result: 17/17 prepared without admission; final independent review pending.** Every candidate moves from Astra-2's **8 PASS / 3 PARTIAL / 1 ABSENT** to the worker's **10 PASS / 1 PARTIAL retention / 1 ABSENT membership**. The two upgraded cells are consumers_checkpoints and positive_negative_oracles. No family is admitted or twelve-cell complete. Native execution remains NOT_RUN. `chat.thread_archived` stays manual only under DL-287. Stop stays separately unprepared: **0 PASS / 5 PARTIAL / 7 ABSENT**, unchanged.
+
+## Review round 3: findings and responses
+
+- **B1 — fixed (`26fa366c56`).** All seventeen `Plans/storage_value_registry.json` DCH checkpoint `value_schema` objects now exactly equal their selected standalone same-ID/version schemas, including every current/history identifier/digest pattern and retirement timestamp. Representative registry line: 123252; selected `Plans/dch_event_payloads/dch_chat_message_checkpoint.schema.json:95`. `scripts/pm_dch_events.py:347` requires exact equality; `:547` independently exercises both definitions with current and populated-history positives and LF negatives. The expanded direct probe rejects **357/357** LF mutations in **both** copies (21 per family), including the review's original 187. Each family's full-checker mutations separately restore unguarded registry patterns, inject payload LF and inject populated-history LF; all exit 1. Verify: `python3 scripts/pm_dch_events.py`, `python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json` and `registry-schema-probe.json`.
+- **B2 — fixed (`26fa366c56`).** `scripts/pm_dch_events.py:32` resolves complete schema-reference closure before fixture execution, independently of instance traversal. This covers payload/envelope/selected checkpoint/embedded registry schemas; local pointers, dynamic anchors, file references, optional/conditional/history branches, and unselected branches of every referenced file. Valid cyclic/local/file references remain accepted. Missing references produce structured failures, never a silently accepted empty-history branch. Each family has a populated-history positive and separate full-checker missing-ref negatives. The actual CLI with all seventeen history refs broken simultaneously exits **1**, `status=fail`, **34 closure failures**, with matching selected/embedded mutations so parity alone cannot catch it. ATS-305 at `Plans/Automated_Testing_System.md:7239` now requires **all ten** checks; `:7242` states registry parity and reference/history obligations. Verify with the regression command above and the retained `cli-schema-negative.py --root <checkout>` (expected exit 1).
+
+No finding is disputed. No new product decision is taken. Standing check 10 additionally gains explicit retained-original lookup coverage in `scripts/pm_dch_events.py:95`: original bytes/edition and current source/access checks remain mandatory, while later lifecycle/worktree state does not redefine historical evidence. Withdrawn or forged events are refused. The witness is a static adapter, not a newly invented authoritative record.
+
+## Every standing check, every prepared family
+
+**P = pass. F = fixed in `26fa366c56`** (check 10 adds the required oracle coverage). No open candidate cell. Each row below has its own actual fixtures, selected/registered checkpoint pair, current/populated-history positives and full-checker negative mutations; no sibling pass is inferred. Every row has the same before/after twelve-cell grades stated above. Check 8 means the actual terminal outcome for the two test-result families and rejection of a fabricated exit field for the other fifteen.
+
+| Family | 1 replay | 2 app key | 3 partition | 4 body | 5 LF | 6 retry | 7 source | 8 exit | 9 refs | 10 history | Baseline checks |
+|---|---|---|---|---|---|---|---|---|---|---|---:|
+| `bundle.selection_forward_blocked` | P | P | P | P | F | P | P | P | F | F | 493 |
+| `bundle.selection_sent_to_chat` | P | P | P | P | F | P | P | P | F | F | 527 |
+| `chat.message` | P | P | P | P | F | P | P | P | F | F | 509 |
+| `chat.thread_archived` | P | P | P | P | F | P | P | P | F | F | 537 |
+| `chat.thread_created` | P | P | P | P | F | P | P | P | F | F | 487 |
+| `chat.thread_deleted` | P | P | P | P | F | P | P | P | F | F | 487 |
+| `chat.thread_worktree_bound` | P | P | P | P | F | P | P | P | F | F | 485 |
+| `chat.thread_worktree_create_failed` | P | P | P | P | F | P | P | P | F | F | 481 |
+| `chat.thread_worktree_merge_failed` | P | P | P | P | F | P | P | P | F | F | 489 |
+| `chat.thread_worktree_merged` | P | P | P | P | F | P | P | P | F | F | 493 |
+| `chat.thread_worktree_pr_created` | P | P | P | P | F | P | P | P | F | F | 493 |
+| `chat.thread_worktree_pr_failed` | P | P | P | P | F | P | P | P | F | F | 485 |
+| `chat.thread_worktree_pre_merge_test_failed` | P | P | P | P | F | P | P | P | F | F | 561 |
+| `chat.thread_worktree_pre_merge_test_passed` | P | P | P | P | F | P | P | P | F | F | 535 |
+| `chat.thread_worktree_pre_merge_test_started` | P | P | P | P | F | P | P | P | F | F | 485 |
+| `chat.thread_worktree_renamed` | P | P | P | P | F | P | P | P | F | F | 483 |
+| `chat.thread_worktree_unbound` | P | P | P | P | F | P | P | P | F | F | 481 |
+
+The machine-readable matrix is `standing-checks.json`; every cell names its individual full-checker runs. All runs invoke the **complete unfiltered checker with all seventeen families**, using in-memory input substitutions or explicitly restored defective oracle behavior. The exact maximum-array bodies are 17,014/17,005 bytes for chat.message and 33,654/33,645 bytes for bundle.selection_sent_to_chat; all four remain valid through their authorized reference positives and are refused inline. No repository input is changed by the runner; an exception is an unexpected failure, not a successful rejection.
+
+| Check | Negative that catches it (applied separately to every family) | Full-checker result |
+|---:|---|---|
+| 1 | Replace current positives' replay policy with projector_replay_only; baseline also tests append and either/both retry records. | exit 1 |
+| 2 | Replace the application key with the incompatible Project dch: recipe; baseline validates exact CV-366 lowercase UTF-8 hex. | exit 1 |
+| 3 | Replace the encoded partition with raw Project text, updating body, envelope, event ID and key consistently. | exit 1 |
+| 4 | Restore acceptance of >16,384-byte inline probes; physical byte-boundary negatives then fail. Also restore schema-valid maximum attachment/provenance bodies inline for the two applicable families and remove reference support. | exit 1 |
+| 5 | Inject payload identifier LF, restore old registry patterns, and inject LF into a populated history token. Baseline independently probes every patterned field in both definitions. | exit 1 each |
+| 6 | Restore whole-record retry comparison; the three independent and combined metadata-only positives fail. Baseline also negates every included semantic field and global event-ID integrity. | exit 1 |
+| 7 | Cross outer/token/selection storage instances while retaining the source event; independently advance the source frontier without the candidate. | exit 1 each |
+| 8 | Failed-test actual exit 0 / passed-test nonzero source; all other families get a fabricated exit_code=0 field. | exit 1 |
+| 9 | Break exercised payload, unexercised history, missing-file, optional, conditional, selected-only, registered-only, external-document-hidden and dynamic-anchor references. Positive local/file/cyclic references prevent a reject-all implementation. | exit 1 for each negative; exit 0 for each positive |
+| 10 | Restore live-revision gating of history; separately claim withdrawn or forged historical evidence is a valid positive. | exit 1 each |
+
+## Earlier findings rerun at the fixed checker
+
+| Earlier finding | Exact restored defect / runner case | Result |
+|---|---|---|
+| Sol F1 | `2_old_application_key`, all 17 application editions (including the subsequently prepared archive). | 17/17 exit 1 |
+| Sol F2 | `3_raw_project_partition`, internally rekeyed, all 17 Project editions. | 17/17 exit 1 |
+| Sol F3 | `F3_archive_stopped_again`; `F3_automatic_archive` with matching automatic source. | both exit 1 |
+| First Astra B1 | `1_replay_only`, both writer editions of every family. | 17/17 exit 1 |
+| First Astra B2 | `4_inline_size_guard_removed`, `B2_payload_reference_support_removed` for all 17; `B2_legal_large_inline_body` and `B2_original_review_maximum_arrays_inline` for chat.message and bundle.selection_sent_to_chat. | all 38 exit 1 |
+| First Astra B3 | `6_whole_record_retry`, independent Storage metadata-only retries. | 17/17 exit 1 |
+| First Astra B4 | `7_checkpoint_storage_mismatch`; `7_current_frontier_mismatch`. | all 34 exit 1 |
+| First Astra B5 | `8_success_as_failure_or_fabricated_exit` for chat.thread_worktree_pre_merge_test_failed changes both actual outcome and payload to success exit 0. | exit 1; other families' outcome/fabricated-field cases also exit 1 |
+
+## Stop — unchanged question for Jared
+
+Which existing durable chat run or turn record, with which exact fields, must preserve whether Stop cancelled the model/tool/subagent work or timed out, and the time of that outcome? The current chat and Storage owners name no such record. If none exists, do you authorize defining a run/turn outcome record and its fields before preparing chat.response_stop_requested and retiring chat_run.cancel_requested, chat_run.cancelled and chat_run.cancel_timeout? The 3-second wait and saved-outcome queue barrier stay, including ACD-471's requirement that queued messages wait for a user action after Stop.
+
+The prior DL-406 condition audit remains below as source history. Neither the three chat_run outcome names, the 3-second wait, the saved-outcome queue barrier nor ACD-471's user-action barrier is altered. No Stop record/schema/fixture is prepared and none of its outcomes is retired. The archive manual-only ruling is unchanged.
+
+## Authority, scope, capacity and verification
+
+All own ACD/CV/SP producer, identity, scope, replay, retention, custody and transition contracts were re-read. `DCH-binding-search.json` adds a separate round-3 search for each exact family across **930 live non-hidden owner/schema/registry files**, excluding shards, ledgers and bootstrap, and pins its own ACD/CV/SP passages. Existing SP-278 original source, SP-337 body/access/readback, own historical-lookup and current-state projection rules are reused. **New product bindings: none.** New witness fields are fixture data only. The DL-045/DL-076/DL-287 premises remain current; the only failed existing-record premise is the already documented Stop condition.
+
+**IDs minted this round: none.** Retained lane IDs: ACD-610–626, CV-630–646, SP-610–626 and ATS-305 (52 existing IDs). Only ATS-305's owner prose/metadata changes in this round. No ACD/CV/SP owner text, event registry, Decision Log, admission, source retention/deletion choice, .gitignore, Spec Lock, auto_decisions, frozen validator or governance evidence is changed. No test file is edited; targeted discovery finds only the two DCH scripts. No pm-mail or subagents, landing lock or main push is used.
+
+Generated shard changes belong only to **automated_testing_system** and **storage_value_registry**. The PlanUnit index changes only ATS-owned rows (77 other ATS rows change only their owner-document hash); acceptance rows change only ATS-305. No other owner's generated body/indexed unit changes. Fifteen ignored currentness-edition files were copied and SHA-256 matched before index generation. No generated file was hand-edited.
+
+Initial capacity was **16 GB available RAM / 124 GB disk free**, above the **6 GB / 50 GB** stop thresholds. Before the final four-process test run: **15 GB / 109 GB**. Later measurement: **18 GB / 96 GB**. The detached sparse worktree is `~/pm-worktrees/DCH-fix3` from `~/src/PuppetMaster`, approximately **3.4 GB**; it is removed after the final report push. Ordinary checker processes, not delegated workers, run the mutation matrix.
+
+| Command/check | Exit | Result |
+|---|---:|---|
+| `python3 scripts/pm_dch_events.py` | 0 | top-level pass; **8,511 checks**, all 17 families / 34 editions; no failures |
+| `python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json` | 0 | **465 full-checker runs**: 414 expected negative exits 1 and 51 valid-reference positive exits 0; zero unexpected outcomes. The 463-case runner was followed by two additive exact maximum-array cases using the same unchanged full checker |
+| Retained `cli-schema-negative.py --root <checkout>` | 1 expected | Actual CLI, all 17 history refs broken together: status fail, 34 structured closure failures |
+| Registry/selected schema probe | 0 | 17 exact object matches; current and real-history positives valid; 357 LF probes rejected by both copies |
+| Schema/reference audit | 0 | All 34 standalone schemas meta-valid; complete closure succeeds; registry pairs audited separately |
+| Self-grade citation audit | 0 | 18 rows / 216 cells / **425 exact citations**; Stop unchanged |
+| `pm-shard-plans.py --generate` / `--check --config Plans/sharding_config.json` | 0 / 0 | top-level pass; 99 sources / 3,135 shards |
+| `pm-plan-index.py generate` / `validate` | 0 / 0 | parsed top-level status=pass; 7,473 PlanUnits |
+| `pm-storage-profile-check.py` | 1 | Byte-identical round-2 baseline: 41 pre-existing errors |
+| `pm-assistant-contract-check.py` | 1 | Same apply-2b results after excluding three changed source-hash values; errors and projects_refresh_static_failures empty |
+| Scope, schema parity, canonical_text, index-owner and protected-path audits | 0 | Only this lane's intended paths/metadata change |
+| `git diff --check` | 0 | No whitespace errors |
+
+The prior 6,012-check claim was incomplete; Astra-2 correctly identified its untested registry and history-reference gaps. The new suite supplies the missing evidence. Native process/receipt, full-source coverage, CRC, source locks, redb/CAS, pack durability, custody and withdrawal execution remain **NOT_RUN**. No aggregate governance pass is claimed. Final independent review, RT policy assignment and later family-by-family admission remain integration work; Stop returns to Jared.
+
+## Round 3 retained evidence
+
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round3/`. Report, self-grade and binding search are copied to the parent DCH draft directory. Paths below are relative to that evidence directory and pins are SHA-256.
+
+| Evidence | SHA-256 |
+|---|---|
+| `baseline-before.json` | `9ba6198821b7671c7e21e0e1b36bf776baecb56c64570993351a18557b4aaebe` |
+| `dch-static.json` | `a977f088bfdcc06876a315eb0d2425c3e7680e2a76e79cb55deb223ce526ce8e` |
+| `full-checker-regressions.json` | `f0ab64706590de84d5fa20446f9762663d4433dd0942d01f15163c709a2c94d2` |
+| `maximum-array-regressions.json` | `c13273b0c8ab72339f1b3fce4a36d45e99242faa0b7f9304ce584a82f7e347ee` |
+| `standing-checks.json` | `77d9d600bc008923093dfbc341d6b1e303927e29a84a2c6a7b5be313bf0d0086` |
+| `registry-schema-probe.json` | `90e469b7e3af8fbd3d7f9cf64675384966bb17db272ea7920f8f65eca15ee941` |
+| `cli-schema-negative.py` | `4b5e983fb84a6d285659fe2b4ab8272bb7fcdf03e55b035e5987e0417e8f2a1b` |
+| `cli-schema-negative.json` | `1e8de2dcef8829968351e732bdf30b84d10eae59b3dda8d9df7091494b236aa2` |
+| `schema-integrity.json` | `772ceae1ed9323939cb303a6bdfeb40e2a6ca52d7d3ebd96e4e89fecdd7bf0d3` |
+| `scope-integrity.json` | `f30a2be530493d7713c17103f6580cc5c5b5a9bcd8c1784eb0814dac426d449c` |
+| `grade-citation-check.json` | `299339d3cb2e2a25a1ffacb31f43508c16a5c0ab89c7b7e029e37ae52962c8ab` |
+| `code-pins.json` | `d2f0ffe3a950ea05a67a42e8abc8d982c6f2e175b23a6a2b69234b131a1a8ea6` |
+| `checks.json` | `11adebca982af5bc0402d4aa05898de5ea44660de23425f76bc039a34a8348fd` |
+| `currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `shard-generate.json` | `a860c43269caab92d401c4ed0955268da735a36aee6a0f1d26608e7f426ade81` |
+| `shard-check.json` | `6749d1671ce42bb36b5a4b623875e0db779efaf197186095421986d7d5490039` |
+| `index-generate.json` | `737f25ac16608ecdff2a285a3616cfbdb3071b5acec1f1dd2c9095a68cf082f8` |
+| `index-validate.json` | `2e580386a8bb5596cb27a75d8b5729845dc754e341a9db7ab2425590ff326986` |
+| `storage-profile.log` | `61b57de32ef976006a497d80df135d0ecd3a6841e3efb447572a6c3e3543c8e2` |
+| `assistant-contract.log` | `f9e42d4b5edc4391e9131309f794d975fa9f73427c45bda0d331f6a303fab62d` |
+
+---
+
+# Previous reports (historical; round 3 above supersedes preparation claims)
+
 # DCH-APPLY — card 2b A / DL-406, 2026-11-04
 
 Branch: `plans/ea-w2-chat-20261104`. Inspected head: `bdc257cc0852fdd094570f2d8390216a4487821c`. This is a report-only condition audit; all owner, schema, fixture, checker, registry and derived content stays at that head.
