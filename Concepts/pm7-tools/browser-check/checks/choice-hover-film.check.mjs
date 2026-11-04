@@ -22,4 +22,5 @@ export default async function(t) {
    await t.crop(name,{x:b.x-3,y:b.y-6,width:b.width+6,height:b.height+12},'Resting bottom edge and lifted visuals; compare control/fix films.');
   }
  }
+ await t.emulate({reducedMotion:'no-preference'});
 }
