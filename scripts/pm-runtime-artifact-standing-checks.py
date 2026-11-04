@@ -33,10 +33,11 @@ def run(name, standing, configure=None, source=None, selected=None):
     source = source or CHECKER.read_text()
     m = module(source)
     families = [r['event_type'] for r in m.load('Plans/runtime_artifact_event_drafts.json')['rows']]
+    # Expose the actual class before a trial mutates its errors() method.
+    # The optimized module's factory is only a cache, never the guard owner.
+    m.SchemaReferences = m._raw_SchemaReferences
     if configure:
         configure(m)
-    # Input injections must be preflighted AFTER configure changes the loader.
-    m.SchemaReferences = m._raw_SchemaReferences
     output = io.StringIO()
     started = time.monotonic()
     with contextlib.redirect_stdout(output):
