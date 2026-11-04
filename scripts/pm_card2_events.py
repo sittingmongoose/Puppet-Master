@@ -19,7 +19,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 from pm_event_index_binding import binding_digest, binding_bytes
 
 def timestamp_valid(value):
-    if type(value) is not str or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:Z|[+-][0-9]{2}:[0-9]{2})",value) is None:
+    if type(value) is not str or re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?(?:Z|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])",value) is None:
         return False
     try:
         return datetime.fromisoformat(value.replace('Z','+00:00')).tzinfo is not None

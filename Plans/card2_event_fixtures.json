@@ -7882,7 +7882,7 @@
               "evidence:support-A"
             ],
             "currentness": "current",
-            "created_at": "changed:created_at",
+            "created_at": "2026-11-03T00:00:00Z",
             "updated_at": "2026-11-03T00:00:00Z",
             "deleted": false,
             "run_id": null,
@@ -11822,37 +11822,39 @@
           "record_ref": "record:after",
           "revision": 1,
           "facts": {
-            "kind": "changed:kind",
-            "status": "changed:status",
+            "kind": "Note",
+            "status": "Active",
             "pinned": false,
             "verification_state": "Unverified",
-            "half_life_days": "changed:half_life_days",
-            "tags": "changed:tags",
+            "half_life_days": 30,
+            "tags": [],
             "claims": [
               {
                 "claim_id": "claim-A",
-                "text": "Changed synthetic claim.",
+                "text": "Synthetic compact claim.",
                 "created_at": "2026-11-03T00:00:00Z"
               }
             ],
-            "summary": "changed:summary",
-            "details": "changed:details",
+            "summary": "Synthetic compact claim.",
+            "details": null,
             "evidence_refs": [
               "evidence:support-A"
             ],
             "source": "AutoRunBoundary",
-            "last_access_at": "changed:last_access_at",
-            "access_count": 2,
-            "embedding_version": "changed:embedding_version",
-            "embed_text_hash": "changed:embed_text_hash",
-            "text_hash": "changed:text_hash",
-            "claim_support": "changed:claim_support",
-            "currentness": "changed:currentness",
-            "created_at": "changed:created_at",
-            "updated_at": "changed:updated_at",
-            "deleted": "changed:deleted",
-            "run_id": "changed:run_id",
-            "thread_id": "changed:thread_id"
+            "last_access_at": "2026-11-03T00:00:00Z",
+            "access_count": 1,
+            "embedding_version": "fixture-v1",
+            "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+            "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+            "claim_support": [
+              "evidence:support-A"
+            ],
+            "currentness": "current",
+            "created_at": "2026-11-03T00:00:00Z",
+            "updated_at": "2026-11-03T00:00:00Z",
+            "deleted": false,
+            "run_id": null,
+            "thread_id": null
           }
         }
       },
@@ -82391,12 +82393,74 @@
       "command_result_retained": true,
       "path": "no_event",
       "before_facts": {
+        "kind": "Note",
+        "status": "Active",
+        "pinned": false,
         "verification_state": "Unverified",
-        "pinned": false
+        "half_life_days": 30,
+        "tags": [],
+        "claims": [
+          {
+            "claim_id": "claim-A",
+            "text": "Synthetic compact claim.",
+            "created_at": "2026-11-03T00:00:00Z"
+          }
+        ],
+        "summary": "Synthetic compact claim.",
+        "details": null,
+        "evidence_refs": [
+          "evidence:support-A"
+        ],
+        "source": "UserManual",
+        "last_access_at": "2026-11-03T00:00:00Z",
+        "access_count": 1,
+        "embedding_version": "fixture-v1",
+        "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+        "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+        "claim_support": [
+          "evidence:support-A"
+        ],
+        "currentness": "current",
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "deleted": false,
+        "run_id": null,
+        "thread_id": null
       },
       "after_facts": {
+        "kind": "Note",
+        "status": "Active",
+        "pinned": false,
         "verification_state": "Unverified",
-        "pinned": false
+        "half_life_days": 30,
+        "tags": [],
+        "claims": [
+          {
+            "claim_id": "claim-A",
+            "text": "Synthetic compact claim.",
+            "created_at": "2026-11-03T00:00:00Z"
+          }
+        ],
+        "summary": "Synthetic compact claim.",
+        "details": null,
+        "evidence_refs": [
+          "evidence:support-A"
+        ],
+        "source": "UserManual",
+        "last_access_at": "2026-11-03T00:00:00Z",
+        "access_count": 1,
+        "embedding_version": "fixture-v1",
+        "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+        "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+        "claim_support": [
+          "evidence:support-A"
+        ],
+        "currentness": "current",
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "deleted": false,
+        "run_id": null,
+        "thread_id": null
       }
     },
     {
@@ -82407,12 +82471,74 @@
       "command_result_retained": true,
       "path": "no_event",
       "before_facts": {
+        "kind": "Note",
+        "status": "Active",
+        "pinned": false,
         "verification_state": "Unverified",
-        "pinned": false
+        "half_life_days": 30,
+        "tags": [],
+        "claims": [
+          {
+            "claim_id": "claim-A",
+            "text": "Synthetic compact claim.",
+            "created_at": "2026-11-03T00:00:00Z"
+          }
+        ],
+        "summary": "Synthetic compact claim.",
+        "details": null,
+        "evidence_refs": [
+          "evidence:support-A"
+        ],
+        "source": "UserManual",
+        "last_access_at": "2026-11-03T00:00:00Z",
+        "access_count": 1,
+        "embedding_version": "fixture-v1",
+        "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+        "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+        "claim_support": [
+          "evidence:support-A"
+        ],
+        "currentness": "current",
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "deleted": false,
+        "run_id": null,
+        "thread_id": null
       },
       "after_facts": {
+        "kind": "Note",
+        "status": "Active",
+        "pinned": false,
         "verification_state": "Unverified",
-        "pinned": false
+        "half_life_days": 30,
+        "tags": [],
+        "claims": [
+          {
+            "claim_id": "claim-A",
+            "text": "Synthetic compact claim.",
+            "created_at": "2026-11-03T00:00:00Z"
+          }
+        ],
+        "summary": "Synthetic compact claim.",
+        "details": null,
+        "evidence_refs": [
+          "evidence:support-A"
+        ],
+        "source": "UserManual",
+        "last_access_at": "2026-11-03T00:00:00Z",
+        "access_count": 1,
+        "embedding_version": "fixture-v1",
+        "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+        "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+        "claim_support": [
+          "evidence:support-A"
+        ],
+        "currentness": "current",
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "deleted": false,
+        "run_id": null,
+        "thread_id": null
       }
     },
     {
@@ -82423,12 +82549,74 @@
       "command_result_retained": true,
       "path": "no_event",
       "before_facts": {
+        "kind": "Note",
+        "status": "Active",
+        "pinned": false,
         "verification_state": "Unverified",
-        "pinned": false
+        "half_life_days": 30,
+        "tags": [],
+        "claims": [
+          {
+            "claim_id": "claim-A",
+            "text": "Synthetic compact claim.",
+            "created_at": "2026-11-03T00:00:00Z"
+          }
+        ],
+        "summary": "Synthetic compact claim.",
+        "details": null,
+        "evidence_refs": [
+          "evidence:support-A"
+        ],
+        "source": "UserManual",
+        "last_access_at": "2026-11-03T00:00:00Z",
+        "access_count": 1,
+        "embedding_version": "fixture-v1",
+        "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+        "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+        "claim_support": [
+          "evidence:support-A"
+        ],
+        "currentness": "current",
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "deleted": false,
+        "run_id": null,
+        "thread_id": null
       },
       "after_facts": {
+        "kind": "Note",
+        "status": "Active",
+        "pinned": false,
         "verification_state": "Unverified",
-        "pinned": false
+        "half_life_days": 30,
+        "tags": [],
+        "claims": [
+          {
+            "claim_id": "claim-A",
+            "text": "Synthetic compact claim.",
+            "created_at": "2026-11-03T00:00:00Z"
+          }
+        ],
+        "summary": "Synthetic compact claim.",
+        "details": null,
+        "evidence_refs": [
+          "evidence:support-A"
+        ],
+        "source": "UserManual",
+        "last_access_at": "2026-11-03T00:00:00Z",
+        "access_count": 1,
+        "embedding_version": "fixture-v1",
+        "embed_text_hash": "e9d95b6fa84671b68a4dbef42e3a344a43b690f68b7efd592923edc890a4786a",
+        "text_hash": "3551c953d185b57a021ba58ecdc13f6a63880955a6a426b398807f3498728deb",
+        "claim_support": [
+          "evidence:support-A"
+        ],
+        "currentness": "current",
+        "created_at": "2026-11-03T00:00:00Z",
+        "updated_at": "2026-11-03T00:00:00Z",
+        "deleted": false,
+        "run_id": null,
+        "thread_id": null
       }
     }
   ],
@@ -151498,11 +151686,8 @@
       "defect": "command_only_delta",
       "changes": [
         [
-          "/after_facts",
-          {
-            "verification_state": "Verified",
-            "pinned": false
-          }
+          "/after_facts/verification_state",
+          "Verified"
         ]
       ]
     },
@@ -151549,11 +151734,8 @@
       "defect": "command_only_delta",
       "changes": [
         [
-          "/after_facts",
-          {
-            "verification_state": "Verified",
-            "pinned": false
-          }
+          "/after_facts/verification_state",
+          "Verified"
         ]
       ]
     },
@@ -151600,11 +151782,8 @@
       "defect": "command_only_delta",
       "changes": [
         [
-          "/after_facts",
-          {
-            "verification_state": "Verified",
-            "pinned": false
-          }
+          "/after_facts/verification_state",
+          "Verified"
         ]
       ]
     },
@@ -151706,6 +151885,165 @@
           }
         ]
       ]
+    },
+    {
+      "id": "browser.session.created/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.created/project/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+              "event_type": "browser.session.created",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.created.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.created.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 0,
+                "revision_after": 1,
+                "before_record_ref": null,
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "created"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": null,
+                "session_class": "workspace_preview",
+                "previous_takeover_state": null,
+                "takeover_state": "none",
+                "previous_lifecycle_state": null,
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+              "event_type": "browser.session.created",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.created.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.created.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 0,
+                "revision_after": 1,
+                "before_record_ref": null,
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "created"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": null,
+                "session_class": "workspace_preview",
+                "previous_takeover_state": null,
+                "takeover_state": "none",
+                "previous_lifecycle_state": null,
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
     },
     {
       "id": "browser.session.created/project/retry/invalid-authenticated-original-schema_id",
@@ -152587,6 +152925,165 @@
       ]
     },
     {
+      "id": "browser.session.created/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.created/application/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+              "event_type": "browser.session.created",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.created.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.created.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 0,
+                "revision_after": 1,
+                "before_record_ref": null,
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "created"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": null,
+                "session_class": "workspace_preview",
+                "previous_takeover_state": null,
+                "takeover_state": "none",
+                "previous_lifecycle_state": null,
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e63726561746564",
+              "event_type": "browser.session.created",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e637265617465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.created.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.created.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 0,
+                "revision_after": 1,
+                "before_record_ref": null,
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "created"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": null,
+                "session_class": "workspace_preview",
+                "previous_takeover_state": null,
+                "takeover_state": "none",
+                "previous_lifecycle_state": null,
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
+    },
+    {
       "id": "browser.session.created/application/retry/invalid-authenticated-original-schema_id",
       "base": "browser.session.created/application/retry",
       "guard": "envelope_schema",
@@ -153367,6 +153864,165 @@
       ]
     },
     {
+      "id": "browser.session.state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.state_changed/project/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+              "event_type": "browser.session.state_changed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.state_changed.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.state_changed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "viewport"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+              "event_type": "browser.session.state_changed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.state_changed.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.state_changed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "viewport"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
+    },
+    {
       "id": "browser.session.state_changed/project/retry/invalid-authenticated-original-schema_id",
       "base": "browser.session.state_changed/project/retry",
       "guard": "envelope_schema",
@@ -154145,6 +154801,165 @@
           }
         ]
       ]
+    },
+    {
+      "id": "browser.session.state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.state_changed/application/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+              "event_type": "browser.session.state_changed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.state_changed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.state_changed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "viewport"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e73746174655f6368616e676564",
+              "event_type": "browser.session.state_changed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.state_changed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.state_changed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "viewport"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
     },
     {
       "id": "browser.session.state_changed/application/retry/invalid-authenticated-original-schema_id",
@@ -155047,6 +155862,165 @@
       ]
     },
     {
+      "id": "browser.session.closed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.closed/project/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+              "event_type": "browser.session.closed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e636c6f7365643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.closed.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.closed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "lifecycle_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "closed",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+              "event_type": "browser.session.closed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e636c6f7365643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.closed.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.closed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "lifecycle_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "closed",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
+    },
+    {
       "id": "browser.session.closed/project/retry/invalid-authenticated-original-schema_id",
       "base": "browser.session.closed/project/retry",
       "guard": "envelope_schema",
@@ -155945,6 +156919,165 @@
           }
         ]
       ]
+    },
+    {
+      "id": "browser.session.closed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.closed/application/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+              "event_type": "browser.session.closed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e636c6f7365643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.closed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.closed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "lifecycle_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "closed",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e636c6f736564",
+              "event_type": "browser.session.closed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e636c6f7365643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.closed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.closed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "lifecycle_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "closed",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
     },
     {
       "id": "browser.session.closed/application/retry/invalid-authenticated-original-schema_id",
@@ -156847,6 +157980,165 @@
       ]
     },
     {
+      "id": "browser.session.promoted/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.promoted/project/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+              "event_type": "browser.session.promoted",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e70726f6d6f7465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.promoted.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.promoted.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "session_class"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "normal_browsing",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+              "event_type": "browser.session.promoted",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e70726f6d6f7465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.promoted.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.promoted.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "session_class"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "normal_browsing",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
+    },
+    {
       "id": "browser.session.promoted/project/retry/invalid-authenticated-original-schema_id",
       "base": "browser.session.promoted/project/retry",
       "guard": "envelope_schema",
@@ -157745,6 +159037,165 @@
           }
         ]
       ]
+    },
+    {
+      "id": "browser.session.promoted/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.promoted/application/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+              "event_type": "browser.session.promoted",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e70726f6d6f7465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.promoted.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.promoted.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "session_class"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "normal_browsing",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e70726f6d6f746564",
+              "event_type": "browser.session.promoted",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e70726f6d6f7465643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.promoted.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.promoted.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "session_class"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "normal_browsing",
+                "previous_takeover_state": "none",
+                "takeover_state": "none",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
     },
     {
       "id": "browser.session.promoted/application/retry/invalid-authenticated-original-schema_id",
@@ -158647,6 +160098,165 @@
       ]
     },
     {
+      "id": "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.takeover_state_changed/project/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+              "event_type": "browser.session.takeover_state_changed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.takeover_state_changed.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.takeover_state_changed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "takeover_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "paused_for_user",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+              "event_type": "browser.session.takeover_state_changed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.takeover_state_changed.payload.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.takeover_state_changed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "takeover_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "paused_for_user",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
+    },
+    {
       "id": "browser.session.takeover_state_changed/project/retry/invalid-authenticated-original-schema_id",
       "base": "browser.session.takeover_state_changed/project/retry",
       "guard": "envelope_schema",
@@ -159547,6 +161157,165 @@
       ]
     },
     {
+      "id": "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "browser.session.takeover_state_changed/application/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+              "event_type": "browser.session.takeover_state_changed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.takeover_state_changed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.takeover_state_changed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "takeover_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "paused_for_user",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e676564",
+              "event_type": "browser.session.takeover_state_changed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:62726f777365722e73657373696f6e2e74616b656f7665725f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.browser.session.takeover_state_changed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.browser.session.takeover_state_changed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "takeover_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "browser_session_id": "session-A",
+                "workspace_id": "workspace-A",
+                "previous_session_class": "workspace_preview",
+                "session_class": "workspace_preview",
+                "previous_takeover_state": "none",
+                "takeover_state": "paused_for_user",
+                "previous_lifecycle_state": "open",
+                "lifecycle_state": "open",
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
+    },
+    {
       "id": "browser.session.takeover_state_changed/application/retry/invalid-authenticated-original-schema_id",
       "base": "browser.session.takeover_state_changed/application/retry",
       "guard": "envelope_schema",
@@ -160325,6 +162094,169 @@
           }
         ]
       ]
+    },
+    {
+      "id": "memory.gist_state_changed/project/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "memory.gist_state_changed/project/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+              "event_type": "memory.gist_state_changed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.memory.gist_state_changed.payload.v1",
+              "payload": {
+                "schema_id": "pm.memory.gist_state_changed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "verification_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "gist_id": "gist-A",
+                "source": "UserManual",
+                "operation": "verify",
+                "previous_verification_state": "Unverified",
+                "verification_state": "Verified",
+                "previous_pinned": false,
+                "pinned": false,
+                "evidence_refs": [
+                  "evidence:support-A"
+                ],
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+              "event_type": "memory.gist_state_changed",
+              "project_id": "project-A",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "card2@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.memory.gist_state_changed.payload.v1",
+              "payload": {
+                "schema_id": "pm.memory.gist_state_changed.payload.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "project",
+                "project_id": "project-A",
+                "thread_id": null,
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "verification_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "gist_id": "gist-A",
+                "source": "UserManual",
+                "operation": "verify",
+                "previous_verification_state": "Unverified",
+                "verification_state": "Verified",
+                "previous_pinned": false,
+                "pinned": false,
+                "evidence_refs": [
+                  "evidence:support-A"
+                ],
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
     },
     {
       "id": "memory.gist_state_changed/project/retry/invalid-authenticated-original-schema_id",
@@ -161333,6 +163265,169 @@
           }
         ]
       ]
+    },
+    {
+      "id": "memory.gist_state_changed/application/retry/invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "base": "memory.gist_state_changed/application/retry",
+      "guard": "storage_format_persisted_at_utc",
+      "defect": "invalid-authenticated-original-persisted_at_utc-invalid-offset",
+      "changes": [
+        [
+          "/storage",
+          {
+            "authentic": true,
+            "withdrawn": false,
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+              "event_type": "memory.gist_state_changed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.memory.gist_state_changed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.memory.gist_state_changed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "verification_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "gist_id": "gist-A",
+                "source": "UserManual",
+                "operation": "verify",
+                "previous_verification_state": "Unverified",
+                "verification_state": "Verified",
+                "previous_pinned": false,
+                "pinned": false,
+                "evidence_refs": [
+                  "evidence:support-A"
+                ],
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "receipt": {
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+              "sequence_id": 1,
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "issued": true
+            }
+          }
+        ],
+        [
+          "/retry",
+          {
+            "original_event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "application",
+              "event_id": "card2:31313131313131312d313131312d343131312d383131312d313131313131313131313131:7365727665722d41:6f7065726174696f6e2d41:6d656d6f72792e676973745f73746174655f6368616e676564",
+              "event_type": "memory.gist_state_changed",
+              "project_id": null,
+              "thread_id": "thread-A",
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "actor:user-A",
+              "requested_account_ref": null,
+              "effective_account_ref": null,
+              "occurred_at_utc": "2026-11-04T00:00:00Z",
+              "observed_at_utc": "2026-11-04T00:00:00Z",
+              "persisted_at_utc": "2026-11-04T00:00:00+02:60",
+              "sequence_id": 1,
+              "producer_sequence_id": null,
+              "correlation_id": "operation-A",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "application@1:7365727665722d41:6d656d6f72792e676973745f73746174655f6368616e6765643a6f7065726174696f6e2d41",
+              "payload_schema_id": "pm.memory.gist_state_changed.payload.application.v1",
+              "payload": {
+                "schema_id": "pm.memory.gist_state_changed.payload.application.v1",
+                "schema_version": "1.0.0",
+                "scope_kind": "application",
+                "project_id": null,
+                "thread_id": "thread-A",
+                "computer_id": "computer-A",
+                "server_id": "server-A",
+                "storage_instance_id": "11111111-1111-4111-8111-111111111111",
+                "owner_operation_id": "operation-A",
+                "revision_before": 1,
+                "revision_after": 2,
+                "before_record_ref": "record:before",
+                "after_record_ref": "record:after",
+                "changed_fields": [
+                  "verification_state"
+                ],
+                "ts": "2026-11-04T00:00:00Z",
+                "gist_id": "gist-A",
+                "source": "UserManual",
+                "operation": "verify",
+                "previous_verification_state": "Unverified",
+                "verification_state": "Verified",
+                "previous_pinned": false,
+                "pinned": false,
+                "evidence_refs": [
+                  "evidence:support-A"
+                ],
+                "owner_change_id": "change-A"
+              },
+              "payload_ref": null,
+              "redaction_profile": "secret_refs_only",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "dedupe_available": true,
+            "result": "original",
+            "effects": 0
+          }
+        ]
+      ],
+      "guards": [
+        "envelope_schema",
+        "storage_format_persisted_at_utc"
+      ],
+      "duplicate_reason": "Intentional defense in depth over the same malformed value or original-record observation."
     },
     {
       "id": "memory.gist_state_changed/application/retry/invalid-authenticated-original-schema_id",
