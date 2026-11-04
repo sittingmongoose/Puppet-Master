@@ -91,12 +91,12 @@
   "current_phase": "compiled_to_plans_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0019",
-    "last_event_id": "evt-0030",
+    "last_event_id": "evt-0031",
     "last_question_id": "q-0017",
     "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
     "next_atom_id": "atom-0095",
     "next_decision_id": "dec-0020",
-    "next_event_id": "evt-0031",
+    "next_event_id": "evt-0032",
     "next_question_id": "q-0018"
   },
   "deferred_questions": [],
@@ -341,7 +341,7 @@
   ],
   "governance_status": "sealed",
   "last_completed_action": "Completed explicit governance seal after compile, post-compile readiness-blocker repair, and migration metadata refresh; regenerated configured shards, refreshed evidence and Spec Lock, and reran the full governance validator suite.",
-  "last_event_id": "evt-0030",
+  "last_event_id": "evt-0031",
   "last_known_good_state": "Canonical Plans contain repaired compiled PlanUnits; Plans/.plan_index validates with 5298 PlanUnits / 18946 acceptance units; migration metadata, configured shards, Spec Lock, evidence bundles, plan graph, auto decisions, run-gates, and git diff hygiene all validate. Node readiness remains intentionally blocked_compiler_contract_incomplete and runtime_disabled.",
   "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
   "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
@@ -461,7 +461,7 @@
     "state/implementation_readiness_fifth_recheck_20260628.json"
   ],
   "source_readiness_recheck_ref_lineage_only": "state/implementation_readiness_fifth_recheck_20260628.json",
-  "updated_at_utc": "2026-06-28T14:12:53Z",
+  "updated_at_utc": "2026-11-04T18:35:42Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "git_diff_check": "pass",

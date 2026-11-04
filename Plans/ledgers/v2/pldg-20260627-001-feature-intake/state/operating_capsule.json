@@ -29,9 +29,9 @@
   "current_phase": "compiled_to_plans_governance_sealed",
   "current_status": "repair_validated",
   "cursor": {
-    "last_event_id": "evt-0030",
+    "last_event_id": "evt-0031",
     "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
-    "next_event_id": "evt-0031"
+    "next_event_id": "evt-0032"
   },
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
@@ -48,7 +48,7 @@
   ],
   "governance_status": "sealed",
   "last_completed_action": "Closed-world semantic audit repair certified with dependency, Runtime Artifacts receipt projection, ledger projection, closure registry, and diff hygiene repairs.",
-  "last_event_id": "evt-0030",
+  "last_event_id": "evt-0031",
   "last_known_good_state": "Canonical Plans and ledger projections are repaired and ready for final governance/index validation; node readiness remains intentionally blocked_compiler_contract_incomplete.",
   "latest_audit_status": "repair_validated",
   "latest_objective_gate_spot_check": {
@@ -56,8 +56,8 @@
     "closed_phase_boundary_blocker_count": 1,
     "closed_product_readiness_blocker_count": 9,
     "git_diff_check": "pass",
-    "governance_status": "pending_seal",
-    "implementation_handoff_status": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+    "governance_status": "sealed",
+    "implementation_handoff_status": "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
     "plan_index_validate": "pass__5298_plan_units__18946_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
     "plan_migration_validate": "pass__5298_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries__preseal_metadata_refreshed",
     "pm_bootstrap_ledger_validate": "pass__94_atoms__28_events__17_compile_queue_items__2461_plan_units_checked",
@@ -124,8 +124,8 @@
     "preserve_node_readiness_boundary"
   ],
   "schema_id": "pm.operating_capsule.v1",
-  "source_compile_readiness_status": "compiled_to_canonical_plans__readiness_repaired__migration_metadata_refreshed__governance_pending_seal",
-  "updated_at_utc": "2026-06-28T13:59:18Z",
+  "source_compile_readiness_status": "compiled_to_canonical_plans__readiness_repaired__migration_metadata_refreshed__governance_sealed__node_compiler_boundary_remaining",
+  "updated_at_utc": "2026-11-04T18:35:42Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "git_diff_check": "pass",
@@ -135,7 +135,7 @@
     "plan_index_generate": "pass",
     "plan_index_validate": "pass",
     "plan_migration_validate": "pass_preseal_metadata_refreshed",
-    "post_compile_readiness_audit": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+    "post_compile_readiness_audit": "repair_validated__node_compiler_phase_boundary_remaining",
     "validator_warnings": [],
     "post_repair_semantic_audit": "repair_validated"
   },
