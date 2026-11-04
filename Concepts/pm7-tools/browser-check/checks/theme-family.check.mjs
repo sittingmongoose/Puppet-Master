@@ -8,6 +8,7 @@ async function settings(f) {
   await f.waitForSelector(select(THEME), {state: 'attached'});
 }
 async function pick(f, id, label) {
+  await f.waitForFunction(() => !window.PM_LOOK_COVERED?.() && !window.PM_THEME_TRANSITION?.busy());
   await f.locator(select(id)).locator('..').locator('.pm51-dd-trigger').click();
   await f.getByRole('option', {name: label, exact: true}).click();
 }
@@ -21,6 +22,30 @@ export default async function (t) {
   await t.count('select[data-setting="general.visual.basic-color-scheme"]', 0, 'no older Basic scheme selector');
   await t.equal('scheme values', await f.locator(`${select(MODE)} option`).evaluateAll(es => es.map(e => e.value)), ['Light', 'Dark', 'Auto']);
   if (choices.join() !== FAMILIES.join()) return; // same assertion fails on the old ten-choice list
+  // Hold the scheme across actual family changes. Repeated picks dispatch no change,
+  // so the family-outer matrix below cannot cover this writer path under Auto.
+  for (const mode of ['Auto', 'Light', 'Dark']) {
+    await pick(f, MODE, mode === 'Auto' ? 'Match my computer' : mode);
+    const initial = await f.locator(select(THEME)).inputValue();
+    const start = FAMILIES.indexOf(initial);
+    const sequence = FAMILIES.slice(start + 1).concat(FAMILIES.slice(0, start + 1));
+    for (const family of sequence) {
+      await t.step(`hold ${mode}: change family to ${family}`, async () => {
+        const previous = await f.locator(select(THEME)).inputValue();
+        await t.check('pick a different family', previous !== family);
+        await pick(f, THEME, family);
+        await f.waitForFunction(family => PM_THEME.getFamily() === family.toLowerCase() && PMLogo.look().startsWith(family.toLowerCase() + '-'), family);
+        await t.equal('held scheme: selected family', await f.locator(select(THEME)).inputValue(), family);
+        await t.equal('held scheme: visible family', await f.locator(select(THEME)).locator('..').locator('.pm51-dd-value').innerText(), family);
+        await t.equal('held scheme: saved family and mode', await f.evaluate(() => [PM51.value('general.visual.theme').split(' ')[0], PM51.value('general.visual.theme-mode')]), [family, mode]);
+        await t.equal('held scheme: selected mode', await f.locator(select(MODE)).inputValue(), mode);
+        await t.equal('held scheme: visible mode', await f.locator(select(MODE)).locator('..').locator('.pm51-dd-value').innerText(), mode === 'Auto' ? 'Match my computer' : mode);
+        await t.equal('held scheme: runtime mode', await f.evaluate(() => PM_THEME.getMode()), mode.toLowerCase());
+        const scheme = await f.evaluate(mode => mode === 'Auto' ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : mode.toLowerCase(), mode);
+        await t.equal('held scheme: runtime look', await f.evaluate(() => PMLogo.look()), family.toLowerCase() + '-' + scheme);
+      });
+    }
+  }
   for (const family of FAMILIES) {
     for (const mode of ['Light', 'Dark', 'Auto']) {
       await t.step(`${family} ${mode}`, async () => {
