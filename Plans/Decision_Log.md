@@ -21137,6 +21137,16 @@ context_scope: product_canon_boundary
 implementation_surfaces:
   - Plans/Decision_Log.md
   - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521 (pm7-build), 2026-11-04: Jared's answer \"1. yes 2. yes\" to the stream P demo-cleanup questions; 2 is this entry"
+  - "/mnt/Cursor/PuppetMaster-Evidence/tests/projects-refresh-20261030/pass2/demo-cleanup/classify-C.md (the DL-173 history row)"
+preserved_exact_tokens:
+  - "DL-302"
+  - "concept-only demo controls"
 owner_hints:
   - Plans/usage-feature.md
 ```
