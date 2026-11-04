@@ -1,0 +1,272 @@
+{
+  "schema_id": "pm.event_authority.ds_p2.layout_suite_refreeze.v1",
+  "lane": "DS-P2",
+  "recorded_at_utc": "2026-11-04",
+  "family": "workspace.layout_changed",
+  "cell": "positive_negative_oracles",
+  "authority": [
+    "Plans/Decision_Log.md#DL-076",
+    "Plans/storage-plan.md SP-273 '2026-09-24 amendment (DL-076)'",
+    "reports/event-authority-20260911/step-08-depth42-assessment-20260924.json (layout oracle gap)"
+  ],
+  "suite_path_note": "~/PM-Experiments/event-authority-step08-workspace-layout-20260911 is a symlink to /mnt/Cursor/archive/PM-Experiments/vm-archive-20260925/event-authority-step08-workspace-layout-20260911 on the Cursor share, so the packet is reachable from every machine at that resolved path.",
+  "before": {
+    "manifest": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json",
+    "sha256": "60f1c8ad2de3a350ac781a1d24e1f7dad979e61bccda8a36c48f748841ff3df5",
+    "files": 51,
+    "stored_value_occurrences": 173,
+    "live_evidence_occurrences": 96,
+    "proposed_schema_occurrences": 6,
+    "relations": 48,
+    "relation_positive": 8,
+    "history": 22,
+    "cleanup": 4
+  },
+  "after": {
+    "manifest": "/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v5/manifest.json",
+    "sha256": "62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877",
+    "files": 53,
+    "stored_value_occurrences": 0,
+    "live_evidence_occurrences": 96,
+    "proposed_schema_occurrences": 0,
+    "relations": 48,
+    "relation_positive": 8,
+    "history": 22,
+    "cleanup": 4
+  },
+  "changed_members": [
+    {
+      "path": "proposed/Plans/home_layout_event_contracts.schema.json",
+      "v4_sha256": "a2558686b5d0203ea717a0e378696c0b553b0a7c45fdca2471aa4276a3d8ee1f",
+      "v5_sha256": "adeaf21d7ae743e06ad98722acc623a76fa84c0af13fc552a79d21c29c12ce9d",
+      "reason": "Canonical DL-076 schema (fe46283fc5): generic_read_token in reader_checkpoint, previous_generations and reader_checkpoint_core drops redb_snapshot_id."
+    },
+    {
+      "path": "proposed-storage-families.json",
+      "v4_sha256": "bba41e56a6ae53d34fb682381a150d691a527ba709bfbdb79f6aaf044b0c7776",
+      "v5_sha256": "db98ee4d2cc0b7696bb0650701e6be1e89fea7f143b2814aefbea576c9e8eebd",
+      "reason": "home_layout_event_reader_checkpoint value_schema follows the corrected reader_checkpoint; slot and receipt rows unchanged."
+    },
+    {
+      "path": "fixtures/v3-relations.json",
+      "v4_sha256": "84c9c92331f6296fcff4808b95b7ffcad327221d84c3698d3d4711a4b04f72ed",
+      "v5_sha256": "9426981a605a3ce8fcb0997b10f1b425768123dc45635cf90ae78361e40c6562",
+      "reason": "Regenerated: stored checkpoint tokens are durable; 48 cases, same ids and declared validity; three negative outcomes name the DL-076 join."
+    },
+    {
+      "path": "fixtures/v3-history.json",
+      "v4_sha256": "e4fbdbf993433ca1c4b148a6b0dbdead6860a7e20b24baf1b6adb0fa6d48480e",
+      "v5_sha256": "03d27304c380dd592f1c8ee2d938af5086d4ecfaf54b2b56aef7853819714ff6",
+      "reason": "Regenerated: stored checkpoint and retired-core tokens are durable; 22 cases, same ids and declared validity."
+    },
+    {
+      "path": "fixtures/v3-history-cleanup.json",
+      "v4_sha256": "d3d4e2f014598c24a7af919504fcd8c80fdcce0dc80e0d948eae4ea8daacd77b",
+      "v5_sha256": "850ddbf2c71f67a27356099eba69c1e815e08330910f1360f3c3f2f5e27a8abd",
+      "reason": "Regenerated: same 4 cases with durable stored tokens."
+    },
+    {
+      "path": "owner-capture-inputs.schema.json",
+      "v4_sha256": "fcab6fe3cd9db0f05c80cb9fe4d5ec9f94d8abc5c3b76c0ca2a00d6692997480",
+      "v5_sha256": "763a923883e203d3baaa5d13cc4d927a325c163ad6af859645e699abd9a3b136",
+      "reason": "Regenerated from the corrected proposed $defs."
+    },
+    {
+      "path": "slot-migration-evidence.schema.json",
+      "v4_sha256": "c0d648e31f864117d4052f4946ec9f2728e6e688c855f9fac7e58e5090dc70af",
+      "v5_sha256": "4c795464a5f0104449de4007db05c88c0b9c4505ad0cbdba195fb7b5f48118a6",
+      "reason": "Regenerated from the corrected proposed $defs."
+    },
+    {
+      "path": "owner-contract.md",
+      "v4_sha256": "e36667473ede9b872838cd38dd790fe4b4fb5fc13c627012878a0becff67805f",
+      "v5_sha256": "8a20261c46667bc058369b712131914c198e6c92247ef8a5676acbca81df2cb6",
+      "reason": "Quotes the canonical SP-273 DL-076 amendment under the paragraph it amends."
+    }
+  ],
+  "new_members": [
+    {
+      "path": "validate_v5.py",
+      "reason": "validate_v4.py with five marked DL-076 edits."
+    },
+    {
+      "path": "README-v5.md",
+      "reason": "Why and what changed."
+    },
+    {
+      "path": "v5-correction-map.json",
+      "reason": "This map."
+    },
+    {
+      "path": "dl076-source-pins.json",
+      "reason": "Pins the canonical DL-076 schema blob, the current canonical checkpoint defs and the DL-076 and SP-273 text."
+    },
+    {
+      "path": "freeze_v5.py",
+      "reason": "Writes manifest.json after the checks."
+    }
+  ],
+  "removed_from_copy": [
+    {
+      "path": "validate_v4.py",
+      "v4_sha256": "751d0ab0a0fb656d245a65c9cc7cb4b1756bd979195f665af05470a4e871b05a",
+      "reason": "Lineage in v4; replaced by validate_v5.py."
+    },
+    {
+      "path": "freeze_v4.py",
+      "v4_sha256": "b597cf68ffcd2527d2cd2ead5dd8eefe5645df28e44c58d8758690a5171aa38a",
+      "reason": "Lineage in v4."
+    },
+    {
+      "path": "finish_v4.py",
+      "v4_sha256": "d5b46c108f724e1d7bbbcfe57c90f236b0c189ced86fd7df56f1960263ae5841",
+      "reason": "Lineage in v4."
+    }
+  ],
+  "renamed_negative_outcomes": [
+    {
+      "id": "v2_regression:generic_snapshot",
+      "v4": "complete current generic token",
+      "v5": "read joins its own live redb snapshot (DL-076)"
+    },
+    {
+      "id": "v2_regression:generic_frontier",
+      "v4": "complete current generic token",
+      "v5": "complete current generic durable token (DL-076)"
+    },
+    {
+      "id": "v2_regression:same_generation_append_stale_token",
+      "v4": "complete current generic token",
+      "v5": "complete current generic durable token (DL-076)"
+    }
+  ],
+  "parity": {
+    "relation_ids_and_validity_equal": true,
+    "history_ids_and_validity_equal": true,
+    "cleanup_ids_and_validity_equal": true,
+    "v3_static_validation_equal": true,
+    "v4_slot_validation_equal": true,
+    "checked_by": "freeze_v5.py (asserts each, then writes manifest.json)"
+  },
+  "canonical_source_pins": {
+    "schema_id": "pm.home_workspace_layout_suite.v5.dl076_source_pins",
+    "recorded_at_utc": "2026-11-04",
+    "repository_commit": "600575221d82095c731f4e8c975099464ae0452d",
+    "proposed_schema": {
+      "path": "proposed/Plans/home_layout_event_contracts.schema.json",
+      "sha256": "adeaf21d7ae743e06ad98722acc623a76fa84c0af13fc552a79d21c29c12ce9d",
+      "canonical_source": {
+        "commit": "fe46283fc566f1349e2cb6564d5d627e49ec29cd",
+        "path": "Plans/home_layout_event_contracts.schema.json",
+        "git_blob": "ff4e1d085760ccd085675b88aa169c0a30dbfd2f",
+        "note": "Byte-identical to the canonical schema as DL-076 corrected it on 2026-09-24. The v4 proposed schema was byte-identical to the canonical schema landed at 808bd8d918 (2026-09-11), the parent content of that correction."
+      }
+    },
+    "current_canonical_checkpoint_defs": {
+      "path": "Plans/home_layout_event_contracts.schema.json",
+      "commit": "600575221d82095c731f4e8c975099464ae0452d",
+      "defs_canonical_json_sha256": {
+        "reader_checkpoint": "9d05d4726d9a582e3a419685ddbbdfc2c977ab7870a17015ca40260370d6e7df",
+        "reader_checkpoint_core": "099d5058382aedc8665b4e4922803ace004f40b453bcd10bfc84dac16da7f675"
+      },
+      "note": "reader_checkpoint and reader_checkpoint_core are equal, as decoded JSON, in v5 and in the canonical schema at this commit."
+    },
+    "canonical_text": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 8586,
+        "quote": "  (DurableGenericToken) without redb_snapshot_id. The four filtered checkpoints that",
+        "line_sha256": "b5c05a4dcc9934e228eaeffcb103f31c82fbcd440b8bb5cde7695a17beeadd7b"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 21942,
+        "quote": "**2026-09-24 amendment (DL-076).** `generic_read_token` in `reader_checkpoint`, in `previous_generations` and in `reader_checkpoint_core` stores the nine-field durable read token",
+        "line_sha256": "de18a33f14208ec37cec7dfcb9f97408b8ee1840acaa829bcac751252145b8ca"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "where": "v5 in place",
+      "command": "python3 -B check_slot_migration.py; python3 -B validate_v5.py; python3 -B check_slot_migration.py",
+      "rc": [
+        0,
+        0,
+        0
+      ],
+      "output": {
+        "validate_v5": {
+          "status": "PASS_STATIC_ONLY",
+          "relations": 48,
+          "positive": 8,
+          "schema_valid_negatives": 40,
+          "history_cases": 22,
+          "numeric_admission_cases": 6,
+          "cleanup_cases": 4,
+          "physical_families": 3,
+          "native": "NOT_RUN",
+          "depth_pass": false,
+          "limits": [
+            "Native original source, receipt, dispatcher/SIR authentication and redb commits are assumed adapter facts.",
+            "Current source may relocate while original receipt/capsule remains historical; original control snapshots need not be retained for later admitted read.",
+            "Identity capture bytes are NEW Home serialization of authenticated content-free values, not original owner wire bytes.",
+            "Global owner hashes and unbounded canonical Home revision schema unchanged."
+          ]
+        },
+        "check_slot_migration": {
+          "status": "PASS_STATIC_ONLY",
+          "migration_cases": 32,
+          "migration_positives": 3,
+          "cleanup_ordinary_cases": 12,
+          "native": "NOT_RUN",
+          "depth_pass": false
+        }
+      }
+    },
+    {
+      "where": "v5 in place",
+      "command": "python3 -B freeze_v5.py",
+      "rc": 0,
+      "output": {
+        "manifest_sha256": "62823e0a62173cdd99bc41cc676e1aec9f4b5689122a51bc289ffb951aa70877",
+        "files": 53,
+        "renamed_outcomes": 3
+      }
+    },
+    {
+      "where": "fresh scratch copy of v2, v3, v4 and frozen v5",
+      "command": "the same three scripts, then every manifest member re-hashed",
+      "rc": [
+        0,
+        0,
+        0
+      ],
+      "manifest_mismatches": 0
+    },
+    {
+      "where": "v4 in a scratch copy, before any change",
+      "command": "python3 -B validate_v4.py; python3 -B check_slot_migration.py",
+      "rc": [
+        0,
+        0
+      ],
+      "note": "v4 regenerated its own fixtures byte-identically and its manifest verified, so the v4 -> v5 difference is the DL-076 edit only."
+    }
+  ],
+  "plans_repin": {
+    "path": "Plans/home_layout_event_contract_fixtures.json",
+    "before_sha256": "e6e84c0ec3f36e7f5f24f9360ea93450c279edf72dfe8a6e97f81a494c2b5982",
+    "after_sha256": "c6da1130b35e7e959ea5bdade481045c639eca90402dd34d5d894c710ee04edc",
+    "field": "frozen_joined_subject",
+    "previous_pin_kept_as": "frozen_joined_subject.refrozen.previous"
+  },
+  "full_value_suite": {
+    "manifest": "/home/sittingmongoose/PM-Experiments/event-authority-step08-home-full-value-adoption-20260912/v3/manifest.json",
+    "sha256": "7ab4fb0046b9d1fb4824af9515b2361d8eed479ca73edf7dcc2e9dc725311eb2",
+    "disposition": "not re-frozen; SP-273's 2026-11-04 amendment records that its stored-token content is superseded",
+    "evidence": "Its own files (top-level scripts, fixtures/, results/) hold no stored reader checkpoint: common.py token(v, snapshot) builds a live token that home_model.py compares with the current source at each read, and check_token_correction.py and check_correction_boundaries.py mutate that live token as negative probes. redb_snapshot_id in stored-checkpoint form occurs only in proposed/home_layout_pending_receipt.schema.json (its copy of the pre-DL-076 reader_checkpoint definitions, which check_home.py, check_successor.py and freeze.py require to equal the old Home1 definition), in source/ snapshots and in lineage/ and runtime/home-regressions/ copies of the v2 to v4 workspace suite."
+  },
+  "native_execution": "NOT_RUN",
+  "depth_pass_claimed": false
+}

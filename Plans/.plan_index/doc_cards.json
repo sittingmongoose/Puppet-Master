@@ -18789,7 +18789,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_home_layout_v2_slot_receipt.py"
       ],
-      "line_count": 29687,
+      "line_count": 29692,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 342,
       "plan_unit_ids": [
@@ -19258,7 +19258,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "212707ce747d08ce5ea0574037aaf89f679e1cf05e2bcbfc91695777581efc32",
+      "sha256": "ae4bed5db84bc56b92de36b668a49722844bfd59eb4df8b968a49046e1058c75",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 338,
@@ -19572,6 +19572,7 @@
         "reports/event-authority-20260911/step-08-wire-validation.md",
         "reports/event-authority-20260911/step-08-wire-validation.md - future Case L seglog durability recovery fixture suite - python3 scripts/pm-plan-index.py validate",
         "reports/event-authority-20260911/step-09-coordination-binding-search-20260925.md",
+        "reports/event-authority-20261104/ds-p2-layout-suite-refreeze.md",
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plan-index.py",
         "scripts/pm-projects-refresh-contracts.py",
@@ -21641,7 +21642,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T15:30:01Z",
+  "generated_at_utc": "2026-11-05T15:30:29Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
