@@ -13,8 +13,7 @@
     "state",
     "index_read_token",
     "through_sequence_id",
-    "last_event_id",
-    "event_refs"
+    "last_event_id"
   ],
   "properties": {
     "schema_id": {
@@ -174,7 +173,8 @@
     },
     "through_sequence_id": {
       "type": "integer",
-      "minimum": 0
+      "minimum": 0,
+      "maximum": 18446744073709551615
     },
     "last_event_id": {
       "anyOf": [
@@ -186,15 +186,8 @@
           "type": "null"
         }
       ]
-    },
-    "event_refs": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      },
-      "uniqueItems": true
     }
   },
-  "$id": "pm.storage_value.alert_acknowledged_checkpoint.v1"
+  "$id": "pm.storage_value.alert_acknowledged_checkpoint.v1",
+  "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
 }

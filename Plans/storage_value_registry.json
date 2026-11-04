@@ -124226,14 +124226,13 @@
         "state",
         "index_read_token",
         "through_sequence_id",
-        "last_event_id",
-        "event_refs"
+        "last_event_id"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "last_event_id"
       ],
-      "replay_behavior": "SP-660: exact identity retry returns original result and first receipt; no repeated owner mutation; SP-278 atomic CAS checkpoint; no checkpoint advance while event absent.",
+      "replay_behavior": "SP-660: frontier-only whole-value CAS; authenticated SP-278 read-through pages (64 matches/16384 bytes, at most 256 scanned sequences); no stored event_refs or retention cap.",
       "migration": "SP-660: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
       "migration_disposition": {
         "mode": "rebuild_on_schema_change",
@@ -124282,8 +124281,7 @@
           "state",
           "index_read_token",
           "through_sequence_id",
-          "last_event_id",
-          "event_refs"
+          "last_event_id"
         ],
         "properties": {
           "schema_id": {
@@ -124443,7 +124441,8 @@
           },
           "through_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 18446744073709551615
           },
           "last_event_id": {
             "anyOf": [
@@ -124455,17 +124454,10 @@
                 "type": "null"
               }
             ]
-          },
-          "event_refs": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 1
-            },
-            "uniqueItems": true
           }
         },
-        "$id": "pm.storage_value.alert_acknowledged_checkpoint.v1"
+        "$id": "pm.storage_value.alert_acknowledged_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
       }
     },
     {
@@ -125032,14 +125024,13 @@
         "state",
         "index_read_token",
         "through_sequence_id",
-        "last_event_id",
-        "event_refs"
+        "last_event_id"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "last_event_id"
       ],
-      "replay_behavior": "SP-661: exact identity retry returns original result and first receipt; no repeated owner mutation; SP-278 atomic CAS checkpoint; no checkpoint advance while event absent.",
+      "replay_behavior": "SP-661: frontier-only whole-value CAS; authenticated SP-278 read-through pages (64 matches/16384 bytes, at most 256 scanned sequences); no stored event_refs or retention cap.",
       "migration": "SP-661: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
       "migration_disposition": {
         "mode": "rebuild_on_schema_change",
@@ -125088,8 +125079,7 @@
           "state",
           "index_read_token",
           "through_sequence_id",
-          "last_event_id",
-          "event_refs"
+          "last_event_id"
         ],
         "properties": {
           "schema_id": {
@@ -125249,7 +125239,8 @@
           },
           "through_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 18446744073709551615
           },
           "last_event_id": {
             "anyOf": [
@@ -125261,17 +125252,10 @@
                 "type": "null"
               }
             ]
-          },
-          "event_refs": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 1
-            },
-            "uniqueItems": true
           }
         },
-        "$id": "pm.storage_value.alert_dismissed_checkpoint.v1"
+        "$id": "pm.storage_value.alert_dismissed_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
       }
     },
     {
@@ -125837,14 +125821,13 @@
         "state",
         "index_read_token",
         "through_sequence_id",
-        "last_event_id",
-        "event_refs"
+        "last_event_id"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "last_event_id"
       ],
-      "replay_behavior": "SP-662: exact identity retry returns original result and first receipt; no repeated owner mutation; SP-278 atomic CAS checkpoint; no checkpoint advance while event absent.",
+      "replay_behavior": "SP-662: frontier-only whole-value CAS; authenticated SP-278 read-through pages (64 matches/16384 bytes, at most 256 scanned sequences); no stored event_refs or retention cap.",
       "migration": "SP-662: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
       "migration_disposition": {
         "mode": "rebuild_on_schema_change",
@@ -125893,8 +125876,7 @@
           "state",
           "index_read_token",
           "through_sequence_id",
-          "last_event_id",
-          "event_refs"
+          "last_event_id"
         ],
         "properties": {
           "schema_id": {
@@ -126054,7 +126036,8 @@
           },
           "through_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 18446744073709551615
           },
           "last_event_id": {
             "anyOf": [
@@ -126066,17 +126049,10 @@
                 "type": "null"
               }
             ]
-          },
-          "event_refs": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 1
-            },
-            "uniqueItems": true
           }
         },
-        "$id": "pm.storage_value.alert_rule_muted_checkpoint.v1"
+        "$id": "pm.storage_value.alert_rule_muted_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
       }
     },
     {
@@ -126647,14 +126623,13 @@
         "state",
         "index_read_token",
         "through_sequence_id",
-        "last_event_id",
-        "event_refs"
+        "last_event_id"
       ],
       "optional_fields": [],
       "nullable_fields": [
         "last_event_id"
       ],
-      "replay_behavior": "SP-663: exact identity retry returns original result and first receipt; no repeated owner mutation; SP-278 atomic CAS checkpoint; no checkpoint advance while event absent.",
+      "replay_behavior": "SP-663: frontier-only whole-value CAS; authenticated SP-278 read-through pages (64 matches/16384 bytes, at most 256 scanned sequences); no stored event_refs or retention cap.",
       "migration": "SP-663: StorageMigrationCoordinator exact schema installation before writer activation, unsupported version fences; no guessed store-version.",
       "migration_disposition": {
         "mode": "rebuild_on_schema_change",
@@ -126703,8 +126678,7 @@
           "state",
           "index_read_token",
           "through_sequence_id",
-          "last_event_id",
-          "event_refs"
+          "last_event_id"
         ],
         "properties": {
           "schema_id": {
@@ -126864,7 +126838,8 @@
           },
           "through_sequence_id": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "maximum": 18446744073709551615
           },
           "last_event_id": {
             "anyOf": [
@@ -126876,17 +126851,10 @@
                 "type": "null"
               }
             ]
-          },
-          "event_refs": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 1
-            },
-            "uniqueItems": true
           }
         },
-        "$id": "pm.storage_value.alert_snoozed_checkpoint.v1"
+        "$id": "pm.storage_value.alert_snoozed_checkpoint.v1",
+        "description": "Bounded frontier only; History reads authenticated SP-278 source pages. No accumulated event refs. Canonical MessagePack must be at most 16384 bytes."
       }
     },
     {
@@ -129359,6 +129327,76 @@
         "storage_group": "projects_and_sources",
         "encoding_target": "messagepack_canonical",
         "encoding_note": "unchanged",
+        "max_value_bytes": 16384
+      },
+      "alert_acknowledged_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-660: bounded original custody",
+        "max_value_bytes": 16384
+      },
+      "alert_acknowledged_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-660: bounded frontier only; paged SP-278 read-through, no event_refs",
+        "max_value_bytes": 16384
+      },
+      "shared_alert_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-660..663: F3-453 one shared owner state, frozen snapshots in individual operations",
+        "max_value_bytes": 16384
+      },
+      "shared_alert_rule_state": {
+        "redb_file": "canonical",
+        "storage_group": "settings_and_layout",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-660..663: F3-453 one shared owner state, frozen snapshots in individual operations",
+        "max_value_bytes": 16384
+      },
+      "alert_dismissed_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-661: bounded original custody",
+        "max_value_bytes": 16384
+      },
+      "alert_dismissed_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-661: bounded frontier only; paged SP-278 read-through, no event_refs",
+        "max_value_bytes": 16384
+      },
+      "alert_rule_muted_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-662: bounded original custody",
+        "max_value_bytes": 16384
+      },
+      "alert_rule_muted_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-662: bounded frontier only; paged SP-278 read-through, no event_refs",
+        "max_value_bytes": 16384
+      },
+      "alert_snoozed_operation": {
+        "redb_file": "canonical",
+        "storage_group": "coordination_and_storage",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-663: bounded original custody",
+        "max_value_bytes": 16384
+      },
+      "alert_snoozed_checkpoint": {
+        "redb_file": "derived",
+        "storage_group": "event_log",
+        "encoding_target": "messagepack_canonical",
+        "encoding_note": "SP-663: bounded frontier only; paged SP-278 read-through, no event_refs",
         "max_value_bytes": 16384
       }
     },

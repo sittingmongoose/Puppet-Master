@@ -567,7 +567,7 @@
       "value": {
         "schema_id": "pm.storage_value.alert_rule_muted_checkpoint.v1",
         "schema_version": "1.0.0",
-        "storage_instance_id": "store",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
         "project_id": "fixture",
         "consumer_id": "projector.alert_rule_muted.history",
         "consumer_version": "1.0.0",
@@ -599,8 +599,7 @@
           }
         },
         "through_sequence_id": 0,
-        "last_event_id": null,
-        "event_refs": []
+        "last_event_id": null
       },
       "valid": true
     },
@@ -616,7 +615,7 @@
       "value": {
         "schema_id": "pm.storage_value.alert_rule_muted_checkpoint.v1",
         "schema_version": "1.0.0",
-        "storage_instance_id": "store",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
         "project_id": "fixture",
         "consumer_id": "projector.alert_rule_muted.history",
         "consumer_version": "1.0.0",
@@ -626,8 +625,7 @@
           "redb_snapshot_id": "forbidden"
         },
         "through_sequence_id": 0,
-        "last_event_id": null,
-        "event_refs": []
+        "last_event_id": null
       },
       "valid": false
     },
@@ -636,7 +634,7 @@
       "value": {
         "schema_id": "pm.storage_value.alert_rule_muted_checkpoint.v1",
         "schema_version": "1.0.0",
-        "storage_instance_id": "store",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
         "project_id": "fixture",
         "consumer_id": "projector.alert_rule_muted.history",
         "consumer_version": "1.0.0",
@@ -669,8 +667,48 @@
           "redb_snapshot_id": "forbidden"
         },
         "through_sequence_id": 0,
-        "last_event_id": null,
-        "event_refs": []
+        "last_event_id": null
+      },
+      "valid": false
+    },
+    {
+      "name": "foreign_storage_token",
+      "value": {
+        "schema_id": "pm.storage_value.alert_rule_muted_checkpoint.v1",
+        "schema_version": "1.0.0",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000002",
+        "project_id": "fixture",
+        "consumer_id": "projector.alert_rule_muted.history",
+        "consumer_version": "1.0.0",
+        "publication_id": "fixture",
+        "state": "current",
+        "index_read_token": {
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_key": "fixture",
+          "checkpoint_ref": "fixture",
+          "generation_id": "eig_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "generation_anchor_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "frontier_revision": 0,
+          "frontier_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "index_dataset_name": "fixture",
+          "source_selection": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "current_ref": "storage/seglog/CURRENT",
+            "current_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "selected_segment_generation": 0,
+            "manifest_ref": "storage/seglog/manifest.v1.msgpack",
+            "manifest_bytes_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "manifest_generation": 0,
+            "recovery_epoch": 0,
+            "manifest_survivor_prefix_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retained_inventory_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "durable_watermarks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "excluded_ranges_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "retired_inputs_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "through_sequence_id": 0,
+        "last_event_id": null
       },
       "valid": false
     }
@@ -750,6 +788,35 @@
       "given": "mixed backup generations or missing original operation/shared owner/first receipt",
       "when": "restore/retry",
       "then": "unavailable and mutation fenced; no reconstructed original"
+    }
+  ],
+  "checkpoint_size_cases": [
+    {
+      "name": "exact_16KiB_frontier",
+      "encoded_bytes": 16384,
+      "valid": true
+    },
+    {
+      "name": "one_byte_over_frontier",
+      "encoded_bytes": 16385,
+      "valid": false
+    }
+  ],
+  "read_through_cases": [
+    {
+      "name": "1000_matches_need_all_pages",
+      "matches": 1000,
+      "page_limit": 64,
+      "scan_limit": 256,
+      "expected_matches": 1000
+    },
+    {
+      "name": "empty_scan_still_advances",
+      "matches": 0,
+      "nonmatches": 1000,
+      "page_limit": 64,
+      "scan_limit": 256,
+      "expected_matches": 0
     }
   ]
 }

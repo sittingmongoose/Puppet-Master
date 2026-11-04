@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L15257-L15297
 
-Source SHA256: `7c22390842745638f5fc5b12cfa099b25239ac08bcbab99448fcbe92386afc69`
+Source SHA256: `60b95568f7b171b409a2126a92fc434465f26c40265797b2d5f68c43b9e07691`
 
 ---
 

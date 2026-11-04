@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L29946
+Source lines: L28057-L30066
 
-Source SHA256: `7c22390842745638f5fc5b12cfa099b25239ac08bcbab99448fcbe92386afc69`
+Source SHA256: `60b95568f7b171b409a2126a92fc434465f26c40265797b2d5f68c43b9e07691`
 
 ---
 
@@ -1483,28 +1483,30 @@ canonical_text: "Newly authored owner contract for alert.acknowledged 1.0.0 unde
   \ schema Plans/alert_event_contracts/alert_acknowledged_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
   \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
   \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
-  \ sequence through the captured frontier, filter exact Project and alert.acknowledged, append only authenticated\
-  \ event refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE\
-  \ redb transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
-  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
-  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
-  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
-  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
-  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
-  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
-  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
-  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
-  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
-  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
-  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
-  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
-  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
-  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
-  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
-  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.acknowledged\
-  \ in a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
-  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
-  \ Original shared state for this family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
+  \ sequence through the captured frontier, filter exact Project and alert.acknowledged, validate each matching\
+  \ EventRecord/payload and atomically CAS the whole prior checkpoint to the verified frontier in ONE derived-redb\
+  \ transaction. The checkpoint stores only this constant-count token/frontier/last-match value, never an event_refs\
+  \ array, page list or retained-history manifest. through_sequence_id is the complete scanned frontier, not merely\
+  \ the last match; last_event_id is the final matching event id or null for no matches. Never skip corrupt/unknown\
+  \ source or advance past an inadmissible event. Reader requires current publication/state, exact scope/instance\
+  \ and adequate verified frontier or returns unavailable, never empty success. No checkpoint may advance while\
+  \ this family is absent. Lost ack/replay never dispatches an owner command. Rebuild stages a separate publication\
+  \ from retained CURRENT-selected source, verifies complete coverage, then atomically withdraws old and publishes\
+  \ new; pruning, source-generation or schema change requires rebuild rather than zeroing a live cursor. Legal source\
+  \ deletion rebuilds only retained refs, never resurrects deleted content.\n\nCompatibility/withdrawal: only payload\
+  \ 1.0.0 and the explicit value schema versions are readable; unknown versions fence without coercion. No historical\
+  \ write is claimed. StorageMigrationCoordinator must install these exact value schemas before activation; no invented\
+  \ store version. Withdrawal first closes writer admission and fences subject mutations, settles every original\
+  \ in-flight obligation under its original evidence, then marks this checkpoint withdrawn under whole-value CAS.\
+  \ Readers refuse withdrawn/staged publications; a future version requires its own contract/admission and verified\
+  \ rebuild, not an alias or in-place event rewrite. Source custody remains subject to holds and its own lifetime.\n\
+  \nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\
+  \ L-3 (SP-026 retention section) offers audit-authority/receipt RP-AUTHORITY-INDEFINITE versus ordinary telemetry\
+  \ ordinary telemetry class (policy identifier not assigned here) for event history; RP-PROJECTION-3GEN is a checkpoint\
+  \ candidate only. No existing text names alert.acknowledged in a decided class. RT must decide/confirm exact assignment\
+  \ and dependent body deletion; do not choose by prefix or expire anything pending that decision. Native execution\
+  \ NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n Original shared state for this\
+  \ family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
   \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
   \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
   \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
@@ -1516,7 +1518,35 @@ canonical_text: "Newly authored owner contract for alert.acknowledged 1.0.0 unde
   \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
   \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
   \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
-  \ source record."
+  \ source record.\n\nBounded History read-through (newly authored technical binding): reader.alert_acknowledged.history@1.0.0\
+  \ reads the exact published checkpoint and its nine-field durable token through SP-278 reader.storage.event_record_index.\
+  \ Request carries publication_id, the entire durable token and after_sequence_id (0 initially; unsigned 64-bit).\
+  \ These are untrusted resumable read inputs, never new persisted state. Authenticate the original token and join\
+  \ its Storage instance to both checkpoint and source_selection; rejoin the actual live redb snapshot on every\
+  \ call. Source generation/selection must still validate under SP-278; do not silently substitute a fresh token\
+  \ into an old continuation. Changed source needs SP-278 verified translation or a new verified publication and\
+  \ a restarted traversal, otherwise unavailable. Scan in canonical sequence order only through the checkpoint's\
+  \ through_sequence_id, at most 256 source sequences per response; return at most 64 authenticated exact-family/Project\
+  \ event refs and at most 16384 canonical MessagePack response bytes. Stop before the first ref that would exceed\
+  \ either response bound. An individual ref or token that cannot fit is invalid source/metadata, never silently\
+  \ dropped. A continuation repeats publication_id and the complete token and advances after_sequence_id to the\
+  \ last actually examined source sequence; it must not advance past an unreturned match. Empty filtered pages carry\
+  \ continuation until complete=true at the frontier. Complete=true with zero matches is empty History only after\
+  \ full verified coverage, never because a scan budget expired. Reader holds/revalidates publication, original\
+  \ source access, deletion and withdrawal at disclosure; invalid/withdrawn publication or a cursor beyond frontier\
+  \ returns unavailable. No History read dispatches an action or changes the checkpoint. Rebuild/withdrawal fences\
+  \ apply equally to every continuation. This bounds a read, not retention: all retained History remains reachable\
+  \ through repeated calls.\n\nSP-340 physical binding: alert_acknowledged_operation is canonical MessagePack in\
+  \ the canonical redb file, coordination_and_storage group (advisory canonical budget); alert_acknowledged_checkpoint\
+  \ is canonical MessagePack in the derived redb file, event_log group (hard derived budget with eviction/rebuild).\
+  \ Each value is at most 16384 encoded bytes, measured before CAS. F3-453 shared_alert_state/shared_alert_rule_state\
+  \ use canonical MessagePack in canonical redb, settings_and_layout group, same maximum. Their original snapshots\
+  \ remain in this family's canonical operation. Budget pressure never refuses canonical history or prunes it; derived\
+  \ eviction makes History unavailable until verified rebuild. Metadata/ref values exceeding the physical maximum\
+  \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
+  \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
+  \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
+  \ input it requires a governed rebuild, never truncation or in-place relabeling."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -1601,28 +1631,30 @@ canonical_text: "Newly authored owner contract for alert.dismissed 1.0.0 under D
   \ schema Plans/alert_event_contracts/alert_dismissed_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
   \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
   \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
-  \ sequence through the captured frontier, filter exact Project and alert.dismissed, append only authenticated\
-  \ event refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE\
-  \ redb transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
-  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
-  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
-  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
-  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
-  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
-  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
-  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
-  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
-  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
-  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
-  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
-  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
-  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
-  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
-  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
-  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.dismissed\
-  \ in a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
-  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
-  \ Original shared state for this family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
+  \ sequence through the captured frontier, filter exact Project and alert.dismissed, validate each matching EventRecord/payload\
+  \ and atomically CAS the whole prior checkpoint to the verified frontier in ONE derived-redb transaction. The\
+  \ checkpoint stores only this constant-count token/frontier/last-match value, never an event_refs array, page\
+  \ list or retained-history manifest. through_sequence_id is the complete scanned frontier, not merely the last\
+  \ match; last_event_id is the final matching event id or null for no matches. Never skip corrupt/unknown source\
+  \ or advance past an inadmissible event. Reader requires current publication/state, exact scope/instance and adequate\
+  \ verified frontier or returns unavailable, never empty success. No checkpoint may advance while this family is\
+  \ absent. Lost ack/replay never dispatches an owner command. Rebuild stages a separate publication from retained\
+  \ CURRENT-selected source, verifies complete coverage, then atomically withdraws old and publishes new; pruning,\
+  \ source-generation or schema change requires rebuild rather than zeroing a live cursor. Legal source deletion\
+  \ rebuilds only retained refs, never resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0\
+  \ and the explicit value schema versions are readable; unknown versions fence without coercion. No historical\
+  \ write is claimed. StorageMigrationCoordinator must install these exact value schemas before activation; no invented\
+  \ store version. Withdrawal first closes writer admission and fences subject mutations, settles every original\
+  \ in-flight obligation under its original evidence, then marks this checkpoint withdrawn under whole-value CAS.\
+  \ Readers refuse withdrawn/staged publications; a future version requires its own contract/admission and verified\
+  \ rebuild, not an alias or in-place event rewrite. Source custody remains subject to holds and its own lifetime.\n\
+  \nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\
+  \ L-3 (SP-026 retention section) offers audit-authority/receipt RP-AUTHORITY-INDEFINITE versus ordinary telemetry\
+  \ ordinary telemetry class (policy identifier not assigned here) for event history; RP-PROJECTION-3GEN is a checkpoint\
+  \ candidate only. No existing text names alert.dismissed in a decided class. RT must decide/confirm exact assignment\
+  \ and dependent body deletion; do not choose by prefix or expire anything pending that decision. Native execution\
+  \ NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n Original shared state for this\
+  \ family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
   \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
   \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
   \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
@@ -1634,7 +1666,35 @@ canonical_text: "Newly authored owner contract for alert.dismissed 1.0.0 under D
   \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
   \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
   \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
-  \ source record."
+  \ source record.\n\nBounded History read-through (newly authored technical binding): reader.alert_dismissed.history@1.0.0\
+  \ reads the exact published checkpoint and its nine-field durable token through SP-278 reader.storage.event_record_index.\
+  \ Request carries publication_id, the entire durable token and after_sequence_id (0 initially; unsigned 64-bit).\
+  \ These are untrusted resumable read inputs, never new persisted state. Authenticate the original token and join\
+  \ its Storage instance to both checkpoint and source_selection; rejoin the actual live redb snapshot on every\
+  \ call. Source generation/selection must still validate under SP-278; do not silently substitute a fresh token\
+  \ into an old continuation. Changed source needs SP-278 verified translation or a new verified publication and\
+  \ a restarted traversal, otherwise unavailable. Scan in canonical sequence order only through the checkpoint's\
+  \ through_sequence_id, at most 256 source sequences per response; return at most 64 authenticated exact-family/Project\
+  \ event refs and at most 16384 canonical MessagePack response bytes. Stop before the first ref that would exceed\
+  \ either response bound. An individual ref or token that cannot fit is invalid source/metadata, never silently\
+  \ dropped. A continuation repeats publication_id and the complete token and advances after_sequence_id to the\
+  \ last actually examined source sequence; it must not advance past an unreturned match. Empty filtered pages carry\
+  \ continuation until complete=true at the frontier. Complete=true with zero matches is empty History only after\
+  \ full verified coverage, never because a scan budget expired. Reader holds/revalidates publication, original\
+  \ source access, deletion and withdrawal at disclosure; invalid/withdrawn publication or a cursor beyond frontier\
+  \ returns unavailable. No History read dispatches an action or changes the checkpoint. Rebuild/withdrawal fences\
+  \ apply equally to every continuation. This bounds a read, not retention: all retained History remains reachable\
+  \ through repeated calls.\n\nSP-340 physical binding: alert_dismissed_operation is canonical MessagePack in the\
+  \ canonical redb file, coordination_and_storage group (advisory canonical budget); alert_dismissed_checkpoint\
+  \ is canonical MessagePack in the derived redb file, event_log group (hard derived budget with eviction/rebuild).\
+  \ Each value is at most 16384 encoded bytes, measured before CAS. F3-453 shared_alert_state/shared_alert_rule_state\
+  \ use canonical MessagePack in canonical redb, settings_and_layout group, same maximum. Their original snapshots\
+  \ remain in this family's canonical operation. Budget pressure never refuses canonical history or prunes it; derived\
+  \ eviction makes History unavailable until verified rebuild. Metadata/ref values exceeding the physical maximum\
+  \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
+  \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
+  \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
+  \ input it requires a governed rebuild, never truncation or in-place relabeling."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -1718,40 +1778,70 @@ canonical_text: "Newly authored owner contract for alert.rule_muted 1.0.0 under 
   \ schema Plans/alert_event_contracts/alert_rule_muted_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
   \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
   \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
-  \ sequence through the captured frontier, filter exact Project and alert.rule_muted, append only authenticated\
-  \ event refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE\
-  \ redb transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
-  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
-  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
-  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
-  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
-  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
-  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
-  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
-  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
-  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
-  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
-  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
-  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
-  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
-  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
-  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
-  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.rule_muted\
-  \ in a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
-  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
-  \ Original shared state for this family is shared_alert_rule_state.v1:{project_id}:{alert_rule_id}, closed schema\
-  \ Plans/alert_event_contracts/shared_alert_rule_state.schema.json. This is a newly authored technical representation\
-  \ of F3-453 existing behavior, reused by each exact handler, not another UI store. prior_owner_state and candidate_owner_state\
-  \ are complete frozen original bytes in this family operation; exact key/Project/subject/source identity must\
-  \ agree with payload and both snapshots. Candidate revision is prior + 1; source_record_ref is unchanged. CAS\
-  \ compares the full prior value, not revision alone, and atomically writes candidate plus committed operation\
-  \ before append. No prepared operation may authorize mutation without exact family admission. Acknowledge clears\
-  \ unread and preserves presentation/source truth; dismiss clears inbox_visible only and preserves source truth;\
-  \ snooze sets original snooze_until and hides until the deadline without deleting; mute changes only exact rule\
-  \ state/deadline. Fields unrelated to the exact action remain byte-equal. Expiry/read projection is the existing\
-  \ owner behavior and creates no fabricated action event. Original immutable owner_commit_ref resolves the operation\
-  \ candidate snapshot even after later revisions. Shared state backup is canonical and mandatory; its retention\
-  \ remains PENDING_RETENTION_DECISION independently of the source record."
+  \ sequence through the captured frontier, filter exact Project and alert.rule_muted, validate each matching EventRecord/payload\
+  \ and atomically CAS the whole prior checkpoint to the verified frontier in ONE derived-redb transaction. The\
+  \ checkpoint stores only this constant-count token/frontier/last-match value, never an event_refs array, page\
+  \ list or retained-history manifest. through_sequence_id is the complete scanned frontier, not merely the last\
+  \ match; last_event_id is the final matching event id or null for no matches. Never skip corrupt/unknown source\
+  \ or advance past an inadmissible event. Reader requires current publication/state, exact scope/instance and adequate\
+  \ verified frontier or returns unavailable, never empty success. No checkpoint may advance while this family is\
+  \ absent. Lost ack/replay never dispatches an owner command. Rebuild stages a separate publication from retained\
+  \ CURRENT-selected source, verifies complete coverage, then atomically withdraws old and publishes new; pruning,\
+  \ source-generation or schema change requires rebuild rather than zeroing a live cursor. Legal source deletion\
+  \ rebuilds only retained refs, never resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0\
+  \ and the explicit value schema versions are readable; unknown versions fence without coercion. No historical\
+  \ write is claimed. StorageMigrationCoordinator must install these exact value schemas before activation; no invented\
+  \ store version. Withdrawal first closes writer admission and fences subject mutations, settles every original\
+  \ in-flight obligation under its original evidence, then marks this checkpoint withdrawn under whole-value CAS.\
+  \ Readers refuse withdrawn/staged publications; a future version requires its own contract/admission and verified\
+  \ rebuild, not an alias or in-place event rewrite. Source custody remains subject to holds and its own lifetime.\n\
+  \nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\
+  \ L-3 (SP-026 retention section) offers audit-authority/receipt RP-AUTHORITY-INDEFINITE versus ordinary telemetry\
+  \ ordinary telemetry class (policy identifier not assigned here) for event history; RP-PROJECTION-3GEN is a checkpoint\
+  \ candidate only. No existing text names alert.rule_muted in a decided class. RT must decide/confirm exact assignment\
+  \ and dependent body deletion; do not choose by prefix or expire anything pending that decision. Native execution\
+  \ NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n Original shared state for this\
+  \ family is shared_alert_rule_state.v1:{project_id}:{alert_rule_id}, closed schema Plans/alert_event_contracts/shared_alert_rule_state.schema.json.\
+  \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
+  \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
+  \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
+  \ revision is prior + 1; source_record_ref is unchanged. CAS compares the full prior value, not revision alone,\
+  \ and atomically writes candidate plus committed operation before append. No prepared operation may authorize\
+  \ mutation without exact family admission. Acknowledge clears unread and preserves presentation/source truth;\
+  \ dismiss clears inbox_visible only and preserves source truth; snooze sets original snooze_until and hides until\
+  \ the deadline without deleting; mute changes only exact rule state/deadline. Fields unrelated to the exact action\
+  \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
+  \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
+  \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
+  \ source record.\n\nBounded History read-through (newly authored technical binding): reader.alert_rule_muted.history@1.0.0\
+  \ reads the exact published checkpoint and its nine-field durable token through SP-278 reader.storage.event_record_index.\
+  \ Request carries publication_id, the entire durable token and after_sequence_id (0 initially; unsigned 64-bit).\
+  \ These are untrusted resumable read inputs, never new persisted state. Authenticate the original token and join\
+  \ its Storage instance to both checkpoint and source_selection; rejoin the actual live redb snapshot on every\
+  \ call. Source generation/selection must still validate under SP-278; do not silently substitute a fresh token\
+  \ into an old continuation. Changed source needs SP-278 verified translation or a new verified publication and\
+  \ a restarted traversal, otherwise unavailable. Scan in canonical sequence order only through the checkpoint's\
+  \ through_sequence_id, at most 256 source sequences per response; return at most 64 authenticated exact-family/Project\
+  \ event refs and at most 16384 canonical MessagePack response bytes. Stop before the first ref that would exceed\
+  \ either response bound. An individual ref or token that cannot fit is invalid source/metadata, never silently\
+  \ dropped. A continuation repeats publication_id and the complete token and advances after_sequence_id to the\
+  \ last actually examined source sequence; it must not advance past an unreturned match. Empty filtered pages carry\
+  \ continuation until complete=true at the frontier. Complete=true with zero matches is empty History only after\
+  \ full verified coverage, never because a scan budget expired. Reader holds/revalidates publication, original\
+  \ source access, deletion and withdrawal at disclosure; invalid/withdrawn publication or a cursor beyond frontier\
+  \ returns unavailable. No History read dispatches an action or changes the checkpoint. Rebuild/withdrawal fences\
+  \ apply equally to every continuation. This bounds a read, not retention: all retained History remains reachable\
+  \ through repeated calls.\n\nSP-340 physical binding: alert_rule_muted_operation is canonical MessagePack in the\
+  \ canonical redb file, coordination_and_storage group (advisory canonical budget); alert_rule_muted_checkpoint\
+  \ is canonical MessagePack in the derived redb file, event_log group (hard derived budget with eviction/rebuild).\
+  \ Each value is at most 16384 encoded bytes, measured before CAS. F3-453 shared_alert_state/shared_alert_rule_state\
+  \ use canonical MessagePack in canonical redb, settings_and_layout group, same maximum. Their original snapshots\
+  \ remain in this family's canonical operation. Budget pressure never refuses canonical history or prunes it; derived\
+  \ eviction makes History unavailable until verified rebuild. Metadata/ref values exceeding the physical maximum\
+  \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
+  \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
+  \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
+  \ input it requires a governed rebuild, never truncation or in-place relabeling."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -1835,28 +1925,30 @@ canonical_text: "Newly authored owner contract for alert.snoozed 1.0.0 under DL-
   \ schema Plans/alert_event_contracts/alert_snoozed_checkpoint.schema.json. Explicitly adopt SP-278 and DL-076:\
   \ CURRENT-selected complete generic EventRecord index, whole nine-field durable index_read_token (no persisted\
   \ redb_snapshot_id); live snapshot id is rejoined and authenticated on each scan/read/advance. Scan every source\
-  \ sequence through the captured frontier, filter exact Project and alert.snoozed, append only authenticated event\
-  \ refs in canonical sequence order, and atomically CAS the whole prior checkpoint plus event_refs in ONE redb\
-  \ transaction. through_sequence_id is the complete scanned frontier, not merely the last match; last_event_id\
-  \ is the final matching ref or null for no matches. Never skip corrupt/unknown source or advance past an inadmissible\
-  \ event. Reader requires current publication/state, exact scope/instance and adequate verified frontier or returns\
-  \ unavailable, never empty success. No checkpoint may advance while this family is absent. Lost ack/replay never\
-  \ dispatches an owner command. Rebuild stages a separate publication from retained CURRENT-selected source, verifies\
-  \ complete coverage, then atomically withdraws old and publishes new; pruning, source-generation or schema change\
-  \ requires rebuild rather than zeroing a live cursor. Legal source deletion rebuilds only retained refs, never\
-  \ resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0 and the explicit value schema versions\
-  \ are readable; unknown versions fence without coercion. No historical write is claimed. StorageMigrationCoordinator\
-  \ must install these exact value schemas before activation; no invented store version. Withdrawal first closes\
-  \ writer admission and fences subject mutations, settles every original in-flight obligation under its original\
-  \ evidence, then marks this checkpoint withdrawn under whole-value CAS. Readers refuse withdrawn/staged publications;\
-  \ a future version requires its own contract/admission and verified rebuild, not an alias or in-place event rewrite.\
-  \ Source custody remains subject to holds and its own lifetime.\n\nretention_policy_ref: PENDING_RETENTION_DECISION\
-  \ for this event, its operation and its History checkpoint. Case L-3 (SP-026 retention section) offers audit-authority/receipt\
-  \ RP-AUTHORITY-INDEFINITE versus ordinary telemetry ordinary telemetry class (policy identifier not assigned here)\
-  \ for event history; RP-PROJECTION-3GEN is a checkpoint candidate only. No existing text names alert.snoozed in\
-  \ a decided class. RT must decide/confirm exact assignment and dependent body deletion; do not choose by prefix\
-  \ or expire anything pending that decision. Native execution NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n\
-  \ Original shared state for this family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
+  \ sequence through the captured frontier, filter exact Project and alert.snoozed, validate each matching EventRecord/payload\
+  \ and atomically CAS the whole prior checkpoint to the verified frontier in ONE derived-redb transaction. The\
+  \ checkpoint stores only this constant-count token/frontier/last-match value, never an event_refs array, page\
+  \ list or retained-history manifest. through_sequence_id is the complete scanned frontier, not merely the last\
+  \ match; last_event_id is the final matching event id or null for no matches. Never skip corrupt/unknown source\
+  \ or advance past an inadmissible event. Reader requires current publication/state, exact scope/instance and adequate\
+  \ verified frontier or returns unavailable, never empty success. No checkpoint may advance while this family is\
+  \ absent. Lost ack/replay never dispatches an owner command. Rebuild stages a separate publication from retained\
+  \ CURRENT-selected source, verifies complete coverage, then atomically withdraws old and publishes new; pruning,\
+  \ source-generation or schema change requires rebuild rather than zeroing a live cursor. Legal source deletion\
+  \ rebuilds only retained refs, never resurrects deleted content.\n\nCompatibility/withdrawal: only payload 1.0.0\
+  \ and the explicit value schema versions are readable; unknown versions fence without coercion. No historical\
+  \ write is claimed. StorageMigrationCoordinator must install these exact value schemas before activation; no invented\
+  \ store version. Withdrawal first closes writer admission and fences subject mutations, settles every original\
+  \ in-flight obligation under its original evidence, then marks this checkpoint withdrawn under whole-value CAS.\
+  \ Readers refuse withdrawn/staged publications; a future version requires its own contract/admission and verified\
+  \ rebuild, not an alias or in-place event rewrite. Source custody remains subject to holds and its own lifetime.\n\
+  \nretention_policy_ref: PENDING_RETENTION_DECISION for this event, its operation and its History checkpoint. Case\
+  \ L-3 (SP-026 retention section) offers audit-authority/receipt RP-AUTHORITY-INDEFINITE versus ordinary telemetry\
+  \ ordinary telemetry class (policy identifier not assigned here) for event history; RP-PROJECTION-3GEN is a checkpoint\
+  \ candidate only. No existing text names alert.snoozed in a decided class. RT must decide/confirm exact assignment\
+  \ and dependent body deletion; do not choose by prefix or expire anything pending that decision. Native execution\
+  \ NOT_RUN. Static validation: python3 scripts/pm-alert-event-contracts-check.py.\n Original shared state for this\
+  \ family is shared_alert_state.v1:{project_id}:{alert_id}, closed schema Plans/alert_event_contracts/shared_alert_state.schema.json.\
   \ This is a newly authored technical representation of F3-453 existing behavior, reused by each exact handler,\
   \ not another UI store. prior_owner_state and candidate_owner_state are complete frozen original bytes in this\
   \ family operation; exact key/Project/subject/source identity must agree with payload and both snapshots. Candidate\
@@ -1868,7 +1960,35 @@ canonical_text: "Newly authored owner contract for alert.snoozed 1.0.0 under DL-
   \ remain byte-equal. Expiry/read projection is the existing owner behavior and creates no fabricated action event.\
   \ Original immutable owner_commit_ref resolves the operation candidate snapshot even after later revisions. Shared\
   \ state backup is canonical and mandatory; its retention remains PENDING_RETENTION_DECISION independently of the\
-  \ source record."
+  \ source record.\n\nBounded History read-through (newly authored technical binding): reader.alert_snoozed.history@1.0.0\
+  \ reads the exact published checkpoint and its nine-field durable token through SP-278 reader.storage.event_record_index.\
+  \ Request carries publication_id, the entire durable token and after_sequence_id (0 initially; unsigned 64-bit).\
+  \ These are untrusted resumable read inputs, never new persisted state. Authenticate the original token and join\
+  \ its Storage instance to both checkpoint and source_selection; rejoin the actual live redb snapshot on every\
+  \ call. Source generation/selection must still validate under SP-278; do not silently substitute a fresh token\
+  \ into an old continuation. Changed source needs SP-278 verified translation or a new verified publication and\
+  \ a restarted traversal, otherwise unavailable. Scan in canonical sequence order only through the checkpoint's\
+  \ through_sequence_id, at most 256 source sequences per response; return at most 64 authenticated exact-family/Project\
+  \ event refs and at most 16384 canonical MessagePack response bytes. Stop before the first ref that would exceed\
+  \ either response bound. An individual ref or token that cannot fit is invalid source/metadata, never silently\
+  \ dropped. A continuation repeats publication_id and the complete token and advances after_sequence_id to the\
+  \ last actually examined source sequence; it must not advance past an unreturned match. Empty filtered pages carry\
+  \ continuation until complete=true at the frontier. Complete=true with zero matches is empty History only after\
+  \ full verified coverage, never because a scan budget expired. Reader holds/revalidates publication, original\
+  \ source access, deletion and withdrawal at disclosure; invalid/withdrawn publication or a cursor beyond frontier\
+  \ returns unavailable. No History read dispatches an action or changes the checkpoint. Rebuild/withdrawal fences\
+  \ apply equally to every continuation. This bounds a read, not retention: all retained History remains reachable\
+  \ through repeated calls.\n\nSP-340 physical binding: alert_snoozed_operation is canonical MessagePack in the\
+  \ canonical redb file, coordination_and_storage group (advisory canonical budget); alert_snoozed_checkpoint is\
+  \ canonical MessagePack in the derived redb file, event_log group (hard derived budget with eviction/rebuild).\
+  \ Each value is at most 16384 encoded bytes, measured before CAS. F3-453 shared_alert_state/shared_alert_rule_state\
+  \ use canonical MessagePack in canonical redb, settings_and_layout group, same maximum. Their original snapshots\
+  \ remain in this family's canonical operation. Budget pressure never refuses canonical history or prunes it; derived\
+  \ eviction makes History unavailable until verified rebuild. Metadata/ref values exceeding the physical maximum\
+  \ are invalid and cannot commit; no accumulating history/body is placed in them. No duration, history-count cap\
+  \ or retention assignment is added. Size-boundary and 1000-match read-through oracles are in this family's fixture.\
+  \ The unadmitted earlier draft's event_refs checkpoint is not a current schema; if encountered as an installation\
+  \ input it requires a governed rebuild, never truncation or in-place relabeling."
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false

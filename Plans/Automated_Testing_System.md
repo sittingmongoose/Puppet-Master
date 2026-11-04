@@ -7247,6 +7247,10 @@ canonical_text: alert.acknowledged is checked independently by python3 scripts/p
   negative added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered
   retry payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain
   NOT_RUN and must prove every SP-660 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7290,6 +7294,10 @@ canonical_text: alert.dismissed is checked independently by python3 scripts/pm-a
   added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
   payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
   and must prove every SP-661 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7332,6 +7340,10 @@ canonical_text: alert.rule_muted is checked independently by python3 scripts/pm-
   added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
   payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
   and must prove every SP-662 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
@@ -7374,6 +7386,10 @@ canonical_text: alert.snoozed is checked independently by python3 scripts/pm-ale
   added secret field, missing field, stale revision, wrong handler, no-change, lost acknowledgement, altered retry
   payload and prohibited checkpoint snapshot are required. Recovery/atomicity/withdrawal native tests remain NOT_RUN
   and must prove every SP-663 boundary; static pass cannot authorize append. Retention PENDING_RETENTION_DECISION.
+  The same full checker must reject the former 1000-ref checkpoint and a foreign Storage token, accept exactly 16384
+  encoded MessagePack bytes, reject 16385, and traverse 1000 matching events plus empty nonmatching pages without
+  storing refs in the checkpoint. These are static contract oracles; native SP-278 read/authentication/CAS/withdrawal
+  and OS/storage durability remain NOT_RUN.
 gui_related: false
 gui_classification_reason: Storage/event contract, no new UI.
 split_recommended: false
