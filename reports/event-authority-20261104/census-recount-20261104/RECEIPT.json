@@ -11,16 +11,16 @@
       "e": 148
     },
     "classification_counts": {
-      "command_or_action_id": 2768,
+      "command_or_action_id": 2766,
       "decided_elsewhere:DL-405": 2,
       "decided_elsewhere:DL-406": 4,
       "decided_elsewhere:DL-407": 7,
       "decided_elsewhere:DL-408": 3,
-      "identifier_or_field": 3980,
-      "not_persisted_by_owner_text": 61,
+      "identifier_or_field": 3981,
+      "not_persisted_by_owner_text": 62,
       "persisted_event_candidate": 588,
-      "retired_or_historical": 154,
-      "undetermined": 6
+      "retired_or_historical": 152,
+      "undetermined": 8
     },
     "classified_count": 7573,
     "direct_prose_files_scanned": 96,
@@ -40,15 +40,1713 @@
     },
     "outside_august_and_registry": 7081,
     "outside_classification_counts": {
-      "command_or_action_id": 2768,
+      "command_or_action_id": 2766,
       "decided_elsewhere:DL-406": 3,
       "decided_elsewhere:DL-408": 1,
-      "identifier_or_field": 3980,
-      "not_persisted_by_owner_text": 61,
+      "identifier_or_field": 3981,
+      "not_persisted_by_owner_text": 62,
       "persisted_event_candidate": 249,
-      "retired_or_historical": 13,
-      "undetermined": 6
+      "retired_or_historical": 11,
+      "undetermined": 8
     },
+    "retirement_evidence_audit": [
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:333-333",
+          "Plans/Decision_Log.md:1313-1313"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "account.switched"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:422-422",
+          "Plans/Multi-Account.md:5291-5291"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "accounts.empty.no_profiles"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:424-424",
+          "Plans/orchestrator-subagent-integration.md:4833-4833"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "agent_id.to_string"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:425-425",
+          "Plans/storage-plan.md:2132-2132"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "analytics.scan_batch_size"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:426-426",
+          "Plans/FileSafe.md:1719-1719"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "attachments.is_empty"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:427-427",
+          "Plans/Wiring_Matrix.md:510-510"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "branching.assistant_auto_worktree"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:428-428",
+          "Plans/assistant-chat-design.md:3085-3085"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "branching.assistant_worktree_pre_merge_cmd"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:429-429",
+          "Plans/assistant-chat-design.md:3087-3087"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "branching.assistant_worktree_pre_merge_test_target"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:430-430",
+          "Plans/assistant-chat-design.md:3086-3086"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "branching.worktree_pre_merge_test_timeout_s"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:334-334",
+          "Plans/Section15_MVP_Promoted_Features_Spec.md:9990-9990"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "browser.streaming_usage_reported"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:335-335",
+          "Plans/Contracts_V0.md:1471-1471"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "chat.subagent_"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:294-294",
+          "Plans/Contracts_V0.md:1471-1471"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "chat.subagent_spawned"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:336-336",
+          "Plans/Commands_System.md:281-281"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "chat.thread.created"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:295-295",
+          "Plans/Contracts_V0.md:977-977"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "chat.thread.worktree_bound"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:431-431",
+          "Plans/Contracts_V0.md:977-977"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "chat.thread_worktree_"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:432-432",
+          "Plans/Contracts_V0.md:7429-7429"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "chat.thread_worktree_pr_failed.phase"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Commands_System.md:6923-6924",
+          "Plans/Commands_System.md:7366-7366"
+        ],
+        "evidence_basis": "Commands owner explicitly retired the first-draft save spellings; not event identities.",
+        "name": "commands.save_"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Commands_System.md:6923-6924",
+          "Plans/Commands_System.md:7366-7366"
+        ],
+        "evidence_basis": "Commands owner explicitly retired the first-draft save spellings; not event identities.",
+        "name": "commands.save_existing"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Commands_System.md:6923-6924",
+          "Plans/Commands_System.md:7366-7366"
+        ],
+        "evidence_basis": "Commands owner explicitly retired the first-draft save spellings; not event identities.",
+        "name": "commands.save_new"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Commands_System.md:6923-6924",
+          "Plans/Commands_System.md:7366-7366"
+        ],
+        "evidence_basis": "Commands owner explicitly retired the first-draft save spellings; not event identities.",
+        "name": "commands.save_override"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:433-433",
+          "Plans/FinalGUISpec.md:3470-3470"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "context_capture.rs"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:435-435",
+          "Plans/MiscPlan.md:2609-2609"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "current_project.path"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:436-436",
+          "Plans/FinalGUISpec.md:3473-3473"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "dap_client.rs"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:437-437",
+          "Plans/Contracts_V0.md:1001-1001"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "defs.event_record_1_0_0_compatibility_reader"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:337-337",
+          "Plans/Decision_Log.md:1339-1339"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "diag.synthetic_continue_loop_prevented"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:338-338",
+          "Plans/Decision_Log.md:1365-1365"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "doctor.evidence_media.checked"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:438-438",
+          "Plans/newtools.md:752-752"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "doctor.live_visualization"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:439-439",
+          "Plans/newtools.md:858-858"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "doctor.live_visualization.evidence"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:339-339",
+          "Plans/Contracts_V0.md:2377-2377"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.budget_exceeded"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:340-340",
+          "Plans/Executor_Protocol.md:7797-7797"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.cancelled"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:341-341",
+          "Plans/Executor_Protocol.md:7797-7797"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.crashed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:342-342",
+          "Plans/Prompt_Pipeline.md:5766-5766"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.deferred"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:343-343",
+          "Plans/Executor_Protocol.md:8008-8008"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.failed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:344-344",
+          "Plans/Run_Modes.md:385-385"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.gutter"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:345-345",
+          "Plans/Run_Modes.md:381-381"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.ok"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:346-346",
+          "Plans/Run_Modes.md:393-393"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.payload.outcome"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:347-347",
+          "Plans/Run_Modes.md:393-393"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.payload.status"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:348-348",
+          "Plans/Glossary.md:211-211"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.rotated"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:349-349",
+          "Plans/Provider_OpenCode.md:317-317"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.stop_reason"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:350-350",
+          "Plans/Run_Modes.md:255-255"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.task_timeout"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:351-351",
+          "Plans/Run_Modes.md:414-414"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "done.timeout"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:440-440",
+          "Plans/FileSafe.md:819-819"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "effective_request.prompt"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:441-441",
+          "Plans/FileSafe.md:1298-1298"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "error.concurrent_edit_conflict"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/OpenCode_Deep_Extraction.md:241-241"
+        ],
+        "evidence_basis": "External OpenCode extraction/reference material describes an upstream hook/bus event, not a PuppetMaster durable family. Historical/source-lineage classification does not assert that the upstream feature was retired.",
+        "name": "experimental.chat.system.transform"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:442-442",
+          "Plans/assistant-chat-design.md:3081-3081"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "file_manager.worktree_follow_thread"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:309-309",
+          "Plans/Contracts_V0.md:2586-2586"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "filesafe.snapshot_conflict"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:310-310",
+          "Plans/Contracts_V0.md:2586-2586"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "filesafe.snapshot_created"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:311-311",
+          "Plans/Contracts_V0.md:2586-2586"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "filesafe.snapshot_restore"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:444-444",
+          "Plans/storage-plan.md:18120-18120"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "goal.evidence_captured.payload.retention_policy_ref"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:445-445",
+          "Plans/FinalGUISpec.md:3458-3458"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "grid_texture.rs"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:446-446",
+          "Plans/orchestrator-subagent-integration.md:1141-1141"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "gui.use_plan_mode_all_tiers"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:447-447",
+          "Plans/newtools.md:122-122"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "gui_config.interview"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:448-448",
+          "Plans/orchestrator-subagent-integration.md:1070-1070"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "gui_config.rs"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:352-352",
+          "Plans/UI_Command_Catalog.md:177-177"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "hitl.approval_requested"
+      },
+      {
+        "after": "undetermined",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/human-in-the-loop.md:32-36",
+          "Plans/human-in-the-loop.md:280-283",
+          "Plans/human-in-the-loop.md:299-304",
+          "Plans/human-in-the-loop.md:1940-1946",
+          "Plans/Contracts_V0.md:955-956",
+          "Plans/storage-plan.md:55-55"
+        ],
+        "evidence_basis": "HITL-028 currently requires this scheduler wake spelling. HITL requires durable approval history; Contracts names approval.granted/approval.denied. Storage lists only hitl.approved as command compatibility vocabulary, not hitl.rejected. No exact per-name binding resolves signal versus alias/retirement versus separate persistence.",
+        "name": "hitl.approved"
+      },
+      {
+        "after": "undetermined",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/human-in-the-loop.md:32-36",
+          "Plans/human-in-the-loop.md:280-283",
+          "Plans/human-in-the-loop.md:299-304",
+          "Plans/human-in-the-loop.md:1940-1946",
+          "Plans/Contracts_V0.md:955-956",
+          "Plans/storage-plan.md:55-55"
+        ],
+        "evidence_basis": "HITL-028 currently requires this scheduler wake spelling. HITL requires durable approval history; Contracts names approval.granted/approval.denied. Storage lists only hitl.approved as command compatibility vocabulary, not hitl.rejected. No exact per-name binding resolves signal versus alias/retirement versus separate persistence.",
+        "name": "hitl.rejected"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Wiring_Matrix.md:7240-7240"
+        ],
+        "evidence_basis": "Legacy panel UI wiring element retired by the cited owner reconciliation; never an event type.",
+        "name": "home.dashboard.pop_out"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Wiring_Matrix.md:7240-7240"
+        ],
+        "evidence_basis": "Legacy panel UI wiring element retired by the cited owner reconciliation; never an event type.",
+        "name": "home.editor_panel_1.pop_out"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Wiring_Matrix.md:7241-7241"
+        ],
+        "evidence_basis": "Legacy panel UI wiring element retired by the cited owner reconciliation; never an event type.",
+        "name": "home.file_manager.open_panel_1"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:353-353",
+          "Plans/Multi-Account.md:462-462"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "item.completed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:354-354",
+          "Plans/Contracts_V0.md:2377-2377"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.budget_exceeded"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:355-355",
+          "Plans/Run_Modes.md:259-259"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.hte_tool_observed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:356-356",
+          "Plans/Decision_Log.md:409-409"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.identical_failure"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:357-357",
+          "Plans/Run_Modes.md:366-366"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.post_scan_failure"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:358-358",
+          "Plans/Run_Modes.md:339-339"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.shell_failure"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:359-359",
+          "Plans/Run_Modes.md:262-262"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.task_timeout"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:360-360",
+          "Plans/Run_Modes.md:340-340"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "kill.write_thrash"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:450-450",
+          "Plans/Architecture_Invariants.md:56-56"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "locked_decisions.storage"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:313-313",
+          "Plans/Contracts_V0.md:959-959"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "lsp.server_crashed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:314-314",
+          "Plans/Contracts_V0.md:959-959"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "lsp.server_started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:451-451",
+          "Plans/orchestrator-subagent-integration.md:4832-4832"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "message_id.to_string"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Wiring_Matrix.md:341-363",
+          "Plans/Contracts_V0.md:2444-2448"
+        ],
+        "evidence_basis": "Only the compatibility/source-lineage wiring section uses node.ready; canonical runtime payload uses run.node_ready. No alias registration is inferred.",
+        "name": "node.ready"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:361-361",
+          "Plans/Contracts_V0.md:921-921"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "node.unblocked.resolution"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:452-452",
+          "Plans/orchestrator-subagent-integration.md:3854-3854"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "node_config.platform"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:453-453",
+          "Plans/Glossary.md:63-63"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "orchestrator.project_state"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:362-362",
+          "Plans/Architecture_Invariants.md:312-312"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "orchestrator.receipt"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:455-455",
+          "Plans/Contracts_V0.md:3694-3694"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "payload_schema_ref.schema_id"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/OpenCode_Deep_Extraction.md:1802-1802"
+        ],
+        "evidence_basis": "External OpenCode extraction/reference material describes an upstream hook/bus event, not a PuppetMaster durable family. Historical/source-lineage classification does not assert that the upstream feature was retired.",
+        "name": "permission.asked"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:456-456",
+          "Plans/Permissions_System.md:9353-9353"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "permissions.external_directory.pick"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:363-363",
+          "Plans/chain-wizard-flexibility.md:1153-1153"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "phase_selector.fallback"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:457-457",
+          "Plans/FinalGUISpec.md:32367-32367"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "pm.activity_bar_order"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:458-458",
+          "Plans/storage-plan.md:18278-18278"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "pm.debug.launch_profiles"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:459-459",
+          "Plans/Automated_Testing_System.md:2765-2765"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "pm.requested_effective_runtime"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:460-460",
+          "Plans/storage-plan.md:16994-16994"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "projection_trust.status"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:461-461",
+          "Plans/FileSafe.md:821-821"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "request.context_files"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:462-462",
+          "Plans/Automated_Testing_System.md:2692-2692"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "restore_point.expired.payload.retention_policy_ref"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:463-463",
+          "Plans/00-plans-index.md:255-255"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "route_target.object_kind"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": null,
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/Document_Packaging_Policy.md:90-90"
+        ],
+        "evidence_basis": "Document Packaging Policy preserves this as contradictory seam evidence, not an event it owns or a current producer binding.",
+        "name": "run.cancelled"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:372-372",
+          "Plans/Run_Modes.md:367-367"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.completed.stop_reason"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:373-373",
+          "Plans/Contracts_V0.md:2366-2366"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.completed.usage"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:319-319",
+          "Plans/Contracts_V0.md:2455-2455"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.node_blocked"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:320-320",
+          "Plans/Contracts_V0.md:2480-2480"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.node_unblocked"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:374-374",
+          "Plans/Contracts_V0.md:528-528"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.persona_stage_changed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:464-464",
+          "Plans/orchestrator-subagent-integration.md:1549-1549"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.qa_cycle_"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:375-375",
+          "Plans/Contracts_V0.md:528-528"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.qa_cycle_completed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:376-376",
+          "Plans/Contracts_V0.md:528-528"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.qa_cycle_started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:321-321",
+          "Plans/Contracts_V0.md:2646-2646"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.remediation_completed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:322-322",
+          "Plans/Contracts_V0.md:2628-2628"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.remediation_started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "alias",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:323-323",
+          "Plans/Contracts_V0.md:2423-2423"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.scheduler_analysis"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:377-377",
+          "Plans/Contracts_V0.md:500-500"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.tier_"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:378-378",
+          "Plans/Contracts_V0.md:528-528"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.tier_completed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:379-379",
+          "Plans/Contracts_V0.md:528-528"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.tier_started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:380-380",
+          "Plans/Contracts_V0.md:528-528"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "run.verification_result"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:381-381",
+          "Plans/Contracts_V0.md:338-338"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "runtime.command_applied"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:382-382",
+          "Plans/Runtime_Artifacts_Panel.md:2516-2516"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "runtime_artifact.created"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:383-383",
+          "Plans/Contracts_V0.md:338-338"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "safe_point.recovery_resolved"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:465-465",
+          "Plans/Decision_Log.md:271-271"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "safe_point.sp"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:466-466",
+          "Plans/FileSafe.md:5301-5301"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "security_filter.check_file_access"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:467-467",
+          "Plans/FileSafe.md:826-826"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.base.bash_guard.check_prompt"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:468-468",
+          "Plans/FileSafe.md:870-870"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.base.execute_command"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:469-469",
+          "Plans/FileSafe.md:866-866"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.build_args"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:470-470",
+          "Plans/orchestrator-subagent-integration.md:391-391"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.build_tier_context"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:471-471",
+          "Plans/orchestrator-subagent-integration.md:5237-5237"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.load_state"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:472-472",
+          "Plans/FileSafe.md:795-795"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.log_blocked_command"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:473-473",
+          "Plans/orchestrator-subagent-integration.md:5040-5040"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.state_file.exists"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:474-474",
+          "Plans/orchestrator-subagent-integration.md:4937-4937"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.state_file.with_extension"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:475-475",
+          "Plans/orchestrator-subagent-integration.md:4179-4179"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.store.append_coordination_event"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:476-476",
+          "Plans/orchestrator-subagent-integration.md:5406-5406"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.store.read_coordination_agents_by_file"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:477-477",
+          "Plans/orchestrator-subagent-integration.md:4199-4199"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.store.read_coordination_snapshot"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:478-478",
+          "Plans/orchestrator-subagent-integration.md:5318-5318"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.store.read_file_conflict_projection"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:479-479",
+          "Plans/orchestrator-subagent-integration.md:397-397"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "self.subagent_selector.select_for_tier"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:480-480",
+          "Plans/assistant-chat-design.md:2785-2785"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "source_control.accordion_state"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:481-481",
+          "Plans/Crosswalk.md:329-329"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "source_control.project_state"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:482-482",
+          "Plans/assistant-chat-design.md:2914-2914"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "source_control.worktree_filter"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:384-384",
+          "Plans/newtools.md:671-671"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "step.failed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:385-385",
+          "Plans/newtools.md:671-671"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "step.passed"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:386-386",
+          "Plans/newtools.md:668-668"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "step.started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:387-387",
+          "Plans/Decision_Log.md:409-409"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "stop.identical_failure"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:388-388",
+          "Plans/Run_Modes.md:258-258"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "stop.user_cancel"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:389-389",
+          "Plans/Contracts_V0.md:20790-20790"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "storage.fallback_reconciled"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:483-483",
+          "Plans/Commands_System.md:124-124"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "storage.legal_hold.manage"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:390-390",
+          "Plans/Multi-Account.md:462-462"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "thread.started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:487-487",
+          "Plans/orchestrator-subagent-integration.md:1080-1080"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tier.plan_mode"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:488-488",
+          "Plans/orchestrator-subagent-integration.md:398-398"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tier_node.tier_type"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:489-489",
+          "Plans/orchestrator-subagent-integration.md:1379-1379"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tier_overrides.get"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:391-391",
+          "Plans/newtools.md:509-509"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tool.custom_headless.invalid"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:392-392",
+          "Plans/Contracts_V0.md:1463-1463"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tool.denied.payload.meta"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:491-491",
+          "Plans/Collaborative_Workflows.md:456-456"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tool.execution_"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:492-492",
+          "Plans/newtools.md:246-246"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "tools.custom_headless"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:393-393",
+          "Plans/Multi-Account.md:462-462"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "turn.started"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:493-493",
+          "Plans/Runtime_Artifacts_Panel.md:37-37"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "type_payload.restore_point_id"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:494-494",
+          "Plans/assistant-chat-design.md:2326-2326"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "ui.chat.in_memory_cap_messages"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:394-394",
+          "Plans/Contracts_V0.md:1457-1457"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "web.operation"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:495-495",
+          "Plans/FinalGUISpec.md:39-39"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.agent_terminal"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:496-496",
+          "Plans/FinalGUISpec.md:4363-4363"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.analytics_chart"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:497-497",
+          "Plans/FinalGUISpec.md:4363-4363"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.budget_donuts"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:498-498",
+          "Plans/FinalGUISpec.md:39-39"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.completed_prose"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:499-499",
+          "Plans/FinalGUISpec.md:38-38"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.current_task"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:500-500",
+          "Plans/Contracts_V0.md:518-518"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.multi_account"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:501-501",
+          "Plans/FinalGUISpec.md:2403-2403"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.orchestrator_status"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:502-502",
+          "Plans/FinalGUISpec.md:38-38"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.progress_bars"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:503-503",
+          "Plans/FinalGUISpec.md:4363-4363"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.quota_summary"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "rejected_lexical_candidate",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:504-504",
+          "Plans/FinalGUISpec.md:4363-4363"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "widget.tool_usage"
+      },
+      {
+        "after": "retired_or_historical",
+        "august_category": "exact_excluded",
+        "before": "retired_or_historical",
+        "citations": [
+          "Plans/.audits/event-authority-2026-08-12/census-adjudication/LEDGER.jsonl:395-395",
+          "Plans/chain-wizard-flexibility.md:384-384"
+        ],
+        "evidence_basis": "preserved August disposition, not a new retirement inference",
+        "name": "wizard.cancelled"
+      }
+    ],
     "round1_changes": {
       "bucket_e_added": [],
       "bucket_e_recommendation_changes": [
@@ -3636,6 +5334,67 @@
       ],
       "reviewed_head": "d6dd33d5ddbd0150bb9dcfbe391460bebac04e65"
     },
+    "round2_changes": {
+      "bucket_e_added": [],
+      "bucket_e_removed": [],
+      "classification_changes": [
+        {
+          "after": "undetermined",
+          "before": "retired_or_historical",
+          "citations": [
+            "Plans/human-in-the-loop.md:32-36",
+            "Plans/human-in-the-loop.md:280-283",
+            "Plans/human-in-the-loop.md:299-304",
+            "Plans/human-in-the-loop.md:1940-1946",
+            "Plans/Contracts_V0.md:955-956",
+            "Plans/storage-plan.md:55-55"
+          ],
+          "name": "hitl.approved"
+        },
+        {
+          "after": "undetermined",
+          "before": "retired_or_historical",
+          "citations": [
+            "Plans/human-in-the-loop.md:32-36",
+            "Plans/human-in-the-loop.md:280-283",
+            "Plans/human-in-the-loop.md:299-304",
+            "Plans/human-in-the-loop.md:1940-1946",
+            "Plans/Contracts_V0.md:955-956",
+            "Plans/storage-plan.md:55-55"
+          ],
+          "name": "hitl.rejected"
+        },
+        {
+          "after": "not_persisted_by_owner_text",
+          "before": "command_or_action_id",
+          "citations": [
+            "Plans/UI_Command_Catalog.md:8627-8627"
+          ],
+          "name": "plan_compile.command_applied"
+        },
+        {
+          "after": "identifier_or_field",
+          "before": "command_or_action_id",
+          "citations": [
+            "Plans/assistant-chat-design.md:27309-27317",
+            "Plans/assistant-chat-design.md:27335-27336"
+          ],
+          "name": "thread.title_locked"
+        }
+      ],
+      "existing_unresolved_rows_unchanged": true,
+      "new_list_bytes_unchanged": true,
+      "new_list_rows_changed": [],
+      "other_classified_row_changes": [
+        "node.ready"
+      ],
+      "reviewed_head": "cad54d77170dfc197d4dc2c42e86152d73e107ad",
+      "unresolved_added": [
+        "hitl.approved",
+        "hitl.rejected"
+      ],
+      "unresolved_removed": []
+    },
     "semantic_keys_with_dotted_bindings": [
       "admitted_event_types",
       "canonical_event_type",
@@ -3666,18 +5425,20 @@
       "field_setting_schema_or_role_namespace": 2008,
       "file_or_hostname": 8,
       "file_or_versioned_identifier": 1523,
-      "reviewed_field_setting_or_selector": 200
+      "reviewed_field_setting_or_selector": 201
     },
     "unresolved_names": [
       "executor.intake_report.recorded",
       "goal.receipt.recorded",
+      "hitl.approved",
+      "hitl.rejected",
       "plan_compile.stage_receipt.recorded",
       "provider.stream.event_recorded",
       "subagent.cancel_requested",
       "testing.receipt.recorded"
     ]
   },
-  "generated_at_utc": "2026-11-04T22:03:33.520096Z",
+  "generated_at_utc": "2026-11-04T22:45:09.025999Z",
   "generators": [
     {
       "command": [
@@ -3685,14 +5446,14 @@
         "scripts/pm-event-authority-currentness.py",
         "generate",
         "--outdir",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run1"
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run1"
       ],
       "output_digests": {
-        "CURRENT_EVENT_SOURCE_INVENTORY.json": "8b7012f2be663b30f16a69493649c1761f804358f151531e34a44ad5adcbcc95",
+        "CURRENT_EVENT_SOURCE_INVENTORY.json": "cd926333892ee95e2e4c53a3ee5342d6290153b79bfb1de1af77df6ed7fe2b68",
         "EVENT_FAMILY_DENOMINATOR_STATUS.json": "37038d5f6a46e0d74d375891e03ea1be39494a6841a92beeec42dc75eb83026d",
         "EVENT_OCCURRENCES.jsonl": "f67f947f77a0b4e7668d6e75a422c1aacd3fa618988ed72ae3aa665899a664e1",
         "README.md": "a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308",
-        "VALIDATOR_RECEIPT.json": "35a096600db18d15b39952eeef3bff3d6ab88f8a8c085303a90755aa9f9bcc97",
+        "VALIDATOR_RECEIPT.json": "0b5960e0e8152cbca08dca69f4f6fdc5ce07bd46dd9b9683d3a513a5ff2f762c",
         "adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
         "adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
       },
@@ -3704,14 +5465,14 @@
         "scripts/pm-event-authority-currentness.py",
         "generate",
         "--outdir",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix1-run2"
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/census-recount/fix2-run2"
       ],
       "output_digests": {
-        "CURRENT_EVENT_SOURCE_INVENTORY.json": "ee03bd885ddc801927d0d71cc60ce6a636071235cbedc3d42b4cee235cf5eeee",
+        "CURRENT_EVENT_SOURCE_INVENTORY.json": "aaaea2f13737a5d862ccf601313c87089b0cf969824400ba2493818c784ffa2c",
         "EVENT_FAMILY_DENOMINATOR_STATUS.json": "37038d5f6a46e0d74d375891e03ea1be39494a6841a92beeec42dc75eb83026d",
         "EVENT_OCCURRENCES.jsonl": "f67f947f77a0b4e7668d6e75a422c1aacd3fa618988ed72ae3aa665899a664e1",
         "README.md": "a16af5dc4c0bc2954ef50bee707f43abfae6b8f79c7a696e0eb92a1637640308",
-        "VALIDATOR_RECEIPT.json": "57fbb6a4fee9da28cbb8143a70d43c7ec89b085a511392a7d4d5b78e6fb24a10",
+        "VALIDATOR_RECEIPT.json": "c74a00c61731d7dfdeace04a06f4c157ff6d2e88502cfb5ae394d2b53c79a47d",
         "adjudication/GROUP_ARTIFACT_MANIFEST.json": "fc212fc26784ba0dec1094705b811663fb7a92f38289af0d20503a7f0247af5e",
         "adjudication/QUARANTINED_EVENT_DISPOSITIONS.jsonl": "e77c83e1861c4b02739d7609c7c4fe066a6fe4f901a8e61511c698e0bb949294"
       },
@@ -3720,8 +5481,8 @@
   ],
   "inputs": {
     "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/BRIEF-DRAFT.md": {
-      "bytes": 11059,
-      "sha256": "59e0a0f5002966a4dec489d66ea43f4fbd3711da7fdd60c0f75a0e585a265fed"
+      "bytes": 11421,
+      "sha256": "18751f47f1daa8f922fe97655528389f72be7d926e8713ad1baa90551dbe0b03"
     },
     "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md": {
       "bytes": 45712,
@@ -3736,8 +5497,12 @@
       "sha256": "f3f553370a89a6fc0467dedde8a5ed71169cc7e4b36f2c0be32ee2475b924104"
     },
     "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/lanes/FIX-ROUND.md": {
-      "bytes": 8176,
-      "sha256": "3320d3c595b3ea73daa508f0f7f3845c372b51e5492b46b8e31659fd778d1028"
+      "bytes": 8538,
+      "sha256": "4298583e2a69a3a6f6950ff94900b1a4d62b9e35bd151d55df227a27dda032e4"
+    },
+    "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW-astra.md": {
+      "bytes": 26766,
+      "sha256": "161b7ad15c9479155550ba573c7b9290c271f4483ed6b2c4ec23d4029f6f85e7"
     },
     "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-COUNT-sol/REVIEW.md": {
       "bytes": 123190,
@@ -6043,6 +7808,30 @@
       "bytes": 9652,
       "sha256": "f342b319abc6ea91863c9fe7512d5711036520897ba31548e557df6296104151"
     },
+    "git:cad54d77170dfc197d4dc2c42e86152d73e107ad:reports/event-authority-20261104/census-recount-20261104/CLASSIFIED.jsonl": {
+      "bytes": 3453051,
+      "sha256": "b2fa214abc5abe3a2675c2b399fe13974397ffa7b925e86800cb3629a2e44d5d"
+    },
+    "git:cad54d77170dfc197d4dc2c42e86152d73e107ad:reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json": {
+      "bytes": 249684,
+      "sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c"
+    },
+    "git:cad54d77170dfc197d4dc2c42e86152d73e107ad:reports/event-authority-20261104/census-recount-20261104/RECEIPT.json": {
+      "bytes": 275552,
+      "sha256": "10e106f940c4bf1efd48f50b078a869fb63477e7ccb26efb36735967e552c239"
+    },
+    "git:cad54d77170dfc197d4dc2c42e86152d73e107ad:reports/event-authority-20261104/census-recount-20261104/REPORT.md": {
+      "bytes": 148490,
+      "sha256": "33311926342f50f6e103fce0a17fcd213b19a3c8f3c2638cc12af6068007cf71"
+    },
+    "git:cad54d77170dfc197d4dc2c42e86152d73e107ad:reports/event-authority-20261104/census-recount-20261104/SKIPPED.jsonl": {
+      "bytes": 1380966,
+      "sha256": "29cee312d1946d807303d62a4ec7dbe74687862591a013fb1ed6ba2033dc71cd"
+    },
+    "git:cad54d77170dfc197d4dc2c42e86152d73e107ad:reports/event-authority-20261104/census-recount-20261104/recount.py": {
+      "bytes": 197517,
+      "sha256": "64e46b564e83124732a0e817e944d791bad66f871d798cc89125df8d955669be"
+    },
     "git:d6dd33d5ddbd0150bb9dcfbe391460bebac04e65:reports/event-authority-20261104/census-recount-20261104/CLASSIFIED.jsonl": {
       "bytes": 3191145,
       "sha256": "ea8f83e3c322c3c879bba247e657e2f00707f17d1691c083768258589693e199"
@@ -6084,10 +7873,10 @@
   "new_list_bytes": 249684,
   "new_list_sha256": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c",
   "outputs": {
-    "CLASSIFIED.jsonl": "b2fa214abc5abe3a2675c2b399fe13974397ffa7b925e86800cb3629a2e44d5d",
+    "CLASSIFIED.jsonl": "2caf660d68905e8e7294c9076bf336ea876382af8ee3adf005730d4fc40b04ff",
     "NEW-LIST.json": "2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c",
-    "SKIPPED.jsonl": "29cee312d1946d807303d62a4ec7dbe74687862591a013fb1ed6ba2033dc71cd",
-    "recount.py": "64e46b564e83124732a0e817e944d791bad66f871d798cc89125df8d955669be"
+    "SKIPPED.jsonl": "2d897edf8486b8068370e97a84e0bad3f2576a5d01553790eb1c8d6f895e45b9",
+    "recount.py": "45fa0091b07281d7468af04ec4ce3cd53fcb10428d2c7d03d7c45e4c74d9e446"
   },
   "reproducibility": {
     "classified_bytes_identical": true,
