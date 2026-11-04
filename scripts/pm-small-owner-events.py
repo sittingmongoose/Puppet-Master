@@ -4,13 +4,15 @@ import copy
 import hashlib
 import json
 import base64
+import re
+from functools import lru_cache
 try:
     from blake3 import blake3
 except ImportError:
     raise SystemExit('pm-small-owner-events requires the blake3 Python package for exact SP-337 byte oracles')
 from datetime import datetime
 from pathlib import Path
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
 FORMATS = FormatChecker()
 @FORMATS.checks('date-time')
 def utc_datetime(value):
@@ -332,11 +334,60 @@ def current_retry(row, incoming, authority):
     return ('return_original_without_effect', result, 0) if result is not None else ('identity_conflict_without_effect', None, 0)
 
 
+@lru_cache(maxsize=2)
+def read_token_validator(durable):
+    schema = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text())['$defs']['read_token']
+    if durable:
+        schema['required'].remove('redb_snapshot_id')
+        del schema['properties']['redb_snapshot_id']
+    # Python's ordinary ^...$ pattern check accepts a trailing LF. Preserve the
+    # shared schema and enforce exact identifier matches in this adapter.
+    def full_pattern(validator, pattern, instance, subschema):
+        if isinstance(instance, str) and re.fullmatch(pattern, instance) is None:
+            yield ValidationError('read-token identifier does not fully match')
+    strict = validators.extend(Draft202012Validator, {'pattern': full_pattern})
+    return strict(schema, format_checker=FORMATS)
+
+
+def token_matches_original(token, original, durable=False):
+    if not read_token_validator(durable).is_valid(token):
+        return False
+    def single_line(value):
+        if isinstance(value, str):
+            return '\r' not in value and '\n' not in value
+        if isinstance(value, dict):
+            return all(single_line(v) for v in value.values())
+        return True
+    if not single_line(token):
+        return False
+    storage = original['storage_instance_id']
+    return (
+        token['storage_instance_id'] == storage
+        and token['source_selection']['storage_instance_id'] == storage
+        and token['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + storage
+        and token['index_dataset_name'] == 'event_record_index.v2@' + token['generation_id']
+    )
+
+
+def checkpoint_matches_original(state):
+    checkpoint = state.get('new_checkpoint', {})
+    token = checkpoint.get('durable_read_token')
+    selected = state.get('selected_live_token')
+    original = state['original_operation']
+    if not token_matches_original(token, original, durable=True) or not token_matches_original(selected, original):
+        return False
+    return (
+        token == {k: v for k, v in selected.items() if k != 'redb_snapshot_id'}
+        and checkpoint.get('frontier_revision') == token['frontier_revision']
+    )
+
+
 def reader_result(row, state):
     return 'available' if (
         state['reader_enabled'] and state['permission_current'] and state['source_present']
         and state['deletion_clear'] and state['hold_allows_disclosure']
         and state['version'] == '1.0.0' and state['current_frontier_verified']
+        and token_matches_original(state['live_token'], state['original_operation'])
         and state['live_token'] == state['selected_token']
         and valid_event(row, state['event'], state['original_operation'])
     ) else 'unavailable'
@@ -347,6 +398,8 @@ def rebuild_publication(row, state):
     if not all(state[k] for k in REBUILD_GATES):
         return old
     if not valid_event(row, state['event'], state['original_operation']):
+        return old
+    if not checkpoint_matches_original(state):
         return old
     # One transaction publishes rows and checkpoint. No family-specific cursor.
     return {'rows': [copy.deepcopy(state['event'])], 'checkpoint': copy.deepcopy(state['new_checkpoint'])}
@@ -434,6 +487,17 @@ def run_exact_family(row):
 
     for variant in row['scope_variants']:
         check(valid_event(row, variant['event'], variant['original_operation']), 'independent scope/original variant')
+    project_event = next((v['event'] for v in row['scope_variants'] if v['event']['scope_kind'] == 'project'), event)
+    partition_case = row['project_partition_case']
+    check(partition_case['encoded_partition'] == scope_partition(project_event), 'authored encoded project partition positive')
+    check(partition_case['raw_project_id'] == project_event['project_id'] and partition_case['raw_project_id'] != scope_partition(project_event), 'raw project id is not a partition')
+    # Five closed bounded bodies cannot legally reach 16 KiB. Still isolate
+    # Storage's byte gate with an oversized synthetic object, independent of
+    # its inevitable closed-schema refusal. This never widens a writer schema.
+    oversized = copy.deepcopy(event)
+    oversized['payload'][row['oversized_inline_probe']['field']] = 'x' * row['oversized_inline_probe']['padding_bytes']
+    check(len(canonical_fixture_msgpack(oversized['payload'])) > INLINE_LIMIT, 'authored oversized inline probe exceeds cap')
+    check(resolved_payload(oversized, {'type': 'object'}) is None, 'oversized inline bytes refused before logical schema')
     check(any(c.get('value') == 'projector_replay_only' and c.get('field') == 'replay_policy' for c in row['envelope_negatives']), 'authored replay-only append negative')
     historical = row['historical_reader_only']
     historical_event = historical['stored_event']
@@ -517,15 +581,24 @@ def run_exact_family(row):
     for case in row['reader_cases']:
         state = copy.deepcopy(row['reader_positive'])
         state.update(copy.deepcopy(case['overrides']))
+        state = patched(state, case.get('patches', []))
         check(reader_result(row, state) == case['expected'], case['case_id'])
     for case in row['rebuild_cases']:
         state = copy.deepcopy(row['rebuild_positive'])
         state.update(copy.deepcopy(case['overrides']))
+        state = patched(state, case.get('patches', []))
         before = copy.deepcopy(state)
         result = rebuild_publication(row, state)
         expected = state['old_publication'] if case['expected'] == 'preserve_old' else {'rows': [event], 'checkpoint': state['new_checkpoint']}
         check(result == expected, case['case_id'])
         check(state == before, case['case_id'] + ': no domain effects')
+    checkpoint_cases = {c['case_id'] for c in row['rebuild_cases'] if c['expected'] == 'preserve_old'}
+    check({
+        'checkpoint_foreign_storage_instance', 'checkpoint_foreign_source_storage',
+        'checkpoint_foreign_key', 'checkpoint_foreign_storage_coherent',
+        'checkpoint_unselected_frontier', 'checkpoint_persisted_snapshot',
+        'checkpoint_trailing_LF_generation', 'checkpoint_missing_token',
+    } <= checkpoint_cases, 'authored checkpoint identity refusal matrix')
     live = row['reader_positive']['live_token']
     token_schema = json.loads((ROOT / 'Plans/event_record_index_checkpoint.schema.json').read_text())
     check(Draft202012Validator(dict(token_schema, **{'$ref': '#/$defs/read_token'}), format_checker=FORMATS).is_valid(live), 'ten-field live read token')
@@ -566,6 +639,7 @@ def run_exact_family(row):
         check('redaction_profile=' + profile in text and 'redacted_refs_only' not in text.replace('profile (including redacted_refs_only)', ''), 'owner profile ' + owner['unit'])
         check('occurred_at_utc equals payload.' + time_field in text and 'correlation_id is the non-empty' in text and 'actor_ref is the non-empty' in text, 'owner joins ' + owner['unit'])
         check('replay_only_not_appendable' in text and '16 KiB' in text and 'publication' in text, 'standing owner checks ' + owner['unit'])
+        check('Checkpoint identity for ' + row['event_type'] in text and 'selected live token' in text, 'owner checkpoint identity ' + owner['unit'])
     return count
 
 
