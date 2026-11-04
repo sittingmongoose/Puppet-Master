@@ -21,7 +21,8 @@
 //   - the bubble, shown, is not painted at its placement (its tail corner more than 2 px off), or overlaps Pip's head or
 //     control as painted.
 // Probes can read a state that was never painted: the films (`--record`) are the claim; this check is the regression
-// gate on the causes. Both surfaces (`--set sandbox=1` for T3's sandbox); `--set motion=reduce` for Reduce Motion.
+// gate on the causes. Both surfaces (`--set sandbox=1` for T3's sandbox); `--set motion=reduce` for Reduce Motion;
+// `--set size=740x900` for another window size (headless: a recording keeps 1920x1080).
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const FRAMES = 96;        // about 1.6 s at 60 fps: the cover or reveal, the rebuild and the bubble's pop
 const NIER_FRAMES = 300;  // NieR's moment plays its plate first
@@ -123,6 +124,9 @@ function judge(frames) {
 }
 
 export default async function (t) {
+	// --set size=740x900: another window size (the stage is a tall pane when wide, a strip when narrow or short)
+	const size = /^(\d+)x(\d+)$/.exec(String(t.args.size || ''));
+	if (size) await t.viewport(+size[1], +size[2]);
 	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
 	await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.svg); }, null, { timeout: 60000 });
 	const reduce = t.args.motion === 'reduce';
