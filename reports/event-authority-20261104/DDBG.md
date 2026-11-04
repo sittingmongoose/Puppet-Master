@@ -1,6 +1,6 @@
 # DDBG — independent investigation event contracts
 
-Branch: `plans/ea-w2-debug-20261104`. Base: `be4766513f` (fetched origin/main). VM memory check: available 16 GiB. Native execution: NOT_RUN. No admission record, event-registry append, Decision Log edit, governance reseal, main push, landing lock, pm-mail or subagent.
+Branch: `plans/ea-w2-debug-20261104`. Base: `be4766513f` (fetched origin/main). Initial VM memory check: available 16 GiB. Round 2 preflight: available 18 GiB, root disk 119 GB free. Current implementation: `1ace7c32935eee55e147a98a05bbca8091707b0c`. Native execution: NOT_RUN. No admission record, event-registry append, Decision Log edit, governance reseal, main push, landing lock, pm-mail or subagent.
 
 ## Per-row outcomes
 
@@ -10,13 +10,13 @@ Branch: `plans/ea-w2-debug-20261104`. Base: `be4766513f` (fetched origin/main). 
 | `debug.investigation.context_item_state_changed` | CV-571 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
 | `debug.investigation.exported` | CV-572 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
 | `debug.investigation.imported` | CV-573 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
-| `debug.investigation.instrumentation_state_changed` | CV-574 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
+| `debug.investigation.instrumentation_state_changed` | CV-574 | HELD_FOR_JARED; 8 PASS, 3 PARTIAL, membership ABSENT; no positive transition claim |
 | `debug.investigation.started` | CV-575 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
 | `debug.investigation.state_changed` | CV-578 | blocked on Jared; CONFLICT |
 | `debug.investigation.target_bound` | CV-576 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
 | `debug.investigation.verification_recorded` | CV-577 | prepared without admission; 10 PASS, retention PARTIAL, membership ABSENT |
 
-Each prepared row owns its exact producer, closed 1.0.0 payload, Project scope and identity recipe, first-receipt ordering, transient reader, source proof, custody, replay, compatibility and withdrawal text. Shared prerequisite definitions do not stand in for an individual adoption. `state_changed` has no schema or fixture: CV-578 records only its unanswered owner conflict.
+Seven rows are prepared. Instrumentation retains structurally closed draft work and conditional technical bindings under CV-574; it is not prepared. Each prepared row owns its exact producer, closed 1.0.0 payload, Project scope and identity recipe, first-receipt ordering, transient reader, source proof, custody, replay, compatibility and withdrawal text. Shared prerequisite definitions do not stand in for an individual adoption. `state_changed` has no schema or fixture: CV-578 records only its unanswered owner conflict.
 
 ## Newly authored bindings and search evidence
 
@@ -51,7 +51,7 @@ DL-045's current exact-name table still names all nine families; Contracts 3.5 s
 - **Derived files:** regenerated shards only for these three owners and repository PlanUnit indexes. No unedited owner's shard changed.
 - **Ids used:** CV-570..578, SP-570, ATS-285. Before minting, scanned all 475 fetched origin refs; no id-block conflict. Evidence `id-scan.json` in the draft directory. No other ids minted; no event family was registered.
 
-## Verification
+## Initial verification (before review fixes)
 
 - Static DDBG schema/identity/refusal oracles: exit 0, top-level PASS, eight separate family cases. Each case checks every missing required field, unknown fields, version, pinned identity, scope/operation substitution, changed-body digest conflict, original custody identity, unregistered/pending-retention/withdrawal refusal. Native transition, receipt crash, source-generation/CAS, evidence permission/deletion and withdrawal/rebuild cases are authored per family and remain NOT_RUN.
 - Shard generation: exit 0. Shard check: exit 0, parsed top-level pass. No unrelated owner shards changed.
@@ -60,7 +60,7 @@ DL-045's current exact-name table still names all nine families; Contracts 3.5 s
 - Existing shared-runtime materialization checker: exit 1, `shared_runtime_storage_materialization_stale`. Its script, registry and all source schemas are unchanged against the base; do not apply its unrelated materialization. `shared-runtime-input-diff.txt` is empty.
 - `git diff --check`: exit 0. No native or runtime readiness claim.
 
-Checks and this report are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/`. Retention and the state_changed owner conflict block admission. The worktree remains for lead integration; this branch is not landed.
+Checks and this report are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/`. Retention and the two explicit owner holds block admission. The round-2 worktree is removed after the final branch push; this branch is not landed.
 
 ## Check evidence hashes
 
@@ -84,3 +84,68 @@ Review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DDBG
 2. **Note, unchanged.** `debug.investigation.state_changed` stays held for Jared ('failed' as a lifecycle state, or which existing state receives the six outcomes); the review confirms the hold is genuine.
 3. **Note, unchanged.** Retention (`PENDING_RETENTION_DECISION`) and admission remain explicit gates.
 4. **Note, unchanged.** The shared-runtime materialization failure is pre-existing on `main`.
+
+
+## Review round 2: findings and responses
+
+Astra final review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DDBG-sol/REVIEW-astra.md`, SHA-256 `e1f08f009621a741afd72e78b87c611e71b0f913f14b3f25979ee6b0e1184672`, reviewed head `5e7faf3870cab5105491541978deca20d046224f`. Implementation commit: `1ace7c32935eee55e147a98a05bbca8091707b0c`. The report/self-grade follow-up records the resulting grades against that exact implementation tree. No finding is disputed.
+
+1. **B1 — fixed (1ace7c3293).** Where: `Plans/debug_investigation_event_payloads.schema.json:379`, `Plans/Contracts_V0.md:2217`, `scripts/pm-debug-investigation-events.py:107`. Cause: round 1 encoded Debug alone. Fix: all seven normalized requested/effective overlays and all four runtimes are bound to Assistant Chat 1.0A/1.0B/1.0C, its enum closure/UI table, and Run_Modes' requested/effective owner projection (`Plans/Run_Modes.md:1714`). Plan/Deep Plan retain their overlay and require runtime `plan`; Debug/Interview/BrainStorm/Crew require `regular` or explicit-opt-in `yolo`; Ask requires `none`. Normalized overlays agree. `none/none/plan` remains lawful for the non-primary runtime entrypoint explicitly permitted at Run_Modes:1716. All 196 closed tuples are checked: 14 legal and 182 forbidden. The two review counterexamples are explicit fixture negatives at `Plans/debug_investigation_event_fixtures.json:558` and `:568`; previous Debug negatives remain. Verify: targeted checker PASS; substituting the round-1 schema makes the full checker FAIL.
+2. **B2 — fixed (1ace7c3293).** Where: `scripts/pm-debug-investigation-events.py:14`, `Plans/Contracts_V0.md:2225`, fixture `:578`. Cause: changing the identity preimage tested key separation without proving a Project join. Fix: compare payload, envelope projection, actual owner record, case Project, investigation identity, optional thread/run, and encoded scope partition. The exact payload-only `project_id=other-project` negative preserves the case Project and expected identities, returns `project_scope_mismatch`, and models zero appends. Separate envelope/owner/investigation/thread/run negatives also run through the same gate. Verify: mutating only the shipped started payload Project makes the full checker FAIL; disabling the join check also fails its negative oracles.
+3. **B3 — fixed (1ace7c3293).** Where: unchanged canonical no-op owner rule `Plans/Contracts_V0.md:1699`, fixture `:182`, `scripts/pm-debug-investigation-events.py:137`. Cause: active/active was accepted as the positive transition. Fix: positive is active-to-revoked; an equal-state candidate is schema-valid but returns `no_op`, with zero modeled appends and no receipt. Its native zero-append obligation is authored and NOT_RUN. Verify: restoring the equal-state positive or disabling no-op rejection makes the full checker FAIL.
+4. **B4 — stopped for Jared (1ace7c3293 records the hold).** Where: `Plans/Contracts_V0.md:2070`, `Plans/storage-plan.md:1106`, `Plans/Automated_Testing_System.md:7239`, schema `:282`, fixture `:449`. Cause: the old manifest-equality wording did not define a source field, domain, or transition predicate. Current-source search covered every tracked live non-pipeline Plans file (`git grep` excluding shards/index/audits/migration/evidence/ledgers/locks). MiscPlan:1333/6085 requires but does not supply collector transitions; MiscPlan:6427 names `collector_state`/`cleanup_result`; Storage:1049 names manifest `scope`/`state`/`cleanup_outcome`; Runtime Artifacts:189 requires lifecycle/cleanup evidence; feature-list:35 names `planned`, `active`, `collecting`, `cleanup_pending`, `cleaned`, `cleanup_failed` without a mapping or legal edges. No source closes `rollback_state`. Fix: preserve the structural draft and conditional technical bindings; remove preparation/positive-transition claims and refuse all candidates as `instrumentation_mapping_unresolved`. Both the old `scrubbed` labels and the review's invented labels are zero-append negatives. The self-grade keeps transitions/oracles PARTIAL. Verify: falsely marking the family prepared or bypassing its hold makes the full checker FAIL.
+
+   **Exact question:** Which exact source fields and closed value domains map to instrumentation_state_changed.scope_kind, state and rollback_state, and which previous-to-next transitions (including cleanup failure, retry and supersession) emit an event versus no event?
+5. **Stale self-grade evidence — fixed in the report/self-grade follow-up.** All 152 evidence quotations now resolve at the edited source bytes, including schema `$id` lines `started:563`, `target_bound:635`, `verification_recorded:683`. Every normative file hash is refreshed; the assessed commit is the implementation SHA above, avoiding a self-referential report-commit hash. Reviewer before-grades are preserved per cell, including all five downgrades; repaired cells are re-graded from current evidence. Verify: `round2-evidence-validation.json` reports PASS, 152 quotes, zero mismatches.
+6. **Lifecycle hold — preserved.** `debug.investigation.state_changed` stays unprepared under CV-578 (`Plans/Contracts_V0.md:2587`), with no schema or positive fixture. The exact existing question remains whether `failed` joins the closed lifecycle or which existing state receives the six failed outcomes. This fix selects neither answer.
+7. **Retention/admission — preserved.** Every family's `PENDING_RETENTION_DECISION` and absent registry membership remain. No registry, admission, Decision Log, Spec Lock, governance evidence, auto-decision row or frozen validator changed. The product-answer and individual-admission gates still apply.
+
+### Standing checks and bounded scope
+
+Every structural candidate, including held instrumentation, now has a `projector_replay_only` negative and current append/retry refusal `replay_only_not_appendable`. All Project positives carry `scope_partition=project~cDE` (the exact unpadded base64url of `p1`); raw `p1` partitions refuse. The raw owning Project ID remains `p1` in identity preimages. No application writer or application key is introduced, so CV-366 application key formatting is inapplicable. Each exact CV-570..577 unit individually adopts the current 16 KiB inline/SP-337 payload-reference boundary; the schema-valid oversized verification body is refused inline. Native pack/reference durability is expressly NOT_RUN, not modeled as a successful write. Removing all native oracle declarations now fails the checker, addressing the review's optional hardening note.
+
+No new PlanUnit IDs, producer/consumer identities, family projectors or checkpoints were minted. The only new held-candidate refusal token is `instrumentation_mapping_unresolved`; it is a technical fence on an unanswered question, not a lifecycle policy. Existing cleanup, restore-point, residue visibility, retention, custody and permission obligations remain. No native readiness, admission or governance seal is claimed.
+
+### Family grades before and after
+
+Before is Astra's independent grade, not the branch's earlier overstatement. P=PASS, p=PARTIAL, A=ABSENT, C=CONFLICT.
+
+| Family suffix | Before | After | Current outcome |
+|---|---|---|---|
+| context_item_added | 10P / 1p / 1A | unchanged | prepared |
+| context_item_state_changed | 9P / 2p / 1A | 10P / 1p / 1A | prepared |
+| exported | 10P / 1p / 1A | unchanged | prepared |
+| imported | 10P / 1p / 1A | unchanged | prepared |
+| instrumentation_state_changed | 8P / 3p / 1A | unchanged grades; hold now explicit | held for Jared |
+| started | 8P / 3p / 1A | 10P / 1p / 1A | prepared |
+| target_bound | 10P / 1p / 1A | unchanged | prepared |
+| verification_recorded | 10P / 1p / 1A | unchanged | prepared |
+| state_changed | 0P / 2p / 8A / 2C | unchanged | held for Jared |
+
+Original eight rows: **75P / 13p / 8A -> 78P / 10p / 8A**. All nine: **75P / 15p / 16A / 2C -> 78P / 12p / 16A / 2C**. Preparation verdict: **5 of 8 pass -> 7 prepared pass, 2 explicit holds across the nine-row lane**. Native execution stays NOT_RUN. IDs remain **CV-570..578, SP-570, ATS-285**; round 2 mints none.
+
+### Round-2 verification
+
+| Check | Exit | Parsed result |
+|---|---:|---|
+| `python3 -B scripts/pm-debug-investigation-events.py` | 0 | PASS; seven prepared, instrumentation held |
+| Full-checker mutation probes | 0 | PASS; 13 probes, 12 injected defects detected |
+| Shard generation | 0 | pass |
+| Index generation | 0 | pass |
+| Shard verification | 0 | pass; only the three edited owner shard directories change |
+| Index validation, after final generation | 0 | top-level pass; no failures |
+| Self-grade quote/hash validation | 0 | PASS; 152 quotes |
+| `git diff --check` | 0 | clean |
+
+The ignored currentness edition was copied and all 15 file SHA-256s matched before index generation. Only CV-570..577 prose additions, SP-570's hold adoption, ATS-285, standalone companions/checker, their derived shards/indexes, and this report/self-grade changed. No test file, unrelated owner shard, registry or governance artifact changed. Aggregate landing checks and native tests were not run by this fix worker.
+
+Round-2 evidence files below are retained; report and self-grade copies overwrite the draft delivery paths. Worktree cleanup follows the final successful branch push.
+
+- **round2-pipeline-exits.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-pipeline-exits.json`, SHA-256 `48bcfe9b9fdd46a30e43f48cef618b00dd3c6712bc572946340212e5b0039da2`.
+- **round2-static-check.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-static-check.json`, SHA-256 `e9bd97b0905f6d15967d12cddc15c35b6bf242d0a0e458d87a29c3b89247cff4`.
+- **round2-regression-probes.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-regression-probes.json`, SHA-256 `06069576f02c55d7314a5ac4e9ae8428a8af4493abde5181a98522056570e092`.
+- **round2-shard-generate.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-shard-generate.json`, SHA-256 `48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4`.
+- **round2-shard-check.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-shard-check.json`, SHA-256 `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`.
+- **round2-index-generate.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-index-generate.json`, SHA-256 `378a6e93edc253c618d38f08e54a66b4be589134094fb67313d802881c4b2b9c`.
+- **round2-index-validate.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-index-validate.json`, SHA-256 `fe832becb1df9b2758b5a0cb18f03f79cd44d1b900b830e9b77a39ceffb0ef9d`.
+- **round2-evidence-validation.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DDBG/round2-evidence-validation.json`, SHA-256 `4aa52895fc32a46935501d61b99ac00c3400c91465ff9be0e0081b51f4bb2969`.
