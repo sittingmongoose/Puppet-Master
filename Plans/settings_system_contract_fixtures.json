@@ -8040,6 +8040,1014 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-classification-code.terminal.theme",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "about_the_screen",
+          "project": "about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "code.terminal.theme"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.theme-device-own",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.terminal.theme",
+        "everywhere_own": "Follow look",
+        "computer_own": null,
+        "device_own": "Nord",
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "Nord"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.theme-device-unset",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.terminal.theme",
+        "everywhere_own": "Follow look",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "Follow look"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.theme-device-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.terminal.theme": "Nord"
+        },
+        "source_by_setting_id": {
+          "code.terminal.theme": "explicit"
+        },
+        "setting_revisions": {
+          "code.terminal.theme": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.theme-computer-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.terminal.theme": "Nord"
+        },
+        "source_by_setting_id": {
+          "code.terminal.theme": "explicit"
+        },
+        "setting_revisions": {
+          "code.terminal.theme": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.theme-project-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.terminal.theme": "Nord"
+        },
+        "source_by_setting_id": {
+          "code.terminal.theme": "explicit"
+        },
+        "setting_revisions": {
+          "code.terminal.theme": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-classification-code.terminal.font-size",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "about_the_screen",
+          "project": "about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "code.terminal.font-size"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.font-size-device-own",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.terminal.font-size",
+        "everywhere_own": "Font default",
+        "computer_own": null,
+        "device_own": 18,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": 18
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.font-size-device-unset",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.terminal.font-size",
+        "everywhere_own": "Font default",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "Font default"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.font-size-device-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.terminal.font-size": 18
+        },
+        "source_by_setting_id": {
+          "code.terminal.font-size": "explicit"
+        },
+        "setting_revisions": {
+          "code.terminal.font-size": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.font-size-computer-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.terminal.font-size": 18
+        },
+        "source_by_setting_id": {
+          "code.terminal.font-size": "explicit"
+        },
+        "setting_revisions": {
+          "code.terminal.font-size": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.terminal.font-size-project-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.terminal.font-size": 18
+        },
+        "source_by_setting_id": {
+          "code.terminal.font-size": "explicit"
+        },
+        "setting_revisions": {
+          "code.terminal.font-size": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-classification-code.editing.color-scheme",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "about_the_screen",
+          "project": "about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "code.editing.color-scheme"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.color-scheme-device-own",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.editing.color-scheme",
+        "everywhere_own": "Follow look",
+        "computer_own": null,
+        "device_own": "Nord",
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "Nord"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.color-scheme-device-unset",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.editing.color-scheme",
+        "everywhere_own": "Follow look",
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": "Follow look"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.color-scheme-device-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.editing.color-scheme": "Nord"
+        },
+        "source_by_setting_id": {
+          "code.editing.color-scheme": "explicit"
+        },
+        "setting_revisions": {
+          "code.editing.color-scheme": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.color-scheme-computer-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.editing.color-scheme": "Nord"
+        },
+        "source_by_setting_id": {
+          "code.editing.color-scheme": "explicit"
+        },
+        "setting_revisions": {
+          "code.editing.color-scheme": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.color-scheme-project-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.editing.color-scheme": "Nord"
+        },
+        "source_by_setting_id": {
+          "code.editing.color-scheme": "explicit"
+        },
+        "setting_revisions": {
+          "code.editing.color-scheme": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-classification-code.editing.font-size",
+      "schema_ref": "Plans/settings_inventory.schema.json#/$defs/layering",
+      "record": {
+        "home": "everywhere",
+        "may_differ_by": [
+          "everywhere",
+          "device"
+        ],
+        "computer_key": null,
+        "combine": "most_specific",
+        "atomic_group": null,
+        "not_offered": {
+          "computer": "about_the_screen",
+          "project": "about_the_screen"
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.reviewed_classification",
+          "expected": "code.editing.font-size"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.font-size-device-own",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.editing.font-size",
+        "everywhere_own": 13,
+        "computer_own": null,
+        "device_own": 18,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": 18
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.font-size-device-unset",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/SettingsResolutionScenarioV1",
+      "record": {
+        "setting_id": "code.editing.font-size",
+        "everywhere_own": 13,
+        "computer_own": null,
+        "device_own": null,
+        "project_own": null,
+        "requested_value": 6,
+        "os_reduce_motion": false,
+        "expected_setting_revision": 1,
+        "actual_setting_revision": 1,
+        "selected_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "eligible_ids": [
+          "ai.usage.max-tool-rounds"
+        ],
+        "theme_pair_revisions": {
+          "theme": 1,
+          "theme_mode": 1
+        },
+        "selected_account_id": "account-a",
+        "authenticated_account_id": "account-a",
+        "source_host_id": "host-a",
+        "destination_host_id": "host-a",
+        "credential_bytes_present": false
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.resolve",
+          "expected": 13
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.font-size-device-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "device",
+          "level_key": "client-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.editing.font-size": 18
+        },
+        "source_by_setting_id": {
+          "code.editing.font-size": "explicit"
+        },
+        "setting_revisions": {
+          "code.editing.font-size": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "accept"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.font-size-computer-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "computer",
+          "level_key": "server:server-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.editing.font-size": 18
+        },
+        "source_by_setting_id": {
+          "code.editing.font-size": "explicit"
+        },
+        "setting_revisions": {
+          "code.editing.font-size": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-b-f15-code.editing.font-size-project-write",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_level_snapshot",
+      "record": {
+        "schema_id": "pm.settings_level_snapshot.v1",
+        "schema_version": "1.0.0",
+        "layer_model": "ladder_v1",
+        "target": {
+          "level": "project",
+          "level_key": "project-a",
+          "computer_key": null,
+          "project_id": "project-a",
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "snapshot_id": "snapshot-a",
+        "revision": 1,
+        "inventory_schema_version": "1.1.0",
+        "values_by_setting_id": {
+          "code.editing.font-size": 18
+        },
+        "source_by_setting_id": {
+          "code.editing.font-size": "explicit"
+        },
+        "setting_revisions": {
+          "code.editing.font-size": 1
+        },
+        "writer_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "committed_at_utc": "2026-11-03T00:00:00Z",
+        "content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "settings.level_and_sparse_maps",
+          "expected": "refuse_unoffered_level"
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
