@@ -28,7 +28,7 @@ const SAMPLE = async () => {
 	if (!st) return { err: 'no stage' };
 	const R = (e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; };
 	const out = (a, c) => Math.max(c.l - a.l, a.r - c.r, c.t - a.t, a.b - c.b);
-	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0, colWords: 0 }, who = {};
+	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0, colWords: 0, restFrames: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
 	while (performance.now() - t0 < 600) {
@@ -67,6 +67,10 @@ const SAMPLE = async () => {
 		worst.pip = Math.max(worst.pip, out(pip, c));
 		worst.headFoot = Math.max(worst.headFoot, head.b - foot);
 		const props = [...st.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
+		// Pip in its resting pose this frame (the hand's slow sway allowed): not mid idle wiggle or swing, a nod or a hop.
+		// FO-50 is about a resting prop over the resting head; those moments of life are counted, not judged
+		const pr0 = st.ps, poseRest = Math.abs(pr0.tilt - pr0.tiltT) < .02 && Math.abs(pr0.th) < .02 && Math.abs(pr0.dy) < 1;
+		if (poseRest) seen.restFrames++;
 		for (const p of props) {
 			const q = R(p.el), name = `${p.spec.kind}:${p.spec.slot || (p.spec.stack != null ? 'stack' + p.spec.stack : '')}`;
 			if (p.spec.kind === 'sign') { seen.sign++; worst.sign = Math.max(worst.sign, out(q, c)); worst.signFoot = Math.max(worst.signFoot, q.b - foot); }
@@ -75,7 +79,7 @@ const SAMPLE = async () => {
 			if (o > worst.prop) { worst.prop = o; who.prop = name; }
 			if (fo > worst.propFoot) { worst.propFoot = fo; who.propFoot = name; }
 			const ix = Math.min(q.r, head.r) - Math.max(q.l, head.l), iy = Math.min(q.b, head.b) - Math.max(q.t, head.t);
-			if (ix > 0 && iy > 0 && Math.min(ix, iy) > worst.propOnHead) {
+			if (poseRest && Math.abs(p.a) < .02 && Math.abs(p.av) < .05 && ix > 0 && iy > 0 && Math.min(ix, iy) > worst.propOnHead) {
 				worst.propOnHead = Math.min(ix, iy); who.propOnHead = name;
 				// (what Pip was doing then: its swing, tilt and hop, and the box the props keep off, in stage units)
 				const ps = st.ps, r2 = (v) => Math.round(v * 100) / 100;
@@ -85,7 +89,7 @@ const SAMPLE = async () => {
 		last = { crop: [c.l, c.t, c.r, c.b].map(Math.round), pip: [pip.l, pip.t, pip.r, pip.b].map(Math.round), foot: Math.round(foot) };
 	}
 	const r1 = (v) => (v < -1e8 ? null : Math.round(v * 10) / 10);
-	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), colWords: seen.colWords, pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
+	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), colWords: seen.colWords, restFrames: seen.restFrames, pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
 };
 
 // the tube powered on (the paper fed in, the line opened) and its stepped draw caught up
@@ -94,8 +98,15 @@ const settle = async (t, f) => {
 	await f.waitForTimeout(450);
 };
 
+// Pip in its resting pose (no idle wiggle or swing, nod or hop playing), up to 4 s
+const poseAtRest = (f) => f.waitForFunction(() => {
+	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), ps = st && st.ps;
+	return !!ps && Math.abs(ps.tilt - ps.tiltT) < .02 && Math.abs(ps.tiltv) < .1 && Math.abs(ps.th) < .02 && Math.abs(ps.thv) < .05 && Math.abs(ps.dy) < 1;
+}, null, { timeout: 4000, polling: 'raf' }).catch(() => {});
+
 async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await settle(t, f);
+	await poseAtRest(f);
 	const r = await f.evaluate(`(${SAMPLE.toString()})()`);
 	if (r.err) return t.check(`${tag}: the stage`, false, r.err);
 	const at = `${tag} [${r.theme} ${r.layout}${r.asleep ? ', asleep' : ''}${r.low ? ', low-resource' : ''}${r.reduced ? ', reduced' : ''}]`;
@@ -111,6 +122,7 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 		await t.check(`${at}: every resting prop inside the visible crop`, r.prop <= 1, `${r.who.prop} ${r.prop} px outside; ${why}`);
 		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
 	}
+	await t.check(`${at}: Pip seen at rest (head-overlap frames)`, r.restFrames >= 8, `${r.restFrames}/${r.n} frames in its resting pose`);
 	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}${r.who.pipState ? '; pip ' + JSON.stringify(r.who.pipState) : ''}`);
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
 	// FO-55: drawn smaller only where the span cannot hold it (.77, Retro Light at 740, the lead's call): never under 75%
@@ -129,7 +141,8 @@ const propsAtRest = async (f) => {
 	await f.waitForFunction(() => {
 		const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), ps = st && st.ps;
 		const still = !!st && !!ps && [...st.props.values()].every((p) => p.state === 'out' || (p.settled && Math.abs(p.a) < .01 && Math.abs(p.av) < .03 && Math.abs(p.lenv) < 2 && Math.abs(p.axv) < 2))
-			&& Math.abs(ps.C.y - ps.Ct.y) < 1 && Math.abs(ps.C.vy) < 2 && Math.abs(ps.thv) < .05 && Math.abs(ps.dyv) < 5 && !(st.moodUntil > st.t);
+			&& Math.abs(ps.C.y - ps.Ct.y) < 1 && Math.abs(ps.C.vy) < 2 && Math.abs(ps.thv) < .05 && Math.abs(ps.dyv) < 5 && !(st.moodUntil > st.t)
+			&& Math.abs(ps.tilt - ps.tiltT) < .02 && Math.abs(ps.tiltv) < .1;
 		if (!still) { window.__bcRest = 0; return false; }
 		if (!window.__bcRest) window.__bcRest = performance.now();
 		return performance.now() - window.__bcRest > 900;
