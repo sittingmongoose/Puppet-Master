@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L5645-L6040
+Source lines: L5645-L6052
 
-Source SHA256: `340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34`
+Source SHA256: `f125e9da0e9754917dd36fb49da931569bea80454605d49c6c27fa35da2d5f0e`
 
 ---
 
@@ -108,6 +108,8 @@ acceptance_criteria:
 - Reader withdrawal disables interpretation while preserving original registered source and retention;
   it admits no replacement writer and decides no sibling event disposition.
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_child_status_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
 - Plans/event_family_registry.json
@@ -151,6 +153,8 @@ The sole family-specific consumer binding is the new Storage-owned read adapter 
 
 This exact-row qualification applies to the older event-log list, D-R03, v2 matrix and schema-authority prose wherever they could be read as current writer/projection admission. Other rows retain their own unresolved/adjudicated owner disposition. Withdrawal of this adapter disables interpretation only; it does not delete historical source or admit a replacement writer.
 
+Amended 2026-11-04 (DL-045 depth): SP-271 adopts SP-420 for the original admission proof of `goal.child_status_changed` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_child_status_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_child_status_history_answer` and `Plans/goal_child_status_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#0-scope, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/storage-plan.md#SP-271, ContractName:Plans/Contracts_V0.md#CV-334
 
 ### GRS-061 - Historical Goal degradation and current projection quality
@@ -166,6 +170,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_degraded_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_degraded_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_degraded.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -273,6 +279,8 @@ preserved_exact_tokens:
 - RP-AUTHORITY-INDEFINITE
 ```
 
+Amended 2026-11-04 (DL-045 depth): SP-277 adopts SP-420 for the original admission proof of `goal.degraded` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_degraded_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_degraded_history_answer` and `Plans/goal_degraded_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-062 - Exact historical Goal scheduling contract
@@ -288,6 +296,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_scheduled_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_scheduled_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -402,5 +412,7 @@ preserved_exact_tokens:
 - none_required
 - storage.goal_scheduled_history_read.v1
 ```
+
+Amended 2026-11-04 (DL-045 depth): SP-280 adopts SP-420 for the original admission proof of `goal.scheduled` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_scheduled_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_scheduled_history_answer` and `Plans/goal_scheduled_history_contract_fixtures.json`. This changes no current-writer refusal above.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045

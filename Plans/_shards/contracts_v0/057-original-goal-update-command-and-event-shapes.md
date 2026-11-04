@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L22548-L23252
+Source lines: L22554-L23270
 
-Source SHA256: `0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08`
+Source SHA256: `3cd5d173dfcdc574aa0682b09999a21766bbd0894ef372298a41f49cf47dfa83`
 
 ---
 
@@ -127,6 +127,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_progressed_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_progressed.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -202,6 +205,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_replanned_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_replanned.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -277,6 +283,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_stopped_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_stopped.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -352,6 +361,9 @@ acceptance_criteria:
   current data cannot invent it. Invalid envelope/payload/source rejects truthful inspection without this read writing
   quarantine or a checkpoint.
 validation_surfaces:
+- Plans/goal_verification_decided_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json

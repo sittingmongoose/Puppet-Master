@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28057-L29478
+Source lines: L28156-L29579
 
-Source SHA256: `b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db`
+Source SHA256: `4d824813b878dbc92bb980bb3742832494a5bdff6340b350b9bc27a7c5378275`
 
 ---
 
@@ -376,6 +376,8 @@ negative_constraints:
 owner_hints:
   - "Plans/storage-plan.md"
 ```
+
+**Historical Goal readers (2026-11-04, DL-045).** When `pm inspect`, or the record inspector (F3-666) that matches it, opens an EventRecord of `goal.child_status_changed`, `goal.degraded`, `goal.scheduled`, `goal.progressed`, `goal.replanned`, `goal.stopped` or `goal.verification_decided`, it calls that family's own historical reader (SP-271, SP-277, SP-280, SP-300, SP-301, SP-302 or SP-303 respectively) with the record's own selector and takes the record's historical interpretation and validation disposition only from that reader's answer. `pm tail`, `pm export` and `pm db dump` call none of them. This adds no verb, no output file and no write.
 
 ### SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction
 

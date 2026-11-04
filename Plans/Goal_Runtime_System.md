@@ -3897,15 +3897,15 @@ Each positive oracle describes validation of the outer EventRecord, exact row sc
 | --- | --- | --- |
 | `EA-UND-0001-GOAL` | Append a permission block with exact permission evidence, ordered action IDs containing `request_approval`, and matching CAS; projection becomes `blocked` and exposes the exact cause/safe action. | Reject unknown blocker/reason/action, missing cause/scope, action set not containing next action, generic `try_anyway`, or block from a terminal state. |
 | `EA-UND-0002-GOAL` (historical v2 only; current GRS-073) | Cancel a running mutated Goal only after referenced settlements are durable; projection becomes terminal `cancelled`. | Reject `mutation_started=false` with rollback refs, true with empty settlement refs, missing cancellation scope, or cancellation of terminal Goal. |
-| `EA-UND-0003-GOAL` | Record a child `running->completed` edge with receipt ref; parent revision advances while parent status remains unchanged. | Reject equal/unknown child states, completed child without receipt, illegal child edge, or any attempt to set parent completion in this payload. |
+| `EA-UND-0003-GOAL` | Historical conditional oracle only under GRS-060; no current writer: Record a child `running->completed` edge with receipt ref; parent revision advances while parent status remains unchanged. | Reject equal/unknown child states, completed child without receipt, illegal child edge, or any attempt to set parent completion in this payload. |
 | `EA-UND-0004-GOAL` | From `verifying`, validate canonical completion receipt, exhaustive satisfied/not-applicable criteria, passing/waived validators, then commit `completed`. | Reject missing/corrupt receipt, unsatisfied/deferred criterion, failed/blocked/unwaived skipped validator, worker claim, projection substitute, or wrong source state. |
 | `EA-UND-0005-GOAL` | Create previously absent Goal at revision 1 with verified control-envelope hash, non-empty criteria, exact scope/budget/model policy; projection is `created`. | Reject expected revision, revision other than 1, duplicate Goal ID, hash mismatch, null optional, unknown enum, or write scope without authority evidence. |
-| `EA-UND-0006-GOAL` | Record a standard-tier no-mutation optional-check degradation with risks/actions and exception evidence; projection is `degraded`, not success. | Reject empty risks/actions, strong-tier required-check degradation, missing exception/approval proof, degradation from a fenced/terminal state, or any completion claim. |
+| `EA-UND-0006-GOAL` | Historical conditional oracle only under GRS-061; no current writer: Record a standard-tier no-mutation optional-check degradation with risks/actions and exception evidence; projection is `degraded`, not success. | Reject empty risks/actions, strong-tier required-check degradation, missing exception/approval proof, degradation from a fenced/terminal state, or any completion claim. |
 | `EA-UND-0007-GOAL` | Capture current source evidence with valid span/hash and matching outer/inner redaction; evidence index advances while state is preserved. | Reject wrong hash syntax, invalid locator branch, artifact snapshot without snapshot ref, raw secret, redaction mismatch, unknown currentness used as proof, or any retention value invented by fallback. |
 | `EA-UND-0008-GOAL` | Historical conditional oracle only under GRS-069; no current writer: Append `scheduled->running` with a non-empty task delta and artifact hashes; second identical fingerprint includes repeat count/marker and remains visible. | Reject disallowed state pair, empty task delta, repeat>=2 without marker, marker with repeat<2, stale status_before, or use of progressed to claim blocked/completed. |
 | `EA-UND-0009-GOAL` | Record a validated verification or completion receipt with complete child/WorkNode refs and passing outputs; state remains unchanged. | Reject missing receipt, invalid certifier enum, certified decision with failed output, exception without approval, incomplete declared dependency receipts, or treating receipt-recorded as Goal completion. |
 | `EA-UND-0010-GOAL` | Historical conditional oracle only under GRS-070; no current writer: Replan running Goal for scope reduction, decide every affected child, preserve only revalidated evidence, and commit `running` at the new revision. | Reject new revision mismatch, missing/extra child decision, unknown interruption/action, stale evidence, terminal/limit source, or child steering without referenced disposition. |
-| `EA-UND-0011-GOAL` | Schedule a created Goal with `dispatch`, due eligibility, queue, budget snapshot, writer storage, current permission, and resolved recovery truth. | Reject dispatch without queue/due time/admission evidence, unknown priority/reason/action, stale CAS, viewer/blocked storage, unknown recovery, or scheduling a terminal Goal. |
+| `EA-UND-0011-GOAL` | Historical conditional oracle only under GRS-062; no current writer: Schedule a created Goal with `dispatch`, due eligibility, queue, budget snapshot, writer storage, current permission, and resolved recovery truth. | Reject dispatch without queue/due time/admission evidence, unknown priority/reason/action, stale CAS, viewer/blocked storage, unknown recovery, or scheduling a terminal Goal. |
 | `EA-UND-0012-GOAL` | Historical conditional oracle only under GRS-071; no current writer: Stop a running Goal at a validated safe point after durable child/tool settlement, with `resumable=true`; projection is fenced `stopped`. | Reject resumable without safe point, before-mutation with settlements, unsettled after-mutation as resumable, unknown stop reason/boundary, or treating stop as cancellation/completion. |
 | `EA-UND-0013-GOAL` | Record a permission check `blocked/approval_required` by output/log refs and block evidence; state is preserved pending named block event. | Reject embedded tool output/secret, failed/unknown without log, approval-required without evidence, deny+passed, unknown check enum, or direct state mutation. |
 | `EA-UND-0014-GOAL` | Apply one exact scope delta with previous/new revision relation, mark affected child stale, and fence dispatch pending replan. | Reject zero deltas, revision mismatch, child in active and stale sets, malformed delta branch, update during verifying/terminal, or implicit child re-steer. |
@@ -5742,6 +5742,8 @@ acceptance_criteria:
 - Reader withdrawal disables interpretation while preserving original registered source and retention;
   it admits no replacement writer and decides no sibling event disposition.
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_child_status_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_child_status_changed.schema.json
 - Plans/event_family_registry.json
@@ -5785,6 +5787,8 @@ The sole family-specific consumer binding is the new Storage-owned read adapter 
 
 This exact-row qualification applies to the older event-log list, D-R03, v2 matrix and schema-authority prose wherever they could be read as current writer/projection admission. Other rows retain their own unresolved/adjudicated owner disposition. Withdrawal of this adapter disables interpretation only; it does not delete historical source or admit a replacement writer.
 
+Amended 2026-11-04 (DL-045 depth): SP-271 adopts SP-420 for the original admission proof of `goal.child_status_changed` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_child_status_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_child_status_history_answer` and `Plans/goal_child_status_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#0-scope, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/storage-plan.md#SP-271, ContractName:Plans/Contracts_V0.md#CV-334
 
 ### GRS-061 - Historical Goal degradation and current projection quality
@@ -5800,6 +5804,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_degraded_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_degraded_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_degraded.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -5907,6 +5913,8 @@ preserved_exact_tokens:
 - RP-AUTHORITY-INDEFINITE
 ```
 
+Amended 2026-11-04 (DL-045 depth): SP-277 adopts SP-420 for the original admission proof of `goal.degraded` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_degraded_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_degraded_history_answer` and `Plans/goal_degraded_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-061, ContractName:Plans/Contracts_V0.md#CV-335, ContractName:Plans/storage-plan.md#SP-277, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-062 - Exact historical Goal scheduling contract
@@ -5922,6 +5930,8 @@ unblocks: []
 reasoning_tier: high
 context_scope: goal_scheduled_exact_family_historical_contract
 validation_surfaces:
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/goal_scheduled_history_contract_fixtures.json
 - Plans/event_payloads/goal_runtime/goal_scheduled.schema.json
 - Plans/goal_runtime_events.schema.json
@@ -6036,6 +6046,8 @@ preserved_exact_tokens:
 - none_required
 - storage.goal_scheduled_history_read.v1
 ```
+
+Amended 2026-11-04 (DL-045 depth): SP-280 adopts SP-420 for the original admission proof of `goal.scheduled` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_scheduled_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_scheduled_history_answer` and `Plans/goal_scheduled_history_contract_fixtures.json`. This changes no current-writer refusal above.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-062, ContractName:Plans/Contracts_V0.md#CV-336, ContractName:Plans/storage-plan.md#SP-280, ContractName:Plans/Scheduling_and_Quota_Resume.md, ContractName:Plans/Decision_Log.md#DL-045
 
@@ -6635,6 +6647,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_progressed_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_progressed.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -6684,6 +6699,8 @@ This ruling does not widen the four-state Goal, reintroduce Goal title/task/phas
 
 The exact reader is `storage.goal_progressed_history_read.v1@1.0.0` under SP-300. CV-343 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
 
+Amended 2026-11-04 (DL-045 depth): SP-300 adopts SP-420 for the original admission proof of `goal.progressed` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_progressed_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_progressed_history_answer` and `Plans/goal_progressed_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-300, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-070 - Exact historical goal.replanned contract
@@ -6727,6 +6744,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_replanned_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_replanned.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -6776,6 +6796,8 @@ This ruling does not widen the four-state Goal, reintroduce Goal title/task/phas
 
 The exact reader is `storage.goal_replanned_history_read.v1@1.0.0` under SP-301. CV-344 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
 
+Amended 2026-11-04 (DL-045 depth): SP-301 adopts SP-420 for the original admission proof of `goal.replanned` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_replanned_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_replanned_history_answer` and `Plans/goal_replanned_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-301, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-071 - Exact historical goal.stopped contract
@@ -6818,6 +6840,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_stopped_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_stopped.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -6867,6 +6892,8 @@ This ruling does not widen the four-state Goal, reintroduce Goal title/task/phas
 
 The exact reader is `storage.goal_stopped_history_read.v1@1.0.0` under SP-302. CV-345 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
 
+Amended 2026-11-04 (DL-045 depth): SP-302 adopts SP-420 for the original admission proof of `goal.stopped` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_stopped_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_stopped_history_answer` and `Plans/goal_stopped_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-302, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-072 - Exact historical goal.verification_decided contract
@@ -6910,6 +6937,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_verification_decided_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -6958,6 +6988,8 @@ Preserve decision, verifier_ref, finding_refs, closure_refs, unresolved_risk_ref
 This ruling does not widen the four-state Goal, reintroduce Goal title/task/phase/tranche/child/budget/role structure, add a workflow obligation, or alter any other exact event's disposition. It grants no current body/revision/receipt/GoalRun effect. Historical bytes are never rewritten, stripped, rehashed as a new payload, promoted to active state or used to infer new original admission. A future semantic successor requires a separate explicit owner contract and central admission; none is supplied here.
 
 The exact reader is `storage.goal_verification_decided_history_read.v1@1.0.0` under SP-303. CV-346 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
+
+Amended 2026-11-04 (DL-045 depth): SP-303 adopts SP-420 for the original admission proof of `goal.verification_decided` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_verification_decided_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_verification_decided_history_answer` and `Plans/goal_verification_decided_history_contract_fixtures.json`. This changes no current-writer refusal above.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-303, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/Decision_Log.md#DL-039
 

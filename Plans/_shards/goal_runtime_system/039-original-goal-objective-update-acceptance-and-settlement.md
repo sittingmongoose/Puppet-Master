@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L6493-L7169
+Source lines: L6505-L7201
 
-Source SHA256: `340679f1e0852d0ad5ef0345415686be14f53b12677402812d37989477a39c34`
+Source SHA256: `f125e9da0e9754917dd36fb49da931569bea80454605d49c6c27fa35da2d5f0e`
 
 ---
 
@@ -153,6 +153,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_progressed_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_progressed.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -202,6 +205,8 @@ This ruling does not widen the four-state Goal, reintroduce Goal title/task/phas
 
 The exact reader is `storage.goal_progressed_history_read.v1@1.0.0` under SP-300. CV-343 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
 
+Amended 2026-11-04 (DL-045 depth): SP-300 adopts SP-420 for the original admission proof of `goal.progressed` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_progressed_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_progressed_history_answer` and `Plans/goal_progressed_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-300, ContractName:Plans/Contracts_V0.md#CV-343, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-070 - Exact historical goal.replanned contract
@@ -245,6 +250,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_replanned_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_replanned.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -294,6 +302,8 @@ This ruling does not widen the four-state Goal, reintroduce Goal title/task/phas
 
 The exact reader is `storage.goal_replanned_history_read.v1@1.0.0` under SP-301. CV-344 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
 
+Amended 2026-11-04 (DL-045 depth): SP-301 adopts SP-420 for the original admission proof of `goal.replanned` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_replanned_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_replanned_history_answer` and `Plans/goal_replanned_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-301, ContractName:Plans/Contracts_V0.md#CV-344, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-071 - Exact historical goal.stopped contract
@@ -336,6 +346,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_stopped_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_stopped.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -385,6 +398,8 @@ This ruling does not widen the four-state Goal, reintroduce Goal title/task/phas
 
 The exact reader is `storage.goal_stopped_history_read.v1@1.0.0` under SP-302. CV-345 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
 
+Amended 2026-11-04 (DL-045 depth): SP-302 adopts SP-420 for the original admission proof of `goal.stopped` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_stopped_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_stopped_history_answer` and `Plans/goal_stopped_history_contract_fixtures.json`. This changes no current-writer refusal above.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-302, ContractName:Plans/Contracts_V0.md#CV-345, ContractName:Plans/Decision_Log.md#DL-039
 
 ### GRS-072 - Exact historical goal.verification_decided contract
@@ -428,6 +443,9 @@ acceptance_criteria:
 - Repeated lookup changes no durable state; reader withdrawal returns unavailable while preserving exact original
   custody. Lawfully removed required source yields unavailable, not payload reconstruction.
 validation_surfaces:
+- Plans/goal_verification_decided_history_contract_fixtures.json
+- Plans/goal_history_reader_outputs.schema.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
 - Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json
 - Plans/event_family_registry.json
 - Plans/storage_value_registry.json
@@ -476,6 +494,8 @@ Preserve decision, verifier_ref, finding_refs, closure_refs, unresolved_risk_ref
 This ruling does not widen the four-state Goal, reintroduce Goal title/task/phase/tranche/child/budget/role structure, add a workflow obligation, or alter any other exact event's disposition. It grants no current body/revision/receipt/GoalRun effect. Historical bytes are never rewritten, stripped, rehashed as a new payload, promoted to active state or used to infer new original admission. A future semantic successor requires a separate explicit owner contract and central admission; none is supplied here.
 
 The exact reader is `storage.goal_verification_decided_history_read.v1@1.0.0` under SP-303. CV-346 applies this qualification to the schema roster and original minima. Existing original acceptance examples are historical conditional oracles only. No historical positive instance, native producer/reader or event-depth verdict is claimed.
+
+Amended 2026-11-04 (DL-045 depth): SP-303 adopts SP-420 for the original admission proof of `goal.verification_decided` records; SP-420 resolves no admitted writer for this family, so no lookup returns `verified_historical`. The operating consumers of `storage.goal_verification_decided_history_read.v1@1.0.0` are SP-339's `pm inspect` and the record inspector F3-666, which take this family's historical interpretation only from that reader; `pm tail` and `pm export` do not call it. Its closed answer and oracle cases are `Plans/goal_history_reader_outputs.schema.json#/$defs/goal_verification_decided_history_answer` and `Plans/goal_verification_decided_history_contract_fixtures.json`. This changes no current-writer refusal above.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-303, ContractName:Plans/Contracts_V0.md#CV-346, ContractName:Plans/Decision_Log.md#DL-039
 
