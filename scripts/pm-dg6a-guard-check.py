@@ -60,6 +60,8 @@ def run_case(kind, m, family, fixture, case):
         return messages(shared.writer_policy_errors(value))
     if target == 'refs':
         return messages(shared.schema_ref_errors(value))
+    if target == 'comparison':
+        return [] if shared.exact_value(value['candidate'], value['source']) else ['immutable source mismatch']
     if target == 'schema':
         try:
             shared.check_schema(value)
@@ -99,6 +101,22 @@ def rejection_mutants(m, function):
     tree = ast.parse(''.join(source))
     result = []
     for node in ast.walk(tree):
+        if function == 'exact_value':
+            options = []
+            if isinstance(node, ast.If) and ast.unparse(node.test).startswith('type(left)'):
+                options.append(('exact JSON value type', ast.Pass()))
+            elif isinstance(node, ast.Return) and isinstance(node.value, ast.BoolOp):
+                category = 'object' if 'left.keys()' in ast.unparse(node.value) else 'array'
+                for i, label in enumerate(('keys' if category=='object' else 'length', 'child values')):
+                    replacement = copy.deepcopy(node)
+                    replacement.value.values[i] = ast.Constant(value=True)
+                    options.append((category + ' ' + label, replacement))
+            elif isinstance(node, ast.Return) and isinstance(node.value, ast.Compare):
+                options.append(('scalar value', ast.Return(value=ast.Constant(value=True))))
+            for label, replacement in options:
+                result.append(dict(module=m,function=function,line=start+node.lineno-1,node_line=node.lineno,
+                                   label=label,replacement=replacement,tree=tree))
+            continue
         replacement = None
         label = None
         if isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
@@ -261,6 +279,10 @@ def history_matrix(kind, m, family, fixture):
                 ('typed_original_result_offset', ['event','receipt','original_append_result','byte_offset'], False, 'original_receipt'),
                 ('typed_source_generation', ['event','source_selection','manifest_generation'], False, 'original_source')]:
             negatives.append(dict(name=name,path=path,value=value,guard=guard))
+        missing_header = copy.deepcopy(base['event']['receipt']['first_append_receipt'])
+        del missing_header['sequence_id']
+        negatives.append(dict(name='missing_original_receipt_sequence',path=['event','receipt','first_append_receipt'],
+                              value=missing_header,guard='original_receipt'))
         def integer_leaf(value, path):
             if type(value) is int:
                 return path, value
@@ -341,7 +363,7 @@ def main():
         sources = [(m, ['errors', 'operation_errors', 'protocol_errors', 'checkpoint_errors', 'profile_errors', 'writer_policy_errors', 'schema_ref_errors'])] if kind == 'alert' else [
             (m, ['operation_errors', 'protocol_errors', 'checkpoint_errors'] + (['payload_errors'] if kind == 'panel' else [])),
             (m.shared, ['checkpoint_errors', 'profile_errors', 'writer_policy_errors', 'schema_ref_errors'])]
-        sources.append((m if kind == 'alert' else m.shared, ['history_page', 'check_schema']))
+        sources.append((m if kind == 'alert' else m.shared, ['history_page', 'check_schema', 'exact_value']))
         mutants = [v for source, functions in sources for function in functions for v in rejection_mutants(source, function)]
         for mutant in mutants:
             saved = install([mutant])

@@ -9938,6 +9938,109 @@
       "errors": [
         "invalid protection proof"
       ]
+    },
+    {
+      "name": "source_comparison_type",
+      "target": "comparison",
+      "value": {
+        "candidate": true,
+        "source": 1
+      },
+      "errors": [
+        "immutable source mismatch"
+      ]
+    },
+    {
+      "name": "source_comparison_object_keys",
+      "target": "comparison",
+      "value": {
+        "candidate": {
+          "sequence_id": 1
+        },
+        "source": {
+          "sequence_id": 1,
+          "byte_offset": 0
+        }
+      },
+      "errors": [
+        "immutable source mismatch"
+      ]
+    },
+    {
+      "name": "source_comparison_object_value",
+      "target": "comparison",
+      "value": {
+        "candidate": {
+          "sequence_id": 2
+        },
+        "source": {
+          "sequence_id": 1
+        }
+      },
+      "errors": [
+        "immutable source mismatch"
+      ]
+    },
+    {
+      "name": "source_comparison_array_length",
+      "target": "comparison",
+      "value": {
+        "candidate": [
+          "pmref:source:first"
+        ],
+        "source": [
+          "pmref:source:first",
+          "pmref:source:second"
+        ]
+      },
+      "errors": [
+        "immutable source mismatch"
+      ]
+    },
+    {
+      "name": "source_comparison_array_value",
+      "target": "comparison",
+      "value": {
+        "candidate": [
+          "pmref:source:foreign"
+        ],
+        "source": [
+          "pmref:source:first"
+        ]
+      },
+      "errors": [
+        "immutable source mismatch"
+      ]
+    },
+    {
+      "name": "source_comparison_scalar_value",
+      "target": "comparison",
+      "value": {
+        "candidate": "pmref:source:foreign",
+        "source": "pmref:source:first"
+      },
+      "errors": [
+        "immutable source mismatch"
+      ]
+    },
+    {
+      "name": "valid_source_comparison",
+      "target": "comparison",
+      "value": {
+        "candidate": {
+          "sequence_id": 1,
+          "source_refs": [
+            "pmref:source:first"
+          ]
+        },
+        "source": {
+          "sequence_id": 1,
+          "source_refs": [
+            "pmref:source:first"
+          ]
+        }
+      },
+      "errors": []
     }
   ]
 }

@@ -359,7 +359,9 @@ def changed_leaves(left, right):
         return sum(changed_leaves(left[k], right[k]) for k in left)
     if isinstance(left, list) and isinstance(right, list) and len(left) == len(right):
         return sum(changed_leaves(a, b) for a, b in zip(left, right))
-    return int(not exact_value(left, right))
+    # This evidence counter must not depend on the authentication predicate
+    # being weakened in a source-comparison mutation trial.
+    return int(type(left) is not type(right) or left != right)
 
 
 def historical_reader_cases(fixture, checkpoint, reader, observations=None):
