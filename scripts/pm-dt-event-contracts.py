@@ -68,6 +68,65 @@ def sha(value):
     return hashlib.sha256(canonical(value)).hexdigest()
 
 
+def patterned_values(schema, value, path=()):
+    """Visit concrete identifier values, including nullable/alternative schemas."""
+    if isinstance(value, str) and 'pattern' in schema:
+        yield path, value, schema
+    if isinstance(value, dict):
+        for key, child in value.items():
+            yield from patterned_values(schema.get('properties', {}).get(key, {}), child, path + (key,))
+    if isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from patterned_values(schema.get('items', {}), child, path + (index,))
+    for keyword in ['anyOf', 'oneOf', 'allOf']:
+        for branch in schema.get(keyword, []):
+            yield from patterned_values(branch, value, path)
+
+
+def set_path(value, path, replacement):
+    for key in path[:-1]:
+        value = value[key]
+    value[path[-1]] = replacement
+
+
+def identifier_checks(c, f, schemas, check):
+    """F7: mutate every populated patterned value, not just one token hash."""
+    name = c['event_type']; slug = name.replace('.', '_')
+    cases = [(slug, f['valid_payload']), (slug + '_source', f['prepared_source']),
+             (slug + '_source', f['completed_source']), (slug + '_checkpoint', f['checkpoint'])]
+    for variant in f['positive_variants']:
+        source = slug + ('_application_source' if variant['event']['scope_kind'] == 'application' else '_source')
+        cases.extend([(source, variant['prepared']), (source, variant['completed'])])
+    for definition, value in cases:
+        validator = Draft202012Validator(schemas[definition], format_checker=FormatChecker())
+        for path, identifier, rule in patterned_values(schemas[definition], value):
+            exact = rule.get('minLength') == rule.get('maxLength') and 'maxLength' in rule
+            check(exact or rule['pattern'].endswith(r'(?![\s\S])'), name + ': full-string identifier guard ' + definition + str(path))
+            bad = copy.deepcopy(value); set_path(bad, path, identifier + '\n')
+            check(not validator.is_valid(bad), name + ': trailing-LF identifier refused ' + definition + str(path))
+    # Keep all token witnesses coherent, so schema grammar alone must refuse.
+    for path, identifier, _ in patterned_values(schemas[slug + '_checkpoint'], f['checkpoint']):
+        case = copy.deepcopy(f['checkpoint_cases'][0])
+        set_path(case['proposed'], path, identifier + '\n')
+        case['context']['current_token'] = copy.deepcopy(case['proposed']['index_read_token'])
+        case['context']['verified_prefix']['index_read_token'] = copy.deepcopy(case['proposed']['index_read_token'])
+        check(checkpoint_result(c, case['previous'], case['proposed'], case['context'], schemas[slug + '_checkpoint']) == 'schema_refused',
+              name + ': coherent trailing-LF checkpoint refused ' + str(path))
+    # Coherently changed original hash plus payload must still fail grammar.
+    hash_join = {'config.migrated': ('source_sha256', 'source_sha256'),
+                 'usage.event': ('observation_sha256', 'provider_payload_hash')}.get(name)
+    if hash_join:
+        for variant in [dict(prepared=f['prepared_source'], completed=f['completed_source'], event=f['event_record'])] + f['positive_variants']:
+            a, b, e = (copy.deepcopy(variant[k]) for k in ['prepared', 'completed', 'event'])
+            before_field, payload_field = hash_join
+            if a['before'][before_field] is None:
+                continue
+            a['before'][before_field] += '\n'; b['before'][before_field] += '\n'
+            b['payload'][payload_field] += '\n'; e['payload'][payload_field] += '\n'
+            b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+            check(source_valid(c, a, b, e, schemas) == 'schema_refused', name + ': coherent trailing-LF payload hash refused')
+
+
 def partition_for(event):
     if event['scope_kind'] == 'application':
         return 'app' if event['project_id'] is None else None
@@ -391,6 +450,7 @@ def main():
     schemas = load('Plans/dt_event_contracts.schema.json')['$defs']
     fixtures = {f['event_type']: f for f in load('Plans/dt_event_contract_fixtures.json')['families']}
     registered = {f['event_type'] for f in load('Plans/event_family_registry.json')['families']}
+    storage_schemas = {f['value_schema_ref']: f for f in load('Plans/storage_value_registry.json')['families']}
     checks = 0
     failures = []
     counts = {}
@@ -403,6 +463,11 @@ def main():
     for c in contracts:
         start = checks
         name = c['event_type']; slug = name.replace('.', '_'); f = fixtures[name]; p = f['valid_payload']
+        for definition in [slug + '_checkpoint', slug + '_source', slug + '_application_source']:
+            if definition in schemas:
+                ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + definition
+                check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
+        identifier_checks(c, f, schemas, check)
         validator = Draft202012Validator(schemas[slug], format_checker=FormatChecker())
         check(not list(validator.iter_errors(p)), name + ': positive payload')
         check(name not in registered, name + ': no registry admission')
