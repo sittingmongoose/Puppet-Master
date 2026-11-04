@@ -13,12 +13,12 @@
     {
       "path": "Plans/filesafe_event_sources/filesafe_policy_degraded.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_policy_degraded/1.0.0",
-      "sha256": "1854f82bb2de023f2096ffde215bc66ad9175b464fb1d609bb414a2a0f31550c"
+      "sha256": "576afdf5bf274a2ff1d9c948e13654a809351e7473bde316412e5fc878a0c0ca"
     },
     {
       "path": "Plans/event_payloads/filesafe_policy_degraded_v2.schema.json",
       "uri": "https://puppetmaster.local/schemas/event_payloads/filesafe_policy_degraded/2.0.0",
-      "sha256": "d5cd17060a05e451c7fded61d108debfc282a960e8853bcc0795a7665c9993e9"
+      "sha256": "b4f6ef8812d887f4ac8eb9e4f81e3a9f95163d3bbad5bea61be73190ab41d8a0"
     },
     {
       "path": "Plans/shared_integration_runtime.schema.json",
@@ -129,5 +129,5 @@
   "retention_policy_ref": "RP-OPERATIONAL-2555D",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "e10546c7097e60c519f432a65df69e302e19ae20df265648e93399e3acef8052"
+  "graph_sha256": "3a38ce0c182df12962580b62f1c5605450be3f2696c016171bb01f0186d44280"
 }

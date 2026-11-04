@@ -47,7 +47,16 @@ def override_subset(granted,requested):
             and all(root in requested['recorded_roots'] for root in granted['recorded_roots'])
             and (requested['normalized_command_identity'] is None or granted['normalized_command_identity']==requested['normalized_command_identity']))
 
-def semantic(payload):
+INLINE_PAYLOAD_LIMIT = 16 * 1024
+
+def payload_bytes(payload):
+    """The DF inline budget is the complete canonical UTF-8 JSON body, not chars."""
+    return json.dumps(payload, sort_keys=True, ensure_ascii=False,
+                      separators=(',', ':'), allow_nan=False).encode('utf-8')
+
+def semantic(payload, *, inline=True):
+    if inline and len(payload_bytes(payload)) > INLINE_PAYLOAD_LIMIT:
+        return False
     s, ctx = payload['scope'], payload['execution_context']
     if s['scope_partition'] != partition(s):
         return False

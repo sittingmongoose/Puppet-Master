@@ -1121,6 +1121,30 @@
           "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
         }
       }
+    },
+    "payload_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload_id",
+        "byte_size",
+        "media_type"
+      ],
+      "properties": {
+        "payload_id": {
+          "type": "string",
+          "pattern": "^blake3:[0-9a-f]{64}$",
+          "minLength": 71,
+          "maxLength": 71
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "media_type": {
+          "const": "application/json"
+        }
+      }
     }
   }
 }

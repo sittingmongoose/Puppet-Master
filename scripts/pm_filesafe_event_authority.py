@@ -10,6 +10,7 @@ import hashlib
 import importlib.util
 import json
 import struct
+import blake3
 from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urljoin
@@ -160,9 +161,42 @@ def decode_original(raw, codec):
     return value
 
 
+def event_payload(family, event, bank):
+    """Resolve SP-337 from independently selected durable synthetic pack custody.
+
+    The envelope's existing string ref contains a canonical JSON descriptor.
+    The decoded semantic root is never copied back into the stored EventRecord.
+    Physical pack durability remains native NOT_RUN.
+    """
+    inline = event['payload']
+    if len(payload_owner.payload_bytes(inline)) > payload_owner.INLINE_PAYLOAD_LIMIT:
+        return None, ['inline_payload_too_large']
+    ref = event['payload_ref']
+    if ref is None:
+        return inline, []
+    try:
+        descriptor = json.loads(ref)
+        _, validator = context(family)
+        if list(validator('payload_reference').iter_errors(descriptor)):
+            return None, ['payload_reference_schema']
+        if payload_owner.payload_bytes(descriptor).decode('utf-8') != ref or inline != {}:
+            return None, ['payload_reference_shape']
+        payload_id = descriptor['payload_id']
+        raw = bytes.fromhex(bank['payloads'][payload_id])
+        if (len(raw) != descriptor['byte_size']
+            or 'blake3:' + blake3.blake3(raw).hexdigest() != payload_id
+            or payload_id not in bank['durable_payload_ids']):
+            return None, ['payload_reference_custody']
+        # Strict canonical decoding also rejects duplicate keys and trailing bytes.
+        value = decode_original(raw.hex(), 'RFC8785')
+        return value, []
+    except (KeyError, ValueError, TypeError, UnicodeError):
+        return None, ['payload_reference_unavailable']
+
+
 def application_original_failures(family, candidate, bank):
     graph,validator=context(family);source=candidate['source'];req=source['original_request']
-    records=source['application_records'];p=candidate['event']['payload'];failures=[]
+    records=source['application_records'];p=source['original_result'];failures=[]
     def require(ok,code):
         if not ok:failures.append('application_'+code)
     members={v['role']:v for v in source['body_members']}
@@ -306,7 +340,9 @@ def materialization_failures(family, candidate, bank):
     if list(validator('materialization').iter_errors(candidate)): return ['materialization_schema']
     source,event,custody=(candidate[k] for k in ('source','event','custody'))
     if event['replay_policy']=='projector_replay_only':return ['replay_only_not_appendable']
-    p=event['payload'];req=source['original_request'];scope=req['scope'];ctx=req['execution_context']
+    p, payload_errors = event_payload(family, event, bank)
+    if payload_errors: return payload_errors
+    req=source['original_request'];scope=req['scope'];ctx=req['execution_context']
     if list(validator('Result').iter_errors(p)): return ['payload_schema']
     failures=[]
     def require(condition,code):
@@ -319,7 +355,7 @@ def materialization_failures(family, candidate, bank):
     require(event['event_type']==family,'family_join')
     slug=family.replace('.','_')
     require(event['payload_schema_id']==load(f'Plans/event_payloads/{slug}_v2.schema.json')['$id'],'payload_selector')
-    require(payload_owner.semantic(p),'payload_semantics')
+    require(payload_owner.semantic(p, inline=event['payload_ref'] is None),'payload_semantics')
     require(req['scope']==p['scope'] and req['execution_context']==p['execution_context'] and req['operation_id']==p['operation_id'],'request_context_join')
     for k in graph['request_payload_joins']:
         require(req.get(k)==p.get(k),'request_subject_join:'+k)
@@ -331,7 +367,7 @@ def materialization_failures(family, candidate, bank):
     require(event['actor_ref']==req['actor_ref'],'envelope_actor')
     require(event['occurred_at_utc']==p['ts'],'envelope_original_timestamp')
     require(event['correlation_id']==req['operation_id'],'envelope_operation')
-    require(event['redaction_profile']=='no_secrets' and event['payload_ref'] is None and event['replay_policy']=='dedupe_by_idempotency_key','envelope_read_policy')
+    require(event['redaction_profile']=='no_secrets' and event['replay_policy']=='dedupe_by_idempotency_key','envelope_read_policy')
     key,eid=payload_owner.identity(family,p)
     require((event['idempotency_key'],event['event_id'])==(key,eid),'envelope_identity')
     members=source['body_members']
@@ -379,7 +415,7 @@ def materialization_failures(family, candidate, bank):
     require(bank['issued'].get(event['event_id'])=={'event':event,'custody':custody},'original_issued_custody')
     return failures
 
-def issued_failures(family, value, expected):
+def issued_failures(family, value, expected, bank):
     """Resolve complete issued authority without reopening disposed domain controls."""
     if not isinstance(value, dict) or set(value) != {'event', 'custody'}:
         return ['issued_custody_missing']
@@ -387,6 +423,11 @@ def issued_failures(family, value, expected):
     if value != expected:
         return ['issued_original_changed']
     event, custody = value['event'], value['custody']
+    payload, payload_errors = event_payload(family, event, bank)
+    if payload_errors: return payload_errors
+    _, selected = context(family)
+    if list(selected('Result').iter_errors(payload)) or not payload_owner.semantic(payload, inline=event['payload_ref'] is None):
+        return ['issued_payload']
     schema = load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
     # Validate the two exact imported roots, without requiring an original command/grant.
     for key in ('event', 'custody'):
@@ -423,11 +464,11 @@ class ProtocolOracle:
         value=self.bank['issued'].get(original['event']['event_id'])
         expected={k:original[k] for k in ('event','custody')}
         return None if (self.bank['storage_instance_id']!=original['custody']['storage_instance_id']
-            or issued_failures(self.family,value,expected)) else value
+            or issued_failures(self.family,value,expected,self.bank)) else value
     def coverage_valid(self):
         return (self.bank['source_generation']==self.source_generation
             and set(self.bank['issued'])==set(self.boundary)
-            and all(not issued_failures(self.family,self.bank['issued'].get(k),v)
+            and all(not issued_failures(self.family,self.bank['issued'].get(k),v,self.bank)
                     for k,v in self.boundary.items()))
     def step(self,action,candidate=None):
         c=candidate or self.original
@@ -447,11 +488,13 @@ class ProtocolOracle:
         if action=='prepare':
             if self.phase!='owner_committed':return 'body_commit_required'
             if self.durable['recovery_refused']:return 'recovery_fenced'
+            if event_payload(self.family,self.durable['original']['event'],self.bank)[1]:return 'payload_unavailable'
             self.prepared=copy.deepcopy(self.durable['original']['event']);self.phase='prepared'
             self.durable['phase']=self.phase;return self.phase
         if action=='append':
             if self.phase!='prepared':return 'prepared_event_required'
             if self.durable['recovery_refused']:return 'recovery_fenced'
+            if event_payload(self.family,self.prepared,self.bank)[1]:return 'payload_unavailable'
             self.issued=copy.deepcopy(self.prepared);self.phase='appended'
             self.durable['phase']=self.phase;return self.phase
         if action=='receipt':
@@ -534,6 +577,9 @@ def check():
         if real_admission(family)!='missing_event_registration':failures.append(family+':membership_changed')
         for case in row['positive']:
             found=materialization_failures(family,case['candidate'],case['bank'])
+            expected={k:case['candidate'][k] for k in ('event','custody')}
+            for stored in ('issued','retained_boundary'):
+                found += issued_failures(family,case['bank'][stored].get(expected['event']['event_id']),expected,case['bank'])
             if found:failures.append(case['id']+':'+','.join(found))
             counts[family]['positive']+=1
         base=row['positive'][0]
@@ -542,7 +588,11 @@ def check():
             candidate,bank=copy.deepcopy((negative_base['candidate'],negative_base['bank']))
             for edit in case['edits']:
                 mutate(candidate if edit['target']=='candidate' else bank,edit['path'],edit.get('value'),edit.get('remove',False))
-            found=materialization_failures(family,candidate,bank)
+            if case.get('layer') == 'issued':
+                expected={k:candidate[k] for k in ('event','custody')}
+                found=issued_failures(family,bank['issued'].get(candidate['event']['event_id']),expected,bank)
+            else:
+                found=materialization_failures(family,candidate,bank)
             if not found:failures.append(case['id']+':negative_accepted')
             if case.get('expected_error') and case['expected_error'] not in found:failures.append(case['id']+':wrong_error:'+','.join(found))
             counts[family]['negative']+=1
