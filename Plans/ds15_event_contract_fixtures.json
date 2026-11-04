@@ -4467,6 +4467,20 @@
         "changes": {
           "payload/doctor_invocation_id": "sample_doctor_invocation_idX"
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -8779,6 +8793,20 @@
         "changes": {
           "payload/session_id": "sample_session_idX"
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -13078,6 +13106,20 @@
         "guard": "p['step_revision'] > x['previous_revision']",
         "changes": {
           "payload/step_revision": 0
+        }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
         }
       }
     ]
@@ -17403,6 +17445,20 @@
         "changes": {
           "context/artifact/committed": false
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -21712,6 +21768,20 @@
         "changes": {
           "payload/manifest_ref": "sample_manifest_refX"
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -22178,7 +22248,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "envelope-mismatch",
@@ -22624,7 +22700,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "forced-visible-no-fallback",
@@ -22654,14 +22736,19 @@
         "id": "forced-visible-headless-forbidden",
         "operation": "payload",
         "changes": {
-          "payload/requested_visual_mode": "forced_visible",
-          "payload/effective_visual_mode": "headless",
-          "context/launch_outcome": "headless"
+          "payload/effective_visual_mode": "headless"
         },
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "parent_case": "forced-visible-no-fallback",
+        "refresh_envelope": true
       },
       {
         "id": "valid-full-prior-cas",
@@ -24681,24 +24768,37 @@
         "id": "publish-current-source-join-refused",
         "operation": "publish",
         "changes": {
-          "payload/effective_visual_mode": "visible"
+          "context/visible_dependency_available": true
         },
         "expected": {
           "result": "REFUSE",
           "effects": 0
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1",
+          "receipt_ref": "receipt:live_session_degraded:1"
         }
       },
       {
         "id": "append-recovery-current-source-join-refused",
         "operation": "recover",
         "changes": {
-          "payload/effective_visual_mode": "visible",
-          "receipt": null
+          "context/visible_dependency_available": true
         },
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "APPEND_ORIGINAL",
+          "effects": 0,
+          "event_id": "event:live_session_degraded:1"
+        },
+        "parent_case": "append-recovery"
       },
       {
         "id": "append-recovery-guard-permission_now",
@@ -26085,6 +26185,20 @@
         "guard": "x['launch_outcome'] == ('refused' if p['requested_visual_mode'] == 'forced_visible' else 'headless')",
         "changes": {
           "context/launch_outcome": "headlessX"
+        }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
         }
       }
     ]
@@ -28584,7 +28698,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "replay-only-payload",
@@ -35014,6 +35134,34 @@
         "changes": {
           "context/auto_send": true
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
+      },
+      {
+        "id": "missing-application-source-at-presence-boundary",
+        "target": "application_source_present",
+        "changes": {
+          "application_source": null
+        }
+      },
+      {
+        "id": "null-original-output-at-presence-boundary",
+        "target": "original_output_present",
+        "changes": {
+          "application_source/original_output": null
+        }
       }
     ]
   },
@@ -36426,7 +36574,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "duplicate-delivery-no-advance",
@@ -39517,6 +39671,20 @@
         "changes": {
           "context/rewrite_terminal_history": true
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -40929,7 +41097,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "duplicate-delivery-no-advance",
@@ -43939,6 +44113,22 @@
           }
         }
       }
+    ],
+    "predicate_cases": [
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
+      }
     ]
   },
   {
@@ -45350,7 +45540,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "duplicate-delivery-no-advance",
@@ -48369,6 +48565,20 @@
         "changes": {
           "context/managed_resources_settled": false
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -49781,7 +49991,13 @@
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "refresh_envelope": true
       },
       {
         "id": "duplicate-delivery-no-advance",
@@ -52789,6 +53005,22 @@
           "properties/review_unresolved": {
             "$ref": "https://unregistered.invalid/review.schema.json#/$defs/optional"
           }
+        }
+      }
+    ],
+    "predicate_cases": [
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
         }
       }
     ]
@@ -57248,6 +57480,20 @@
         "changes": {
           "context/session_state": "createdX"
         }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
+        }
       }
     ]
   },
@@ -58287,21 +58533,19 @@
         "id": "non-browser-cannot-use-browser-command",
         "operation": "payload",
         "changes": {
-          "payload/browser_session_id": {
-            "$delete": true
-          },
-          "payload/session_class": {
-            "$delete": true
-          },
-          "context/browser_session_id": null,
-          "payload/preview_surface_kind": "generated_restricted",
-          "payload/transport_mode": "internal_preview_origin",
-          "payload/attached_surface": "editor_preview"
+          "payload/refresh_origin": "cmd.browser.reload"
         },
         "expected": {
           "result": "REFUSE",
           "effects": 0
-        }
+        },
+        "single_defect": true,
+        "parent_expected": {
+          "result": "ACCEPT",
+          "effects": 0
+        },
+        "parent_case": "non-browser-refresh",
+        "refresh_envelope": true
       },
       {
         "id": "valid-full-prior-cas",
@@ -61730,6 +61974,20 @@
         "guard": "n != 'preview.session.refreshed' or (x['session_state'] in ('ready', 'stale', 'degraded', 'error') and x['refreshable'] and x['refresh_committed'] and (p['preview_revision'] > x['previous_revision']) and (p['refresh_origin'] == 'cmd.browser.reload' and bool(p.get('browser_session_id')) and (p['browser_session_id'] == x['browser_session_id']) or (p['refresh_origin'] == 'filemanager.preview_refresh' and (not p.get('browser_session_id')))))",
         "changes": {
           "payload/browser_session_id": "browser:1X"
+        }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
         }
       }
     ]
@@ -66157,6 +66415,20 @@
         "guard": "n != 'preview.session.stopped' or (x['session_state'] != 'closed' and p['runtime_state'] == 'closed' and x['managed_resources_settled'])",
         "changes": {
           "context/session_state": "closed"
+        }
+      },
+      {
+        "id": "missing-outcome-at-presence-boundary",
+        "target": "outcome_present",
+        "changes": {
+          "outcome": null
+        }
+      },
+      {
+        "id": "missing-admission-at-presence-boundary",
+        "target": "admission_present",
+        "changes": {
+          "admitted_sequence": null
         }
       }
     ]
