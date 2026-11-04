@@ -7,7 +7,7 @@
   ],
   "july_classification": "live_registry_august",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: AUG-CP-TWM-001 VETO_KEEP_REGISTERED_PROVISIONAL applied 2026-09-11T14:10:58.582468+00:00. Keep terminal.workgroup_moved registered and provisional; consumer/checkpoint authority remains UNKNOWN/OWNER_REQUIRED. No inferred IDs or depth closure. Refreshed 2026-11-04T18:08:51Z (lane DS, stream E batch 1): every citation re-anchored to 66a93f80f3; the consumer, projector and checkpoint are now cited from the Plans, which is the condition DL-039 AUG-CP-TWM-001 set (\"remain unknown until cited from the Plans, and that depth work is authorized\"), so provisional is false. The owner choice AUG-CP-TWM-001 = VETO_KEEP_REGISTERED_PROVISIONAL is unchanged. Cells not PASS at this revision: positive_negative_oracles (see their notes); contract depth is not complete. Application: reports/event-authority-20261104/ds-step5-august-ledger-application.json. No identifier is invented, no registry row changes, no depth or seal is claimed beyond the cells. Re-graded 2026-11-04T19:11:41Z (lane DS-P2, stream E batch 1): every citation re-anchored to bef4342ecc. positive_negative_oracles stays FAIL: the cell is stopped on an owner question about a withdrawn family's oracles. Cells not PASS at this revision: positive_negative_oracles; contract depth is not complete. The owner choice AUG-CP-TWM-001 is unchanged and provisional stays false. Application: reports/event-authority-20261104/ds-p2-august-regrade-application.json. No identifier is invented, no registry row changes, no seal is claimed.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: AUG-CP-TWM-001 VETO_KEEP_REGISTERED_PROVISIONAL applied 2026-09-11T14:10:58.582468+00:00. Keep terminal.workgroup_moved registered and provisional; consumer/checkpoint authority remains UNKNOWN/OWNER_REQUIRED. No inferred IDs or depth closure. Refreshed 2026-11-04T18:08:51Z (lane DS, stream E batch 1): every citation re-anchored to 66a93f80f3; the consumer, projector and checkpoint are now cited from the Plans, which is the condition DL-039 AUG-CP-TWM-001 set (\"remain unknown until cited from the Plans, and that depth work is authorized\"), so provisional is false. The owner choice AUG-CP-TWM-001 = VETO_KEEP_REGISTERED_PROVISIONAL is unchanged. Cells not PASS at this revision: positive_negative_oracles (see their notes); contract depth is not complete. Application: reports/event-authority-20261104/ds-step5-august-ledger-application.json. No identifier is invented, no registry row changes, no depth or seal is claimed beyond the cells. Re-graded 2026-11-04T19:11:41Z (lane DS-P2, stream E batch 1): every citation re-anchored to bef4342ecc. positive_negative_oracles stays FAIL: the cell is stopped on an owner question about a withdrawn family's oracles. Cells not PASS at this revision: positive_negative_oracles; contract depth is not complete. The owner choice AUG-CP-TWM-001 is unchanged and provisional stays false. Application: reports/event-authority-20261104/ds-p2-august-regrade-application.json. No identifier is invented, no registry row changes, no seal is claimed. Re-graded 2026-11-04T20:35:50Z (lane DS-FIX1, stream E batch 1, review round 1): every citation re-anchored to 2220b74e24. consumers_checkpoints returns to OWNER_REQUIRED: the reader and checkpoint are cited, but no operating consumer exists and SMPFS-170 and SP-319 disagree on the reader's disclosure (the terminal question stopped for Jared). Cells not PASS at this revision: consumers_checkpoints, positive_negative_oracles; contract depth is not complete. The owner choice AUG-CP-TWM-001 is unchanged and provisional stays false. Application: reports/event-authority-20261104/ds-fix1-terminal-consumer-regrade.json. No identifier is invented, no registry row changes, no seal is claimed.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
@@ -55,9 +55,9 @@
       "note": "Refreshed 2026-11-04: historical row predicates are explicit (exact 1.0.0 interpretation) and current transitions are refused (DL-181, CV-361)."
     },
     "consumers_checkpoints": {
-      "status": "PASS",
-      "citation": "Plans/storage-plan.md:26921; Plans/storage-plan.md:26929; Plans/storage-plan.md:26932; Plans/storage-plan.md:27073; Plans/storage-plan.md:27072",
-      "note": "Cited from the Plans 2026-11-04 under DL-039 AUG-CP-TWM-001 (\"stays registered on the same terms\" as AUG-CP-WLC-001). Reader storage.terminal_workgroup_move.inspect_current.v1@1.0.0 (SP-319); no projector; family checkpoint none_required, with SP-278's generic projector/checkpoint mandatory; no stored read token (DL-076). SP-319's canonical text (amended on this branch, f86b68e982) states that no consumer operates because the producer never activated and no operation was ever admitted; terminal.workgroup_move_history_read.v1 survives only in SMPFS-170's lineage. Existing identifiers only; none invented."
+      "status": "OWNER_REQUIRED",
+      "citation": "Plans/storage-plan.md:26921; Plans/storage-plan.md:26929; Plans/storage-plan.md:26932; Plans/storage-plan.md:27073; Plans/storage-plan.md:27072; Plans/Section15_MVP_Promoted_Features_Spec.md:12413; Plans/Section15_MVP_Promoted_Features_Spec.md:12604; Plans/storage-plan.md:26912",
+      "note": "Re-graded 2026-11-04 (lane DS-FIX1, review DS-SOL-03): OWNER_REQUIRED, not PASS. The step-8 rubric grades a historical-only consumers_checkpoints on the exact historical reader and checkpoint (including SP-278 adoption) and a named operating consumer, PARTIAL where the owner says that facet is open. The reader storage.terminal_workgroup_move.inspect_current.v1@1.0.0, no projector and the none_required family checkpoint with SP-278's generic checkpoint are cited; but SP-319's canonical text says no consumer operates (the producer never activated, no operation was ever admitted, terminal.workgroup_move_history_read.v1 survives only in SMPFS-170's lineage), and two owners disagree on the reader itself: SMPFS-170's withdrawal admits no new reader disclosure, while SP-319's DL-181 amendment keeps the passive reader for 1.0.0 events already written. That conflict is the terminal question stopped for Jared (reports/event-authority-20261104/DS.md); no consumer is invented or reactivated. DL-039 AUG-CP-TWM-001 is unchanged and provisional stays false: the reader, projector and checkpoint facts are cited from the Plans, which is the condition that choice set."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
@@ -74,147 +74,162 @@
     {
       "citation": "Plans/event_family_registry.json:2841",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: \"semantic_owner_doc\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation\","
+      "notes": "exact quote at 2220b74e24: \"semantic_owner_doc\": \"Plans/Section15_MVP_Promoted_Features_Spec.md#pmconcept7-home-workspace-terminal-reconciliation\","
     },
     {
       "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12593",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: ### SMPFS-170 - Terminal workgroup moved original operation and historical consumer"
+      "notes": "exact quote at 2220b74e24: ### SMPFS-170 - Terminal workgroup moved original operation and historical consumer"
     },
     {
       "citation": "Plans/storage-plan.md:27060",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: ### SP-319 - Terminal workgroup moved passive source and checkpoint disposition"
+      "notes": "exact quote at 2220b74e24: ### SP-319 - Terminal workgroup moved passive source and checkpoint disposition"
     },
     {
       "citation": "Plans/Contracts_V0.md:23713",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0"
+      "notes": "exact quote at 2220b74e24: No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0"
     },
     {
       "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12604",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was"
+      "notes": "exact quote at 2220b74e24: terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was"
     },
     {
       "citation": "Plans/event_family_registry.json:2839",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: \"event_type\": \"terminal.workgroup_moved\","
+      "notes": "exact quote at 2220b74e24: \"event_type\": \"terminal.workgroup_moved\","
     },
     {
       "citation": "Plans/event_payloads/terminal_workgroup_moved.schema.json:3",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: \"$id\": \"https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0\","
+      "notes": "exact quote at 2220b74e24: \"$id\": \"https://puppetmaster.local/schemas/event_payloads/terminal_workgroup_moved/1.0.0\","
     },
     {
       "citation": "Plans/event_payloads/terminal_workgroup_moved.schema.json:6",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: \"additionalProperties\": false,"
+      "notes": "exact quote at 2220b74e24: \"additionalProperties\": false,"
     },
     {
       "citation": "Plans/event_family_registry.json:2840",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: \"scope_policy\": \"project_only\","
+      "notes": "exact quote at 2220b74e24: \"scope_policy\": \"project_only\","
     },
     {
       "citation": "Plans/storage-plan.md:26925",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: Storage instance, Project, workgroup, exact event ID, original global sequence and"
+      "notes": "exact quote at 2220b74e24: Storage instance, Project, workgroup, exact event ID, original global sequence and"
     },
     {
       "citation": "Plans/storage-plan.md:26928",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: has no pagination, durable cursor, acknowledgement or reconstructed live state."
+      "notes": "exact quote at 2220b74e24: has no pagination, durable cursor, acknowledgement or reconstructed live state."
     },
     {
       "citation": "Plans/storage-plan.md:26930",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: this owner assigns only a fresh one-event historical observation with zero durable"
+      "notes": "exact quote at 2220b74e24: this owner assigns only a fresh one-event historical observation with zero durable"
     },
     {
       "citation": "Plans/event_family_registry.json:2870",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: \"policy_id\": \"RP-AUTHORITY-INDEFINITE\","
+      "notes": "exact quote at 2220b74e24: \"policy_id\": \"RP-AUTHORITY-INDEFINITE\","
     },
     {
       "citation": "Plans/storage-plan.md:27030",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: The event retains `RP-AUTHORITY-INDEFINITE@1.0.0`; source/index/ref and original"
+      "notes": "exact quote at 2220b74e24: The event retains `RP-AUTHORITY-INDEFINITE@1.0.0`; source/index/ref and original"
     },
     {
       "citation": "Plans/storage-plan.md:27012",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: Current Project/access/deletion/maintenance permission must authorize every original"
+      "notes": "exact quote at 2220b74e24: Current Project/access/deletion/maintenance permission must authorize every original"
     },
     {
       "citation": "Plans/storage-plan.md:27018",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: The existing `reject_unhandled_secrets` rule remains. A retained event never grants"
+      "notes": "exact quote at 2220b74e24: The existing `reject_unhandled_secrets` rule remains. A retained event never grants"
     },
     {
       "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12605",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: ever admitted, and an event already recorded, if any, keeps its exact 1.0.0 interpretation and"
+      "notes": "exact quote at 2220b74e24: ever admitted, and an event already recorded, if any, keeps its exact 1.0.0 interpretation and"
     },
     {
       "citation": "Plans/Contracts_V0.md:23713",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0"
+      "notes": "exact quote at 2220b74e24: No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0"
     },
     {
       "citation": "Plans/storage-plan.md:26921",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private"
+      "notes": "exact quote at 2220b74e24: Define `storage.terminal_workgroup_move.inspect_current.v1@1.0.0`, a private"
     },
     {
       "citation": "Plans/storage-plan.md:26929",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: The exact family projection/checkpoint disposition is **`none_required`**, because"
+      "notes": "exact quote at 2220b74e24: The exact family projection/checkpoint disposition is **`none_required`**, because"
     },
     {
       "citation": "Plans/storage-plan.md:26932",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: closure. SP-278's generic projector/checkpoint remains independently mandatory."
+      "notes": "exact quote at 2220b74e24: closure. SP-278's generic projector/checkpoint remains independently mandatory."
     },
     {
       "citation": "Plans/storage-plan.md:27073",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: No consumer operates on terminal.workgroup_moved, because its producer"
+      "notes": "exact quote at 2220b74e24: No consumer operates on terminal.workgroup_moved, because its producer"
     },
     {
       "citation": "Plans/storage-plan.md:27072",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: The binding stores no read token, and any stored copy of its token is the nine-field durable token"
-    },
-    {
-      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12603",
-      "status": "ok",
-      "notes": "exact quote at bef4342ecc: terminal.workgroup_moved is withdrawn under this unit's own withdrawal rule"
-    },
-    {
-      "citation": "Plans/storage-plan.md:26912",
-      "status": "ok",
-      "notes": "exact quote at bef4342ecc: no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written."
-    },
-    {
-      "citation": "Plans/storage-plan.md:27090",
-      "status": "ok",
-      "notes": "exact quote at bef4342ecc: Paired static oracles and closed original/read-result companions remain required, distinct from native proof."
-    },
-    {
-      "citation": "Plans/storage-plan.md:26912",
-      "status": "ok",
-      "notes": "exact quote at bef4342ecc: no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written."
+      "notes": "exact quote at 2220b74e24: The binding stores no read token, and any stored copy of its token is the nine-field durable token"
     },
     {
       "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12413",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: no new producer admission and no new reader disclosure"
+      "notes": "exact quote at 2220b74e24: no new producer admission and no new reader disclosure"
+    },
+    {
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12604",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was"
+    },
+    {
+      "citation": "Plans/storage-plan.md:26912",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written."
+    },
+    {
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12603",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: terminal.workgroup_moved is withdrawn under this unit's own withdrawal rule"
+    },
+    {
+      "citation": "Plans/storage-plan.md:26912",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written."
+    },
+    {
+      "citation": "Plans/storage-plan.md:27090",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: Paired static oracles and closed original/read-result companions remain required, distinct from native proof."
+    },
+    {
+      "citation": "Plans/storage-plan.md:26912",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written."
+    },
+    {
+      "citation": "Plans/Section15_MVP_Promoted_Features_Spec.md:12413",
+      "status": "ok",
+      "notes": "exact quote at 2220b74e24: no new producer admission and no new reader disclosure"
     },
     {
       "citation": "Plans/storage-plan.md:27057",
       "status": "ok",
-      "notes": "exact quote at bef4342ecc: new disclosure. These are required paired oracles for the companion task, not"
+      "notes": "exact quote at 2220b74e24: new disclosure. These are required paired oracles for the companion task, not"
     }
   ],
   "owner_veto": null,
@@ -230,7 +245,8 @@
     "AUG-CP-TWM-001 owner choice is applied; provisional=true persists because event-specific consumer/checkpoint depth remains OWNER_REQUIRED.",
     "2026-11-04T18:08:51Z: lane DS refresh; citations are exact single-line quotes at 66a93f80f3fe3d032d8276d4e486cf69a2f1bf05; see reports/event-authority-20261104/ds-step5-august-ledger-application.json.",
     "2026-11-04T19:11:41Z: lane DS-P2 re-grade; citations are exact single-line quotes at bef4342ecc0437df62a87d5c5c79506420ba032a; see reports/event-authority-20261104/ds-p2-august-regrade-application.json.",
-    "2026-11-04T20:31:21Z: lane DS-FIX1 corrected the application times mirrored in this row to the evidenced times of their application commits (2026-11-04T18:30:00Z -> 2026-11-04T18:08:51Z for ds-step5-august-ledger-application.json; 2026-11-04T23:30:00Z -> 2026-11-04T19:11:41Z for ds-p2-august-regrade-application.json). The recorded times were later than the commits that applied them (review DS-SOL-04). The original application records are unchanged; see reports/event-authority-20261104/ds-fix1-application-time-correction.json."
+    "2026-11-04T20:31:21Z: lane DS-FIX1 corrected the application times mirrored in this row to the evidenced times of their application commits (2026-11-04T18:30:00Z -> 2026-11-04T18:08:51Z for ds-step5-august-ledger-application.json; 2026-11-04T23:30:00Z -> 2026-11-04T19:11:41Z for ds-p2-august-regrade-application.json). The recorded times were later than the commits that applied them (review DS-SOL-04). The original application records are unchanged; see reports/event-authority-20261104/ds-fix1-application-time-correction.json.",
+    "2026-11-04T20:35:50Z: lane DS-FIX1 re-grade (DS-SOL-03); citations are exact single-line quotes at 2220b74e249fd8796093b0f95286a3e5bdbf1625; see reports/event-authority-20261104/ds-fix1-terminal-consumer-regrade.json."
   ],
   "fresh_census_merged": false,
   "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge",
