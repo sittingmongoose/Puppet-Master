@@ -1,6 +1,6 @@
 # CA-SEAL branch report: the DL-412 seal-check change, 2026-11-04
 
-Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
+Branch `plans/ea-seal-check-multifamily-20261104`, from `origin/main` `5e37ffb616`. Worker CA-SEAL, stream E, agent task `claude-opus-5.5:ea-ca-seal-20261104`. Fix round 1 was done by worker CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`. Fix round 2 is by CA-SEAL-FIX2 (Codex). The stream lead `claude-opus-5.5:pm-ea-lead`, session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, made `616345d688`. The full change record is `seal-check-multifamily-step-amendment.md` beside this file.
 
 ## What this branch does
 
@@ -12,6 +12,8 @@ It makes exactly the change Jared approved in E-CARDS-1 item 4c, option B (DL-41
 | `d67201e885` | The change record and this report (reviewed by Sol: NOT_READY, CA-SEAL-01 and CA-SEAL-02) |
 | `e10fc5c840` | Fix round 1: the validator (`bad3e7e8...` -> `e4e988b7...`, CRLF), the spec's DL-412 section, and the receipt's validator pin and text |
 | fix round 1, reports commit | The change record and this report, aligned with the fixed check |
+| `9460959cc7` | Fix round 2: consistent step SHA interpretation (AS-01), spec and new receipt text/pin |
+| fix round 2, reports commit | AS-02 procedural exclusions, same-landing patch requirement, rerun results and check-11 table |
 
 ## Families
 
@@ -35,7 +37,7 @@ None.
 
 None minted. The receipt and the record cite DL-412 (CA-DL's entry). The test patch uses `DL-999` only as a fixture decision entry inside its own temporary copy of the Decision Log; that string never enters `Plans/`.
 
-## Checks
+## Checks from fix round 1
 
 | Check | Exit | Result |
 |---|---|---|
@@ -129,7 +131,94 @@ All runs used scratch trees; no checkout's tracked output receipt was written.
 
 1. **The lander fills `lander_task`.** Do this at landing by running the receipt writer with `--lander` on the tree that carries DL-412 (command in the change record). Until then the check fails closed on the receipt.
 2. **Landing order.** The branch lands after `plans/ea-cards1-answers-20261104` (DL-412).
-3. **The test patch.** It lands as its own commit once DL-413's `.gitignore` line (`66af5d0d67`) is on `main`. Without it the holding-bucket test fails 41 entries instead of today's 2.
+3. **The test patch.** It lands as a separate commit in the same landing as the validator, after DL-413's `.gitignore` line (`66af5d0d67`) is on `main`. Without it the holding-bucket test fails 41 entries instead of today's 2.
 4. **The DL-300 records.** The record writer chooses and documents the truthful step. The commit that appended the three rows is `102a7e99e8`, and that step also changed eleven Goal rows.
-5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL) and the fix worker (CA-SEAL-FIX1) are barred from applying the seal.
-6. **The seal bar for the fix worker is procedural.** The receipt's checked `seal_applier_forbidden_tasks` must equal the author and the lander. Adding CA-SEAL-FIX1 would be another check change, which is not approved. The seal applier's procedure must exclude CA-SEAL-FIX1 by hand.
+5. **Reviews.** Sol 6.1 max then Astra max, before landing and right after. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2 (this worker), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal.
+6. **The seal exclusion is procedural.** The receipt's checked `seal_applier_forbidden_tasks` remains exactly the author and lander. Its validator guard is unchanged. The seal applier must separately enforce the full participant exclusion above.
+
+## Review round 2: findings and responses
+
+Astra review: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/CA-SEAL-sol/REVIEW-astra.md`, NOT_READY at `616345d688`. Both findings are fixed. None is disputed or stopped for Jared. This round changes exactly five paths from that head: the validator, its audit spec, the new DL-412 receipt, this report and the amendment. No test is committed before DL-413's allowance; the fixture patch remains a separate commit required in the same landing.
+
+### AS-01 (blocking): fixed in `9460959cc7`
+
+**Where.** `Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py:266`, `:281`, `:283`, `:365`; spec `INDEPENDENT_EA_VALIDATOR_SPEC.md:96`.
+
+**Cause.** Record validation accepts a 64-digit JSON integer via `str(value)`, but step states kept it raw and claimant detection discarded it. Equivalent integer/string hashes could therefore hide a foreign record, including one rejected for its filename or event type.
+
+**Fix.** Step states stringify the SHA exactly as record validation does. Claims stringify it before the existing strip/lower normalization. The step-only before/after equality test uses that same representation, so equal hashes cannot differ only by JSON type. The one-family branch, its raw equality/type handling and its DL-077/DL-078 decision exclusion remain byte-for-byte unchanged; no step problem is added to a no-field record.
+
+**Tests.** The fixture patch adds three methods (60 total): five passing string/integer member controls, 80 foreign controls (all 16 member/claimant before/after type combinations × valid, misnamed, missing event type, numeric event type and Known37 claimant), and three normalized-equal-hash negatives. Each foreign case runs both admission and `main()`, rejects every step member and retains the legacy claimant's own judgment. Symbolic hashes use 7/8, avoiding pre-existing fixture pairs. The three methods produce 78 failures against the reviewed `e4e988b7...` validator after its scratch receipt is re-pinned, and pass after the repair. The old record's acceptance of numeric fields is deliberately preserved.
+
+### AS-02 (should fix): fixed in this reports commit, with receipt note in `9460959cc7`
+
+**Where.** Open items 3, 5 and 6 above; amendment's opening seal exclusion and Landing notes. The complete exclusion names author, actual lander, CA-SEAL-FIX1, CA-SEAL-FIX2, stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`) and every other fix worker. This is procedural. The validator's checked forbidden-task predicate is unchanged and still requires exactly author and lander. The patch must be a separate commit in the same landing, after DL-413's allowance is on main.
+
+### Round-2 validation
+
+All execution used local scratch trees, never the checkout's tracked validator output receipt. The authority is the pinned `b6332f391a` Decision Log in test fixtures; it is not applied to this branch.
+
+| Check | Exit/result |
+|---|---|
+| S1-S7, C1-C5 | All 12 exit 1 as expected; C4 admits the three complete members, C5 admits none of them. S2/S4 and C1/C2 differ only in the new receipt pin; S4/S7 are identical. |
+| Patched holding-bucket suite | Exit 0; 60 tests pass. |
+| Sol adversarial and legacy probes | Exit 0; all 26 negatives reject every step member; X1 and X2 rerun; 112/112 legacy comparisons equal. |
+| Astra isolated numeric probe | Exit 0; string/no-claim control admits all three; string/string, string/integer, integer/string and integer/integer foreign claims reject all three through admission and main. |
+| Original differential, every existing record | Exit 0; A=1,812, B=1,808, X2=4, C=24; zero differences. The two main outputs differ only in generation time and the new input pin. |
+| Astra full live-record differential | Exit 0; 492 cases × two comparisons × all four records = 3,936 comparisons, zero differences. |
+| Additional numeric legacy differential | Exit 0; 128 mixed-type/equal-hash cases across all four legacy records, 256 comparisons, zero differences, including coexistence with step records. |
+| All 34 unchanged fixture methods | Same two pre-existing failures, no errors. Of 279 helper comparisons, 267 are exact and 12 differ only in receipt-chain failure diagnostics/receipt return; acceptance outcomes all match. |
+| Original 19 mutation variants plus four AS-01 variants | 23/23 caught, each re-pinned to its own validator bytes. New variants discard numeric claims, retain raw step hashes, retain raw step equality, or discard numeric rejected-file claims. |
+| Check 11 | 29 semantic guard variants × 45 isolated negatives = 1,305 cells, plus baseline and main corroboration. Every intended negative flips and every other negative retains rejection for its own defect. |
+| Shard check / index validate | Both exit 0, top-level `status: pass`; 99 sources, 3,092 shards; 7,421 PlanUnits. |
+| Protected scope / whitespace | Five-path allowlist verified; CRLF preserved. `git -c core.whitespace=cr-at-eol diff --check` passes. No derived owner source changed; no regeneration or governance refresh. |
+
+### Check 11: guard, flipped negatives, other negatives still rejected
+
+Each fixture starts valid and changes one semantic input; assessment/receipt pins and other observing copies are updated. A malformed claimant is a defect of the step's exclusivity claim: disabling that guard must admit the otherwise complete members even while the claimant remains rejected for its own unrelated malformed field. For per-record decision and implementation-pin guards, the defective record is the rejection target. The sibling-completeness guard's target is the complete peers; the defective member still fails its own depth guard. This avoids calling a changed sibling outcome a pass of the defective record.
+
+The before-pin chain is one invariant observed twice. Its scratch variant weakens both equality comparisons while still calling `post_august_validator_pin()`, so every other receipt/authority guard continues to execute. The shared-description variant groups list and state equality; the narrower state variant is also tested separately. Structural parser checks and the frozen non-DL-412 rules stay intact. Full issue lists and exact retained-negative names are in the machine table below.
+
+| Guard weakened in scratch | Its negatives that start to pass | Other negatives still rejected for their own defect |
+|---|---|---|
+| `foreign` | `foreign-Known37`, `foreign-malformed`, `foreign-newline`, `foreign-numeric-claimant`, `foreign-numeric-members`, `foreign-numeric-rejected`, `foreign-ordinary`, `foreign-rejected`, `foreign-upper` | 36 of 45 |
+| `missing` | `missing-member` | 44 of 45 |
+| `states` | `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 40 of 45 |
+| `same-description` | `same-list-and-states`, `same-states-counts`, `same-states-registry_after-revision`, `same-states-registry_after-sha256`, `same-states-registry_before-revision`, `same-states-registry_before-sha256` | 39 of 45 |
+| `count` | `count-padded`, `count-short` | 43 of 45 |
+| `different-hashes` | `equal-hashes`, `equal-hashes-mixed` | 43 of 45 |
+| `sorted-unique` | `shape-duplicate`, `shape-unsorted` | 43 of 45 |
+| `all-or-none` | `member-incomplete` | 44 of 45 |
+| `step-pin` | `step-receipt-pin` | 44 of 45 |
+| `decision-DL412` | `decision-DL412` | 44 of 45 |
+| `receipt-schema_id` | `receipt-schema_id` | 44 of 45 |
+| `receipt-authority_ref` | `receipt-authority_ref` | 44 of 45 |
+| `receipt-authority_section_sha256` | `receipt-authority_section_sha256` | 44 of 45 |
+| `receipt-validator_before_sha256` | `receipt-validator_before_sha256` | 44 of 45 |
+| `receipt-validator_after_sha256` | `receipt-validator_after_sha256` | 44 of 45 |
+| `receipt-record_dir` | `receipt-record_dir` | 44 of 45 |
+| `receipt-record_schema_id` | `receipt-record_schema_id` | 44 of 45 |
+| `receipt-author_task` | `receipt-author_task` | 44 of 45 |
+| `receipt-seal_authorized` | `receipt-seal_authorized` | 44 of 45 |
+| `receipt-admission_authorized` | `receipt-admission_authorized` | 44 of 45 |
+| `receipt-contract_depth_complete` | `receipt-contract_depth_complete` | 44 of 45 |
+| `receipt-prior-path` | `receipt-prior-path` | 44 of 45 |
+| `receipt-prior-sha256` | `receipt-prior-sha256` | 44 of 45 |
+| `receipt-lander-and-list` | `receipt-forbidden`, `receipt-lander-''`, `receipt-lander-None` | 42 of 45 |
+| `authority-tokens` | `authority-token-0`, `authority-token-1`, `authority-token-2`, `authority-token-3` | 41 of 45 |
+| `numeric-claim` | `foreign-numeric-claimant`, `foreign-numeric-rejected` | 43 of 45 |
+| `numeric-state` | `foreign-numeric-members` | 44 of 45 |
+| `numeric-equality` | `equal-hashes-mixed` | 44 of 45 |
+| `rejected-numeric-claim` | `foreign-numeric-rejected` | 44 of 45 |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix2/results/guard-matrix.json`, SHA-256 `dda0e1656dd2b51f3bb036c3560cd587452ce6990627c133de2b936adf4104b4`.
+
+### Pins, evidence, grades and ids
+
+Validator SHA-256: `fb551b066c138be4a198ed1c875edff4a71c7932631db90d1e102ba43ce8a303`. New receipt SHA-256: `bd04156a9052c04cfa13787678b6e654066b79821ad85eeecd2cd516d643d732`. Only its current-validator pin is refreshed; its before pin, authority/source/card pins, prior-receipt pin, null lander, checked forbidden list and false flags remain unchanged. Descriptive receipt text matches the code and records the procedural exclusion. Earlier receipts and existing records are untouched.
+
+Fixture patch: `fix2/test-patch/test_event_authority_holding_bucket.dl412.patch`, SHA-256 `a0c70aec676fb95bda2c18c0fe5ad273a56062c193603c79378bdd6a7d18dcdb`. It applies to the unchanged tracked test; the full patched file is beside it. Landing writer: `scripts/write_multifamily_receipt.py` at the top of the evidence bundle, also under `fix2/scripts/`, aligned with the committed receipt text.
+
+Compact run summary: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix2/results/fix2-summary.json`, SHA-256 `a93e8ab5732a4c9d39060c660533ffc6872cc8837164539aecbcb0741ceb1c5a`. It pins the detailed differential, numeric, guard and mutation results. Scratch helpers preserve each reviewer's probe logic with only local roots, validator/receipt overlays and the fixture-patch pin changed. Setup corrections (missing scratch temp directory, CRLF whitespace handling, source-section selection and scratch-mutation syntax/evaluation order) were fixed in the harness before these retained results; they changed no production rule. The currentness copy's 15 file hashes match despite unsupported permission-preservation metadata on the source share.
+
+**Family grades before → after:** N/A → N/A; no families are admitted or graded, no self-grade JSON applies. **Bindings:** none. **Ids minted:** none; DL-998 and DL-999 remain fixture-only. DL-412 is cited as the existing authority, not authored here. Landing prerequisites remain the DL-412/DL-413 dependencies, real lander receipt and ordered pre/post reviews. No seal is applied.

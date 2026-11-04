@@ -6,7 +6,7 @@ pm7-build relayed this reading with the answer (not Jared's words): 4c B was pm7
 
 This branch makes that change and writes its receipt. It writes no admission record. The records for the three DL-300 families come later, once each family's contract reaches 12 of 12.
 
-**Barred from the seal.** The author is the agent task `claude-opus-5.5:ea-ca-seal-20261104`. The receipt names it, and the lander it records at landing, as tasks that must never apply the seal.
+**Barred from the seal.** The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2 (this worker), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The validator still checks exactly the author and lander in its receipt list; the complete exclusion is a procedural obligation.
 
 **Approving entry.** DL-412 is on `plans/ea-cards1-answers-20261104` at `b6332f391a`, not yet on `main`. Its prose section (`### DL-412:`) has SHA-256 `95375f1997a193d58a3d02c82a46892e324ac0dd1cfbbc2b69efc212ae932927`, and the receipt pins that value.
 
@@ -21,19 +21,19 @@ if after["family_count"] != before["family_count"] + 1 or after["sha256"] == bef
 
 So a family registered in a step that added k > 1 families had no truthful record. The three DL-300 families went from 43 to 46 together.
 
-**After** (validator `e4e988b7...`, fix round 1; the reviewed head was `bad3e7e8...`):
+**After** (validator `fb551b06...`, fix round 2; fix round 1 was `e4e988b7...` and round 0 was `bad3e7e8...`):
 
 - **A record without `registry_step_event_types`** is judged exactly as before:
-  - the one-family rule above, unchanged at lines 358-361;
+  - the one-family rule above, unchanged at lines 359-362;
   - the record pinning the DL-077 receipt;
-  - DL-077's decision exclusion, byte for byte (`in ("DL-077", "DL-078")`, lines 341-342).
+  - DL-077's decision exclusion, byte for byte (`in ("DL-077", "DL-078")`, lines 342-343).
 
   No step judgment ever adds a problem to such a record, whatever step records exist (fix round 1, CA-SEAL-02).
 - **A record with `registry_step_event_types`** describes a multi-family step. It is complete only if all of the following hold:
   1. The list is a sorted list of two or more distinct, non-empty event types that includes the record's own.
-  2. `registry_after.family_count == registry_before.family_count + len(list)` and the two SHA-256 differ (`registry_before_after_not_exactly_step_families`, lines 362-365).
+  2. `registry_after.family_count == registry_before.family_count + len(list)` and the two SHA-256 differ (`registry_before_after_not_exactly_step_families`, lines 363-366).
   3. Every listed family is registered beyond Known37 and the August pair. Each has its own record carrying the identical list and the identical `registry_before` and `registry_after` (revision, SHA-256 and family count). Otherwise every record of the step fails `registry_step_partial:<names>`.
-  4. No other record file in the record directory names the same before and after SHA-256 (`registry_step_partial:<names>`). A record names the pair when both its `sha256` fields equal it, compared after trimming whitespace and lower-casing. `registry_step_claim` (line 270) reads the pair without validating anything else in the record (fix round 1, CA-SEAL-01). So none of these hides a claimant:
+  4. No other record file in the record directory names the same before and after SHA-256 (`registry_step_partial:<names>`). A record names the pair when both its `sha256` fields equal it, compared after string conversion, trimming whitespace and lower-casing. Step states also stringify SHA fields, so accepted JSON integers and equivalent strings name the same pair; before/after equality uses that same interpretation. The no-field DL-077 path retains its original type handling. `registry_step_claim` (line 270) reads the pair without validating anything else in the record (fix round 1, CA-SEAL-01). So none of these hides a claimant:
      - a malformed revision, family count, list or schema;
      - either record form;
      - a file rejected for its name or event type (it is named by its file name).
@@ -43,14 +43,14 @@ So a family registered in a step that added k > 1 families had no truthful recor
   6. The record pins the SHA-256 of the DL-412 receipt (`implementation_receipt_sha256`), the receipt it is written under.
   7. Every DL-077 rule still applies to the record itself:
      - `schema_id` and `family_id`;
-     - its own decision entry, which names its exact event type (DL-077 and DL-078 cannot be cited, and a step record cannot cite DL-412 either, line 343);
+     - its own decision entry, which names its exact event type (DL-077 and DL-078 cannot be cited, and a step record cannot cite DL-412 either, line 344);
      - its live registry row SHA-256;
      - its own depth assessment row at the live `family_id` and `family_revision`, with all twelve criteria PASS and Plans/ evidence for each PASS.
 
 Code:
-- `registry_step_shape_ok` (line 249), `registry_step_states` (line 256), `registry_step_claim` (line 270) and `registry_step_problems` (line 286);
-- the DL-412 decision exclusion for step records (line 343) and the step-size branch in `admission_record_problems` (lines 354-365);
-- the rejected-file collection (line 422) and the two-pass judgment in `validate_post_august_admissions` (lines 425-446).
+- `registry_step_shape_ok` (line 249), `registry_step_states` (line 256), `registry_step_claim` (line 270) and `registry_step_problems` (line 287);
+- the DL-412 decision exclusion for step records (line 344) and the step-size branch in `admission_record_problems` (lines 355-366);
+- the rejected-file collection (line 423) and the two-pass judgment in `validate_post_august_admissions` (lines 426-447).
 
 The two-pass judgment rates every record on its own, then the records of each multi-family step together. Step problems go only to records that list a step. If the step judgment itself raised, every step record would be reported malformed. With no record carrying the field, its output and issue order are identical to DL-077's. Given a valid receipt chain, a record without the field gets the same problems and admission as under DL-077, whatever other records exist. The full old-versus-new differential below checks both.
 
@@ -86,16 +86,16 @@ Exactly one thing: a family registered by a registry step that added several fam
 
 | File | Change |
 |---|---|
-| The seal check (CRLF kept on every line) | SHA-256 `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` (1,754 lines) -> `e4e988b767cbc0f594644f0606cb459603c68ae10498a0c421148ffe405e46b5` (1,913 lines; the reviewed head `bad3e7e8...` had 1,892). DL-412 constants. `multi_family_receipt_state` (line 206). `post_august_validator_pin` (line 237): the DL-077 receipt's `validator_after_sha256` now has to equal the DL-412 receipt's `validator_before_sha256` (line 181). It used to equal the current file. The four step functions above. The step branch, receipt choice and step-only DL-412 exclusion (line 343) in `admission_record_problems`. The rejected-file collection and the two-pass judgment. The check's own output receipt pins the DL-412 receipt (`multi_family_step_receipt_sha256`, line 1845), as it pins DL-077's. |
+| The seal check (CRLF kept on every line) | SHA-256 `190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20` (1,754 lines) -> `fb551b066c138be4a198ed1c875edff4a71c7932631db90d1e102ba43ce8a303` (1,914 lines; the reviewed head `bad3e7e8...` had 1,892). DL-412 constants. `multi_family_receipt_state` (line 206). `post_august_validator_pin` (line 237): the DL-077 receipt's `validator_after_sha256` now has to equal the DL-412 receipt's `validator_before_sha256` (line 181). It used to equal the current file. The four step functions above. The step branch, receipt choice and step-only DL-412 exclusion (line 344) in `admission_record_problems`. The rejected-file collection and the two-pass judgment. The check's own output receipt pins the DL-412 receipt (`multi_family_step_receipt_sha256`, line 1846), as it pins DL-077's. |
 | `INDEPENDENT_EA_VALIDATOR_SPEC.md` | A DL-412 section after the DL-077 section, as DL-077 added one after Step 3's. |
 | `INDIVIDUAL_DISPOSITION_SCHEMA.md` | A note: DL-412 adds no bucket and no row field. A family accepted through a step record is treated exactly like one accepted through a one-family record. |
 | `reports/event-authority-20261104/seal-check-multifamily-step-receipt.json` | The change receipt, detailed below. |
 
-The receipt has SHA-256 `6c749a745b9a809f71f87fb7b941ef3ac3d4d7edda5f71852a20e35fed6d72ee` as committed in fix round 1 (`afef45e2...` at the reviewed head). Fix round 1 changed only its `validator_after_sha256` and the text of `record_contract_change`, `changes` and `does_not_relax`, to match the fixed check. It binds:
+The current receipt has SHA-256 `bd04156a9052c04cfa13787678b6e654066b79821ad85eeecd2cd516d643d732` (`6c749a74...` in fix round 1; `afef45e2...` at round 0). Fix round 2 refreshes only its `validator_after_sha256` pin and aligns descriptive `record_contract_change`, `changes` and `notes` text. Every other pin, identity field and flag is unchanged. It binds:
 - the DL-412 section (`95375f19...`, as pushed at `b6332f391a`);
 - Jared's answer file (`00bb608e...`) and the cards as presented (`578a6774...`);
 - the DL-077 receipt's exact bytes (`prior_receipt.sha256` `dceb7f21...`, checked by the code);
-- validator before `190a86f2...` and after `e4e988b7...`;
+- validator before `190a86f2...` and after `fb551b06...`;
 - the record directory and schema;
 - the author, and `seal_applier_forbidden_tasks`, which must equal the sorted author and lander;
 - `seal_authorized`, `admission_authorized` and `contract_depth_complete`, all false.
@@ -108,7 +108,7 @@ It also states what the change relaxes and what it does not. `lander_task` is `n
 |---|---|---|
 | Step 3 receipt `validator_after_sha256` (`step-03-holding-bucket-receipt.json`) | `bd54afff...` | unchanged. The holding check still reaches it only through the DL-077 receipt's `validator_before_sha256`. |
 | DL-077 receipt `validator_before/after_sha256` (`step-10-post-august-admission-receipt.json`) | `bd54afff...` -> `190a86f2...` | unchanged (file untouched). Its `after` is now checked against the DL-412 receipt's `before`, not the current file. |
-| DL-412 receipt `validator_before/after_sha256` (new) | none | `190a86f2...` -> `e4e988b7...`, checked against the current file |
+| DL-412 receipt `validator_before/after_sha256` (new) | none | `190a86f2...` -> `fb551b06...`, checked against the current file |
 | Chain code in the check | `post_august_receipt_state`: DL-077 `after` == current file | `post_august_receipt_state`: DL-077 `after` == `post_august_validator_pin()`, which is DL-412's `before` through a valid DL-412 receipt, else the current file. `multi_family_receipt_state`: DL-412 `after` == current file. |
 | The check's output receipt `input_pins` | holding receipt, DL-077 receipt | plus `multi_family_step_receipt_sha256` |
 | `tests/test_event_authority_holding_bucket.py` fixtures | copy the Step 3 and DL-077 receipts | must also copy the DL-412 receipt: the patch below, not committed here |
@@ -169,9 +169,9 @@ The seal stays failing in C4 for reasons this change does not touch:
 - the August families' depth;
 - the compaction and Browser records' depth gaps.
 
-## Tests
+## Tests from fix round 1
 
-`tests/test_event_authority_holding_bucket.py` is tracked but not named in `.gitignore` on `main`, so this branch may not edit it. DL-413 (Card 5) approves its `.gitignore` line. That line is the one commit on `plans/ea-gitignore-ea-tests-20261104` (`66af5d0d67`), not yet on `main`. The test change is therefore delivered as a patch, `test_event_authority_holding_bucket.dl412.patch`, in the evidence folder (fix round 1: SHA-256 `fbe7bcd61b42287d3dc46eb7e15a4f8041e40fd4e5f5ffdf91c20d1acdb9f8b6`, +478/-13, applies cleanly to this branch and to `main`; the reviewed head's patch was `679a095f...`, +301/-13). It goes in as its own commit once the `.gitignore` line is on `main`.
+`tests/test_event_authority_holding_bucket.py` is tracked but not named in `.gitignore` on `main`, so this branch may not edit it. DL-413 (Card 5) approves its `.gitignore` line. That line is the one commit on `plans/ea-gitignore-ea-tests-20261104` (`66af5d0d67`), not yet on `main`. The test change is therefore delivered as a patch, `test_event_authority_holding_bucket.dl412.patch`, in the evidence folder (fix round 1: SHA-256 `fbe7bcd61b42287d3dc46eb7e15a4f8041e40fd4e5f5ffdf91c20d1acdb9f8b6`, +478/-13, applies cleanly to this branch and to `main`; the reviewed head's patch was `679a095f...`, +301/-13). It goes in as a separate commit in the same landing as the validator, after the `.gitignore` line is on `main`.
 
 The patch does five things:
 - Both fixtures copy the DL-412 receipt.
@@ -252,7 +252,7 @@ Positive cases:
   - `5375bfd2a7` (DL-300's landing) only relabeled the registry to `2026-11-04.1` (`443ae71d...`) and added no family. A record naming `2026-10-09.1@43` -> `2026-11-04.1@46` would pair two states that are not one commit's before and after. Which pair is the truthful step is the record writer's to state and the reviewers' to verify.
   - The same step (`102a7e99e8`) also changed eleven existing Goal rows (their application-scope editions). The check does not examine that, before or after this change. The records should say so in their notes.
 - **Reviews.** Sol 6.1 max, then Astra max, before landing and right after, as DL-412 and DL-400 require.
-- **The seal.** It is not applied here. The author and the lander are barred from applying it. So is fix round 1's worker (CA-SEAL-FIX1, agent task `claude-opus-5.5:ea-ca-seal-fix1-20261104`). The receipt's checked list names only the author and the lander: adding a name would be another check change, which is not approved. The seal applier's procedure must exclude this worker too.
+- **The seal.** It is not applied here. The author (CA-SEAL, `claude-opus-5.5:ea-ca-seal-20261104`), the actual lander, CA-SEAL-FIX1 (`claude-opus-5.5:ea-ca-seal-fix1-20261104`), CA-SEAL-FIX2 (this worker), the stream lead `claude-opus-5.5:pm-ea-lead` (session `b29da1b5-9877-474f-8a4c-e7a57ab7f899`, responsible for `616345d688`), and every other fix worker are procedurally excluded from applying the seal. The receipt's checked list remains exactly the author and lander. The seal applier must enforce the remaining exclusions procedurally; this does not add a validator rule.
 
 ## Open items
 
@@ -281,7 +281,7 @@ Result: 1,812 A comparisons, 1,808 B comparisons, 4 X2 controls and 24 C cases, 
 
 ## Evidence
 
-`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/`, with its own `SHA256SUMS`. Fix round 1's evidence is at the top level. The reviewed round's evidence is unchanged under `round0/`, with its own manifest (`round0/SHA256SUMS`, SHA-256 `4f3b0988...`, the one the review verified). The top level holds:
+`/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/`, with its own `SHA256SUMS`. Fix round 2's evidence is under `fix2/`; its current report, amendment, receipt and fixture patch are also copied to the top level. Fix round 1's original run evidence remains at the top level. The reviewed round's evidence is unchanged under `round0/`, with its own manifest (`round0/SHA256SUMS`, SHA-256 `4f3b0988...`, the one the review verified). The top level holds:
 - the validator diffs from `5e37ffb616` and from the reviewed head;
 - the scripts:
   - from round 0: the change applier, receipt writer, scenario harness, comparison, test-tree builder and mutation check, updated where fix round 1 needed it;
@@ -292,3 +292,15 @@ Result: 1,812 A comparisons, 1,808 B comparisons, 4 X2 controls and 24 C cases, 
 - the test patch and the full patched test file;
 - the test logs and the mutation results;
 - copies of this record, the branch report and the receipt.
+
+## Fix round 2 (2026-11-04): Astra AS-01 and AS-02
+
+AS-01 is fixed in `9460959cc7`: step states and claims use the same string interpretation as record validation, including accepted 64-digit JSON integers. Claim comparison then retains its strip/lower behavior. Step-only before/after equality uses the same interpretation. No-field DL-077 rules, including their legacy type handling, remain unchanged. Foreign claims fail all step members regardless of numeric/string SHA representation, invalid filenames or event types. Numeric/string mixtures within a truthful step are equivalent. Numeric/string representations of the same digest are not a change in digest for a step record.
+
+AS-02 is fixed in the accompanying reports commit: the full procedural exclusion appears both at the start of this record and in Landing notes, and includes the author, lander, CA-SEAL-FIX1, CA-SEAL-FIX2, the named stream lead/session responsible for `616345d688` and every other fix worker. The checked forbidden-task list remains exactly author and lander. The updated fixture patch is a separate commit in the same landing, after DL-413's allowance is on main.
+
+Current results supersede the historical round-1 test counts above: **60 tests pass; all 23 mutants are caught** (the original 19 plus four AS-01 variants). Added controls cover five positive representations, all 80 mixed/all-numeric foreign-file combinations through admission and main, and three normalized-equal-hash negatives; they produce 78 failures against the reviewed validator. S1-S7 and C1-C5 are all rerun, with the same expected admission outcomes and failing seal exits. Sol's 26 adversarial and 112 legacy comparisons, Astra's numeric/adversarial/legacy probes and all unchanged fixture methods are rerun. The original full differential has A=1,812, B=1,808, X2=4, C=24 and zero differences; Astra's 3,936 live-record comparisons and 256 additional numeric legacy comparisons also have zero differences. Main outputs retain only the new pin/time difference. The 279 old fixture helper comparisons retain 267 exact results and 12 receipt-chain diagnostic/return differences with identical acceptance outcomes; the same two pre-existing test methods fail. This is not a claim that all fixture diagnostics are byte-identical.
+
+Check 11 is proved with 29 semantic guard variants and 45 isolated negatives: expected negatives start to pass after their guard is weakened and all other negatives retain rejection for their own defect. Each scratch mutant has a valid validator receipt pin. The report's round-2 section contains the full table and explains the paired bridge observations and sibling-completeness target. Shards and index validation pass; no owner-derived files or governance artifacts are refreshed.
+
+Current validator SHA-256: `fb551b066c138be4a198ed1c875edff4a71c7932631db90d1e102ba43ce8a303`. Current fixture patch SHA-256: `a0c70aec676fb95bda2c18c0fe5ad273a56062c193603c79378bdd6a7d18dcdb`. Evidence summary: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/CA-SEAL/fix2/results/fix2-summary.json`, SHA-256 `a93e8ab5732a4c9d39060c660533ffc6872cc8837164539aecbcb0741ceb1c5a`. Complete guard table: `fix2/results/guard-matrix.json`, SHA-256 `dda0e1656dd2b51f3bb036c3560cd587452ce6990627c133de2b936adf4104b4`. Family grades remain N/A → N/A, with no new ids or bindings. No family is admitted and no seal is applied.
