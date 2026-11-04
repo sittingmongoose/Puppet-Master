@@ -94,7 +94,9 @@
     },
     "seed_sha256": {
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
     },
     "project_context_snapshot_ref": {
       "type": "string",
@@ -103,7 +105,9 @@
     },
     "project_context_snapshot_hash": {
       "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "pattern": "^[0-9a-f]{64}$",
+      "minLength": 64,
+      "maxLength": 64
     },
     "permission_snapshot_id": {
       "type": "string",

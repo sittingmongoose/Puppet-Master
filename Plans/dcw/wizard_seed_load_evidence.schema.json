@@ -114,7 +114,9 @@
         },
         "expected_child_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "command_id": {
           "const": "cmd.project.chain_wizard_open_deferred"
@@ -173,7 +175,9 @@
         },
         "sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         }
       }
     },
@@ -219,7 +223,9 @@
         },
         "sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "named_plan_id": {
           "type": "string",
@@ -233,7 +239,9 @@
         },
         "project_context_snapshot_hash": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "warning_refs": {
           "type": "array",
@@ -318,7 +326,9 @@
         },
         "child_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "seed_ref": {
           "type": "string",
@@ -327,7 +337,9 @@
         },
         "seed_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "project_context_snapshot_ref": {
           "type": "string",
@@ -336,7 +348,9 @@
         },
         "project_context_snapshot_hash": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "occurred_at_utc": {
           "type": "string",

@@ -244,6 +244,9 @@ def bundle_source(row, scenario, legacy_validate, historical=False):
 def wizard_source(row, scenario):
     source, authority, event = scenario['source'], scenario['authority'], scenario['event']
     check_schema(row['source_schema'], source)
+    # EventRecord leaves payload dispatch to its exact family schema, including
+    # the frozen stored copy; equality alone does not validate its hash shape.
+    check_schema(row['schema'], source['prepared_event']['payload'])
     p=event['payload'];req=source['request'];child=source['child'];seed=source['seed'];result=source['result']
     require(scenario['source_key'] == [row['source_family'] + '.v1', p['project_id'], p['planning_run_id'], p['request_id']], 'source_key')
     require(source['source_ref'] == p['source_ref'] == row['source_family'] + ':' + event['idempotency_key'].split(':')[-1], 'source_ref')

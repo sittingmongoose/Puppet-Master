@@ -250,7 +250,9 @@
               },
               "source_document_sha256": {
                 "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "pattern": "^[0-9a-f]{64}$",
+                "minLength": 64,
+                "maxLength": 64
               },
               "output_document_refs": {
                 "type": "array",
@@ -472,7 +474,9 @@
         },
         "source_document_sha256": {
           "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
+          "pattern": "^[0-9a-f]{64}$",
+          "minLength": 64,
+          "maxLength": 64
         },
         "accepted_at": {
           "type": "string",

@@ -3475,6 +3475,109 @@
               "value": []
             }
           ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_append",
+          "operation": "append",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_publish",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_retry",
+          "operation": "retry",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_0_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_intent_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
         }
       ]
     },
@@ -9139,6 +9242,144 @@
               "op": "remove"
             }
           ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_append",
+          "operation": "append",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_publish",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_retry",
+          "operation": "retry",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_0_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_1_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_intent_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
         }
       ]
     },
@@ -13602,6 +13843,179 @@
               "op": "remove"
             }
           ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_append",
+          "operation": "append",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:completed:2/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_publish",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:completed:2/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_retry",
+          "operation": "retry",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:completed:2/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_0_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_1_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_2_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_intent_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
         }
       ]
     },
@@ -18026,6 +18440,179 @@
             {
               "path": "/authority/custody/evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
               "op": "remove"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_append",
+          "operation": "append",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:interrupted:2/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_publish",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:interrupted:2/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_retry",
+          "operation": "retry",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/intents/intent:resubmit/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:requested:0/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:started:1/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:interrupted:2/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/documents/document:base/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_0_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/0/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_1_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/1/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_phases_2_result_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/phases/2/result/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_intent_source_document_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/intent/source_document_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ]
         }
@@ -22697,6 +23284,220 @@
             {
               "path": "/authority/contexts",
               "value": {}
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_append",
+          "operation": "append",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/requests/request:original/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/children/child:actual/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_publish",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/requests/request:original/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/children/child:actual/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_retry",
+          "operation": "retry",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.opened/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/requests/request:original/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/children/child:actual/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_request_expected_child_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_child_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/seed/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_seed_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/seed/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_result_child_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_result_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/result/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_result_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/result/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_event_payload_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/event/payload/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_source_prepared_event_payload_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/prepared_event/payload/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_event_payload_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/event/payload/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_source_prepared_event_payload_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/prepared_event/payload/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ]
         }
@@ -28106,6 +28907,220 @@
             {
               "path": "/authority/custody/evt_wizard_opened_6f545a1425e49bbeb4cf4f5c0deb69adcd2e705b7bcc2ed0254ec42b077023c1",
               "op": "remove"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_append",
+          "operation": "append",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.deferred_payload.loaded/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/requests/request:original/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/children/child:actual/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_publish",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.deferred_payload.loaded/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/requests/request:original/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/children/child:actual/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_original_hash_retry",
+          "operation": "retry",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/results/result:wizard.deferred_payload.loaded/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/requests/request:original/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            },
+            {
+              "path": "/authority/children/child:actual/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_request_expected_child_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/request/expected_child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_child_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/child/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/seed/sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_seed_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/seed/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_result_child_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/result/child_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_result_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/result/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_stored_result_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/result/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_event_payload_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/event/payload/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_source_prepared_event_payload_seed_sha256",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/prepared_event/payload/seed_sha256",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_event_payload_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/event/payload/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
+            }
+          ]
+        },
+        {
+          "case_id": "trailing_LF_source_prepared_event_payload_project_context_snapshot_hash",
+          "operation": "publish",
+          "expected": "schema",
+          "mutations": [
+            {
+              "path": "/source/prepared_event/payload/project_context_snapshot_hash",
+              "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n"
             }
           ]
         }
