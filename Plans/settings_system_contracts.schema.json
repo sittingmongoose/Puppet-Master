@@ -3184,7 +3184,8 @@
         "testing_browser_devices",
         "permissions_security",
         "memory_retention_history",
-        "notifications_usage_budgets"
+        "notifications_usage_budgets",
+        "project_only_rows"
       ]
     },
     "settings_transfer_draft_target": {
@@ -3273,7 +3274,7 @@
         "selector_ids": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 10,
+          "maxItems": 11,
           "uniqueItems": true,
           "items": {
             "$ref": "#/$defs/settings_transfer_selector_id"
@@ -3345,7 +3346,7 @@
         "selector_ids": {
           "type": "array",
           "minItems": 1,
-          "maxItems": 10,
+          "maxItems": 11,
           "uniqueItems": true,
           "items": {
             "$ref": "#/$defs/settings_transfer_selector_id"
@@ -11427,12 +11428,31 @@
       ]
     },
     "settings_transaction_result_v2": {
+      "description": "Live closed union: historical shapes without owner-copy contributions, or the selected evidence-bearing owner-copy edition. Historical owner-bearing definitions remain readable only. Static contract, no native evidence.",
       "oneOf": [
         {
-          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_transaction_result"
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_transaction_result"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_result_v1"
+                }
+              ]
+            },
+            {
+              "properties": {
+                "owner_results": {
+                  "maxItems": 0
+                }
+              }
+            }
+          ]
         },
         {
-          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_result_v1"
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_result_v2"
         }
       ]
     },
@@ -11566,12 +11586,31 @@
       }
     },
     "settings_transaction_preview_request_v3": {
+      "description": "Live closed union: historical shapes without owner-copy contributions, or the selected evidence-bearing owner-copy edition. Historical owner-bearing definitions remain readable only. Static contract, no native evidence.",
       "oneOf": [
         {
-          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2"
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v2"
+                }
+              ]
+            },
+            {
+              "properties": {
+                "owner_thing_previews": {
+                  "maxItems": 0
+                }
+              }
+            }
+          ]
         },
         {
-          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v2"
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v3"
         }
       ]
     },
@@ -11951,14 +11990,797 @@
       }
     },
     "settings_transaction_preview_v3": {
+      "description": "Live closed union: historical shapes without owner-copy contributions, or the selected evidence-bearing owner-copy edition. Historical owner-bearing definitions remain readable only. Static contract, no native evidence.",
       "oneOf": [
         {
-          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2"
+          "allOf": [
+            {
+              "oneOf": [
+                {
+                  "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2"
+                },
+                {
+                  "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_v2"
+                }
+              ]
+            },
+            {
+              "properties": {
+                "request": {
+                  "properties": {
+                    "owner_thing_previews": {
+                      "maxItems": 0
+                    }
+                  }
+                }
+              }
+            }
+          ]
         },
         {
-          "$ref": "https://puppetmaster.local/Plans/settings_system_contracts.schema.json#/$defs/settings_layered_preview_v2"
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_preview_v3"
         }
       ]
+    },
+    "owner_thing_copy_contribution_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_ref",
+        "operation_id",
+        "command_id",
+        "source_id",
+        "source_revision",
+        "source_sha256",
+        "destination_target_ref",
+        "expected_destination_revision",
+        "own_value_basis",
+        "selected_ids",
+        "excluded_field_ids",
+        "before_ref",
+        "after_ref",
+        "readback_ref",
+        "rollback_ref",
+        "status",
+        "schema_id",
+        "schema_version",
+        "preview_ref",
+        "preview_sha256"
+      ],
+      "properties": {
+        "owner_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_target_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_destination_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "own_value_basis": {
+          "enum": [
+            "own_values",
+            "effective_values"
+          ]
+        },
+        "selected_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "excluded_field_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "before_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "after_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "previewed",
+            "done",
+            "not_reached",
+            "refused",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "schema_id": {
+          "const": "pm.owner_thing_copy_contribution.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "preview_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "description": "Selected owner-copy contribution v2. Preview evidence identifies the exact owner preview/hash. before_ref is the per-part restore point; done/rolled_back require owner after, readback and rollback evidence. recovery_required never claims completed readback. Historical v1 is read-only compatibility for owner-bearing copies, not admitted by the new live transaction unions.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "previewed",
+                  "not_reached",
+                  "refused"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "after_ref": {
+                "type": "null"
+              },
+              "readback_ref": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "done",
+                  "rolled_back"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "after_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "readback_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "rollback_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "recovery_required"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "before_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "rollback_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        }
+      ]
+    },
+    "settings_layered_preview_request_v3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "context",
+        "operation",
+        "source_target",
+        "destination_target",
+        "copy_basis",
+        "selectors",
+        "picked_setting_ids",
+        "include_project_only",
+        "proposed_values",
+        "expected_setting_revisions",
+        "owner_thing_previews",
+        "command_id"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings.layered.preview.request.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "context": {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/SettingsOperationContextV1"
+        },
+        "operation": {
+          "enum": [
+            "copy",
+            "edit",
+            "reset",
+            "import",
+            "join",
+            "promote"
+          ]
+        },
+        "source_target": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "destination_target": {
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+        },
+        "copy_basis": {
+          "enum": [
+            "own_values",
+            "effective_values"
+          ]
+        },
+        "selectors": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "appearance_workspace",
+              "assistant_chat",
+              "providers_accounts_models_routing",
+              "planning_goal",
+              "orchestrator_automation",
+              "tools_integrations",
+              "testing_browser_devices",
+              "permissions_security",
+              "memory_retention_history",
+              "notifications_usage_budgets",
+              "project_only_rows"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "picked_setting_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "include_project_only": {
+          "type": "boolean"
+        },
+        "proposed_values": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/setting_value"
+          }
+        },
+        "expected_setting_revisions": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[a-z0-9-]+\\.[a-z0-9-]+\\.[a-z0-9-]+$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "owner_thing_previews": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/owner_thing_copy_contribution_v2"
+              },
+              {
+                "properties": {
+                  "status": {
+                    "enum": [
+                      "previewed",
+                      "not_reached",
+                      "refused"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "command_id": {
+          "const": "cmd.settings.transaction.preview"
+        }
+      }
+    },
+    "settings_layered_preview_v3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "request",
+        "preview_id",
+        "preview_sha256",
+        "generation",
+        "expires_at_utc",
+        "selector_sets",
+        "resolved_setting_ids",
+        "account_resolution",
+        "exclusions",
+        "blockers",
+        "owner_validation_refs",
+        "confirmation_required"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings.layered.preview.v3"
+        },
+        "schema_version": {
+          "const": "3.0.0"
+        },
+        "request": {
+          "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_layered_preview_request_v3"
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expires_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "selector_sets": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "appearance_workspace",
+            "assistant_chat",
+            "providers_accounts_models_routing",
+            "planning_goal",
+            "orchestrator_automation",
+            "tools_integrations",
+            "testing_browser_devices",
+            "permissions_security",
+            "memory_retention_history",
+            "notifications_usage_budgets",
+            "project_only_rows"
+          ],
+          "properties": {
+            "appearance_workspace": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "assistant_chat": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "providers_accounts_models_routing": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "planning_goal": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "orchestrator_automation": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "tools_integrations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "testing_browser_devices": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "permissions_security": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "memory_retention_history": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "notifications_usage_budgets": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            },
+            "project_only_rows": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "resolved_setting_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "account_resolution": {
+          "type": "array",
+          "items": {
+            "$ref": "https://puppetmaster.local/Plans/multi_account_contracts.schema.json#/$defs/AccountResolutionV1"
+          }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "reason_ref"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              },
+              "reason_ref": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          }
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "owner_validation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "confirmation_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "settings_layered_result_v2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "operation_id",
+        "preview_id",
+        "preview_sha256",
+        "status",
+        "targets",
+        "owner_results",
+        "readback_refs",
+        "undo_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.settings_layered_result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "preview_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "done",
+            "partial",
+            "refused",
+            "rolled_back",
+            "recovery_required"
+          ]
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target",
+              "outcome",
+              "result_ref",
+              "reason_ref"
+            ],
+            "properties": {
+              "target": {
+                "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/settings_level_target_v1"
+              },
+              "outcome": {
+                "enum": [
+                  "done",
+                  "not_reached",
+                  "refused"
+                ]
+              },
+              "result_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "reason_ref": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "owner_results": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "https://puppetmaster.local/schemas/settings-system/1.0.0/settings_system_contracts.schema.json#/$defs/owner_thing_copy_contribution_v2"
+              },
+              {
+                "properties": {
+                  "status": {
+                    "enum": [
+                      "done",
+                      "not_reached",
+                      "refused",
+                      "rolled_back",
+                      "recovery_required"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "readback_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        },
+        "undo_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
     }
   },
   "x-server-gap-alias-normalization": {
@@ -12004,8 +12826,8 @@
       "owner_component": "SettingsTransactionCoordinator",
       "sole_handler": "handlers::settings::transaction_apply",
       "gui_consumers": [
-        "Settings > Projects > Copy Settings From",
-        "Projects duplicate/template flows"
+        "Settings > Settings Transfer > Use settings from",
+        "Projects duplicate/Saved setups flows"
       ],
       "availability_until_native_proof": "inherit exact target",
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
@@ -12020,8 +12842,8 @@
       "owner_component": "SettingsTransactionCoordinator",
       "sole_handler": "handlers::settings::transaction_preview",
       "gui_consumers": [
-        "Settings > Projects > Copy Settings From",
-        "Projects duplicate/template flows"
+        "Settings > Settings Transfer > Use settings from",
+        "Projects duplicate/Saved setups flows"
       ],
       "availability_until_native_proof": "inherit exact target",
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"
@@ -12036,8 +12858,8 @@
       "owner_component": "SettingsTransactionCoordinator",
       "sole_handler": "handlers::settings::transaction_rollback",
       "gui_consumers": [
-        "Settings > Projects > Copy Settings From",
-        "Projects duplicate/template flows"
+        "Settings > Settings Transfer > Use settings from",
+        "Projects duplicate/Saved setups flows"
       ],
       "availability_until_native_proof": "inherit exact target",
       "event_receipt_rule": "receipt/projection only unless the exact event family is separately admitted by Event Authority; never infer runtime success"

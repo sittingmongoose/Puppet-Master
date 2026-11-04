@@ -850,7 +850,7 @@ A two-section layout:
 1. **Global wildcard default:** A single dropdown (`Allow` | `Ask` | `Deny`) that sets the fallback action for any tool without an explicit rule. Default: `Ask`.
 2. **Per-tool overrides:** A table listing all known tools (built-in canonical names from §5 + MCP-discovered tools). Each row: tool name, category badge, permission dropdown (`Allow` | `Ask` | `Deny`), and an expand chevron for granular rules.
 
-Override display is inline, not modal-only. Each effective permission row shows `Inherited`, `Overridden`, and `Effective` state with `/inheritance/fallback` provenance so users can understand resolution without opening a separate explanation dialog.
+Permission origin is inline. Each effective permission row shows the Computer or Project name, or Everywhere, opening Details with requested/effective values and the narrowing reason (PS-144, DL-283). `/inheritance/fallback` remains an internal provenance path, never visible inherit/override wording.
 
 ### 10.3 Granular rule editor
 
@@ -4854,7 +4854,7 @@ plan_unit_id: PS-064
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
-canonical_text: "The Permissions UI includes a global wildcard default dropdown and a per-tool overrides table with tool category, action dropdown, granular expand affordance, and inline inherited, overridden, and effective provenance."
+canonical_text: "The Permissions UI includes a global wildcard default dropdown and a per-tool overrides table with tool category, action dropdown, granular expand affordance, and inline origin words (Computer or Project name, or Everywhere) opening Details with requested/effective values and the narrowing reason (PS-144, DL-283)."
 gui_related: true
 gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
 split_recommended: false
@@ -4889,12 +4889,12 @@ preserved_exact_tokens:
 - "Per-tool overrides"
 - "category badge"
 - "expand chevron"
-- "Inherited"
-- "Overridden"
-- "Effective"
+- "Everywhere"
+- "Details"
+- "requested/effective"
 - "/inheritance/fallback"
 negative_constraints:
-- "Override display is inline, not modal-only."
+- "Permission origin is inline and opens Details; inherit/override wording is not product copy."
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -10564,7 +10564,7 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
 
 
   SSH host trust/public-key installation consumes the exact protected Server/Remote Access protocol owned
-  by A; absent selected contract or native authority is typed unavailable, never an inferred remote key writer
+  by SRV-018/RAS-017; absent selected contract or native authority is typed unavailable, never an inferred remote key writer
   behind an integration.connection.* or Client-pairing alias.'
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are

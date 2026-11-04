@@ -2270,19 +2270,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
-  Settings > Rules & Commands includes a Commands section with a top scope
-  selector that manages Global commands from ~/.config/puppet-master/commands/
-  and Project commands from <project_root>/.puppet-master/commands/ when a
+  Settings > Rules & Commands includes a Commands section with a top reach
+  selector labelled Every project for library commands from ~/.config/puppet-master/commands/
+  and This project for commands from <project_root>/.puppet-master/commands/ when a
   project is active.
 gui_related: true
-gui_classification_reason: Scope selection is a visible control in the Commands settings section.
+gui_classification_reason: Reach selection is a visible control in the Commands settings section.
 split_recommended: false
 depends_on: [CS-012, CS-027]
 unblocks: [CS-029, CS-046]
 acceptance_criteria:
-  - The Commands section within Settings > Rules & Commands provides a top-level scope selector.
-  - Global manages commands in ~/.config/puppet-master/commands/.
-  - Project is visible when a project is active and manages commands in <project_root>/.puppet-master/commands/.
+  - The Commands section within Settings > Rules & Commands provides a top-level reach selector using Every project and This project.
+  - Every project manages library commands in ~/.config/puppet-master/commands/.
+  - This project is visible when a project is active and manages commands in <project_root>/.puppet-master/commands/.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2299,8 +2299,8 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0039
 preserved_exact_tokens:
   - "Settings > Rules & Commands"
-  - "Global"
-  - "Project"
+  - "Every project"
+  - "This project"
   - "~/.config/puppet-master/commands/"
   - "<project_root>/.puppet-master/commands/"
 negative_constraints: []
@@ -2423,8 +2423,9 @@ status: accepted
 owner_doc: Plans/Commands_System.md
 canonical_text: >-
   Row click or edit button opens the command editor pre-populated; editing a
-  global command while a project is active offers Save as project override or
-  Save globally.
+  library command saves to its owner-held library home. With a project active,
+  Make a version for [Project] creates a whole Project version; Go back to the library version
+  removes that version through the command owner (SSYS-061).
 gui_related: true
 gui_classification_reason: Edit entry points and save-target options are visible editor interactions.
 split_recommended: false
@@ -2433,8 +2434,8 @@ unblocks: [CS-032]
 acceptance_criteria:
   - Row click opens the same editor pre-populated.
   - Edit button opens the same editor pre-populated.
-  - Editing a global command while a project is active offers Save as project override.
-  - Editing a global command while a project is active offers Save globally.
+  - Editing a library command while a project is active offers Make a version for [Project].
+  - A Project version offers Go back to the library version; ordinary Save writes the actual home.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2449,8 +2450,8 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0042
 preserved_exact_tokens:
-  - "Save as project override"
-  - "Save globally"
+  - "Make a version for [Project]"
+  - "Go back to the library version"
 negative_constraints: []
 owner_hints:
   - Plans/Commands_System.md
@@ -9345,8 +9346,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_settings
@@ -9557,8 +9558,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_projects
@@ -9944,8 +9945,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_no_project
@@ -10313,8 +10314,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_automation
@@ -10471,8 +10472,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_goal_crew
@@ -10632,8 +10633,8 @@ validation_surfaces:
 - Plans/pm7_control_bindings.json
 - Plans/touch_closure.json
 - Plans/touch_closure_action_sources.json
-- python3 scripts/pm-touch-closure-verify.py (phase 2 only)
-- python3 scripts/pm-plans-verify.py validate-wiring-matrix (phase 2 only)
+- scripts/pm-touch-closure-verify.py
+- scripts/pm-plans-verify.py
 risk_class: scope_target_authority_or_command_binding_drift
 reasoning_tier: high
 context_scope: projects_refresh_plan_schedule

@@ -51883,7 +51883,7 @@
     },
     "catalog.project_add_existing": {
       "ui_element_id": "catalog.project_add_existing",
-      "ui_location": "Project surface > Add Existing; Product Onboarding exact Review commit chain under PJCT-007; Projects refresh reverse consumers: Projects/New Project/onboarding/conversion; exact owner Details/recovery/Backup/SCM",
+      "ui_location": "Projects > New Project > existing folder; Product Onboarding exact Review commit chain under PJCT-007; Projects refresh reverse consumers: Projects/New Project/onboarding/conversion; exact owner Details/recovery/Backup/SCM",
       "ui_command_id": "cmd.project.add_existing",
       "handler_location": "handlers::project::add_existing",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2",
@@ -53253,7 +53253,7 @@
     },
     "catalog.project_new_local": {
       "ui_element_id": "catalog.project_new_local",
-      "ui_location": "Project surface > New Local; Product Onboarding exact Review commit chain under PJCT-007; Projects refresh reverse consumers: Projects/New Project/onboarding/conversion; exact owner Details/recovery/Backup/SCM",
+      "ui_location": "Projects > New Project > new local folder; Product Onboarding exact Review commit chain under PJCT-007; Projects refresh reverse consumers: Projects/New Project/onboarding/conversion; exact owner Details/recovery/Backup/SCM",
       "ui_command_id": "cmd.project.new_local",
       "handler_location": "handlers::project::new_local",
       "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/project_action_request_v2",
