@@ -972,7 +972,10 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
     module target) or nonlocal (for a function target). A qualified component is refused when
     the body it is looked up in declares it global or nonlocal. Function and lambda bodies run
     later, if at all, and reflective mutation (exec, globals(), setattr) is not code structure:
-    both are outside the anchor's contract. Names are compared after Python's private-name
+    both are outside the anchor's contract. Special names (double underscores on both sides, such
+    as __init__, __doc__ or __annotate_func__) are not anchorable: the interpreter and compiler
+    bind some of them implicitly (Python 3.14 stores __annotate_func__ in any class with
+    annotations), which no source-level count can see. Names are compared after Python's private-name
     mangling, and the compiler's symbol table independently confirms ownership
     (_symtable_ownership); the anchor is refused when either check fails.
     """
@@ -1082,6 +1085,9 @@ def _python_segment(source: str, qualname: str, ref: str) -> str:
             stack.extend(ast.iter_child_nodes(item))
         return found
 
+    for part in qualname.split("."):
+        if len(part) > 4 and part.startswith("__") and part.endswith("__"):
+            raise AnchorError(f"{ref}: {part!r} is a special name the interpreter may bind implicitly; anchor an ordinary definition")
     _symtable_ownership(source, qualname, ref)
     scope: list[ast.stmt] = list(tree.body)
     scope_kind = "module"
@@ -4205,6 +4211,14 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("pydef_mangled_class_global_rebinding_fails", "def _C__f():\n    return 1\nclass C:\n    global __f\n    __f = 2\n", "_C__f"),
             ("pydef_mangled_class_nonlocal_rebinding_fails", "def outer():\n    def _C__f():\n        return 1\n    class C:\n        nonlocal __f\n        __f = 2\n    return _C__f\n", "outer._C__f"),
             ("pydef_mangled_duplicate_definition_fails", "class C:\n    def __f():\n        return 1\n    def _C__f():\n        return 2\n", "C._C__f"),
+        ):
+            (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
+            check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
+        # R8-B2: special names can be bound implicitly by the compiler (Python 3.14 __annotate_func__).
+        for name, source, ref in (
+            ("pydef_special_name_method_refused", "class C:\n    def __annotate_func__():\n        return 1\n    x: int\n", "C.__annotate_func__"),
+            ("pydef_special_name_assignment_refused", "class C:\n    __annotate_func__ = 1\n    x: int\n", "C.__annotate_func__"),
+            ("pydef_dunder_method_refused", "class C:\n    def __init__(self):\n        pass\n", "C.__init__"),
         ):
             (tmp / "scripts/bind.py").write_text(source, encoding="utf-8")
             check(name, not resolves(f"scripts/bind.py#pydef={ref}"))
