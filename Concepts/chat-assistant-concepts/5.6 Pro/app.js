@@ -2736,7 +2736,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const bar=stage.querySelector('.activity-wrap');
     if(bar){const tpl=document.createElement('template');tpl.innerHTML=renderActivityBar();pmPatchNode(bar,tpl.content.firstElementChild);}
     fitActivityTabs();
-    renderOverlays();
+    // Only the Activity hover card changed; overlay-wide hooks measure and
+    // refit unrelated sheets and editor surfaces.
+    syncHoverCard();
   }
 
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
