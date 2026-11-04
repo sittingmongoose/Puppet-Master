@@ -1,108 +1,89 @@
-# DM — fix round 3, final permitted round
+# DM — DL-408 application fix 1
 
-Worker: **DM-FIX3**, VM. Branch: `plans/ea-w2-small-owners-20261104`. Input: `d30cd99c371276ece97105f402e72d7487d5a60f`. Contract/checker fix: `1eaddcd0ed045e78ac36d59fa1648799203640ab`.
+Worker: **DM-APPLY-FIX1**, VM. Branch: `plans/ea-w2-small-owners-20261104`. Input: `90f7e163614575558644d291f283c19ae6f305a9`. Companion/checker fix: `66655ae43ec98be050816fb574ef26d9d9e8709c`. Exclusion application: `e2cfea7c5823e1ea822cfd088db0c125a0327d5b`. The final reporting commit contains this assessment and the derived index; its parent source/data revision is the application head above.
 
-The checkpoint identity gap is fixed across all eight prepared families. All standing checks pass; every family has eight explicit negative regressions run through the full checker. **64/64 full-checker subprocesses rejected the negative, and 8/8 harness probes rejected success exit 0.** The full current suite passes **4,846 assertions**. These are static contract/model oracles; native execution remains **NOT_RUN**.
+**B4 and B5 are fixed. All eight prepared families preserve their cycle-3 grades.** The full lane checker passes **4,965 assertions**; **72/72** standing-check regressions and **40/40** Settings regressions fail through the complete checker with exit **1** and the expected assertion. All eight failure-oracle guards reject exit **0**. These are static contract/model checks; native execution remains **NOT_RUN**.
 
-## Review round 3: findings and responses
+## Review round 3: findings and responses (DM-APPLY-FIX1)
 
-- **Standing check 7 — fixed (`1eaddcd0ed045e78ac36d59fa1648799203640ab`).** `scripts/pm-small-owner-events.py:337` validates the shared live token schema with strict full matches and its nine-field durable projection; `:352` joins original Storage/source/key/generation, `:372` joins every durable field to an independent selected live token and frontier, and `:396` fences publication. Passive reads validate the same identities. Each family's own three owner units and ATS paragraph state the rule; its fixture adds 37 checkpoint and four reader refusal cases. Every refusal preserves the complete old publication and produces no owner effect. The pinned input checker accepts the exact foreign-Storage mutation in all eight; the fixed checker refuses it in all eight. Removing the new gate fails the full checker for every family.
-- **Cycle-2 B1 — remains fixed (`6eb5a0ba62`).** All three application families use exact CV-366 actual-Server UTF-8-hex keys; former hash recipes, foreign/missing Server and normalization refuse. The five Project-only families reject foreign/noncanonical keys without being given an application writer.
-- **Cycle-2 B2 — remains fixed (`6eb5a0ba62`).** All three legal large-body families reject the review's >32 KiB inline bodies and pass their own 16383/16384/16385-byte and SP-337 external-reference boundaries. All eight additionally exercise Storage's byte gate with an oversized synthetic object before logical-schema validation. For the five bounded closed schemas, that artificial object is not a legal payload; no external-body product behavior is invented for them.
-- **Cycle-2 B3 — remains fixed (`6eb5a0ba62`).** Every family rejects compatibility-only replay policy before current append/retry, preserves immutable historical reads and rejects every mutated/missing delivered receipt field before terminal success. A foreign delivered receipt leaves its already durable frame but exposes no receipt or success.
-- **Cycle-1 resolved findings — preserved (`9f276c6e08`).** Correct closed redaction enums, 104 original-envelope joins, 77 payload joins, eight timestamp joins, family-specific clauses and producer witnesses remain enforced. All 24 current owner bodies match after their role heading. Project registration/new creation/ordinary Git clone boundaries stay distinct.
-- **Settings disposition — preserved (`6757da332b`).** `settings.updated` and `settings.theme.updated` remain retired as superseded under DL-408. `settings.layer.changed` is the sole future Settings family. Historical bytes remain readable; DRY guard mapping stays disabled with `owner_contract_missing`. No Settings writer or event fixture was added. The cycle-2 review predates DL-408; its old request for a decision is superseded, not reopened.
+- **B4 — fixed (`66655ae43ec98be050816fb574ef26d9d9e8709c`). Where:** `Plans/Wiring_Matrix.production.json:71407` through the four theme entries, `Plans/touch_closure.json:3182`, and `Plans/Wiring_Matrix.production.exclusions.json:306`. **Cause:** sixteen theme requirements and two future-DRY passages retained the superseded names. **Fix:** all four theme commands use only `settings.layer.changed`; the DRY companion passages use that successor under SSYS-060/DL-300 and existing owner-adoption prerequisites. The DRY guard retains empty event refs, absent handler/wiring, `owner_contract_missing`, zero mutation dispatch and zero writes. Historical dedicated DRY records remain read-only without aliasing or payload rewrite. `scripts/pm-small-owner-events.py:64` checks the actual current companions; `:89` exercises forty authored refusal cases. The fixture adds no retired-family writer or positive EventRecord. Verification: the complete checker passes; forty separate full-checker processes catch retired-name reintroduction in every theme requirement field and both DRY passages, premature guard claims, and loss of historical readability.
+- **B5 — fixed (`e2cfea7c5823e1ea822cfd088db0c125a0327d5b`). Where:** `Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json:5`, `ROW_settings.updated.json:5`, the mirrored ledger lines 251–252 and census lines 255–256. **Cause:** the approved retirement had no Step 9 exclusion application. **Fix:** both exact names now have `RECLASSIFY_TO_EXCLUDED` in all six representations. `DM-settings-exclusions-application.json` records each row's before/after SHA-256, both whole-ledger hashes and each changed line's hashes, thirteen exact checked source quotes, the pinned DL-408 decision branch and immutable fields. The row rationale and appended citations distinguish historical August depth evidence from current retirement evidence. Verification: `apply-fix1/verify-exclusions.py` passes; only the two named lines in each ledger change, mirrors agree, every recorded hash and quote matches, and all frozen fields and inherited evidence remain intact. No denominator removal is claimed.
+- **N1 — carried qualification (this report/index commit).** Index generation changes the four existing top-level `generated_at_utc` fields. Its only substantive change is expected staleness for the edited production Wiring Matrix hash and exclusions source; no unrelated owner, PlanUnit, shard, JSONL index or generator changed. `scope-derived-audit.json` checks the exact two-source delta. Literal derived byte identity is qualified by those clock fields and the required edited-source staleness update.
+- **N2 — fixed (this report/search commit).** Every retained `hits` collection in `DM-search.json` is labelled with capture revision `81746599e17375fda60b8b51c8ac2bfd3c2b09d7`. All **79** historical hits match that revision; the **22** other current binding quotes still match current source. They are no longer presented as current search verification. All **248** current self-grade quotes and source hashes were checked and the moved checker definitions re-anchored.
 
-No finding is disputed or stopped for Jared in this fix. Membership/admission and six previously pending retention cells remain outside this round.
+No finding is disputed or stopped for Jared. No decision beyond **2d A** is made.
 
-## Per-family standing checks
+## Authority and boundaries
 
-| Exact family | 1 replay-only | 2 key | 3 partition | 4 byte cap | 5 LF | 6 semantic body | 7 checkpoint | 8 failure exit |
-|---|---|---|---|---|---|---|---|---|
-| `format.applied` | pass | pass (Project-only) | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `lsp.server.lifecycle_changed` | pass | pass (Project-only) | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `model.catalog_refreshed` | pass | pass | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `subagent.context_rehydrated` | pass | pass | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `subagent.context_shrunk` | pass | pass | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `project.added` | pass | pass (Project-only) | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `project.created` | pass | pass (Project-only) | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
-| `git.clone.completed` | pass | pass (Project-only) | pass | pass | pass | pass | fixed (`1eaddcd0ed`) | pass |
+DL-408 is pinned to `origin/plans/ea-cards1-answers-20261104` at `b6332f391a7870bad5f01a29a7e9d080050dac27`; its Decision Log integration remains a dependency. Jared's exact answer, the as-presented **2d A**, and current Settings/UCC/UIW/Storage passages are checked in the application record. The as-presented card SHA-256 is `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`. DL-408 replaces DL-041's naming premise only. The prior DL-039 phase-1 evidence remains historical.
 
-Check 2 is application-format applicable to three families; the five Project-only rows instead prove their exact current Project recipe and reject a foreign application-form key. Every family has an encoded Project positive, including independently authored Project variants of the three application-capable families. Check 5 covers all existing payload LF negatives plus new token LF negatives, including coherent token substitution. Check 6 proves changes to `sequence_id`, `observed_at_utc` and `persisted_at_utc` leave caller semantic identity unchanged, while full-value recovery rejects changed stored bytes.
+Every Settings change uses only `settings.layer.changed`; `settings.updated` and `settings.theme.updated` are retired as superseded. Older `settings.agent_rules.dry_method_default_guard.updated` records stay readable. The DRY guard stays disabled pending exact key-to-valid-setting-ID/writer proof. The Memory switch, theme transactions, existing result/receipt joins, preview non-emission and owner-adoption gates retain their current owners. No alias, event-byte rewrite, writer adoption, scope/identity choice, retention/deletion choice or new admission is supplied.
 
-## Negative cases and full-checker rejection
+No owner Markdown was edited, and no shard changed. No registry append, admission record, Decision Log entry, governance reseal, frozen validator, cohort map, Spec Lock or auto-decision was changed. No pm-mail, subagent, browser, server, landing lock or main push was used.
 
-The complete 64-cell matrix, per-negative command, failure text and evidence path/SHA-256 are in `reports/event-authority-20261104/DM-round3-standing-checks.json` and `fix3/standing-checks.json`.
+## All nine standing checks, all eight prepared families
 
-| Check | Per-family negative that catches a regression |
-|---|---|
-| 1 | Allow current retry of a genuine historical `projector_replay_only` original. Full checker refuses the regression. |
-| 2 | Replace the current positive key with `application@1:NOT_HEX:wrong_operation`. Full checker rejects the positive. |
-| 3 | Replace the authored encoded `project~` partition with its raw Project id. Full checker rejects it. |
-| 4 | Bypass the 16 KiB Storage byte gate for this family. Full checker rejects the oversized inline acceptance; the three reachable external-body matrices also stay active. |
-| 5 | Strip trailing LF from checkpoint identifiers instead of refusing it. The coherent selected/proposed-token LF negative fails the full checker. |
-| 6 | Include Storage-assigned `sequence_id` in this family's caller semantic digest. Full checker rejects the changed digest. |
-| 7 | Restore this family's unchecked rebuild publication. The explicit foreign Storage checkpoint case fails the full checker. |
-| 8 | Mark an invalid original producer witness as a positive. The complete checker exits nonzero; separately passing success exit 0 to the failure-oracle guard raises a failure for every family. |
+| Exact family | 1 replay-only | 2 key | 3 partition | 4 bytes | 5 LF | 6 semantics | 7 checkpoint | 8 failure exit | 9 refs |
+|---|---|---|---|---|---|---|---|---|---|
+| `format.applied` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `lsp.server.lifecycle_changed` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `model.catalog_refreshed` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `subagent.context_rehydrated` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `subagent.context_shrunk` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `project.added` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `project.created` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
+| `git.clone.completed` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
 
-Every negative child calls `main()` with all eight families and all original checks enabled, with only the selected fixture/adapter mutated in memory. No repository fixture is overwritten by the audit. Initial execution checked every child exit and printed each family completion only after all eight refusals; its finalizer then used the obsolete Settings outcome spelling. The finalizer was corrected to the existing `retired` value and revalidated the eight completion records plus 64 retained failure outputs using `--summarize-completed`. All product checker/fixture bytes were unchanged; no completed subprocess result was replaced with a success or silently ignored.
+1. Each current retry refuses even a genuine retained `projector_replay_only` original; immutable historical reads remain unchanged.
+2. The three application-capable families retain CV-366's exact actual-Server/original-operation UTF-8-hex key. The five Project-only families retain their own exact recipes and reject foreign application keys.
+3. All eight retain their validating encoded `project~` Project positive.
+4. All eight retain Storage's 16 KiB inline gate; the three legally large-body families keep SP-337 external-body cases. No external-body product behavior is added to the five bounded schemas.
+5. Existing payload and coherent checkpoint trailing-LF refusals remain. No trimming or normalization is accepted.
+6. Caller semantic comparison excludes Storage `sequence_id`, `observed_at_utc` and `persisted_at_utc`; full-value identity still rejects changed stored bytes.
+7. Foreign Storage/source/key/generation, selected live-token/frontier and persisted-snapshot mismatches preserve old publication.
+8. An invalid original witness makes the complete checker fail; the separate failure guard accepts only expected exit 1 and refuses exit 0.
+9. `scripts/pm-small-owner-events.py:34` resolves every `$ref`, including unused definitions, in all eight payload schemas and their shared envelope/receipt/checkpoint schemas. References use an offline registry of the checked schema corpus. Every family has an unused dangling-reference negative; a separate mutated full-checker run must fail. An unresolved reference is never counted as an expected data refusal.
 
-## Grades before and after
+The matrix runs with one process-local mutation at a time, keeping every other family and original assertion enabled. `DM-apply-fix1-standing-checks.json` records each child command, exact failure, exit code and external output path/SHA-256. Existing original fixture vectors are byte-semantically unchanged after removing only the added negative matrices. No existing refusal was weakened.
 
-Before is the requested input head's self-grade, including the checkpoint PARTIAL downgrade. After is the full source/checker head above. Intentional absent membership and the six permitted retention holds prevent a claim of all-twelve admission PASS.
+## Family grades before and after
 
-| Exact family | Before | After |
+Before is the **cycle-3 independent review** at the requested input, including its two Settings compatibility PARTIAL corrections. The input self-grade had overstated those two cells as PASS. After records the completed application; N/A remains disposition-only and supplies no current-writer depth credit.
+
+| Exact family | Cycle-3 reviewed before | After |
 |---|---|---|
-| `format.applied` | 9 PASS/2 PARTIAL/1 ABSENT | 10 PASS/1 PARTIAL/1 ABSENT |
-| `git.clone.completed` | 9 PASS/2 PARTIAL/1 ABSENT | 10 PASS/1 PARTIAL/1 ABSENT |
-| `lsp.server.lifecycle_changed` | 9 PASS/2 PARTIAL/1 ABSENT | 10 PASS/1 PARTIAL/1 ABSENT |
-| `model.catalog_refreshed` | 9 PASS/2 PARTIAL/1 ABSENT | 10 PASS/1 PARTIAL/1 ABSENT |
-| `project.added` | 9 PASS/2 PARTIAL/1 ABSENT | 10 PASS/1 PARTIAL/1 ABSENT |
-| `project.created` | 9 PASS/2 PARTIAL/1 ABSENT | 10 PASS/1 PARTIAL/1 ABSENT |
-| `settings.theme.updated` | 2 PASS/1 ABSENT/9 NOT_APPLICABLE | 2 PASS/1 ABSENT/9 NOT_APPLICABLE |
-| `settings.updated` | 2 PASS/1 ABSENT/9 NOT_APPLICABLE | 2 PASS/1 ABSENT/9 NOT_APPLICABLE |
-| `subagent.context_rehydrated` | 10 PASS/1 PARTIAL/1 ABSENT | 11 PASS/1 ABSENT |
-| `subagent.context_shrunk` | 10 PASS/1 PARTIAL/1 ABSENT | 11 PASS/1 ABSENT |
+| `format.applied` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `git.clone.completed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `lsp.server.lifecycle_changed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `model.catalog_refreshed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `project.added` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `project.created` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `settings.theme.updated` | 1 PASS / 1 PARTIAL / 1 ABSENT / 9 NOT_APPLICABLE | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE |
+| `settings.updated` | 1 PASS / 1 PARTIAL / 1 ABSENT / 9 NOT_APPLICABLE | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE |
+| `subagent.context_rehydrated` | 11 PASS / 1 ABSENT | 11 PASS / 1 ABSENT |
+| `subagent.context_shrunk` | 11 PASS / 1 ABSENT | 11 PASS / 1 ABSENT |
 
-Both retired rows keep two PASS disposition cells, nine NOT_APPLICABLE current-writer cells and ABSENT membership. Their disposition is not graded as a current-writer prepared contract.
+All eight remain **PASS AS PREPARED**, with membership intentionally ABSENT. Six permitted `PENDING_RETENTION_DECISION` cells remain with RT; the two child-context rows keep their reviewed existing Runtime retention binding. Other card answers, including retention, are outside this fix. Each retired name has two PASS disposition cells, intentional ABSENT membership and nine NOT_APPLICABLE current-writer cells. Aggregate: **86 PASS / 6 PARTIAL / 10 ABSENT / 18 NOT_APPLICABLE**.
 
-## Exact owner locations and shared hunks
-
-| Exact family | Added identity contract locations |
-|---|---|
-| `format.applied` | `FS-075` `Plans/Formatters_System.md:1132`; `CV-620` `Plans/Contracts_V0.md:24496`; `SP-600` `Plans/storage-plan.md:29505` |
-| `lsp.server.lifecycle_changed` | `LSPS-173` `Plans/LSPSupport.md:7271`; `CV-621` `Plans/Contracts_V0.md:24548`; `SP-601` `Plans/storage-plan.md:29558` |
-| `model.catalog_refreshed` | `MS-199` `Plans/Models_System.md:9930`; `CV-622` `Plans/Contracts_V0.md:24600`; `SP-602` `Plans/storage-plan.md:29611` |
-| `subagent.context_rehydrated` | `PP-151` `Plans/Prompt_Pipeline.md:6065`; `CV-623` `Plans/Contracts_V0.md:24652`; `SP-603` `Plans/storage-plan.md:29664` |
-| `subagent.context_shrunk` | `PP-152` `Plans/Prompt_Pipeline.md:6117`; `CV-624` `Plans/Contracts_V0.md:24704`; `SP-604` `Plans/storage-plan.md:29717` |
-| `project.added` | `PJCT-072` `Plans/Project_System.md:1007`; `CV-625` `Plans/Contracts_V0.md:24756`; `SP-605` `Plans/storage-plan.md:29770` |
-| `project.created` | `PJCT-073` `Plans/Project_System.md:1059`; `CV-626` `Plans/Contracts_V0.md:24808`; `SP-606` `Plans/storage-plan.md:29823` |
-| `git.clone.completed` | `SCS-085` `Plans/Source_Control_System.md:2165`; `CV-627` `Plans/Contracts_V0.md:24860`; `SP-607` `Plans/storage-plan.md:29876` |
-
-- **Plans/Contracts_V0.md**: `@@ -24495,0 +24496 @@ canonical_text: |-`, `@@ -24546,0 +24548 @@ canonical_text: |-`, `@@ -24597,0 +24600 @@ canonical_text: |-`, `@@ -24648,0 +24652 @@ canonical_text: |-`, `@@ -24699,0 +24704 @@ canonical_text: |-`, `@@ -24750,0 +24756 @@ canonical_text: |-`, `@@ -24801,0 +24808 @@ canonical_text: |-`, `@@ -24852,0 +24860 @@ canonical_text: |-`
-- **Plans/storage-plan.md**: `@@ -29504,0 +29505 @@ canonical_text: |-`, `@@ -29556,0 +29558 @@ canonical_text: |-`, `@@ -29608,0 +29611 @@ canonical_text: |-`, `@@ -29660,0 +29664 @@ canonical_text: |-`, `@@ -29712,0 +29717 @@ canonical_text: |-`, `@@ -29764,0 +29770 @@ canonical_text: |-`, `@@ -29816,0 +29823 @@ canonical_text: |-`, `@@ -29868,0 +29876 @@ canonical_text: |-`
-- **Plans/Automated_Testing_System.md**: `@@ -7242 +7242 @@ canonical_text: |-`, `@@ -7282 +7282 @@ canonical_text: |-`, `@@ -7322 +7322 @@ canonical_text: |-`, `@@ -7362 +7362 @@ canonical_text: |-`, `@@ -7402 +7402 @@ canonical_text: |-`, `@@ -7433 +7433 @@ negative_constraints:`, `@@ -7436 +7436 @@ project.added — ATS-304 independent oracle supplement. project.added independe`, `@@ -7439 +7439 @@ project.created — ATS-304 independent oracle supplement. project.created indep`
-
-These are refinements of each existing newly authored owner contract under DL-045, following independent exact-family inspection recorded in `DM-search.json`. Existing SP-278 consumer/projector/checkpoint identities and DL-076 token shape are reused. No new persisted value, technical identifier or owner authority is introduced.
-
-## Verification and evidence
+## Verification and delivery
 
 | Check | Exit / result |
 |---|---|
-| Full exact-family checker | 0; 4,846 assertions |
-| All eight standing checks across eight prepared families | 0; 64 failure processes and eight zero-exit harness mutations verified |
-| Previous 22 weakened-checker mutations | 0; 22 caught |
-| Independent cycle-2 probe and current result assertions | 0; B1–B3 and resolved findings stay fixed |
-| Shard generate / check | 0 / 0; parsed `pass` |
-| Index generate / validate | 0 / 0; parsed top-level `pass` |
-| Currentness input copy | 15 files, matching SHA-256 before generation |
-| Derived ownership audit | No generated shard for an unedited owner changed |
-| Storage recovery self-test | 0; `pass` |
-| Storage profile | 1; same 41 missing-profile errors, output byte-identical to prior apply run |
-| Evidence quotes and hashes / whitespace | 0 / 0 |
+| Full lane checker | 0; 4,965 assertions, eight families PASS |
+| Nine standing checks per family | 0; 72/72 full-checker negatives rejected; 8/8 success-exit guards reject 0 |
+| DL-408 companion regressions | 0; 40/40 full-checker negatives rejected |
+| Exclusion hashes, citations and frozen fields | 0; two rows / six representations / thirteen exact checked quotes |
+| Historical/current search and self-grade quotes | 0; 79 historical hits, 22 current bindings, 248 current grade quotes |
+| Shard check | 0; parsed `pass`, 99 sources / 3,092 shards |
+| Index generate / validate | 0 / 0; parsed top-level `pass`; runtime readiness remains blocked |
+| Settings layering | 0; 135 semantic cases, 1,017 rows |
+| Existing DRY guard consumer tests | 0; ten tests |
+| Storage recovery self-test | 0; parsed `pass` |
+| Storage profile | 1; unchanged 41 missing-profile errors; output SHA-256 `89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b` matches the pinned review byte for byte |
+| Scope/derived audit and whitespace | 0; no unrelated owner output; inherited CRLF accepted with `cr-at-eol` and default whitespace rules |
 
-Exact commands, exit codes and output SHA-256 values are in `DM-checks.json`. Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/`. `artifact-manifest.json` records retained evidence paths and hashes. Report/self-grade copies are delivered in the parent `drafts/DM/` directory. Original input report, grades, checks and search records are preserved as `fix3/input-DM*`.
+`DM-checks.json` contains commands, exits and output hashes. Raw check outputs and reproducible mutation/audit scripts are under `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/`; their final manifest records paths and SHA-256 values. Currentness generation input: fifteen files copied from the share and individually hash-matched before index generation. The first index validation reported the expected edited-source staleness; regeneration reconciled only that delta. No governance seal was refreshed; the edited Wiring Matrix sources still require the integration reseal.
 
-No new IDs were minted. Existing units used: **FS-075, LSPS-173, MS-199, PP-151/152, PJCT-072/073, SCS-085, CV-620–627, SP-600–607, ATS-300–304**. No registry append, admission, Decision Log entry, governance reseal, frozen-validator edit, profile change, native activation, subagent, landing or main push. An initial inbox/who read preceded the no-pm-mail brief; no registration or message was sent and no later mailbox call was made.
+Report, self-grade, checks, search and application copies are delivered to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/`. The prior report/grade/check/search snapshots remain in `apply-fix1/input-DM*` for lineage. Entry resources were **128 GB free root disk / 16 GiB available memory**, above both hard limits. The required sparse worktree is removed after the final push; no other checkout is touched.
 
-Entry resources: **16 GiB available memory, 115 GB available root disk**. The requested sparse detached worktree was created at the exact input head from `~/src/PuppetMaster`; currentness was copied and verified. After the final report push, remove `/home/sittingmongoose/pm-worktrees/DM-fix3` with the literal-path worktree command. No browser, server or venv was started.
+**IDs used:** no new PlanUnit or runtime binding IDs. Existing lane units remain **FS-075, LSPS-173, MS-199, PP-151/152, PJCT-072/073, SCS-085, CV-620–627, SP-600–607, ATS-300–304**. The fix applies existing **DL-408 / SSYS-060 / UCC-084/104/108 / UIW / WM-040 / SP-348** authority and reuses **CV-366, SP-278, SP-286/CV-339 and SP-337**. Original per-family search and newly authored bindings remain in `DM-search.json`; no new product binding is authored in this fix.

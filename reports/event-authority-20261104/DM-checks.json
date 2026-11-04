@@ -1,170 +1,101 @@
 {
-  "worker": "DM-FIX3",
-  "input_head": "d30cd99c371276ece97105f402e72d7487d5a60f",
-  "canonical_head": "1eaddcd0ed045e78ac36d59fa1648799203640ab",
-  "checks": [
-    {
-      "command": [
-        "python3",
-        "scripts/pm-small-owner-events.py"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/family-check.txt",
-      "sha256": "1d8f16f1f51a85af0516370083eded9c7dd1e8e4a38f27397ed5f83ff0b68027",
-      "top_level_status": null
-    },
-    {
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/shard-generate.json",
-      "sha256": "48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4",
-      "top_level_status": "pass"
-    },
-    {
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/index-generate.json",
-      "sha256": "6817f1da5319cf71c63984375ab1110189f0c13b3a45073167e54d8810569789",
-      "top_level_status": "pass"
-    },
-    {
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/shard-check.json",
-      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21",
-      "top_level_status": "pass"
-    },
-    {
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/index-validate.json",
-      "sha256": "bd252fd84f42c7037dad647280011bbb5467cc43f5791511980f13e3229cf425",
-      "top_level_status": "pass"
-    },
-    {
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
-        "/home/sittingmongoose/pm-worktrees/DM-fix3",
-        "--summarize-completed"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.json",
-      "sha256": "485aefc2595bc6161fb4dc6e50f117bbe613eeff8f8044c8d23bc26ec1ce8d8f",
-      "top_level_status": "PASS"
-    },
-    {
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix2/regression-mutations.py",
-        "/home/sittingmongoose/pm-worktrees/DM-fix3"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/regression-mutations.json",
-      "sha256": "3cb1e220eb31826199f86307822b09dabe053f5f3f96af5069eab4fdb3fdfbf1",
-      "top_level_status": "PASS"
-    },
-    {
-      "command": [
-        "python3",
-        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-mutation-probe.py",
-        "/home/sittingmongoose/pm-worktrees/DM-fix3"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/review-probe.json",
-      "sha256": "92f0eff68ed3b103c3d00a5abd0042483b49d1292cb2f9161fb02012ba6fe299",
-      "top_level_status": null
-    },
-    {
-      "command": "Validate the independent cycle-2 probe results and all eight current owner triplets",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/cycle2-regression-summary.json",
-      "sha256": "9874595d9dc05650abecd8802886d19599fcfd1c19e927e298ed75948588ae5c",
-      "top_level_status": "PASS"
-    },
-    {
-      "command": [
-        "python3",
-        "scripts/pm-storage-recovery-contracts.py",
-        "--self-test"
-      ],
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/storage-recovery.json",
-      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a",
-      "top_level_status": "pass"
-    },
-    {
-      "command": [
-        "python3",
-        "scripts/pm-storage-profile-check.py"
-      ],
-      "exit_code": 1,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/storage-profile.json",
-      "sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b",
-      "top_level_status": "fail"
-    },
-    {
-      "command": [
-        "git",
-        "diff",
-        "--check",
-        "d30cd99c371276ece97105f402e72d7487d5a60f..1eaddcd0ed045e78ac36d59fa1648799203640ab"
-      ],
-      "exit_code": 0,
-      "output": "No whitespace errors"
-    },
-    {
-      "command": "Validate every current self-grade/search evidence quote, line range and file SHA-256; assert only eight checkpoint grades improve and both retired Settings rows retain their statuses",
-      "exit_code": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/quote-grade-check.json",
-      "sha256": "381fc9cda5b6cddc1bbe978516d980998a0ddcd415cc5626b12f772f06ec1b62",
-      "top_level_status": "PASS"
-    }
-  ],
-  "evidence": [
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/standing-checks.py",
-      "sha256": "b36240c725b6b0204a00827fa83ea5f43e95b2b2e7e8fc653dc1dd8fc7b53cd0"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/currentness-copy.json",
-      "sha256": "ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/source-scope.json",
-      "sha256": "86286a0e555c04d5f528f6deceadab226489c86013f409e7523a485f1d130cca"
-    },
-    {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-      "sha256": "379081c82b11fac73b4f157af7163685545e217aaa80ea4efdcac5ce724a6aa0"
-    }
-  ],
-  "settings_disposition": "DL-408 retirements preserved; no current writer for either retired Settings family",
+  "worker": "DM-APPLY-FIX1",
+  "input_head": "90f7e163614575558644d291f283c19ae6f305a9",
+  "contract_checker_head": "66655ae43ec98be050816fb574ef26d9d9e8709c",
+  "application_head": "e2cfea7c5823e1ea822cfd088db0c125a0327d5b",
   "native_execution": "NOT_RUN",
-  "limitations": [
-    "Six retention decisions remain pending; membership remains ABSENT for all candidates.",
-    "Storage profile checker exits 1 with the same 41 missing-profile errors, byte-identical to apply/storage-profile.json.",
-    "Initial 64-process audit completed every negative and zero-exit refusal, then its report finalizer used the old Settings outcome spelling and asserted. Fixed the finalizer to accept the existing retired outcome; --summarize-completed verifies all eight completion lines and 64 retained AssertionError outputs without repeating the subprocesses. No checker/fixture bytes changed between execution and summary.",
-    "Cycle-2 probe retains its embedded historical head label and obsolete result-field names; cycle2-regression-summary.json interprets actual current keys, refused oversized bodies and refused receipt publication rather than those labels."
+  "full_assertions": 4965,
+  "standing_negatives_caught": 72,
+  "settings_negatives_caught": 40,
+  "success_exit_guards": 8,
+  "commands": [
+    {
+      "command": "python3 -B scripts/pm-small-owner-events.py",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/full-checker.txt",
+      "sha256": "b262df83e3b902b6f69b365991922d54b7896316e9216d9c59c4d0b919b11f04"
+    },
+    {
+      "command": "python3 -B /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-checks.py /home/sittingmongoose/pm-worktrees/DM-apply-fix1",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/standing-progress.txt",
+      "sha256": "41857b0e9d5fd7508758c85e2aeaa2f4b297021cdb7efba94785968ad99696fd"
+    },
+    {
+      "command": "python3 -B /mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/verify-exclusions.py",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/exclusion-verification.txt",
+      "sha256": "779222fa520062146679bc279c1713e9c94236e2915b6695a1a188e1298a5acd"
+    },
+    {
+      "command": "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/shard-check.txt",
+      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+    },
+    {
+      "command": "python3 -B scripts/pm-plan-index.py generate",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/index-generate.txt",
+      "sha256": "cca1c04f235998d1e33cb48a374b69b3adfb34bd946f9583ea1754c05c817aec"
+    },
+    {
+      "command": "python3 -B scripts/pm-plan-index.py validate",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/index-validate.txt",
+      "sha256": "62b172a88e57a5cd83c5e60d6525fa125991e4a88eb31fe13c806f8ad965842d"
+    },
+    {
+      "command": "python3 -B scripts/pm-storage-recovery-contracts.py --self-test",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/storage-recovery.txt",
+      "sha256": "e56e543c18588569abd7a299f25004750f6954e919c5571c6a669b38668eca1a"
+    },
+    {
+      "command": "python3 -B scripts/pm-settings-layering-check.py",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/settings-layering.txt",
+      "sha256": "d38e86560c3cea1f45370aa1e8aa9564729b3f5f97bac6cde7f9c831e0106da7"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -p test_pm_touch_closure_source.py -k DryGuardConsumerTests",
+      "exit": 0,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/dry-guard-tests.txt",
+      "sha256": "c5088d71c1491f8f0993f65ce77ef3341057e0507962ca71e7d915a3eeca9ad2"
+    },
+    {
+      "command": "python3 -B scripts/pm-storage-profile-check.py",
+      "exit": 1,
+      "output": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/storage-profile.txt",
+      "sha256": "89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b"
+    }
+  ],
+  "audits": [
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/exclusion-verification.json",
+      "sha256": "779222fa520062146679bc279c1713e9c94236e2915b6695a1a188e1298a5acd"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/scope-derived-audit.json",
+      "sha256": "84366cc09cf74f26d83c4dff11ebe532adfb657e16fdcde6e4df2609b54892b6"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/grade-quote-verification.json",
+      "sha256": "7a55b21c0cbeb841578c553033bc0f7174737a319f59ed2f0a54861d6e6a6671"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/search-quote-verification.json",
+      "sha256": "0fe54d056733c78f357d9d1e58f73bb57881bba69187442f75c34945d084965e"
+    },
+    {
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/currentness-copy.json",
+      "sha256": "5de9c47cbb5319f30d1ed004773096390c8384c8e43b9f2d028db93ab379f141"
+    }
+  ],
+  "qualifications": [
+    "Initial index validate failed only on stale node_readiness_report.json; regeneration changed only the two edited Wiring Matrix source-staleness rows plus four existing top-level clock fields, and the final top-level validate passes.",
+    "Storage profile exit 1 is the same 41 pre-existing missing-profile errors as the pinned cycle-3 review; full output SHA-256 matches byte for byte.",
+    "Inherited CRLF audit records are preserved; whitespace check uses cr-at-eol along with all default whitespace rules.",
+    "An initial external standing harness check expected a dotted family name in an underscored missing-ref pointer; corrected only that assertion and reran the full matrix from scratch. No product refusal was weakened."
   ]
 }

@@ -1,14 +1,14 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DM-FIX3-SELF-20261104",
+  "assessment_id": "EA-DM-APPLY-FIX1-SELF-20261104",
   "assessment_kind": "branch_local_self_grade",
   "assessed_tree": {
     "branch": "plans/ea-w2-small-owners-20261104",
     "base": "be4766513ff71776346fc73b84f2542990f955af",
-    "method": "DM-FIX3: regrade all eight prepared families after explicit checkpoint Storage/key/source/frontier identity validation; all eight standing checks and 64 full-checker negative processes. Two DL-408 Settings retirements preserved. Native NOT_RUN; no admission or retention choice.",
-    "canonical_head": "1eaddcd0ed045e78ac36d59fa1648799203640ab",
-    "reviewed_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
-    "input_head": "d30cd99c371276ece97105f402e72d7487d5a60f"
+    "method": "DM-APPLY-FIX1: preserve all eight prepared contracts, apply only approved DL-408/2d A to current companions and both J248 exclusions; all nine standing checks per prepared family, 40 Settings refusal mutations, exact application quotes/hashes. Static only; native NOT_RUN; no admission or retention choice.",
+    "canonical_head": "e2cfea7c5823e1ea822cfd088db0c125a0327d5b",
+    "reviewed_head": "90f7e163614575558644d291f283c19ae6f305a9",
+    "input_head": "90f7e163614575558644d291f283c19ae6f305a9"
   },
   "rubric": {
     "criteria": [
@@ -57,11 +57,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -99,11 +99,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -128,11 +128,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -157,11 +157,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -186,11 +186,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -207,11 +207,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -236,11 +236,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -257,11 +257,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -287,18 +287,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -315,16 +315,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Formatters_System.md",
@@ -337,10 +337,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Formatters_System.md",
@@ -360,11 +360,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -372,10 +372,10 @@
         "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0"
@@ -408,11 +408,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -429,11 +429,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -450,11 +450,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -479,11 +479,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -508,11 +508,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -537,11 +537,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -558,11 +558,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -587,11 +587,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -608,11 +608,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -638,18 +638,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -666,16 +666,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Source_Control_System.md",
@@ -688,10 +688,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Source_Control_System.md",
@@ -711,11 +711,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -723,10 +723,10 @@
         "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0"
@@ -759,11 +759,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -780,11 +780,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -801,11 +801,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -830,11 +830,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -859,11 +859,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -888,11 +888,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -909,11 +909,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -938,11 +938,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -959,11 +959,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -989,18 +989,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1017,16 +1017,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/LSPSupport.md",
@@ -1039,10 +1039,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/LSPSupport.md",
@@ -1062,11 +1062,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -1074,10 +1074,10 @@
         "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0"
@@ -1110,11 +1110,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1131,11 +1131,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -1152,11 +1152,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1181,11 +1181,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1218,11 +1218,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1247,11 +1247,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1268,11 +1268,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1297,11 +1297,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -1318,11 +1318,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1348,18 +1348,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1376,16 +1376,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Models_System.md",
@@ -1398,10 +1398,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Models_System.md",
@@ -1429,11 +1429,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -1441,10 +1441,10 @@
         "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0"
@@ -1477,11 +1477,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1498,11 +1498,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -1519,11 +1519,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1548,11 +1548,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1577,11 +1577,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1606,11 +1606,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1627,11 +1627,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1656,11 +1656,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -1677,11 +1677,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1707,18 +1707,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1735,16 +1735,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -1757,10 +1757,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Project_System.md",
@@ -1780,11 +1780,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -1792,10 +1792,10 @@
         "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.project.added@1.0.0"
@@ -1828,11 +1828,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1849,11 +1849,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -1870,11 +1870,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1899,11 +1899,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1928,11 +1928,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1957,11 +1957,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1978,11 +1978,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2007,11 +2007,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -2028,11 +2028,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2058,18 +2058,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2086,16 +2086,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -2108,10 +2108,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Project_System.md",
@@ -2131,11 +2131,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
@@ -2143,10 +2143,10 @@
         "PENDING_RETENTION_DECISION: RT owns this remaining product cell; no retention chosen here."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.project.created@1.0.0"
@@ -2159,8 +2159,6 @@
       "disposition": "RETIRED_AS_SUPERSEDED",
       "current_owner_units": [
         "SSYS-060",
-        "DL-041",
-        "DL-300",
         "SP-348"
       ],
       "cells": {
@@ -2195,11 +2193,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2236,11 +2234,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2277,11 +2275,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2318,11 +2316,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2359,11 +2357,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2400,11 +2398,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2441,11 +2439,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2482,11 +2480,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2523,11 +2521,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2564,11 +2562,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2577,7 +2575,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "retired_as_superseded",
-          "finding": "DL-408 retires this exact name as superseded by settings.layer.changed; no current writes. Older dedicated DRY-guard records stay readable without a payload alias or rewrite.",
+          "finding": "DL-408 retirement fully applied: current companions select only settings.layer.changed under existing adoption gates; both exact J248 rows and census lines are RECLASSIFY_TO_EXCLUDED with checked quotes and before/after hashes. Historical dedicated DRY records stay readable and the guard stays disabled. No alias, byte rewrite, writer or denominator removal.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
@@ -2602,14 +2600,22 @@
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
               "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
+            },
+            {
+              "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json",
+              "unit": "J248 exclusion application",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"disposition\": \"RECLASSIFY_TO_EXCLUDED\"",
+              "file_sha256": "43b0260963db21ad317dff13fb1fffa87e912f3500b53a1672281285c81eee0e"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PASS"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change": "upgraded",
+          "change_reason": "B4/B5 application complete: current companions and all six J248 row/ledger representations reconciled with checked quotes/hashes; no current-writer depth credit.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2646,11 +2652,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2659,12 +2665,13 @@
       },
       "remaining_gaps": [],
       "static_checks_seen": [
-        "DL-408 retirement/owner consistency",
-        "all-ten standing audit; retired writer checks not applicable"
+        "DL-408 successor-only current-companion consistency and 40 full-checker refusal mutations PASS",
+        "Two rows / six representations / 13 exact quotes / file and line hashes / frozen fields PASS"
       ],
       "notes": "No current writer, schema, retention class or event oracle is authored for these retired names. Historical dedicated DRY-guard records remain readable. The DRY guard remains disabled pending exact owner key/writer proof. Existing successor owner-adoption requirements stand.",
       "successor": "settings.layer.changed",
-      "decision_ref": "DL-408"
+      "decision_ref": "DL-408 (pinned decision-branch dependency)",
+      "application_record": "reports/event-authority-20261104/DM-settings-exclusions-application.json"
     },
     {
       "event_type": "settings.updated",
@@ -2674,8 +2681,6 @@
       "disposition": "RETIRED_AS_SUPERSEDED",
       "current_owner_units": [
         "SSYS-060",
-        "DL-041",
-        "DL-300",
         "SP-348"
       ],
       "cells": {
@@ -2710,11 +2715,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2751,11 +2756,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2792,11 +2797,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2833,11 +2838,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2874,11 +2879,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2915,11 +2920,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -2956,11 +2961,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -2997,11 +3002,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -3038,11 +3043,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "PARTIAL"
@@ -3079,11 +3084,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3092,7 +3097,7 @@
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "retired_as_superseded",
-          "finding": "DL-408 retires this exact name as superseded by settings.layer.changed; no current writes. Older dedicated DRY-guard records stay readable without a payload alias or rewrite.",
+          "finding": "DL-408 retirement fully applied: current companions select only settings.layer.changed under existing adoption gates; both exact J248 rows and census lines are RECLASSIFY_TO_EXCLUDED with checked quotes and before/after hashes. Historical dedicated DRY records stay readable and the guard stays disabled. No alias, byte rewrite, writer or denominator removal.",
           "evidence": [
             {
               "path": "Plans/Settings_System.md",
@@ -3117,14 +3122,22 @@
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. DL-408 retires settings.updated and settings.theme.u",
               "file_sha256": "3b18644251c2bdaa592917f229ebdb47b2f7197b6fe96872601d4e3c2eba0e75"
+            },
+            {
+              "path": "Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.updated.json",
+              "unit": "J248 exclusion application",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"disposition\": \"RECLASSIFY_TO_EXCLUDED\"",
+              "file_sha256": "c97dee8f1e37c0bd5ef46559a1dc8256cfb6945c627d3f9497271a428aa0e385"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PASS"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PARTIAL"
           },
-          "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change": "upgraded",
+          "change_reason": "B4/B5 application complete: current companions and all six J248 row/ledger representations reconciled with checked quotes/hashes; no current-writer depth credit.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3161,11 +3174,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "NOT_APPLICABLE"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades.",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN.",
           "branch_prior": {
             "source": "DM-self-grade.json@c9d623f793",
             "status": "ABSENT"
@@ -3174,12 +3187,13 @@
       },
       "remaining_gaps": [],
       "static_checks_seen": [
-        "DL-408 retirement/owner consistency",
-        "all-ten standing audit; retired writer checks not applicable"
+        "DL-408 successor-only current-companion consistency and 40 full-checker refusal mutations PASS",
+        "Two rows / six representations / 13 exact quotes / file and line hashes / frozen fields PASS"
       ],
       "notes": "No current writer, schema, retention class or event oracle is authored for these retired names. Historical dedicated DRY-guard records remain readable. The DRY guard remains disabled pending exact owner key/writer proof. Existing successor owner-adoption requirements stand.",
       "successor": "settings.layer.changed",
-      "decision_ref": "DL-408"
+      "decision_ref": "DL-408 (pinned decision-branch dependency)",
+      "application_record": "reports/event-authority-20261104/DM-settings-exclusions-application.json"
     },
     {
       "event_type": "subagent.context_rehydrated",
@@ -3209,11 +3223,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3230,11 +3244,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -3251,11 +3265,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3280,11 +3294,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3317,11 +3331,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3346,11 +3360,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PASS",
@@ -3367,11 +3381,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3396,11 +3410,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -3417,11 +3431,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3447,18 +3461,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3475,16 +3489,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3497,10 +3511,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3528,21 +3542,21 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0"
@@ -3575,11 +3589,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3596,11 +3610,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "producer": {
           "status": "PASS",
@@ -3617,11 +3631,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3646,11 +3660,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3683,11 +3697,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3712,11 +3726,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "retention": {
           "status": "PASS",
@@ -3733,11 +3747,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3762,11 +3776,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "transitions": {
           "status": "PASS",
@@ -3783,11 +3797,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3813,18 +3827,18 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "checkpoint_matches_original",
-              "line_start": 372,
-              "line_end": 372,
+              "line_start": 448,
+              "line_end": 448,
               "quote": "def checkpoint_matches_original(state):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Standing check 7 repaired at 1eaddcd0ed045e78ac36d59fa1648799203640ab; input PARTIAL is now PASS after exact-family negative coverage."
+          "change": "carried",
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3841,16 +3855,16 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "All eight standing checks pass for this exact family; full suite has 4,846 assertions, 64 deliberately failing full-checker subprocesses reject their regressions, and eight harness mutations reject success exit 0. Exact checkpoint/reader negatives and reachable payload/reference boundaries pass. Native NOT_RUN.",
+          "finding": "All nine standing checks pass for this exact family. The full suite passes 4,965 assertions; 72 isolated standing-check regressions and 40 Settings regressions fail through the complete checker; all eight success-exit guards refuse exit 0. Exact original joins, receipt, LF, payload-reference and checkpoint cases remain. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3863,10 +3877,10 @@
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 453,
-              "line_end": 453,
+              "line_start": 529,
+              "line_end": 529,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "fedf33c9dab6e717c46d17e1144f6e45303a4cdeb45c5bbda313fe9e1c1c2ad5"
+              "file_sha256": "ce184276959e053068bcc69d639b82a36161718571aa99027e3662b7209644fa"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -3894,21 +3908,21 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix3/input-DM-self-grade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Input-head normative status preserved; current exact evidence and all applicable standing checks verified. Retired Settings rows receive no fabricated current-writer grades."
+          "change_reason": "Cycle-3 reviewed grade preserved after this DL-408-only application and all nine applicable standing checks. Native NOT_RUN."
         }
       },
       "remaining_gaps": [
         "Exact membership intentionally ABSENT pending later independent review and admission."
       ],
       "static_checks_seen": [
-        "python3 scripts/pm-small-owner-events.py — 4846 assertions PASS at 1eaddcd0ed045e78ac36d59fa1648799203640ab",
-        "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
-        "python3 scripts/pm-plan-index.py validate — parsed top-level pass",
-        "fix3/standing-checks.py — 64/64 full-checker negative subprocesses fail; 8/8 success-exit harness mutations rejected"
+        "python3 -B scripts/pm-small-owner-events.py — 4965 assertions PASS",
+        "apply-fix1/standing-checks.py — nine full-checker failure processes per family; success exit 0 refused",
+        "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
+        "python3 -B scripts/pm-plan-index.py validate — parsed top-level pass"
       ],
       "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.context.shrunk@1.0.0"
@@ -3923,8 +3937,14 @@
   },
   "review_round": 3,
   "prior_review": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
-    "sha256": "2319f9b7bf0c21b8ea1db65cecf659053e0b1768bcad8c3cd03516d3a3dd549a"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle3-regrade.json",
+    "sha256": "2fb24a9fcee6d8eba66e92ea69f1c3ee4ed9fb108625900cf6c95783fe06b0fe"
   },
-  "settings_decision": "DL-408; retired as superseded by settings.layer.changed"
+  "settings_decision": "DL-408 / 2d A applied; both names retired as superseded by settings.layer.changed, J248 RECLASSIFY_TO_EXCLUDED, no denominator removal; DRY guard disabled.",
+  "fix_worker": "DM-APPLY-FIX1",
+  "decision_integration_dependency": {
+    "branch": "origin/plans/ea-cards1-answers-20261104",
+    "head": "b6332f391a7870bad5f01a29a7e9d080050dac27",
+    "unit": "DL-408"
+  }
 }

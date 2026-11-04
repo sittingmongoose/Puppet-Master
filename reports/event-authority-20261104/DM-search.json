@@ -11,7 +11,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 584,
-        "quote": "| `Plans/Formatters_System.md` | — | `format.applied` | — |"
+        "quote": "| `Plans/Formatters_System.md` | \u2014 | `format.applied` | \u2014 |"
       },
       {
         "path": "Plans/Formatters_System.md",
@@ -97,7 +97,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "git.clone.completed",
@@ -106,7 +108,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 599,
-        "quote": "| `Plans/Source_Control_System.md` | — | `git.clone.completed` | — |"
+        "quote": "| `Plans/Source_Control_System.md` | \u2014 | `git.clone.completed` | \u2014 |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -162,7 +164,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "lsp.server.lifecycle_changed",
@@ -211,7 +215,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 587,
-        "quote": "| `Plans/LSPSupport.md` | — | `lsp.server.lifecycle_changed` | — |"
+        "quote": "| `Plans/LSPSupport.md` | \u2014 | `lsp.server.lifecycle_changed` | \u2014 |"
       }
     ],
     "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
@@ -262,7 +266,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "model.catalog_refreshed",
@@ -271,7 +277,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 588,
-        "quote": "| `Plans/Models_System.md` | — | `model.catalog_refreshed` | — |"
+        "quote": "| `Plans/Models_System.md` | \u2014 | `model.catalog_refreshed` | \u2014 |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -363,7 +369,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "project.added",
@@ -372,7 +380,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 593,
-        "quote": "| `Plans/Project_System.md` | — | `project.added`, `project.created` | — |"
+        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -428,7 +436,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "project.created",
@@ -437,7 +447,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 593,
-        "quote": "| `Plans/Project_System.md` | — | `project.added`, `project.created` | — |"
+        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -493,7 +503,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "settings.theme.updated",
@@ -502,7 +514,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 598,
-        "quote": "| `Plans/Settings_System.md` | — | `settings.theme.updated`, `settings.updated` | — |"
+        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
@@ -622,7 +634,9 @@
       "command": "rg -n -F \"settings.theme.updated\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
       "native_execution": "NOT_RUN",
       "negative_evidence": "No family writer, schema, fixture or alias authored. Current owner conflict and exact product-disposition questions remain Jared's; five standing checks are recorded as stopped, not event-oracle PASS."
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "settings.updated",
@@ -636,7 +650,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 598,
-        "quote": "| `Plans/Settings_System.md` | — | `settings.theme.updated`, `settings.updated` | — |"
+        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
       },
       {
         "path": "Plans/Settings_System.md",
@@ -706,7 +720,9 @@
       "command": "rg -n -F \"settings.updated\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
       "native_execution": "NOT_RUN",
       "negative_evidence": "No family writer, schema, fixture or alias authored. Current owner conflict and exact product-disposition questions remain Jared's; five standing checks are recorded as stopped, not event-oracle PASS."
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "subagent.context_rehydrated",
@@ -740,7 +756,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 594,
-        "quote": "| `Plans/Prompt_Pipeline.md` | — | `subagent.context_rehydrated`, `subagent.context_shrunk` | — |"
+        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
       }
     ],
     "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
@@ -807,7 +823,9 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   },
   {
     "event_type": "subagent.context_shrunk",
@@ -841,7 +859,7 @@
       {
         "path": "Plans/Decision_Log.md",
         "line": 594,
-        "quote": "| `Plans/Prompt_Pipeline.md` | — | `subagent.context_rehydrated`, `subagent.context_shrunk` | — |"
+        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
       }
     ],
     "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
@@ -908,6 +926,8 @@
         }
       ],
       "native_execution": "NOT_RUN"
-    }
+    },
+    "hits_capture_revision": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+    "hits_capture_note": "Historical before-fix search capture, verified at this revision; hits are retained source-lineage and are not current verification. Current bindings are cited in DM-self-grade.json and the DL-408 exclusion application."
   }
 ]
