@@ -28940,7 +28940,7 @@ canonical_text: Make a project from this chat and Move this chat into a project 
   the preview. Existing approvals settle first; active work/timers are fenced by their owners. Conversion never
   enters Planning Wizard, PRD Builder or Orchestrator automatically. CV-367 owns the exhaustive ChatMoveManifestV1
   and every per-family disposition; CV-366 owns its conversion_manifest semantic hash, and SP-350 owns operation/cutover/lineage/Undo
-  custody. The live preview and apply use that one complete map; absent owner/source/policy materialization is a
+  custody. The live preview and apply preserve the same complete family plan across the draft-preview to real-target cutover binding specified by CV-367; absent owner/source/policy materialization is a
   typed blocker, never an implicit nothing-to-move result.
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
