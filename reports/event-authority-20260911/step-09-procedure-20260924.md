@@ -23,6 +23,8 @@ Rows the review marked TECHNICAL_BLOCKED are unfinished technical work. They are
 
 ## Per registration
 
+**Dated context, 2026-11-04 (DL-400).** The one-family-per-landing granularity below is historical; current Event Authority work lands in three batches. Each family retains its own commit, full contract, Decision Log entry, admission record with registry revision and SHA-256 before and after its own commit, depth assessment with all twelve criteria passing, and Sol 6.1 max then Astra max verdict. Only passing changes land; failed changes are pulled from the batch. Each batch is reviewed again right after landing against `main`. Coordinator go and checkpoint bookkeeping remain required; DL-039's no bulk registration stands. These procedural details are the coordinator's reading relayed to Jared on 2026-11-04, distinguished from his verbatim answers in DL-400.
+
 A family is admitted only with its complete contract: exact payload schema (closed), scope and identity joins, producer, consumers and projector, checkpoint key and version, custody, retention and oracles, with all twelve depth criteria passing on current owner text. Then:
 
 1. **Its own Storage admission landing, one family per landing.** The landing adds the registry row, advances the registry revision, and writes the family's admission record in the DL-077 form: the Decision Log entry that admits it, the registry revision and SHA-256 before and after, and the current depth assessment with all twelve criteria passing.
@@ -40,6 +42,8 @@ A family is admitted only with its complete contract: exact payload schema (clos
 Record `RECLASSIFY_TO_EXCLUDED` on the row in `Plans/.audits/event-authority-2026-08-12/individual-disposition/` and on its line in the census adjudication ledger, citing the owner text and any Decision Log answer. Keep the legacy bucket and cohort pins, since the frozen schema has no J248 exclusion category, and claim no denominator removal. Write an application record with before and after hashes, as batch 1 does (`step-09-card-answer-application-20260924.json`, landed with batch 1 at `41fbecb612`).
 
 ## Standing constraints
+
+**Dated context, 2026-11-04 (DL-400).** The one-family-per-landing granularity below is historical; current Event Authority work lands in three batches. Each family retains its own commit, full contract, Decision Log entry, admission record with registry revision and SHA-256 before and after its own commit, depth assessment with all twelve criteria passing, and Sol 6.1 max then Astra max verdict. Only passing changes land; failed changes are pulled from the batch. Each batch is reviewed again right after landing against `main`. Coordinator go and checkpoint bookkeeping remain required; DL-039's no bulk registration stands. These procedural details are the coordinator's reading relayed to Jared on 2026-11-04, distinguished from his verbatim answers in DL-400.
 
 - One family per registration landing; no bulk registration (DL-039, DL-045, DL-046).
 - No invented consumer, projector or checkpoint identifiers outside DL-045 and DL-046.
