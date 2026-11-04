@@ -478,11 +478,13 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
 const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* NO_PICK only after completion: these owner screens replace their form with a success banner.
-   Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm. */
+   Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm, token on online-signin. */
 const NO_PICK_DONE = (screen) => {
   const done = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-key="done"]');
   return !!done && ((screen === 'c-review' && !!O55.S.sess.drafts.connect.server_trust_confirmed)
-    || (screen === 's-confirm' && !!O55.S.sess.server.claimed));
+    || (screen === 's-confirm' && !!O55.S.sess.server.claimed)
+    /* A finished sign-in similarly draws only its signed-in account banner, with no editable token. */
+    || (screen === 'online-signin' && O55.S.sess.signin.state === 'done'));
 };
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
    pick back, so the answers after it are those the step was reached with (lead: every picker, not only Review's Edit
