@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-SELF-GRADE-20261104",
+  "assessment_id": "EA-W2-DMEM-FIX1-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -17,11 +17,11 @@
       "compatibility_withdrawal",
       "positive_negative_oracles"
     ],
-    "rubric_md": "/Volumes/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md"
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md"
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "c4eaa00998a8b7334778e6ec02a56b782d907001",
+    "commit": "87024556d85e707dea8e1051d8b04d95c9123c14",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -30,8 +30,8 @@
   },
   "status_counts": {
     "ABSENT": 44,
-    "PASS": 76,
-    "PARTIAL": 24
+    "PASS": 84,
+    "PARTIAL": 16
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -46,12 +46,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-630",
-          "line_start": 29488,
-          "line_end": 29488,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search"
+          "line_start": 29489,
+          "line_end": 29489,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -60,64 +60,88 @@
         "CV-650",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29488,
-              "line_end": 29488,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0; search"
+              "line_start": 29489,
+              "line_end": 29489,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-100/SP-630/CV-650 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-100",
               "line_start": 3159,
               "line_end": 3159,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0, prepared"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.completed@1.0.0, prepared"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-650",
+              "line_start": 24479,
+              "line_end": 24479,
+              "quote": "Newly authored closed payload owner contract for exactly memory.dedup_sweep.completed@1.0.0 under"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29507,
-              "line_end": 29507,
-              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class"
+              "line_start": 29491,
+              "line_end": 29491,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29497,
+              "line_end": 29497,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -127,157 +151,198 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-630",
-              "line_start": 29495,
-              "line_end": 29495,
-              "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.completed\"]"
-            }
-          ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
-        },
-        "replay_idempotency": {
-          "status": "PASS",
-          "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
-          "evidence": [
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-630",
-              "line_start": 29523,
-              "line_end": 29523,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
-            }
-          ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
-        },
-        "retention": {
-          "status": "PARTIAL",
-          "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
               "line_start": 29490,
               "line_end": 29490,
-              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION:"
+              "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.completed\"] wi"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29497,
+              "line_end": 29497,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.dedup_sweep.completed",
+              "line_start": 21004,
+              "line_end": 21004,
+              "quote": "\"name\": \"memory.dedup_sweep.completed:lost-ack-retry-replay-no-effects\","
+            }
+          ],
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29489,
+              "line_end": 29489,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
+            }
+          ],
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29541,
-              "line_end": 29541,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29494,
+              "line_end": 29494,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and atomic effect/outcome settlement with receipt-before-state barriers.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29512,
-              "line_end": 29512,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29497,
+              "line_end": 29497,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29527,
-              "line_end": 29527,
-              "quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding"
+              "line_start": 29493,
+              "line_end": 29493,
+              "quote": "Exact consumer reader.memory.dedup_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact type. I"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-100/CV-650/SP-630 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-630",
-              "line_start": 29548,
-              "line_end": 29548,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29495,
+              "line_end": 29495,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.dedup_sweep.completed",
+              "line_start": 21169,
+              "line_end": 21169,
+              "quote": "\"name\": \"memory.dedup_sweep.completed:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.dedup_sweep.started",
@@ -290,12 +355,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-631",
-          "line_start": 29591,
-          "line_end": 29591,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0; search"
+          "line_start": 29538,
+          "line_end": 29538,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -304,64 +369,88 @@
         "CV-651",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29591,
-              "line_end": 29591,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0; search"
+              "line_start": 29538,
+              "line_end": 29538,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-101/SP-631/CV-651 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-101",
               "line_start": 3211,
               "line_end": 3211,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0, prepared"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.dedup_sweep.started@1.0.0, prepared"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-651",
+              "line_start": 24525,
+              "line_end": 24525,
+              "quote": "Newly authored closed payload owner contract for exactly memory.dedup_sweep.started@1.0.0 under"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29610,
-              "line_end": 29610,
-              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class"
+              "line_start": 29540,
+              "line_end": 29540,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29546,
+              "line_end": 29546,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -371,157 +460,198 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29598,
-              "line_end": 29598,
-              "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.started\"]"
+              "line_start": 29539,
+              "line_end": 29539,
+              "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.started\"] with"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29626,
-              "line_end": 29626,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29546,
+              "line_end": 29546,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.dedup_sweep.started",
+              "line_start": 22944,
+              "line_end": 22944,
+              "quote": "\"name\": \"memory.dedup_sweep.started:lost-ack-retry-replay-no-effects\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29593,
-              "line_end": 29593,
-              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION:"
+              "line_start": 29538,
+              "line_end": 29538,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29643,
-              "line_end": 29643,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29543,
+              "line_end": 29543,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and atomic effect/outcome settlement with receipt-before-state barriers.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29615,
-              "line_end": 29615,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29546,
+              "line_end": 29546,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29629,
-              "line_end": 29629,
-              "quote": "Exact consumer reader.memory.dedup_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only binding"
+              "line_start": 29542,
+              "line_end": 29542,
+              "quote": "Exact consumer reader.memory.dedup_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact type. It "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-101/CV-651/SP-631 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29650,
-              "line_end": 29650,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29544,
+              "line_end": 29544,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.dedup_sweep.started",
+              "line_start": 23085,
+              "line_end": 23085,
+              "quote": "\"name\": \"memory.dedup_sweep.started:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.index.lexical.rebuild.completed",
@@ -534,12 +664,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-632",
-          "line_start": 29693,
-          "line_end": 29693,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0;"
+          "line_start": 29587,
+          "line_end": 29587,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -548,64 +678,95 @@
         "CV-652",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29693,
-              "line_end": 29693,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0;"
+              "line_start": 29587,
+              "line_end": 29587,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-102/SP-632/CV-652 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-102",
               "line_start": 3263,
               "line_end": 3263,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0,"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.completed@1.0.0,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-652",
+              "line_start": 24570,
+              "line_end": 24570,
+              "quote": "Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.completed@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29713,
-              "line_end": 29713,
-              "quote": "This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,"
+              "line_start": 29589,
+              "line_end": 29589,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29595,
+              "line_end": 29595,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29599,
+              "line_end": 29599,
+              "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -615,157 +776,212 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29701,
-              "line_end": 29701,
+              "line_start": 29588,
+              "line_end": 29588,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.lexical.rebuild.comp"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29729,
-              "line_end": 29729,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29595,
+              "line_end": 29595,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.lexical.rebuild.completed",
+              "line_start": 26462,
+              "line_end": 26462,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29599,
+              "line_end": 29599,
+              "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29696,
-              "line_end": 29696,
-              "quote": "is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit"
+              "line_start": 29587,
+              "line_end": 29587,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29747,
-              "line_end": 29747,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29592,
+              "line_end": 29592,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and receipt-before-state barriers; rebuilds add durable prepared descriptors and exact selected-target recovery.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29718,
-              "line_end": 29718,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29595,
+              "line_end": 29595,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29599,
+              "line_end": 29599,
+              "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29733,
-              "line_end": 29733,
-              "quote": "Exact consumer reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only"
+              "line_start": 29591,
+              "line_end": 29591,
+              "quote": "Exact consumer reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exa"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-102/CV-652/SP-632 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29754,
-              "line_end": 29754,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29593,
+              "line_end": 29593,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.lexical.rebuild.completed",
+              "line_start": 26627,
+              "line_end": 26627,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.index.lexical.rebuild.started",
@@ -778,12 +994,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-633",
-          "line_start": 29797,
-          "line_end": 29797,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0;"
+          "line_start": 29644,
+          "line_end": 29644,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -792,64 +1008,95 @@
         "CV-653",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29797,
-              "line_end": 29797,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0;"
+              "line_start": 29644,
+              "line_end": 29644,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-103/SP-633/CV-653 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-103",
               "line_start": 3315,
               "line_end": 3315,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0,"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.lexical.rebuild.started@1.0.0,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-653",
+              "line_start": 24616,
+              "line_end": 24616,
+              "quote": "Newly authored closed payload owner contract for exactly memory.index.lexical.rebuild.started@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29817,
-              "line_end": 29817,
-              "quote": "This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,"
+              "line_start": 29646,
+              "line_end": 29646,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29652,
+              "line_end": 29652,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29656,
+              "line_end": 29656,
+              "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -859,157 +1106,212 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29805,
-              "line_end": 29805,
+              "line_start": 29645,
+              "line_end": 29645,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.lexical.rebuild.star"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29833,
-              "line_end": 29833,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29652,
+              "line_end": 29652,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.lexical.rebuild.started",
+              "line_start": 30594,
+              "line_end": 30594,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29656,
+              "line_end": 29656,
+              "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29800,
-              "line_end": 29800,
-              "quote": "is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit"
+              "line_start": 29644,
+              "line_end": 29644,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29850,
-              "line_end": 29850,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29649,
+              "line_end": 29649,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and receipt-before-state barriers; rebuilds add durable prepared descriptors and exact selected-target recovery.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29822,
-              "line_end": 29822,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29652,
+              "line_end": 29652,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29656,
+              "line_end": 29656,
+              "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29836,
-              "line_end": 29836,
-              "quote": "Exact consumer reader.memory.index.lexical.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only"
+              "line_start": 29648,
+              "line_end": 29648,
+              "quote": "Exact consumer reader.memory.index.lexical.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-103/CV-653/SP-633 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29857,
-              "line_end": 29857,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29650,
+              "line_end": 29650,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.lexical.rebuild.started",
+              "line_start": 30735,
+              "line_end": 30735,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.index.semantic.rebuild.completed",
@@ -1022,12 +1324,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-634",
-          "line_start": 29900,
-          "line_end": 29900,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;"
+          "line_start": 29701,
+          "line_end": 29701,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1036,64 +1338,95 @@
         "CV-654",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29900,
-              "line_end": 29900,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0;"
+              "line_start": 29701,
+              "line_end": 29701,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-104/SP-634/CV-654 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-104",
               "line_start": 3367,
               "line_end": 3367,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.completed@1.0.0,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-654",
+              "line_start": 24661,
+              "line_end": 24661,
+              "quote": "Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.completed@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29920,
-              "line_end": 29920,
-              "quote": "This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,"
+              "line_start": 29703,
+              "line_end": 29703,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29709,
+              "line_end": 29709,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29713,
+              "line_end": 29713,
+              "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1103,157 +1436,212 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29908,
-              "line_end": 29908,
+              "line_start": 29702,
+              "line_end": 29702,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.semantic.rebuild.com"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29936,
-              "line_end": 29936,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29709,
+              "line_end": 29709,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.semantic.rebuild.completed",
+              "line_start": 34396,
+              "line_end": 34396,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29713,
+              "line_end": 29713,
+              "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29903,
-              "line_end": 29903,
-              "quote": "is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit"
+              "line_start": 29701,
+              "line_end": 29701,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29954,
-              "line_end": 29954,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29706,
+              "line_end": 29706,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and receipt-before-state barriers; rebuilds add durable prepared descriptors and exact selected-target recovery.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29925,
-              "line_end": 29925,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29709,
+              "line_end": 29709,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29713,
+              "line_end": 29713,
+              "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29940,
-              "line_end": 29940,
-              "quote": "Exact consumer reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only"
+              "line_start": 29705,
+              "line_end": 29705,
+              "quote": "Exact consumer reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this ex"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-104/CV-654/SP-634 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29961,
-              "line_end": 29961,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29707,
+              "line_end": 29707,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.semantic.rebuild.completed",
+              "line_start": 34561,
+              "line_end": 34561,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.index.semantic.rebuild.started",
@@ -1266,12 +1654,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-635",
-          "line_start": 30004,
-          "line_end": 30004,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0;"
+          "line_start": 29758,
+          "line_end": 29758,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1280,64 +1668,95 @@
         "CV-655",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30004,
-              "line_end": 30004,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0;"
+              "line_start": 29758,
+              "line_end": 29758,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-105/SP-635/CV-655 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-105",
               "line_start": 3419,
               "line_end": 3419,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0,"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.index.semantic.rebuild.started@1.0.0,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-655",
+              "line_start": 24707,
+              "line_end": 24707,
+              "quote": "Newly authored closed payload owner contract for exactly memory.index.semantic.rebuild.started@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values; rebuild target persists before selector CAS.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30024,
-              "line_end": 30024,
-              "quote": "This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,"
+              "line_start": 29760,
+              "line_end": 29760,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29766,
+              "line_end": 29766,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29770,
+              "line_end": 29770,
+              "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1347,157 +1766,212 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30012,
-              "line_end": 30012,
+              "line_start": 29759,
+              "line_end": 29759,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.semantic.rebuild.sta"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30040,
-              "line_end": 30040,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29766,
+              "line_end": 29766,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.semantic.rebuild.started",
+              "line_start": 38198,
+              "line_end": 38198,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29770,
+              "line_end": 29770,
+              "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30007,
-              "line_end": 30007,
-              "quote": "is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit"
+              "line_start": 29758,
+              "line_end": 29758,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30057,
-              "line_end": 30057,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29763,
+              "line_end": 29763,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and receipt-before-state barriers; rebuilds add durable prepared descriptors and exact selected-target recovery.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30029,
-              "line_end": 30029,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29766,
+              "line_end": 29766,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29770,
+              "line_end": 29770,
+              "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30043,
-              "line_end": 30043,
-              "quote": "Exact consumer reader.memory.index.semantic.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only"
+              "line_start": 29762,
+              "line_end": 29762,
+              "quote": "Exact consumer reader.memory.index.semantic.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exac"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-105/CV-655/SP-635 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 30064,
-              "line_end": 30064,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29764,
+              "line_end": 29764,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.index.semantic.rebuild.started",
+              "line_start": 38339,
+              "line_end": 38339,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.verification_sweep.completed",
@@ -1510,12 +1984,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-636",
-          "line_start": 30107,
-          "line_end": 30107,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0;"
+          "line_start": 29815,
+          "line_end": 29815,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1524,64 +1998,88 @@
         "CV-656",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30107,
-              "line_end": 30107,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0;"
+              "line_start": 29815,
+              "line_end": 29815,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-106/SP-636/CV-656 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-106",
               "line_start": 3471,
               "line_end": 3471,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0,"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.completed@1.0.0,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-656",
+              "line_start": 24752,
+              "line_end": 24752,
+              "quote": "Newly authored closed payload owner contract for exactly memory.verification_sweep.completed@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30127,
-              "line_end": 30127,
-              "quote": "This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,"
+              "line_start": 29817,
+              "line_end": 29817,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29823,
+              "line_end": 29823,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1591,157 +2089,198 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30115,
-              "line_end": 30115,
+              "line_start": 29816,
+              "line_end": 29816,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.verification_sweep.complet"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30143,
-              "line_end": 30143,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29823,
+              "line_end": 29823,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.verification_sweep.completed",
+              "line_start": 40572,
+              "line_end": 40572,
+              "quote": "\"name\": \"memory.verification_sweep.completed:lost-ack-retry-replay-no-effects\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30110,
-              "line_end": 30110,
-              "quote": "is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit"
+              "line_start": 29815,
+              "line_end": 29815,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30161,
-              "line_end": 30161,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29820,
+              "line_end": 29820,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and atomic effect/outcome settlement with receipt-before-state barriers.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30132,
-              "line_end": 30132,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29823,
+              "line_end": 29823,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30147,
-              "line_end": 30147,
-              "quote": "Exact consumer reader.memory.verification_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only"
+              "line_start": 29819,
+              "line_end": 29819,
+              "quote": "Exact consumer reader.memory.verification_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-106/CV-656/SP-636 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 30168,
-              "line_end": 30168,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29821,
+              "line_end": 29821,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.verification_sweep.completed",
+              "line_start": 40737,
+              "line_end": 40737,
+              "quote": "\"name\": \"memory.verification_sweep.completed:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.verification_sweep.started",
@@ -1754,12 +2293,12 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-637",
-          "line_start": 30211,
-          "line_end": 30211,
-          "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0;"
+          "line_start": 29864,
+          "line_end": 29864,
+          "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
-      "pass_count": 9,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
       "current_owner_units": [
@@ -1768,64 +2307,88 @@
         "CV-657",
         "ATS-315",
         "SP-278",
-        "SP-286"
+        "SP-286",
+        "SP-340"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
           "representation": "absent",
-          "finding": "No registry admission; exact family remains quarantined.",
+          "finding": "ABSENT by design; quarantined, no admission or registry change.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30211,
-              "line_end": 30211,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0;"
+              "line_start": 29864,
+              "line_end": 29864,
+              "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "owner_doc": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "AMS-107/SP-637/CV-657 governs this exact family; no paired-family substitution.",
           "evidence": [
             {
               "path": "Plans/assistant-memory-subsystem.md",
               "unit": "AMS-107",
               "line_start": 3523,
               "line_end": 3523,
-              "quote": "canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0,"
+              "quote": "Newly authored owner contract under DL-045 for exactly memory.verification_sweep.started@1.0.0,"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-657",
+              "line_start": 24798,
+              "line_end": 24798,
+              "quote": "Newly authored closed payload owner contract for exactly memory.verification_sweep.started@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "producer": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own SP-286/CV-339 full-value/full-flush ordering, exact operation CAS and frozen publication values.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30231,
-              "line_end": 30231,
-              "quote": "This family explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission,"
+              "line_start": 29866,
+              "line_end": 29866,
+              "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29872,
+              "line_end": 29872,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own closed definition preserves required fields, exact version/type and strengthened bounded result/time constraints.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1835,157 +2398,198 @@
               "quote": "is a distinct closed definition; schema_version and event_type are exact constants. All listed properties are"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30219,
-              "line_end": 30219,
+              "line_start": 29865,
+              "line_end": 29865,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.verification_sweep.started"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Concrete original full values and frozen operation outcomes must match; retry/replay leave effect and selector counts unchanged.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30247,
-              "line_end": 30247,
-              "quote": "Pending/ambiguous effect is unavailable until original owner recovery settles it. Event replay never runs maintenance."
+              "line_start": 29872,
+              "line_end": 29872,
+              "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.verification_sweep.started",
+              "line_start": 42512,
+              "line_end": 42512,
+              "quote": "\"name\": \"memory.verification_sweep.started:lost-ack-retry-replay-no-effects\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "retention": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Event and canonical operation-custody retention are PENDING_RETENTION_DECISION; existing generic index/checkpoint retain their current policies.",
+          "finding": "Event, operation and rebuild selector/target retention stay PENDING_RETENTION_DECISION; generic history index/checkpoint keep existing policies.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30214,
-              "line_end": 30214,
-              "quote": "is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit"
+              "line_start": 29864,
+              "line_end": 29864,
+              "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Own canonical operation/outcome, coherent BRS-031 custody and current authorized ref resolution; no gist/evidence content or deletion inference.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30264,
-              "line_end": 30264,
-              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore"
+              "line_start": 29869,
+              "line_end": 29869,
+              "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "transitions": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Closed phase invariants, exact-prior CAS and atomic effect/outcome settlement with receipt-before-state barriers.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30236,
-              "line_end": 30236,
-              "quote": "The operation state machine is accepted -> started -> effect_committed -> completed. The started event''s durable"
+              "line_start": 29872,
+              "line_end": 29872,
+              "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact stateless history reader explicitly adopts SP-278 generic projector/checkpoint and DL-076 nine-field durable token; no filtered durable cursor.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30250,
-              "line_end": 30250,
-              "quote": "Exact consumer reader.memory.verification_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only"
+              "line_start": 29868,
+              "line_end": 29868,
+              "quote": "Exact consumer reader.memory.verification_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact ty"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "AMS-107/CV-657/SP-637 explicitly binds this exact family; contract preparation only, native NOT_RUN.",
+          "finding": "Exact version only, fail-closed unknown editions, external admission/reader withdrawal fence preserves original durable operation phase.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 30271,
-              "line_end": 30271,
-              "quote": "preserved for authorized history. No implicit alias/migration. Withdrawal first fences new command acceptance"
+              "line_start": 29870,
+              "line_end": 29870,
+              "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read current family-specific owner contract; status remains supported."
         },
         "positive_negative_oracles": {
-          "status": "PARTIAL",
+          "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "136 static schema, identity and boundary predicate cases pass across eight families. Owner-authored native oracles exist, but static cases do not model operation CAS, crash convergence or replay effects; add those before a complete depth claim.",
+          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7244,
-              "line_end": 7244,
-              "quote": "and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,"
+              "line_start": 7243,
+              "line_end": 7243,
+              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/memory.verification_sweep.started",
+              "line_start": 42653,
+              "line_end": 42653,
+              "quote": "\"name\": \"memory.verification_sweep.started:stale-operation-cas\","
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "First exact wave-2 contract preparation for this family."
+          "prior": {
+            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
         }
       },
       "remaining_gaps": [
         "Membership ABSENT until independent review and own Storage admission.",
-        "RT must resolve event and operation-custody retention.",
-        "Add static CAS/crash/replay-effect oracles; current fixture predicates are incomplete for those facets.",
-        "Deletion policy remains reserved; policy-dependent mutation cannot activate."
+        "RT must resolve event/operation and rebuild selector/target retention.",
+        "Deletion policy remains reserved; policy-dependent mutation cannot activate.",
+        "Native custody/atomicity/filesystem crash/backup/read-race obligations remain NOT_RUN; static success is not native proof."
       ],
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared writer contract; UNDISPOSITIONED means no admitted current writer. No admission record authored. Self-assessment only."
+      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
     },
     {
       "event_type": "memory.monthly_summary.completed",
@@ -2919,5 +3523,7 @@
       "static_checks_seen": [],
       "notes": "No payload or owner contract minted for this held row."
     }
-  ]
+  ],
+  "review_round": 1,
+  "reviewed_head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e"
 }
