@@ -2185,7 +2185,9 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     var themeKey=family+'|'+mode,currentSlug=document.documentElement.getAttribute('data-theme')||'';
     bridgeDepth++;
     try{
-      if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)){
+      // A resolved slug can match while Auto was replaced by an explicit bootstrap mode.
+      // Reconcile the complete saved pair even when its family and painted scheme agree.
+      if(themeKey!==lastPaintThemeKey||currentSlug!==slug||(window.PM_THEME&&typeof window.PM_THEME.getFamily==='function'&&window.PM_THEME.getFamily()!==family)||(window.PM_THEME&&typeof window.PM_THEME.getMode==='function'&&window.PM_THEME.getMode()!==mode)){
         if(window.PM_THEME&&typeof window.PM_THEME.setFamily==='function'&&typeof window.PM_THEME.setMode==='function'){
           window.PM_THEME.setFamily(family,{persist:false,dispatch:false});
           window.PM_THEME.setMode(mode,{persist:false,dispatch:false});
