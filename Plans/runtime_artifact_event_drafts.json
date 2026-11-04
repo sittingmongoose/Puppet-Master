@@ -18,9 +18,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-520"
     },
     {
       "event_type": "runtime_artifact.artifact_version",
@@ -37,9 +39,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-521"
     },
     {
       "event_type": "runtime_artifact.before_after_snapshot",
@@ -56,9 +60,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-522"
     },
     {
       "event_type": "runtime_artifact.browser_recording",
@@ -75,9 +81,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-523"
     },
     {
       "event_type": "runtime_artifact.code_diff",
@@ -94,9 +102,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-524"
     },
     {
       "event_type": "runtime_artifact.context_snapshot",
@@ -113,9 +123,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-525"
     },
     {
       "event_type": "runtime_artifact.cost_usage",
@@ -132,9 +144,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-526"
     },
     {
       "event_type": "runtime_artifact.document",
@@ -151,9 +165,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-527"
     },
     {
       "event_type": "runtime_artifact.evidence",
@@ -170,9 +186,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-528"
     },
     {
       "event_type": "runtime_artifact.failed_attempts",
@@ -189,9 +207,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-529"
     },
     {
       "event_type": "runtime_artifact.hitl_approval",
@@ -208,9 +228,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-530"
     },
     {
       "event_type": "runtime_artifact.implementation_plan",
@@ -227,9 +249,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-531"
     },
     {
       "event_type": "runtime_artifact.reasoning_summary",
@@ -246,16 +270,33 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-532"
     },
     {
       "event_type": "runtime_artifact.restore_point",
-      "outcome": "blocked on Jared",
+      "outcome": "register (prepared)",
+      "family_revision": "1.0.0",
       "owner_unit": "RAP-113",
+      "storage_unit": "SP-533",
+      "payload_unit": "CV-533",
+      "payload_schema_ref": "Plans/runtime_artifact_restore_point.schema.json",
+      "payload_schema_id": "pm.runtime_artifact.restore_point.schema.v1",
+      "producer": "owner.runtime_artifacts.restore_point.publish@1.0.0",
+      "consumer": "reader.runtime_artifacts.restore_point.history@1.0.0",
+      "scope_policy": "project_only",
+      "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
+      "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "question": "For the lifecycle-changing runtime_artifact.restore_point record, should each immutable state observation get a distinct artifact_id, or should the existing artifact_id acquire a revision-bearing event identity? The current four-member tuple would suppress later state observations."
+      "membership": "ABSENT",
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-533",
+      "identity_recipe": "ra-observation1: framed [event_type,project_id,artifact_id,schema_id,decimal(producer_sequence_id)]"
     },
     {
       "event_type": "runtime_artifact.screenshot",
@@ -272,9 +313,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-534"
     },
     {
       "event_type": "runtime_artifact.subagent_lineage",
@@ -291,9 +334,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-535"
     },
     {
       "event_type": "runtime_artifact.suggested_next_steps",
@@ -310,9 +355,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-536"
     },
     {
       "event_type": "runtime_artifact.tool_llm_trace",
@@ -329,9 +376,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-537"
     },
     {
       "event_type": "runtime_artifact.validation_test",
@@ -348,9 +397,11 @@
       "checkpoint_key": "event_record_index_checkpoint.v1:{storage_instance_id}",
       "checkpoint_schema_ref": "Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint",
       "retention_policy_ref": "RP-AUTHORITY-INDEFINITE",
-      "derived_retention_policy_ref": "RP-PROJECTION-3GEN",
       "membership": "ABSENT",
-      "new_stored_values": []
+      "new_stored_values": [],
+      "index_retention_policy_ref": "RP-EVENT-INDEX-SOURCE",
+      "checkpoint_retention_policy_ref": "RP-PROJECTION-3GEN",
+      "payload_storage_contract": "SP-337; exact inline/pm.payload_pack.v1: dispatch in CV-538"
     }
   ]
 }
