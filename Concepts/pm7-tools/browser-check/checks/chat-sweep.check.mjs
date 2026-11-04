@@ -4,6 +4,7 @@ export const tests = {
   await t.viewport(1024,480);
   for(let i=0;i<10;i++) {
    const f=await t.app.open();
+   await t.emulate({reducedMotion:'no-preference'});
    const b=f.locator('#pmRoot [data-action="open-activity"]').first();
    await f.evaluate(()=>{
     window.__activityPaint=null;
