@@ -7024,6 +7024,17 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
                         "finding_key": row.get("finding_key"),
                     }
                 )
+        # A reopened row stays open until a re-audit row validly supersedes it. Only
+        # pm-audit-closure.py checks that link (exact line hash, record hash, three
+        # agreeing verdicts), so when it reports its open rows, keep only those.
+        open_rows = raw_report.get("registry", {}).get("open_rows")
+        if isinstance(open_rows, list):
+            still_open = {
+                (row.get("line"), row.get("closure_id"))
+                for row in open_rows
+                if isinstance(row, dict) and row.get("closure_status") == "reopened"
+            }
+            reopened_rows = [row for row in reopened_rows if (row["line"], row["closure_id"]) in still_open]
     else:
         failures.append({"path": rel(registry), "error": "missing_audit_closure_registry"})
     if reopened_rows:
