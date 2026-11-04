@@ -4366,6 +4366,7 @@
     "PDS-022",
     "0PI-057",
     "PDS-015",
+    "PLS-025",
     "PSMERA-008",
     "WS-004",
     "WS-005",
@@ -53287,6 +53288,16 @@
       "edge_type": "depends_on",
       "from": "PLS-024",
       "to": "PLS-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-025",
+      "to": "PDS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-025",
+      "to": "PLS-012"
     },
     {
       "edge_type": "depends_on",
@@ -205701,6 +205712,23 @@
         "heading_level": 3,
         "heading_line": 1479,
         "line": 1481,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-025",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "PLS-025 - Closure Re-Audit Records And Anchor-Scoped Evidence Hashes",
+        "heading_level": 3,
+        "heading_line": 1545,
+        "line": 1547,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",

@@ -41728,7 +41728,7 @@
   "plan_unit_count": 7422,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2743,
+      "high": 2744,
       "low": 9,
       "medium": 30,
       "standard": 4640
@@ -43275,6 +43275,7 @@
       "governance_boundary": 2,
       "governance_false_buildability": 1,
       "governance_gap_loss": 1,
+      "governance_integrity": 1,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
       "governance_runtime_record_schema_gap": 1,
@@ -45933,7 +45934,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5614,
+      "requirement": 5615,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
