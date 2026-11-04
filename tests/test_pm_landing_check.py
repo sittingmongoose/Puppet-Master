@@ -811,7 +811,9 @@ class EndToEnd(unittest.TestCase):
         self.stub_checks([STALE_HASH], [self.SPAN], root_in_failure=True)
         self.record()
         self.touch("Touched.md")
-        other = Path(self.scratch.name).parent / (Path(self.scratch.name).name + "-second")
+        # A sibling name that does not start with the first checkout's path, so the assertNotIn below cannot
+        # match the second checkout's own paths (seen on macOS, where /var resolves to /private/var).
+        other = Path(self.scratch.name).parent / ("second-" + Path(self.scratch.name).name)
         shutil.copytree(self.repo, other)
         self.addCleanup(shutil.rmtree, other, True)
         code, out = self.run_main("--base", self.base, "--baseline", "baseline.json", "--root", str(other))
