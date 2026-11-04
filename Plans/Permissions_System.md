@@ -10267,13 +10267,14 @@ canonical_text: 'Permissions owns rule matching and durable authority; Settings 
 
 
   The finite existing safety-answer scalar rows are safety.rules.default-tool-permission, safety.approvals.doom-loop-action
-  and safety.protection.external-dir-action, each with careful_order deny→ask→allow. The profile order is
+  and safety.protection.external-dir-action, plus the admitted safety.rules.computer-use answer, each with
+  careful_order deny→ask→allow. The profile order is
   read_only→plan→regular→full (custom uses the stated Computer fallback), and the one FileSafe switch orders
   On before Off. The per-tool-permissions and web-tool-permissions maps stay per_item: first resolve each
   layer own answer for the exact permission key with existing owner matching/deny semantics, then protectively
   combine simultaneous Computer-own and Project-own declared answers with deny before ask before allow. This
   is not per-field profile merging or a reordering of independent granular durable-rule specificity. Do not
-  invent a fourth scalar ask row or generic internet-use toggle from imprecise source wording; actual web/network
+  invent extra scalar ask rows or a generic internet-use toggle from imprecise source wording; actual web/network
   policy retains its existing owner contract. Numeric declared limit rows use computer_ceiling through Settings/runtime
   admission; Reduce motion keeps its separate Everywhere/Device/Project plus OS rule.
 

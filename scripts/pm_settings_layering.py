@@ -41,11 +41,11 @@ def resolve_setting(row, own_values, *, os_reduce_motion=False):
         raise ValueError('unoffered ordinary Settings level')
     values = [own_values[level] for level in ('everywhere', 'computer', 'device', 'project')
               if level in levels and own_values.get(level) is not None]
-    if not values:
-        return row['default']
+    requested = values[-1] if values else row['default']
     combine = layering['combine']
     if combine == 'computer_ceiling':
-        requested = values[-1]
+        if not values:
+            return requested
         ceiling = own_values.get('computer')
         if type(requested) not in (int, float) or (ceiling is not None and type(ceiling) not in (int, float)):
             raise ValueError('capacity is not normalized numeric input')
@@ -58,19 +58,40 @@ def resolve_setting(row, own_values, *, os_reduce_motion=False):
         if any(not any(type(v) is type(item) and v == item for item in order)
                and not (is_profile and v == 'custom') for v in values):
             raise ValueError('unvalidated protective own value')
-        if is_profile:
-            c, p = own_values.get('computer'), own_values.get('project')
-            if c is not None and p is not None and (c == 'custom' or p == 'custom'):
-                return c
-            if 'custom' in values:
-                return values[-1]
-        chosen = min(values, key=order.index)
         if row['id'] == 'general.visual.reduce-animations':
-            chosen = chosen or os_reduce_motion
-        return chosen
-    if combine == 'per_item':
+            return (any(values) if values else requested) or os_reduce_motion
+        c, p = own_values.get('computer'), own_values.get('project')
+        if c is not None and p is not None:
+            if is_profile and (c == 'custom' or p == 'custom'):
+                return c
+            return min((c, p), key=order.index)
+        return requested
+    if combine == 'per_item' and values:
         raise ValueError('per-item maps require the owning permission/tool resolver')
-    return values[-1]
+    return requested
+
+
+def repository_origin_resolution(record, rows):
+    """Golden scenario: resolution alone never accepts repository loosening.
+
+    repository_loosening is an input fact from the Permissions owner. Matching
+    fixture evidence still requires that owner's real source authentication.
+    """
+    scenario = record['resolution']
+    resolved = settings_predicate('settings.resolve', scenario, rows)
+    gate = 'not_repository_loosening'
+    if record['repository_loosening']:
+        acceptance = record['acceptance']
+        source = record['source']
+        matches = acceptance is not None and all(
+            acceptance.get(key) == source[key] for key in (
+                'project_id', 'source_repository_ref', 'source_version', 'source_sha256'))
+        if (matches and scenario['setting_id'] in acceptance['looser_rule_ids']
+                and acceptance['person_decision_evidence']):
+            gate = 'requires_actual_owner_validation'
+        else:
+            gate = 'held_for_repository_acceptance'
+    return {'resolved_value': resolved, 'origin_gate': gate}
 
 
 def settings_predicate(predicate, record, rows, expected=None):
@@ -82,6 +103,8 @@ def settings_predicate(predicate, record, rows, expected=None):
     if predicate == 'settings.resolve':
         return resolve_setting(rows[record['setting_id']], {level: record[level + '_own'] for level in LEVELS},
                                os_reduce_motion=record['os_reduce_motion'])
+    if predicate == 'settings.repository_origin_resolution':
+        return repository_origin_resolution(record, rows)
     if predicate == 'settings.cas':
         return 'accept' if record['expected_setting_revision'] == record['actual_setting_revision'] else 'refuse'
     if predicate == 'settings.theme_atomic_pair':
