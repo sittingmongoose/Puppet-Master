@@ -1,0 +1,4244 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-W2-DCH-SELF-20261104",
+  "assessment_kind": "worker_self_grade",
+  "assessed_tree": {
+    "branch": "plans/ea-w2-chat-20261104",
+    "base": "be4766513f",
+    "contract_commit": "d6ea5d97c5",
+    "final_edition": "Includes the chat.message class clarification committed beside this report; no self-referential report commit hash."
+  },
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "native_execution": "NOT_RUN",
+  "rows": [
+    {
+      "event_type": "bundle.selection_forward_blocked",
+      "family_id": "event-family-bundle-selection-forward-blocked",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-610",
+          "line_start": 29081,
+          "line_end": 29081,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-610",
+        "CV-630",
+        "SP-610",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-610",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-610",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-630",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-630",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-630",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-610",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-610",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-610",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-610",
+              "line_start": 29487,
+              "line_end": 29487,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-610",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "bundle.selection_sent_to_chat",
+      "family_id": "event-family-bundle-selection-sent-to-chat",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-611",
+          "line_start": 29139,
+          "line_end": 29139,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-611",
+        "CV-631",
+        "SP-611",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-611",
+              "line_start": 29139,
+              "line_end": 29139,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-611",
+              "line_start": 29139,
+              "line_end": 29139,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-631",
+              "line_start": 24535,
+              "line_end": 24535,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-631",
+              "line_start": 24535,
+              "line_end": 24535,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-631",
+              "line_start": 24535,
+              "line_end": 24535,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-611",
+              "line_start": 29619,
+              "line_end": 29619,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-611",
+              "line_start": 29619,
+              "line_end": 29619,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-611",
+              "line_start": 29139,
+              "line_end": 29139,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-611",
+              "line_start": 29623,
+              "line_end": 29623,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-611",
+              "line_start": 29619,
+              "line_end": 29619,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.message",
+      "family_id": "event-family-chat-message",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-612",
+          "line_start": 29198,
+          "line_end": 29198,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-612",
+        "CV-632",
+        "SP-612",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-612",
+              "line_start": 29198,
+              "line_end": 29198,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-612",
+              "line_start": 29198,
+              "line_end": 29198,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-632",
+              "line_start": 24596,
+              "line_end": 24596,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-632",
+              "line_start": 24596,
+              "line_end": 24596,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-632",
+              "line_start": 24596,
+              "line_end": 24596,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-612",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-612",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-612",
+              "line_start": 29198,
+              "line_end": 29198,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-612",
+              "line_start": 29759,
+              "line_end": 29759,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-612",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_archived",
+      "family_id": "event-family-chat-thread-archived",
+      "family_revision": null,
+      "outcome": "blocked_on_Jared",
+      "disposition": "UNDISPOSITIONED",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "lifecycle",
+          "line_start": 1122,
+          "line_end": 1122,
+          "quote": "`cmd.chat.thread.archive` or retention policy"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-508",
+          "line_start": 28766,
+          "line_end": 28766,
+          "quote": "Archive keeps the folder and is never automatic."
+        }
+      ],
+      "current_owner_units": [],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "owner_doc": {
+          "status": "CONFLICT",
+          "representation": "exact_normative_owner",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "producer": {
+          "status": "CONFLICT",
+          "representation": "exact_normative_owner",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "scope_identity": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "retention": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "redaction_custody": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "transitions": {
+          "status": "CONFLICT",
+          "representation": "exact_normative_owner",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Archive trigger scope conflicts between the lifecycle table and ACD-508; whole family stopped, no contract or admission drafted.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "lifecycle",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "`cmd.chat.thread.archive` or retention policy"
+            },
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-508",
+              "line_start": 28766,
+              "line_end": 28766,
+              "quote": "Archive keeps the folder and is never automatic."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment; product scope remains Jared’s decision."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 9,
+        "CONFLICT": 3
+      },
+      "pass_count": 0,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "Does the lifecycle table permission for retention-policy automatic archive still apply to Project chats, or does ACD-508’s “Archive keeps the folder and is never automatic” prohibit automatic archive for every chat? Clarify scope before the exact producer contract is adopted."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": []
+    },
+    {
+      "event_type": "chat.thread_created",
+      "family_id": "event-family-chat-thread-created",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-614",
+          "line_start": 29256,
+          "line_end": 29256,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-614",
+        "CV-634",
+        "SP-614",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-614",
+              "line_start": 29256,
+              "line_end": 29256,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-614",
+              "line_start": 29256,
+              "line_end": 29256,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-634",
+              "line_start": 24657,
+              "line_end": 24657,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-634",
+              "line_start": 24657,
+              "line_end": 24657,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-634",
+              "line_start": 24657,
+              "line_end": 24657,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-614",
+              "line_start": 29895,
+              "line_end": 29895,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-614",
+              "line_start": 29895,
+              "line_end": 29895,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-614",
+              "line_start": 29256,
+              "line_end": 29256,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-614",
+              "line_start": 29899,
+              "line_end": 29899,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-614",
+              "line_start": 29895,
+              "line_end": 29895,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_deleted",
+      "family_id": "event-family-chat-thread-deleted",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-615",
+          "line_start": 29314,
+          "line_end": 29314,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-615",
+        "CV-635",
+        "SP-615",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-615",
+              "line_start": 29314,
+              "line_end": 29314,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-615",
+              "line_start": 29314,
+              "line_end": 29314,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-635",
+              "line_start": 24718,
+              "line_end": 24718,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-635",
+              "line_start": 24718,
+              "line_end": 24718,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-635",
+              "line_start": 24718,
+              "line_end": 24718,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-615",
+              "line_start": 30030,
+              "line_end": 30030,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-615",
+              "line_start": 30030,
+              "line_end": 30030,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-615",
+              "line_start": 29314,
+              "line_end": 29314,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-615",
+              "line_start": 30034,
+              "line_end": 30034,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-615",
+              "line_start": 30030,
+              "line_end": 30030,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_bound",
+      "family_id": "event-family-chat-thread-worktree-bound",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-616",
+          "line_start": 29373,
+          "line_end": 29373,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-616",
+        "CV-636",
+        "SP-616",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-616",
+              "line_start": 29373,
+              "line_end": 29373,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-616",
+              "line_start": 29373,
+              "line_end": 29373,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-636",
+              "line_start": 24779,
+              "line_end": 24779,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-636",
+              "line_start": 24779,
+              "line_end": 24779,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-636",
+              "line_start": 24779,
+              "line_end": 24779,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-616",
+              "line_start": 30167,
+              "line_end": 30167,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-616",
+              "line_start": 30167,
+              "line_end": 30167,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-616",
+              "line_start": 29373,
+              "line_end": 29373,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-616",
+              "line_start": 30171,
+              "line_end": 30171,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-616",
+              "line_start": 30167,
+              "line_end": 30167,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_create_failed",
+      "family_id": "event-family-chat-thread-worktree-create-failed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-617",
+          "line_start": 29431,
+          "line_end": 29431,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-617",
+        "CV-637",
+        "SP-617",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-617",
+              "line_start": 29431,
+              "line_end": 29431,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-617",
+              "line_start": 29431,
+              "line_end": 29431,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-637",
+              "line_start": 24840,
+              "line_end": 24840,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-637",
+              "line_start": 24840,
+              "line_end": 24840,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-637",
+              "line_start": 24840,
+              "line_end": 24840,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-617",
+              "line_start": 30303,
+              "line_end": 30303,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-617",
+              "line_start": 30303,
+              "line_end": 30303,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-617",
+              "line_start": 29431,
+              "line_end": 29431,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-617",
+              "line_start": 30307,
+              "line_end": 30307,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-617",
+              "line_start": 30303,
+              "line_end": 30303,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_merge_failed",
+      "family_id": "event-family-chat-thread-worktree-merge-failed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-618",
+          "line_start": 29489,
+          "line_end": 29489,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-618",
+        "CV-638",
+        "SP-618",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-618",
+              "line_start": 29489,
+              "line_end": 29489,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-618",
+              "line_start": 29489,
+              "line_end": 29489,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-638",
+              "line_start": 24901,
+              "line_end": 24901,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-638",
+              "line_start": 24901,
+              "line_end": 24901,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-638",
+              "line_start": 24901,
+              "line_end": 24901,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-618",
+              "line_start": 30439,
+              "line_end": 30439,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-618",
+              "line_start": 30439,
+              "line_end": 30439,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-618",
+              "line_start": 29489,
+              "line_end": 29489,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-618",
+              "line_start": 30443,
+              "line_end": 30443,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-618",
+              "line_start": 30439,
+              "line_end": 30439,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_merged",
+      "family_id": "event-family-chat-thread-worktree-merged",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-619",
+          "line_start": 29547,
+          "line_end": 29547,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-619",
+        "CV-639",
+        "SP-619",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-619",
+              "line_start": 29547,
+              "line_end": 29547,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-619",
+              "line_start": 29547,
+              "line_end": 29547,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-639",
+              "line_start": 24962,
+              "line_end": 24962,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-639",
+              "line_start": 24962,
+              "line_end": 24962,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-639",
+              "line_start": 24962,
+              "line_end": 24962,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-619",
+              "line_start": 30575,
+              "line_end": 30575,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-619",
+              "line_start": 30575,
+              "line_end": 30575,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-619",
+              "line_start": 29547,
+              "line_end": 29547,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-619",
+              "line_start": 30579,
+              "line_end": 30579,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-619",
+              "line_start": 30575,
+              "line_end": 30575,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_created",
+      "family_id": "event-family-chat-thread-worktree-pr-created",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-620",
+          "line_start": 29605,
+          "line_end": 29605,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-620",
+        "CV-640",
+        "SP-620",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-620",
+              "line_start": 29605,
+              "line_end": 29605,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-620",
+              "line_start": 29605,
+              "line_end": 29605,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-640",
+              "line_start": 25023,
+              "line_end": 25023,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-640",
+              "line_start": 25023,
+              "line_end": 25023,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-640",
+              "line_start": 25023,
+              "line_end": 25023,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-620",
+              "line_start": 30711,
+              "line_end": 30711,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-620",
+              "line_start": 30711,
+              "line_end": 30711,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-620",
+              "line_start": 29605,
+              "line_end": 29605,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-620",
+              "line_start": 30715,
+              "line_end": 30715,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-620",
+              "line_start": 30711,
+              "line_end": 30711,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pr_failed",
+      "family_id": "event-family-chat-thread-worktree-pr-failed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-621",
+          "line_start": 29662,
+          "line_end": 29662,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-621",
+        "CV-641",
+        "SP-621",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-621",
+              "line_start": 29662,
+              "line_end": 29662,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-621",
+              "line_start": 29662,
+              "line_end": 29662,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-641",
+              "line_start": 25084,
+              "line_end": 25084,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-641",
+              "line_start": 25084,
+              "line_end": 25084,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-641",
+              "line_start": 25084,
+              "line_end": 25084,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-621",
+              "line_start": 30847,
+              "line_end": 30847,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-621",
+              "line_start": 30847,
+              "line_end": 30847,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-621",
+              "line_start": 29662,
+              "line_end": 29662,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-621",
+              "line_start": 30851,
+              "line_end": 30851,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-621",
+              "line_start": 30847,
+              "line_end": 30847,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_failed",
+      "family_id": "event-family-chat-thread-worktree-pre-merge-test-failed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-622",
+          "line_start": 29720,
+          "line_end": 29720,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-622",
+        "CV-642",
+        "SP-622",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-622",
+              "line_start": 29720,
+              "line_end": 29720,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-622",
+              "line_start": 29720,
+              "line_end": 29720,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-642",
+              "line_start": 25145,
+              "line_end": 25145,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-642",
+              "line_start": 25145,
+              "line_end": 25145,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-642",
+              "line_start": 25145,
+              "line_end": 25145,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-622",
+              "line_start": 30983,
+              "line_end": 30983,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-622",
+              "line_start": 30983,
+              "line_end": 30983,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-622",
+              "line_start": 29720,
+              "line_end": 29720,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-622",
+              "line_start": 30987,
+              "line_end": 30987,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-622",
+              "line_start": 30983,
+              "line_end": 30983,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_passed",
+      "family_id": "event-family-chat-thread-worktree-pre-merge-test-passed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-623",
+          "line_start": 29778,
+          "line_end": 29778,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-623",
+        "CV-643",
+        "SP-623",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-623",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-623",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-643",
+              "line_start": 25206,
+              "line_end": 25206,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-643",
+              "line_start": 25206,
+              "line_end": 25206,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-643",
+              "line_start": 25206,
+              "line_end": 25206,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-623",
+              "line_start": 31120,
+              "line_end": 31120,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-623",
+              "line_start": 31120,
+              "line_end": 31120,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-623",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-623",
+              "line_start": 31124,
+              "line_end": 31124,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-623",
+              "line_start": 31120,
+              "line_end": 31120,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_pre_merge_test_started",
+      "family_id": "event-family-chat-thread-worktree-pre-merge-test-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-624",
+          "line_start": 29836,
+          "line_end": 29836,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-624",
+        "CV-644",
+        "SP-624",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-624",
+              "line_start": 29836,
+              "line_end": 29836,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-624",
+              "line_start": 29836,
+              "line_end": 29836,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-644",
+              "line_start": 25267,
+              "line_end": 25267,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-644",
+              "line_start": 25267,
+              "line_end": 25267,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-644",
+              "line_start": 25267,
+              "line_end": 25267,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-624",
+              "line_start": 31257,
+              "line_end": 31257,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-624",
+              "line_start": 31257,
+              "line_end": 31257,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-624",
+              "line_start": 29836,
+              "line_end": 29836,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-624",
+              "line_start": 31261,
+              "line_end": 31261,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-624",
+              "line_start": 31257,
+              "line_end": 31257,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_renamed",
+      "family_id": "event-family-chat-thread-worktree-renamed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-625",
+          "line_start": 29895,
+          "line_end": 29895,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-625",
+        "CV-645",
+        "SP-625",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-625",
+              "line_start": 29895,
+              "line_end": 29895,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-625",
+              "line_start": 29895,
+              "line_end": 29895,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-645",
+              "line_start": 25328,
+              "line_end": 25328,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-645",
+              "line_start": 25328,
+              "line_end": 25328,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-645",
+              "line_start": 25328,
+              "line_end": 25328,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-625",
+              "line_start": 31394,
+              "line_end": 31394,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-625",
+              "line_start": 31394,
+              "line_end": 31394,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-625",
+              "line_start": 29895,
+              "line_end": 29895,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-625",
+              "line_start": 31398,
+              "line_end": 31398,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-625",
+              "line_start": 31394,
+              "line_end": 31394,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    },
+    {
+      "event_type": "chat.thread_worktree_unbound",
+      "family_id": "event-family-chat-thread-worktree-unbound",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "disposition": "CURRENT_WRITER",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-626",
+          "line_start": 29953,
+          "line_end": 29953,
+          "quote": "Newly authored owner contract under DL-045"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-626",
+        "CV-646",
+        "SP-626",
+        "ATS-305"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Membership intentionally ABSENT: prepared contract only, no registry append or admission record.",
+          "evidence": [
+            {
+              "path": "Plans/dch_event_contracts.json",
+              "unit": "#/rows",
+              "line_start": 2,
+              "line_end": 2,
+              "quote": "\"status\": \"prepared_without_admission\""
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds owner doc; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-626",
+              "line_start": 29953,
+              "line_end": 29953,
+              "quote": "Newly authored owner contract under DL-045"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds producer; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-626",
+              "line_start": 29953,
+              "line_end": 29953,
+              "quote": "Adopt SP-286 and CV-339 full-value first-AppendReceipt custody by name"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds closed payload schema; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-646",
+              "line_start": 25389,
+              "line_end": 25389,
+              "quote": "The root and both payload editions are closed"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds scope identity; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-646",
+              "line_start": 25389,
+              "line_end": 25389,
+              "quote": "The semantic identity tuple is"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds replay idempotency; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-646",
+              "line_start": 25389,
+              "line_end": 25389,
+              "quote": "same identity with changed semantics is a conflict, never an overwrite."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Structured source retention assignment is pending RT. Derived checkpoint explicitly adopts RP-PROJECTION-3GEN; chat.message binds existing Case L-3 Chat content semantics.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-626",
+              "line_start": 31530,
+              "line_end": 31530,
+              "quote": "retention_policy_ref = PENDING_RETENTION_DECISION."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds redaction custody; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-626",
+              "line_start": 31530,
+              "line_end": 31530,
+              "quote": "coherent backup/restore includes those dependencies and deletion records before any visible read."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds transitions; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-626",
+              "line_start": 29953,
+              "line_end": 29953,
+              "quote": "Exact producer:"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds consumers checkpoints; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-626",
+              "line_start": 31534,
+              "line_end": 31534,
+              "quote": "domain projection binding (newly authored owner contract)"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "This exact family’s owner unit binds compatibility withdrawal; shared prerequisites are explicitly adopted. This is normative contract depth, not native execution evidence.",
+          "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-626",
+              "line_start": 31530,
+              "line_end": 31530,
+              "quote": "Withdrawal cuts off this exact family before new operations"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        },
+        "positive_negative_oracles": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Family-specific Project/application positives and required-field/envelope negatives pass the DCH checker; ATS-305 authors native receipt/CAS/replay/withdrawal obligations, NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-305",
+              "line_start": 7235,
+              "line_end": 7235,
+              "quote": "DCH per-family contract oracles (prepared without admission)."
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First lane self-assessment of newly authored contract; independent review still required."
+        }
+      },
+      "status_counts": {
+        "ABSENT": 1,
+        "PASS": 10,
+        "PARTIAL": 1
+      },
+      "pass_count": 10,
+      "normative_depth_complete": false,
+      "remaining_gaps": [
+        "RT must replace PENDING_RETENTION_DECISION with the exact structured source policy assignment.",
+        "Registry membership and admission deliberately absent. Native obligations NOT_RUN; independent review pending."
+      ],
+      "native_execution": "NOT_RUN",
+      "static_checks_seen": [
+        "python3 scripts/pm_dch_events.py (exit 0; 1317 checks)"
+      ]
+    }
+  ]
+}

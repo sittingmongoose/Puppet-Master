@@ -1,0 +1,1400 @@
+{
+  "bundle.selection_forward_blocked": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Crosswalk.md",
+        "line": 441,
+        "text": "- Bundle lifecycle/audit events remain visible as `bundle.note_created`, `bundle.note_status_changed`, `bundle.revision_started`, `bundle.revision_completed`, `bundle.revision_interrupted`, `bundle.selection_sent_to_chat`, and `bundle.selection_forward_blocked`.",
+        "sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1173,
+        "text": "- `bundle.selection_forward_blocked` records blocked handoff attempts and the visible reason instead of pretending the chip was sent.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 8652,
+        "text": "- bundle.selection_forward_blocked",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "bundle.selection_sent_to_chat": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 907,
+        "text": "Document annotation events reuse the existing `bundle-note` event family for durable annotation lifecycle and audit transitions. Ephemeral document-selection chat handoff is a separate event, `bundle.selection_sent_to_chat`, whose payload must include the requested chat target, effective resolved target, document provenance, and bounded selection excerpt; this event prepares visible chat context but does not mutate durable annotation state by itself.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 952,
+        "text": "| `bundle.selection_sent_to_chat` | document bundle / review owner | chat, prompt assembly, audit | `bundle_id`, `doc_id`, `selection_id`, requested/effective chat target, bounded selection excerpt ref, provenance refs, `ts` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 6975,
+        "text": "  bundle.selection_sent_to_chat is a separate event that prepares visible chat",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 6985,
+        "text": "  - bundle.selection_sent_to_chat remains a separate event from durable annotation state changes.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7005,
+        "text": "  - \"`bundle.selection_sent_to_chat`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7011,
+        "text": "  - \"bundle.selection_sent_to_chat must not mutate durable annotation state by itself.\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7236,
+        "text": "  - bundle.annotation_state_changed, bundle.selection_sent_to_chat, and bundle.revision_requested preserve their listed identity and target/capability minima.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7257,
+        "text": "  - \"`bundle.selection_sent_to_chat`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Crosswalk.md",
+        "line": 441,
+        "text": "- Bundle lifecycle/audit events remain visible as `bundle.note_created`, `bundle.note_status_changed`, `bundle.revision_started`, `bundle.revision_completed`, `bundle.revision_interrupted`, `bundle.selection_sent_to_chat`, and `bundle.selection_forward_blocked`.",
+        "sha256": "14fd3cdb089efc95ee176d37639d858cfb4ec7bfd71652645985dad5bde7233b"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1172,
+        "text": "- `bundle.selection_sent_to_chat` records `requested_target` and `effective_target` for successful chat handoff.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 8649,
+        "text": "- bundle.selection_sent_to_chat",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.message": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 242,
+        "text": "5. **Messages transform**: `Plugin.trigger(\"experimental.chat.messages.transform\")` allows plugins to modify the message history.",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 552,
+        "text": "| `chat.message` | `(input, output) => void` | Called when a new user message is received |",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 560,
+        "text": "| `experimental.chat.messages.transform` | `(input, output) => void` | Modify message history before sending to LLM |",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 700,
+        "text": "4. **Plugin prompt transforms**: Puppet Master supports both `experimental.chat.system.transform` and `experimental.chat.messages.transform` hooks under its plugin hook system with the `experimental.` prefix accepted as alias (consistent with the compaction hook alias decision in `Plans/Plugins_System.md`).",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 2087,
+        "text": "- 'experimental.chat.messages.transform'",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 3098,
+        "text": "  Plugin hook events preserve event, config, tool, auth, chat.message, chat.params, chat.headers, permission.ask, command.execute.before, tool.execute.before, tool.execute.after, shell.env, experimental.chat.messages.transform, experimental.chat.system.transform, experimental.session.compacting, and experimental.text.complete.",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 3127,
+        "text": "- 'chat.message'",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 3135,
+        "text": "- 'experimental.chat.messages.transform'",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 3819,
+        "text": "  Puppet Master subagent/context deltas preserve subprocess or thread-based agent execution, Rust prompt assembly, configurable 20,000-token reserve and 40,000-token prune-protect values, and plugin prompt transform aliases for experimental.chat.system.transform and experimental.chat.messages.transform.",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/OpenCode_Deep_Extraction.md",
+        "line": 3849,
+        "text": "- 'experimental.chat.messages.transform'",
+        "sha256": "f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c"
+      },
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 35215,
+        "text": "        \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\"",
+        "sha256": "ce5ea327531aec6be291958213b20223edfd2549904283a567d527a7e1f9c8fa"
+      },
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 47638,
+        "text": "      \"Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\"",
+        "sha256": "ce5ea327531aec6be291958213b20223edfd2549904283a567d527a7e1f9c8fa"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8580,
+        "text": "| `cmd.chat.send` | `thread_id`, `project_id?`, `message_id`, `content_ref`, `attachment_refs[]`, `model_request_ref?`, `delivery_mode?` (`queue` or `steer`; UCC-168), `idempotency_key` | `assistant_turn_id?`, `message_id`, `run_or_goal_ref?` | `permission_denied`, `stale_projection`, `handler_unavailable` | `chat.message.submitted` |",
+        "sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 14594,
+        "text": "  without stopping the answer and emits chat.message.submitted for that message with delivery_mode steer; it",
+        "sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+      },
+      {
+        "path": "Plans/Plugins_System.md",
+        "line": 271,
+        "text": "#### `chat.message`",
+        "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809"
+      },
+      {
+        "path": "Plans/Plugins_System.md",
+        "line": 531,
+        "text": "OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Plugin sources: internal (compiled), built-in npm packages, and config-specified packages/paths. Plugins receive a `PluginInput` with SDK client, project metadata, and Bun shell. The `Hooks` interface defines ~15 named hooks including `tool.execute.before/after`, `permission.ask`, `experimental.session.compacting`, `chat.message`, `chat.params`, `shell.env`, and system/message transforms. Custom tools are registered via the `tool` property; plugin tools override built-ins on name collision.",
+        "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809"
+      },
+      {
+        "path": "Plans/Plugins_System.md",
+        "line": 1904,
+        "text": "canonical_text: \"chat.message fires before prompt assembly with message_text and session_id, and chat.params fires before provider send with temperature, top_p, max_tokens, and model; both may Continue with modified payloads.\"",
+        "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809"
+      },
+      {
+        "path": "Plans/Plugins_System.md",
+        "line": 1932,
+        "text": "- \"chat.message\"",
+        "sha256": "d9a210e3a709ee17b5fd624480bcbe73969fee68d37c1c90113b20217cf23809"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 58,
+        "text": "Command-contract reconciliation is registry-facing, not prose-only. `Commands_System.md`, `Wiring_Matrix.md`, and `UI_Wiring_Rules.md` must keep command-contract `IDs` and validation hooks aligned: `/compact` stays reserved when `cmd.chat.compact_context` exists, `cmd.chat.run_user_command` cannot claim a phantom `chat.message.submitted` event unless the event owner registers it, and `AC-CMD02`, `AC-CMD07`, and `AC-CMD10` all enforce the same `override_builtin`, reserved-name, `/catalog`, `/actions`, `/mutation`, and projection-freshness boundaries instead of leaving git/actions prefix prohibition as prose-only guidance. Case L commands `cmd.chat.create_restore_point`, `cmd.chat.branch_from_restore`, and `cmd.chat.delete_restore_point` now have canonical catalog rows plus one-handler production wiring/reverse coverage. Their dispatch remains fail-closed on current catalog/wiring mismatch or an unavailable owner family; this current registration must not be replaced by a hand-maintained ghost-command example. The same registry boundary owns slash-command reservation, the command execution seam for User Commands, runtime vs overlay mode semantics, and reverse-coverage enforcement for every normative `cmd.*` reference.",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 281,
+        "text": "Reserved-name validation is a command-system boundary shared with chat-design, chat-overlay, and command-catalog consumers. The runtime rejects command files, palette entries, or plugin/skill projections that collide with the reserved-name set before they can emit a canonical-event, and `/mode` must be disambiguated by owner context so chat-overlay display mode, runtime run mode, and User Command frontmatter do not share an untyped payload slot. GPT-era registry audits do not create new event names by observation: `chat.thread.created` and `chat.thread_created` cannot both be active names for the same event, and `chat.message.submitted` is not valid support for `cmd.chat.run_user_command` until the event registry owns that name.",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 682,
+        "text": "| `cmd.chat.run_user_command` | `{ command_name, arguments? }` | `tool.invoked` when `subtask: true`; otherwise the canonical chat message event registered by the event owner, not `chat.message.submitted` unless that event is explicitly registered | Assistant chat, Command palette |",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 1042,
+        "text": "  - cmd.chat.run_user_command cannot claim chat.message.submitted unless the event owner registers it.",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 1068,
+        "text": "  - \"chat.message.submitted\"",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 1483,
+        "text": "  - \"chat.message.submitted\"",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 2957,
+        "text": "  - chat.message.submitted is not expected unless that event is explicitly registered.",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 2981,
+        "text": "  - \"chat.message.submitted\"",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/projects_refresh_command_bindings.json",
+        "line": 24512,
+        "text": "      \"effect\": \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\",",
+        "sha256": "6ff5290dd5008a6e399c0ab92bba1c55fe198076b0ecb380271d8417981d3d20"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 22284,
+        "text": "        \"chat.message.submitted\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 22308,
+        "text": "          \"chat.message.submitted\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 22341,
+        "text": "          \"requirement\": \"Assert cmd.chat.send emits chat.message.submitted with command_id, origin, correlation_id, and handler target.\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 22360,
+        "text": "        \"Assert cmd.chat.send emits chat.message.submitted with command_id, origin, correlation_id, and handler target.\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87043,
+        "text": "        \"chat.message.submitted\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87055,
+        "text": "        \"Projects refresh exact effect: cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\",",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87063,
+        "text": "        \"description\": \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence. Projects refresh: cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\",",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87065,
+        "text": "          \"chat.message.submitted\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87088,
+        "text": "          \"requirement\": \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87098,
+        "text": "          \"requirement\": \"Assert cmd.chat.queue.send_now emits chat.message.submitted with delivery_mode steer, command_id, origin, correlation_id, and handler target, and emits no stop event.\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87113,
+        "text": "          \"requirement\": \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence. Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 87117,
+        "text": "        \"Assert cmd.chat.queue.send_now emits chat.message.submitted with delivery_mode steer, command_id, origin, correlation_id, and handler target, and emits no stop event.\"",
+        "sha256": "867f964af618c8377465e14a24ee84567d5c50105abb7df302c7bb223abc5b54"
+      },
+      {
+        "path": "Plans/projects_refresh_command_bindings.fixtures.json",
+        "line": 24788,
+        "text": "            \"effect\": \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\",",
+        "sha256": "5a69ddce5a0ff2fdcfbf124736c008e19088e6e16efd139b2d2c769509faefd8"
+      },
+      {
+        "path": "Plans/projects_refresh_command_bindings.fixtures.json",
+        "line": 52429,
+        "text": "            \"effect\": \"cmd.chat.queue.send_now emits chat.message.submitted for the steered message with delivery_mode steer and records dispatch correlation evidence.\",",
+        "sha256": "5a69ddce5a0ff2fdcfbf124736c008e19088e6e16efd139b2d2c769509faefd8"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1663,
+        "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 2048,
+        "text": "  Build: projector (or second projector) that reads seglog from checkpoint, indexes `chat.message` (and optionally `chat.thread_created`) into a Tantivy chat index (fields: thread_id, content, role, ts, message_id), and persists its checkpoint in redb.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 2139,
+        "text": "- **Phase 4:** Unit: Tantivy index add document and search by content and thread_id. Integration: append chat.message events; run chat projector; assert search results.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10968,
+        "text": "- chat.message",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 13447,
+        "text": "- chat.message",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_message.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.message payload\",",
+        "sha256": "272086687897b6e5e9d99349940e238db96703e595e7b40d2651ce26b2be794d"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_message.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.message\",",
+        "sha256": "272086687897b6e5e9d99349940e238db96703e595e7b40d2651ce26b2be794d"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_archived": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 977,
+        "text": "Contracts registers the assistant worktree event family with underscore-separated names that match existing chat seglog convention (`chat.thread_created`, `chat.thread_archived`, `chat.thread_deleted`). Dot-namespaced proposals such as `chat.thread.worktree_bound` are migration/review aliases only and MUST normalize to `chat.thread_worktree_*` before persistence.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7406,
+        "text": "  - \"`chat.thread_archived`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1636,
+        "text": "Storage registers assistant worktree seglog events using the same underscore convention as `chat.thread_created`, `chat.thread_archived`, and `chat.thread_deleted`; incoming dot-form review aliases such as `chat.thread.worktree_bound` normalize to `chat.thread_worktree_bound` before projection. The `worktree_` segment inside the event name groups the assistant worktree lifecycle events logically without introducing a new namespace depth. The event schemas are ADDITIVE to the existing chat event catalog and bind to `thread_state:{thread_id}:worktree_binding`, `worktree_binding_reverse:{worktree_id}`, and `worktree_record.v1:{project_id}:{worktree_id}` rather than inventing another worktree store. The first eight rows below are assistant worktree lifecycle, merge, and PR events; the final three rows are pre-merge test events.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10778,
+        "text": "- chat.thread_archived",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_archived.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_archived payload\",",
+        "sha256": "54075fed4b44336867b4dfcc19f0ed4e0c7296bbdb12954957d4d336473cd86b"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_archived.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_archived\",",
+        "sha256": "54075fed4b44336867b4dfcc19f0ed4e0c7296bbdb12954957d4d336473cd86b"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_created": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 977,
+        "text": "Contracts registers the assistant worktree event family with underscore-separated names that match existing chat seglog convention (`chat.thread_created`, `chat.thread_archived`, `chat.thread_deleted`). Dot-namespaced proposals such as `chat.thread.worktree_bound` are migration/review aliases only and MUST normalize to `chat.thread_worktree_*` before persistence.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7405,
+        "text": "  - \"`chat.thread_created`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Document_Packaging_Policy.md",
+        "line": 90,
+        "text": "Document packages that preserve command and event seam evidence must keep naming contradictions visible instead of flattening them into copied lists. The chat seam distinguishes canonical namespace and payload-shape conflicts: `chat.thread.created` and `chat.thread_created` are not interchangeable, terminal-state names such as `run.cancelled` and `run.completed` must be reconciled explicitly, and a single `{ mode }` field cannot carry the requested `/mode`, `/effective`, overlay, and `/runtime` split. `reserved-name` ownership remains split across three docs, and `/compact` evidence must identify the owning docs instead of copying unsafe command/event lists.",
+        "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+      },
+      {
+        "path": "Plans/Document_Packaging_Policy.md",
+        "line": 649,
+        "text": "canonical_text: Command and event seam evidence packages keep contradictions visible, including chat.thread.created versus chat.thread_created, terminal run names, requested/effective/runtime mode splits, reserved-name ownership, and /compact owner evidence.",
+        "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+      },
+      {
+        "path": "Plans/Document_Packaging_Policy.md",
+        "line": 674,
+        "text": "- chat.thread_created",
+        "sha256": "c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 281,
+        "text": "Reserved-name validation is a command-system boundary shared with chat-design, chat-overlay, and command-catalog consumers. The runtime rejects command files, palette entries, or plugin/skill projections that collide with the reserved-name set before they can emit a canonical-event, and `/mode` must be disambiguated by owner context so chat-overlay display mode, runtime run mode, and User Command frontmatter do not share an untyped payload slot. GPT-era registry audits do not create new event names by observation: `chat.thread.created` and `chat.thread_created` cannot both be active names for the same event, and `chat.message.submitted` is not valid support for `cmd.chat.run_user_command` until the event registry owns that name.",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/Commands_System.md",
+        "line": 1482,
+        "text": "  - \"chat.thread_created\"",
+        "sha256": "8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1636,
+        "text": "Storage registers assistant worktree seglog events using the same underscore convention as `chat.thread_created`, `chat.thread_archived`, and `chat.thread_deleted`; incoming dot-form review aliases such as `chat.thread.worktree_bound` normalize to `chat.thread_worktree_bound` before projection. The `worktree_` segment inside the event name groups the assistant worktree lifecycle events logically without introducing a new namespace depth. The event schemas are ADDITIVE to the existing chat event catalog and bind to `thread_state:{thread_id}:worktree_binding`, `worktree_binding_reverse:{worktree_id}`, and `worktree_record.v1:{project_id}:{worktree_id}` rather than inventing another worktree store. The first eight rows below are assistant worktree lifecycle, merge, and PR events; the final three rows are pre-merge test events.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1663,
+        "text": "- [ ] **Define event type schemas** for `chat.message`, `chat.thread_created`, `run.started`, `run.completed`, `usage.event`, `tool.invoked` (include optional `success`, `error`, `thread_id` per Plans/Tools.md \u00a78.0), optional `tool.denied`, runtime checkpoint-marker events, and any editor lifecycle events per FileManager.md.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 2048,
+        "text": "  Build: projector (or second projector) that reads seglog from checkpoint, indexes `chat.message` (and optionally `chat.thread_created`) into a Tantivy chat index (fields: thread_id, content, role, ts, message_id), and persists its checkpoint in redb.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10777,
+        "text": "- chat.thread_created",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10969,
+        "text": "- chat.thread_created",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 13448,
+        "text": "- chat.thread_created",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_created.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_created payload\",",
+        "sha256": "23148a6cc095ad63995bcb244a6bf2e61879628cb3d5d8b93f0d5dd80cdc3b4d"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_created.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_created\",",
+        "sha256": "23148a6cc095ad63995bcb244a6bf2e61879628cb3d5d8b93f0d5dd80cdc3b4d"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_deleted": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 977,
+        "text": "Contracts registers the assistant worktree event family with underscore-separated names that match existing chat seglog convention (`chat.thread_created`, `chat.thread_archived`, `chat.thread_deleted`). Dot-namespaced proposals such as `chat.thread.worktree_bound` are migration/review aliases only and MUST normalize to `chat.thread_worktree_*` before persistence.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7407,
+        "text": "  - \"`chat.thread_deleted`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1636,
+        "text": "Storage registers assistant worktree seglog events using the same underscore convention as `chat.thread_created`, `chat.thread_archived`, and `chat.thread_deleted`; incoming dot-form review aliases such as `chat.thread.worktree_bound` normalize to `chat.thread_worktree_bound` before projection. The `worktree_` segment inside the event name groups the assistant worktree lifecycle events logically without introducing a new namespace depth. The event schemas are ADDITIVE to the existing chat event catalog and bind to `thread_state:{thread_id}:worktree_binding`, `worktree_binding_reverse:{worktree_id}`, and `worktree_record.v1:{project_id}:{worktree_id}` rather than inventing another worktree store. The first eight rows below are assistant worktree lifecycle, merge, and PR events; the final three rows are pre-merge test events.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10779,
+        "text": "- chat.thread_deleted",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_deleted.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_deleted payload\",",
+        "sha256": "2a255678b4177621dc58025b76803514e2f6c57e59f28d214df2c316233be986"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_deleted.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_deleted\",",
+        "sha256": "2a255678b4177621dc58025b76803514e2f6c57e59f28d214df2c316233be986"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_bound": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 983,
+        "text": "| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7456,
+        "text": "  - \"`chat.thread_worktree_bound`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 2990,
+        "text": "**Binding rebuild logic:** Projectors replay `chat.thread_worktree_bound` and `chat.thread_worktree_unbound` events in sequence order to reconstruct current binding state. The last event for a given `thread_id` determines whether a binding exists and which `worktree_id` it references.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3033,
+        "text": "6. On success: new `worktree_record` written to redb; `thread_state:{thread_id}:worktree_binding` written; `chat.thread_worktree_bound` seglog event emitted; dialog closes; chat header button updates to bound state",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3365,
+        "text": "| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` (`manual` \\| `auto_create`) | Thread bound to worktree |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 18921,
+        "text": "  Projectors replay `chat.thread_worktree_bound` and",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 18949,
+        "text": "  - \"chat.thread_worktree_bound\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 19110,
+        "text": "  `chat.thread_worktree_bound`, and uses the generated",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 19138,
+        "text": "  - \"chat.thread_worktree_bound\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21189,
+        "text": "  - \"chat.thread_worktree_bound\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1636,
+        "text": "Storage registers assistant worktree seglog events using the same underscore convention as `chat.thread_created`, `chat.thread_archived`, and `chat.thread_deleted`; incoming dot-form review aliases such as `chat.thread.worktree_bound` normalize to `chat.thread_worktree_bound` before projection. The `worktree_` segment inside the event name groups the assistant worktree lifecycle events logically without introducing a new namespace depth. The event schemas are ADDITIVE to the existing chat event catalog and bind to `thread_state:{thread_id}:worktree_binding`, `worktree_binding_reverse:{worktree_id}`, and `worktree_record.v1:{project_id}:{worktree_id}` rather than inventing another worktree store. The first eight rows below are assistant worktree lifecycle, merge, and PR events; the final three rows are pre-merge test events.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1638,
+        "text": "The `thread_state:{thread_id}:worktree_binding` and `worktree_binding_reverse:{worktree_id}` redb keys are disposable projections rebuilt by replaying `chat.thread_worktree_bound` and `chat.thread_worktree_unbound` seglog events in order, consistent with the other redb/Tantivy projections being rebuildable from seglog (no JSONL mirror exists, SP-339). `thread_state:{thread_id}:persona_override` follows the same per-thread redb state-key pattern, while `worktree_projection.v1:{project_id}:{worktree_id}` remains the project/worktree projection record.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1642,
+        "text": "| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10781,
+        "text": "- chat.thread_worktree_bound",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10836,
+        "text": "- chat.thread_worktree_bound",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_bound.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_worktree_bound payload\",",
+        "sha256": "e289c31ad0dd52dc8b5d408faf53c39324ceb4651ea435c34e62a65bc4543743"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_bound.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_worktree_bound\",",
+        "sha256": "e289c31ad0dd52dc8b5d408faf53c39324ceb4651ea435c34e62a65bc4543743"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_create_failed": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 986,
+        "text": "| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7459,
+        "text": "  - \"`chat.thread_worktree_create_failed`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3368,
+        "text": "| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | Worktree creation failed |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21192,
+        "text": "  - \"chat.thread_worktree_create_failed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1645,
+        "text": "| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10839,
+        "text": "- chat.thread_worktree_create_failed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_merge_failed": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 988,
+        "text": "| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7461,
+        "text": "  - \"`chat.thread_worktree_merge_failed`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3370,
+        "text": "| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` | Merge attempt failed |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21231,
+        "text": "  - \"chat.thread_worktree_merge_failed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1647,
+        "text": "| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10841,
+        "text": "- chat.thread_worktree_merge_failed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_merged": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 987,
+        "text": "| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7460,
+        "text": "  - \"`chat.thread_worktree_merged`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3369,
+        "text": "| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` | Worktree branch merged |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21230,
+        "text": "  - \"chat.thread_worktree_merged\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1646,
+        "text": "| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10840,
+        "text": "- chat.thread_worktree_merged",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_pr_created": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 989,
+        "text": "| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7462,
+        "text": "  - \"`chat.thread_worktree_pr_created`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3371,
+        "text": "| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | PR created |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21232,
+        "text": "  - \"chat.thread_worktree_pr_created\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1648,
+        "text": "| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10842,
+        "text": "- chat.thread_worktree_pr_created",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_pr_failed": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 990,
+        "text": "| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 995,
+        "text": "For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: `push` means the git push failed before PR creation, while `api` means the PR API call failed after push.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7429,
+        "text": "  payloads, and chat.thread_worktree_pr_failed.phase is the exact enum",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7439,
+        "text": "  - chat.thread_worktree_pr_failed.phase uses the exact enum push | api with preserved meaning.",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7463,
+        "text": "  - \"`chat.thread_worktree_pr_failed`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3268,
+        "text": "**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure \u2192 error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3272,
+        "text": "If the PR API call fails after push, the PR panel does not open; Chat shows \"PR creation failed: {error}\" and emits `chat.thread_worktree_pr_failed` with `phase=api`.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3372,
+        "text": "| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push` \\| `api`) | PR creation failed |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 20521,
+        "text": "canonical_text: PR flow auto-pushes `git push -u origin {branch}` before panel open; push/API failures prevent panel opening, show failure behavior, emit `chat.thread_worktree_pr_failed` with `phase=push` or `phase=api`, require GitHub remote, and keep worktree bound post-PR with no cleanup modal.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 20547,
+        "text": "  - \"chat.thread_worktree_pr_failed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21233,
+        "text": "  - \"chat.thread_worktree_pr_failed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1649,
+        "text": "| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1654,
+        "text": "For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: use `push` for git push failure and `api` for PR API failure. The three pre-merge test events are `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_pre_merge_test_passed`, and `chat.thread_worktree_pre_merge_test_failed`; the ADDITIVE family shorthand `chat.thread_worktree_pre_merge_test_started/passed/failed` expands only to those three event types. Projectors store these events with the same canonical envelope as other chat events, and safe-point creation records for worktree-bound execution include worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, `HEAD_sha`) before mutation-capable merge or test operations continue.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10843,
+        "text": "- chat.thread_worktree_pr_failed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_pr_failed.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_worktree_pr_failed payload\",",
+        "sha256": "790a2b401a5a7a00fbfef8a48d3f62905b213a228f9d8aca4ac68eb70efa42c3"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_pr_failed.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_worktree_pr_failed\",",
+        "sha256": "790a2b401a5a7a00fbfef8a48d3f62905b213a228f9d8aca4ac68eb70efa42c3"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_pre_merge_test_failed": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 993,
+        "text": "| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7466,
+        "text": "  - \"`chat.thread_worktree_pre_merge_test_failed`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3375,
+        "text": "| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` | Tests failed |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21274,
+        "text": "  - \"chat.thread_worktree_pre_merge_test_failed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1652,
+        "text": "| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1654,
+        "text": "For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: use `push` for git push failure and `api` for PR API failure. The three pre-merge test events are `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_pre_merge_test_passed`, and `chat.thread_worktree_pre_merge_test_failed`; the ADDITIVE family shorthand `chat.thread_worktree_pre_merge_test_started/passed/failed` expands only to those three event types. Projectors store these events with the same canonical envelope as other chat events, and safe-point creation records for worktree-bound execution include worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, `HEAD_sha`) before mutation-capable merge or test operations continue.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10846,
+        "text": "- chat.thread_worktree_pre_merge_test_failed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10862,
+        "text": "- The ADDITIVE family shorthand expands only to chat.thread_worktree_pre_merge_test_started, chat.thread_worktree_pre_merge_test_passed, and chat.thread_worktree_pre_merge_test_failed.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_pre_merge_test_passed": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 992,
+        "text": "| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7465,
+        "text": "  - \"`chat.thread_worktree_pre_merge_test_passed`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3374,
+        "text": "| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | Tests passed |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21273,
+        "text": "  - \"chat.thread_worktree_pre_merge_test_passed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1651,
+        "text": "| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1654,
+        "text": "For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: use `push` for git push failure and `api` for PR API failure. The three pre-merge test events are `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_pre_merge_test_passed`, and `chat.thread_worktree_pre_merge_test_failed`; the ADDITIVE family shorthand `chat.thread_worktree_pre_merge_test_started/passed/failed` expands only to those three event types. Projectors store these events with the same canonical envelope as other chat events, and safe-point creation records for worktree-bound execution include worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, `HEAD_sha`) before mutation-capable merge or test operations continue.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10845,
+        "text": "- chat.thread_worktree_pre_merge_test_passed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10862,
+        "text": "- The ADDITIVE family shorthand expands only to chat.thread_worktree_pre_merge_test_started, chat.thread_worktree_pre_merge_test_passed, and chat.thread_worktree_pre_merge_test_failed.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_pre_merge_test_started": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 991,
+        "text": "| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7464,
+        "text": "  - \"`chat.thread_worktree_pre_merge_test_started`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3373,
+        "text": "| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` | Pre-merge test started |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21272,
+        "text": "  - \"chat.thread_worktree_pre_merge_test_started\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1650,
+        "text": "| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1654,
+        "text": "For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: use `push` for git push failure and `api` for PR API failure. The three pre-merge test events are `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_pre_merge_test_passed`, and `chat.thread_worktree_pre_merge_test_failed`; the ADDITIVE family shorthand `chat.thread_worktree_pre_merge_test_started/passed/failed` expands only to those three event types. Projectors store these events with the same canonical envelope as other chat events, and safe-point creation records for worktree-bound execution include worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, `HEAD_sha`) before mutation-capable merge or test operations continue.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10844,
+        "text": "- chat.thread_worktree_pre_merge_test_started",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10860,
+        "text": "- chat.thread_worktree_pre_merge_test_started/passed/failed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10862,
+        "text": "- The ADDITIVE family shorthand expands only to chat.thread_worktree_pre_merge_test_started, chat.thread_worktree_pre_merge_test_passed, and chat.thread_worktree_pre_merge_test_failed.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_renamed": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 985,
+        "text": "| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7458,
+        "text": "  - \"`chat.thread_worktree_renamed`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3061,
+        "text": "   f. Emit `chat.thread_worktree_renamed` seglog event",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3367,
+        "text": "| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | Branch renamed after title generation |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 19285,
+        "text": "  branch, updates records, emits `chat.thread_worktree_renamed`, and keeps the",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 19294,
+        "text": "  - Successful rename updates records and emits `chat.thread_worktree_renamed`; failure keeps the temp name without user interruption.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 19315,
+        "text": "  - \"chat.thread_worktree_renamed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21191,
+        "text": "  - \"chat.thread_worktree_renamed\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1644,
+        "text": "| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10838,
+        "text": "- chat.thread_worktree_renamed",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_renamed.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_worktree_renamed payload\",",
+        "sha256": "58f30892f7a24a6f4d912b256459ffc2e3cf1a01d8d6b3cd0907fb3192454568"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_renamed.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_worktree_renamed\",",
+        "sha256": "58f30892f7a24a6f4d912b256459ffc2e3cf1a01d8d6b3cd0907fb3192454568"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  },
+  "chat.thread_worktree_unbound": {
+    "scope": "Live non-pipeline Plans markdown, JSON schemas and registries; exclude ledgers, shards, hidden governance; literal exact family search, all hits retained. Inspected ACD W.2/W.7/W.8/W.9, lifecycle, selection handoff, CV-366 and SP-278/286/338/349 as applicable.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 984,
+        "text": "| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` |",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7457,
+        "text": "  - \"`chat.thread_worktree_unbound`\"",
+        "sha256": "0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 2990,
+        "text": "**Binding rebuild logic:** Projectors replay `chat.thread_worktree_bound` and `chat.thread_worktree_unbound` events in sequence order to reconstruct current binding state. The last event for a given `thread_id` determines whether a binding exists and which `worktree_id` it references.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 2996,
+        "text": "**Startup revalidation:** After PM startup rehydrates thread state from redb/seglog, the next focus of a thread with `thread_state:{thread_id}:worktree_binding` lazily verifies that the recorded path exists and appears in `git worktree list`. If the path is missing, PM auto-unbinds by deleting the binding and reverse lookup, emits `chat.thread_worktree_unbound` with `reason=path_missing`, and notifies the user; it does not silently re-create the missing worktree.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3127,
+        "text": "Thread worktree cleanup is scoped to thread delete, not archive/unarchive lifecycle changes. The extended delete confirmation presents `Keep worktree on disk` and `Remove worktree` choices; dirty worktrees include a dirty-check confirmation sublabel, the default choice is configured in Settings > Branching by `branching.assistant_worktree_cleanup_default`, and after cleanup action completes the system emits `chat.thread_worktree_unbound` with the appropriate `reason`.",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3158,
+        "text": "7. After cleanup: `chat.thread_worktree_unbound` seglog event emitted with appropriate `reason`",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 3366,
+        "text": "| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`, `user_remove`, `thread_delete`, `path_missing`) | Thread unbound from worktree |",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 18922,
+        "text": "  `chat.thread_worktree_unbound`; startup lazily revalidates path membership in",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 18950,
+        "text": "  - \"chat.thread_worktree_unbound\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 19637,
+        "text": "  - \"chat.thread_worktree_unbound\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "line": 21190,
+        "text": "  - \"chat.thread_worktree_unbound\"",
+        "sha256": "a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1638,
+        "text": "The `thread_state:{thread_id}:worktree_binding` and `worktree_binding_reverse:{worktree_id}` redb keys are disposable projections rebuilt by replaying `chat.thread_worktree_bound` and `chat.thread_worktree_unbound` seglog events in order, consistent with the other redb/Tantivy projections being rebuildable from seglog (no JSONL mirror exists, SP-339). `thread_state:{thread_id}:persona_override` follows the same per-thread redb state-key pattern, while `worktree_projection.v1:{project_id}:{worktree_id}` remains the project/worktree projection record.",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 1643,
+        "text": "| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` |",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 10837,
+        "text": "- chat.thread_worktree_unbound",
+        "sha256": "b5c25cb5b5ce1aa48455af1e77ee36f555191c9355e1ed1d3909310ee14e35db"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 603,
+        "text": "| `Plans/assistant-chat-design.md` | `restore_point.applied`, `restore_point.corrupt`, `restore_point.created`, `restore_point.deleted`, `restore_point.expired` | `bundle.selection_forward_blocked`, `bundle.selection_sent_to_chat`, `chat.message`, `chat.response_stop_requested`, `chat.thread_archived`, `chat.thread_created`, `chat.thread_deleted`, `chat.thread_worktree_bound`, `chat.thread_worktree_create_failed`, `chat.thread_worktree_merge_failed`, `chat.thread_worktree_merged`, `chat.thread_worktree_pr_created`, `chat.thread_worktree_pr_failed`, `chat.thread_worktree_pre_merge_test_failed`, `chat.thread_worktree_pre_merge_test_passed`, `chat.thread_worktree_pre_merge_test_started`, `chat.thread_worktree_renamed`, `chat.thread_worktree_unbound` | `task.failed` |",
+        "sha256": "d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_unbound.schema.json",
+        "line": 5,
+        "text": "  \"title\": \"chat.thread_worktree_unbound payload\",",
+        "sha256": "9b30b19c91f92f20caf99480daf6e55fee44736033c4804adcebd3f6a19bc2b4"
+      },
+      {
+        "path": "Plans/event_payloads/assistant_chat/chat_thread_worktree_unbound.schema.json",
+        "line": 7,
+        "text": "  \"x-event-type\": \"chat.thread_worktree_unbound\",",
+        "sha256": "9b30b19c91f92f20caf99480daf6e55fee44736033c4804adcebd3f6a19bc2b4"
+      }
+    ],
+    "negative_evidence": "Existing payload drafts are shape-only, not adopted. No exact versioned family consumer/projector/checkpoint, full identity/withdrawal contract established in these current surfaces. Generic SP-278 and SP-286 definitions exist and are reused; compaction and restore-point bindings are limited to their own families."
+  }
+}

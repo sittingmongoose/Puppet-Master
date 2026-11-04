@@ -68,7 +68,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_message@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_message.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_message_checkpoint"
+      "domain_checkpoint_family": "dch_chat_message_checkpoint",
+      "retention_class_binding": "Case L-3 Chat content: thread lifetime; 250,000/thread linked successor; policy object assignment pending RT"
     },
     {
       "event_type": "chat.thread_archived",
