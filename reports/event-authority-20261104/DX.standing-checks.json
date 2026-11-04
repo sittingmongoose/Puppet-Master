@@ -1,11 +1,10 @@
 {
-  "status": "pass",
+  "status": "PARTIAL",
   "families": 16,
-  "standing_cells_checked": 160,
+  "standing_cells_checked": 176,
   "rows": [
     {
       "event_type": "attempt.completed",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -273,7 +272,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -330,14 +330,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "attempt.started",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -585,7 +595,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -642,14 +653,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "node.blocked",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -897,7 +918,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -954,14 +976,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "node.completed",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -1209,7 +1241,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -1266,14 +1299,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "node.started",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -1521,7 +1564,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -1578,14 +1622,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "node.unblocked",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -1833,7 +1887,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -1890,14 +1945,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "plan.decomposition_degraded",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -2145,7 +2210,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -2202,14 +2268,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "remediation.resolved",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -2457,7 +2533,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -2514,14 +2591,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "remediation.spawned",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -2769,7 +2856,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -2826,14 +2914,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "run.completed",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -3081,7 +3179,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -3138,14 +3237,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "run.graph_integrity_failed",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -3393,7 +3502,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -3450,14 +3560,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "run.node_backoff_expired",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -3705,7 +3825,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -3762,14 +3883,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "run.node_backoff_started",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -4037,7 +4168,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -4094,14 +4226,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "run.node_ready",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -4369,7 +4511,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -4426,14 +4569,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "run.node_retry_scheduled",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -4681,7 +4834,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -4738,14 +4892,24 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 12,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     },
     {
       "event_type": "scheduler.pass",
-      "all_ten_checked": true,
       "checks": {
         "1": {
           "status": "PASS",
@@ -5058,7 +5222,8 @@
             "unresolved_unvisited_definition"
           ],
           "boundary": "All sixteen payload schemas plus the lane proof schema; shared non-DX instance-schema findings are integration items.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
         },
         "10": {
           "status": "FIXED",
@@ -5115,12 +5280,23 @@
           ],
           "full_checker": "144 history cases + 144 later-live writer controls pass",
           "boundary": "Finite retained-source/disclosure oracle; zero effects. Complete native read/backup/transaction proof NOT_RUN.",
-          "commit": "6083110e8e8315bf2340082aa5290020279073bd"
+          "commit": "6083110e8e8315bf2340082aa5290020279073bd",
+          "round_4_regression": "PASS: fresh independent reference/history regressions and both full CLIs."
+        },
+        "11": {
+          "status": "PARTIAL",
+          "named_successor_negative": "illegal-successor",
+          "original_result": "reject: illegal successor",
+          "successor_guard_removed": "accept",
+          "new_independent_controls": 10,
+          "whole_lane_guard_matrix": "reports/event-authority-20261104/DX.guard-removal.json",
+          "limit": "All negatives were evaluated under the enumerated single-site deletions. Masked and zero-witness rows remain; full check 11 is not cleared."
         }
       },
-      "native_execution": "NOT_RUN"
+      "native_execution": "NOT_RUN",
+      "all_eleven_checked": true
     }
   ],
   "native_execution": "NOT_RUN",
-  "graded_source_head": "6083110e8e8315bf2340082aa5290020279073bd"
+  "graded_source_head": "26fc48d3703972ce2f4ab2440d7b2699e80ae264"
 }

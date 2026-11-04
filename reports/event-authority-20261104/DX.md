@@ -1,3 +1,273 @@
+# DX-FIX4 — named F9 repairs; strict guard-isolation clearance remains open
+
+Branch: `plans/ea-w2-executor-20261104`. Reviewed starting head: `f70be56e76a0ac5bd51d3acd79155c076b80c7e3`. Graded fixture/checker head: `26fc48d3703972ce2f4ab2440d7b2699e80ae264`. The following report-only commit preserves these source bytes; `drafts/DX/head.txt` records the final pushed head. This fourth, targeted fix round was explicitly authorized after the former cap. No admission, landing or native execution is claimed.
+
+**Outcome:** the sixteen successor negatives, scheduler boolean, masked classified-policy negatives and forged backoff-history observation named in F9 are repaired. **Full standing check 11 remains PARTIAL.** The literal single-site matrix finds **21 guard rows / 618 guard-case instances** still masked, and **42 sites** with no first-failing authored negative. These counts are diagnostic; not every mask is a distinct defect. No universal own-defect clearance is asserted.
+
+**Grades remain 159 PASS / 17 PARTIAL / 16 ABSENT**, as in the cycle-4 blind review. Every oracle cell remains PARTIAL. Every membership cell remains ABSENT. `plan.decomposition_degraded` also keeps its existing PARTIAL retention cell pending Jared. Earlier report/self-grade claims of fifteen families prepared are superseded.
+
+## Review round 4: findings and responses
+
+- **F1 — resolved and retained** (`bca9fb92c6`, `b139ae2b27`): all 37 original presence/mirror probes match, including real episode attempt presence and valid pre-attempt controls. Both production source/mirror equalities remain unchanged.
+- **F2 — resolved and retained** (`b5a8fefab6`): all eight independent actual/normalized generation and ceiling probes match. Divergent-generation permanent controls now use 2 within the ceiling, so the normalization defect is independent of ceiling exhaustion; coherent over-ceiling controls remain.
+- **F3 — resolved and retained** (`25fde70fad`, `4aec2b4801`): six original counterexamples and all 245 classified-policy regression cases match. Budget, provenance and limit negatives use valid timed seeds where timed families require them. Counter changes also update the original counter, ordinal and computed deadline. Immediate auth/structured-output/interrupted-Storage policies remain separate timed-policy refusals. Storage no-new-attempt controls use valid transient-busy timers. The old unrepresentable 99-of-100 permanent control is replaced by a coherent 3-of-100 limit control; the independent original 99-of-100 counterexample still rejects in the regression harness.
+- **F4 — resolved and retained** (`43e7f77452`): coherent priorities accept 0/50/100 and reject -1/101/bool/fraction; four independent schema-bound probes match. The permanent boolean case now physically contains `true` in payload, source scores, selected scores, mirror and inline body. The differencer compares JSON types and canonical bytes, preserving `true` versus integer `1`; hashes are recomputed.
+- **F5 — resolved and retained** (`6abe1d5e6a`): all family capture/shape refusals and 48 append/retry/replay traces still match the exact compatibility-only refusal before effects.
+- **F6 — resolved and retained** (`0b9588eb01`, `d2e5ac703e`): all inline boundaries, valid large references, 208 corruptions and 32 transport traces match. Referenced-logical-body negatives now keep a valid event/source observation and change only the self-consistent addressed pack. Independent normalized-hex and descriptor-media witnesses were added. Existing checksum/body and descriptor/pack size overlap is retained and exposed in the matrix.
+- **F7 — resolved and retained** (`c3ba5ef160`, `6d27e68d4e`): all 22 timestamp locations reject coherent LF captures, isolated schema mutations and append traces. The complete trace/schema sensitivity run exposes 236/236 mutations.
+- **F8 — resolved and retained** (`0b4cf74f52`, `6083110e8e`): resolving controls and all 64 reachable/dormant missing-reference CLI mutations match; the 48 same-process resource/freshness controls and both proof-schema CLI refusals match. Production reference admission is byte-identical to the reviewed head.
+- **F9 — named counterexamples fixed; universal criterion not cleared** (`68f6964ad5`, seed labels `d845a84e1d`, independent controls `c93fa60926`, lossless literal compaction `26fc48d370`). Every `illegal-successor` capture also sets the post-state to the fabricated successor. Removing only `illegal successor` makes exactly sixteen negatives accept and makes the full CLI exit 1 with exactly sixteen mismatches; the other 2,171 source negatives still reject. Policy/provenance/limit/budget seeds and the boolean are repaired as above. The forged original in `run.node_backoff_started` observes `12:00:00.500Z`, inside the original one-second deadline, and accepts when only retained-source custody is removed. An additional 178 controls each reject under the production checker and accept with their own single guard removed. Predecessor, wake, dependency-resolution, stale-revision, runtime-identity and generation observations were repaired where independent stale copies had masked the intended defect. The full lane matrix below records the remaining masks without reclassifying them as PASS.
+- **N1 — existing integration item:** the runtime-vocabulary suite still has its one missing `Skia compiled in and selected by default` assertion. The GUI owner/test match the reviewed head and fetched main exactly. No DX repair changes those files.
+- **N2 — existing shared-schema integration item:** `execution_unit_context.schema.json` reaches the missing `goal_body_custody.schema.json#/$defs/body_application_v1` through the shared application-workflow schema. Those shared schemas are unchanged. This lane does not claim a repository-wide shared-reference clearance.
+- **Retention — stopped for Jared, unchanged:** Should `plan.decomposition_degraded` be kept for seven years as non-authority operational degradation history under RP-OPERATIONAL-2555D@1.0.0, with terminal_transition explicitly anchored to the original durably committed decomposition/degradation result, or indefinitely as audit authority/source lineage under RP-AUTHORITY-INDEFINITE@1.0.0?
+
+## Why the universal single-site claim is disputed
+
+**Where:** `scripts/pm_executor_event_semantics.py:281-283` and `:301`.
+
+**Why:** `source_observation()` reads the same joins as line 281. If `original == payload` at line 283, every field equality at line 281 follows. A JSON fixture cannot violate the latter equality while satisfying the former. Removing only the source-join check leaves 181 negatives rejected by complete observation equality. The complete CLI still passes when only source joins are removed, and also when only complete observation equality is removed. This is subsumption, not a reason to weaken either production check. Other matrix rows include implicit missing-record/dependency reads and guards without authored first-failure witnesses; those are retained as open coverage, not silently excused.
+
+**Fix/status:** the independent lifecycle-successor defect is repaired. The requested universal acceptance-flip criterion cannot be claimed from these fixtures while every subsuming guard stays active. No guard, predicate, schema, refusal, checker source or owner rule was weakened or removed in production. `python3 redundancy-proof.py <worktree>` exits 0 and records both complete-CLI exit-0/pass results in `redundancy-proof.json`; `guard-matrix.json` supplies exact IDs and subsequent rejection reasons. A technical interpretation/refactor would be needed for universal per-site clearance; this worker does not invent one. Check 11 and the oracle grades remain PARTIAL.
+
+## Family grades before and after
+
+Counts are PASS / PARTIAL / ABSENT against the cycle-4 independent review, not the superseded self-grade.
+
+| Family | Before | After | Verdict |
+|---|---|---|---|
+| `attempt.completed` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `attempt.started` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `node.blocked` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `node.completed` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `node.started` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `node.unblocked` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `plan.decomposition_degraded` | 9 / 2 / 1 | 9 / 2 / 1 | INCOMPLETE: check 11; retention pending |
+| `remediation.resolved` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `remediation.spawned` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `run.completed` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `run.graph_integrity_failed` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `run.node_backoff_expired` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `run.node_backoff_started` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `run.node_ready` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `run.node_retry_scheduled` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+| `scheduler.pass` | 10 / 1 / 1 | 10 / 1 / 1 | INCOMPLETE: check 11 |
+
+## Guard-removal table — entire authored lane
+
+The run evaluates **3066 negatives**: 2,187 source, 607 shape, 128 history, 112 reference, 22 isolated schema and ten score-domain cases. Each is rerun against each of **171 enumerated require/raise/schema/reference boundary sites**: **524,286 mutant evaluations**, plus baseline evaluations. **119 sites** produce acceptance flips, **21 rows** retain masked own negatives, **zero unrelated negatives accept**. All eight trace mutations are detected across all 230 scenarios. Trace changes mean changed observable outputs/effects, not necessarily acceptance. Helper/orchestration paths outside the enumerated boundaries are not granted coverage by this table.
+
+The table gives counts so it stays readable. Exact flipping IDs are in `DX.guard-removal.json`; every other negative ID is exactly the inventory minus that row's flipping set. The pinned raw matrix records every still-rejected ID's actual guard and reason. Zero-flip rows and implicit exceptions are included. No row is hidden by a grouped-guard removal. The matrix caches only immutable schema/proof inputs in the test process; independent resource/freshness tests run through the unchanged production checker separately. Literal compaction reduced the fixture from 25,799,297 to 5,391,253 bytes with identical expanded captures (canonical SHA-256 `729f98ae7087791e0728e313e4069be6ea411bbf40d58ede8caf89b6eb6b7640`).
+
+| Guard (source line) | Negatives that flip | Negatives that stay rejected | Own negatives still masked |
+|---|---:|---:|---:|
+| `sem:45:require` 'fixture repetition syntax' | 0 | 3066 | 0 |
+| `sem:82:require` 'replay_only_not_appendable' | 0 | 3066 | 32 |
+| `sem:83:require` 'family append replay policy' | 0 | 3066 | 0 |
+| `sem:95:require` 'payload map string keys' | 0 | 3066 | 0 |
+| `sem:99:require` 'unsupported fixture payload value' | 0 | 3066 | 2 |
+| `sem:109:require` 'inline logical payload join' | 16 | 3050 | 16 |
+| `sem:110:require` 'oversized_inline_payload' | 49 | 3017 | 0 |
+| `sem:112:require` 'referenced payload cannot remain inline' | 16 | 3050 | 0 |
+| `sem:113:require` 'resolved SP-337 descriptor' | 0 | 3066 | 0 |
+| `sem:115:require` 'payload ref byte size' | 0 | 3066 | 17 |
+| `sem:116:require` 'payload ref media type' | 16 | 3050 | 16 |
+| `sem:118:require` 'missing payload pack' | 0 | 3066 | 16 |
+| `sem:120:require` 'exact normalized pack bytes' | 16 | 3050 | 0 |
+| `sem:121:require` 'payload pack BLAKE3' | 32 | 3034 | 16 |
+| `sem:122:require` 'payload pack byte size' | 16 | 3050 | 0 |
+| `sem:124:require` 'payload pack media type' | 16 | 3050 | 0 |
+| `sem:125:require` 'payload pack logical source body' | 15 | 3051 | 0 |
+| `sem:126:require` 'payload pack Project custody' | 16 | 3050 | 0 |
+| `sem:127:require` 'payload pack Storage custody' | 16 | 3050 | 0 |
+| `sem:128:require` 'payload pack before referencing record' | 16 | 3050 | 0 |
+| `sem:129:require` 'payload pack disclosure custody' | 32 | 3034 | 0 |
+| `sem:148:require` 'whole-string source timestamp' | 0 | 3066 | 0 |
+| `sem:150:require` 'source clock timezone' | 0 | 3066 | 0 |
+| `sem:158:require` 'retry classification' | 3 | 3063 | 0 |
+| `sem:159:require` 'per-error counter identity' | 3 | 3063 | 0 |
+| `sem:160:require` 'original per-error retry counter' | 21 | 3045 | 0 |
+| `sem:163:require` 'original failed attempt' | 2 | 3064 | 1 |
+| `sem:165:require` 'classified prior attempt' | 0 | 3066 | 0 |
+| `sem:166:require` 'no blind retry' | 0 | 3066 | 0 |
+| `sem:172:require` 'original Storage classification' | 0 | 3066 | 0 |
+| `sem:173:require` 'Storage retry class' | 9 | 3057 | 18 |
+| `sem:176:require` 'Storage adapter retry cannot create an Executor attempt' | 6 | 3060 | 0 |
+| `sem:179:require` 'classified retry policy domain' | 0 | 3066 | 0 |
+| `sem:180:require` 'foreign Storage policy' | 0 | 3066 | 0 |
+| `sem:182:require` 'classified owner policy provenance' | 18 | 3048 | 0 |
+| `sem:183:require` 'exact classified retry limit' | 21 | 3045 | 0 |
+| `sem:184:require` 'per-error retry budget' | 21 | 3045 | 0 |
+| `sem:186:require` 'classified retry ordinal' | 2 | 3064 | 0 |
+| `sem:191:require` 'original failure/scheduling clocks' | 3 | 3063 | 0 |
+| `sem:200:require` 'original Retry-After header' | 0 | 3066 | 0 |
+| `sem:205:require` 'Retry-After date timezone' | 0 | 3066 | 0 |
+| `sem:209:require` 'one successful original auth refresh' | 2 | 3064 | 1 |
+| `sem:211:require` 'refresh and client rebuild before retry' | 2 | 3064 | 0 |
+| `sem:216:require` 'Retry-After belongs to rate_limited' | 0 | 3066 | 0 |
+| `sem:218:require` 'refresh belongs to auth_expired' | 0 | 3066 | 0 |
+| `sem:220:require` 'original classified retry deadline' | 45 | 3021 | 0 |
+| `sem:222:require` 'classified policy has no timed backoff' | 26 | 3040 | 0 |
+| `sem:224:require` 'early timer' | 2 | 3064 | 0 |
+| `sem:226:require` 'original start timer join' | 0 | 3066 | 0 |
+| `sem:227:require` 'backoff deadline' | 0 | 3066 | 0 |
+| `sem:232:require` 'scheduler manual_priority integer 0..100' | 8 | 3058 | 0 |
+| `sem:234:require` 'whole-string score timestamp' | 2 | 3064 | 0 |
+| `sem:244:schema` schema_validate(contract['schema_ref'], payload) | 15 | 3051 | 61 |
+| `sem:248:require` 'adapter dispatch' | 16 | 3050 | 0 |
+| `sem:249:require` 'family dispatch' | 16 | 3050 | 0 |
+| `sem:251:require` 'scope Project' | 16 | 3050 | 0 |
+| `sem:253:require` 'scope partition' | 32 | 3034 | 0 |
+| `sem:254:require` 'storage root' | 32 | 3034 | 0 |
+| `sem:257:require` 'envelope ' + field | 43 | 3023 | 0 |
+| `sem:262:require` 'episode attempt presence' | 0 | 3066 | 7 |
+| `sem:265:require` 'pre-attempt envelope omission' | 2 | 3064 | 1 |
+| `sem:267:require` 'episode attempt record' | 2 | 3064 | 0 |
+| `sem:268:require` 'source record set' | 16 | 3050 | 87 |
+| `sem:273:require` 'source owner ' + slot | 4 | 3062 | 0 |
+| `sem:274:require` 'source Project ' + slot | 91 | 2975 | 0 |
+| `sem:275:require` 'source root ' + slot | 91 | 2975 | 0 |
+| `sem:276:require` 'source revision ' + slot | 91 | 2975 | 0 |
+| `sem:277:require` 'source digest ' + slot | 20 | 3046 | 0 |
+| `sem:278:require` 'source parents ' + slot | 220 | 2846 | 0 |
+| `sem:281:require` 'source join ' + field | 0 | 3066 | 181 |
+| `sem:283:require` 'complete source observation/presence' | 0 | 3066 | 56 |
+| `sem:290:require` 'account interpretation requires original snapshots' | 2 | 3064 | 0 |
+| `sem:295:require` 'installed graph join' | 24 | 3042 | 0 |
+| `sem:297:require` 'materialization request join' | 12 | 3054 | 0 |
+| `sem:301:require` 'conditional presence/original observation' | 16 | 3050 | 0 |
+| `sem:302:require` 'reserved sequence' | 16 | 3050 | 0 |
+| `sem:303:require` 'transition revision' | 16 | 3050 | 0 |
+| `sem:304:require` 'source predecessor' | 16 | 3050 | 0 |
+| `sem:308:require` 'illegal predecessor' | 0 | 3066 | 16 |
+| `sem:309:require` 'illegal successor' | 16 | 3050 | 0 |
+| `sem:310:require` 'post-state' | 16 | 3050 | 0 |
+| `sem:311:require` 'post-state CAS' | 16 | 3050 | 0 |
+| `sem:312:require` 'post-state sequence' | 16 | 3050 | 0 |
+| `sem:314:require` 'post-state effects' | 17 | 3049 | 0 |
+| `sem:316:require` 'owner predicate ' + path | 36 | 3030 | 0 |
+| `sem:319:require` 'missing dependency ' + field | 0 | 3066 | 20 |
+| `sem:320:require` 'dependency payload ref ' + field | 9 | 3057 | 0 |
+| `sem:321:require` 'dependency scope ' + field | 20 | 3046 | 0 |
+| `sem:322:require` 'dependency root ' + field | 0 | 3066 | 0 |
+| `sem:323:require` 'dependency hash ' + field | 29 | 3037 | 0 |
+| `sem:324:require` 'deleted dependency ' + field | 20 | 3046 | 0 |
+| `sem:325:require` 'dependency authorization ' + field | 20 | 3046 | 0 |
+| `sem:329:schema` schema_validate('Plans/execution_unit_context.schema.json', dependency['body'], whole_schema_refs=False) | 0 | 3066 | 0 |
+| `sem:334:require` 'runtime subject ' + key | 0 | 3066 | 0 |
+| `sem:336:require` 'runtime identity ' + key | 50 | 3016 | 0 |
+| `sem:338:require` 'complete dependency resolution' | 0 | 3066 | 0 |
+| `sem:342:require` 'evidence list dependency ' + field | 0 | 3066 | 0 |
+| `sem:349:require` 'terminal outcome classification' | 0 | 3066 | 0 |
+| `sem:352:require` 'pre-attempt omission' | 0 | 3066 | 0 |
+| `sem:354:require` 'restore anchor' | 0 | 3066 | 0 |
+| `sem:357:require` 'current ordered action' | 1 | 3065 | 0 |
+| `sem:358:require` 'resolution evidence' | 1 | 3065 | 0 |
+| `sem:359:require` 'resolution barrier' | 2 | 3064 | 0 |
+| `sem:363:require` 'child is parent' | 0 | 3066 | 0 |
+| `sem:364:require` 'parent attempt record' | 2 | 3064 | 0 |
+| `sem:365:require` 'child attempt record' | 2 | 3064 | 0 |
+| `sem:366:require` 'remediation root record' | 2 | 3064 | 0 |
+| `sem:367:require` 'remediation ceiling' | 0 | 3066 | 2 |
+| `sem:368:require` 'normalized remediation generation' | 4 | 3062 | 0 |
+| `sem:369:require` 'joined remediation generation ceiling' | 0 | 3066 | 0 |
+| `sem:371:require` 'fixed without successful child' | 1 | 3065 | 0 |
+| `sem:380:require` 'scheduler source selection' | 0 | 3066 | 0 |
+| `sem:385:require` 'duplicate candidate' | 0 | 3066 | 0 |
+| `sem:386:require` 'candidate partition' | 0 | 3066 | 0 |
+| `sem:387:require` 'fill available capacity' | 1 | 3065 | 0 |
+| `sem:390:require` 'score ordering' | 0 | 3066 | 0 |
+| `sem:393:require` 'selected score' | 0 | 3066 | 0 |
+| `sem:395:require` 'primary wake' | 1 | 3065 | 0 |
+| `sem:396:require` 'coalesced wakes' | 0 | 3066 | 0 |
+| `sem:397:require` 'wake event joins' | 0 | 3066 | 0 |
+| `sem:399:require` 'first recovery wake' | 1 | 3065 | 0 |
+| `sem:401:require` 'watchdog pending event' | 0 | 3066 | 0 |
+| `sem:403:require` 'publication ordering' | 128 | 2938 | 0 |
+| `sem:414:require` 'reader_withdrawn' | 16 | 3050 | 0 |
+| `sem:415:require` 'source_unavailable' | 16 | 3050 | 0 |
+| `sem:416:require` 'event_deleted' | 16 | 3050 | 0 |
+| `sem:417:require` 'event access' | 16 | 3050 | 0 |
+| `sem:418:require` 'history Project' | 16 | 3050 | 0 |
+| `sem:419:require` 'history Storage root' | 16 | 3050 | 0 |
+| `sem:421:require` 'retained original source custody' | 16 | 3050 | 0 |
+| `sem:445:schema` schema_validate(contract['schema_ref'], p) | 0 | 3066 | 0 |
+| `shape:27:schema` schema_validate(contract['schema_ref'], payload) | 173 | 2893 | 51 |
+| `shape:30:raise` field | 80 | 2986 | 0 |
+| `shape:32:raise` 'withdrawal/deletion fence' | 32 | 3034 | 0 |
+| `shape:34:raise` 'Project join' | 16 | 3050 | 0 |
+| `shape:36:raise` 'generation join' | 15 | 3051 | 0 |
+| `shape:40:raise` p + ' source join' | 14 | 3052 | 0 |
+| `shape:44:schema` jsonschema.Draft202012Validator(definition).validate(context['source_facts']) | 39 | 3027 | 1 |
+| `shape:48:raise` 'canonical source binding: ' + key | 85 | 2981 | 0 |
+| `shape:51:raise` 'envelope binding: ' + key | 41 | 3025 | 0 |
+| `shape:55:raise` 'node completion source state' | 0 | 3066 | 0 |
+| `shape:57:raise` 'fixed without child success' | 1 | 3065 | 0 |
+| `shape:59:raise` 'child is parent' | 0 | 3066 | 0 |
+| `shape:61:raise` 'backoff before recorded observation' | 0 | 3066 | 0 |
+| `shape:63:raise` 'graph already locked' | 1 | 3065 | 0 |
+| `shape:65:raise` 'Document Set packaging' | 1 | 3065 | 0 |
+| `shape:67:raise` 'backoff not elapsed' | 1 | 3065 | 0 |
+| `shape:69:raise` 'non-retryable failure' | 2 | 3064 | 0 |
+| `shape:72:raise` 'terminal success/failure mismatch' | 1 | 3065 | 0 |
+| `shape:75:raise` 'missing restore anchor' | 1 | 3065 | 0 |
+| `shape:82:raise` 'duplicate node' | 0 | 3066 | 0 |
+| `shape:84:raise` 'capacity/partition' | 2 | 3064 | 0 |
+| `shape:88:raise` 'selection order' | 0 | 3066 | 0 |
+| `shape:92:raise` 'score join' | 0 | 3066 | 0 |
+| `isolated-schema:attempt.completed` date-time exact-end pattern | 2 | 3064 | 0 |
+| `reference-admission` whole-document $ref resolution and schema-target admission | 112 | 2954 | 0 |
+| `isolated-schema:attempt.started` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:node.blocked` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:node.completed` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:node.started` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:node.unblocked` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:plan.decomposition_degraded` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:remediation.resolved` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:remediation.spawned` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:run.completed` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:run.graph_integrity_failed` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:run.node_backoff_expired` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:run.node_backoff_started` date-time exact-end pattern | 2 | 3064 | 0 |
+| `isolated-schema:run.node_ready` date-time exact-end pattern | 2 | 3064 | 0 |
+| `isolated-schema:run.node_retry_scheduled` date-time exact-end pattern | 1 | 3065 | 0 |
+| `isolated-schema:scheduler.pass` date-time exact-end pattern | 4 | 3062 | 0 |
+| Trace: idempotency body comparison | 16 change outcome | 214 unchanged | — |
+| Trace: original receipt dedupe | 80 change outcome | 150 unchanged | — |
+| Trace: writer cutoff | 16 change outcome | 214 unchanged | — |
+| Trace: reader cutoff | 16 change outcome | 214 unchanged | — |
+| Trace: current read token | 16 change outcome | 214 unchanged | — |
+| Trace: replay cannot mint original | 16 change outcome | 214 unchanged | — |
+| Trace: unavailable receipt refusal | 16 change outcome | 214 unchanged | — |
+| Trace: rebuild source custody | 16 change outcome | 214 unchanged | — |
+
+
+## Verification, custody and scope
+
+Both complete CLIs pass: shape 659 fixtures / 80 identity cases / 208 references; semantic 2,285 source / 230 traces / 16 score / 22 isolated schema / 208 reference / 144 history cases. The independent 903-case regression passes. Injecting its 679 source cases and 134 traces into the full semantic CLI also passes: 2,964 source / 364 traces with the other suites retained. History/reference controls match 448/448. Event-index tests pass 14/14. Shard and parsed top-level plan-index validation pass; readiness stays blocked. The runtime-vocabulary test has the single existing failure described above. Command exit codes and hashes are in `DX.checks.json`.
+
+All sixteen baselines, 98 original positives, 2,107 original case expectations and 230 original traces are preserved. The 276 prior self-grade source quotations are exact in the current files; new guard/fixture citations are added to the self-grade. The four owner documents, registry, value catalog, Decision Log, test files, .gitignore, Spec Lock, auto decisions, generated shards/evidence and frozen validator are unchanged from the reviewed head. Only `Plans/executor_event_semantic_fixtures.json` and DX reports change in this round. No owner markdown changed, so no shard/index regeneration is needed. All fifteen ignored currentness files were copied and hash-matched before validation.
+
+**IDs reused:** EP-210..225, CV-500..515, SP-500..515, ATS-250..257 — 56 existing PlanUnit IDs, zero minted. No new product, retention, emitter, consumer, checkpoint, policy or identity binding was authored. No subagent, admission, registry append, Decision Log entry, landing lock, main push or reseal occurred. One initial read-only mailbox inbox call preceded reading the brief's no-mail instruction; no registration, send or later mailbox call occurred.
+
+Initial resources were 13 GB available RAM / 130 GB free disk, above the required 6 GB / 50 GB stops. The worktree is sparse and removed after the final branch push. Scratch mutation schemas and injection bytes are restored; uncited temporary inputs are removed. Raw evidence and reproduction scripts stay outside the repository, under `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4`. Native execution remains NOT_RUN.
+
+Key evidence (path plus SHA-256):
+
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/guard-matrix.json` — `81448e8450e92452fdf4b342264f5792d40396182f87f1cd403f9b28ecde62c2`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/guard-matrix.py` — `bcbd0feeb102bd8a34f2f33f8b9e6cc1735a2274d077b8a19ac25d8e26527a12`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/successor-proof.json` — `bdc2986455972262a2d347358e25c2a1a8cf545a23227b798a87d008457847ba`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/redundancy-proof.json` — `ef9b007becf4da099307d708669ba4cc13774db7ed93ced2bb00aec568039123`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/added-guard-controls.json` — `b38fb43f68b5ea86c16f1acd6ba89cf46ed74bc36bd1f6d0b6cafc36c195878a`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/scope-audit.json` — `1f16fbdbe7dda7b734be79d5da55b4741892cb0dfdc2efae9cdfacf814c7fdd5`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/refs-cycle4.json` — `3693c0c049df05d138b3628b7cfd3c4bd8a6cd821739d66f890cb22b9d925450`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/ref-resource-cycle4.json` — `7b3f240e7d622ca681fe147fdaf17078c11975aa597049da8feb178d588736c4`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/injected-check-cycle4.json` — `aff2ef8614c58cbe1e8b6036257251cb0f150c9b6c329bdd3792c926a2c90231`.
+- `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/fix4/fixture-compaction.json` — `40015d1c2a954f5c83c723f0143687edb057c4fade4a44111c9d96cfd37152b6`.
+
+## Previous reports and source lineage (historical)
+
+All grades, readiness claims and cap statements below are superseded by round 4 above. Original searches and premise checks are retained as lineage.
+
 # DX-FIX3 — Event Authority final fix round
 
 Branch: `plans/ea-w2-executor-20261104`. Starting/reviewed head: `16015f1c49a72a67589085fcd7894b9b54b15ca8`. Graded code/fixture head: `6083110e8e8315bf2340082aa5290020279073bd`. A subsequent report-only commit preserves those source bytes; `drafts/DX/head.txt` records the pushed final head. VM sparse detached worktree `/home/sittingmongoose/pm-worktrees/DX-fix3`; removed after push. This is the third and last authorized fix round; the next independent review is final. No review, admission or landing is claimed here.
