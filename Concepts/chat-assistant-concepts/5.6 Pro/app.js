@@ -358,7 +358,7 @@
       activeThread, selectedModel, statusLabel, activityDefs, activityScope, workStep,
       formatText, formatElapsed, msgIndex, msgClock, isNarrow, isPhone,
       /* mutators -- each triggers the render the change actually needs */
-      renderApp, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
+      renderApp, renderConversation: renderConversationUpdate, renderGoals: renderGoalSurfaces, renderOverlays, toast, addReceipt, openEditor, closeEditor,
       switchThread, mutateThread, appendMessage, openMenu, closeMenu, setSubmenu,
       openDialog, closeDialog, copyText, savePrefs, extRender, renderOwnedWorking:renderWorkingAnimation,
       /* Chat WOW M1: live-turn plumbing for turn-stream.js and friends. */
@@ -2719,6 +2719,61 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     runAfterRender('app',{flips});
   }
 
+  /* Work projection changes the work islands, not the conversation or shell.
+     A layout change still belongs to renderApp (including the host ladder). */
+  function renderWorkSurfaces(){
+    const wasOpen=state.activity.open;
+    syncActivityDomain();
+    const stage=document.querySelector('#pmRoot .chat-stage');
+    if(!HOSTED||!stage||state.activity.open!==wasOpen||activityDocked()!==activityDockLayout||state.editorRevealed||state.dialog){ renderApp(); return false; }
+    const patch=(sel,html,parent)=>{
+      const live=document.querySelector('#pmRoot '+sel);
+      const tpl=document.createElement('template'); tpl.innerHTML=html;
+      const src=tpl.content.firstElementChild;
+      if(live&&src) pmPatchNode(live,src);
+      else if(live) live.remove();
+      else if(src&&parent) parent.appendChild(src);
+      return live||src;
+    };
+    patch('.chat-header',renderChatHeader(activeThread()));
+    patch('.chat-float',renderChatFloat(),stage);
+    if(state.activity.open){
+      const panel=document.querySelector('#pmRoot .activity-panel');
+      if(!panel){renderApp();return false;}
+      const scroll=panel.querySelector('[data-scroll-key="activity"]');
+      const before=scroll?scroll.scrollTop:null;
+      patch('.activity-panel',renderActivityPanel(activityDockLayout?'dock':'cover'));
+      if(before!=null) restoreScroll({activity:before},{post:{activity:scroll.scrollTop}});
+    }
+    // This transcript card reads the work projection; ordinary messages do not.
+    for(const live of document.querySelectorAll('#pmRoot [data-msg-type="live-agents"]')){
+      const tpl=document.createElement('template');tpl.innerHTML=renderLiveAgentsCard();
+      const src=tpl.content.firstElementChild;
+      for(const a of live.attributes) if(a.name!=='class') src.setAttribute(a.name,a.value);
+      patchScope(live,src.outerHTML);
+    }
+    syncHoverCard(); fitActivityTabs();
+    runAfterRender('scope',{scope:stage,flips:[]});
+    return true;
+  }
+
+  /* A committed collaboration appends to this conversation. Reconcile that
+     stage using the existing scroll/FLIP owner; leave shell/editor/history alone. */
+  function renderConversationUpdate(){
+    const stage=document.querySelector('#pmRoot .chat-stage');
+    if(!HOSTED||!stage||state.editorRevealed){renderApp();return;}
+    syncActivityDomain();
+    if(activityDocked()!==activityDockLayout){renderApp();return;}
+    if(!patchScope(stage,renderChat())){renderApp();return;}
+    if(state.activity.open&&activityDockLayout){
+      const panel=document.querySelector('#pmRoot .activity-panel');
+      if(panel) patchScope(panel,renderActivityPanel('dock'));
+    }
+    renderOverlays();fitActivityTabs();
+    armComposerObserver();armJumpBottomListener();armFollowObserver();syncJumpBottom();
+    if(HOSTED)hostedSyncTabs();
+  }
+
   /* patchScope (Chat WOW M1): re-render ONE keyed live node with the same
      before/after steps renderApp runs around a full patch -- height FLIPs,
      move FLIPs, rolling digits, scroll custody, hover retention -- so a caller
@@ -2730,7 +2785,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const tpl=document.createElement('template'); tpl.innerHTML=String(html).trim();
     const src=tpl.content.firstElementChild; if(!src) return false;
     if(src.getAttribute('data-k')!==live.getAttribute('data-k')) return false;
-    const positions=captureScroll();
+    const positions=captureScroll(live);
     const flipTargets=[...live.querySelectorAll('[data-flip]')]; if(live.hasAttribute('data-flip')) flipTargets.unshift(live);
     const flipBefore=new Map(flipTargets.map(el=>[el, el.getBoundingClientRect().height]));
     const rollBefore=new Map([...live.querySelectorAll('.pm-roll')].map(el=>[el, el.textContent]));
@@ -2738,14 +2793,15 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const moveBefore=new Map(moveTargets.map(el=>{const r=el.getBoundingClientRect();return [el,{x:r.left,y:r.top}];}));
     const workH=live.classList.contains('working-card')?live.getBoundingClientRect().height:null;
     const workKey=workH!=null?live.getAttribute('data-k'):null;
-    const preTop=keepTopBefore();
+    const affectsTranscript=!!live.closest('.transcript')||!!live.querySelector('.transcript');
+    const preTop=affectsTranscript?keepTopBefore():null;
     pmPatchNode(live,src);
-    const post=snapScroll();
+    const post=snapScroll(live);
     const flips=flipHeights(flipTargets, flipBefore);
-    keepTopAfter(preTop,post);
+    if(affectsTranscript) keepTopAfter(preTop,post);
     flipMoves(moveTargets, moveBefore);
     rollDigits(rollBefore);
-    restoreScroll(positions,{workH, workKey, post, workGrow:workFlipped(flips)});
+    restoreScroll(positions,{scope:live, workH, workKey, post, workGrow:workFlipped(flips)});
     retainHoverAfterRender();
     runAfterRender('scope',{scope:live, flips});
     return true;
@@ -3237,7 +3293,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(e.clientX>r.left+el.clientWidth){ tDragging=true; tUserInputAt=performance.now(); tStick=false; cancelGlide(); }
   },{capture:true});
   document.addEventListener('pointerup',()=>{ if(tDragging){ tDragging=false; tUserInputAt=performance.now(); const el=tEl(); if(el) tStick=tAtBottom(el); } },{capture:true});
-  function snapScroll(){ const out={}; document.querySelectorAll('[data-scroll-key]').forEach(el=>{ out[el.dataset.scrollKey]=el.scrollTop; }); return out; }
+  function scrollTargets(scope=document){
+    const out=[...scope.querySelectorAll('[data-scroll-key]')];
+    for(let el=scope.nodeType===1?scope:null;el;el=el.parentElement) if(el.hasAttribute('data-scroll-key')) out.push(el);
+    return [...new Set(out)];
+  }
+  function snapScroll(scope=document){ const out={}; scrollTargets(scope).forEach(el=>{ out[el.dataset.scrollKey]=el.scrollTop; }); return out; }
   /* A patch that removes content is laid out once at the shorter height before
      the height FLIP pins the old height back, and the browser clamps the
      transcript's scroll during that one layout -- an upward jump nobody asked
@@ -3374,9 +3435,9 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       requestAnimationFrame(settle);
     });
   }
-  function captureScroll(){
+  function captureScroll(scope=document){
     const out={};
-    document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+    scrollTargets(scope).forEach(el=>{
       const k=el.dataset.scrollKey, intent=scrollIntents.get(k);
       out[k]=(k==='transcript'&&tStick)?'follow':intent?intent.to:el.scrollTop;
     });
@@ -3384,7 +3445,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
        height: the live stage can regroup above them without resizing the card.
        A following reader still belongs to the bottom glide. */
     const tr=tEl();
-    if(tr&&!tStick&&!scrollIntents.has('transcript')){
+    if(tr&&(scope===document||tr.contains(scope)||scope.contains(tr))&&!tStick&&!scrollIntents.has('transcript')){
       const vr=tr.getBoundingClientRect();
       const history=[...tr.querySelectorAll('.working-card:not(.is-done) .work-history')].find(el=>{
         const r=el.getBoundingClientRect();
@@ -3437,7 +3498,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(opts&&opts.still&&!keepHistory) workHistoryAnchor=null;
     const historyAnchored=(!(opts&&opts.still)||keepHistory)&&anchorWorkHistory(history);
     requestAnimationFrame(()=>{
-      document.querySelectorAll('[data-scroll-key]').forEach(el=>{
+      scrollTargets(opts&&opts.scope||document).forEach(el=>{
         const v=pos?pos[el.dataset.scrollKey]:null;
         if(v==null) return;
         if(el.dataset.scrollKey==='transcript'&&historyAnchored&&workHistoryAnchor) return;
@@ -5513,7 +5574,7 @@ suggested path                    migration 0043, reversible</div></div></sectio
       workSig=now;
       if(workQueued) return;
       workQueued=true;
-      requestAnimationFrame(()=>{ workQueued=false; renderApp(); });
+      requestAnimationFrame(()=>{ workQueued=false; renderWorkSurfaces(); });
     });
   }
   /* time, progress and output tails in place: the platform panel's one patcher, over the chat and its overlays */
