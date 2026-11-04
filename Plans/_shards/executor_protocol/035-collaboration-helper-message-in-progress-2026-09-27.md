@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L8828-L9103
+Source lines: L8828-L9183
 
-Source SHA256: `e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca`
+Source SHA256: `371c9478ed536ea6ca97c77b742e6791567ae2fb326fd892a4bd8b0925803bba`
 
 ---
 
@@ -284,3 +284,83 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Executor_Protocol.md#EP-132, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### EP-200 - Workflow run stop and block writers
+
+```yaml
+plan_unit_id: EP-200
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: |-
+  Newly authored owner contract under DL-045, written for DL-080 (2026-11-04). It is the Workflow writer listing DL-080 requires for goal_run.stopped and goal_run.blocked, Project edition only. Two writers are named: owner.executor.workflow_run.stop.v1, entered from handlers::orchestrator::pause (cmd.orchestrator.pause) and handlers::runtime::abort_run (cmd.runtime.abort_run); and owner.executor.workflow_run.block.v1, entered from the Executor scheduler when a run-level block is admitted. Each moves the native Workflow body status once, under the D01 update_workflow observation, and its own event follows in the order below. Installation: EP-118 keeps refusing every unlisted writer (RequiredOtherWorkflowWriterSource=false), and the all_writers.v7 descriptor (EP-124) lists neither writer, so neither can run on any existing birth. They become available only on a fresh Workflow source edition whose all-writers descriptor lists them; that edition is a separate dependency this unit does not author, and no existing birth is enrolled or cast.
+gui_related: false
+gui_classification_reason: Defines event, writer, persistence or projection contracts; no visual surface.
+split_recommended: false
+depends_on:
+- EP-118
+- EP-119
+- EP-124
+- GRS-200
+- GRS-201
+- SP-286
+- SP-309
+- SP-426
+- SP-427
+- DL-080
+- DL-045
+unblocks: []
+acceptance_criteria:
+- The stop writer is reached only from cmd.orchestrator.pause and cmd.runtime.abort_run; the block writer only from the Executor scheduler; no other route appends either family.
+- Each writer orders admission, settlement or block receipt, native status update, append with SP-286 first receipt, then terminal command publication; no step is reordered or skipped.
+- On every existing birth both writers stay refused by RequiredOtherWorkflowWriterSource=false; only a fresh source edition that lists them may install them.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution; the writer never re-dispatches, rolls back or mints a new event value.
+validation_surfaces:
+- Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json
+- Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json
+- Plans/goal_run_stop_block_oracle_fixtures.json
+- python3 scripts/pm_goal_run_stop_block_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: unlisted_workflow_writer_admission
+reasoning_tier: high
+context_scope: workflow_run_stop_block_writers
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-080
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (item 3)
+preserved_exact_tokens:
+- "owner.executor.workflow_run.stop.v1"
+- "owner.executor.workflow_run.block.v1"
+- "RequiredOtherWorkflowWriterSource=false"
+negative_constraints:
+- No completion, certification, replan, resume or ownership-transfer writer.
+- No enrollment of an existing birth and no application-scope writer.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+**Why a listing and not an installation.** DL-080 says "Each contract names the family's writer, which the Workflow writer list lacks today". EP-118 lists the original materialized, stage-entrypoint, prepare-start, prestart-abort, original-start and D06 writers and refuses every other one; EP-124 binds the entire `all_writers.v7` descriptor before birth. Naming the two writers here closes the listing gap; installing them needs a fresh Workflow source edition with these writers in its descriptor, and that edition is not written here.
+
+**Stop writer order** (`owner.executor.workflow_run.stop.v1`).
+1. Admission at the writer's final predicate: current Project permission for the command, writer-capable Storage, no recovery hold, the native status is one D-R21 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, `blocked`, or `stopped` with new settlement or recovery evidence), and the expected GoalRun revision is current.
+2. Settlement: the bounded safe-stop owner (EP-119, SP-309) settles the run's in-flight effects and returns durable settlement dispositions. `resumable=true` additionally needs a validated safe point and no unresolved mutation fence; otherwise the writer sets `resumable=false`.
+3. Native update: the native body status becomes `stopped` and the GoalRun revision advances exactly once; D01 `update_workflow.v3` observes the update and never issues it. The Goal body, revision and four-state lifecycle are unchanged.
+4. Append: the frozen goal_run.stopped v3 EventRecord (SP-426 identity) is appended through Storage; the first AppendReceipt is retained under SP-286 by name.
+5. Terminal publication: the command result is published only after the first receipt (CV-333 central response). A refusal after step 3 keeps every genuine earlier effect and reports recovery, never rollback.
+
+**Block writer order** (`owner.executor.workflow_run.block.v1`).
+1. Admission: the scheduler has a run-level block cause from the v2 `blocked_reason_code` list, the native status is one D-R16 source (`ready`, `running`, `provisional_success`, `verifying`, `failed_verification`, `repairing`, or `blocked` with new evidence, action or recovery revision), and the expected GoalRun revision is current.
+2. Block receipt: the owner of the cause (Permissions for denial, Storage for storage blocks, the approval owner for approval) has issued the receipt the payload names; D-R16 requires it to exist before append.
+3. Native update: status `blocked`, GoalRun revision advances once, D01 observes; Goal state unchanged.
+4. Append with SP-286 first receipt (SP-427 identity).
+5. No command result: the scheduler records its pass outcome after the first receipt.
+
+**Search (DL-045).** Scope: EP-116..124, EP-132, GRS-026, GRS-027, GRS-071, GRS-075, GRS-079..085, SP-309..317, CV-340, `Plans/Wiring_Matrix.production.json` rows `catalog.orchestrator_pause` and `catalog.runtime_abort_run`, `Plans/workflow_standard_source_contracts/` and the Known-37 matrix rows EA-UND-0016 and EA-UND-0021. Found: both wiring rows expect `goal_run.stopped`; EP-118 refuses unlisted writers; no unit names a stop or block writer, method or entrypoint. These two writer identities are newly authored.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-118, ContractName:Plans/Executor_Protocol.md#EP-124, ContractName:Plans/Goal_Runtime_System.md#GRS-200, ContractName:Plans/Goal_Runtime_System.md#GRS-201, ContractName:Plans/Decision_Log.md#DL-080

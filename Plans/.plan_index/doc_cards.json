@@ -1871,10 +1871,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 32,
+        "False": 33,
         "True": 47
       },
-      "heading_count": 154,
+      "heading_count": 155,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -1936,6 +1936,7 @@
         "Plans/goal_certified_producer_source_contracts",
         "Plans/goal_current_writer_oracle_fixtures.json",
         "Plans/goal_run_certified_consumer_contracts",
+        "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/human-in-the-loop.md",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/server_command_gap_adjudication.json",
@@ -1981,6 +1982,7 @@
         "scripts/pm_coordination_events.py",
         "scripts/pm_goal_current_writer_oracles.py",
         "scripts/pm_goal_history_reader_fixtures.py",
+        "scripts/pm_goal_run_stop_block_oracles.py",
         "scripts/pm_packet_audit_census.py",
         "scripts/pm_packet_audit_verdicts.py",
         "tests/fixtures/pm7_shared",
@@ -1989,9 +1991,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7356,
+      "line_count": 7419,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 79,
+      "plan_unit_count": 80,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2071,7 +2073,8 @@
         "ATS-084",
         "ATS-085",
         "ATS-210",
-        "ATS-211"
+        "ATS-211",
+        "ATS-212"
       ],
       "reasoning_tiers": [
         "high",
@@ -2104,6 +2107,7 @@
         "forbidden_browser_compatibility_dependency",
         "forge_provider_automation_security_or_evidence_layer_false_pass",
         "goal_cancellation_original_authority_or_effect_loss",
+        "goal_run_stop_block_oracle_drift",
         "historical_child_receipt_reinterpreted_as_current_authority",
         "historical_goal_oracle_drift",
         "history_validation_gap",
@@ -2144,10 +2148,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "09b8dd7716bccb150e7bdb01f2977bddff6ec1afd855326a76d32f712036853c",
+      "sha256": "37cde034dec540ae4109c2e269f1ffe0cef5838a0421ffc1949104ebd2388e51",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 78,
+        "accepted": 79,
         "superseded": 1
       },
       "title": "Automated Testing System",
@@ -2155,7 +2159,7 @@
         "acceptance_contract": 3,
         "acceptance_gate": 6,
         "constraint": 1,
-        "requirement": 32,
+        "requirement": 33,
         "schema_contract": 3,
         "validation_contract": 1,
         "validation_criterion": 33
@@ -2180,6 +2184,8 @@
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/coordination_event_admission.json",
         "Plans/coordination_event_contract_fixtures.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "Plans/external_research_contract_fixtures.json",
         "Plans/external_research_contracts.schema.json",
         "Plans/forge_backup_tsnet_acceptance.json",
@@ -2203,6 +2209,7 @@
         "Plans/goal_history_reader_outputs.schema.json",
         "Plans/goal_receipt_version_routes.json",
         "Plans/goal_run_certified_consumer_contracts/protocol.md",
+        "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/guided_tour_contract_fixtures.json",
         "Plans/guided_tour_contracts.schema.json",
         "Plans/plans_to_code_handoff.schema.json",
@@ -2305,6 +2312,7 @@
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_goal_current_writer_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
+        "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
         "scripts/pm-integration-packet-audit-work.py",
@@ -4477,10 +4485,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 285,
+        "False": 287,
         "True": 76
       },
-      "heading_count": 561,
+      "heading_count": 563,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4542,6 +4550,8 @@
         "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
         "Plans/event_record.schema.json",
         "Plans/execution_unit_context.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "Plans/full_thread_runtime_contracts.schema.json",
         "Plans/goal_certified_event_coordinator_contracts",
         "Plans/goal_certified_producer_source_contracts",
@@ -4584,9 +4594,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24491,
+      "line_count": 24603,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 361,
+      "plan_unit_count": 363,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4948,7 +4958,9 @@
         "CV-365",
         "CV-366",
         "CV-367",
-        "CV-368"
+        "CV-368",
+        "CV-420",
+        "CV-421"
       ],
       "reasoning_tiers": [
         "high",
@@ -5090,6 +5102,8 @@
         "goal_event_schema_contract",
         "goal_progressed_historical_authority_confusion",
         "goal_replanned_historical_authority_confusion",
+        "goal_run_blocked_payload",
+        "goal_run_stopped_payload",
         "goal_stopped_historical_authority_confusion",
         "goal_verification_decided_historical_authority_confusion",
         "goalrun_contract_envelope_gap",
@@ -5309,10 +5323,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "a577c1b288b95f4b39b1c457d85f35be8a2ccd07d8c8def05e16e278dd16344a",
+      "sha256": "505f9e4a9db854daac17a192b795dabf792b54f030edd3b46870401157b9fd78",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 361
+        "accepted": 363
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -5323,7 +5337,7 @@
         "integration_contract": 3,
         "interface_contract": 6,
         "owner_boundary": 1,
-        "requirement": 230,
+        "requirement": 232,
         "schema_contract": 28,
         "source_lineage_residual_disposition": 1
       },
@@ -5371,6 +5385,8 @@
         "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
         "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
         "Plans/event_record_index_checkpoint.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "Plans/goal_cancel_command_custody.schema.json",
         "Plans/goal_cancel_schema_resources.json",
         "Plans/goal_certification_custody.schema.json",
@@ -5391,6 +5407,7 @@
         "Plans/goal_receipt_version_routes.json",
         "Plans/goal_replanned_history_contract_fixtures.json",
         "Plans/goal_run_certified_consumer_contracts/protocol.md",
+        "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/goal_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_scheduled_history_contract_fixtures.json",
@@ -5475,6 +5492,7 @@
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
+        "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -6860,10 +6878,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 111,
+        "False": 112,
         "True": 18
       },
-      "heading_count": 287,
+      "heading_count": 288,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -6904,9 +6922,9 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 9103,
+      "line_count": 9183,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 129,
+      "plan_unit_count": 130,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -7036,7 +7054,8 @@
         "EP-129",
         "EP-130",
         "EP-131",
-        "EP-132"
+        "EP-132",
+        "EP-200"
       ],
       "reasoning_tiers": [
         "high",
@@ -7071,20 +7090,21 @@
         "scheduler_boundary_drift",
         "scope_authority_and_custody",
         "stream_vocabulary_drift",
+        "unlisted_workflow_writer_admission",
         "unsafe_execution_context",
         "unsafe_runtime_activation",
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca",
+      "sha256": "371c9478ed536ea6ca97c77b742e6791567ae2fb326fd892a4bd8b0925803bba",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 129
+        "accepted": 130
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 122,
+        "requirement": 123,
         "schema_contract": 5
       },
       "validation_surfaces": [
@@ -7111,6 +7131,8 @@
         "Plans/executor_cancellation_contracts/methods.json",
         "Plans/executor_cancellation_contracts/physical-families.json",
         "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "Plans/executor_cancellation_schema_resources.json",
         "Plans/goal_certified_event_coordinator_contracts/participant-method-tuples.json",
         "Plans/goal_certified_event_coordinator_contracts/phase-boundaries.json",
@@ -7132,6 +7154,7 @@
         "Plans/goal_run_started_consumer_contracts/methods.json",
         "Plans/goal_run_started_consumer_contracts/physical-families.json",
         "Plans/goal_run_started_consumer_schema_resources.json",
+        "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/run_started_consumer_contract_fixtures.json",
         "Plans/run_started_consumer_contracts.schema.json",
         "Plans/storage_value_registry.json",
@@ -7166,6 +7189,7 @@
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "zero-usage aborted turn is not model replay content."
       ]
     },
@@ -9515,10 +9539,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 51,
+        "False": 54,
         "True": 34
       },
-      "heading_count": 212,
+      "heading_count": 215,
       "implementation_surfaces": [
         "Plans/.plan_index",
         "Plans/00-plans-index.md",
@@ -9583,9 +9607,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8405,
+      "line_count": 8606,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 85,
+      "plan_unit_count": 88,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-048",
@@ -9670,6 +9694,9 @@
         "GRS-083",
         "GRS-084",
         "GRS-085",
+        "GRS-200",
+        "GRS-201",
+        "GRS-202",
         "GRS-086",
         "GRS-087"
       ],
@@ -9705,6 +9732,8 @@
         "goal_progressed_historical_authority_confusion",
         "goal_replanned_historical_authority_confusion",
         "goal_route_retargeting",
+        "goal_run_blocked_contract",
+        "goal_run_stopped_contract",
         "goal_runtime_false_success_after_canonical_loss",
         "goal_runtime_host_certification_drift",
         "goal_runtime_product_risk",
@@ -9742,6 +9771,7 @@
         "retired_goal_projection_in_transcript",
         "retired_goal_structure_reintroduced",
         "retired_scheduled_goal_state_reintroduced",
+        "run_history_projection_gap",
         "runtime_split_brain",
         "scheduler_drift",
         "scope_authority_and_custody",
@@ -9755,10 +9785,10 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9",
+      "sha256": "ea1a5a69582be42ca373ff79d334f62edad3dcc675ed3800f306541e204d801a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 76,
+        "accepted": 79,
         "superseded": 9
       },
       "title": "Goal Runtime System",
@@ -9766,7 +9796,7 @@
         "compatibility_disposition": 2,
         "constraint": 14,
         "owner_boundary": 2,
-        "requirement": 53,
+        "requirement": 56,
         "risk": 1,
         "schema_contract": 11,
         "validation_criterion": 2
@@ -9812,6 +9842,8 @@
         "Plans/event_payloads/goal_runtime/goal_stopped.schema.json",
         "Plans/event_payloads/goal_runtime/goal_verification_decided.schema.json",
         "Plans/event_record_index_checkpoint.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_body_custody_fixtures.json",
         "Plans/goal_cancel_command_custody.schema.json",
@@ -9853,6 +9885,7 @@
         "Plans/goal_run_started_consumer_contracts/methods.json",
         "Plans/goal_run_started_consumer_contracts/physical-families.json",
         "Plans/goal_run_started_consumer_schema_resources.json",
+        "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/goal_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
@@ -9946,6 +9979,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
         "python3 scripts/pm_goal_current_writer_oracles.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
+        "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "reports/event-authority-20260911/step-08-goal-body-validation.md",
@@ -18591,10 +18625,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 237,
+        "False": 240,
         "True": 110
       },
-      "heading_count": 823,
+      "heading_count": 826,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18689,9 +18723,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29895,
+      "line_count": 30100,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 347,
+      "plan_unit_count": 350,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19006,6 +19040,9 @@
         "SP-424",
         "SP-312",
         "SP-425",
+        "SP-426",
+        "SP-427",
+        "SP-428",
         "SP-313",
         "SP-314",
         "SP-315",
@@ -19078,8 +19115,10 @@
         "goal_cancellation_original_authority_or_effect_loss",
         "goal_progressed_historical_authority_confusion",
         "goal_replanned_historical_authority_confusion",
+        "goal_run_blocked_persistence",
         "goal_run_cancelled_withdrawal_drift",
         "goal_run_started_withdrawal_drift",
+        "goal_run_stopped_persistence",
         "goal_runtime_persistence_owner_gap",
         "goal_stopped_historical_authority_confusion",
         "goal_update_event_identity_drift",
@@ -19135,6 +19174,7 @@
         "retention_compaction_recovery_loss",
         "retired_goal_child_writer_reintroduction",
         "rollback_diagnostics_storage_drift",
+        "run_history_projection_gap",
         "safe_point_restore_storage_drift",
         "scope_authority_and_custody_drift",
         "second_source_of_truth",
@@ -19168,10 +19208,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0a68b015bde37e821d0a853361020f6e919b16fe40d2cc21eec38163913e7563",
+      "sha256": "4b4ea7b4b6dc4ab03905bc3919e3f64d2381fc6efffb423a324221cea3950c8a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 343,
+        "accepted": 346,
         "retired": 3,
         "superseded": 1
       },
@@ -19185,7 +19225,7 @@
         "requirement": 277,
         "schema_contract": 23,
         "security_contract": 1,
-        "storage_contract": 33,
+        "storage_contract": 36,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -19269,6 +19309,8 @@
         "Plans/executor_cancellation_contracts/methods.json",
         "Plans/executor_cancellation_contracts/physical-families.json",
         "Plans/executor_cancellation_contracts/realm-entry-boundaries.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-blocked.v3.schema.json",
+        "Plans/executor_cancellation_contracts/schemas/goal-run-stopped.v3.schema.json",
         "Plans/executor_cancellation_schema_resources.json",
         "Plans/goal_body_custody.schema.json",
         "Plans/goal_body_custody_fixtures.json",
@@ -19307,6 +19349,7 @@
         "Plans/goal_run_started_consumer_contracts/methods.json",
         "Plans/goal_run_started_consumer_contracts/physical-families.json",
         "Plans/goal_run_started_consumer_schema_resources.json",
+        "Plans/goal_run_stop_block_oracle_fixtures.json",
         "Plans/goal_runtime_contracts.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/goal_runtime_workflow_cancel_contracts.schema.json",
@@ -19458,6 +19501,7 @@
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
         "python3 scripts/pm_goal_history_reader_fixtures.py",
+        "python3 scripts/pm_goal_run_stop_block_oracles.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
         "reports/event-authority-20260911/step-08-certified-custody-validation.md",
@@ -21551,7 +21595,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T18:04:52Z",
+  "generated_at_utc": "2026-11-04T18:13:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21559,13 +21603,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3638,
+      "False": 3648,
       "True": 3791
     },
-    "plan_unit_count": 7429,
+    "plan_unit_count": 7439,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7212,
+      "accepted": 7222,
       "retired": 194,
       "superseded": 23
     },
@@ -21635,7 +21679,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5616,
+      "requirement": 5623,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -21654,7 +21698,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 33,
+      "storage_contract": 36,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,

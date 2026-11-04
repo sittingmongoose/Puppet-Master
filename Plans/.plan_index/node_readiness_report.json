@@ -1,18 +1,121 @@
 {
-  "build_order_blockers": [],
+  "build_order_blockers": [
+    {
+      "blocker_type": "dependency_cycles",
+      "items": [
+        {
+          "plan_unit_id": "CV-420",
+          "remaining_depends_on": [
+            "EP-200",
+            "GRS-200",
+            "SP-426"
+          ]
+        },
+        {
+          "plan_unit_id": "CV-421",
+          "remaining_depends_on": [
+            "EP-200",
+            "GRS-201",
+            "SP-427"
+          ]
+        },
+        {
+          "plan_unit_id": "EP-200",
+          "remaining_depends_on": [
+            "GRS-200",
+            "GRS-201",
+            "SP-426",
+            "SP-427"
+          ]
+        },
+        {
+          "plan_unit_id": "GRS-200",
+          "remaining_depends_on": [
+            "CV-420",
+            "EP-200",
+            "GRS-202",
+            "SP-426"
+          ]
+        },
+        {
+          "plan_unit_id": "GRS-201",
+          "remaining_depends_on": [
+            "CV-421",
+            "EP-200",
+            "GRS-202",
+            "SP-427"
+          ]
+        },
+        {
+          "plan_unit_id": "GRS-202",
+          "remaining_depends_on": [
+            "EP-200",
+            "GRS-200",
+            "GRS-201",
+            "SP-428"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-426",
+          "remaining_depends_on": [
+            "CV-420",
+            "EP-200",
+            "GRS-200",
+            "SP-428"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-427",
+          "remaining_depends_on": [
+            "CV-421",
+            "EP-200",
+            "GRS-201",
+            "SP-428"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-428",
+          "remaining_depends_on": [
+            "GRS-202",
+            "SP-426",
+            "SP-427"
+          ]
+        }
+      ]
+    },
+    {
+      "blocker_type": "dependency_cycle_downstream_blocked_nodes",
+      "items": [
+        {
+          "plan_unit_id": "ATS-212",
+          "remaining_depends_on": [
+            "CV-420",
+            "CV-421",
+            "EP-200",
+            "GRS-200",
+            "GRS-201",
+            "GRS-202",
+            "SP-426",
+            "SP-427",
+            "SP-428"
+          ]
+        }
+      ]
+    }
+  ],
   "dependency_graph_summary": {
-    "build_order_available": true,
-    "build_order_blocked_node_count": 0,
-    "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18819,
-    "downstream_blocked_node_count": 0,
-    "edge_count": 22027,
-    "node_count": 7429,
-    "true_cycle_component_count": 0,
+    "build_order_available": false,
+    "build_order_blocked_node_count": 10,
+    "cycle_blocker_count": 9,
+    "depends_on_edge_count": 18909,
+    "downstream_blocked_node_count": 1,
+    "edge_count": 22117,
+    "node_count": 7439,
+    "true_cycle_component_count": 1,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T18:04:53Z",
+  "generated_at_utc": "2026-11-04T18:13:55Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -23034,8 +23137,8 @@
         "source_location": {
           "heading": "GRS-086 - Application Goal Birth Continuation And Versioned Custody",
           "heading_level": 3,
-          "heading_line": 8254,
-          "line": 8256,
+          "heading_line": 8455,
+          "line": 8457,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -23045,8 +23148,8 @@
         "source_location": {
           "heading": "GRS-087 - Immutable Goal Conversion And Linked Destination Birth",
           "heading_level": 3,
-          "heading_line": 8337,
-          "line": 8339,
+          "heading_line": 8538,
+          "line": 8540,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -35013,8 +35116,8 @@
         "source_location": {
           "heading": "SP-330 - The v2 Home Layout Record, Its Transaction And The Migration From v1",
           "heading_level": 3,
-          "heading_line": 27953,
-          "line": 27955,
+          "heading_line": 28158,
+          "line": 28160,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35024,8 +35127,8 @@
         "source_location": {
           "heading": "SP-331 - Terminal Appearance Storage",
           "heading_level": 3,
-          "heading_line": 28118,
-          "line": 28120,
+          "heading_line": 28323,
+          "line": 28325,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35035,8 +35138,8 @@
         "source_location": {
           "heading": "SP-332 - Terminal Records Re-Scoped To One Session Per Tab, And Saved Scrollback",
           "heading_level": 3,
-          "heading_line": 28240,
-          "line": 28242,
+          "heading_line": 28445,
+          "line": 28447,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35046,8 +35149,8 @@
         "source_location": {
           "heading": "SP-333 - Editor Appearance And Wallpaper Settings Levels",
           "heading_level": 3,
-          "heading_line": 28339,
-          "line": 28341,
+          "heading_line": 28544,
+          "line": 28546,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35057,8 +35160,8 @@
         "source_location": {
           "heading": "SP-338 - Render-Ready Chat Pages And The Open-Path Gate",
           "heading_level": 3,
-          "heading_line": 28709,
-          "line": 28711,
+          "heading_line": 28914,
+          "line": 28916,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35068,8 +35171,8 @@
         "source_location": {
           "heading": "SP-339 - No Always-On JSON Copies; Dump, Inspect, Tail And Export",
           "heading_level": 3,
-          "heading_line": 28775,
-          "line": 28777,
+          "heading_line": 28980,
+          "line": 28982,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35079,8 +35182,8 @@
         "source_location": {
           "heading": "SP-340 - redb Value Limits, Two Files, Quick Repair And Scheduled Compaction",
           "heading_level": 3,
-          "heading_line": 28843,
-          "line": 28845,
+          "heading_line": 29048,
+          "line": 29050,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -35090,8 +35193,8 @@
         "source_location": {
           "heading": "SP-341 - Parquet Archive, DuckDB On Demand And Kept Usage History",
           "heading_level": 3,
-          "heading_line": 28896,
-          "line": 28898,
+          "heading_line": 29101,
+          "line": 29103,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -41725,10 +41828,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7429,
+  "plan_unit_count": 7439,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2751,
+      "high": 2761,
       "low": 9,
       "medium": 29,
       "standard": 4640
@@ -43256,9 +43359,16 @@
       "goal_record_event_disposition_drift": 1,
       "goal_replanned_historical_authority_confusion": 3,
       "goal_route_retargeting": 1,
+      "goal_run_blocked_contract": 1,
+      "goal_run_blocked_payload": 1,
+      "goal_run_blocked_persistence": 1,
       "goal_run_cancelled_withdrawal_drift": 1,
       "goal_run_lifecycle_event_disposition_drift": 1,
       "goal_run_started_withdrawal_drift": 1,
+      "goal_run_stop_block_oracle_drift": 1,
+      "goal_run_stopped_contract": 1,
+      "goal_run_stopped_payload": 1,
+      "goal_run_stopped_persistence": 1,
       "goal_runtime_account_identity_drift": 1,
       "goal_runtime_false_success_after_canonical_loss": 1,
       "goal_runtime_host_certification_drift": 1,
@@ -44819,6 +44929,7 @@
       "run_graph_node_state_legend_drift": 1,
       "run_graph_runtime_projection_drift": 1,
       "run_graph_usage_identity_drift": 1,
+      "run_history_projection_gap": 2,
       "run_limit_precedence": 1,
       "run_mode_usage_settlement_drift": 1,
       "run_modes": 1,
@@ -45579,6 +45690,7 @@
       "undisclosed_remote_scope_on_a_destructive_bookmark_action": 1,
       "unification_phase_boundary": 1,
       "unknown_resolution_policy_drift": 1,
+      "unlisted_workflow_writer_admission": 1,
       "unnecessary_user_escalation": 1,
       "unowned_preference_or_scope_drift": 1,
       "unproved_or_incompatible_reader_installation": 1,
@@ -45871,7 +45983,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7212,
+      "accepted": 7222,
       "retired": 194,
       "superseded": 23
     },
@@ -45941,7 +46053,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5616,
+      "requirement": 5623,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -45960,7 +46072,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 33,
+      "storage_contract": 36,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,
@@ -46050,13 +46162,13 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "e9b534b288cf26f8491197a8298235235d65c6627a7e4d86153934d9f313a8ca",
+        "expected": "371c9478ed536ea6ca97c77b742e6791567ae2fb326fd892a4bd8b0925803bba",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "114ab69e26d6cfa38e1ddfa9636e64b53b3b409048f56e90ebb7318e829041f9",
+        "expected": "ea1a5a69582be42ca373ff79d334f62edad3dcc675ed3800f306541e204d801a",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
@@ -46068,7 +46180,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "09b8dd7716bccb150e7bdb01f2977bddff6ec1afd855326a76d32f712036853c",
+        "expected": "37cde034dec540ae4109c2e269f1ffe0cef5838a0421ffc1949104ebd2388e51",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46126,6 +46238,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/DRY_Rules.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
