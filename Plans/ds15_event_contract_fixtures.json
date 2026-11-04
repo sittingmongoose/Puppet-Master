@@ -1,0 +1,195 @@
+[
+  {
+    "event_type": "doctor.custom_headless.checked",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "doctor_invocation_id": "sample_doctor_invocation_id",
+      "outcome": "valid"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  },
+  {
+    "event_type": "tool.custom_headless.skipped",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "reason": "custom_headless_key_absent"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  },
+  {
+    "event_type": "live.session.started",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "run_id": "sample_run_id",
+      "live_session_id": "sample_live_session_id",
+      "platform": "web",
+      "provider": "sample_provider",
+      "session_id": "sample_session_id",
+      "pid": 123,
+      "display_target": "sample_display_target",
+      "artifact_root": "sample_artifact_root"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  },
+  {
+    "event_type": "live.step.updated",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "run_id": "sample_run_id",
+      "live_session_id": "sample_live_session_id",
+      "step_id": "sample_step_id",
+      "step_revision": 1,
+      "status": "running"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  },
+  {
+    "event_type": "live.artifact.created",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "run_id": "sample_run_id",
+      "live_session_id": "sample_live_session_id",
+      "artifact_id": "sample_artifact_id",
+      "artifact_ref": "sample_artifact_ref",
+      "artifact_receipt_ref": "sample_artifact_receipt_ref"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  },
+  {
+    "event_type": "live.session.completed",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "run_id": "sample_run_id",
+      "live_session_id": "sample_live_session_id",
+      "manifest_ref": "sample_manifest_ref",
+      "summary_ref": "sample_summary_ref",
+      "checks_ref": "sample_checks_ref"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  },
+  {
+    "event_type": "live.session.degraded",
+    "positive": {
+      "schema_version": "1.0.0",
+      "project_id": "sample_project_id",
+      "run_id": "sample_run_id",
+      "live_session_id": "sample_live_session_id",
+      "degradation_revision": 1,
+      "requested_visual_mode": "auto",
+      "effective_visual_mode": "visible",
+      "fallback_reason": "missing_display"
+    },
+    "negative": [
+      {
+        "mutation": "extra_field",
+        "field": "unexpected",
+        "value": true
+      },
+      {
+        "mutation": "missing_field",
+        "field": "project_id"
+      },
+      {
+        "mutation": "wrong_version",
+        "field": "schema_version",
+        "value": "9.0.0"
+      }
+    ]
+  }
+]

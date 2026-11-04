@@ -7228,3 +7228,339 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-320 — doctor.custom_headless.checked positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-320",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "doctor.custom_headless.checked positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-217 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-320"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-321 — tool.custom_headless.skipped positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-321",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "tool.custom_headless.skipped positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-218 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-321"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-322 — live.session.started positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-322",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "live.session.started positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-219 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-322"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-323 — live.step.updated positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-323",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "live.step.updated positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-220 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-323"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-324 — live.artifact.created positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-324",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "live.artifact.created positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-221 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-324"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-325 — live.session.completed positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-325",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "live.session.completed positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-222 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-325"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
+
+
+### ATS-326 — live.session.degraded positive/negative oracles.
+
+```yaml
+{
+  "plan_unit_id": "ATS-326",
+  "unit_type": "contract",
+  "status": "accepted",
+  "owner_doc": "Plans/Automated_Testing_System.md",
+  "canonical_text": "live.session.degraded positive/negative oracles.\nPlans/ds15_event_contract_fixtures.json has exact-family valid payload, extra-field, missing-field and wrong-version cases; scripts/pm-ds15-event-contracts.py checks them and each checkpoint closure, nine-field token, identity, producer and consumer. The native boundary obligations in Plans/newtools.md#N2-223 remain NOT_RUN. Successful static checks never admit this family or settle retention.",
+  "gui_related": false,
+  "gui_classification_reason": "Durable event contract only; existing presentation is consumed.",
+  "depends_on": [
+    "DL-045"
+  ],
+  "unblocks": [],
+  "acceptance_criteria": [
+    "Exact family closure is checked by scripts/pm-ds15-event-contracts.py; production admission remains absent."
+  ],
+  "validation_surfaces": [
+    "python3 scripts/pm-ds15-event-contracts.py"
+  ],
+  "risk_class": "event_authority_contract_drift",
+  "reasoning_tier": "high",
+  "context_scope": "ds15_event_preparation",
+  "implementation_surfaces": [
+    "Plans/Automated_Testing_System.md"
+  ],
+  "node_compile_hint": {
+    "mode": "contract_only",
+    "create_worknodes": false,
+    "create_nodeseeds": false
+  },
+  "source_lineage": [
+    "Plans/Decision_Log.md#DL-045"
+  ],
+  "preserved_exact_tokens": [
+    "ATS-326"
+  ],
+  "negative_constraints": [
+    "No admission, retention decision, native proof, WorkNodes or NodeSeeds."
+  ],
+  "owner_hints": [
+    "Plans/Automated_Testing_System.md"
+  ]
+}
+```
