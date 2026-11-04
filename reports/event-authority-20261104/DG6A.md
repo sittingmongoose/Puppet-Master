@@ -1,6 +1,6 @@
 # DG6A — post-Astra technical fix round 5
 
-Worker: DG6A-FIX5, VM. Branch: `plans/ea-w2-gui-concerns-20261104`. Reviewed head: `370e7718684f2bcb025dafa3a3993091a96a49fd`. Technical commits: `6780aafe6c6383459386d50d7807211760bb679a` (type-exact proofs and historical source joins), `50d7f966de` (optional command presence and instant ordering), `b65638d1a610f4abc9ab4662aa96fcae7e608c33` (B1–B3), `74cbca0ca4` (new generated registry shards), and `87628f167daf8372a65ba652c2fd4371ae63d651` (independent protocol witnesses). The final report commit is self-inclusive. This section supersedes round 4's oracle-grade claims; earlier records and all nine stopped questions remain below unchanged.
+Worker: DG6A-FIX5, VM. Branch: `plans/ea-w2-gui-concerns-20261104`. Reviewed head: `370e7718684f2bcb025dafa3a3993091a96a49fd`. Technical commits: `e0102de48fd3d5ce199473f3ac91e6ee425af973` (independent counters and six source-comparison helper guard proofs), `6780aafe6c6383459386d50d7807211760bb679a` (type-exact proofs and historical source joins), `50d7f966de` (optional command presence and instant ordering), `b65638d1a610f4abc9ab4662aa96fcae7e608c33` (B1–B3), `74cbca0ca4` (new generated registry shards), and `87628f167daf8372a65ba652c2fd4371ae63d651` (independent protocol witnesses). The final report commit is self-inclusive. This section supersedes round 4's oracle-grade claims; earlier records and all nine stopped questions remain below unchanged.
 
 Seven families remain **prepared without admission**, each **10 PASS / 1 PARTIAL / 1 ABSENT** after repair, versus Astra's **9 PASS / 2 PARTIAL / 1 ABSENT**. Criterion 12 is restored with current-operation and whole-lane guard witnesses. Membership remains ABSENT, retention PARTIAL / `PENDING_RETENTION_DECISION`, and native execution NOT_RUN. No new retention, creator, lifecycle, or stopped-family policy is chosen.
 
@@ -28,11 +28,11 @@ Seven families remain **prepared without admission**, each **10 PASS / 1 PARTIAL
 
 The [guard-removal table](DG6A.guard-removal.md) records each guard, flipping witnesses, remaining rejections and named duplicates. The hashed JSON evidence contains every name and diagnostic, including the exact complement of each flipping set.
 
-- **229/229 guard rows pass:** 130 current-operation/payload/protocol/checkpoint/profile/schema/pager rejection sites across the three checker contexts; 99 historical rows, eleven guards across nine reader versions.
-- **660 current negative vectors** produce **28,976 source-removal trials**. Every negative has a singleton witness or a named duplicate proof. No unrelated pair is used to excuse a masked defect.
+- **247/247 guard rows pass:** 148 current-operation/payload/protocol/checkpoint/profile/schema/pager/source-comparison rejection sites across the three checker contexts; 99 historical rows, eleven guards across nine reader versions.
+- **702 nonhistorical negative vectors** produce **35,036 source-removal trials**. Every negative has a singleton witness or a named duplicate proof. No unrelated pair is used to excuse a masked defect.
 - **54 duplicate witnesses / 11 pair matrices** cover replay-only versus generic unsupported-policy refusal, schema representation versus exact digest equality, the concern embedded/standalone payload schema, and redock's repeated window comparison. Every paired removal is swept across the full relevant negative set. All 55 changed-but-still-rejected diagnostics have named duplicate proofs; unrelated rejections retain their own reason.
-- **504 historical negative vectors / 5,544 cross-guard trials** prove exact original Storage/event/payload/receipt/source/publication and current disclosure guards. **18 positives** retain current/v1 originals, including replay-only history, with live state absent. Existing returning-helper revocation vectors continue to exercise the second disclosure fence.
-- Each mutant is compiled only in memory and the exact original function is restored in `finally`. The shipped checker retains every original guard and adds joins. The new vector assertions run through the normal three checker entry points.
+- **513 historical negative vectors / 5,643 cross-guard trials** prove exact original Storage/event/payload/receipt/source/publication and current disclosure guards. **18 positives** retain current/v1 originals, including replay-only history, with live state absent. Existing returning-helper revocation vectors continue to exercise the second disclosure fence.
+- Source-comparison helper guards have six additional direct witnesses per family: exact type, object keys/children, array length/children and scalar value. The leaf counter has its own type comparison and does not call the authentication helper, so helper weakening cannot be masked by a changed counter. Missing first-receipt sequence fields also have composed-reader witnesses. Each mutant is compiled only in memory and the exact original function is restored in `finally`. The shipped checker retains every original guard and adds joins. The new vector assertions run through the normal three checker entry points.
 
 ## All nine Astra defect classes, all seven prepared families
 
@@ -63,14 +63,14 @@ Per-family pinned searches across Storage, Contracts, FinalGUISpec, UI_Command_C
 
 ## Round 5 verification and evidence
 
-Technical input head: `6780aafe6c6383459386d50d7807211760bb679a`. The 700-observation broad regression ran with its inputs frozen at `87628f167d`; the 18 focused CLI cases then verified the optional-field and offset additions at `50d7f966de`. After the final type-exact changes, all three complete family checkers and the entire source/historical removal matrix pass again. The 63 historical representation observations run the actual composed readers with an independent coercive-comparison mutant, without weakening the leaf counter. No older result is represented as a full CLI rerun at the final head.
+Technical input head: `e0102de48fd3d5ce199473f3ac91e6ee425af973`. The 700-observation broad regression ran with its inputs frozen at `87628f167d`; the 18 focused CLI cases then verified the optional-field and offset additions at `50d7f966de`. After the final type-exact changes, all three complete family checkers and the entire source/historical removal matrix pass again. The 63 historical representation observations run the actual composed readers with an independent coercive-comparison mutant, without weakening the leaf counter. No older result is represented as a full CLI rerun at the final head.
 
 | Check | Exit/result |
 |---|---|
-| Alert checker | 0 / pass; 1142 cases, four families |
-| Panel checker | 0 / pass; 638 cases, two families including immutable v1 readers |
-| Concern checker | 0 / pass; 449 cases |
-| Whole-lane guard runner | 0 / pass; 229 guard rows, 660 current negatives, 504 historical negatives, 11 paired matrices |
+| Alert checker | 0 / pass; 1170 cases, four families |
+| Panel checker | 0 / pass; 652 cases, two families including immutable v1 readers |
+| Concern checker | 0 / pass; 456 cases |
+| Whole-lane guard runner | 0 / pass; 247 guard rows, 702 nonhistorical negatives, 513 historical negatives, 11 paired matrices |
 | Broad CLI regression | 0 / pass; 700 observations, including 403 real CLI calls |
 | Focused CLI regression | 0 / pass; 18 real CLI calls, 10 refusals and eight optional-array positives |
 | Historical type interpretation mutant | 0 / pass; 63 exact own-guard refusals, each disclosed only by the deliberately coercive mutant |
@@ -86,21 +86,21 @@ Initial resources: 13 GiB available RAM / 116 GB root disk free. Final check: 7 
 
 | Retained evidence | Absolute path | SHA-256 |
 |---|---|---|
-| `guard-removal.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-removal.json` | `c8d650d654d628951d2b0d5d1668065f8744e2efdbe0bb220539ddf3b417ca76` |
-| `guard-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-summary.json` | `06daaba1a39e73ad6641ba8f12b711b644a29933b65e0c2b1ada6b875ec91c12` |
+| `guard-removal.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-removal.json` | `4e1b71edc2904e88e5f2046022136e87ea5c9c1ae955ca814da74846b51f2029` |
+| `guard-summary.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-summary.json` | `17b38320013f6f4a62ca79d26ca1b09d25dffd4169778c79318107ed2a9947ec` |
 | `full-cli-mutations.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/full-cli-mutations.json` | `75d6bbaa3676db7983341f3d0596d76958348308919034e4c135450a06d85fdc` |
 | `final-cli.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/final-cli.json` | `e9cb51c6f8f9d7e8d6a00a1441bc1565c2339aa664cde32bfebd75317ee7eb75` |
 | `typed-inputs-before.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/typed-inputs-before.json` | `576a2214ae0bcb61f32884050af09d5ce0572da10c740844c13852f9caf06f03` |
 | `historical-representation-probe.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/historical-representation-probe.json` | `6451d522dbb62ec4c16dda42afff1c90705edac5e2af3c2f027c014f872576e8` |
 | `representation-probe.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/representation-probe.json` | `04203bfbf9e1a02ce5ca6263305d8e9a517b33bfe1b3c9de6b4daa8b866e1f56` |
-| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/boundary-audit.json` | `e060d7b2ed9006295f3ce463921f4e12f9dcf5f80dfaeb9a33549a5414be9294` |
+| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/boundary-audit.json` | `c5394848df32adc68f07129e06c90d8c935369ff85d18a9903a2685ef630e25d` |
 | `alert-binding-search.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alert-binding-search.json` | `8e774284a0a8639a5b0ae78fbe127423dc428e4a1da491f25f52522c6d81c42d` |
 | `currentness-copy.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/currentness-copy.json` | `d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84` |
 | `review-evidence.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/review-evidence.json` | `e98c678640a9332b20390a8cacecd90d66b832f64c842c2884e6d934125ea7d6` |
 | `grade-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/grade-audit.json` | `e673d3b8b7c02c0dc158f9aa7b1f79de8622d2d07e368cb5625f0304fa824457` |
-| `alerts.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alerts.log` | `180b753dc5de1d072a71ce61455498c82d644e472dc280c7c8a9ac24ca0d4cd2` |
-| `panels.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/panels.log` | `a9445df915270fbf6b5237d9cf0e2cbf4b7cdfd56f6b461ac0dd1c9e3d313cd9` |
-| `concern.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/concern.log` | `03c9a6b6b8c7af4f3033c2d3a06a0a1f1ff9c46717fc3ab08a36d272360c65b3` |
+| `alerts.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alerts.log` | `3fb03e13b1754c8b753da6651205994686faf373868692a210337ae80483f53c` |
+| `panels.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/panels.log` | `4381506461cc2d4ddafab8725308f771ec4c03a0de9e3e5cdaed900aa6c1f196` |
+| `concern.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/concern.log` | `394fd4143a3567424d3b704d3d1606149716339af93fbe81b532ff13a3e9cab3` |
 | `assistant-tests.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/assistant-tests.log` | `ec1eb8cc809b5a847c88c7459bb47f169b4c1a3115bcee66643a6b76317d1c89` |
 | `shard-generate.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/shard-generate.json` | `32a149ab6029e00e969dad0c0c34dec8d8559259481c573d0387cd6050928d52` |
 | `shard-check.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/shard-check.log` | `48c1f857e2193456e9db56b97c616373bfca9a7db703b6ebe4b0efe2ae378363` |

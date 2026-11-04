@@ -2,7 +2,7 @@
   "worker": "DG6A-FIX5",
   "round": 5,
   "reviewed_head": "370e7718684f2bcb025dafa3a3993091a96a49fd",
-  "technical_head": "6780aafe6c6383459386d50d7807211760bb679a",
+  "technical_head": "e0102de48fd3d5ce199473f3ac91e6ee425af973",
   "broad_regression_head": "87628f167daf8372a65ba652c2fd4371ae63d651",
   "focused_cli_head": "50d7f966de",
   "checks": [
@@ -11,28 +11,28 @@
       "exit": 0,
       "status": "pass",
       "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/alerts.log",
-      "sha256": "180b753dc5de1d072a71ce61455498c82d644e472dc280c7c8a9ac24ca0d4cd2"
+      "sha256": "3fb03e13b1754c8b753da6651205994686faf373868692a210337ae80483f53c"
     },
     {
       "name": "panels",
       "exit": 0,
       "status": "pass",
       "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/panels.log",
-      "sha256": "a9445df915270fbf6b5237d9cf0e2cbf4b7cdfd56f6b461ac0dd1c9e3d313cd9"
+      "sha256": "4381506461cc2d4ddafab8725308f771ec4c03a0de9e3e5cdaed900aa6c1f196"
     },
     {
       "name": "concern",
       "exit": 0,
       "status": "pass",
       "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/concern.log",
-      "sha256": "03c9a6b6b8c7af4f3033c2d3a06a0a1f1ff9c46717fc3ab08a36d272360c65b3"
+      "sha256": "394fd4143a3567424d3b704d3d1606149716339af93fbe81b532ff13a3e9cab3"
     },
     {
       "name": "guard removal",
       "exit": 0,
       "status": "pass",
       "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix5/guard-check.log",
-      "sha256": "d89dcdd7304e19cd9661076bf1627d072cf8ae72a0c0656575d5061fc1f40cd8"
+      "sha256": "d4513c631cef0d76470342463b6a9815d7a7025949c2d527831fd721367fe685"
     },
     {
       "name": "grade citations",
@@ -111,12 +111,12 @@
     }
   ],
   "guard_removal": {
-    "guards": 229,
-    "current_guards": 130,
-    "current_negatives": 660,
-    "current_trials": 28976,
-    "history_negatives": 504,
-    "history_trials": 5544
+    "guards": 247,
+    "current_guards": 148,
+    "current_negatives": 702,
+    "current_trials": 35036,
+    "history_negatives": 513,
+    "history_trials": 5643
   },
   "native": "NOT_RUN",
   "admission": "ABSENT",
