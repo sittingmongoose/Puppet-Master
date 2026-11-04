@@ -9,7 +9,7 @@ export default async function(t) {
    await f.evaluate(([fam,mode])=>O55.ui.applyLook(fam,mode),look.split('-'));await f.waitForTimeout(1500);
    for(const screen of ['where','look']) {
     await t.page.mouse.move(2,2);await f.evaluate(s=>O55.ui.go(s,{noHistory:true}),screen);await f.waitForTimeout(1700);
-    const c=f.locator('.o55-layer:not(.o55-out) '+(screen==='where'?'.o55-card':'.o55-tile')).first();
+    const c=f.locator('.o55-layer:not(.o55-out) '+(screen==='where'?'.o55-card[data-arg="server"]':'.o55-tile')).first();
     await c.scrollIntoViewIfNeeded();await f.waitForTimeout(500);
     const read=()=>c.evaluate(e=>{const r=e.getBoundingClientRect(),v=e.firstElementChild.getBoundingClientRect(),p=getComputedStyle(e,'::before');return {x:r.x,y:r.y,child:v.y,paint:getComputedStyle(e).getPropertyValue('--o55-hover-y'),pointer:p.pointerEvents,outline:p.outlineStyle,outlineWidth:p.outlineWidth,bg:p.background,shadow:p.boxShadow,focus:e.matches(':focus-visible')};});
     const a=await read(),b=await c.boundingBox();await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2);await f.waitForTimeout(600);const z=await read();
