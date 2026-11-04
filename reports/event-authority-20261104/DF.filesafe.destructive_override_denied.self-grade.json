@@ -10,11 +10,11 @@
     {
       "path": "Plans/Contracts_V0.md",
       "unit": "CV-551",
-      "line_start": 24585,
-      "line_end": 24585,
+      "line_start": 24587,
+      "line_end": 24587,
       "quote": "**Producer and transition.**",
       "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
-      "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+      "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
       "quote_check": "exact"
     }
   ],
@@ -53,12 +53,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "ABSENT"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "owner_doc": {
       "status": "PASS",
@@ -68,31 +68,31 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24583,
-          "line_end": 24583,
+          "line_start": 24585,
+          "line_end": 24585,
           "quote": "**Newly authored owner contract",
           "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24595,
-          "line_end": 24595,
+          "line_start": 24599,
+          "line_end": 24599,
           "quote": "**Exact original source graph (second pass).**",
           "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "producer": {
       "status": "PASS",
@@ -102,21 +102,21 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24595,
-          "line_end": 24595,
+          "line_start": 24599,
+          "line_end": 24599,
           "quote": "**Exact original source graph (second pass).**",
           "excerpt_sha256": "62b0ca804c854fa8c4203559ac9bd702e9bca0840da771a3c65cf1cbb950cdde",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24601,
-          "line_end": 24601,
+          "line_start": 24605,
+          "line_end": 24605,
           "quote": "**Lifecycle barriers for",
           "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
@@ -131,12 +131,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "closed_payload_schema": {
       "status": "PASS",
@@ -150,27 +150,27 @@
           "line_end": 3,
           "quote": "\"additionalProperties\": false",
           "excerpt_sha256": "4fe655e121901a2a09025263b26e06f69e0ca93dd03150f78ec63bbf08fa421a",
-          "file_sha256": "574670b6ac76421462fd167da71dbf2e084d004b8bb77c36e167d6a239b7599d",
+          "file_sha256": "8033da34509a6a4d7f5a1299f4fe2cecc4919ced63724dd2c7dfbd3992663f65",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24583,
-          "line_end": 24583,
+          "line_start": 24585,
+          "line_end": 24585,
           "quote": "**Newly authored owner contract",
           "excerpt_sha256": "8ef132798eecc752105453551b6edc674e90ba76b1ce2a51462a4d44cfcc7c8c",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "scope_identity": {
       "status": "PASS",
@@ -180,11 +180,11 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24587,
-          "line_end": 24587,
+          "line_start": 24589,
+          "line_end": 24589,
           "quote": "**Scope and joins.**",
           "excerpt_sha256": "356c919262c63b2dd5a2bad6965f8004d148d8c38b97a2dbd521e7b09142b16d",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
@@ -200,21 +200,21 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24613,
-          "line_end": 24613,
+          "line_start": 24617,
+          "line_end": 24617,
           "quote": "For this family, event scope_kind/project_id/thread_id/run_id/node_id/attempt_id",
           "excerpt_sha256": "f47b120453aaecf4c6f89b6cedba1f5e546b1d1a318620eab8101bb2c624a94d",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "replay_idempotency": {
       "status": "PASS",
@@ -265,20 +265,30 @@
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
           "quote": "**Current-writer eligibility for `filesafe.destructive_override_denied` (review round 2).**",
-          "line_start": 24591,
-          "line_end": 24591,
+          "line_start": 24593,
+          "line_end": 24593,
           "excerpt_sha256": "138b601d4fe23190c32597582fb33bb8c329ee1ece1cc7250d87ced346ec4166",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-551",
+          "quote": "**Current-writer eligibility for `filesafe.destructive_override_denied` (review round 2).**",
+          "line_start": 24593,
+          "line_end": 24593,
+          "excerpt_sha256": "138b601d4fe23190c32597582fb33bb8c329ee1ece1cc7250d87ced346ec4166",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "retention": {
       "status": "PARTIAL",
@@ -302,17 +312,17 @@
           "line_end": 129,
           "quote": "\"retention_policy_ref\"",
           "excerpt_sha256": "d62fae07c239ae4e7048050b98c82f976e463a29e812fa37eefc188a19a646c0",
-          "file_sha256": "88db140f5c8ecea9bf36b322feddbc5ece27e85c7a363aa28847ac6b8efa4699",
+          "file_sha256": "413f95ee58884b42085714ff244f8cab96049415c631e2615b775d7134b10119",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PARTIAL"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "redaction_custody": {
       "status": "PASS",
@@ -332,21 +342,21 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24597,
-          "line_end": 24597,
+          "line_start": 24601,
+          "line_end": 24601,
           "quote": "The source's original_request, original_result, writer_epoch",
           "excerpt_sha256": "de1002a443a05f71d88cc27b17bbf29fb758718f7b9c1a9a14a48d3e3331133a",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "transitions": {
       "status": "PASS",
@@ -356,31 +366,31 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24585,
-          "line_end": 24585,
+          "line_start": 24587,
+          "line_end": 24587,
           "quote": "**Producer and transition.**",
           "excerpt_sha256": "ee1d0a638e1624393c06de0b82057a27503f09f98cecc617f1ce225d0529eeb1",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24601,
-          "line_end": 24601,
+          "line_start": 24605,
+          "line_end": 24605,
           "quote": "**Lifecycle barriers for",
           "excerpt_sha256": "5c1392ad6829f11c045389ef84f772dc37bfcdd3cc819356765055ea9b04fbfb",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "consumers_checkpoints": {
       "status": "PASS",
@@ -399,12 +409,12 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
@@ -414,11 +424,11 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
-          "line_start": 24593,
-          "line_end": 24593,
+          "line_start": 24597,
+          "line_end": 24597,
           "quote": "**Compatibility.**",
           "excerpt_sha256": "1f2549a6c617bebc1dfaf68610c6d1dcf58a05ee350ae8c170ee238fece5f094",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
@@ -453,17 +463,17 @@
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PASS"
       },
       "change": "carried",
-      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-2 status carried."
+      "change_reason": "Current own owner evidence re-read and mechanically refreshed; cycle-3 status carried."
     },
     "positive_negative_oracles": {
       "status": "PASS",
       "representation": "exact_normative_owner",
-      "finding": "ATS-275 and own full-checker cases refuse replay-only current writes/retries in both scopes, including disposed controls; metadata-only retries preserve the complete original. Trailing-LF and storage joins refuse. All prior cases remain unchanged; native NOT_RUN.",
+      "finding": "ATS-275 and own full-checker Project/application cases cover complete canonical UTF-8 bodies at 16,383/16,384/16,385 bytes, ASCII and multibyte; valid BLAKE3-addressed large semantic-body references and invalid inline/retained copies. Missing/changed/non-durable references fail. Every standing check and B1..B7 regression holds; deliberate failure controls require nonzero exit. Native NOT_RUN.",
       "evidence": [
         {
           "path": "Plans/Automated_Testing_System.md",
@@ -472,27 +482,27 @@
           "line_end": 7280,
           "quote": "- `filesafe.destructive_override_denied`: independent Project and application traces",
           "excerpt_sha256": "749155e78858ff0b521479e8b0007e6bae14e2b0e87da11f36f6aa5a2362442e",
-          "file_sha256": "207d76b13096a08d22d2d1b34ced17689656c1bc8870c41fe9dc17f2b1203446",
+          "file_sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-551",
-          "line_start": 8879,
-          "line_end": 8879,
+          "line_start": 36890,
+          "line_end": 36890,
           "quote": "\"id\": \"filesafe_destructive_override_denied.fix1.1.missing_custody_after_recovery\"",
           "excerpt_sha256": "0deb1f72bd2f17a196e5708d1fac227a0547d8cd456fc38d86e52f71f3c66de3",
-          "file_sha256": "33e29727937552f19c6a5eb2a89b4ebd7446b7b0182e4338f1c174a972b1d838",
+          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
           "quote_check": "exact"
         },
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-551",
           "quote": "**Current-writer eligibility for `filesafe.destructive_override_denied` (review round 2).**",
-          "line_start": 24591,
-          "line_end": 24591,
+          "line_start": 24593,
+          "line_end": 24593,
           "excerpt_sha256": "138b601d4fe23190c32597582fb33bb8c329ee1ece1cc7250d87ced346ec4166",
-          "file_sha256": "1fd46d56fefbd9516c64e54b8bfb4df69eb41d8259b2c6cf82c1b56c15cb97ed",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
           "quote_check": "exact"
         },
         {
@@ -502,37 +512,87 @@
           "line_start": 7286,
           "line_end": 7286,
           "excerpt_sha256": "ba42f24ee562f36a895ac3ec47b73a7dd70d2c3cc4eb030526000b2a81d2ab6d",
-          "file_sha256": "207d76b13096a08d22d2d1b34ced17689656c1bc8870c41fe9dc17f2b1203446",
+          "file_sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
           "quote_check": "exact"
         },
         {
           "path": "Plans/filesafe_event_authority_fixtures.json",
           "unit": "CV-551",
           "quote": "\"id\": \"filesafe_destructive_override_denied.fix2.replay_only_writer.project\"",
-          "line_start": 7355,
-          "line_end": 7355,
+          "line_start": 27644,
+          "line_end": 27644,
           "excerpt_sha256": "0e22ca293557b84b6ebb128523052aef8b65920e1923d62f590a55cd01f0def5",
-          "file_sha256": "33e29727937552f19c6a5eb2a89b4ebd7446b7b0182e4338f1c174a972b1d838",
+          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
           "quote_check": "exact"
         },
         {
           "path": "scripts/pm_filesafe_event_authority.py",
           "unit": "CV-551",
           "quote": "return 'replay_only_not_appendable'",
-          "line_start": 437,
-          "line_end": 437,
+          "line_start": 478,
+          "line_end": 478,
           "excerpt_sha256": "d724ff68974f6d3c28933813a60a372848d55ce5bf8f35ddeacfc7ec4f6c2909",
-          "file_sha256": "bf505dffc7f9fd6b1c05ca898247bfac81a3bbda2e7268b3cec83e23f15b02f9",
+          "file_sha256": "f5f0368481af283a97fb4afc69a981841e75ecaf1f060f9dd0a3600593521c4b",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-551",
+          "quote": "**SP-337 payload boundary for `filesafe.destructive_override_denied` (review round 3).**",
+          "line_start": 24595,
+          "line_end": 24595,
+          "excerpt_sha256": "a11f916ca55b54de014cb9e71ade9acb1fca1f2289b751d6b99a315cf43dd922",
+          "file_sha256": "69bbf0246f117cfc061f1b9ae3575fc88c417b20fbb445c52b1b65d0be85a019",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "unit": "ATS-275",
+          "quote": "**Review round 3 SP-337 regressions for `filesafe.destructive_override_denied`.**",
+          "line_start": 7291,
+          "line_end": 7291,
+          "excerpt_sha256": "e896474413824d0f0d92347ac7e664e6198a2b0c478579977a1a19c6d399ecca",
+          "file_sha256": "01df2049835ab880c837de64ae2a556fe19f5d3b869bc2b53645e7f47350567d",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_event_authority_fixtures.json",
+          "unit": "CV-551",
+          "quote": "\"id\": \"filesafe_destructive_override_denied.fix3.inline_utf8_16385.project\"",
+          "line_start": 28312,
+          "line_end": 28312,
+          "excerpt_sha256": "418bc564651e793fb3c6ff178311e642ae25210744f01d6f58ab99b126b2d90f",
+          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
+          "quote_check": "exact"
+        },
+        {
+          "path": "Plans/filesafe_event_authority_fixtures.json",
+          "unit": "CV-551",
+          "quote": "\"id\": \"filesafe_destructive_override_denied.fix3.sp337_reference.application\"",
+          "line_start": 25936,
+          "line_end": 25936,
+          "excerpt_sha256": "764ff2348cc285969a5a2bbde1ec57ec6d749d37e046cb1649052186dd5ce94b",
+          "file_sha256": "2697bfee1061d39adc6ff1dc7a8f2e8caa32f7f673a70128075dfa90197a9b2b",
+          "quote_check": "exact"
+        },
+        {
+          "path": "scripts/pm_filesafe_event_authority.py",
+          "unit": "CV-551",
+          "quote": "return None, ['inline_payload_too_large']",
+          "line_start": 173,
+          "line_end": 173,
+          "excerpt_sha256": "e8d6ae5f7cf6c653b007b152ff87d0c45613a864fbd88c190b8dc9a62cef64ab",
+          "file_sha256": "f5f0368481af283a97fb4afc69a981841e75ecaf1f060f9dd0a3600593521c4b",
           "quote_check": "exact"
         }
       ],
       "prior": {
-        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle2-regrade.json",
-        "commit": "0585dd597bf5811a7b321a9d8ee8e94ca6ed2992",
+        "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DF-sol/cycle3-regrade.json",
+        "commit": "bd0000e139825d8e99260de647f2421026eadb42",
         "status": "PARTIAL"
       },
       "change": "upgraded",
-      "change_reason": "Round-2 B6 replay-only refusals and B7 original-journal joins now pass the full checker."
+      "change_reason": "Round-3 B8 complete inline byte budget and verified SP-337 reference/stored-copy regressions now pass the full checker."
     }
   },
   "remaining_gaps": [
@@ -546,8 +606,8 @@
     "python3 scripts/pm-plan-index.py validate"
   ],
   "notes": "Prepared normative depth only. Native execution/authenticity, durable storage, filesystem effects, payload addressing and CAS remain NOT_RUN; no admission or governance certification.",
-  "grading_batch": "DF_FIX2_self_grade",
-  "assessed_head": "655a0d97e82541939cf3320f3f72c5a2b9ed13b2",
+  "grading_batch": "DF_FIX3_self_grade",
+  "assessed_head": "223e52e83e7b4147d371005d1c0d0a7621fa515c",
   "counts": {
     "PASS": 10,
     "PARTIAL": 1,
