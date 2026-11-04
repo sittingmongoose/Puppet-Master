@@ -114,3 +114,9 @@ New storage-row JSON Schema validation: 13 rows, zero errors. Derived shard chan
 `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/storage-profile-check.json` — SHA-256 `41190f97c6e8f86658e94aa1a05243c250104d86ccc768a824fce3dbe417f36f`.
 
 `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/new-storage-rows-schema.json` — SHA-256 `0a97e222a99f03141bfecbf35868e2e8d8235dcfc0f5c786a00250703e14c29a`.
+
+## Self-grade and handoff
+
+Contract head assessed: `6d7bf192250c1007fc2bd920e0edac5c63fcba5c`. The separate report/self-grade commit changes no canonical contract. `DG6B.self-grade.json` contains all 19 rows and all twelve cells per row, with exact current line citations and content hashes. The 13 prepared rows each have ten PASS, membership ABSENT and retention PARTIAL; normative_depth_complete is false. Six Persona rows remain UNDISPOSITIONED with the owner conflict recorded, no payload or binding authored.
+
+Worktree is intentionally left at `/home/sittingmongoose/pm-worktrees/DG6B` for integration, as the brief requires. The lead decides whether to accept the six blocked outcomes and resolves retention through RT; this worker has not answered either owner question.
