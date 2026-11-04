@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-FIX1-SELF-GRADE-20261104",
+  "assessment_id": "EA-W2-DMEM-FIX2-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -21,7 +21,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-memory-maintenance-20261104",
-    "commit": "87024556d85e707dea8e1051d8b04d95c9123c14",
+    "commit": "9d197a494c9e091fde0529788d7f6959d1ff0b18",
     "base": "be4766513ff71776346fc73b84f2542990f955af"
   },
   "registry": {
@@ -78,11 +78,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -105,11 +105,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -132,11 +132,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -152,16 +152,16 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -169,14 +169,21 @@
               "line_start": 29490,
               "line_end": 29490,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.completed\"] wi"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29499,
+              "line_end": 29499,
+              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -193,17 +200,24 @@
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.dedup_sweep.completed",
-              "line_start": 21004,
-              "line_end": 21004,
+              "line_start": 22146,
+              "line_end": 22146,
               "quote": "\"name\": \"memory.dedup_sweep.completed:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29499,
+              "line_end": 29499,
+              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -219,11 +233,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -236,14 +250,21 @@
               "line_start": 29494,
               "line_end": 29494,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29499,
+              "line_end": 29499,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -259,11 +280,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -279,11 +300,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -296,41 +317,69 @@
               "line_start": 29495,
               "line_end": 29495,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29499,
+              "line_end": 29499,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-630",
+              "line_start": 29499,
+              "line_end": 29499,
+              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.completed@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.dedup_sweep.completed",
-              "line_start": 21169,
-              "line_end": 21169,
-              "quote": "\"name\": \"memory.dedup_sweep.completed:stale-operation-cas\","
+              "unit": "#/writer_families/0",
+              "line_start": 45643,
+              "line_end": 45643,
+              "quote": "\"name\": \"memory.dedup_sweep.completed:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/0",
+              "line_start": 22892,
+              "line_end": 22892,
+              "quote": "\"name\": \"memory.dedup_sweep.completed:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/0",
+              "line_start": 22912,
+              "line_end": 22912,
+              "quote": "\"name\": \"memory.dedup_sweep.completed:completed-recovery-withdrawal-refusal\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -342,7 +391,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.dedup_sweep.started",
@@ -355,8 +404,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-631",
-          "line_start": 29538,
-          "line_end": 29538,
+          "line_start": 29540,
+          "line_end": 29540,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -381,17 +430,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29538,
-              "line_end": 29538,
+              "line_start": 29540,
+              "line_end": 29540,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -414,11 +463,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -428,24 +477,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29540,
-              "line_end": 29540,
+              "line_start": 29542,
+              "line_end": 29542,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29548,
+              "line_end": 29548,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -461,31 +510,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29539,
-              "line_end": 29539,
+              "line_start": 29541,
+              "line_end": 29541,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.dedup_sweep.started\"] with"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -495,24 +551,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29548,
+              "line_end": 29548,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.dedup_sweep.started",
-              "line_start": 22944,
-              "line_end": 22944,
+              "line_start": 24182,
+              "line_end": 24182,
               "quote": "\"name\": \"memory.dedup_sweep.started:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -522,17 +585,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29538,
-              "line_end": 29538,
+              "line_start": 29540,
+              "line_end": 29540,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -542,17 +605,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29543,
-              "line_end": 29543,
+              "line_start": 29545,
+              "line_end": 29545,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -562,17 +632,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29546,
-              "line_end": 29546,
+              "line_start": 29548,
+              "line_end": 29548,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "Only accepted pre-append start admission may lack an original start; any recorded start receipt or later phase requires the exact retained full-value start"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -582,17 +659,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29542,
-              "line_end": 29542,
+              "line_start": 29544,
+              "line_end": 29544,
               "quote": "Exact consumer reader.memory.dedup_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact type. It "
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -602,44 +679,79 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-631",
-              "line_start": 29544,
-              "line_end": 29544,
+              "line_start": 29546,
+              "line_end": 29546,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2/B3 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-631",
+              "line_start": 29550,
+              "line_end": 29550,
+              "quote": "Newly authored current-writer boundary for exactly memory.dedup_sweep.started@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.dedup_sweep.started",
-              "line_start": 23085,
-              "line_end": 23085,
-              "quote": "\"name\": \"memory.dedup_sweep.started:stale-operation-cas\","
+              "unit": "#/writer_families/1",
+              "line_start": 46799,
+              "line_end": 46799,
+              "quote": "\"name\": \"memory.dedup_sweep.started:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/1",
+              "line_start": 24868,
+              "line_end": 24868,
+              "quote": "\"name\": \"memory.dedup_sweep.started:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/1",
+              "line_start": 24888,
+              "line_end": 24888,
+              "quote": "\"name\": \"memory.dedup_sweep.started:completed-recovery-withdrawal-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/cases",
+              "line_start": 16753,
+              "line_end": 16753,
+              "quote": "\"name\": \"memory.dedup_sweep.started:completed-missing-original-start\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2/B3 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -651,7 +763,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.index.lexical.rebuild.completed",
@@ -664,8 +776,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-632",
-          "line_start": 29587,
-          "line_end": 29587,
+          "line_start": 29591,
+          "line_end": 29591,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -690,17 +802,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29587,
-              "line_end": 29587,
+              "line_start": 29591,
+              "line_end": 29591,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -723,11 +835,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -737,31 +849,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29589,
-              "line_end": 29589,
+              "line_start": 29593,
+              "line_end": 29593,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
-            },
-            {
-              "path": "Plans/storage-plan.md",
-              "unit": "SP-632",
-              "line_start": 29595,
-              "line_end": 29595,
-              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
               "line_start": 29599,
               "line_end": 29599,
+              "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29605,
+              "line_end": 29605,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -777,31 +889,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29588,
-              "line_end": 29588,
+              "line_start": 29592,
+              "line_end": 29592,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.lexical.rebuild.comp"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29601,
+              "line_end": 29601,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -811,31 +930,38 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29599,
+              "line_end": 29599,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.index.lexical.rebuild.completed",
-              "line_start": 26462,
-              "line_end": 26462,
+              "line_start": 27837,
+              "line_end": 27837,
               "quote": "\"name\": \"memory.index.lexical.rebuild.completed:lost-ack-retry-replay-no-effects\","
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29599,
-              "line_end": 29599,
+              "line_start": 29605,
+              "line_end": 29605,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29601,
+              "line_end": 29601,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -845,17 +971,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29587,
-              "line_end": 29587,
+              "line_start": 29591,
+              "line_end": 29591,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -865,17 +991,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29592,
-              "line_end": 29592,
+              "line_start": 29596,
+              "line_end": 29596,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29601,
+              "line_end": 29601,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -885,24 +1018,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29595,
-              "line_end": 29595,
+              "line_start": 29599,
+              "line_end": 29599,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29599,
-              "line_end": 29599,
+              "line_start": 29605,
+              "line_end": 29605,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -912,17 +1045,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29591,
-              "line_end": 29591,
+              "line_start": 29595,
+              "line_end": 29595,
               "quote": "Exact consumer reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exa"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -932,44 +1065,72 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-632",
-              "line_start": 29593,
-              "line_end": 29593,
+              "line_start": 29597,
+              "line_end": 29597,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29601,
+              "line_end": 29601,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-632",
+              "line_start": 29601,
+              "line_end": 29601,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.completed@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.index.lexical.rebuild.completed",
-              "line_start": 26627,
-              "line_end": 26627,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:stale-operation-cas\","
+              "unit": "#/writer_families/2",
+              "line_start": 48017,
+              "line_end": 48017,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/2",
+              "line_start": 29137,
+              "line_end": 29137,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/2",
+              "line_start": 29157,
+              "line_end": 29157,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.completed:completed-recovery-withdrawal-refusal\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -981,7 +1142,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.index.lexical.rebuild.started",
@@ -994,8 +1155,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-633",
-          "line_start": 29644,
-          "line_end": 29644,
+          "line_start": 29650,
+          "line_end": 29650,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -1020,17 +1181,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29644,
-              "line_end": 29644,
+              "line_start": 29650,
+              "line_end": 29650,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1053,11 +1214,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -1067,31 +1228,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29646,
-              "line_end": 29646,
+              "line_start": 29652,
+              "line_end": 29652,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29652,
-              "line_end": 29652,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29656,
-              "line_end": 29656,
+              "line_start": 29664,
+              "line_end": 29664,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1107,31 +1268,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29645,
-              "line_end": 29645,
+              "line_start": 29651,
+              "line_end": 29651,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.lexical.rebuild.star"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29660,
+              "line_end": 29660,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1141,31 +1309,38 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29652,
-              "line_end": 29652,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.index.lexical.rebuild.started",
-              "line_start": 30594,
-              "line_end": 30594,
+              "line_start": 32065,
+              "line_end": 32065,
               "quote": "\"name\": \"memory.index.lexical.rebuild.started:lost-ack-retry-replay-no-effects\","
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29656,
-              "line_end": 29656,
+              "line_start": 29664,
+              "line_end": 29664,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29660,
+              "line_end": 29660,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1175,17 +1350,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29644,
-              "line_end": 29644,
+              "line_start": 29650,
+              "line_end": 29650,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1195,17 +1370,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29649,
-              "line_end": 29649,
+              "line_start": 29655,
+              "line_end": 29655,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29660,
+              "line_end": 29660,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -1215,24 +1397,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29652,
-              "line_end": 29652,
+              "line_start": 29658,
+              "line_end": 29658,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29656,
-              "line_end": 29656,
+              "line_start": 29664,
+              "line_end": 29664,
               "quote": "Newly authored lexical target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_lexical_rebuild. It is n"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29660,
+              "line_end": 29660,
+              "quote": "Only accepted pre-append start admission may lack an original start; any recorded start receipt or later phase requires the exact retained full-value start"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1242,17 +1431,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29648,
-              "line_end": 29648,
+              "line_start": 29654,
+              "line_end": 29654,
               "quote": "Exact consumer reader.memory.index.lexical.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1262,44 +1451,79 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-633",
-              "line_start": 29650,
-              "line_end": 29650,
+              "line_start": 29656,
+              "line_end": 29656,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29660,
+              "line_end": 29660,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2/B3 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-633",
+              "line_start": 29660,
+              "line_end": 29660,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.lexical.rebuild.started@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.index.lexical.rebuild.started",
-              "line_start": 30735,
-              "line_end": 30735,
-              "quote": "\"name\": \"memory.index.lexical.rebuild.started:stale-operation-cas\","
+              "unit": "#/writer_families/3",
+              "line_start": 49175,
+              "line_end": 49175,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/3",
+              "line_start": 33305,
+              "line_end": 33305,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/3",
+              "line_start": 33325,
+              "line_end": 33325,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:completed-recovery-withdrawal-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/cases",
+              "line_start": 17006,
+              "line_end": 17006,
+              "quote": "\"name\": \"memory.index.lexical.rebuild.started:completed-missing-original-start\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2/B3 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -1311,7 +1535,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.index.semantic.rebuild.completed",
@@ -1324,8 +1548,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-634",
-          "line_start": 29701,
-          "line_end": 29701,
+          "line_start": 29709,
+          "line_end": 29709,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -1350,17 +1574,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29701,
-              "line_end": 29701,
+              "line_start": 29709,
+              "line_end": 29709,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1383,11 +1607,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -1397,31 +1621,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29703,
-              "line_end": 29703,
+              "line_start": 29711,
+              "line_end": 29711,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29709,
-              "line_end": 29709,
+              "line_start": 29717,
+              "line_end": 29717,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29713,
-              "line_end": 29713,
+              "line_start": 29723,
+              "line_end": 29723,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1437,31 +1661,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29702,
-              "line_end": 29702,
+              "line_start": 29710,
+              "line_end": 29710,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.semantic.rebuild.com"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29719,
+              "line_end": 29719,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1471,31 +1702,38 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29709,
-              "line_end": 29709,
+              "line_start": 29717,
+              "line_end": 29717,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.index.semantic.rebuild.completed",
-              "line_start": 34396,
-              "line_end": 34396,
+              "line_start": 36004,
+              "line_end": 36004,
               "quote": "\"name\": \"memory.index.semantic.rebuild.completed:lost-ack-retry-replay-no-effects\","
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29713,
-              "line_end": 29713,
+              "line_start": 29723,
+              "line_end": 29723,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29719,
+              "line_end": 29719,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1505,17 +1743,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29701,
-              "line_end": 29701,
+              "line_start": 29709,
+              "line_end": 29709,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1525,17 +1763,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29706,
-              "line_end": 29706,
+              "line_start": 29714,
+              "line_end": 29714,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29719,
+              "line_end": 29719,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -1545,24 +1790,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29709,
-              "line_end": 29709,
+              "line_start": 29717,
+              "line_end": 29717,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29713,
-              "line_end": 29713,
+              "line_start": 29723,
+              "line_end": 29723,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1572,17 +1817,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29705,
-              "line_end": 29705,
+              "line_start": 29713,
+              "line_end": 29713,
               "quote": "Exact consumer reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this ex"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1592,44 +1837,72 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-634",
-              "line_start": 29707,
-              "line_end": 29707,
+              "line_start": 29715,
+              "line_end": 29715,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29719,
+              "line_end": 29719,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-634",
+              "line_start": 29719,
+              "line_end": 29719,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.completed@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.index.semantic.rebuild.completed",
-              "line_start": 34561,
-              "line_end": 34561,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:stale-operation-cas\","
+              "unit": "#/writer_families/4",
+              "line_start": 50381,
+              "line_end": 50381,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/4",
+              "line_start": 37244,
+              "line_end": 37244,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/4",
+              "line_start": 37264,
+              "line_end": 37264,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.completed:completed-recovery-withdrawal-refusal\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -1641,7 +1914,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.index.semantic.rebuild.started",
@@ -1654,8 +1927,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-635",
-          "line_start": 29758,
-          "line_end": 29758,
+          "line_start": 29768,
+          "line_end": 29768,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -1680,17 +1953,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29758,
-              "line_end": 29758,
+              "line_start": 29768,
+              "line_end": 29768,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1713,11 +1986,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -1727,31 +2000,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29760,
-              "line_end": 29760,
+              "line_start": 29770,
+              "line_end": 29770,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29766,
-              "line_end": 29766,
+              "line_start": 29776,
+              "line_end": 29776,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29770,
-              "line_end": 29770,
+              "line_start": 29782,
+              "line_end": 29782,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1767,31 +2040,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29759,
-              "line_end": 29759,
+              "line_start": 29769,
+              "line_end": 29769,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.index.semantic.rebuild.sta"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1801,31 +2081,38 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29766,
-              "line_end": 29766,
+              "line_start": 29776,
+              "line_end": 29776,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.index.semantic.rebuild.started",
-              "line_start": 38198,
-              "line_end": 38198,
+              "line_start": 39902,
+              "line_end": 39902,
               "quote": "\"name\": \"memory.index.semantic.rebuild.started:lost-ack-retry-replay-no-effects\","
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29770,
-              "line_end": 29770,
+              "line_start": 29782,
+              "line_end": 29782,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1835,17 +2122,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29758,
-              "line_end": 29758,
+              "line_start": 29768,
+              "line_end": 29768,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1855,17 +2142,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29763,
-              "line_end": 29763,
+              "line_start": 29773,
+              "line_end": 29773,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -1875,24 +2169,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29766,
-              "line_end": 29766,
+              "line_start": 29776,
+              "line_end": 29776,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29770,
-              "line_end": 29770,
+              "line_start": 29782,
+              "line_end": 29782,
               "quote": "Newly authored semantic target/selection custody for this exact family (per-family round-1 search in DMEM-search.json) uses required nullable prepared_target in index_semantic_rebuild. It is"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Only accepted pre-append start admission may lack an original start; any recorded start receipt or later phase requires the exact retained full-value start"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
-            "status": "PARTIAL"
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change": "carried",
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1902,17 +2203,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29762,
-              "line_end": 29762,
+              "line_start": 29772,
+              "line_end": 29772,
               "quote": "Exact consumer reader.memory.index.semantic.rebuild.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exac"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1922,44 +2223,79 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-635",
-              "line_start": 29764,
-              "line_end": 29764,
+              "line_start": 29774,
+              "line_end": 29774,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2/B3 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-635",
+              "line_start": 29778,
+              "line_end": 29778,
+              "quote": "Newly authored current-writer boundary for exactly memory.index.semantic.rebuild.started@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.index.semantic.rebuild.started",
-              "line_start": 38339,
-              "line_end": 38339,
-              "quote": "\"name\": \"memory.index.semantic.rebuild.started:stale-operation-cas\","
+              "unit": "#/writer_families/5",
+              "line_start": 51539,
+              "line_end": 51539,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/5",
+              "line_start": 41082,
+              "line_end": 41082,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/5",
+              "line_start": 41102,
+              "line_end": 41102,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:completed-recovery-withdrawal-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/cases",
+              "line_start": 17356,
+              "line_end": 17356,
+              "quote": "\"name\": \"memory.index.semantic.rebuild.started:completed-missing-original-start\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2/B3 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -1971,7 +2307,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.verification_sweep.completed",
@@ -1984,8 +2320,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-636",
-          "line_start": 29815,
-          "line_end": 29815,
+          "line_start": 29827,
+          "line_end": 29827,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -2010,17 +2346,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29815,
-              "line_end": 29815,
+              "line_start": 29827,
+              "line_end": 29827,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2043,11 +2379,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -2057,24 +2393,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29817,
-              "line_end": 29817,
+              "line_start": 29829,
+              "line_end": 29829,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29823,
-              "line_end": 29823,
+              "line_start": 29835,
+              "line_end": 29835,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2090,31 +2426,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29816,
-              "line_end": 29816,
+              "line_start": 29828,
+              "line_end": 29828,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.verification_sweep.complet"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29837,
+              "line_end": 29837,
+              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2124,24 +2467,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29823,
-              "line_end": 29823,
+              "line_start": 29835,
+              "line_end": 29835,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.verification_sweep.completed",
-              "line_start": 40572,
-              "line_end": 40572,
+              "line_start": 42413,
+              "line_end": 42413,
               "quote": "\"name\": \"memory.verification_sweep.completed:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29837,
+              "line_end": 29837,
+              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.completed@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2151,17 +2501,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29815,
-              "line_end": 29815,
+              "line_start": 29827,
+              "line_end": 29827,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2171,17 +2521,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29820,
-              "line_end": 29820,
+              "line_start": 29832,
+              "line_end": 29832,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29837,
+              "line_end": 29837,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -2191,17 +2548,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29823,
-              "line_end": 29823,
+              "line_start": 29835,
+              "line_end": 29835,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2211,17 +2568,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29819,
-              "line_end": 29819,
+              "line_start": 29831,
+              "line_end": 29831,
               "quote": "Exact consumer reader.memory.verification_sweep.completed.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact "
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2231,44 +2588,72 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-636",
-              "line_start": 29821,
-              "line_end": 29821,
+              "line_start": 29833,
+              "line_end": 29833,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29837,
+              "line_end": 29837,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-636",
+              "line_start": 29837,
+              "line_end": 29837,
+              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.completed@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.verification_sweep.completed",
-              "line_start": 40737,
-              "line_end": 40737,
-              "quote": "\"name\": \"memory.verification_sweep.completed:stale-operation-cas\","
+              "unit": "#/writer_families/6",
+              "line_start": 52703,
+              "line_end": 52703,
+              "quote": "\"name\": \"memory.verification_sweep.completed:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/6",
+              "line_start": 43159,
+              "line_end": 43159,
+              "quote": "\"name\": \"memory.verification_sweep.completed:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/6",
+              "line_start": 43179,
+              "line_end": 43179,
+              "quote": "\"name\": \"memory.verification_sweep.completed:completed-recovery-withdrawal-refusal\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -2280,7 +2665,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.verification_sweep.started",
@@ -2293,8 +2678,8 @@
         {
           "path": "Plans/storage-plan.md",
           "unit": "SP-637",
-          "line_start": 29864,
-          "line_end": 29864,
+          "line_start": 29878,
+          "line_end": 29878,
           "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
         }
       ],
@@ -2319,17 +2704,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29864,
-              "line_end": 29864,
+              "line_start": 29878,
+              "line_end": 29878,
               "quote": "remains absent from event_family_registry.json, quarantined before append or projection. Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 pe"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2352,11 +2737,11 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "producer": {
           "status": "PASS",
@@ -2366,24 +2751,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29866,
-              "line_end": 29866,
+              "line_start": 29880,
+              "line_end": 29880,
               "quote": "explicitly adopts SP-286 and CV-339 full-value v2 first-AppendReceipt custody: validate admission, append barrier-class SeglogFrameV2 through SP-026/SP-236 with full flush, durably settle or"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29872,
-              "line_end": 29872,
+              "line_start": 29886,
+              "line_end": 29886,
               "quote": "Every mutation is a whole-value CAS against the exact prior operation row under the single maintenance writer; request, scope, source, start time and receipt identities never change. started"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2399,31 +2784,38 @@
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation.",
+          "finding": "Exact Project/operation/source/envelope joins and domain-separated event/key recipes; bounded result identity resolves only the original operation. Own encoded Project dedupe partition and canonical 2.0.0 payload dispatch are now checked.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29865,
-              "line_end": 29865,
+              "line_start": 29879,
+              "line_end": 29879,
               "quote": "Identity recipe for this family: use strict UTF-8 canonical JSON of the array [\"pm.memory.maintenance.event.v1\",storage_instance_id,project_id,operation_id,\"memory.verification_sweep.started"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29888,
+              "line_end": 29888,
+              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2433,24 +2825,31 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29872,
-              "line_end": 29872,
+              "line_start": 29886,
+              "line_end": 29886,
               "quote": "Completed payload status/ref/hash and frozen time must equal that row and, when present, the exact retained SP-286 full-value original. Started retries likewise equal the original full value"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
               "unit": "#/stateful_families/memory.verification_sweep.started",
-              "line_start": 42512,
-              "line_end": 42512,
+              "line_start": 44449,
+              "line_end": 44449,
               "quote": "\"name\": \"memory.verification_sweep.started:lost-ack-retry-replay-no-effects\","
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29888,
+              "line_end": 29888,
+              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.started@1.0.0"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2460,17 +2859,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29864,
-              "line_end": 29864,
+              "line_start": 29878,
+              "line_end": 29878,
               "quote": "Retention is PENDING_RETENTION_DECISION: candidate ordinary telemetry (Case L-3, 90 days/2,000,000 per Project) versus audit authority (indefinite/no count eviction); neither is selected. Un"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2480,17 +2879,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29869,
-              "line_end": 29869,
+              "line_start": 29883,
+              "line_end": 29883,
               "quote": "Original operation/result, canonical gists, EventRecord and SP-286 receipts join coherent BRS-031 capture/restore boundaries; derived indexes are rebuilt, never backed up as canonical gists "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29888,
+              "line_end": 29888,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "transitions": {
           "status": "PASS",
@@ -2500,17 +2906,24 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29872,
-              "line_end": 29872,
+              "line_start": 29886,
+              "line_end": 29886,
               "quote": "Operation rows use the phase constraints of their closed schema: accepted has no event receipt or outcome; started has only the original start receipt; effect_committed has a complete frozen"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29888,
+              "line_end": 29888,
+              "quote": "Only accepted pre-append start admission may lack an original start; any recorded start receipt or later phase requires the exact retained full-value start"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2520,17 +2933,17 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29868,
-              "line_end": 29868,
+              "line_start": 29882,
+              "line_end": 29882,
               "quote": "Exact consumer reader.memory.verification_sweep.started.history.v1@1.0.0 is a newly authored stateless read-only binding used by Memory maintenance history and audit lookup for this exact ty"
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2540,44 +2953,79 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-637",
-              "line_start": 29870,
-              "line_end": 29870,
+              "line_start": 29884,
+              "line_end": 29884,
               "quote": "Withdrawal first fences new command acceptance and this family's writer admission, drains or explicitly leaves unresolved existing original operations without reissuing them, then under the "
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29888,
+              "line_end": 29888,
+              "quote": "Recovery rechecks current Project permission and family withdrawal before any original disclosure, including completed operations; refusal returns no output and leaves durable state unchanged."
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current family-specific owner contract; status remains supported."
+          "change_reason": "Re-read own current family contract at the assessed source head; grade remains supported."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full static checker passes 188 boundary, 84 operation, 240 stateful traces / 428 steps. Own CAS, original equality, crash convergence and no-repeat negatives exist; physical native execution remains NOT_RUN.",
+          "finding": "Full static checker: 206 boundaries, 84 operation cases, 276 traces / 464 steps, 128 canonical writer steps, 105 identifier cases. B1/B2/B3 and four restored-defect probes pass. Native NOT_RUN.",
           "evidence": [
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-637",
+              "line_start": 29888,
+              "line_end": 29888,
+              "quote": "Newly authored current-writer boundary for exactly memory.verification_sweep.started@1.0.0"
+            },
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-315",
-              "line_start": 7243,
-              "line_end": 7243,
-              "quote": "Each exact family owns stateful positive and negative traces for exact-prior whole-value CAS, failed/stale CAS with unchanged state, crash before/after start append and start-row advancement"
+              "line_start": 7245,
+              "line_end": 7245,
+              "quote": "Each exact family additionally owns an independent current-writer boundary suite using the complete canonical EventRecord 2.0.0 schema with format checking"
             },
             {
               "path": "Plans/memory_maintenance_event_fixtures.json",
-              "unit": "#/stateful_families/memory.verification_sweep.started",
-              "line_start": 42653,
-              "line_end": 42653,
-              "quote": "\"name\": \"memory.verification_sweep.started:stale-operation-cas\","
+              "unit": "#/writer_families/7",
+              "line_start": 53859,
+              "line_end": 53859,
+              "quote": "\"name\": \"memory.verification_sweep.started:append-projector-replay-only\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/7",
+              "line_start": 45135,
+              "line_end": 45135,
+              "quote": "\"name\": \"memory.verification_sweep.started:completed-recovery-permission-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/stateful_families/7",
+              "line_start": 45155,
+              "line_end": 45155,
+              "quote": "\"name\": \"memory.verification_sweep.started:completed-recovery-withdrawal-refusal\","
+            },
+            {
+              "path": "Plans/memory_maintenance_event_fixtures.json",
+              "unit": "#/cases",
+              "line_start": 17671,
+              "line_end": 17671,
+              "quote": "\"name\": \"memory.verification_sweep.started:completed-missing-original-start\","
             }
           ],
           "prior": {
-            "source": "DMEM-sol independent review at ef00a9a59f9c4d0a56ac1cf120149f024211d86e",
+            "source": "Astra final review at 47b099a837b84ce8718f69c40a84ebd9f1179d3b",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round 1 closes the reviewed durable-custody/static-oracle gap."
+          "change_reason": "Round 2 repairs B1/B2/B3 and standing identifier guards; current family evidence and full checker revalidated."
         }
       },
       "remaining_gaps": [
@@ -2589,7 +3037,7 @@
       "static_checks_seen": [
         "scripts/pm_memory_maintenance_events.py"
       ],
-      "notes": "Prepared without admission. All ten non-membership/non-retention criteria self-grade PASS at the assessed source head; independent re-review is still required."
+      "notes": "Prepared without admission. Round-2 worker self-grade after Astra blockers; independent re-review remains required. Membership ABSENT, retention PARTIAL and native NOT_RUN remain separate."
     },
     {
       "event_type": "memory.monthly_summary.completed",
@@ -3524,6 +3972,6 @@
       "notes": "No payload or owner contract minted for this held row."
     }
   ],
-  "review_round": 1,
-  "reviewed_head": "ef00a9a59f9c4d0a56ac1cf120149f024211d86e"
+  "review_round": 2,
+  "reviewed_head": "47b099a837b84ce8718f69c40a84ebd9f1179d3b"
 }
