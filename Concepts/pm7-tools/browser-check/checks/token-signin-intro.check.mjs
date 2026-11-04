@@ -5,6 +5,8 @@
 //   token form   the introduction points below to what the token can reach, and that note is below it;
 //   signed in    with the demo token: the introduction is the signed-in one, with no forward reference ("below") and no
 //                service page that never opened ("'s page shows"); the same after Plain English and Expert switch.
+//   re-entry    Back from details (skips completed sign-in), Continue with the same service: known-account intro,
+//               no dangling scope or provider-page reference, both wordings, token method preserved.
 // A browser sign-in's introduction names the service's page (GitHub.com, checked first). On main before the fix the four
 // browser-first services kept "{name}'s page shows the access it asks for" over the token form and after the token
 // signed in (FO-32's variant; Forgejo and Gitea were fixed by ec4c3a3b6a). Both surfaces with --set sandbox=0/1.

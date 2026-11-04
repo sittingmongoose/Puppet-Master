@@ -7,7 +7,7 @@
 //            account changed: the opening line again, with Check access back in place of Continue. In the first look
 //            only: a refused password shows Pip's oops line, and the right one then the done line, or the cheer for the
 //            fault put right in its place.
-//   drive    Checking the drive: the done line once its check passes; Choose another drive, NFS on Where are the files,
+//   drive    Existing Project → Home NAS → mounted drive: checking line in both wordings; Checking the drive: the done line once its check passes; Choose another drive, NFS on Where are the files,
 //            a share, Continue: the NFS step's done line once its own check passes.
 // Each line is read from Pip's bubble as painted (shown, typed out, not empty), against the copy the page holds
 // (pip.say.<screen>.<line>), and from the stage's spec (its lineId). Motion as the kit sets it; --set motion=on for
