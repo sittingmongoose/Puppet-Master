@@ -94,6 +94,23 @@ def repository_origin_resolution(record, rows):
     return {'resolved_value': resolved, 'origin_gate': gate}
 
 
+def onboarding_first_paint(record, rows):
+    """Static presentation scenario, using the existing Settings resolver."""
+    pairs = record['look_pairs'] if record['claimed_context'] else {}
+    applicable = {level: pair for level, pair in pairs.items()
+                  if level != 'project' or record['project_id'] is not None}
+    result = {field: resolve_setting(rows[setting], {
+        level: pair[field] for level, pair in applicable.items() if pair is not None})
+        for field, setting in (('theme', 'general.visual.theme'), ('theme_mode', 'general.visual.theme-mode'))}
+    motion = record['motion']
+    own = {level: motion[level + '_own'] for level in LEVELS} if record['claimed_context'] else {}
+    if record['project_id'] is None:
+        own.pop('project', None)
+    result['reduce_motion'] = resolve_setting(rows['general.visual.reduce-animations'], own,
+                                             os_reduce_motion=motion['os_reduce_motion'])
+    return result
+
+
 def settings_predicate(predicate, record, rows, expected=None):
     if predicate in ('settings.level_and_sparse_maps', 'settings.identical_sparse_key_sets'):
         errors = snapshot_failures(record, rows)
@@ -105,6 +122,16 @@ def settings_predicate(predicate, record, rows, expected=None):
                                os_reduce_motion=record['os_reduce_motion'])
     if predicate == 'settings.repository_origin_resolution':
         return repository_origin_resolution(record, rows)
+    if predicate == 'settings.onboarding_first_paint':
+        return onboarding_first_paint(record, rows)
+    if predicate == 'settings.onboarding_ready_destination':
+        if not record['owner_complete'] or not record['last_block_landed']:
+            return 'wait'
+        if record['path'] == 'later' and record['project_id'] is None:
+            return 'No project'
+        if record['path'] == 'project' and record['project_id']:
+            return 'Planning Wizard'
+        return 'refuse'
     if predicate == 'settings.cas':
         return 'accept' if record['expected_setting_revision'] == record['actual_setting_revision'] else 'refuse'
     if predicate == 'settings.theme_atomic_pair':
