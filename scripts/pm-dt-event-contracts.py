@@ -78,6 +78,13 @@ def partition_for(event):
 
 def application_bytes(value):
     """CV-366 physical MessagePack, preserving finite binary64 and exact integers."""
+    if isinstance(value, int) and not isinstance(value, bool) and value < 0:
+        if value >= -32:
+            return bytes([value & 255])
+        for minimum, marker, fmt in [(-128, b'\xd0', '>b'), (-32768, b'\xd1', '>h'), (-2147483648, b'\xd2', '>i'), (-9223372036854775808, b'\xd3', '>q')]:
+            if value >= minimum:
+                return marker + struct.pack(fmt, value)
+        raise ValueError('signed integer outside int64')
     if isinstance(value, float):
         if not __import__('math').isfinite(value):
             raise ValueError('nonfinite number')
@@ -123,6 +130,8 @@ def append_model(seen, key, digest, result):
 
 def transition(name, payload, before, outcome):
     """The separately authored owner predicates for each exact family."""
+    if name in ['gate.evaluation_started', 'gate.failed', 'gate.passed'] and not gate_score_join(payload, before, outcome):
+        return False
     if name == 'approval.requested':
         return before['episode_state'] == 'blocked' and bool(payload['allowed_action_ids']) and payload['allowed_action_ids'] == before['allowed_action_ids'] and tool_request_join(payload, before)
     if name == 'approval.granted':
@@ -144,13 +153,17 @@ def transition(name, payload, before, outcome):
     if name == 'run.background_enqueued':
         return before['queue_state'] == 'committed' and all(payload[k] == before[k] for k in ['enqueue_id', 'queue_record_ref', 'scope_ref', 'host_ref', 'root_ref'])
     if name == 'tool.denied':
-        return before['policy_decision'] == 'deny' and before['dispatch_state'] == 'not_dispatched' and payload['denial_reason_code'] == before['denial_reason_code']
+        fields = ['denial_reason_code', 'blocked_sequence', 'approval_scope_key', 'blocked_reason_code', 'failure_class', 'allowed_action_ids', 'headless_denied', 'permission_snapshot_id', 'executed_at_all']
+        return denial_emission(before) == 'emit' and all(payload[k] == before[k] for k in fields) and not payload['executed_at_all'] and payload['headless_denied'] == (payload['blocked_reason_code'] == 'headless_ask_denied') and payload['failure_class'] is None
     if name == 'tool.execution_completed':
         return before['execution_state'] == 'started' and all(payload.get(k) == outcome[k] for k in ['result_ref', 'outcome', 'duration_ms'])
     if name == 'tool.execution_started':
         return before['execution_state'] == 'admitted' and before['policy_decision'] == 'allow' and before['schema_valid'] and before['hooks_pass']
     if name == 'tool.invoked':
-        return before['dispatch_state'] == 'started' and outcome['dispatch_state'] == 'attempted_completed' and all(payload.get(k) == outcome[k] for k in ['success', 'latency_ms', 'index_used'])
+        request = before['web_request']
+        meta = payload.get('meta')
+        web_join = request is None and meta is None or request is not None and meta is not None and payload['tool_name'] == meta['tool_id'] and all(meta.get(k) == v for k, v in request.items() if k != 'parent_event_id')
+        return web_join and before['dispatch_state'] == 'started' and outcome['dispatch_state'] == 'attempted_completed' and all(payload.get(k) == outcome[k] for k in ['success', 'latency_ms', 'index_used', 'meta'])
     if name == 'usage.event':
         previous = before['prior_settlement_status']
         state = payload['settlement_status']
@@ -170,6 +183,27 @@ def transition(name, payload, before, outcome):
     if name == 'worktree.deleted':
         return before['allocation_state'] == 'cleanup_eligible' and outcome['allocation_state'] == 'deleted' and before['elapsed_grace_ms'] >= payload['grace_period_ms'] and before['file_lock_checked'] and payload['file_lock_checked'] and not any(before[k] for k in ['active_lock_refs', 'safe_point_refs', 'terminal_session_refs', 'editor_session_refs', 'blocked_recovery_refs']) and not payload.get('active_lock_refs') and not payload.get('safe_point_refs') and all(payload.get(k) == before[k] for k in ['repo_id', 'run_id', 'lane_id', 'package_id'])
     return False
+
+
+def gate_score_join(payload, before, outcome):
+    """Numeric gate results retain Executor's dispatch context, not a new score policy."""
+    if payload.get('score') != outcome['score'] or payload.get('score_threshold') != before['score_threshold']:
+        return False
+    if any(payload.get(k) != before[k] for k in ['dispatch_score_ref', 'dispatch_score_tuple']):
+        return False
+    if 'score' in payload or 'score_threshold' in payload:
+        context = payload.get('dispatch_score_tuple')
+        return context is not None and payload.get('node_id') == context['node_id'] and bool(payload.get('dispatch_score_ref'))
+    return True
+
+
+def denial_emission(before):
+    # FileSafe is fenced pending the competing-owner decision, not resolved here.
+    if before['denial_origin'] == 'filesafe':
+        return 'owner_conflict_stopped'
+    if before['denial_origin'] not in ['policy', 'user'] or before['policy_decision'] != 'deny' or before['dispatch_state'] != 'not_dispatched':
+        return 'no_emission'
+    return 'emit'
 
 
 def time_value(s):
@@ -217,6 +251,14 @@ def accounting_totals(p):
 
 
 def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False):
+    if event['replay_policy'] == 'projector_replay_only':
+        return 'replay_only_not_appendable'
+    if event['payload_ref'] is None:
+        try:
+            if len(application_bytes(event['payload'])) > 16384:
+                return 'payload_ref_required'
+        except ValueError:
+            return 'schema_refused'
     slug = c['event_type'].replace('.', '_')
     source_is_app = completed['envelope_context']['scope_kind'] == 'application'
     source_definition = slug + ('_application_source' if source_is_app else '_source')
@@ -267,13 +309,32 @@ def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, 
         return 'join_refused'
     if c['event_type'] == 'usage.event' and p['usage_event_ref'] != eid:
         return 'join_refused'
+    if c['event_type'] == 'tool.invoked' and completed['before']['web_request'] is not None and event['parent_event_id'] != completed['before']['web_request'].get('parent_event_id'):
+        return 'join_refused'
     if not transition(c['event_type'], p, completed['before'], completed['owner_result']):
         return 'transition_refused'
     return 'accepted'
 
 
+def batch_join(parent, children):
+    p = parent['event']['payload']; pm = p['meta']
+    if pm.get('batch_role') != 'parent' or not children:
+        return False
+    if pm['child_tool_use_ids'] != [v['event']['payload']['tool_use_id'] for v in children] or len(set(pm['child_tool_use_ids'])) != len(children):
+        return False
+    for child in children:
+        e = child['event']; q = e['payload']; cm = q['meta']
+        if cm.get('batch_role') != 'child' or cm['batch_id'] != pm['batch_id'] or cm['parent_tool_use_id'] != p['tool_use_id'] or e['parent_event_id'] != parent['event']['event_id'] or not q.get('provider_attempt_ref') or q['tool_use_id'] == p['tool_use_id']:
+            return False
+        if any(e[k] != parent['event'][k] for k in ['run_id', 'attempt_id', 'project_id', 'scope_kind']):
+            return False
+    return p['success'] == all(v['event']['payload']['success'] for v in children)
+
+
 def recovery(c, f, case):
     """Original-owner/receipt adapters are supplied witnesses, not native authentication."""
+    if case.get('replay_policy', f['event_record']['replay_policy']) == 'projector_replay_only':
+        return {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}
     if not case['admitted']:
         return {'result': 'admission_refused', 'external_effects': 0, 'append_count': 0, 'value': None}
     if not case['source_present'] or not case['owner_proven'] or not case['backup_coherent'] or not case['permission'] or case['deleted']:
@@ -381,7 +442,16 @@ def main():
             bad = copy.deepcopy(done); v = bad['subject'][field]; bad['subject'][field] = v + 1 if isinstance(v, int) else v + '-other'
             check(source_valid(c, prep, bad, event, schemas) != 'accepted', name + ': wrong source subject ' + field)
         for case in f['positive_variants']:
+            check(not list(event_validator.iter_errors(case['event'])), name + ': variant complete envelope ' + case['case'])
             check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == 'accepted', name + ': ' + case['case'])
+        for case in f.get('source_join_negatives', []):
+            check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == case['expected'], name + ': ' + case['case'])
+        replay = copy.deepcopy(event); replay['replay_policy'] = 'projector_replay_only'
+        check(source_valid(c, prep, done, replay, schemas) == 'replay_only_not_appendable', name + ': current writer refuses compatibility-only replay policy')
+        retry = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
+        check(recovery(c, f, retry) == {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': retry refuses compatibility-only replay policy')
+        oversized = copy.deepcopy(event); oversized['payload'] = {'body': 'x' * 16385}
+        check(source_valid(c, prep, done, oversized, schemas) == 'payload_ref_required', name + ': inline body over SP-337 limit requires payload ref')
         for case in f.get('application_identity_negatives', []):
             original = next(v for v in f['positive_variants'] if v['case'] == 'authenticated_application_source')
             a, b, e = (copy.deepcopy(original[k]) for k in ['prepared', 'completed', 'event'])
@@ -393,8 +463,16 @@ def main():
             b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
             check(source_valid(c, a, b, e, schemas) == case['expected'], name + ': app ' + case['case'])
         for case in f['retention_cases']:
-            value = case['input']; eligible = value['policy'] == 'RP-RUNTIME-365D' and value['run_completed_at'] is not None and (time_value(value['now']) - time_value(value['run_completed_at'])).days >= 365 and not value['held'] and not value['dependent']
+            value = case['input']
+            anchor, days = (value.get('run_completed_at'), 365) if value['policy'] == 'RP-RUNTIME-365D' else (value.get('terminal_at'), 2555) if value['policy'] == 'RP-OPERATIONAL-2555D' else (None, None)
+            eligible = anchor is not None and (time_value(value['now']) - time_value(anchor)).days >= days and not value['held'] and not value['dependent']
             check(eligible == case['expected_eligible'], name + ': retention ' + case['case'])
+        check(f['retention_binding_oracle'] == c.get('retention_binding'), name + ': exact retention binding')
+        if c.get('retention_binding'):
+            binding = c['retention_binding']
+            check('one Server-wide counterpart bucket' in binding['application_bucket'], name + ': SP-349 app counting boundary')
+            if name == 'usage.event':
+                check(binding['setting_key'] == 'ai.usage.usage-retention' and binding['default_days'] == 90 and not binding['deletion_enabled'] and not binding['admission_enabled'], name + ': decided Usage setting with adapter fenced')
         for case in f['projection_retention_cases']:
             outcome = 'capacity_fenced' if len(case['held_generations']) == case['existing_generations'] else 'retire_unheld_derived_only'
             check(outcome == case['expected'], name + ': ' + case['case'])
@@ -425,7 +503,27 @@ def main():
         except (ValueError, UnicodeError, json.JSONDecodeError):
             value = None; accepted = False
         check(accepted == vector['accepted'], 'source codec: ' + vector['case'])
+    for vector in load('Plans/dt_event_contract_fixtures.json')['messagepack_integer_vectors']:
+        try:
+            actual = application_bytes(vector['value']).hex()
+        except ValueError:
+            actual = None
+        check(actual == vector['expected_hex'], 'MessagePack integer: ' + vector['case'])
     usage = fixtures['usage.event']
+    for case in fixtures['tool.denied']['non_emission_cases']:
+        disposition = denial_emission(case['before'])
+        check(disposition == case['expected'], 'tool.denied emission boundary: ' + case['case'])
+        check((1 if disposition == 'emit' else 0) == case['append_count'], 'tool.denied append boundary: ' + case['case'])
+    web = fixtures['tool.invoked']
+    for case in web['batch_cases']:
+        parent = copy.deepcopy(next(v for v in web['positive_variants'] if v['case'] == case['parent_case']))
+        children = [copy.deepcopy(next(v for v in web['positive_variants'] if v['case'] == name)) for name in case['child_cases']]
+        for change in case.get('changes', []):
+            target = parent if change['target'] == 'parent' else children[change['target']]
+            for field in change['path'][:-1]:
+                target = target[field]
+            target[change['path'][-1]] = change['value']
+        check(batch_join(parent, children) == case['expected'], 'tool.invoked batch: ' + case['case'])
     for case in usage['accounting_cases']:
         check(accounting_totals(case['payload']) == case['expected'], 'usage accounting: ' + case['case'])
     for case in usage['usage_value_negatives']:
