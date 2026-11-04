@@ -1,6 +1,6 @@
 # DCO drafting report — Event Authority wave 2, 2026-11-04
 
-Branch: `plans/ea-w2-coordination-20261104`. Base: `be4766513f` (origin/main at checkout). Contract commit assessed by the self-grade: `58e68620d2dbad2dbd9554d396538f9577ea29d7`. No landing or admission. Worktree left for integration: `/home/sittingmongoose/pm-worktrees/ea-w2-dco`.
+Branch: `plans/ea-w2-coordination-20261104`. Base: `be4766513f` (origin/main at checkout). Initial contract commit: `58e68620d2dbad2dbd9554d396538f9577ea29d7`. Current self-grade assesses round 1 checker commit `21e4dede26ba23a8374f42cb7873c8d23111db7d`. No landing or admission. Worktree left for integration: `/home/sittingmongoose/pm-worktrees/ea-w2-dco`.
 
 | Family | Outcome | Self-grade | Own owner units |
 |---|---|---|---|
@@ -19,7 +19,7 @@ Each row reuses its own existing OSI-438 producer and CV-353 closed payload, pre
 
 **Newly authored bindings:** SP-540..545 are individual owner adoption contracts. Each reuses `storage.coordination_projector.v1@1.0.0`, `projector.checkpoint.coordination:{project_id}`, its existing checkpoint schema, five existing reader identities and the SP-320 identity recipe. Each binds `storage.coordination_reader.mirror_export.v1@1.0.0` solely to on-request export under SP-339, with current authorization/coverage and live-server access while running. No automatic mirror, new runtime consumer/projector/checkpoint identifier, physical key, storage family or event schema is invented. OSI-650 applies the already answered threshold, without extending it. `coordination_wave2_oracles.json` and `pm_coordination_wave2.py` add boundary and fail-closed regression oracles, not runtime bindings.
 
-The generic static checker now recognizes exactly the seven existing ApplicationV1 payload names while leaving the Project root union unchanged. Project no-null validation excludes those separately governed definitions; it still rejects Project nulls. Its expected Project storage composition copies Project definitions only, matching the existing stored composition rather than adding unused application definitions. Unknown-definition, null, extension and composition regressions are exercised by the DCO checker. Application admission remains governed separately; this wave grants none.
+The generic static checker now recognizes exactly the seven existing ApplicationV1 payload names while leaving the Project root union unchanged. Project no-null validation excludes those separately governed definitions only after enforcing Project reference isolation; it rejects direct and indirect Project references into the nullable application edition. Its projection census permits only the 18 named Project definitions and their 18 known app counterparts. Composition filtering excludes only those exact app names; unknown definitions still fail storage composition. Its expected Project storage composition copies Project definitions only, matching the existing stored composition rather than adding unused application definitions. Unknown-definition, null, extension and composition regressions are exercised by the DCO checker. Application admission remains governed separately; this wave grants none.
 
 ## Premise checks
 
@@ -79,3 +79,41 @@ Report and self-grade copies live in `/mnt/Cursor/PuppetMaster-Evidence/event-au
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/currentness-sha256.txt` — `76fa6f4657ab818ac61ef422c10a66ef11906f79a736374dc2e6e4da4d5acce9`
 
 - `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/index-validate.json` — `4d2ee842e837d8077ca2c28655b3e038551391276dd8545dc18639410a3e455e`
+
+## Review round 1: findings and responses
+
+Reviewed input: `8640c26f84341687138ba8265a0682cf627e6334`; fixes: `21e4dede26ba23a8374f42cb7873c8d23111db7d`. All three actionable findings accepted and fixed. No owner prose, schema, fixture, admission, registry or decision was changed in this round; no regeneration was needed. The existing fixture already has all three correct boundaries. Only two checkers and this report/self-grade change. No pm-mail or subagent was used.
+
+1. **Finding 1 — fixed (`21e4dede26ba23a8374f42cb7873c8d23111db7d`).** `scripts/pm_coordination_events.py:142` enumerates the exact projection definitions; `:522` rejects unknown definitions before composition filtering; `:836` excludes only the exact application set. Unknown `rogue` and `rogueApplicationV1` definitions reach the full checker and must yield both `projection_schema_definition_census` and `coordination_storage_family_mismatch`. Verify with `python3 -B scripts/pm_coordination_wave2.py` (negative probes in `schema_regression_failures`). Legitimate application definitions and the unchanged Project composition pass.
+2. **Finding 2 — fixed (`21e4dede26ba23a8374f42cb7873c8d23111db7d`).** `scripts/pm_coordination_events.py:422` enforces reference isolation across every retained Project subtree, including shared helpers, before accepting the pruned null scan. Project references may name only known Project/shared payload definitions in the same schema. Direct nullable application-field and indirect shared-helper reference mutations must fail this helper with `project_payload_reference_not_isolated`, and fail the complete coordination checker. Verify with the same wave2 command. Existing direct-null and unknown-definition probes also run through the full checker.
+3. **Finding 3 — fixed (`21e4dede26ba23a8374f42cb7873c8d23111db7d`).** `scripts/pm_coordination_wave2.py:23` requires exactly the ages 299999/300000/300001 with boolean false/false/true before evaluation. Missing, empty, incomplete, wrong-expectation and integer-as-boolean mutations run through the complete fixture checker and must report `threshold_oracle_census`. Verify with the same wave2 command. The shipped fixture remains unchanged.
+4. **Finding 4 — integration item.** The ignored `tests/test_pm_coordination_events.py:745–752` is unchanged. This round again ran 50 tests: only the two known TestingSession fingerprint / GitHub count helper subtests fail (exit 1). Separate authorized maintenance must update those helper expectations. This is not an unresolved DCO checker fix.
+5. **Finding 5 — integration item.** Integrate the DL-095 recorded answer from `plans/ea-s09-decisions-hb-scope-20261104` before/with OSI-650 and before `coordination.agent_crashed` admission. `Plans/orchestrator-subagent-integration.md:3969` and `Plans/storage-plan.md:27339` retain that dependency. No answer or Decision Log entry is changed here.
+
+### Round 1 validation and re-grade
+
+At `21e4dede26ba23a8374f42cb7873c8d23111db7d`, each of the six families was re-graded: aborted, crashed, file_ownership_updated, operation_updated, status_updated and unregistered each remain **11 PASS + membership ABSENT → 11 PASS + membership ABSENT**. Total **66 PASS / 6 ABSENT → 66 PASS / 6 ABSENT**. All 72 current quoted cells and source-file hashes were rechecked. Prepared contracts remain separate; no admission or native execution claim follows from passing static probes.
+
+| Check | Exit | Result |
+|---|---:|---|
+| Resource preflight | 0 | 21 GB available RAM; 19 GB available disk |
+| Coordination checker | 0 | top-level pass |
+| Wave2 checker with full-checker negative probes | 0 | top-level pass |
+| Shard check | 0 | pass |
+| Plan index validate | 0 | JSON-parsed top-level pass |
+| Coordination unit module | 1 | 50 tests; only the two known helper-pin failures |
+| Currentness copy | 0 | all 15 files hash-matched |
+| git diff --check | 0 | clean |
+
+No new IDs. Existing lane IDs remain **SP-540..545, OSI-650**; no CV/ATS IDs. The detached `/home/sittingmongoose/pm-worktrees/DCO-fix1` worktree is removed after both commits are pushed, as required by FIX-ROUND.md. No main push, landing, reseal or governance mutation.
+
+Round 1 outputs are retained under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/`; SHA-256 pins follow.
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/checks.json` — `2a3cf6a7b9c81b5859c15bd4321f42db8beccb30dc7f56870d457f8d98ecb4dd`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/coordination.json` — `c185c7e97808849b6fa80f414fd76c41dadadab90340a73dcff327f41cc7b04e`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/currentness-sha256.txt` — `76fa6f4657ab818ac61ef422c10a66ef11906f79a736374dc2e6e4da4d5acce9`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/index-validate.json` — `76e92f8847b5b176a2268971591f10a0e3143b5d1a1bade1474d6bb8d98b3503`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/regrade-verification.json` — `fb6f67f417517ed981e96ac01d87ec62d7d7390ddbcc24ee90a0de25ddca9d49`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/shard-check.txt` — `3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/unittest.txt` — `2213029598cbda77e7964bcc2d1b3af719e1f72386f3e02edaf283107b78fc4e`
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCO/fix-round1/wave2.json` — `a961a9428b5d3f2793445c89e18d0a4b0ede30e672083f105eb23fcd025796c6`

@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.event_authority.depth_assessment.v1",
-  "assessment_id": "DCO-wave2-20261104",
+  "assessment_id": "DCO-fix1-20261104",
   "assessment_kind": "self_grade_prepared_without_admission",
   "rubric": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
-  "assessed_tree": "58e68620d2dbad2dbd9554d396538f9577ea29d7",
+  "assessed_tree": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
   "registry": {
     "path": "Plans/event_family_registry.json",
     "modified": false
@@ -62,9 +62,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -82,9 +85,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "producer": {
           "status": "PASS",
@@ -102,9 +108,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -132,9 +141,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -152,9 +164,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -172,9 +187,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "retention": {
           "status": "PASS",
@@ -202,9 +220,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -222,9 +243,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "transitions": {
           "status": "PASS",
@@ -242,9 +266,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -262,9 +289,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -282,14 +312,17 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -302,9 +335,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         }
       },
       "remaining_gaps": [
@@ -318,7 +354,22 @@
         "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
       ],
       "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
-      "grading_batch": "DCO_self_grade_20261104"
+      "grading_batch": "DCO_self_grade_20261104",
+      "review_round_1": {
+        "before": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "after": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "checker_commit": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+        "integration_items": [
+          "Ignored helper-pin test maintenance (finding 4)",
+          "DL-095 answer integration before/with OSI-650 and before crashed admission (finding 5)"
+        ]
+      }
     },
     {
       "event_type": "coordination.agent_crashed",
@@ -369,9 +420,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -389,9 +443,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "producer": {
           "status": "PASS",
@@ -419,9 +476,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -449,9 +509,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -469,9 +532,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -489,9 +555,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "retention": {
           "status": "PASS",
@@ -519,9 +588,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -539,9 +611,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "transitions": {
           "status": "PASS",
@@ -559,9 +634,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -579,9 +657,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -599,14 +680,17 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -619,9 +703,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         }
       },
       "remaining_gaps": [
@@ -636,7 +723,22 @@
         "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
       ],
       "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
-      "grading_batch": "DCO_self_grade_20261104"
+      "grading_batch": "DCO_self_grade_20261104",
+      "review_round_1": {
+        "before": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "after": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "checker_commit": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+        "integration_items": [
+          "Ignored helper-pin test maintenance (finding 4)",
+          "DL-095 answer integration before/with OSI-650 and before crashed admission (finding 5)"
+        ]
+      }
     },
     {
       "event_type": "coordination.agent_file_ownership_updated",
@@ -686,9 +788,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -706,9 +811,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "producer": {
           "status": "PASS",
@@ -726,9 +834,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -756,9 +867,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -776,9 +890,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -796,9 +913,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "retention": {
           "status": "PASS",
@@ -826,9 +946,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -846,9 +969,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "transitions": {
           "status": "PASS",
@@ -866,9 +992,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -886,9 +1015,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -906,14 +1038,17 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -926,9 +1061,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         }
       },
       "remaining_gaps": [
@@ -942,7 +1080,22 @@
         "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
       ],
       "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
-      "grading_batch": "DCO_self_grade_20261104"
+      "grading_batch": "DCO_self_grade_20261104",
+      "review_round_1": {
+        "before": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "after": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "checker_commit": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+        "integration_items": [
+          "Ignored helper-pin test maintenance (finding 4)",
+          "DL-095 answer integration before/with OSI-650 and before crashed admission (finding 5)"
+        ]
+      }
     },
     {
       "event_type": "coordination.agent_operation_updated",
@@ -992,9 +1145,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1012,9 +1168,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "producer": {
           "status": "PASS",
@@ -1032,9 +1191,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1062,9 +1224,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1082,9 +1247,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1102,9 +1270,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "retention": {
           "status": "PASS",
@@ -1132,9 +1303,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1152,9 +1326,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "transitions": {
           "status": "PASS",
@@ -1172,9 +1349,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1192,9 +1372,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1212,14 +1395,17 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1232,9 +1418,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         }
       },
       "remaining_gaps": [
@@ -1248,7 +1437,22 @@
         "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
       ],
       "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
-      "grading_batch": "DCO_self_grade_20261104"
+      "grading_batch": "DCO_self_grade_20261104",
+      "review_round_1": {
+        "before": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "after": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "checker_commit": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+        "integration_items": [
+          "Ignored helper-pin test maintenance (finding 4)",
+          "DL-095 answer integration before/with OSI-650 and before crashed admission (finding 5)"
+        ]
+      }
     },
     {
       "event_type": "coordination.agent_status_updated",
@@ -1298,9 +1502,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1318,9 +1525,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "producer": {
           "status": "PASS",
@@ -1338,9 +1548,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1368,9 +1581,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1388,9 +1604,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1408,9 +1627,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "retention": {
           "status": "PASS",
@@ -1438,9 +1660,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1458,9 +1683,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "transitions": {
           "status": "PASS",
@@ -1478,9 +1706,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1498,9 +1729,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1518,14 +1752,17 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1538,9 +1775,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         }
       },
       "remaining_gaps": [
@@ -1554,7 +1794,22 @@
         "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
       ],
       "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
-      "grading_batch": "DCO_self_grade_20261104"
+      "grading_batch": "DCO_self_grade_20261104",
+      "review_round_1": {
+        "before": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "after": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "checker_commit": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+        "integration_items": [
+          "Ignored helper-pin test maintenance (finding 4)",
+          "DL-095 answer integration before/with OSI-650 and before crashed admission (finding 5)"
+        ]
+      }
     },
     {
       "event_type": "coordination.agent_unregistered",
@@ -1604,9 +1859,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1624,9 +1882,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "producer": {
           "status": "PASS",
@@ -1644,9 +1905,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1674,9 +1938,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1694,9 +1961,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1714,9 +1984,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "retention": {
           "status": "PASS",
@@ -1744,9 +2017,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1764,9 +2040,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "transitions": {
           "status": "PASS",
@@ -1784,9 +2063,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1804,9 +2086,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1824,14 +2109,17 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "This family has its own payload/EventRecord/identity/transition cases under ATS-058; both static checkers pass. Native NOT_RUN. The unittest pin subtest has two independently reproduced base failures.",
+          "finding": "Own ATS-058 payload/EventRecord/identity/transition cases remain; both static checkers pass with unknown projection, Project-to-app reference and missing/empty heartbeat negative probes. Native NOT_RUN; only the two known helper-pin subtests fail.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
@@ -1844,9 +2132,12 @@
               "quote_check": "exact"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Fresh self-grade of this exact prepared Project family; no sibling grade carried forward."
+          "prior": {
+            "source": "DCO-self-grade.json at 8640c26f84341687138ba8265a0682cf627e6334",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Round 1 re-grade: current family owner text and cited evidence remain unchanged; strengthened static schema, composition and oracle enforcement preserves this prepared grade."
         }
       },
       "remaining_gaps": [
@@ -1860,7 +2151,71 @@
         "tests/test_pm_coordination_events.py: 50 tests, one test with two failing helper subtests, reproduced on base"
       ],
       "notes": "Project edition only. Prepared, not admitted. Self-grade is not independent review or native proof.",
-      "grading_batch": "DCO_self_grade_20261104"
+      "grading_batch": "DCO_self_grade_20261104",
+      "review_round_1": {
+        "before": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "after": {
+          "PASS": 11,
+          "ABSENT": 1
+        },
+        "checker_commit": "21e4dede26ba23a8374f42cb7873c8d23111db7d",
+        "integration_items": [
+          "Ignored helper-pin test maintenance (finding 4)",
+          "DL-095 answer integration before/with OSI-650 and before crashed admission (finding 5)"
+        ]
+      }
     }
-  ]
+  ],
+  "review_round": 1,
+  "prior_assessed_tree": "58e68620d2dbad2dbd9554d396538f9577ea29d7",
+  "round_1_verification": {
+    "cells": 72,
+    "exact_quotes_and_file_hashes": "pass",
+    "static_checks": {
+      "coordination": {
+        "command": "python3 -B scripts/pm_coordination_events.py",
+        "exit": 0,
+        "status": "pass"
+      },
+      "wave2": {
+        "command": "python3 -B scripts/pm_coordination_wave2.py",
+        "exit": 0,
+        "status": "pass"
+      },
+      "shards": {
+        "command": "python3 -B scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "exit": 0,
+        "status": "pass"
+      },
+      "index": {
+        "command": "python3 -B scripts/pm-plan-index.py validate",
+        "exit": 0,
+        "top_level_status": "pass"
+      },
+      "unittest": {
+        "command": "python3 -B -m unittest discover -s tests -p test_pm_coordination_events.py -v",
+        "exit": 1,
+        "tests": 50,
+        "failures": "Two previously reproduced helper-pin subtests; no other failures"
+      },
+      "diff_check": {
+        "command": "git diff --check",
+        "exit": 0
+      }
+    },
+    "negative_cases": [
+      "rogue projection",
+      "rogueApplicationV1 projection",
+      "Project nullable field referencing app definition",
+      "Project shared helper referencing app definition",
+      "missing heartbeat vectors",
+      "empty heartbeat vectors",
+      "incomplete heartbeat vectors",
+      "wrong boundary expectation",
+      "integer instead of boolean expectation"
+    ]
+  }
 }
