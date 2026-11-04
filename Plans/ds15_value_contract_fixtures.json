@@ -285,6 +285,13 @@
           }
         },
         "valid": false
+      },
+      {
+        "id": "trailing-LF-workflow-outcome_ref",
+        "changes": {
+          "workflow/outcome_ref": "dev:outcome:1\n"
+        },
+        "valid": false
       }
     ],
     "migration_base": {
@@ -390,6 +397,48 @@
           "evidence/backup_verified": false
         },
         "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-adapter_capability_snapshot_ref",
+        "changes": {
+          "source/adapter_capability_snapshot_ref": "adapter:capabilities:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-owner_ref",
+        "changes": {
+          "source/owner_ref": "owner:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-lease_ref",
+        "changes": {
+          "source/lease_ref": "lease:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-permission_grant_ref",
+        "changes": {
+          "source/permission_grant_ref": "permission:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-policy_ref",
+        "changes": {
+          "source/policy_ref": "policy:1\n"
+        },
+        "expected": null
+      },
+      {
+        "id": "legacy-DAP-trailing-LF-source-waiter_arm_ref",
+        "changes": {
+          "source/waiter_arm_ref": "waiter:1\n"
+        },
+        "expected": null
       }
     ]
   },
@@ -443,6 +492,13 @@
         "id": "unknown-version",
         "changes": {
           "schema_version": "9.0.0"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-source_ref",
+        "changes": {
+          "source_ref": "source:1\n"
         },
         "valid": false
       }
@@ -626,6 +682,27 @@
         "id": "no-raw-page",
         "changes": {
           "page_body": "raw"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-source_ref",
+        "changes": {
+          "source_ref": "capture:source:1\n"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-provenance_ref",
+        "changes": {
+          "provenance_ref": "capture:provenance:1\n"
+        },
+        "valid": false
+      },
+      {
+        "id": "trailing-LF-summary_ref",
+        "changes": {
+          "summary_ref": "capture:summary:1\n"
         },
         "valid": false
       }

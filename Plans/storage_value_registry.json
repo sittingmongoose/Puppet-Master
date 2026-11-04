@@ -28030,7 +28030,7 @@
                     "type": "string",
                     "minLength": 1,
                     "maxLength": 512,
-                    "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+                    "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
                   },
                   "run_id": {
                     "type": [
@@ -28234,7 +28234,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 512,
-            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
           },
           "nullable_non_empty_string": {
             "oneOf": [
@@ -127433,7 +127433,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 512,
-            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
           },
           "restore_intent": {
             "enum": [
@@ -127518,7 +127518,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 512,
-            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$"
+            "pattern": "^(?![A-Za-z]:[\\\\/])(?!/)(?!file:)(?!sk-[A-Za-z0-9_-]{8,}$)(?!.*(?:password|passwd|secret|api[_-]?key|access[_-]?token|refresh[_-]?token|bearer))[A-Za-z][A-Za-z0-9._:/#-]*$(?![\\s\\S])"
           }
         }
       }

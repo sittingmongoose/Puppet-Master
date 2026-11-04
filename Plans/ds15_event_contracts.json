@@ -147,7 +147,7 @@
     "checkpoint_schema_ref": "Plans/ds15_browser_context_captured_checkpoint.schema.json",
     "consumer": "reader.ds15.browser_context_captured.v1@1.0.0",
     "checkpoint_key": "projector.checkpoint.ds15.browser_context_captured:{scope_key}",
-    "idempotency_recipe": "sha256(canonical MessagePack array [\"browser.context_captured\", \"1.0.0\", actual scope map with UTF-8 sorted keys, thread_id, chip_id])",
+    "idempotency_recipe": "application scope: application@1:{hex(server_id)}:{hex(owner_operation_id)} from the immutable OriginalBrowserTransitionSource.original_operation_id; Project scope: sha256(canonical MessagePack array [\"browser.context_captured\", \"1.0.0\", actual scope map with UTF-8 sorted keys, thread_id, chip_id])",
     "identity_fields": [
       "thread_id",
       "chip_id"
@@ -162,6 +162,12 @@
       "Plans/storage-plan.md:1154-1166",
       "Plans/Section15_MVP_Promoted_Features_Spec.md:757",
       "Plans/UI_Command_Catalog.md:824-846"
+    ],
+    "project_idempotency_recipe": "sha256(canonical MessagePack array [\"browser.context_captured\", \"1.0.0\", actual scope map with UTF-8 sorted keys, thread_id, chip_id])",
+    "application_source_ref": "Plans/application_workflow_sources.schema.json#/$defs/OriginalBrowserTransitionSource",
+    "application_identity_fields": [
+      "server_id",
+      "original_operation_id"
     ]
   },
   {

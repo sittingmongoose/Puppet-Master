@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L23953-L25285
 
-Source SHA256: `c5d5283900db66c154a539e17a87931d0bbf00daae3fb3973c1ba49ceb1f881e`
+Source SHA256: `f4b6b2a2a48f34da3b40ba18610534cc293bab8dd9265b2c2e8ab17e029aa6e5`
 
 ---
 
@@ -871,7 +871,7 @@ The selected app request union accepts only an authenticated user actor. A malfo
   "unit_type": "contract",
   "status": "accepted",
   "owner_doc": "Plans/Contracts_V0.md",
-  "canonical_text": "browser.context_captured@1.0.0 uses exact closed Plans/ds15_browser_context_captured.schema.json and checkpoint Plans/ds15_browser_context_captured_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310 and Plans/storage-plan.md#SP-647 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Chip value binding: Plans/ds15_browser_capture_chip_v2.schema.json governs the typed browser entry inside composer_prep_state.v1:{thread_id}. No browser-owned composer or separate chip storage family. Migration validates actual thread/namespace and preserves sibling entries and draft bytes; unresolved legacy chip stays visibly unavailable, never silently reassigned. Append/passive replay cannot recreate a chip that the user sent or removed. Read/serialization rechecks current permissions, source deletion and chip blocked/expired/scrubbed/revoked state; unavailable chips may remain visible but never serialize as successful attachments.",
+  "canonical_text": "browser.context_captured@1.0.0 uses exact closed Plans/ds15_browser_context_captured.schema.json and checkpoint Plans/ds15_browser_context_captured_checkpoint.schema.json. Independently adopts entire Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-310 and Plans/storage-plan.md#SP-647 including producer ordering, scope/identity, transitions, replay, original custody, permission/deletion and compatibility/withdrawal. Unknown fields/versions refuse; no admission. Chip value binding: Plans/ds15_browser_capture_chip_v2.schema.json governs the typed browser entry inside composer_prep_state.v1:{thread_id}. No browser-owned composer or separate chip storage family. Migration validates actual thread/namespace and preserves sibling entries and draft bytes; unresolved legacy chip stays visibly unavailable, never silently reassigned. Append/passive replay cannot recreate a chip that the user sent or removed. Read/serialization rechecks current permissions, source deletion and chip blocked/expired/scrubbed/revoked state; unavailable chips may remain visible but never serialize as successful attachments.\nApplication identity follows CV-366 exactly: application@1:{hex(server_id)}:{hex(owner_operation_id)}, using UTF-8 lowercase hex of OriginalBrowserTransitionSource.server_id and immutable original_operation_id through owner.browser.transition.application@1.0.0. Preserve original source/thread/chip/ordinary user/Computer/profile/BrowserSession joins and SP-286 full-value custody. Wrong or absent original identity and a raw tuple/scope hash refuse. The Project MessagePack recipe remains unchanged; scope_key is a checkpoint namespace only. Append recovery rejects projector_replay_only as replay_only_not_appendable; publication rechecks current permission/source/access while retained receipt resolution remains independent of retired controls.",
   "gui_related": false,
   "gui_classification_reason": "Durable event/runtime contract.",
   "depends_on": [

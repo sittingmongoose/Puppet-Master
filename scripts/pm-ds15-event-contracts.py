@@ -3,12 +3,21 @@
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 import jsonschema
 import importlib.util
+from functools import lru_cache
+from jsonschema.validators import extend
+from referencing import Registry, Resource
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMAT = jsonschema.FormatChecker()
+def exact_pattern(validator, pattern, instance, schema):
+    if isinstance(instance, str) and re.fullmatch(pattern, instance) is None:
+        yield jsonschema.ValidationError('String does not fully match identifier pattern')
+
+StrictValidator = extend(jsonschema.Draft202012Validator, {'pattern': exact_pattern})
 _codec_spec = importlib.util.spec_from_file_location('pm_ds15_readiness_codec', ROOT / 'scripts/pm-implementation-readiness.py')
 _codec = importlib.util.module_from_spec(_codec_spec)
 _codec_spec.loader.exec_module(_codec)
@@ -16,21 +25,108 @@ _debug_spec = importlib.util.spec_from_file_location('pm_ds15_debug_semantics', 
 _debug = importlib.util.module_from_spec(_debug_spec)
 _debug_spec.loader.exec_module(_debug)
 
+@lru_cache(maxsize=None)
 def read(path):
     return json.loads((ROOT / path).read_text())
 
 def validator(schema):
+    return cached_validator(json.dumps(schema, sort_keys=True))
+
+@lru_cache(maxsize=None)
+def cached_validator(encoded):
+    schema = json.loads(encoded)
     jsonschema.Draft202012Validator.check_schema(schema)
-    return jsonschema.Draft202012Validator(schema, format_checker=FORMAT)
+    return StrictValidator(schema, format_checker=FORMAT)
 
-def digest(value):
-    # Test-only normalized bytes; production uses SP-026/SP-286 codecs.
-    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+@lru_cache(maxsize=1)
+def application_source_validator():
+    registry = Registry()
+    for name in ('shared_integration_runtime', 'application_workflow_contracts', 'application_workflow_sources'):
+        schema = read('Plans/' + name + '.schema.json')
+        resource = Resource.from_contents(schema)
+        registry = registry.with_resource(schema['$id'], resource)
+        registry = registry.with_resource('https://puppetmaster.local/Plans/' + name + '.schema.json', resource)
+    schema = read('Plans/application_workflow_sources.schema.json')
+    return StrictValidator({'$defs': schema['$defs'], '$ref': '#/$defs/OriginalBrowserTransitionSource'},
+                           registry=registry, format_checker=FORMAT)
 
-def identity(c, payload):
+def identity(c, payload, source=None):
+    if payload.get('scope', {}).get('kind') == 'app':
+        if not source:
+            raise ValueError('Application identity requires original Server/owner-operation custody')
+        return 'application@1:{}:{}'.format(source['server_id'].encode().hex(),
+                                           source['original_operation_id'].encode().hex())
     scope = [payload['project_id']] if c['scope_policy'] == 'project_only' else [payload['scope']]
     parts = [c['event_type'], c['family_revision'], *scope] + [payload[k] for k in c['identity_fields']]
     return hashlib.sha256(_codec.canonical_messagepack_bytes(parts)).hexdigest()
+
+def commitment(event):
+    domain = 'pm.storage.original_event_value_commitment.v1'
+    codec = 'pm.seglog_frame_v2.event_value.canonical_msgpack.v1'
+    preimage = [domain, '1.0.0', codec, event['schema_id'], event['schema_version'], event]
+    return {'schema_id': domain, 'schema_version': '1.0.0', 'codec': codec, 'domain': domain,
+            'event_schema_id': event['schema_id'], 'event_schema_version': event['schema_version'],
+            'sha256': hashlib.sha256(_codec.canonical_messagepack_bytes(preimage)).hexdigest()}
+
+def shared_valid(kind, value):
+    schema = read('Plans/event_append_receipt_contracts.schema.json')
+    return not list(validator({'$defs': schema['$defs'], '$ref': '#/$defs/' + kind}).iter_errors(value))
+
+def envelope_ok(c, d, retry=True):
+    e, original = d['envelope'], d['original']['event']
+    scope = d['context']['scope']
+    if (list(validator(read('Plans/event_record.schema.json')).iter_errors(e))
+            or list(validator(read('Plans/event_record.schema.json')).iter_errors(original))
+            or e['event_type'] != c['event_type'] or not re.fullmatch(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+', e['event_type'])
+            or e['replay_policy'] != 'dedupe_by_idempotency_key'
+            or original['replay_policy'] != 'dedupe_by_idempotency_key'
+            or e['scope_kind'] != ('application' if scope['kind'] == 'app' else 'project')
+            or e['project_id'] != scope['project_id'] or e['payload'] != d['payload']
+            or e['run_id'] != d['payload'].get('run_id') or e['thread_id'] != d['payload'].get('thread_id')
+            or e['payload_schema_id'] != read(c['payload_schema_ref'])['$id']
+            or d['scope_partition'] != _codec.scope_partition(e['scope_kind'], e['project_id'])
+            or len(_codec.canonical_messagepack_bytes(e['payload'])) > 16384):
+        return False
+    # The retry equality domain excludes only Storage-assigned metadata. Full original
+    # value custody below independently commits those original metadata fields too.
+    if retry and (e['event_id'] != original['event_id']
+            or _codec.event_producer_semantic_digest(e) != _codec.event_producer_semantic_digest(original)):
+        return False
+    source = d.get('application_source')
+    if scope['kind'] == 'app':
+        if (not source or source != d['original']['application_source']
+                or list(application_source_validator().iter_errors(source))
+                or source['schema_id'] != 'pm.application_source.browser_transition.v1'
+                or source['interface_id'] != 'owner.browser.transition.application@1.0.0'
+                or source['storage_instance_id'] != d['storage_instance_id']
+                or source['thread_id'] != e['thread_id']
+                or source['scope']['scope_kind'] != 'application' or source['scope']['project_id'] is not None
+                or source['scope']['server_id'] != source['server_id']
+                or source['original_output'] is None
+                or source['original_output']['profile_id'] != scope['profile_id']
+                or d['payload']['browser_session_id'] not in source['original_output']['session_refs']
+                or any(stage['original_operation_id'] != source['original_operation_id']
+                       for stage in source['stage_custody'].values())
+                or not all(isinstance(source.get(k), str) and 0 < len(source[k]) <= 256 and '\n' not in source[k]
+                           for k in ('server_id', 'original_operation_id'))):
+            return False
+    return e['idempotency_key'] == identity(c, e['payload'], source)
+
+def receipt_ok(d):
+    r, custody, result, event = d['receipt'], d['custody'], d['issued_result'], d['original']['event']
+    if not (shared_valid('AppendReceipt', r) and shared_valid('custody_v2', custody)
+            and shared_valid('full_value_result', result)):
+        return False
+    return (r == custody['first_append_receipt'] == result['first_append_receipt']
+            and r['event_id'] == event['event_id'] and r['sequence_id'] == event['sequence_id']
+            and r['byte_offset'] < r['durable_end_offset']
+            and custody['original_event_value_commitment'] == result['original_event_value_commitment'] == commitment(event)
+            and custody['original_segment_ref'] == result['original_segment_ref']
+            and custody['storage_instance_id'] == d['storage_instance_id']
+            and custody['scope_partition'] == d['scope_partition']
+            and custody['event_id'] == event['event_id'] and custody['event_type'] == event['event_type']
+            and custody['idempotency_key'] == event['idempotency_key']
+            and custody['producer_semantic_digest'] == _codec.event_producer_semantic_digest(event))
 
 def owner_text(c):
     path, uid = c['semantic_owner'].split('#')
@@ -116,26 +212,40 @@ def payload_ok(c, p, x):
 def evaluate(c, op, d):
     """Normative reference model over concrete source/receipt/index values."""
     p, x = d['payload'], d['context']
+    if op in ('payload', 'recover', 'publish', 'withdraw_writer'):
+        policies = [d['envelope'].get('replay_policy'), d['original']['event'].get('replay_policy'),
+                    d.get('replay_policy'), x.get('replay_policy'), x.get('envelope_replay_policy')]
+        if 'projector_replay_only' in policies:
+            return {'result': 'REFUSE', 'effects': 0, 'error': 'replay_only_not_appendable'}
     if op == 'payload':
-        return {'result': 'ACCEPT' if payload_ok(c, p, x) else 'REFUSE', 'effects': 0}
+        return {'result': 'ACCEPT' if payload_ok(c, p, x) and envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
     if op in ('recover', 'publish', 'read'):
         o, r, out = d['original'], d['receipt'], d['outcome']
         if out is None or not out['committed'] or not d['backup_closure_verified']:
             return {'result': 'UNAVAILABLE', 'effects': 0}
-        if (not payload_ok(c, o['payload'], x) or p != o['payload'] or out['payload'] != o['payload']
-                or out['event_id'] != o['event_id'] or o['idempotency_key'] != identity(c, p)):
+        if (not payload_ok(c, o['payload'], d['original_context']) or not envelope_ok(c, d)
+                or p != o['payload'] or out['payload'] != o['payload']
+                or out['event_id'] != o['event_id'] or o['event']['payload'] != o['payload']
+                or o['event']['event_id'] != o['event_id'] or o['idempotency_key'] != o['event']['idempotency_key']):
             return {'result': 'REFUSE', 'effects': 0}
         if p.get('outcome_ref', out['source_ref']) != out['source_ref']:
             return {'result': 'REFUSE', 'effects': 0}
-        if r is None:
-            return {'result': 'APPEND_ORIGINAL' if op == 'recover' else 'PENDING', 'effects': 0, 'event_id': o['event_id']}
-        if any(r[k] != v for k, v in {'event_id': o['event_id'], 'idempotency_key': o['idempotency_key'], 'payload_sha256': digest(p)}.items()):
+        # Only pure retained-receipt resolution is independent of retired source
+        # controls. New append recovery and publication keep the current joins.
+        if not (op == 'recover' and r is not None) and not payload_ok(c, o['payload'], x):
             return {'result': 'REFUSE', 'effects': 0}
-        if op == 'read' and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']):
-            return {'result': 'UNAVAILABLE', 'effects': 0}
+        if op in ('publish', 'read') and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']
+                                         or not x['owner_command_authorized']):
+            return {'result': 'REFUSE' if op == 'publish' else 'UNAVAILABLE', 'effects': 0}
+        if r is None:
+            if op == 'recover' and (not d['permission_now'] or d['source_deleted_now'] or not d['share_current']):
+                return {'result': 'REFUSE', 'effects': 0}
+            return {'result': 'APPEND_ORIGINAL' if op == 'recover' else 'PENDING', 'effects': 0, 'event_id': o['event_id']}
+        if not receipt_ok(d):
+            return {'result': 'REFUSE', 'effects': 0}
         if op == 'publish' and not d['receipt_retained']:
             return {'result': 'PENDING', 'effects': 0, 'event_id': o['event_id']}
-        return {'result': 'ORIGINAL', 'effects': 0, 'event_id': o['event_id'], 'receipt_ref': r['receipt_ref']}
+        return {'result': 'ORIGINAL', 'effects': 0, 'event_id': o['event_id'], 'receipt_ref': d['receipt_ref']}
     if op in ('checkpoint', 'rebuild'):
         cp = d['checkpoint']
         if (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(cp))
@@ -149,19 +259,37 @@ def evaluate(c, op, d):
                 or cp['state'] != 'current' or token != d['selected_token']
                 or d['live_snapshot_id'] != d['current_live_snapshot_id']
                 or token['storage_instance_id'] != token['source_selection']['storage_instance_id']
+                or not d['share_current'] or not envelope_ok(c, d) or not receipt_ok(d)
+                or token['storage_instance_id'] != d['storage_instance_id']
                 or cp.get('project_id') != p.get('project_id') or cp.get('scope') != p.get('scope')):
             return {'result': 'REFUSE', 'effects': 0}
         if cp == d['stored_previous']:
             return {'result': 'UNCHANGED', 'effects': 0}
-        rows, low, high = d['index_rows'], d['scan_low'], d['scan_high']
-        if ([r['sequence'] for r in rows] != list(range(low, high + 1))
+        rows, low, high, source = d['index_rows'], d['scan_low'], d['scan_high'], d['selected_source']
+        prior = d['stored_previous']
+        source_rows = source['rows']
+        start = source['first_sequence'] if prior is None else prior['through_sequence_id'] + 1
+        if (source['storage_instance_id'] != d['storage_instance_id']
+                or source['index_read_token'] != token or source['last_sequence'] != d['selected_high']
+                or [r['sequence'] for r in source_rows] != list(range(source['first_sequence'], source['last_sequence'] + 1))
+                or any(r['scope_partition'] != _codec.scope_partition('application' if r['scope']['kind'] == 'app' else 'project', r['scope']['project_id']) for r in source_rows)
+                or low != start or rows != [r for r in source_rows if low <= r['sequence'] <= high]
+                or [r['sequence'] for r in rows] != list(range(low, high + 1))
                 or cp['through_sequence_id'] != high or high != d['selected_high']
-                or (d['stored_previous'] is not None and low != d['stored_previous']['through_sequence_id'] + 1)):
+                or (prior is not None and (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(prior))
+                    or any(prior['index_read_token'][key] != token[key]
+                           for key in ('storage_instance_id', 'generation_id', 'generation_anchor_sha256'))
+                    or prior.get('project_id') != cp.get('project_id') or prior.get('scope') != cp.get('scope')
+                    or prior['state'] != 'current'))):
             return {'result': 'REFUSE', 'effects': 0}
         matches = [r['event_id'] for r in rows if r['event_type'] == c['event_type'] and r['scope'] == x['scope']]
-        if not matches or matches != d['selected_matches'] or cp['last_event_id'] != matches[-1]:
+        earlier = [r['event_id'] for r in source_rows if r['sequence'] < low and r['event_type'] == c['event_type'] and r['scope'] == x['scope']]
+        if prior is not None and (not earlier or prior['last_event_id'] != earlier[-1]):
             return {'result': 'REFUSE', 'effects': 0}
-        return {'result': 'ADVANCE', 'effects': 0, 'through_sequence_id': high, 'last_event_id': matches[-1]}
+        last = matches[-1] if matches else (prior['last_event_id'] if prior is not None else None)
+        if last is None or matches != d['selected_matches'] or cp['last_event_id'] != last:
+            return {'result': 'REFUSE', 'effects': 0}
+        return {'result': 'ADVANCE', 'effects': 0, 'through_sequence_id': high, 'last_event_id': last}
     if op == 'withdraw_writer':
         admitted = d['admitted_sequence']
         if admitted is None or admitted > d['withdrawal_frontier']:
@@ -187,7 +315,19 @@ REQUIRED = {'valid-transition', 'invalid-transition', 'envelope-mismatch', 'orig
             'coverage-gap', 'filtered-omission', 'cas-race', 'token-change', 'snapshot-change',
             'source-instance-mismatch', 'withdrawn-reader', 'withdrawn-writer', 'drain-admitted',
             'rebuild-valid', 'rebuild-missing-prefix', 'stale-reader-version', 'unknown-checkpoint-field',
-            'persisted-snapshot', 'terminal-before-receipt'}
+            'persisted-snapshot', 'terminal-before-receipt', 'replay-only-payload',
+            'replay-only-recover', 'replay-only-publish', 'replay-only-context-recovery',
+            'publish-guard-permission_now', 'publish-guard-source_deleted_now',
+            'publish-guard-share_current', 'publish-guard-context-owner_command_authorized',
+            'initial-global-row-drop-and-low-change', 'wrong-partition-envelope',
+            'token-storage-disagrees-with-event', 'full-value-commitment-corrupt',
+            'zero-match-suffix-after-first-match', 'zero-match-suffix-cannot-invent-match',
+            'no-checkpoint-before-first-match', 'retry-ignores-storage-sequence_id',
+            'retry-ignores-storage-observed_at_utc', 'retry-ignores-storage-persisted_at_utc',
+            'retry-compares-semantic-actor', 'trailing-LF-envelope-event-type', 'oversize-inline-body-refused',
+            'publish-current-source-join-refused', 'append-recovery-current-source-join-refused',
+            'append-recovery-guard-permission_now', 'append-recovery-guard-source_deleted_now',
+            'append-recovery-guard-share_current'}
 
 def value_valid(schema_ref, value):
     if list(validator(read(schema_ref)).iter_errors(value)):
@@ -250,6 +390,8 @@ def check_value_contracts():
     return count
 
 def main():
+    shared = read('Plans/event_append_receipt_full_value_fixtures.json')
+    assert commitment(shared['base_original_event'])['sha256'] == shared['commitment_sha256']
     contracts = read('Plans/ds15_event_contracts.json')
     fixtures = read('Plans/ds15_event_contract_fixtures.json')
     registry = read('Plans/event_family_registry.json')
@@ -285,6 +427,11 @@ def main():
             assert word in own, (name, word)
         ids = [case['id'] for case in f['semantic_cases']]
         assert len(ids) == len(set(ids)) and REQUIRED <= set(ids), (name, REQUIRED - set(ids))
+        assert any(i.startswith('trailing-LF-checkpoint-') for i in ids), name
+        if name == 'browser.context_captured':
+            assert {'application-exact-cv366-key', 'application-raw-hash-key',
+                    'application-wrong-server_id', 'application-wrong-original_operation_id',
+                    'project-capture-original-retry'} <= set(ids)
         for case in f['semantic_cases']:
             data = copy.deepcopy(f['semantic_base']); patch(data, case['changes'])
             got = evaluate(c, case['operation'], data)
