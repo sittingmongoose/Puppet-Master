@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25865-L25928
+Source lines: L25865-L25931
 
-Source SHA256: `a98ae13d4db70965e30571283e0e606193d1bd9e6f50cc67443440ddd294e54d`
+Source SHA256: `c260fb0a5e14c6e9e4f83d22217f9f03f9d6cdd4be32b5fc4f68f8df97e7b329`
 
 ---
 
@@ -14,7 +14,7 @@ The following contract establishes the previously missing bindings under Jared's
 
 **Membership and producer.** `event-family-context-compaction-completed@1.0.0` has the sole exact event type `context.compaction.completed` and closed payload `pm.context_compaction_completed.schema.v1`, version `1.0.0`, in `Plans/event_payload_context_compaction_completed.schema.json`. Define producer binding ID `assistant_chat.compaction_commit.v1` for the existing bounded compaction transaction's commit step. Manual `cmd.chat.compact_context` reaches it through `handlers::chat::compact_context`; automatic and eligible micro-compaction reach the same commit step under PP-078. UI click, helper return, local progress and command-result rendering are not independent emitters.
 
-**Identity and scope.** `context.compaction.completed` has explicit original Project and newly admitted application editions. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec. An app thread binds null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer; Worktree-unbound Project is a different case, not a prohibition of genuine app completion. Both outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit; generic app work cannot emit Chat completion. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses; replay/checkpoint uses the explicitly adopted app sibling without changing original Project history.
+**Identity and scope.** `context.compaction.completed` is admitted in its original Project edition only. Its registry row is `project_only` with no `payload_versions`, SP-259 admits it with `project_only` scope, and DL-300, the one Event Authority grant of the projects and settings refresh, admits no application edition of this family. A Project thread retains real Project/Home Server and the exact old ThreadDetail payload/codec. The application counterpart that CV-329, CV-366 (`CompactionCompletionApplicationV1`) and SP-259 specify for an app thread binds null `project_id`, real `thr_{ulid}`, Server/Computer/environment/topology and app storage writer; Worktree-unbound Project is a different case, not a prohibition of genuine app completion. That app counterpart emits no `context.compaction.completed` EventRecord until Event Authority admits an application payload version of this family; until then its event edition is a missing version, unavailable under CV-366, and no registry boolean, fixture or receipt stands in for it. Both outer/inner scope and thread agree; the EventRecord envelope remains Contracts-owned `pm.event.v0@2.0.0`. Resolve current owner, thread/deletion/head, roots, topology, writer/lease and complete currentness before commit; generic app work cannot emit Chat completion. `operation_id` and `operation_generation` stay exact across retry. Optional run/node/attempt/account/causality refs are required-present null unless genuinely proven. Actor/correlation come from the original operation and commit time is frozen, never identity. Unknown schema, cross-scope join, deleted/hidden target or missing evidence refuses; once that application version is admitted, replay/checkpoint uses the explicitly adopted app sibling without changing original Project history.
 
 **Commit and state meaning.** A completion means a candidate passed every PP-078 fence and useful-gain predicate and the Storage commit marker durably committed. Input/output context revisions are monotonic integers; `output_context_revision > input_context_revision`, `input_tokens - output_tokens = reclaimed_tokens > 0`, and configured `min_reclaim_tokens` must also be met. The detailed CompactionReceipt records branch/head, retained obligations, redaction, hashes, artifacts, fences and policy proof; its opaque reference must resolve to this exact operation/thread/revision pair at commit. The permanent EventRecord is a bounded audit projection of that receipt, containing no transcript, summary, prompt, tool output, content-derived hash, title or arbitrary message. Required token/byte counts are measurements, not billed Usage. No-op, soft-defer, cancellation, stale/late result, policy denial, helper failure and precommit interruption emit no completion. `context.compaction.started` and `context.compaction.failed` remain unregistered, independently visible through existing result/receipt state.
 
@@ -31,14 +31,16 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Successful committed compaction produces one content-free context.compaction.completed EventRecord under
-  the explicit owner contract above. The focused-thread detail consumer uses the existing replay path;
-  retained transcript search and thread-deletion behavior remain unchanged. The app completion sibling
-  uses explicit application scope/null Project and the same content-free commit/result, original
-  operation, thread/deletion/head/generation fence, complete replay/checkpoint and unavailable-input
-  rules. The original Project Event/codec remains exact. Worktree-unbound Project completion and genuine
-  app completion are separately admitted forms; neither authorizes arbitrary generic app operations to
-  emit Chat completion.
+  Successful committed compaction of a Project thread produces one content-free context.compaction.completed
+  EventRecord under the explicit owner contract above. The focused-thread detail consumer uses the existing
+  replay path; retained transcript search and thread-deletion behavior remain unchanged. The family is
+  admitted in its original Project edition only (registry project_only, SP-259, DL-300). The app completion
+  sibling uses explicit application scope/null Project and the same content-free commit/result, original
+  operation, thread/deletion/head/generation fence, complete replay/checkpoint and unavailable-input rules,
+  and emits no context.compaction.completed EventRecord until Event Authority admits an application payload
+  version of this family. The original Project Event/codec remains exact. Worktree-unbound Project completion
+  and genuine app completion are separate forms; neither authorizes arbitrary generic app operations to emit
+  Chat completion.
 gui_related: true
 gui_classification_reason: This unit binds the visible focused-thread completion history to durable authority.
 depends_on: []
@@ -65,6 +67,7 @@ source_lineage:
   - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
   - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
   - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+  - "Plans/Decision_Log.md#DL-300"
 negative_constraints:
   - No runtime, buildability, independent-validator clearance, governance seal, WorkNodes, or NodeSeeds follows from this contract.
 owner_hints:
