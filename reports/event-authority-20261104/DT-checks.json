@@ -1,34 +1,55 @@
 {
-  "dt-check.log": {
+  "dt-check.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/dt-check.json",
+    "assertions": 2981
   },
-  "registry-schema-check.json": {
+  "registry-schema.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/registry-schema.json"
   },
-  "storage-recovery-check.log": {
+  "storage-recovery.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/storage-recovery.json"
   },
-  "storage-profile-check.log": {
+  "storage-profile.json": {
     "top_level_status": "fail",
-    "exit_code": 1
+    "exit_code": 1,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/storage-profile.json",
+    "baseline_comparison": "41 pre-existing missing profiles at 713241763c; 41 now; zero new errors."
   },
-  "shard-generate.log": {
+  "shard-generate.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/shard-generate.json"
   },
-  "index-generate.log": {
+  "index-generate.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/index-generate.json"
   },
-  "shard-check.log": {
+  "shard-check.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/shard-check.json"
   },
-  "index-validate.log": {
+  "index-validate.json": {
     "top_level_status": "pass",
-    "exit_code": 0
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/index-validate.json"
+  },
+  "grade-evidence-check.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/grade-evidence-check.json",
+    "cells": 216
+  },
+  "committed-shards-check.json": {
+    "top_level_status": "pass",
+    "exit_code": 0,
+    "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/pass2/committed-shards-check.json"
   }
 }
