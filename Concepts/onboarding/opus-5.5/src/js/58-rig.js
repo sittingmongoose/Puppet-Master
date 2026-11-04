@@ -187,8 +187,12 @@
       this.btext = this.bubble.querySelector('.pst-bt');
       /* new words that change the bubble's size are placed before they are painted, past Retro's stepped draw: a stepped
          stage left a grown bubble over a prop for up to a tenth of a second */
+      /* (placed here, from Pip's last drawn pose, not only on the next drawn frame: a screen change holds the stage while
+         the new screen comes in, and its line was written then, so the bubble grew where the old line had stood and was
+         painted there, over the page leaving with the old screen, until the stage was let go: Basic Dark at 740x768,
+         Begin to Away, FO-34 R1) */
       if (this.bubbleMO) this.bubbleMO.disconnect();
-      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; this.kick(); } });
+      this.bubbleMO = new MutationObserver(() => { const b = this.bubble; if (!b || this.dead) return; const w = b.offsetWidth, h = b.offsetHeight; if (w !== this.bubbleW || h !== this.bubbleH) { this.bubbleW = w; this.bubbleH = h; this.frameT = -1e9; if (this.H && this.famName !== 'nier') this.placeBubble(this.H, this.ang); this.kick(); } });
       this.bubbleMO.observe(this.bubble, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ['class'] });
       if (this.tube === 'phosphor') div('pst-crt', this.screen, '<i class="pst-roll"></i><i class="pst-scan"></i><i class="pst-mask"></i><i class="pst-noise"></i><i class="pst-vig"></i><i class="pst-glare"></i>');
       if (this.tube === 'teletype') { div('pst-grain', this.screen); this.head = div('pst-printer', this.screen, '<i class="pst-bail"></i><i class="pst-platen"></i><i class="pst-head"><b></b></i>').querySelector('.pst-head'); }
