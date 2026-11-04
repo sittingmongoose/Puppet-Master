@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L2931-L3388
+Source lines: L2932-L3400
 
-Source SHA256: `28edb53e508961708b70c041ce43bb6a9d0cac80667419b95c8c9c470f88e8cf`
+Source SHA256: `602edf1df01af4da1f2b884664297dfe8269f84e30cb9c5613321f88db98838e`
 
 ---
 
@@ -148,7 +148,10 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-settings-layering-check.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -215,7 +218,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -285,7 +290,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -357,7 +364,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103
@@ -428,7 +437,9 @@ acceptance_criteria:
 - Unregistered names remain command_not_registered and missing native handlers remain handler_unavailable; no optimistic
   saved/sent/completed state.
 validation_surfaces:
-- Phase-2 owner/companion semantic checks after the interface freeze; not execution evidence.
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plans-verify.py
+- scripts/pm-touch-closure-verify.py
 risk_class: scope_actor_dispatch_or_return_drift
 reasoning_tier: high
 context_scope: projects_refresh_pass2_20261103

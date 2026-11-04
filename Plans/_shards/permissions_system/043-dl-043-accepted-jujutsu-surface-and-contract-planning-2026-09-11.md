@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L10025-L11097
 
-Source SHA256: `94a82f002370bd3365925c564c67776da00a4c62f4f54750910c316356dca0bc`
+Source SHA256: `dc1aae046c22b416b6e298461970289c3cb8e59d9d378dd3f8e6bfcfdea81c2a`
 
 ---
 
@@ -550,7 +550,7 @@ canonical_text: 'Application chat, Goal, Crew, Plan/Deep Plan and scheduled mess
 
 
   SSH host trust/public-key installation consumes the exact protected Server/Remote Access protocol owned
-  by A; absent selected contract or native authority is typed unavailable, never an inferred remote key writer
+  by SRV-018/RAS-017; absent selected contract or native authority is typed unavailable, never an inferred remote key writer
   behind an integration.connection.* or Client-pairing alias.'
 gui_related: true
 gui_classification_reason: Approval cards, scope selection, live action targets and recovery controls are

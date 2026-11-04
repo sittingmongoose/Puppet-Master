@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L70-L119
 
-Source SHA256: `31555f1af75d84e5bedebd87d6ec3206b0b074d6381a09c1d8ee10f3931eeb97`
+Source SHA256: `fec2705a0c4f5bcab7856d62a8ca80b2456552237d014f2d1f305ba481929b1b`
 
 ---
 
@@ -51,7 +51,7 @@ Canonical requirements:
 - Command identity is the whole normalized segment that would be dispatched after policy expansion and before spawn. For multi-line or chained invocations using newline, `&&`, `;`, `||`, or `|`, each dispatch segment is normalized and checked independently; the invocation is allowed only if every segment is independently allowed and none is blocked. An approval for `git status` does not approve `git status && rm -rf /`.
 - Prefix, substring, `starts_with`, shell-fragment, fuzzy, prompt-expanded, and concatenated-command approval are forbidden. Mismatches emit `filesafe.command_denied` with `denial_code = approved_command_identity_mismatch`.
 - Missing or empty command/path allowlists fail closed whenever the corresponding guard is enabled. `strict_mode=false` can soften non-authoritative advisory reporting only after a safe enforcement baseline is present; it cannot permit writes, reads, or commands when the authoritative allowlist, baseline, root, or guard input is absent.
-- PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 remains request-only. F2-207/F2-213 require authenticated operator realm/identity/reason/scope/expiry, real Project/run/worktree or explicit app thread/run/Computer/Host/Environment/recorded-root binding, and security event/receipt. Exact PS-146 Y1 and PS-147 grant-created-resource actions use structured authenticated exception evidence, never a bare environment variable or broad command allow.
+- PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 remains request-only. F2-207/F2-213 require authenticated operator realm/identity/reason/scope/expiry, real Project/run/worktree or explicit app thread/run/Computer/Host/Environment/recorded-root binding. Project overrides retain their historical security event/receipt contract and exact payloads; application overrides require a durable scope-bound owner receipt. App filesafe.* EventRecords have no registered edition and stay missing_event_registration/non-emitting pending separate Event Authority admission. Missing durable receipt custody fails closed. Exact PS-146 Y1 and PS-147 grant-created-resource actions use structured authenticated exception evidence, never a bare environment variable or broad command allow.
 - Prompt/free-text command or path extraction is never the sole enforcement boundary. Structured tool arguments, final command segments, and resolved path scopes remain mandatory checks.
 - Source-lineage snippets that preserve old fail-open, prefix-match, or disabled-fallback examples must be explicitly fenced as retired/noncanonical and must include a copy-prevention note saying they are not implementation guidance.
 

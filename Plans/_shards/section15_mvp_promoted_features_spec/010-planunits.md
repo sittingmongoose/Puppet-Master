@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L1056-L8894
 
-Source SHA256: `29202993e8ede84b3d108d6e5a58ee6bfd886eb3e27a06e2ea6c27fb51968c5c`
+Source SHA256: `7e58f2ab5e6852e0cd94770b67f10ac99652bd94bcf7940ee5100cdd176f9da5`
 
 ---
 
@@ -2189,7 +2189,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation
   files, or source code are created by this PlanUnit.
 - Project restore_point_record keeps rp:{project_id}:{restore_point_id}/pm.storage_value.restore_point_record.v1
-  unchanged; F admits a distinct scope-aware app key/schema variant with the same closed status available,
+  unchanged; CV-366/SP-349 select the distinct scope-aware app key/schema variant with the same closed status available,
   expired, deleted, corrupt.
 - Only branched creates a new thread_id, conversation branch_id, and restore_point.applied record; refused
   and failed create none.

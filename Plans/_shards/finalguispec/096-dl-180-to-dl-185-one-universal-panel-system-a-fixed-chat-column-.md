@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45246-L47314
+Source lines: L45209-L47277
 
-Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
+Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
 
 ---
 
@@ -31,7 +31,7 @@ F3-041, F3-060, F3-061, F3-066 to F3-068, F3-071, F3-072, F3-102, F3-132, F3-140
 F3-162, F3-195, F3-202, F3-205, F3-206, F3-217, F3-225, F3-234, F3-271, F3-276 to F3-278, F3-281, F3-282, F3-297,
 F3-421 to F3-423, F3-445, F3-463, F3-464, F3-466, F3-467, F3-469, F3-476, F3-516, F3-517, F3-520, F3-521, F3-540,
 F3-565 and F3-569; and, where their DL-162 notes or text name the bottom Debug tab or the bottom zone, the Run & Debug
-units F3-483, F3-484, F3-490 to F3-492, F3-495 and F3-496 and the DL-162 addendum's heading paragraph, which now point
+units F3-483, F3-484, F3-490 to F3-492, F3-495 and the DL-162 addendum's heading paragraph, which now point
 at the Debug Console tool kind. The left rail otherwise keeps its own canon (DL-162, DL-163, F3-618 to F3-625, DR-057):
 its side panels, their segmented strips, its More tray and its looks are not home panels and are not changed here. The
 terminal tab's own chrome, features, appearance, effects, faces, images and agents are F3-640 to F3-646

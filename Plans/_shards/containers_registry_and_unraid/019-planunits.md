@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L975-L5755
+Source lines: L975-L5760
 
-Source SHA256: `75d9a47bd5c989f47381a983d2a252c904be9c6e7e432031824a3d198644870c`
+Source SHA256: `328030c2670761871b6898ab1d66211f4d376308d4ea5b132a87582d68a70dc0`
 
 ---
 
@@ -202,8 +202,8 @@ acceptance_criteria:
 - Browser-login and PAT entry controls both remain present.
 - Helper text explicitly says PAT is recommended and links or explains how to obtain a PAT.
 - Requested auth mode and effective capability are displayed distinctly.
-- The settings-level create-repository toggle remains distinct from mandatory confirmation when repository
-  creation becomes a remote side effect.
+- The settings-level create-repository toggle remains distinct from PS-146/147 effect authority; Regular confirms
+  when approval is missing; admitted YOLO or an exact build grant uses the same writer without another ordinary yes.
 - Tag template defaults preserve {commit}, {version}, {timestamp}, and future canonical tag variables.
 - Push policy preserves manual default and optional after_build.
 validation_surfaces:
@@ -1744,8 +1744,10 @@ unblocks: []
 acceptance_criteria:
 - Missing repository creation is explicit and visible during first-push preparation.
 - Confirmation shows namespace, repository name, and privacy.
-- Confirmation cannot be bypassed by YOLO modes, agent autonomy, or any fast-path setting.
-- cmd.docker.create_repository validates namespace/repository/privacy and emits docker.repository.create.confirmation_requested.
+- Regular requires confirmation when exact-effect approval is absent. Admitted PS-146 YOLO or a PS-147 build grant
+  invokes the same writer with typed authority evidence; no automated route fabricates a human confirmation.
+- cmd.docker.create_repository validates namespace/repository/privacy and emits docker.repository.create.confirmation_requested
+  only when actually awaiting a human decision.
 - Confirm dispatches cmd.docker.create_repository.confirm.
 - Cancel dispatches cmd.docker.create_repository.cancel.
 - Approving image push does not implicitly approve creation of a missing DockerHub repository.
@@ -2453,7 +2455,8 @@ unblocks:
 - CRAU-045
 acceptance_criteria:
 - Missing repository during push preserves the local build result.
-- The flow enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested.
+- Only an unsatisfied human decision enters awaiting_repo_creation_confirmation and emits
+  docker.repository.create.confirmation_requested; admitted YOLO/grant authority creates directly through the same writer.
 - Successful repository creation resumes the pending push attempt without forcing rebuild.
 - Cancelled, rejected, or policy-blocked creation emits docker.publish.blocked with reason_code repo_creation_not_confirmed,
   blocked_step create_repository, and allowed_action_ids[].
@@ -2524,9 +2527,10 @@ acceptance_criteria:
 - push_policy after_build does not grant standing approval for remote side effects.
 - Build click approves only local build execution.
 - Auto-dispatch evaluates external_publish_side_effect for cmd.orchestrator.push_image.
-- Missing approval emits docker.publish.blocked with blocked_step push_image, preserves local build result,
+- Missing PS-146/147 effect authority emits docker.publish.blocked with blocked_step push_image, preserves local build result,
   and surfaces Push image as recovery CTA.
-- Repository creation and managed-template remote repo create/push remain separately approved side effects.
+- Repository creation and managed-template remote repo create/push remain separately evaluated side effects under
+  PS-146/147; Regular asks for missing approval, while admitted YOLO or an exact build grant proceeds without another ordinary yes.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4345,7 +4349,8 @@ unblocks:
 - CRAU-082
 - CRAU-083
 acceptance_criteria:
-- Repository creation confirmation is mandatory and non-bypassable.
+- Repository creation requires current PS-146/147 effect authority; missing Regular approval asks; admitted YOLO
+  or an exact build grant proceeds with recorded authority and no fabricated human confirmation.
 - Secrets are not written to redb, project files, YAML, or evidence.
 - Publish/template-repo logs and evidence redact secrets.
 - Docs distinguish DockerHub image distribution from Unraid template distribution.

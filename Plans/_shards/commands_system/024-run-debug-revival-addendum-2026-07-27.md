@@ -2,15 +2,15 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4564-L4818
+Source lines: L4565-L4819
 
-Source SHA256: `8ab326bfb35da2c0a2f6f1d36d29f9588417e2c2adf56226782399e4a0e97013`
+Source SHA256: `2754b5f74923b64eac32b3be733c381bed732e178f5d6104a35300b28e12f249`
 
 ---
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab (the Debug Console tab in the universal panels from 2026-10-09, DL-180) and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab (the Debug Console tab in the universal panels from 2026-10-09, DL-180) and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-495) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### 7.2 Run & Debug dispatch family (cmd.run_debug.*)
 
@@ -128,7 +128,7 @@ node_compile_hint:
   create_nodeseeds: false
 source_lineage:
   - user-decision:2026-07-27-run-debug-revival
-  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-496; referenced)
+  - Plans/FinalGUISpec.md (Run & Debug Revival Addendum F3-482..F3-495; referenced)
 preserved_exact_tokens:
   - cmd.run_debug.*
   - cmd.run_debug.start
@@ -143,7 +143,7 @@ preserved_exact_tokens:
   - permission_required
 negative_constraints:
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit.
-  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-496 owns that canon and is referenced by unit id only.
+  - Do not restate the Debug tab or rail panel layout or the debug session state machine here; Plans/FinalGUISpec.md F3-482..F3-495 owns that canon and is referenced by unit id only.
   - Do not re-scope or restate cmd.debug.* semantics; the assistant-investigation boundary per CS-009 and §7.1 stands unchanged.
   - Do not mint catalog rows here; Plans/UI_Command_Catalog.md owns row-level registration.
 owner_hints: [Plans/Commands_System.md, Plans/UI_Command_Catalog.md, Plans/FinalGUISpec.md]

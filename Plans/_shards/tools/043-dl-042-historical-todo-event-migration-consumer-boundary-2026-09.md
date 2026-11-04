@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L12985-L13354
+Source lines: L12985-L13356
 
-Source SHA256: `07c3efdee44347cb503ca642e0262e7639be178b30c1b1b9d3cf95a042005569`
+Source SHA256: `62ede04d56ef24109a9f2fb6e7c69f581a0da383eea3430a4239faac691622fd`
 
 ---
 
@@ -225,8 +225,10 @@ drivers, provider APIs or desktop-control executables are not aliases or availab
 
 The six definitions have logical IDs `pm.computer_use.{screen|pointer|keys}.{request|result}.v1`,
 version `1.0.0`. Each definition is closed; pointer and keys use a discriminated operation union,
-with no arbitrary action string, script, provider argument bag or additional properties. F-d owns
-their schema/fixture materialization; F-b owns registry/binding/touch joins. The agent-tool census
+with no arbitrary action string, script, provider argument bag or additional properties.
+`Plans/computer_use_contracts.schema.json` and `Plans/computer_use_contract_fixtures.json` define and
+exercise these contracts; `Plans/projects_refresh_command_bindings.json` and `Plans/touch_closure.json`
+supply their registry/binding/touch joins. The agent-tool census
 is three screen tools plus T-185's six read tools. `computer.*` is only a family selector. No
 `computer.stop` tool or `cmd.computer.*` primary is admitted.
 
@@ -307,8 +309,8 @@ canonical_text: Every app tool call uses explicit application scope, project_id=
   and Eval roots use the selected CV-366 graph in Plans/application_workflow_contracts.schema.json, Plans/application_workflow_sources.schema.json
   and Plans/application_workflow_source_graph.json, with SP-349 physical keys and counterpart quotas.
   Original Project sources remain exact. A missing actual source/handler/retention/backup join is unavailable
-  rather than an app-capable alias. C-B01 conversion re-resolves these destinations through the one owner
-  manifest; it neither transfers a live process/controller nor reuses source permissions.
+  rather than an app-capable alias. Conversion under CV-367/PSB-007 and ACD-510/511 re-resolves these destinations
+  through the one owner manifest; it neither transfers a live process/controller nor reuses source permissions.
 gui_related: false
 gui_classification_reason: Defines runtime scope, data identity and custody without owning visual presentation.
 depends_on:

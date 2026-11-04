@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25303-L25698
+Source lines: L25308-L25701
 
-Source SHA256: `dcab438f728b4ce5508085a47c122ce4ad2bce6d9f626904292a1bfc4a5b9fd0`
+Source SHA256: `86553c2d79c37e993d9ce0c2ccb75efa1acd034a54583239895fd2f5ef022c72`
 
 ---
 
@@ -29,7 +29,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 15. **Plan Tab Editor Navigation and Deduplication (`APR-036`, `APR-037`, `APR-038`)**: Clicking a plan title, Details, Expand, or Open Plan in transcript opens the exact plan revision in the left editor/document tab system. The legacy artifact alias and plan identity reuse one unified tab, preventing duplicate open tabs. The plan tab exposes owner-backed controls (Rich Text/Markdown, Build, Revise, More, Build With Crew, Build At, Send to Planning Wizard, Export). Under narrow viewport widths (e.g. 390px, 768px), the editor displays full width with tab controls above content and a persistent "Return to chat" affordance, temporarily occluding History without mutating saved preferences. The same editor-document rules apply to the collaboration run views (Crew, Chat Room, BrainStorm, Review): Open Panel opens the run's view as one editor document per run identity in that tab system, focusing an open tab instead of duplicating it, with the same narrow-width full-width presentation and "Return to chat" affordance (ACD-480).
 16. **Typed Work Records and Diff Counts (`APR-039`, `APR-040`, `APR-041`, `APR-055`)**: Agent work items render with explicit semantic kinds: File change, File inspection, Activity, Plan, Artifact, or Work note. Change records display genuine file identity, line numbers, and hunks with green (+) additions and red (-) deletions. Obsolete editorial migration comments (e.g. "0043 supersedes 0039...") are excised. Inline code and emphasis format safely; unlinked content remains a Work note.
 17. **Internal Work-Note Boundary (`APR-056`)**: Internal work notes (scratch notes, reasoning fragments, diagnostic traces) are behind-the-scenes diagnostic state. They must never appear as ordinary transcript message cards or standalone user artifacts. Concise user-facing progress summaries are distinct, typed projections.
-18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: All 30 fixture threads in History are inventoried and aligned to current specifications. Everyday threads predominantly show running, completed, or successful work. Failure, blocked, or recovery states are segregated into an intentional, clearly labeled recovery minority (`recovery-scheduling`, `recovery-attachments`, `recovery-collaboration`). Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review fixtures demonstrate inspection and findings without mutating workspace files.
+18. **History Thread Currentness and Normal Workflows (`APR-057`, `APR-058`, `APR-067`)**: History shows each thread's actual owner-backed state. Failure, blocked or recovery states appear on the threads where they actually occur. Unfinished work is not labeled "Needs attention" unless explicitly blocked or faulted. Read-only review shows inspection and findings without mutating workspace files.
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
 20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including full-size Activity Detail until closed (G1/G2), floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
@@ -358,17 +358,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  History threads and components are fully inventoried to reflect current behavior. Ordinary everyday threads predominantly show running, completed, or successful workflows; unfinished work is not marked Needs attention unless an active fault exists. Recovery and failure examples are clearly partitioned into an intentional, labeled recovery minority. Read-only review fixtures demonstrate findings and inspection without source mutation. The responsive editor/chat split enforces min-size rules so chat is never crushed into the resize handle.
+  History shows each thread's actual owner-backed state; unfinished work is not marked Needs attention unless an active fault exists, and failure and recovery states appear on the threads where they actually occur. Read-only review shows inspection and findings without source mutation. The responsive editor/chat split enforces min-size rules so chat is never crushed into the resize handle.
   Amended 2026-10-09 (DL-180): Home has no editor/chat split: the chat is a fixed column whose width and limits are
   Plans/FinalGUISpec.md#F3-637's, and the centre's panels never take its room (F3-636), so the chat is never crushed.
 gui_related: true
-gui_classification_reason: History thread currentness, normal workflow proportion, and responsive split behavior.
+gui_classification_reason: History thread state truthfulness and responsive split behavior.
 depends_on: [ACD-452, ACD-457, DL-180, F3-637, ACD-500]
 unblocks: []
 acceptance_criteria:
-  - Every History thread has an inventoried disposition and before/after component mapping.
-  - Ordinary workflows show running/completed/successful work without false Needs attention labels.
-  - Failures and recoveries are confined to explicit labeled recovery threads.
+  - History rows reflect their actual owner-backed state.
+  - Unfinished work is not labelled Needs attention without an actual fault or block.
+  - Failure and recovery states appear on the threads where they actually occur.
   - Read-only review shows findings, not file mutation.
   - "Resizing the chat column stays within F3-637's limits, so the chat is never crushed (DL-180)."
 validation_surfaces:
@@ -390,8 +390,6 @@ source_lineage:
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-066
   - source_packet:pm-assistant-plans-v3-restored:REQUIREMENTS.csv:APR-067
 preserved_exact_tokens:
-  - "predominantly running/completed/successful"
-  - "labeled recovery minority"
   - "inspection and findings"
 negative_constraints:
   - Do not mark unfinished work as Needs attention without an actual error or block.

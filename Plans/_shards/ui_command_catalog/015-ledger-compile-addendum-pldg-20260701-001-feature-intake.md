@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7916-L8326
+Source lines: L7916-L8327
 
-Source SHA256: `c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121`
+Source SHA256: `b99fb48e21b645dc005c0470e6c71ac204d161f475d8aae85873600817e4a0b1`
 
 ---
 
@@ -27,9 +27,10 @@ canonical_text: 'UCC-106 retains eleven historical cmd.onboarding.* identifiers 
   ui.onboarding.choose_first_project, ui.onboarding.finish, and ui.onboarding.choose_look. These are local
   UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
   and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look
-  preview, and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for
-  settings_rerun): neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the
-  Project at commit. Every request consumes PWIZ-021''s closed, normalized, secret-free local_context, including
+  preview. ui.onboarding.start uses the one Settings-resolved saved look for first_run, including without a
+  Project, with Basic Dark only as the factory/pre-claim fallback; settings_rerun keeps the look on screen.
+  Neither dispatches cmd.theme.* or a Settings transaction; the look commits once at the accepted application/Computer
+  or real-Project boundary (DL-286). Every request consumes PWIZ-021''s closed, normalized, secret-free local_context, including
   phase-specific draft/preflight/commit bindings as defined by the owner schema; arbitrary/raw payload fields
   and secret-bearing values are rejected. An action that launches owner work carries a typed owner route or
   intent and maps to that owner''s existing canonical command and sole handler. The command-era reference to

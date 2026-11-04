@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3617-L22619
+Source lines: L3617-L22624
 
-Source SHA256: `dcab438f728b4ce5508085a47c122ce4ad2bce6d9f626904292a1bfc4a5b9fd0`
+Source SHA256: `86553c2d79c37e993d9ce0c2ccb75efa1acd034a54583239895fd2f5ef022c72`
 
 ---
 
@@ -423,8 +423,8 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Assistant workflow identity stays ask, agent, debug, plan and deep_plan; only runtime posture normalizes
   to the run-envelope mode. ACD-508 and AI-069 admit genuine app chat, Goal, Crew, Plan/Deep Plan and
-  scheduled-message/task workflows. Requires a project is a workflow gate only for Planning Wizard, PRD
-  Builder and Orchestrator. Other actions validate their actual permitted
+  scheduled-message/task workflows. The stored token Requires a project is rendered Needs a project and gates only Planning
+  Wizard, PRD Builder and Orchestrator. Other actions validate their actual permitted
   folder/file/history/connection/target and capability, never infer a Project from focus.
 gui_related: true
 gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
@@ -432,11 +432,11 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
   - "Debug and deep_plan mint no extra runtime mode."
-  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Requires a project."
+  - "App Plan/Deep Plan/Goals/Crew/scheduled messages/tasks are positive cases; only the three named workflows show Needs a project."
   - "Missing actual resource/authority remains a typed refusal without automatic conversion."
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: runtime_mode_drift
 reasoning_tier: standard
 context_scope: assistant_chat_window_001
@@ -3035,7 +3035,7 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Automatic retrieval is local: current Project chat/code/log sources for a Project thread, or the app
   thread's own messages and permitted chat-folder/working-root sources for No project. Explicit projects.*
-  reads use T-185/ACD-509 and D's source/time/provider grants, never ambient index or private-memory
+  reads use T-185/ACD-509 and PS-145 source/time/provider grants, never ambient index or private-memory
   merge. After the recorded grant or task-scoped YOLO admission, an explicit question about my projects or
   my tasks may request all permitted Projects; every empty/partial result states coverage. An unspecified
   cross-Project scope never silently falls back to current Project.
@@ -3047,8 +3047,8 @@ acceptance_criteria:
   - "Auto-retrieval stays within the owning Project or app thread/roots; explicit cross-Project T-185 reads require recorded scope/authority and coverage."
   - "External or cross-project retrieval requires explicit user request."
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: retrieval_scope
 reasoning_tier: high
 context_scope: auto_retrieval
@@ -14570,19 +14570,21 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Wizard launch opens preloaded `EnhanceRewriteAdd` when project/path context
-  exists, or preserves imported context and lands on project-setup review first
-  when required project context is missing.
+  Wizard launch opens preloaded `EnhanceRewriteAdd` only with a real active Project and admitted path. A
+  No project handoff preserves imported context and first offers Make a project from this chat and Move this
+  chat into a project as equal choices with neither preselected, or selects a real Project through F3-325/ACD-510.
+  Conversion and actual Project registration/listing complete before Wizard launch or intake; the unbound
+  handoff shows Needs a project and never starts the Wizard's own setup as a bypass.
 gui_related: true
-gui_classification_reason: Wizard launch path and project-setup review landing are visible workflow UI.
+gui_classification_reason: Wizard launch and the prerequisite Project conversion or selection are visible workflow UI.
 depends_on: [ACD-309]
 unblocks: [ACD-313, ACD-314]
 acceptance_criteria:
-  - Threads with active project/path open the preloaded `EnhanceRewriteAdd` flow.
-  - Threads missing required project context preserve imported context and land on project-setup review first.
+  - Threads with a real active Project and admitted path open the preloaded `EnhanceRewriteAdd` flow.
+  - No project handoffs preserve imported context, offer both conversion choices or real Project selection, and enter the Wizard only after actual Project admission.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-plan-migration.py
+  - scripts/pm-plan-index.py
 risk_class: wizard_launch
 reasoning_tier: standard
 context_scope: gui
@@ -14597,7 +14599,10 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
 preserved_exact_tokens:
   - "EnhanceRewriteAdd"
-  - "project-setup review path"
+  - "No project"
+  - "Make a project from this chat"
+  - "Move this chat into a project"
+  - "Needs a project"
 negative_constraints: []
 owner_hints:
   - Plans/assistant-chat-design.md

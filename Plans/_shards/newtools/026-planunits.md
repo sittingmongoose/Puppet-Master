@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L1308-L8598
 
-Source SHA256: `2d8d35c569a7e8c83623a981274b5a4ae8a47984adc41958fa9c13bdf9326d9b`
+Source SHA256: `966ba820ce12942663478ceea99ad0c9bb242700c0df4655b2d8825e826d7ed7`
 
 ---
 
@@ -6527,7 +6527,7 @@ plan_unit_id: N2-140
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access. If publish is requested and the target repository does not exist, repository creation is guarded by an explicit confirmation showing namespace, repository, and privacy; this confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+canonical_text: Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access. If publish is requested and the target repository does not exist, repository creation follows PS-146/147 with the actual namespace, repository, and privacy and a private default. Regular requires explicit confirmation, mandatory when exact-effect approval is absent; admitted YOLO/autonomy behavior or an exact build grant invokes the same writer with typed authority, without another ordinary yes or a fabricated human confirmation. Capability, trust, FileSafe, secrets, currentness and unknown-effect reconciliation remain required.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
 split_recommended: true
@@ -6563,7 +6563,7 @@ preserved_exact_tokens:
 - YOLO/autonomy behavior
 negative_constraints:
 - The app MUST NOT assume browser login or PAT implies full management access.
-- Repository creation confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+- Repository creation requires PS-146/147 authority; Regular confirmation is mandatory when exact-effect approval is absent. Admitted YOLO/autonomy behavior or an exact build grant never fabricates human approval and retains capability, trust, FileSafe, secrets and currentness checks.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -6944,7 +6944,7 @@ plan_unit_id: N2-148
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The expanded DockerHub flow detects whether the active project is Docker-related, resolves requested_auth_mode, validates effective_capabilities, allows browser/device login or PAT-based auth with PAT remaining the recommended explicit path, and gates missing-repository creation behind a mandatory confirmation dialog showing namespace, repository name, and privacy that cannot be bypassed by YOLO/autonomy modes.
+canonical_text: Detect whether the active project is Docker-related, resolve requested_auth_mode, validate effective_capabilities, and allow browser/device login or PAT-based auth, with PAT remaining the recommended explicit path. Missing-repository creation follows PS-146/147, showing namespace, repository name, and privacy with a private default. Regular uses its mandatory confirmation dialog when exact-effect approval is absent; admitted YOLO/autonomy modes or an exact build grant invokes the same writer with typed authority, without another ordinary yes or a fabricated human confirmation. Capability, trust, FileSafe, secrets, currentness and unknown-effect reconciliation remain required.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
 split_recommended: false
@@ -6980,7 +6980,7 @@ preserved_exact_tokens:
 - privacy
 - YOLO/autonomy modes
 negative_constraints:
-- Missing-repository creation confirmation cannot be bypassed by YOLO/autonomy modes.
+- Missing-repository creation requires PS-146/147 authority; absent Regular approval asks, while admitted YOLO/autonomy modes or an exact build grant proceeds through the same writer without fabricated human approval. Capability, trust, FileSafe, secrets and currentness checks remain required.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

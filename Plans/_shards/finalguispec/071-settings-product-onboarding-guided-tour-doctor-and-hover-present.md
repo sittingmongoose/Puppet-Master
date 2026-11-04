@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36476-L37677
+Source lines: L36434-L37641
 
-Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
+Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
 
 ---
 
@@ -151,14 +151,17 @@ acceptance_criteria:
   including NieR Light/Dark with Adjust NieR opening the same editor (F3-598); no independent checkbox remains (Q22).
 - The ten-theme choice (Q22), the header Look menu and the NieR Mode editor panel each emit `ui.onboarding.choose_look`
   (intents choose_look, toggle_look_menu and toggle_look_editor; preview_nier is retired by Q22) with no owner route,
-  no `cmd.theme.*` and no Settings transaction; the previewed look is written with the Project at commit, a later change
-  through the same Settings binding when the window finishes or closes (DL-153).
+  no `cmd.theme.*` and no Settings transaction during preview. An accepted look commits once through the Settings owner
+  at its explicit admissible Everywhere/Device/Project level (DL-286); a Project own choice at actual Project commit,
+  a Later/app choice at the accepted application/Device boundary, and pre-claim preview only ephemerally. Later changes
+  use the same Settings binding when the window finishes or closes (DL-153).
 - 'Beyond welcome, the onboarding header keeps a persistent Look menu (`Change the look`: five families including NieR
   plus Light/Dark and the retained Adjust NieR button (Q22)) and sound control reachable by keyboard on every stage;
   Look changes preview presentation without dispatching owner work and persist only through the Settings owner (`general.visual.theme`,
   `general.visual.theme-mode`, and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background`
-  (Q22)) with a verified current Project binding after commit or connection; Project Later and every no-Project state
-  allow only ephemeral preview without durable writes, while the sound control binds to the Settings-owned `general.interaction.sound-effects`
+  (Q22)) at the explicitly accepted admissible Everywhere/Device/Project level (SSYS-002/059, DL-286); a Project write
+  requires a verified current Project binding, while Project Later and No project may persist at admitted app levels.
+  Only pre-claim/unbound preview stays ephemeral. The sound control binds to the Settings-owned `general.interaction.sound-effects`
   effective pref with an explicit `Sound off — click to turn on` state, honors effective Reduced Motion, and audio never
   carries a status alone.'
 - The header Look menu exposes its open state and family/mode choices as menuitemradio options including NieR as a menuitemradio
@@ -579,8 +582,9 @@ negative_constraints:
 - Do not add a surface-owned physics loop or require unsupported effects; F3-663’s approved bounded solver/CRT/world
   effects obey O2 and the supported reduced-motion/capability path. Filter replacements require a look-preserving recorded
   A/B.
-- Include family nier in the ten-theme choices and Look menu (Q22); do not write a NieR choice durably before the existing
-  Project binding exists.
+- Include family nier in the ten-theme choices and Look menu (Q22); commit only through the Settings owner at an
+  explicitly accepted admissible level. A Project own write requires a real Project binding; Later/app writes use
+  admitted app levels and pre-claim/unbound preview stays ephemeral (DL-286).
 - Do not move server, provider, Project, backup/restore, authentication, or persistence ownership into Final GUI.
 - Do not let the Home relaunch item create a second onboarding controller, persistence record, or domain command.
 - Do not promote browser-concept projections, route previews, local persistence, or receipts into production owner-work,
@@ -637,10 +641,11 @@ acceptance_criteria:
   retained Adjust NieR button (Q22) whose editor opens as a popup dialog above the Tour) and sound control reachable
   by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`,
   and for NieR the retained `general.visual.nier-parts` and `general.visual.nier-background` (Q22)) at once with presentation-only
-  effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds
-  both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds
+  effect at the explicitly accepted admissible Everywhere/Device/Project level, and the Tour follows the same effective
+  value. Project switching re-resolves both controls; No project permits admitted app-level persistence, while only
+  pre-claim/unbound preview remains ephemeral (SSYS-002/059, DL-286). The sound control binds
   to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn
-  on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference
+  on` state; both are shared chrome controls using their Settings-declared levels and neither becomes a tour-specific preference
   toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: five-family Look choices (Q22),
   live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply,
   and Adjust NieR emits ui.settings.nier_editor.open (DL-153).'
@@ -661,8 +666,8 @@ acceptance_criteria:
 - The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access
   consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved.
 - 'Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish
-  lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved
-  by the Tour).'
+  lands on the real Planning Wizard when a committed Project exists, otherwise in No project chat on the named
+  Computer, without starting work or fabricating a practice Project (DL-287). The chat is not moved by the Tour (DL-180).'
 - Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real
   Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution.
 - 'Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner
@@ -697,7 +702,8 @@ acceptance_criteria:
   in product copy.
 - Pause, Back, valid forward navigation, and Skip remain reachable and operational. Close/reload resumes the last safe
   step after owner-state revalidation. Skip restores captured layout/Chat state/focus; Finish tour restores by default
-  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard. Failed restoration
+  and keeps demonstrated layout only after explicit selection, then focuses the real Planning Wizard for a committed
+  Project or No project chat on the named Computer otherwise (DL-287). Failed restoration
   exposes recovery, never false completion.
 - Effective Reduced Motion uses restrained transitions that preserve sequence and cause/effect, focus, hierarchy, announcements,
   and action parity. Settings changes are honored without discarding the step; hidden/collapsed surfaces stop decorative

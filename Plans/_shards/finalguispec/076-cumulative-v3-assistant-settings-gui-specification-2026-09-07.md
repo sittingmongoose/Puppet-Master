@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38673-L39385
+Source lines: L38637-L39347
 
-Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
+Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
 
 ---
 
@@ -172,9 +172,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   the run view (ACD-480). The remaining families keep the native presentation above, with Processes governed by ACD-505.
   Second scoped exception (2026-10-08, DL-147): the To-Dos rows of item 2 are one-line checklist rows like the
   To-Do hover preview, inside the native panel (F3-593).
-- **Read-Only Demonstration Semantics (APR-067):** Read-only inspection fixtures and demo cards
-  render findings, diagnostics, and code views without interactive mutation controls or misleading
-  active buttons, clearly labeling the static or demo nature of the content.
+- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
 
 ### 25. Settings Manager Presentation Grammar Across All 38 Managers and Projections
 
@@ -232,7 +230,7 @@ Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels 
   29. `server-backup-restore` (Server-level disaster recovery)
   30. `project-backup` (Project-level archive and backup)
   31. `updates` (Application update channels and policies)
-  32. `project-defaults-templates` (Project scaffolding templates)
+  32. `project-defaults-templates` (Saved setups: detached configuration; Project-owned Starters are a separate child)
   33. `onboarding-guided-tour` (Run Onboarding Again, Guided Tour resume and replay, onboarding flags)
   34. `doctor` (System health checks, diagnostics)
   35. `usage-budgets` (Spend limits, token quotas)
@@ -477,7 +475,7 @@ canonical_text: 'The Assistant wand menu structures commands into compact, organ
   command list. The chat composer strictly excludes internal-browser launch controls, preserving independent URL and
   attachment capabilities.  Amended DL-260, Jared 2026-10-31: only real product behavior remains an implementation requirement.'
 gui_related: true
-gui_classification_reason: Governs wand menu grouping, composer browser boundary, and demo fixture isolation.
+gui_classification_reason: Governs wand menu grouping and the composer browser boundary.
 depends_on:
 - F3-531
 unblocks: []
@@ -619,7 +617,7 @@ canonical_text: >-
   USER-REFERENCE-LAYOUT-ROLLBACK-20260908, apart from the scoped exceptions of F3-580 (DL-122) and the
   To-Do rows of F3-593 (DL-147), superseding the reference-video flat-row and forced single-column layout
   while preserving concise hierarchy, clear progress/state grouping, and quiet action rows. Read-only
-  inspection fixtures present findings and code evidence without interactive mutation controls.
+  inspection views present findings and code evidence without interactive mutation controls.
 gui_related: true
 gui_classification_reason: Governs collaboration configuration popups, footer styling, Single Agent Review
   invariant, and all ten Activity Detail families.
@@ -633,7 +631,7 @@ acceptance_criteria:
 - Switching to Single Agent Review reactively reduces draft reviewer count to exactly one.
 - All ten Activity Detail families apply the native card and grid presentation grammar with concise hierarchy,
   superseding the reference-video flat-row prescription, apart from the scoped exceptions of F3-580 and F3-593.
-- Read-only inspection demos render findings without interactive mutation controls.
+- Read-only inspection views render findings, diagnostics and code evidence without interactive mutation controls or misleading active buttons.
 validation_surfaces:
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: collaboration_popup_or_activity_family_grammar_drift

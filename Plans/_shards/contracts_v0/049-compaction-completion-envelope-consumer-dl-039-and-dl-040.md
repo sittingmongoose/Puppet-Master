@@ -2,15 +2,15 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L21593-L21636
+Source lines: L21592-L21635
 
-Source SHA256: `0f2d2d1469f93b242e80b786460bf717b505699b4f48b3d4b40b869eff5f9c39`
+Source SHA256: `03b09cc13847139ac3c5ead7d952532de3895983c0e8a4be88def5e2b86b963d`
 
 ---
 
 ## Compaction completion envelope consumer (DL-039 and DL-040)
 
-`context.compaction.completed` uses the existing closed `EventRecord` envelope `pm.event.v0@2.0.0`; ACD-461 owns the event meaning and closed payload, SP-259 owns persistence/registry/retention, and SIR-038 owns its exact shared replay binding. The original payload edition remains Project-only with exact payload/envelope Project/thread equality. CV-366/SP-349 select the separate app payload/source edition with null Project, real Server/thread equality and its full append/read/custody graph. Both use `dedupe_by_idempotency_key` and inline `payload_ref=null`; no historical byte or digest is reinterpreted. It is a commit marker and bounded content-free audit receipt projection, not a second transcript or detailed CompactionReceipt schema. No started/failed family, legacy alias or new envelope field is introduced. SP-259 supplies the exact ID derivations and producer semantic-digest inputs remain the existing EventRecord rule.
+`context.compaction.completed` uses the existing closed `EventRecord` envelope `pm.event.v0@2.0.0`; ACD-461 owns the event meaning and closed payload, SP-259 owns persistence/registry/retention, and SIR-038 owns its exact shared replay binding. The original payload edition remains Project-only with exact payload/envelope Project/thread equality. CV-366/SP-349 retain a separately specified app payload/source candidate with null Project and actual Server/thread equality; it is not an admitted EventRecord edition. The registry remains `project_only`, DL-300 grants no app compaction edition, and app emission stays `missing_event_registration`/non-emitting until separate Event Authority admission and complete owner adoption. App owner operation/result receipts cannot enter the Project event checkpoint. The admitted Project event uses `dedupe_by_idempotency_key` and inline `payload_ref=null`; no historical byte or digest is reinterpreted. It is a commit marker and bounded content-free audit receipt projection, not a second transcript or detailed CompactionReceipt schema. No started/failed family, legacy alias or new envelope field is introduced. SP-259 supplies the exact ID derivations and producer semantic-digest inputs remain the existing EventRecord rule.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-461, ContractName:Plans/storage-plan.md#SP-259, ContractName:Plans/Shared_Integration_Runtime.md#SIR-038, SchemaID:pm.event.v0, SchemaID:pm.context_compaction_completed.schema.v1
 ### CV-329 - Compaction Completion Envelope Consumer
@@ -21,7 +21,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Compaction completion consumes the existing EventRecord v2 envelope and its scoped idempotency contract; Assistant Chat and Storage retain event payload, binding, retention and admission authority. For an owner-admitted app feature, CV-365/366 selects explicit application scope and the exact application envelope/source/physical-key/append/read/retention graph; required-present project_id is null and actual thread/Server/Host/root identities remain. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge. Compaction has an application sibling under CV-366/SP-349; this unit, not CV-334, is the envelope consumer.
+  Project compaction completion consumes the existing EventRecord v2 envelope and its scoped idempotency contract; Assistant Chat and Storage retain event payload, binding, retention and admission authority. context.compaction.completed remains project_only in the registry and DL-300 grants no app edition. CV-366/SP-349 retain a separately specified application payload/source candidate, not an admitted event sibling. App operation/result receipts keep null project_id and actual thread/Server/Host/root identities without entering this Project event append/replay/checkpoint. App event emission remains missing_event_registration/non-emitting until separate Event Authority admission and complete payload/source/append/read/retention adoption; missing durable owner receipt/source custody is unavailable. Original Project resources and historical policy/receipts stay exact. This adds no app PRD/PlanningRun/WorkNode or Project-native SCM authority, no global nullable rewrite and no ambient cross-Project merge. This unit, not CV-334, remains the compaction envelope consumer.
 gui_related: false
 gui_classification_reason: This unit defines persisted-event contracts and owner boundaries.
 depends_on: []

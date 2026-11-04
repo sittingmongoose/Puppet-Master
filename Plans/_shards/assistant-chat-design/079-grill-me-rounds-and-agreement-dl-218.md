@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L28302-L29076
+Source lines: L28306-L29080
 
-Source SHA256: `dcab438f728b4ce5508085a47c122ce4ad2bce6d9f626904292a1bfc4a5b9fd0`
+Source SHA256: `86553c2d79c37e993d9ce0c2ccb75efa1acd034a54583239895fd2f5ef022c72`
 
 ---
 
@@ -479,7 +479,7 @@ canonical_text: 'No project is a first-class chat place with project_id=null, sc
   rung. Selected account_resolution uses MA-074 on the exact work Computer. No Basic Dark flash or no-project Settings
   write ban. N15 Set up a project later still performs protected AI setup on that Computer in app scope, then lands
   in No project chat; Guided Tour Finish/Skip returns to that exact app chat/layout without a practice Project or
-  claiming an unexecuted Project step completed. Computer use consumes T-186/D policy: named Computer, task-allowed
+  claiming an unexecuted Project step completed. Computer use consumes T-186/PS-145 policy: named Computer, task-allowed
   apps, separate provider screen disclosure and protected-auth exclusion, with a visible session-bound strip/Stop
   and existing double-Esc stop; it is no root grant or hidden desktop access. Delivery stages are chat/Goals/Crew/Plan/Deep
   Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
@@ -557,7 +557,7 @@ canonical_text: Every chat may explicitly read permitted Projects and request wo
   One coverage formatter records requested, looked_in, not_looked_in with reasons and partial with missing ranges;
   empty/partial replies and empty/filtered UI always disclose coverage, with a quiet expandable line. Archived Projects
   are skipped unless named. Notebooks, private memory, credentials, safe copies and denied files remain excluded.
-  An outgoing request shows exact target, task text and effect before Regular Send or D-admitted YOLO dispatch.
+  An outgoing request shows exact target, task text and effect before Regular Send or YOLO dispatch under PS-145.
   Sender authority never changes receiver mode; Off refuses, and unseen Regular Ask me requests remain read/answer-only
   until accepted. A person-reviewed send may satisfy that message's receiving choice, but is never fabricated for
   YOLO. Delivery is ordered at a safe turn boundary, distinct from the person's two-slot composer queue; request

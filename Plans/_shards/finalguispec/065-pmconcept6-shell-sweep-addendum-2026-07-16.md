@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L32431-L33087
 
-Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
+Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
 
 ---
 
@@ -93,7 +93,7 @@ canonical_text: >-
   former glass depth background mode and its pointer parallax obligation are retired compatibility/source
   lineage; no current Wallpaper selection enables that old mode or revives its sampler. All active
   document-level pointer-move work, including the F3-465 hover driver, remains merged into a single shared
-  document pointer-move handler (`window.PM7_PMOVE` in the concept) that every consumer hooks into rather
+  document pointer-move handler that every consumer hooks into rather
   than listening itself. The retired parallax sampler stays inactive under every motion preference; F3-465
   sets the active hover's reduced-motion form.
 gui_related: true

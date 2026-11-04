@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L40578-L40805
+Source lines: L40540-L40767
 
-Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
+Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
 
 ---
 
@@ -208,7 +208,7 @@ split_recommended: false
 depends_on: [ACD-469, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
+  - "No product Chat transcript overflows sideways at full width or at a 234px popped-out desktop Chat pane; main-window Chat follows F3-637."
   - "Needs-you actions wrap; ledger titles ellipsize; long tokens break."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json

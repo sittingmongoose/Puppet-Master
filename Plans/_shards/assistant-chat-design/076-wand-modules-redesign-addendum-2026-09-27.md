@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L27008-L27731
+Source lines: L27012-L27735
 
-Source SHA256: `dcab438f728b4ce5508085a47c122ce4ad2bce6d9f626904292a1bfc4a5b9fd0`
+Source SHA256: `86553c2d79c37e993d9ce0c2ccb75efa1acd034a54583239895fd2f5ef022c72`
 
 ---
 
@@ -667,15 +667,15 @@ split_recommended: false
 depends_on: [ACD-010, DL-126, F3-572]
 unblocks: [F3-581, ATS-065]
 acceptance_criteria:
-  - "A chat with an override uses it; a chat without one uses the project default; a project without one uses the app default."
+  - "Resolution follows This chat → Project → Computer → Everywhere → factory; an app chat skips Project and each missing override falls through to the next applicable level."
   - "After a switch, every earlier reply keeps its text and no reply is re-sent, regenerated or rewritten."
   - "A reply streaming during a switch finishes in the style it started with."
   - "Explain this reply simply adds exactly one reply, leaves the explained reply unchanged and changes no ELI5 setting."
   - "cmd.chat.eli5.explain_reply is refused for a reply that is still streaming."
   - "No helper line under a control has an Expert and an ELI5 variant."
 validation_surfaces:
-  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
-  - python3 scripts/pm-plan-index.py validate
+  - scripts/pm-shard-plans.py
+  - scripts/pm-plan-index.py
 risk_class: eli5_second_response_or_rewrite
 reasoning_tier: high
 context_scope: chat_eli5
@@ -699,7 +699,7 @@ source_lineage:
   - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 preserved_exact_tokens:
   - "DL-138"
-  - "the chat override, otherwise the project default, otherwise the app default"
+  - "This chat → Project → Computer → Everywhere → factory"
   - "general.interaction.chat-eli5"
   - "general.interaction.eli5-default"
   - "Explain Terms Everywhere"
@@ -721,7 +721,7 @@ negative_constraints:
   - "Do not let ELI5 change code, plans, files or generated documents."
   - "Do not define the Settings project scope here; Settings owns it."
 stale_retired_dispositions:
-  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by the three-level resolution in this unit (DL-126)."
+  - "Section 2.1's 'A toggle in the chat UI', its bare 'Default: OFF' and 'a per-chat or per-session flag' are superseded by this unit's Settings-owned layered resolution (DL-281); DL-126's forward-only reply behavior remains."
   - "FinalGUISpec 2026-09-03 section 14's 'ELI5 is a wand check' is superseded by the ELI5 sheet and the quick dot (FinalGUISpec F3-581)."
 owner_hints:
   - Plans/assistant-chat-design.md

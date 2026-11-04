@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1642-L2038
+Source lines: L1642-L2039
 
-Source SHA256: `9dae397812bf129b84259fa7d61109fed8337d71124c1251b597dc66bc0087ac`
+Source SHA256: `029b1cd5d90cf1ecc878e1057d5c89a24b384976e6c21bd2f8545b0d3be0856e`
 
 ---
 
@@ -45,9 +45,9 @@ acceptance_criteria:
   focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never
   authorize work.
 - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection
-  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}`
-  through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible
-  route.
+  queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local` through
+  Project System with the exact reviewed `project_setup_binding` and selected Git or Jujutsu backend under PJCT-009.
+  Tests reject no-history setup and `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
 - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null`
   and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|none|null`
   axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never
@@ -174,9 +174,10 @@ acceptance_criteria:
   resize, scale, localization, movement, and route changes; stale or missing target geometry cannot advance the film.
 - Skip restores exact captured layout, Chat thread/selection/placeholder/draft, and focus. Finish requires current
   prerequisite predicates, restores temporary layout by default or honors explicit Keep, removes practice content,
-  and lands on the real Planning Wizard without work. Restoration failure remains recoverable, never completed. Safe
-  checkpoint tests revalidate owner state on Close/reload/resume, reject stale/secret-bearing records, return to the
-  earliest unsatisfied prerequisite, and never replay domain work.
+  and lands without starting work on the owner-approved real Project Planning Wizard or, for N15 Later, the No project
+  chat. Restoration failure remains recoverable, never completed. Safe checkpoint tests revalidate owner state on
+  Close/reload/resume, reject stale/secret-bearing records, return to the earliest unsatisfied prerequisite,
+  and never replay domain work.
 - Reload tests prove that Skip or Finish after a reload still restores through the layout owner's snapshot ref; that
   a checkpoint which cannot be revalidated restores whatever of its basis is still resolvable, never adopts the temporary
   arrangement as the new starting point, and starts a fresh session with a plain notice instead of a dead-end recovery

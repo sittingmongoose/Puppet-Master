@@ -4,7 +4,7 @@ Source: `Plans/Shared_Integration_Runtime.md`
 
 Source lines: L2007-L2089
 
-Source SHA256: `6f2c5e2b19702e2dad7fad0f6cb29e5c74e38cc226edcd3352c644be601e0d9e`
+Source SHA256: `bb9f233ffd1699001f2844d3b00ebda83049f6c86d3489a4e899d4e5ec416c12`
 
 ---
 
@@ -58,7 +58,7 @@ status: accepted
 owner_doc: Plans/Shared_Integration_Runtime.md
 canonical_text: >-
   Project notebook/checkpoint records remain in the one Project Vault under its existing lease/topology
-  authority. B's app notebook/checkpoint edition lives in the actual Server app store with thread/Computer
+  authority. WN-021's app notebook/checkpoint edition lives in the actual Server app store with thread/Computer
   and app writer/lease, no Vault before conversion. PSB-006/007 fences old holders and stale
   renewal/release/mutation; destination access/route/currentness verifies before resume. N25 maps carried
   canonical records explicitly, preserving independently retained source history. Notes carry no raw

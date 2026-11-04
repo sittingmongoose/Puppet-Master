@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5574-L27152
 
-Source SHA256: `edd7bd4f7cfdf83c37af3556b43ed73417dfa668e7685d4edfaa0e828a4e9fb9`
+Source SHA256: `0b96d40c3ed433887eb3f1a1f7fe7ffc9c1e6e407d4cb1a0f6b08eac4e3cc433`
 
 ---
 
@@ -4345,8 +4345,8 @@ canonical_text: >-
   The Slint theme global exposes the canonical ThemeMode values for all ten built-in variants (friendly-dark,
   friendly-light, glass-dark, glass-light, retro-dark, retro-light, basic-light, basic-dark) and theme token
   properties for colors, accents, retro effects, paper texture, borders, padding, scrollbar width, line height,
-  and base font size, with the property defaults illustrative per active variant and basic-dark as the untouched
-  first-open/fresh-project factory mode. The former friendly-dark default is superseded lineage. The
+  and base font size, with the property defaults illustrative per active variant and basic-dark as the bundled/pre-claim
+  fallback only. A fresh Project follows Your usual settings through the applicable SSYS-002/059 ladder. The former friendly-dark default is superseded lineage. The
   ThemePresentationMode dimension (light, dark, auto) resolves family + mode to one of the same eight token
   sets; in auto the effective variant tracks the OS appearance (prefers-color-scheme) live and feeds the
   identical per-variant tokens. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes
@@ -11987,7 +11987,7 @@ unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "A genuinely fresh Project seeds Basic Dark plus factory layout, existing explicit saved theme/layout survives startup and switching, and a copied Project owns an independent detached destination snapshot."
+- "A fresh Project follows Your usual settings through SSYS-002/059, using Basic Dark only when no applicable look exists, and starts with factory layout unless an explicit saved layout applies. Existing appearance values and layouts survive startup and switching. Copy brings source-owned settings by default, effective values only through Keep them fixed, and detached layout state through its layout owner."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -15034,7 +15034,7 @@ canonical_text: >-
   warning that no GPU was detected), Slint as the only native UI framework (replacing it needs a new owner
   decision; a GPUI fork was rejected on 2026-10-02), and Puppet Master's Skia renderer extensions (DL-139), no
   React or Tauri product UI with the web GUI a Rust Leptos client (DL-139), IDE shell layout, five theme
-  families (ten built-in themes, untouched first-open/fresh-project factory default Basic Dark; the former
+  families (ten built-in themes, bundled/pre-claim fallback Basic Dark; new Projects follow Your usual settings; the former
   Friendly Dark and prior three-family defaults remain superseded lineage), Settings owned by
   `Plans/Settings_System.md`, the Doctor registry/router/projection owned by `Plans/newtools.md` N2-151, Login
   retained by auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and

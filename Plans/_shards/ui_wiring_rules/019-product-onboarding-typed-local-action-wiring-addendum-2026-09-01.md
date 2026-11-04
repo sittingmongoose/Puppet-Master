@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1024-L1378
+Source lines: L1024-L1379
 
-Source SHA256: `28edb53e508961708b70c041ce43bb6a9d0cac80667419b95c8c9c470f88e8cf`
+Source SHA256: `602edf1df01af4da1f2b884664297dfe8269f84e30cb9c5613321f88db98838e`
 
 ---
 
@@ -104,8 +104,9 @@ acceptance_criteria:
 - ui.onboarding.choose_look's choose_look intent (Q22 retires preview_nier) carry a closed look_choice with only the
   changed fields non-null and write the session with look_previewed; its two toggles carry look_choice null and write
   nothing; none has an owner route, owner command, cmd.theme.* or Settings transaction (DL-153).
-- ui.onboarding.start with source_surface first_run paints a Basic Dark preview with Basic Dark preselected; with
-  settings_rerun it keeps the look on screen preselected; neither writes a setting (F3-520, DL-153).
+- ui.onboarding.start with source_surface first_run preselects the one Settings-resolved saved look, including
+  without a Project; Basic Dark is only the factory/pre-claim fallback. settings_rerun keeps the look on screen
+  preselected; neither writes a setting. The preview commits once at the accepted application/Computer or real-Project boundary (F3-520, DL-286).
 - Every request/result validates against pm.product_onboarding.action_request.v2 and pm.product_onboarding.action_result.v2
   with closed applied, disabled, and rejected outcomes.
 - local_context consumes PWIZ-021's exact closed v2 owner definition, including required nullable phase/command/preflight/Project-commit
