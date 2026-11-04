@@ -10,6 +10,7 @@ import hashlib
 import json
 import re
 import struct
+from blake3 import blake3
 from pathlib import Path
 from functools import lru_cache
 from jsonschema import Draft202012Validator, FormatChecker
@@ -189,7 +190,7 @@ def original_receipt(event, slot, authority):
 
 def bundle_source(row, scenario, legacy_validate, historical=False):
     source, authority, event = scenario['source'], scenario['authority'], scenario['event']
-    check_schema('Plans/dcw/revision_run.schema.json', source)
+    check_schema('Plans/dcw/revision_run.schema.json', source, 'inline')
     payload = event['payload']
     fields = ('project_id', 'thread_id', 'bundle_id', 'revision_id', 'annotation_ids',
               'requested_revision_capability', 'effective_revision_capability', 'permission_snapshot_id')
@@ -243,7 +244,7 @@ def bundle_source(row, scenario, legacy_validate, historical=False):
 
 def wizard_source(row, scenario):
     source, authority, event = scenario['source'], scenario['authority'], scenario['event']
-    check_schema(row['source_schema'], source)
+    check_schema(row['source_schema'], source, 'inline')
     # EventRecord leaves payload dispatch to its exact family schema, including
     # the frozen stored copy; equality alone does not validate its hash shape.
     check_schema(row['schema'], source['prepared_event']['payload'])
@@ -298,6 +299,36 @@ def index_read(index, reader):
     require(any(t['transaction_id']==frontier['redb_transaction_id'] and t['frontier_sha256']==token['frontier_sha256'] for t in index['committed_transactions']), 'index_currentness')
 
 
+def source_storage(row, scenario):
+    """Validate the physical redb row and its SP-337 original payload, if selected.
+
+    `source` is the independently decoded logical original. Synthetic payload
+    authority is an adapter input, never native durability/authentication proof.
+    """
+    source = scenario['source']
+    stored = scenario.get('stored_source', source)
+    profile = load('Plans/storage_value_registry.json')['storage_profile']['family_profiles'][row['source_family']]
+    require(profile['redb_file'] == 'canonical' and profile['storage_group'] == 'runs_and_goals' and
+            profile['max_value_bytes'] == 16384, 'source_storage_profile')
+    require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')
+    check_schema(row['source_schema'], stored)
+    if 'source_payload_ref' not in stored:
+        require(stored == source, 'source_storage_value')
+        return
+    require(stored['source_key'] == scenario['source_key'] and all(stored[k] == source[k] for k in
+            ('schema_id', 'schema_version', 'storage_instance_id', 'recovery_epoch', 'value_revision')), 'source_reference_identity')
+    ref = stored['source_payload_ref']
+    payload = scenario['authority'].get('payloads', {}).get(ref['blake3'])
+    require(payload is not None, 'source_payload_missing')
+    require(payload['readable'], 'source_payload_unavailable')
+    require(payload['durable'] and payload['index_durable'], 'source_payload_not_durable')
+    raw = canonical_msgpack(payload['body'])
+    require(len(raw) == ref['byte_size'], 'source_payload_size')
+    require(blake3(raw).hexdigest() == ref['blake3'], 'source_payload_digest')
+    check_schema(row['source_schema'], payload['body'], 'inline')
+    require(raw == canonical_msgpack(source), 'source_payload_substitution')
+
+
 def verify(row, scenario, operation, legacy_validate):
     event=scenario['event'];authority=scenario['authority'];control=scenario['control']
     if operation == 'compatibility_append':
@@ -311,8 +342,13 @@ def verify(row, scenario, operation, legacy_validate):
         require(admission is not None and scenario['source']['recovery_epoch'] < control['selected_recovery_epoch'], 'restore_epoch')
         check_schema('Plans/event_append_receipt_contracts.schema.json',admission,'restore_admission')
         require(admission['recovery_epoch']==control['selected_recovery_epoch'] and admission['storage_instance_id']==authority['storage_instance_id'] and admission['restored_boundary_sha256']==control['restored_boundary_sha256'], 'restore_admission')
-        source_sha=hashlib.sha256(canonical_msgpack(scenario['source'])).hexdigest()
+        source_sha=hashlib.sha256(canonical_msgpack(scenario.get('stored_source', scenario['source']))).hexdigest()
         require(authority.get('restored_sources',{}).get(compact_digest(scenario['source_key']))==source_sha, 'restore_source_inventory')
+        stored = scenario.get('stored_source', scenario['source'])
+        if 'source_payload_ref' in stored:
+            ref = stored['source_payload_ref']
+            require(authority.get('restored_payloads', {}).get(ref['blake3']) ==
+                    {k: ref[k] for k in ('byte_size', 'media_type')}, 'restore_payload_inventory')
         ids={slot['prepared_event']['event_id'] for slot in scenario['source']['phases']} if row['event_type'].startswith('bundle.') else {event['event_id']}
         if row['event_type']=='wizard.deferred_payload.loaded':ids.add(event['payload']['predecessor_event_id'])
         require(ids <= {m['event_id'] for m in admission['members']}, 'restore_members')
@@ -329,6 +365,11 @@ def verify(row, scenario, operation, legacy_validate):
         require(event['payload']['project_id'] in authority['writable_projects'], 'permission_or_deleted_source')
         require(not control['writer_cutoff'] or (operation != 'append' and control['pending_disposition']=='drain_original'), 'writer_cutoff')
     if operation == 'retry':
+        # A caller retries semantic inputs; Storage-assigned observed/persisted
+        # times and sequence are resolved from the original, never compared as
+        # caller body. Full-value receipt authentication still checks that original.
+        if 'retry_request' in scenario:
+            require(semantic_digest(scenario['retry_request']) == semantic_digest(event), 'idempotency_conflict')
         # Current retry must resolve original full value independently of semantic dedupe.
         original_receipt(event,scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source'],authority)
     if operation in ('read','rebuild','compatibility_read'):
@@ -339,12 +380,14 @@ def verify(row, scenario, operation, legacy_validate):
         index=copy.deepcopy(load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']['generic'])
         for mutation in scenario.get('index_mutations',[]):
             patch(index,mutation)
+        require(scenario['reader']['live_token']['storage_instance_id'] == authority['storage_instance_id'], 'checkpoint_storage_instance')
         index_read(index,scenario['reader'])
     # Compatibility is a transient view of the original; no source or custody bytes change.
     original_event=authority['events'].get(event['event_id'])
     if operation=='compatibility_read':
         require(original_event is not None, 'original_custody_missing')
         scenario=copy.deepcopy(scenario);scenario['event']=original_event;event=original_event
+    source_storage(row, scenario)
     secret_free(scenario['source'])
     slot=bundle_source(row,scenario,legacy_validate,historical=operation in ('read','rebuild','compatibility_read')) if row['event_type'].startswith('bundle.') else wizard_source(row,scenario)
     if operation != 'append':
@@ -366,6 +409,44 @@ def patch(value, mutation):
         target[key]=copy.deepcopy(mutation['value'])
 
 
+def source_size_fixture(row, scenario, target, referenced, payload_body_mutations=()):
+    """Build exact canonical-byte boundary inputs using bounded evidence refs."""
+    source = scenario['source']
+    refs = source['changes'] if row['event_type'].startswith('bundle.') else source['seed']['warning_refs']
+    refs.clear()
+    # Leave one final ref to tune byte length without crossing a MessagePack
+    # string/array header boundary unnoticed. Every ref remains <=512 chars.
+    while target - len(canonical_msgpack(source)) > 520:
+        refs.append('evidence:' + str(len(refs)) + ':' + 'a' * 480)
+    refs.append('evidence:boundary:')
+    for length in range(1, 513):
+        refs[-1] = ('evidence:boundary:' + 'b' * 512)[:length]
+        if len(canonical_msgpack(source)) == target:
+            break
+    else:
+        raise AssertionError(('unreachable source boundary', row['event_type'], target))
+    if row['event_type'].startswith('wizard.'):
+        scenario['authority']['seeds'][source['seed']['seed_ref']] = copy.deepcopy(source['seed'])
+    if referenced:
+        body = copy.deepcopy(source)
+        for mutation in payload_body_mutations:
+            patch(body, mutation)
+        raw = canonical_msgpack(body)
+        payload_id = blake3(raw).hexdigest()
+        scenario['stored_source'] = {k: source[k] for k in
+            ('schema_id', 'schema_version', 'storage_instance_id', 'recovery_epoch', 'value_revision')}
+        scenario['stored_source'].update(source_key=copy.deepcopy(scenario['source_key']), source_payload_ref=dict(
+            blake3=payload_id, byte_size=len(raw),
+            media_type='application/vnd.puppetmaster.' + row['source_family'].replace('_', '-') + '+msgpack'))
+        scenario['authority']['payloads'] = {payload_id: dict(body=body, readable=True, durable=True, index_durable=True)}
+    if source['recovery_epoch'] != scenario['control']['selected_recovery_epoch']:
+        stored = scenario.get('stored_source', source)
+        scenario['authority']['restored_sources'][compact_digest(scenario['source_key'])] = hashlib.sha256(canonical_msgpack(stored)).hexdigest()
+        if referenced:
+            ref = stored['source_payload_ref']
+            scenario['authority']['restored_payloads'] = {ref['blake3']: {k: ref[k] for k in ('byte_size', 'media_type')}}
+
+
 def run(legacy_validate):
     fixtures=load('Plans/dcw_event_contract_fixtures.json');checks=0
     require({r['event_type'] for r in fixtures['families']}=={'bundle.revision_requested','bundle.revision_started','bundle.revision_completed','bundle.revision_interrupted','wizard.opened','wizard.deferred_payload.loaded'} and len(fixtures['families'])==6,'family_inventory')
@@ -378,6 +459,13 @@ def run(legacy_validate):
         require(source['recovery_disposition']['backup_required'] and source['restore_disposition']['mutation_fence_on_unresolved'] and source['restore_disposition']['mode']=='mandatory_backup', 'original_backup_contract')
         for case in row['cases']:
             scenario=copy.deepcopy(row['positive'])
+            if 'base_case' in case:
+                base = next(c for c in row['cases'] if c['case_id'] == case['base_case'])
+                for mutation in base.get('mutations', ()):
+                    patch(scenario, mutation)
+            if 'source_bytes' in case:
+                source_size_fixture(row, scenario, case['source_bytes'], case['source_representation'] == 'payload_reference',
+                                    case.get('payload_body_mutations', ()))
             for mutation in case.get('mutations',[]):
                 patch(scenario,mutation)
             try:
@@ -386,6 +474,15 @@ def run(legacy_validate):
                 outcome=str(exc)
             assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)
             checks+=1
+            if outcome == 'accept' and case['operation'] in ('append', 'publish', 'retry'):
+                scenario['event']['replay_policy'] = 'projector_replay_only'
+                try:
+                    verify(row, scenario, case['operation'], legacy_validate)
+                except Refusal as exc:
+                    assert str(exc) == 'replay_only_not_appendable', (row['event_type'], case['case_id'], str(exc))
+                else:
+                    raise AssertionError('reader-only policy accepted on current writer: ' + case['case_id'])
+                checks += 1
         for field in row['positive']['event']['payload']:
             scenario=copy.deepcopy(row['positive']);del scenario['event']['payload'][field]
             try:
