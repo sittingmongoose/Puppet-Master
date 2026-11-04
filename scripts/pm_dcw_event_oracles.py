@@ -16,6 +16,8 @@ from functools import lru_cache
 from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import ValidationError
 from referencing import Registry, Resource
+from referencing.exceptions import Unresolvable
+from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMAT = FormatChecker()
@@ -48,6 +50,31 @@ def check_schema(path, value, definition=None):
         Draft202012Validator(schema, registry=RESOURCES, format_checker=FORMAT).validate(value)
     except ValidationError as exc:
         raise Refusal('schema') from exc
+
+
+def schema_references(schema, resolver=None):
+    """Resolve even unused definitions; schema-shape validation is insufficient."""
+    if resolver is None:
+        resolver = RESOURCES.resolver(schema['$id'])
+    if isinstance(schema, dict):
+        resolver = resolver.in_subresource(Resource.from_contents(schema, default_specification=DRAFT202012))
+        if '$ref' in schema:
+            try:
+                resolver.lookup(schema['$ref'])
+            except Unresolvable as exc:
+                raise Refusal('unresolved_schema_ref') from exc
+        for value in schema.values():
+            schema_references(value, resolver)
+    elif isinstance(schema, list):
+        for value in schema:
+            schema_references(value, resolver)
+
+
+def writer_policy(policy):
+    # Admission is independent of the producer semantic digest and still runs
+    # when a caller retries an already receipted event.
+    require(policy != 'projector_replay_only', 'replay_only_not_appendable')
+    require(policy == 'dedupe_by_idempotency_key', 'writer_policy')
 
 
 def secret_free(value):
@@ -148,8 +175,10 @@ def envelope(row, event, compatibility=False):
     require(event['correlation_id'] == payload['revision_id' if row['event_type'].startswith('bundle.') else 'request_id'], 'correlation')
     require(event['producer_sequence_id'] == payload.get('phase_sequence'), 'producer_sequence')
     require(event['redaction_profile'] == 'secret_refs_only', 'redaction')
-    require(event['replay_policy'] == ('projector_replay_only' if compatibility else 'dedupe_by_idempotency_key'),
-            'replay_only_not_appendable' if event['replay_policy'] == 'projector_replay_only' else 'writer_policy')
+    if compatibility:
+        require(event['replay_policy'] == 'projector_replay_only', 'writer_policy')
+    else:
+        writer_policy(event['replay_policy'])
     require(all(v is None for v in event['migration'].values()), 'native_migration')
     require(len(json.dumps(payload, ensure_ascii=False).encode()) <= 16384, 'inline_limit')
     def no_secret(value):
@@ -369,6 +398,8 @@ def verify(row, scenario, operation, legacy_validate):
         # times and sequence are resolved from the original, never compared as
         # caller body. Full-value receipt authentication still checks that original.
         if 'retry_request' in scenario:
+            if 'replay_policy' in scenario['retry_request']:
+                writer_policy(scenario['retry_request']['replay_policy'])
             require(semantic_digest(scenario['retry_request']) == semantic_digest(event), 'idempotency_conflict')
         # Current retry must resolve original full value independently of semantic dedupe.
         original_receipt(event,scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source'],authority)
@@ -397,6 +428,11 @@ def verify(row, scenario, operation, legacy_validate):
 
 
 def patch(value, mutation):
+    if mutation.get('op') == 'copy':
+        source = value
+        for part in mutation['from'].strip('/').split('/'):
+            source = source[int(part)] if isinstance(source, list) else source[part]
+        mutation = dict(mutation, op='replace', value=copy.deepcopy(source))
     parts=mutation['path'].strip('/').split('/');target=value
     for key in parts[:-1]:
         target=target[int(key)] if isinstance(target,list) else target[key]
@@ -451,7 +487,9 @@ def run(legacy_validate):
     fixtures=load('Plans/dcw_event_contract_fixtures.json');checks=0
     require({r['event_type'] for r in fixtures['families']}=={'bundle.revision_requested','bundle.revision_started','bundle.revision_completed','bundle.revision_interrupted','wizard.opened','wizard.deferred_payload.loaded'} and len(fixtures['families'])==6,'family_inventory')
     for schema_path in SCHEMAS:
-        Draft202012Validator.check_schema(json.loads(schema_path.read_text()))
+        schema = load(str(schema_path.relative_to(ROOT)))
+        Draft202012Validator.check_schema(schema)
+        schema_references(schema)
     registry=load('Plans/storage_value_registry.json')
     for row in fixtures['families']:
         source=next(f for f in registry['families'] if f['family_id']==row['source_family'])
@@ -475,6 +513,17 @@ def run(legacy_validate):
             assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)
             checks+=1
             if outcome == 'accept' and case['operation'] in ('append', 'publish', 'retry'):
+                if case['operation'] == 'retry':
+                    retry_scenario = copy.deepcopy(scenario)
+                    retry_scenario.setdefault('retry_request', copy.deepcopy(scenario['event']))
+                    retry_scenario['retry_request']['replay_policy'] = 'projector_replay_only'
+                    try:
+                        verify(row, retry_scenario, 'retry', legacy_validate)
+                    except Refusal as exc:
+                        assert str(exc) == 'replay_only_not_appendable', (row['event_type'], case['case_id'], str(exc))
+                    else:
+                        raise AssertionError('reader-only caller retry accepted: ' + case['case_id'])
+                    checks += 1
                 scenario['event']['replay_policy'] = 'projector_replay_only'
                 try:
                     verify(row, scenario, case['operation'], legacy_validate)

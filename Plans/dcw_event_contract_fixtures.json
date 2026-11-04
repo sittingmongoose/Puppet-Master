@@ -4171,6 +4171,247 @@
               "value": "5290bcc6e6ec3c3aa2dccd093f5550f2f55e3ddcc031d599459bde0a410b7311"
             }
           ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_inline",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_referenced_source",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_None_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_None_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_semantic_fields_only",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/retry_request",
+              "value": {
+                "event_type": "bundle.revision_requested",
+                "scope_kind": "project",
+                "project_id": "project-a",
+                "thread_id": "thread-a",
+                "run_id": null,
+                "node_id": null,
+                "attempt_id": null,
+                "actor_ref": "actor:review-owner",
+                "requested_account_ref": null,
+                "effective_account_ref": null,
+                "occurred_at_utc": "2026-11-04T18:00:00Z",
+                "producer_sequence_id": 0,
+                "correlation_id": "revision-a",
+                "causation_event_id": null,
+                "parent_event_id": null,
+                "idempotency_key": "bundle.revision_requested:9290258f42e1dc0cb7c5a2524cd7140e2d16f84ce10f882277b101abff55a148",
+                "payload_schema_id": "pm.event_payload.bundle.revision_requested.v1",
+                "payload": {
+                  "project_id": "project-a",
+                  "thread_id": "thread-a",
+                  "bundle_id": "bundle-a",
+                  "revision_id": "revision-a",
+                  "requested_revision_capability": "x-requested_revision_capability",
+                  "permission_snapshot_id": "x-permission_snapshot_id",
+                  "schema_id": "pm.event_payload.bundle.revision_requested.v1",
+                  "schema_version": "1.0.0",
+                  "event_type": "bundle.revision_requested",
+                  "annotation_ids": [
+                    "annotation-a"
+                  ],
+                  "effective_revision_capability": "validated_structured_revision",
+                  "ts": "2026-11-04T18:00:00Z",
+                  "safe_point_id": null,
+                  "predecessor_event_id": null,
+                  "source_ref": "revision_run_phase:7ceccb52bb4b42e1857f8c0a133259d732edd8fac5947d2223bc79f6838f1992",
+                  "phase_sequence": 0
+                },
+                "payload_ref": null,
+                "redaction_profile": "secret_refs_only",
+                "migration": {
+                  "migrated_from_schema_id": null,
+                  "migrated_from_schema_version": null,
+                  "migration_id": null,
+                  "compatibility_event_type": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_observed_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/observed_at_utc",
+              "value": "2026-11-04T20:00:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_persisted_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/persisted_at_utc",
+              "value": "2026-11-04T20:00:01Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_sequence_id",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/sequence_id",
+              "value": 99999
+            }
+          ]
         }
       ]
     },
@@ -10570,6 +10811,247 @@
               "value": "6dceb6a1254e51f0ffe60f27fcd230f76217b8a201665d564d91d2e3d86587c3"
             }
           ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_inline",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_referenced_source",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_None_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_None_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_semantic_fields_only",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/retry_request",
+              "value": {
+                "event_type": "bundle.revision_started",
+                "scope_kind": "project",
+                "project_id": "project-a",
+                "thread_id": "thread-a",
+                "run_id": null,
+                "node_id": null,
+                "attempt_id": null,
+                "actor_ref": "actor:review-owner",
+                "requested_account_ref": null,
+                "effective_account_ref": null,
+                "occurred_at_utc": "2026-11-04T18:00:00Z",
+                "producer_sequence_id": 1,
+                "correlation_id": "revision-a",
+                "causation_event_id": "evt_bundle_revision_9290258f42e1dc0cb7c5a2524cd7140e2d16f84ce10f882277b101abff55a148",
+                "parent_event_id": "evt_bundle_revision_9290258f42e1dc0cb7c5a2524cd7140e2d16f84ce10f882277b101abff55a148",
+                "idempotency_key": "bundle.revision_started:fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                "payload_schema_id": "pm.event_payload.bundle.revision_started.v1",
+                "payload": {
+                  "project_id": "project-a",
+                  "thread_id": "thread-a",
+                  "bundle_id": "bundle-a",
+                  "revision_id": "revision-a",
+                  "requested_revision_capability": "x-requested_revision_capability",
+                  "permission_snapshot_id": "x-permission_snapshot_id",
+                  "schema_id": "pm.event_payload.bundle.revision_started.v1",
+                  "schema_version": "1.0.0",
+                  "event_type": "bundle.revision_started",
+                  "annotation_ids": [
+                    "annotation-a"
+                  ],
+                  "effective_revision_capability": "validated_structured_revision",
+                  "ts": "2026-11-04T18:00:00Z",
+                  "safe_point_id": null,
+                  "predecessor_event_id": "evt_bundle_revision_9290258f42e1dc0cb7c5a2524cd7140e2d16f84ce10f882277b101abff55a148",
+                  "source_ref": "revision_run_phase:c6ec01359315fbab24846374cfd8cb3d57509fa86507275a9983aba1a183f17a",
+                  "phase_sequence": 1
+                },
+                "payload_ref": null,
+                "redaction_profile": "secret_refs_only",
+                "migration": {
+                  "migrated_from_schema_id": null,
+                  "migrated_from_schema_version": null,
+                  "migration_id": null,
+                  "compatibility_event_type": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_observed_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/observed_at_utc",
+              "value": "2026-11-04T20:00:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_persisted_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/persisted_at_utc",
+              "value": "2026-11-04T20:00:01Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_sequence_id",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/sequence_id",
+              "value": 99999
+            }
+          ]
         }
       ]
     },
@@ -15807,6 +16289,247 @@
               "value": "e398929cc97eaba875de6820f0f08d7d540397b64adce3d2a83751a0c751db7e"
             }
           ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_inline",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_referenced_source",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_None_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_None_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_semantic_fields_only",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/retry_request",
+              "value": {
+                "event_type": "bundle.revision_completed",
+                "scope_kind": "project",
+                "project_id": "project-a",
+                "thread_id": "thread-a",
+                "run_id": null,
+                "node_id": null,
+                "attempt_id": null,
+                "actor_ref": "actor:review-owner",
+                "requested_account_ref": null,
+                "effective_account_ref": null,
+                "occurred_at_utc": "2026-11-04T18:00:00Z",
+                "producer_sequence_id": 2,
+                "correlation_id": "revision-a",
+                "causation_event_id": "evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                "parent_event_id": "evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                "idempotency_key": "bundle.revision_completed:9ea2d3636b163edcc62b7272616915579f1c165287c269f19b3d0cc405d90f06",
+                "payload_schema_id": "pm.event_payload.bundle.revision_completed.v1",
+                "payload": {
+                  "project_id": "project-a",
+                  "thread_id": "thread-a",
+                  "bundle_id": "bundle-a",
+                  "revision_id": "revision-a",
+                  "requested_revision_capability": "x-requested_revision_capability",
+                  "permission_snapshot_id": "x-permission_snapshot_id",
+                  "schema_id": "pm.event_payload.bundle.revision_completed.v1",
+                  "schema_version": "1.0.0",
+                  "event_type": "bundle.revision_completed",
+                  "annotation_ids": [
+                    "annotation-a"
+                  ],
+                  "effective_revision_capability": "validated_structured_revision",
+                  "ts": "2026-11-04T18:00:00Z",
+                  "safe_point_id": null,
+                  "predecessor_event_id": "evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                  "source_ref": "revision_run_phase:0eb3bd85678ba7095ee23ceb666e20d8eb42d08487a1a6b38bf5bbc5717c18b6",
+                  "phase_sequence": 2
+                },
+                "payload_ref": null,
+                "redaction_profile": "secret_refs_only",
+                "migration": {
+                  "migrated_from_schema_id": null,
+                  "migrated_from_schema_version": null,
+                  "migration_id": null,
+                  "compatibility_event_type": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_observed_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/observed_at_utc",
+              "value": "2026-11-04T20:00:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_persisted_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/persisted_at_utc",
+              "value": "2026-11-04T20:00:01Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_sequence_id",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/sequence_id",
+              "value": 99999
+            }
+          ]
         }
       ]
     },
@@ -21005,6 +21728,247 @@
             {
               "path": "/authority/restored_sources/078aaec47e21606f4aff7c4657810fbdfd0d8b0d3ddf87d662703de35c45f6b1",
               "value": "c033938f102de7fa14db41e849253b34ecdf229647a65c64b4317d3d3194d55c"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_inline",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_referenced_source",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_None_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_None_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_semantic_fields_only",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/retry_request",
+              "value": {
+                "event_type": "bundle.revision_interrupted",
+                "scope_kind": "project",
+                "project_id": "project-a",
+                "thread_id": "thread-a",
+                "run_id": null,
+                "node_id": null,
+                "attempt_id": null,
+                "actor_ref": "actor:review-owner",
+                "requested_account_ref": null,
+                "effective_account_ref": null,
+                "occurred_at_utc": "2026-11-04T18:00:00Z",
+                "producer_sequence_id": 2,
+                "correlation_id": "revision-a",
+                "causation_event_id": "evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                "parent_event_id": "evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                "idempotency_key": "bundle.revision_interrupted:88a3071d69341fde0e231a80ad18d45d3b67449dd3ba909ec5f15bd8fbd1b134",
+                "payload_schema_id": "pm.event_payload.bundle.revision_interrupted.v1",
+                "payload": {
+                  "project_id": "project-a",
+                  "thread_id": "thread-a",
+                  "bundle_id": "bundle-a",
+                  "revision_id": "revision-a",
+                  "requested_revision_capability": "x-requested_revision_capability",
+                  "permission_snapshot_id": "x-permission_snapshot_id",
+                  "schema_id": "pm.event_payload.bundle.revision_interrupted.v1",
+                  "schema_version": "1.0.0",
+                  "event_type": "bundle.revision_interrupted",
+                  "annotation_ids": [
+                    "annotation-a"
+                  ],
+                  "effective_revision_capability": "validated_structured_revision",
+                  "ts": "2026-11-04T18:00:00Z",
+                  "safe_point_id": null,
+                  "predecessor_event_id": "evt_bundle_revision_fa2e59906bbd4270ff5c1809e0f4e1c8be40ea8b15b6bf08375cb3c649eca8de",
+                  "source_ref": "revision_run_phase:0eb3bd85678ba7095ee23ceb666e20d8eb42d08487a1a6b38bf5bbc5717c18b6",
+                  "phase_sequence": 2
+                },
+                "payload_ref": null,
+                "redaction_profile": "secret_refs_only",
+                "migration": {
+                  "migrated_from_schema_id": null,
+                  "migrated_from_schema_version": null,
+                  "migration_id": null,
+                  "compatibility_event_type": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_observed_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/observed_at_utc",
+              "value": "2026-11-04T20:00:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_persisted_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/persisted_at_utc",
+              "value": "2026-11-04T20:00:01Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_sequence_id",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/sequence_id",
+              "value": 99999
             }
           ]
         }
@@ -26487,6 +27451,249 @@
             {
               "path": "/authority/restored_sources/6de78810d7daf075068b489b4d00043198717c90580c3623fac66cbbd707ae67",
               "value": "55da4e94c3d3d8f99924c2fc3c54fe2a02a59493b98fc593d872bfd28fd3bd3f"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_inline",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_referenced_source",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_None_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_None_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_semantic_fields_only",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/retry_request",
+              "value": {
+                "event_type": "wizard.opened",
+                "scope_kind": "project",
+                "project_id": "project-a",
+                "thread_id": "intake-a",
+                "run_id": null,
+                "node_id": null,
+                "attempt_id": null,
+                "actor_ref": "actor:review-owner",
+                "requested_account_ref": null,
+                "effective_account_ref": null,
+                "occurred_at_utc": "2026-11-04T18:00:00Z",
+                "producer_sequence_id": null,
+                "correlation_id": "request-a",
+                "causation_event_id": null,
+                "parent_event_id": null,
+                "idempotency_key": "wizard.opened:6f545a1425e49bbeb4cf4f5c0deb69adcd2e705b7bcc2ed0254ec42b077023c1",
+                "payload_schema_id": "pm.event_payload.wizard.opened.v1",
+                "payload": {
+                  "schema_id": "pm.event_payload.wizard.opened.v1",
+                  "schema_version": "1.0.0",
+                  "event_type": "wizard.opened",
+                  "project_id": "project-a",
+                  "thread_id": "intake-a",
+                  "planning_run_id": "planning-run-a",
+                  "named_plan_id": "named-plan-a",
+                  "thread_group_id": "group-a",
+                  "request_id": "request-a",
+                  "source_ref": "wizard_open_evidence:6f545a1425e49bbeb4cf4f5c0deb69adcd2e705b7bcc2ed0254ec42b077023c1",
+                  "result_ref": "result:wizard.opened",
+                  "seed_ref": "seed:current",
+                  "seed_kind": "assistant_chat_handoff_seed",
+                  "seed_version": "seed-v1",
+                  "seed_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "project_context_snapshot_ref": "context:project-a",
+                  "project_context_snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "permission_snapshot_id": "x-permission_snapshot_id",
+                  "predecessor_event_id": null,
+                  "ts": "2026-11-04T18:00:00Z"
+                },
+                "payload_ref": null,
+                "redaction_profile": "secret_refs_only",
+                "migration": {
+                  "migrated_from_schema_id": null,
+                  "migrated_from_schema_version": null,
+                  "migration_id": null,
+                  "compatibility_event_type": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_observed_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/observed_at_utc",
+              "value": "2026-11-04T20:00:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_persisted_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/persisted_at_utc",
+              "value": "2026-11-04T20:00:01Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_sequence_id",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/sequence_id",
+              "value": 99999
             }
           ]
         }
@@ -32711,6 +33918,249 @@
             {
               "path": "/authority/restored_sources/96fa0462994078191ef9117b7e7fd17ad1938b4ef7972b0bfef7816c12b34ffd",
               "value": "a681c9594c44f650400e705e417c6f5bc68e23332186f12eaf452e367ec6c5fe"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_inline",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_projector_replay_only_referenced_source",
+          "operation": "retry",
+          "expected": "replay_only_not_appendable",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_append_once_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "append_once"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_dedupe_by_event_id_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": "dedupe_by_event_id"
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_policy_None_inline",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_policy_None_referenced_source",
+          "operation": "retry",
+          "expected": "writer_policy",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/replay_policy",
+              "value": null
+            }
+          ],
+          "source_bytes": 24576,
+          "source_representation": "payload_reference"
+        },
+        {
+          "case_id": "caller_retry_semantic_fields_only",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "path": "/retry_request",
+              "value": {
+                "event_type": "wizard.deferred_payload.loaded",
+                "scope_kind": "project",
+                "project_id": "project-a",
+                "thread_id": "intake-a",
+                "run_id": null,
+                "node_id": null,
+                "attempt_id": null,
+                "actor_ref": "actor:review-owner",
+                "requested_account_ref": null,
+                "effective_account_ref": null,
+                "occurred_at_utc": "2026-11-04T18:00:00Z",
+                "producer_sequence_id": null,
+                "correlation_id": "request-a",
+                "causation_event_id": "evt_wizard_opened_6f545a1425e49bbeb4cf4f5c0deb69adcd2e705b7bcc2ed0254ec42b077023c1",
+                "parent_event_id": "evt_wizard_opened_6f545a1425e49bbeb4cf4f5c0deb69adcd2e705b7bcc2ed0254ec42b077023c1",
+                "idempotency_key": "wizard.deferred_payload.loaded:77a1d5b25eef05fd78dee0ec2ad19b28e4342c3648449d25eebb1dbb991b8319",
+                "payload_schema_id": "pm.event_payload.wizard.deferred_payload.loaded.v1",
+                "payload": {
+                  "schema_id": "pm.event_payload.wizard.deferred_payload.loaded.v1",
+                  "schema_version": "1.0.0",
+                  "event_type": "wizard.deferred_payload.loaded",
+                  "project_id": "project-a",
+                  "thread_id": "intake-a",
+                  "planning_run_id": "planning-run-a",
+                  "named_plan_id": "named-plan-a",
+                  "thread_group_id": "group-a",
+                  "request_id": "request-a",
+                  "source_ref": "wizard_seed_load_evidence:77a1d5b25eef05fd78dee0ec2ad19b28e4342c3648449d25eebb1dbb991b8319",
+                  "result_ref": "result:wizard.deferred_payload.loaded",
+                  "seed_ref": "seed:current",
+                  "seed_kind": "assistant_chat_handoff_seed",
+                  "seed_version": "seed-v1",
+                  "seed_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "project_context_snapshot_ref": "context:project-a",
+                  "project_context_snapshot_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "permission_snapshot_id": "x-permission_snapshot_id",
+                  "predecessor_event_id": "evt_wizard_opened_6f545a1425e49bbeb4cf4f5c0deb69adcd2e705b7bcc2ed0254ec42b077023c1",
+                  "ts": "2026-11-04T18:00:00Z"
+                },
+                "payload_ref": null,
+                "redaction_profile": "secret_refs_only",
+                "migration": {
+                  "migrated_from_schema_id": null,
+                  "migrated_from_schema_version": null,
+                  "migration_id": null,
+                  "compatibility_event_type": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_observed_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/observed_at_utc",
+              "value": "2026-11-04T20:00:00Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_persisted_at_utc",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/persisted_at_utc",
+              "value": "2026-11-04T20:00:01Z"
+            }
+          ]
+        },
+        {
+          "case_id": "caller_retry_metadata_sequence_id",
+          "operation": "retry",
+          "expected": "accept",
+          "mutations": [
+            {
+              "op": "copy",
+              "from": "/event",
+              "path": "/retry_request"
+            },
+            {
+              "path": "/retry_request/sequence_id",
+              "value": 99999
             }
           ]
         }
