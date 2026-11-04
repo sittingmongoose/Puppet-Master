@@ -13,6 +13,7 @@ export default async function(t) {
     await t.check(`FO-56 open note stays bounded and readable after resize ${width}x${height}`,result.ok);
   }
   await t.viewport(1280,500);
+  await f.locator('.o55-lookslot .o55-tipq[data-arg="lookFamily:nier"]').click();
   await t.page.keyboard.press('Escape');
   await t.check('FO-56 Escape closes menu and returns palette focus', await f.evaluate(() => !document.querySelector('.o55-lookslot .o55-lookmenu') && document.activeElement.matches('.o55-lookbtn') && document.activeElement.getAttribute('aria-expanded') === 'false'));
   await t.page.keyboard.press('Enter');
