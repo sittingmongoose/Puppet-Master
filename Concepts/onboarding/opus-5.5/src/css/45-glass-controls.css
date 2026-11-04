@@ -65,12 +65,12 @@
 /* choices: glass rows; the chosen one lights up with a ring of the accent and a glow under it */
 #pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider),
 .o55t-root[data-family="glass"] .o55t-choice {
-  --o55-face-border-color: transparent; border-color: transparent; border-radius: 12px; --o55-face-background: var(--o55g-row); background: var(--o55g-row);
-  --o55-face-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot), 0 0 0 0.5px var(--o55g-line); box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot), 0 0 0 0.5px var(--o55g-line); }
+  --o55-face-border-color: transparent; border-color: var(--o55-face-border-color); border-radius: 12px; --o55-face-background: var(--o55g-row); background: var(--o55-face-background);
+  --o55-face-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 -1px 1px var(--o55g-edge-bot), 0 0 0 0.5px var(--o55g-line); box-shadow: var(--o55-face-shadow); }
 #pm-o55-onboarding[data-family="glass"] :is(.o55-card, .o55-tile, .o55-provider):is(.o55-on, [aria-checked="true"], [aria-pressed="true"]),
 .o55t-root[data-family="glass"] .o55t-choice.o55t-on {
-  --o55-face-background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-row-on); background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-row-on);
-  --o55-face-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-blue) 85%, transparent), 0 10px 26px -14px color-mix(in srgb, var(--accent-blue) 60%, transparent); box-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-blue) 85%, transparent), 0 10px 26px -14px color-mix(in srgb, var(--accent-blue) 60%, transparent); }
+  --o55-face-background: radial-gradient(120% 120% at 20% -10%, rgba(255, 255, 255, 0.16), transparent 60%), var(--o55g-row-on); background: var(--o55-face-background);
+  --o55-face-shadow: inset 0 1px 0 var(--o55g-edge-top), inset 0 0 0 1.5px color-mix(in srgb, var(--accent-blue) 85%, transparent), 0 10px 26px -14px color-mix(in srgb, var(--accent-blue) 60%, transparent); box-shadow: var(--o55-face-shadow); }
 
 /* segments: a glass track; the chosen segment is a raised piece of clear glass (the Glass layer's lens, when it is
    on, takes this over) */

@@ -35,8 +35,8 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-secondary { border-color: rgba(
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-secondary:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-btn:active { transform: translate(1px, 1px); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-card:hover, html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile:hover { --o55-hover-y: 0px; }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-card.o55-on { --o55-face-background: var(--o55-nier-selected); background: var(--o55-nier-selected); --o55-face-shadow: inset 0 0 0 1px var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
-html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile.o55-on { --o55-face-shadow: inset 0 0 0 1px var(--o55-nier-ink); box-shadow: inset 0 0 0 1px var(--o55-nier-ink); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-card.o55-on { --o55-face-background: var(--o55-nier-selected); background: var(--o55-face-background); --o55-face-shadow: inset 0 0 0 1px var(--o55-nier-ink); box-shadow: var(--o55-face-shadow); }
+html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile.o55-on { --o55-face-shadow: inset 0 0 0 1px var(--o55-nier-ink); box-shadow: var(--o55-face-shadow); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-glyph { color: var(--o55-nier-ink); background: transparent; box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .4); }
 /* a tag is a mono word in ink after its square, no frame (no pills) */
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-tag { color: var(--o55-nier-ink); background: none; font-family: var(--mono-font); font-weight: 500; letter-spacing: .14em; }
@@ -152,7 +152,7 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-tile .o55-tilesub { color: colo
 /* The chosen card, tile or segment is an inverted ink block with paper words (O55.nierFx.cursor slides the same ink
    in under the pointer and keeps its square stepping beside it). The tile's living art keeps its own look. */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on,
-html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-tile.o55-on { --o55-face-background: var(--o55-nier-ink); background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); --o55-face-border-color: var(--o55-nier-ink); border-color: var(--o55-nier-ink); --o55-face-shadow: none; box-shadow: none; }
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-tile.o55-on { --o55-face-background: var(--o55-nier-ink); background: var(--o55-face-background); color: var(--o55-nier-on-ink); --o55-face-border-color: var(--o55-nier-ink); border-color: var(--o55-face-border-color); --o55-face-shadow: none; box-shadow: var(--o55-face-shadow); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile).o55-on :where(.o55-cardsub, .o55-tilesub, .o55-tilename, .o55-cardtitle, .o55-glyph, .o55-tag) { color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-card.o55-on .o55-glyph { box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-paper-rgb), .55); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-on > .o55-check { border-color: var(--o55-nier-on-ink); background: var(--o55-nier-on-ink); box-shadow: inset 0 0 0 3px var(--o55-nier-ink); }
@@ -163,8 +163,8 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile)
    inversion (05-nier-fx.css) for the window's choices only. */
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor],
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook:not([data-on="true"])[data-o55fx-cursor] {
-  --o55-face-background-image: linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .13) 0 var(--o55fx-cur), transparent 0) !important; background-image: linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .13) 0 var(--o55fx-cur), transparent 0) !important;
-  color: var(--text-primary) !important; --o55-face-border-color: var(--o55-nier-ink) !important; border-color: var(--o55-nier-ink) !important; --o55-face-shadow: inset 0 0 0 1px var(--o55-nier-ink) !important; box-shadow: inset 0 0 0 1px var(--o55-nier-ink) !important; }
+  --o55-face-background-image: linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .13) 0 var(--o55fx-cur), transparent 0) !important; background-image: var(--o55-face-background-image) !important;
+  color: var(--text-primary) !important; --o55-face-border-color: var(--o55-nier-ink) !important; border-color: var(--o55-face-border-color) !important; --o55-face-shadow: inset 0 0 0 1px var(--o55-nier-ink) !important; box-shadow: var(--o55-face-shadow) !important; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor] :is(.o55-cardsub, .o55-tilesub),
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-nierlook:not([data-on="true"])[data-o55fx-cursor] .o55-niersub { color: var(--text-secondary) !important; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor] :is(.o55-cardtitle, .o55-tilename, .o55-glyph, .o55-tag),
@@ -544,7 +544,7 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-tipq { border-radius: 0; border
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-tipq:hover { background: rgba(var(--o55-nier-ink-rgb), .1); }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-tipq[aria-expanded="true"] { color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); outline: 1px solid var(--o55-nier-ink); outline-offset: 2px; }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt > .o55-card.o55-on {
-  --o55-face-background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / calc(100% - 46px) 100% no-repeat, var(--o55-card-bg); background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / calc(100% - 46px) 100% no-repeat, var(--o55-card-bg); }
+  --o55-face-background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / calc(100% - 46px) 100% no-repeat, var(--o55-card-bg); background: var(--o55-face-background); }
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt > .o55-card.o55-on::after { content: ''; position: absolute; top: 6px; bottom: 6px; right: 46px; width: 1px; background: var(--o55-nier-ink); opacity: .35; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-opt > .o55-card { position: relative; }
 /* NieR's menu cursor (05-nier-fx.css) paints a hovered or focused row's whole width in ink with !important, and a card
@@ -560,3 +560,6 @@ html[data-o55-nier="on"] #pm-o55-onboarding .o55-explainer-h { font-family: var(
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-railzip-str { stroke: rgba(var(--o55-nier-ink-rgb), .45); stroke-width: 1; stroke-linecap: butt; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-railzip-hi { stroke: var(--o55-nier-ink); stroke-width: 1.5; stroke-linecap: butt; }
 html[data-o55-nier="on"] #pm-o55-onboarding .o55-railzip-eye { stroke: var(--o55-nier-ink); stroke-width: 1; }
+
+/* The cursor's image is paint only, alongside the card's material. */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding :is(.o55-card, .o55-tile):not(.o55-on)[data-o55fx-cursor]::before { background-image: var(--o55-face-background-image); }

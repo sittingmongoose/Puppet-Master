@@ -31,13 +31,19 @@ export default async function(t) {
      let b=await c.boundingBox(); if(!b) continue;
      for(const hovered of [false,true]) {
       points: for(const d of [1,2,3]) for(const edge of ['bottom','top','left','right']) {
-       await t.page.mouse.move(2,2); await f.waitForTimeout(220);
+       await t.page.mouse.move(2,2);
+       await c.evaluate(async e=>{getComputedStyle(e).transform;await Promise.all(e.getAnimations().filter(a=>a.transitionProperty==='transform').map(a=>a.finished.catch(()=>{})));});
        // Focus/scroll and the stage may have changed the pane since the preceding click.
        // Capture this trial's rest box after leaving hover, then keep it for the entire trial.
        b=await c.boundingBox();
        const x=edge==='left'?b.x-d:edge==='right'?b.x+b.width+d:b.x+b.width/2;
        const y=edge==='top'?b.y-d:edge==='bottom'?b.y+b.height+d:b.y+b.height/2;
-       if(hovered) { await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2); await f.waitForTimeout(220); }
+       if(hovered) {
+        await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2);
+        // Settle the first hover; subsequent edge trials also cover the transition in flight.
+        const active=await c.evaluate(async (e,settle)=>{getComputedStyle(e).transform;if(settle)await Promise.all(e.getAnimations().filter(a=>['transform','--o55-hover-y'].includes(a.transitionProperty)).map(a=>a.finished.catch(()=>{})));return e.matches(':hover');},d===1&&edge==='bottom');
+        if(!active){bad.push(`${i}: centre did not hover`);break points;}
+       }
        // Bounding boxes already include the frame offset. Hit observations are in frame coordinates.
        const hit=await f.evaluate(([x,y])=>document.elementFromPoint(x,y)?.closest('.o55-card,.o55-tile')?.dataset.arg||null,[x-off.x,y-off.y]);
        // A different real neighbouring choice is allowed only if its own rest box contains the point.
