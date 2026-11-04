@@ -1,14 +1,13 @@
-# DG6A — final fix round 3
+# DG6A — standing-check fix round 4
 
-Worker: DG6A-FIX3, VM. Branch: `plans/ea-w2-gui-concerns-20261104`.
-Reviewed head: `b6ddf461659e979362f9f58d8781733a23737a42`. Repair commit: `65a6a61e0ddbec2d55a9f017c0dbf9df15aee995`.
-The final report commit is self-inclusive. This is the final allowed fix round, pending the final independent review.
+Worker: DG6A-FIX4, VM. Branch: `plans/ea-w2-gui-concerns-20261104`.
+Reviewed head: `de28e8be91b347e209f8b75e25838ef3bf686f73`. Repair commit: `8142c5bfa35e47b011ae7e8ff0ae8452e30e189c`. The final report commit is self-inclusive.
 
-Seven families are prepared without admission. Each moves from the cycle-3 review's **9 PASS / 2 PARTIAL / 1 ABSENT** to this worker's **10 PASS / 1 PARTIAL / 1 ABSENT**. Membership remains ABSENT and retention remains PARTIAL. All nine stopped records and decision-card questions/recommendations are unchanged. Native execution remains NOT_RUN.
+Seven families are prepared without admission. Each recovers the historical-oracle cell from the cycle-4 review's PARTIAL to PASS. Membership stays ABSENT, retention stays PARTIAL / PENDING_RETENTION_DECISION, and native execution stays NOT_RUN. All nine stopped family records and their exact final question/recommendation pairs are unchanged.
 
 ## Family grades before and after
 
-| Family | Cycle-3 review | Round-3 self-grade |
+| Family | Cycle-4 independent review | Round-4 self-grade |
 |---|---|---|
 | `alert.acknowledged` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
 | `alert.dismissed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
@@ -18,56 +17,58 @@ Seven families are prepared without admission. Each moves from the cycle-3 revie
 | `panel.redocked` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
 | `panel.undocked` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
 
-The nine stopped families retain their exact prior twelve-cell grades. All seven upgrades are confined to positive_negative_oracles; admission and retention stay open.
+All other cells carry forward after current-citation verification. All 534 final citations resolve. No native or event admission is claimed.
 
-## Review round 3: findings and responses
+## Review round 4: findings and responses
 
-1. **Blocking 1 — fixed (`65a6a61e0ddbec2d55a9f017c0dbf9df15aee995`).** Where: `scripts/pm-alert-event-contracts-check.py:93`, `scripts/pm-panel-event-contracts-check.py:45`, `scripts/pm-concern-created-contracts-check.py:94`; all seven checkpoint paths. Cause: three mutually consistent checkpoint/token/source identities were accepted without joining the original event's Storage context. Fix: every checkpoint oracle now requires the separately supplied original operation context and compares Storage instance and the Project/server/partition fields present in both contracts. Four alert operation fixture sets now use the checkpoint's actual UUID instead of `store`. Each family rejects both a single foreign token and the coherent UUID `00000000-0000-4000-8000-000000000002` triple through its full CLI. Internal consistency, schema closure, byte limits and native NOT_RUN obligations remain.
+1. **Blocking 1 — fixed (`8142c5bfa35e47b011ae7e8ff0ae8452e30e189c`). Where:** `scripts/pm-alert-event-contracts-check.py:196,228,268,367`, `scripts/pm-panel-event-contracts-check.py:121`, `scripts/pm-concern-created-contracts-check.py:103`, each of the seven exact family's fixtures, and `scripts/pm-dg6a-final-regression-check.py:187`. **Cause:** the prior byte pager never consumed actual checkpoint publication state and original-event evidence. **Fix:** the read-only historical gate validates the actual checkpoint and independently supplied original event/payload/schema, original eleven-field receipt/four-field result, Storage/source selection and current disclosure permissions/deletion/withdrawal. It feeds only accepted refs into pagination and rechecks after the helper returns. It does not invoke current writer/retry predicates. Superseded alert/rule revision, ended panel session/closed window and already-created concern positives remain readable while the respective writer models refuse new actions. Each exact family refuses withdrawn/staged checkpoints and events, forged publications/tokens/originals/payloads/receipts/source, foreign Storage/Project/consumer context, unknown payload version and originally invalid writes. Panel v1 and v2 are dispatched by their stored payload id/version; both immutable v1 schemas are unchanged. Verify with the three family checkers and the full regression command below.
 
-2. **Blocking 2 — fixed (`65a6a61e0ddbec2d55a9f017c0dbf9df15aee995`).** Where: `scripts/pm-alert-event-contracts-check.py:68` and `:74`, each alert's operation fixture and SP-660..663's existing physical bound. Cause: operation values received only JSON Schema validation. Fix: measure canonical MessagePack of the complete operation and refuse above 16384 bytes. Every alert exercises schema-valid exact 16384/16385 boundaries and two oversized frozen snapshots. The full CLI rejects both 17000-byte snapshot refs and an attempted positive expectation at 16385. Existing SP-337 body-reference ownership and separate checkpoint/History limits are preserved; spill/pack durability is native NOT_RUN.
+   Each historical version has 26 one-leaf negative vectors plus five returning-helper revocation cases. Every one fails for exactly its named guard, then discloses through the same reader and byte pager when only that guard is weakened. Permission includes current membership and original source access. The event `state` in this synthetic read-evidence wrapper describes publication availability, never a new EventRecord field or live owner lifecycle. Exact-16384-byte ACTUAL-checkpoint positives are tested before isolated negatives use a separately declared compact publication witness; otherwise changing current to withdrawn would also exceed the byte cap. Neither physical bounds nor state schemas are weakened. Stored withdrawn/staged states remain valid storage lifecycle values but cannot authorize disclosure.
 
-3. **Blocking 3 — fixed (`65a6a61e0ddbec2d55a9f017c0dbf9df15aee995`).** Where: the four `Plans/alert_event_contracts/alert_*_operation.schema.json` files (`$defs/payload_ref_array/items`, acknowledgement line 362) and the matching four embedded `value_schema` objects in `Plans/storage_value_registry.json`; `scripts/pm-alert-event-contracts-check.py:38`. Cause: embedding renamed `non_secret_ref` but left its optional array pointer unchanged. Fix: use `#/$defs/payload_non_secret_ref` in all four external/embedded schemas. Nonempty source/evidence arrays are retained as positives and pass eight full CLI probes. Every lane schema and relevant embedded schema now receives a local-reference resolution walk, including unused definitions. Full CLI mutations inserting unused unresolved refs fail for every family, independently of instance validation. No permitted field is removed and no positive exception is treated as a valid negative.
-
-4. **Note 4 — reported accurately (final report commit).** No generated timestamp is hand-edited and no governance artifact is refreshed. The no-edit regeneration comparison below retains the existing four `generated_at_utc` exceptions.
+2. **Note 2 — addressed in this report.** No generated timestamp is hand-edited and no governance artifact is refreshed. Pinned no-edit regeneration leaves all 3325 shard files and both JSONL indexes byte-identical. The same four JSON artifacts change only `generated_at_utc`: coverage_report, dependencies, doc_cards and node_readiness_report. This pre-existing timestamp exception is retained explicitly.
 
 ## Per-family standing checks
 
-P = pass; F = fixed by `65a6a61e0ddbec2d55a9f017c0dbf9df15aee995`. Each numbered check has negative cases run through the complete checker command. The detailed JSON records every command, expected exit and actual exit. Check 9 is included because FIX-ROUND.md adds it after checks 1–8.
+P = pass. F = fixed by `8142c5bfa35e47b011ae7e8ff0ae8452e30e189c`. † = Project-only family: an application attempt is refused; no application writer is invented. Each cell links to actual observations in `standing-checks.json` and `full-cli-mutations.json`.
 
-| Family | 1 replay | 2 app key | 3 partition | 4 bytes/ref | 5 LF | 6 semantic | 7 context | 8 failure exit | 9 refs |
-|---|---|---|---|---|---|---|---|---|---|
-| `alert.acknowledged` | P | P† | P | F | P | P | F | P | F |
-| `alert.dismissed` | P | P† | P | F | P | P | F | P | F |
-| `alert.rule_muted` | P | P† | P | F | P | P | F | P | F |
-| `alert.snoozed` | P | P† | P | F | P | P | F | P | F |
-| `concern.created` | P | P† | P | P | P | P | F | P | P |
-| `panel.redocked` | P | P | P | P | P | P | F | P | P |
-| `panel.undocked` | P | P | P | P | P | P | F | P | P |
+| Family | 1 replay | 2 app key | 3 partition | 4 bytes/ref | 5 LF | 6 semantic | 7 context | 8 exit | 9 refs | 10 history | 11 isolation |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| `alert.acknowledged` | P | P† | P | P | P | P | P | P | P | F | F |
+| `alert.dismissed` | P | P† | P | P | P | P | P | P | P | F | F |
+| `alert.rule_muted` | P | P† | P | P | P | P | P | P | P | F | F |
+| `alert.snoozed` | P | P† | P | P | P | P | P | P | P | F | F |
+| `concern.created` | P | P† | P | P | P | P | P | P | P | F | F |
+| `panel.redocked` | P | P | P | P | P | P | P | P | P | F | F |
+| `panel.undocked` | P | P | P | P | P | P | P | P | P | F | F |
 
-† Project-only families reject an application-scope attempt; no application capability or key extension is invented. The two panel application positives use the exact CV-366 lowercase UTF-8 hex recipe. Arbitrary, unequal, uppercase and raw-identity keys fail independently.
-
-| Check | Negative case and full-checker assertion |
+| Check | Verification |
 |---|---|
-| 1 | Replace the positive current-writer policy with `projector_replay_only`; exit 1 for each family. Actual guard/retry models also retain their replay-only negatives. |
-| 2 | For each panel mutate the application positive to malformed/unequal keys. For the five Project-only families mutate the original positive to null Project scope. Each full CLI exits 1. |
-| 3 | Replace the encoded positive partition with raw `fixture`; exit 1. Panels/creation additionally reject a raw original-operation partition. All seven use the actual shared reversible Project codec. |
-| 4 | Supply schema-valid oversized complete operations; exit 1 in all seven. Alerts additionally reject a 16385-byte operation claimed as valid. Exact 16384 operation positives, SP-337 ownership and independent checkpoint/complete-History boundaries remain. |
-| 5 | Add trailing LF to a populated payload identifier and nested token hash; exit 1 per family. Ordinary suites also cover every authored pattern leaf, including optional leaves. |
-| 6 | Claim an altered caller body has the original digest, or claim only changed `sequence_id`, `observed_at_utc` or `persisted_at_utc` changes the digest; each false expectation exits 1. The actual shared producer digest keeps each assigned-metadata-only retry equal and changes for altered semantic payload. |
-| 7 | Change one token UUID, then all three checkpoint/token/source UUIDs coherently, preserving the original operation; both full CLI cases exit 1 per family. |
-| 8 | Change a negative policy expectation to success and feed actual exit 0 to the full failure-oracle entry point; both exit 1 per family. The mutation runner requires actual exit 1 for a negative and refuses unexpected success. |
-| 9 | Insert an unused unresolved local ref into each payload/operation/checkpoint schema and the embedded registry schema; each full CLI exits 1. Eight permitted nonempty alert-array positives exit 0, status=pass. |
+| 1 | Current writer/retry projector_replay_only remains replay_only_not_appendable; false positive-policy expectations exit 1 per family. |
+| 2 | Both panel application positives use CV-366's exact application@1 lowercase UTF-8 hex recipe; malformed/unequal/uppercase/raw keys exit 1. Project-only null-Project attempts exit 1. |
+| 3 | Encoded project~Zml4dHVyZQ positives remain; raw Project partition mutations exit 1 per family. |
+| 4 | Schema-valid complete operations above 16384 bytes exit 1; alert exact 16384/16385 boundaries remain. All seven unchanged owner contracts use SP-337 payload refs above the EventRecord inline cap; oversized metadata is still refused. |
+| 5 | Payload identifier and nested token trailing-LF mutations exit 1; existing suites exercise every authored pattern leaf with full-string guards. |
+| 6 | Altered caller bodies cannot retain the same digest; changes only to assigned sequence/observed/persisted metadata cannot change it. False expectations exit 1 per family. |
+| 7 | Single foreign token and coherent checkpoint/token/source Storage triple mutations exit 1, independently of the original operation. |
+| 8 | A negative marked valid and a real process exit 0 supplied to the failure-oracle entry point both exit 1. All process negatives compare actual exits. |
+| 9 | Every schema and embedded-schema unresolved-ref mutation exits 1; all eight permitted nonempty alert optional-array positives exit 0/status pass. |
+| 10 | Actual withdrawn/staged checkpoint and event mutations, original evidence forgeries, foreign contexts and denied disclosure fail. Originally valid retained refs survive live owner changes. Both panel historical v1 readers pass the same composed suite. |
+| 11 | All 279 historical negative witnesses (31 per reader version, nine versions) change exactly one leaf, fail exactly one guard and disclose only after that guard is weakened; the 18 live-change positives pass. |
 
 ## Earlier findings rerun
 
-| Finding | Negative cases and result |
+All **221 earlier observations pass again**, with their original required exits: 202 refusals and 19 successes. Added historical coverage produces **700/700 total observations**: 403 full CLI runs (384 exit-1 refusals, 19 exit-0 successes) and 297 composed historical/isolation observations. Mutated inputs are restored byte-for-byte in finally and SHA-256 verified.
+
+| Earlier finding | Rerun result |
 |---|---|
-| A1 — physical profiles | Delete each prepared operation/checkpoint profile, both shared alert-state profiles, and the concern_record profile. Every relevant full CLI exits 1. Existing profiles/groups/budgets are unchanged; the complete profile checker retains the reviewed head's same 41 unrelated errors. |
-| A2 — unbounded checkpoints/History | Add 1000 accumulated event refs or a persisted redb_snapshot_id, and exceed complete checkpoint bytes: every family exits 1. Dedicated exact-16384 checkpoint positives pass. Ordinary suites retain 1000-match traversal, empty filtered continuation, large valid token, exact complete-response bytes, 16385 refusal and individually unpageable metadata/ref checks for every family. |
-| A3 — panel current versus historical semantics | For each panel mutate chat identity, persisted-host flag, co-emission flag, or replace the current positive with historical v1. All eight full CLI negatives exit 1. Historical schema bytes remain unchanged. |
-| A4 — creation authority | Worker/User/External Resource/Recovery/Observer mutate both command creator and candidate record creator with the full digest recomputed; all five full CLI cases exit 1. Authorized creators and independent accountable owners remain positive. |
-| A5 — grades/citations | Change each prepared family's pending retention grade to PASS, and change the annotation owner citation to CV-049. The full grade/citation checker rejects all eight mutations. The unmodified audit resolves 527 citations and verifies the nine stopped records match the reviewed head. |
-| Panel digests | For each panel change only settled_at_utc or interaction_transaction_id, retaining the original digest/event/receipts. All four full CLIs exit 1. Full frozen command/payload preimages remain unchanged. |
+| A1 physical profiles | Every operation/checkpoint, both shared alert states and concern_record profile removal is refused (17 probes). |
+| A2 bounded History | All seven refuse 1000 accumulated refs, persisted redb_snapshot_id and oversized complete checkpoints; exact 16384 positives pass (28 probes). Existing large-token, complete-response boundaries, unpageable ref/metadata, 1000-match and empty-filter continuation cases remain. A legitimate changed positive token carries its independently supplied matching publication witness. |
+| A3 panel semantics | Generic panel, saved host, layout co-emission and historical-v1-as-current-writer mutations are refused (8 probes). |
+| A4 authorized creators | Worker/User/External Resource/Recovery/Observer changes update both creator fields and recompute the full digest; all five are refused. Existing authorized creators remain positive. |
+| A5 grades/citations | Each false retention-PASS and wrong CV-049 annotation citation is refused; the unmodified 534-citation/nine-hold audit passes (9 observations). |
+| Full panel digests | Both unchanged-digest timestamp/transaction mutations remain refused per panel (4 probes). |
+| Cycle-3 checkpoint/alert/ref findings | Exact coherent foreign triple, two 17000-byte owner refs and unused unresolved refs remain refused; permitted alert arrays remain positive. |
+| A6 known authority | All nine stopped records and final question/recommendation pairs remain exact. No creator, owner or resolver privilege is added. |
 
 ## Nine stopped families: unchanged decision-card questions
 
@@ -97,41 +98,36 @@ The following original question/recommendation is preserved as a separate propos
 
 ## Authority, scope and IDs
 
-No new PlanUnit IDs or product bindings were minted in round 3. Existing lane IDs are SP-660..666, CV-680..686, F3-700..705 and ATS-330..334 (25 total); OP-004 remains the existing creation route. This repair implements existing owner limits/context joins, without a new actor, retention, event, command, projector or checkpoint identity.
+No new PlanUnit ID or product binding is authored in round 4. Existing IDs remain **SP-660..666, CV-680..686, F3-700..705, ATS-330..334** (25 definitions). Existing exact-family owner contracts already require these historical-read fences; only their synthetic oracle composition is repaired.
 
-All six owner documents (Storage, Contracts, Orchestrator, Executor, FinalGUISpec and Automated_Testing_System) remain byte-identical to the reviewed head. Existing per-family searches and DL-045/DL-076/current panel/creator premise checks remain as recorded in prior lane evidence; no August/September answer is newly applied or extended. No new Jared choice is taken. No event-family registry append, admission, exclusion application, Decision Log, .gitignore, Spec Lock, .evidence, auto_decisions, frozen-validator or main change.
-
-Shared-file edits are exactly the four dangling-pointer corrections in storage_value_registry.json. No registry row/profile/group/budget is added, removed or reordered. Derived shards/indexes are regenerated with the ignored currentness edition copied and all fifteen files SHA-256 matched. No test file is edited; the reproducible full-CLI mutation runner is an allowed scripts/ companion.
+Storage, Contracts, Orchestrator, Executor, FinalGUISpec and Automated_Testing_System owner docs are byte-identical to the reviewed head, as are storage/event registries, Decision Log and immutable panel v1 schemas. Previous per-family searches and checked premises remain applicable to these unchanged contracts; no old retention answer is extended and no Jared choice is taken. No admission, registry append, Decision Log, .gitignore, Spec Lock, .evidence, auto_decision, frozen validator, governance seal or main edit/push occurs. All previous writer, retry, byte and reference guards remain.
 
 ## Verification and evidence
 
 | Command/check | Exit | Result |
 |---|---:|---|
-| `python3 scripts/pm-dg6a-final-regression-check.py --output <evidence>/full-cli-mutations.json` | 0 | 221 full-command observations passed: 202 required exit-1 rejections, 19 required exit-0 successes; every family has checks 1–9. All mutated input bytes restored. |
-| `python3 scripts/pm-alert-event-contracts-check.py` | 0 | pass, 437 cases, four families. |
-| `python3 scripts/pm-panel-event-contracts-check.py` | 0 | pass, 180 cases, two families. |
-| `python3 scripts/pm-concern-created-contracts-check.py` | 0 | pass, 272 cases, one family. |
-| `pm-shard-plans.py --generate --config Plans/sharding_config.json`, then `pm-plan-index.py generate`, twice | 0 each | Only 665 registry-source shard files changed in the repair regeneration, including source-hash headers/index/manifest. No other document's shards changed. No-edit regeneration: all 3325 shards and both JSONL indexes byte-identical; only four generated_at_utc fields differ. |
-| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | pass. |
-| `python3 scripts/pm-plan-index.py validate` | 0 | Parsed top-level status=pass. |
-| Full registry against `storage_value_registry.schema.json` | 0 (assertion) | 360 rows, zero schema errors. All existing profiles/groups/budgets unchanged. |
-| `python3 scripts/pm-storage-profile-check.py`, final / pinned reviewed head | 1 / 1 | Exactly the same 41 unrelated errors, 360 rows / 319 profiles. |
-| `python3 scripts/pm-assistant-contract-check.py` | 1 | Existing gaps_found, errors=[], 51 pending Browser rows. |
-| `python3 tests/test_pm_assistant_contract_closure.py` | 1 | 41 tests; the same two known failures as the cycle-3 review: definitionless BrainStorm question bank and schedrec_envelope_record_wrong_type reason. No new lane error is claimed fixed. |
-| `python3 scripts/pm-dg6a-final-regression-check.py --audit-grade-only` | 0 | 527 citations resolve; all nine stopped records identical to reviewed head. |
-| `git diff --check` / staged diff check | 0 / 0 | No whitespace errors. |
-| Boundary/scope audit | 0 | Registry differs only at four local pointers; old fixture expectations preserved, historical panel schemas and owner prose unchanged; zero new IDs or forbidden paths. |
+| python3 scripts/pm-alert-event-contracts-check.py | 0 | pass; 709 cases, four exact families. |
+| python3 scripts/pm-panel-event-contracts-check.py | 0 | pass; 448 cases, two exact families including immutable historical v1. |
+| python3 scripts/pm-concern-created-contracts-check.py | 0 | pass; 340 cases, concern.created. |
+| python3 scripts/pm-dg6a-final-regression-check.py --output <evidence>/full-cli-mutations.json | 0 | 700/700 observations, all eleven checks per family and all earlier mutation probes. Executed repair head and restored input hashes are recorded. |
+| Same runner --audit-grade-only | 0 | All 534 current citations resolve; nine stopped records identical. |
+| pm-shard-plans.py --check / --generate / --check | 0 each | All 3325 shard files stable; 99 source documents. |
+| pm-plan-index.py validate / generate / validate | 0 each | Parsed top-level status pass before/after; only four timestamp differences. |
+| Boundary/input audit | 0 | Exact unchanged owner/registry/historical-schema comparisons; zero new IDs or forbidden paths. |
+| git diff --check | 0 | No whitespace errors. |
 
+The mutation runner uses the exclusive assigned worktree. Derived regeneration uses a selective pinned scratch extract to avoid reading the runner's temporarily mutated fixtures. Its first incomplete-input validation stopped before generation; the review's unchanged pinned read transport supplied missing tracked references for the complete rerun, without changing parsers, schemas, validators or assertions. That extract used 195679367 bytes and is deleted. Every ignored currentness-edition file was copied and SHA-256 matched before generation.
 
-Evidence lives under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/`; exact paths and SHA-256 values follow.
+| Evidence | Absolute path | SHA-256 |
+|---|---|---|
+| `full-cli-mutations.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/full-cli-mutations.json` | `46abe5b46c3a7db4eca6ea533906a7c1f684f87d6d875484ea3de1274a496102` |
+| `standing-checks.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/standing-checks.json` | `62c584227106fd9811678f448baf19fcf3cf27ecba9d2c7f12478fadc332cf35` |
+| `targeted-checks.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/targeted-checks.json` | `3adf0208d7d539f6d200afadac8e1c0c461ac3b515bd1f1e1765998efb752527` |
+| `boundary-audit.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/boundary-audit.json` | `41158df3c647e73282abf8cb623d31a91a3df7b30ed3626838b8bb0f1270dc3c` |
+| `regeneration.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/regeneration.json` | `a5af23fcff8a488712e876a353ad868a299824def005aaaba27db7b1aa760a0d` |
+| `history-coverage.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/history-coverage.json` | `5cf310a7c52524dff73cf5d833aa521fa837484429501613116af70b4c0386cd` |
+| `currentness-copy.json` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/currentness-copy.json` | `1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf` |
+| `derived-inputs.jsonl` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/derived-inputs.jsonl` | `02a14215862d54254884b213e6a1825d02dd1d4dec3cb80e43a957b9eaecd2d9` |
+| `index-incomplete-extract.log` | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/index-incomplete-extract.log` | `8102db82dd39e69875698e03d6a00cb906b13f09129d6bf680cfe2f1e1dfe06d` |
 
-- **full-cli-mutations.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/full-cli-mutations.json`; SHA-256 `901cc7dfc977296d8cc4888125e652e9392af8e677be009d7cc07b8489ac873c`.
-- **checks.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/checks.json`; SHA-256 `17f8198dd744a9339fde8d6bc8e26902bf060eeeb37ee444ed299bb612f4116b`.
-- **boundary-audit.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/boundary-audit.json`; SHA-256 `252708b93356c688f7a72137fb9f1618801043563673de78573b0c84049c4a74`.
-- **regeneration.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/regeneration.json`; SHA-256 `47496c03114197f76bc7074c392cd0a9a89723493401f82199fc237a6d34644c`.
-- **currentness-copy.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/currentness-copy.json`; SHA-256 `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c`.
-- **profile-reviewed.json:** `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix3/profile-reviewed.json`; SHA-256 `fc5885fa872722fec087a51bbfe1f79e9a91803254bd03e69d3eb464a3cee17f`.
-
-Initial resources: 21 GiB available RAM, 130 GB root disk free; subsequent checks remained above 6 GiB / 50 GB. The assigned sparse detached worktree is removed after its final branch push. Temporary baseline extracts and uncited working files are deleted. Only the lane branch is pushed.
-
-Process exceptions: an initial read-only pm-mail inbox/who call preceded reading the lane prohibition; no registration or message was sent and no further mailbox use occurred. Two interrupted harness attempts are superseded by the complete final run: one reference-length correction, then routing the exact-size alert positive through its dedicated boundary vector while preserving the compact-baseline assertion. Neither attempt is reported as a repository pass. No subagents, admission, registry append, governance refresh or main push.
+Initial resources were 18 GiB available RAM and 89 GB root disk free; repeated checks remained above the required 6 GiB / 50 GB thresholds. Only the lane branch is pushed. The sparse detached worktree is removed after final push and evidence copies. No pm-mail, subagent, browser or server was used. Remaining open facets are the allowed pending admission/retention, native NOT_RUN, and the same nine Jared decision holds.

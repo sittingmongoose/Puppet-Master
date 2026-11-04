@@ -1,7 +1,8 @@
 {
-  "worker": "DG6A-FIX2",
-  "reviewed_head": "257c2af1af6c3fbb324594664cb09a1ebf26475e",
-  "contract_head": "276e10cd781c969f716bb8fec0b33b61f8855076",
+  "worker": "DG6A-FIX4",
+  "round": 4,
+  "reviewed_head": "de28e8be91b347e209f8b75e25838ef3bf686f73",
+  "contract_head": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
   "checks": [
     {
       "name": "alert-check",
@@ -10,8 +11,8 @@
         "scripts/pm-alert-event-contracts-check.py"
       ],
       "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/alert-check.log",
-      "sha256": "751a68bbea20b1b4019ac16154a1cd4547e854d1444731fc3bd965a7013307a6"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/alert-check.log",
+      "sha256": "319b440bb909798a3ee43257879835d3bbe139e21a3d4b6cf29e6f3ace3c1823"
     },
     {
       "name": "panel-check",
@@ -20,8 +21,8 @@
         "scripts/pm-panel-event-contracts-check.py"
       ],
       "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/panel-check.log",
-      "sha256": "e72c88833e1a65899d9e4c79161c42b464f77e8e98f3fb0bf3b79d8f16396b95"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/panel-check.log",
+      "sha256": "07ce83d86549119361f43fef58a094c2b5fa9dc9f6a39c00b9fd1861cb35c317"
     },
     {
       "name": "concern-check",
@@ -30,57 +31,19 @@
         "scripts/pm-concern-created-contracts-check.py"
       ],
       "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/concern-check.log",
-      "sha256": "42668b339fe51ac5b24afdfc07faaa35124df09acb3b3df5a040852634adc445"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/concern-check.log",
+      "sha256": "027f03b5cd77709432f9b8cad403e8dcbc8fbbf1adce25df111ddb0d2b55d0be"
     },
     {
-      "name": "shards-generate",
+      "name": "grade-audit",
       "command": [
         "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
+        "scripts/pm-dg6a-final-regression-check.py",
+        "--audit-grade-only"
       ],
       "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/shards-generate.log",
-      "sha256": "7c2c2dccbd5e1d910247816cbb7400054792c4a7a3937c29108b0002539db006"
-    },
-    {
-      "name": "index-generate",
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "generate"
-      ],
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/index-generate.log",
-      "sha256": "2613eaad3a7befdad473dcbd7803a03f3cdd850e424409c1dd5f26e647be1bc7"
-    },
-    {
-      "name": "shards-check",
-      "command": [
-        "python3",
-        "scripts/pm-shard-plans.py",
-        "--check",
-        "--config",
-        "Plans/sharding_config.json"
-      ],
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/shards-check.log",
-      "sha256": "2b3e5fdfaf24e7bcb524267fa5f1f5624f8d336eabf781db2b2c34407b307649"
-    },
-    {
-      "name": "index-validate",
-      "command": [
-        "python3",
-        "scripts/pm-plan-index.py",
-        "validate"
-      ],
-      "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/index-validate.log",
-      "sha256": "7ab9ccb2659dbbc37160af57dd4a3727827af4c26847ae0eb58f3a5544e0acf5",
-      "top_level_status": "pass"
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/grade-audit.log",
+      "sha256": "602f57127db7ff6927aa9ed47ca128129176ad7a055ffdad673f873d673bd64a"
     },
     {
       "name": "diff-check",
@@ -90,119 +53,1339 @@
         "--check"
       ],
       "exit": 0,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/diff-check.log",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/diff-check.log",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "name": "profile-check",
+      "name": "shards-before-complete",
       "command": [
         "python3",
-        "scripts/pm-storage-profile-check.py"
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/READ-TRANSPORT-cycle4.py",
+        "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
       ],
-      "exit": 1,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/profile-check.log",
-      "sha256": "fc5885fa872722fec087a51bbfe1f79e9a91803254bd03e69d3eb464a3cee17f",
-      "pre_existing_errors": 41,
-      "families": 360,
-      "profiles": 319
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/shards-before-complete.log",
+      "sha256": "2b3e5fdfaf24e7bcb524267fa5f1f5624f8d336eabf781db2b2c34407b307649"
     },
     {
-      "name": "assistant-contract-check",
+      "name": "index-before-complete",
       "command": [
         "python3",
-        "scripts/pm-assistant-contract-check.py"
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/READ-TRANSPORT-cycle4.py",
+        "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "scripts/pm-plan-index.py",
+        "validate"
       ],
-      "exit": 1,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-contract-check.log",
-      "sha256": "f5c185f2cfb60b5898767d33237ae43eb14c4c72d144cd67e5114f9e9d63bb74",
-      "status": "gaps_found",
-      "errors": []
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/index-before-complete.log",
+      "sha256": "a21b69402c30564aa52c081e68ba01595a27d819752eb70c277885c00dc0fdac",
+      "top_level_status": "pass"
     },
     {
-      "name": "assistant-tests",
+      "name": "shards-generate",
       "command": [
         "python3",
-        "tests/test_pm_assistant_contract_closure.py"
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/READ-TRANSPORT-cycle4.py",
+        "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
       ],
-      "exit": 1,
-      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-tests.log",
-      "sha256": "4da2e62e4a1aacad37ee069e892b93123089cd294d9f153ad00e992dc2b05234",
-      "tests": 41,
-      "pre_existing_failures": [
-        "test_definitionless_records_stay_blocked (__main__.LiveEquivalentPayloadClosureTests.test_definitionless_records_stay_blocked)",
-        "test_live_equivalent_negatives_fail_for_intended_reason (__main__.LiveEquivalentPayloadClosureTests.test_live_equivalent_negatives_fail_for_intended_reason)"
-      ]
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/shards-generate.log",
+      "sha256": "7c2c2dccbd5e1d910247816cbb7400054792c4a7a3937c29108b0002539db006"
+    },
+    {
+      "name": "index-generate",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/READ-TRANSPORT-cycle4.py",
+        "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/index-generate.log",
+      "sha256": "726bc821abea778d8e17fe62fa2b81d63d2adb2ca6ef860db8ed1217a437ac9e"
+    },
+    {
+      "name": "shards-after",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/READ-TRANSPORT-cycle4.py",
+        "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/shards-after.log",
+      "sha256": "2b3e5fdfaf24e7bcb524267fa5f1f5624f8d336eabf781db2b2c34407b307649"
+    },
+    {
+      "name": "index-after",
+      "command": [
+        "python3",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DG6A-sol/READ-TRANSPORT-cycle4.py",
+        "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit": 0,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/index-after.log",
+      "sha256": "1451cca28d5379fa97124e34a60ee43ede71ac8add88d243001dd542e1ee5bec",
+      "top_level_status": "pass"
+    },
+    {
+      "name": "full-cli-regression",
+      "command": [
+        "python3",
+        "scripts/pm-dg6a-final-regression-check.py",
+        "--output",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/full-cli-mutations.json"
+      ],
+      "exit": 0,
+      "observations": 700,
+      "required_exit_1": 384,
+      "required_exit_0": 19,
+      "historical_observations": 297
     }
   ],
   "evidence": [
     {
-      "name": "targeted and derived checks",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/round2-checks.json",
-      "sha256": "f1764aaf6ed8c3646ee2e304ed0f7dc2ccced6de0a2641cc225ae8f1e653ebdb"
+      "name": "full-cli-mutations.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/full-cli-mutations.json",
+      "sha256": "46abe5b46c3a7db4eca6ea533906a7c1f684f87d6d875484ea3de1274a496102"
     },
     {
-      "name": "four full mutated-input checker reruns",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/panel-mutation-reruns.json",
-      "sha256": "67d0cc2fa8aa6205d1d7dbfd9ce97c62228a80b92e895a2cf3469becd7414e6b"
+      "name": "standing-checks.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/standing-checks.json",
+      "sha256": "62c584227106fd9811678f448baf19fcf3cf27ecba9d2c7f12478fadc332cf35"
     },
     {
-      "name": "regeneration stability",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/regeneration-stability.json",
-      "sha256": "32c8942dae9264fce52c34a8a13216c3f1b97434885dee19acebd564ad15e850"
+      "name": "targeted-checks.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/targeted-checks.json",
+      "sha256": "3adf0208d7d539f6d200afadac8e1c0c461ac3b515bd1f1e1765998efb752527"
     },
     {
-      "name": "grade/citation audit",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/grade-audit.json",
-      "sha256": "54895e961dc88ab3feb02a4d0040c31d9e42583ac63272d378b8665fd2f8dd97"
+      "name": "boundary-audit.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/boundary-audit.json",
+      "sha256": "41158df3c647e73282abf8cb623d31a91a3df7b30ed3626838b8bb0f1270dc3c"
     },
     {
-      "name": "per-family current-canon search",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/concern-created-search.json",
-      "sha256": "e5179c09c2c5b06b66d35f242423481c9ab38b234c647322472796773f494139"
+      "name": "regeneration.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/regeneration.json",
+      "sha256": "a5af23fcff8a488712e876a353ad868a299824def005aaaba27db7b1aa760a0d"
     },
     {
-      "name": "current-main premises",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/premise-checks.json",
-      "sha256": "d29b61658bdef13d6e034e3c038cc0b91f100510be3fa1bc3cf162b14637e348"
+      "name": "history-coverage.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/history-coverage.json",
+      "sha256": "5cf310a7c52524dff73cf5d833aa521fa837484429501613116af70b4c0386cd"
     },
     {
-      "name": "cross-origin id scan",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/id-scan.json",
-      "sha256": "0583e5f806faf4848b92e64ff2b452a8cb1871fd5de3834ba5adfa2e0e88a5ab"
+      "name": "currentness-copy.json",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/currentness-copy.json",
+      "sha256": "1b765b9ac2ab42d60576eba5c1f1edd03454965e434717497da8cbcf32c009bf"
     },
     {
-      "name": "currentness-edition copy",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/currentness-sha256.json",
-      "sha256": "ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c"
+      "name": "derived-inputs.jsonl",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/derived-inputs.jsonl",
+      "sha256": "02a14215862d54254884b213e6a1825d02dd1d4dec3cb80e43a957b9eaecd2d9"
     },
     {
-      "name": "Assistant regression comparison",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-regression-comparison.json",
-      "sha256": "65a2b7bb341415dcae2737d3eafe9dd8b5591cd7dad94e8dee4198f17650dbb2"
-    },
-    {
-      "name": "pinned baseline read transport",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/pin-run.py",
-      "sha256": "c8ff993fb6e8cfff8b0c7adb658b43d94616f0d7c93825c68ff4d9725353623a"
-    },
-    {
-      "name": "pinned reviewed-head profile output",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/profile-reviewed.log",
-      "sha256": "40ddb3b98d752262a02b59a998985687fd4c5e8058618d154800887ff2d3e696"
-    },
-    {
-      "name": "pinned reviewed-head Assistant output",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/assistant-tests-reviewed.log",
-      "sha256": "24a95a114ed6ca1846e3ca2f7945e2fdc4cfd039cfff8879f2128819ab9aecad"
-    },
-    {
-      "name": "final boundary audit",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix2/final-boundary-audit.json",
-      "sha256": "2700dc601e588a49c6da0313358f1483ec8356c257a16e57fe10c1d25f2935a4"
+      "name": "index-incomplete-extract.log",
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/fix4/index-incomplete-extract.log",
+      "sha256": "8102db82dd39e69875698e03d6a00cb906b13f09129d6bf680cfe2f1e1dfe06d"
     }
   ],
+  "standing_checks": {
+    "alert.acknowledged": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "application attempt on Project-only family"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "raw Project partition positive"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "schema-valid oversized complete operation",
+          "16385-byte operation cannot be positive"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 6,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/attention/alert_acknowledged.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_acknowledged_operation.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_acknowledged_checkpoint.schema.json",
+          "unresolved embedded registry reference",
+          "valid nonempty optional source_refs",
+          "valid nonempty optional evidence_refs"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 28,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_superseded_revision",
+          "retained_after_live_owner_stale"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 31,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    },
+    "alert.dismissed": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "application attempt on Project-only family"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "raw Project partition positive"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "schema-valid oversized complete operation",
+          "16385-byte operation cannot be positive"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 6,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/attention/alert_dismissed.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_dismissed_operation.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_dismissed_checkpoint.schema.json",
+          "unresolved embedded registry reference",
+          "valid nonempty optional source_refs",
+          "valid nonempty optional evidence_refs"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 28,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_superseded_revision",
+          "retained_after_live_owner_stale"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 31,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    },
+    "alert.rule_muted": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "application attempt on Project-only family"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "raw Project partition positive"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "schema-valid oversized complete operation",
+          "16385-byte operation cannot be positive"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 6,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/attention/alert_rule_muted.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_rule_muted_operation.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_rule_muted_checkpoint.schema.json",
+          "unresolved embedded registry reference",
+          "valid nonempty optional source_refs",
+          "valid nonempty optional evidence_refs"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 28,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_superseded_revision",
+          "retained_after_live_owner_stale"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 31,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    },
+    "alert.snoozed": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "application attempt on Project-only family"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "raw Project partition positive"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "schema-valid oversized complete operation",
+          "16385-byte operation cannot be positive"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 6,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/attention/alert_snoozed.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_snoozed_operation.schema.json",
+          "unused unresolved reference Plans/alert_event_contracts/alert_snoozed_checkpoint.schema.json",
+          "unresolved embedded registry reference",
+          "valid nonempty optional source_refs",
+          "valid nonempty optional evidence_refs"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 28,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_superseded_revision",
+          "retained_after_live_owner_stale"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 31,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    },
+    "concern.created": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "application attempt on Project-only family"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "raw Project partition positive",
+          "raw original-operation Project partition"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "schema-valid oversized complete operation"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/concern/concern_created.schema.json",
+          "unused unresolved reference Plans/concern_created_contracts/concern_created_operation.schema.json",
+          "unused unresolved reference Plans/concern_created_contracts/concern_created_checkpoint.schema.json",
+          "unresolved embedded registry reference"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 28,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_subject_active",
+          "retained_after_concern_created"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 31,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    },
+    "panel.redocked": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "CV-366 malformed/unequal fixture",
+          "CV-366 malformed/unequal application@1:736572766572:66697874757265x",
+          "CV-366 malformed/unequal APPLICATION@1:736572766572:66697874757265",
+          "CV-366 malformed/unequal application@1:server:fixture"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "raw Project partition positive",
+          "raw original-operation Project partition"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "schema-valid oversized complete operation"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/panel_redocked_v2.schema.json",
+          "unused unresolved reference Plans/panel_event_contracts/panel_redocked_operation.schema.json",
+          "unused unresolved reference Plans/panel_event_contracts/panel_redocked_checkpoint.schema.json",
+          "unresolved embedded registry reference"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 30,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_session_ended",
+          "retained_after_window_closed",
+          "retained_after_session_ended",
+          "retained_after_window_closed"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 62,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state",
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    },
+    "panel.undocked": {
+      "1": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "current writer replay-only"
+        ]
+      },
+      "2": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "CV-366 malformed/unequal fixture",
+          "CV-366 malformed/unequal application@1:736572766572:66697874757265x",
+          "CV-366 malformed/unequal APPLICATION@1:736572766572:66697874757265",
+          "CV-366 malformed/unequal application@1:server:fixture"
+        ]
+      },
+      "3": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "raw Project partition positive",
+          "raw original-operation Project partition"
+        ]
+      },
+      "4": {
+        "status": "pass",
+        "commit": null,
+        "observations": 1,
+        "probes": [
+          "schema-valid oversized complete operation"
+        ]
+      },
+      "5": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "payload identifier trailing LF",
+          "nested token hash trailing LF"
+        ]
+      },
+      "6": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "altered caller body claimed equal",
+          "Storage-assigned metadata claimed semantic 0",
+          "Storage-assigned metadata claimed semantic 1",
+          "Storage-assigned metadata claimed semantic 2"
+        ]
+      },
+      "7": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "foreign single token",
+          "foreign coherent triple"
+        ]
+      },
+      "8": {
+        "status": "pass",
+        "commit": null,
+        "observations": 2,
+        "probes": [
+          "negative policy expectation changed to success",
+          "failure oracle rejects process exit zero"
+        ]
+      },
+      "9": {
+        "status": "pass",
+        "commit": null,
+        "observations": 4,
+        "probes": [
+          "unused unresolved reference Plans/event_payloads/panel_undocked_v2.schema.json",
+          "unused unresolved reference Plans/panel_event_contracts/panel_undocked_operation.schema.json",
+          "unused unresolved reference Plans/panel_event_contracts/panel_undocked_checkpoint.schema.json",
+          "unresolved embedded registry reference"
+        ]
+      },
+      "10": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 30,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "retained_after_session_ended",
+          "retained_after_window_closed",
+          "retained_after_session_ended",
+          "retained_after_window_closed"
+        ]
+      },
+      "11": {
+        "status": "fixed",
+        "commit": "8142c5bfa35e47b011ae7e8ff0ae8452e30e189c",
+        "observations": 62,
+        "probes": [
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state",
+          "withdrawn_checkpoint",
+          "staged_checkpoint",
+          "forged_checkpoint_publication",
+          "foreign_checkpoint_storage",
+          "forged_checkpoint_token",
+          "foreign_checkpoint_consumer",
+          "withdrawn_event",
+          "staged_event",
+          "forged_event_ref",
+          "forged_event_id",
+          "foreign_event_storage",
+          "foreign_event_project",
+          "forged_schema_valid_payload",
+          "forged_schema_invalid_payload",
+          "unknown_historical_version",
+          "forged_receipt_event",
+          "foreign_receipt_storage",
+          "forged_original_result",
+          "forged_source_selection",
+          "foreign_source_storage",
+          "not_valid_when_written",
+          "current_permission_denied",
+          "source_deleted",
+          "current_withdrawal",
+          "current_membership_denied",
+          "current_source_access_denied",
+          "after_helper_disclosure_permission_allowed",
+          "after_helper_disclosure_deleted",
+          "after_helper_disclosure_withdrawn",
+          "after_helper_checkpoint_state",
+          "after_helper_event_state"
+        ]
+      }
+    }
+  },
   "native": "NOT_RUN",
   "admission": "ABSENT",
-  "retention": "PENDING_RETENTION_DECISION",
-  "round": 2
+  "retention": "PENDING_RETENTION_DECISION"
 }
