@@ -2704,6 +2704,13 @@ window.PM12_REFERENCE = {"version":"1.0.0","total":892,"inventory_sha256":"be85c
     if(id==='general.visual.theme'){
       const mode=String(value||'').trim().split(/\s+/).pop();
       if(/^(light|dark)$/i.test(mode))writes['general.visual.theme-mode']=cap(mode);
+      else if(['Basic','Friendly','Retro','Glass','NieR'].includes(value)){
+        // Family-only picks preserve Light / Dark / Auto and the existing persisted pair.
+        const selectedMode=String(state.settings['general.visual.theme-mode']||'Dark');
+        const scheme=/^auto$/i.test(selectedMode)?(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):selectedMode;
+        writes[id]=value+' '+cap(scheme);
+        writes['general.visual.theme-mode']=selectedMode;
+      }
     }else if(id==='general.visual.theme-mode'){
       /* Auto (QA2 m2): the Theme's word follows what the computer paints, written in the same batch, so Auto stays */
       const family=String(state.settings['general.visual.theme']||'Basic Dark').trim().split(/\s+/)[0]||'Basic';
