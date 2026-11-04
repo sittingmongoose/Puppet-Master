@@ -258,7 +258,6 @@ OWNER_DOCS = [
     "Plans/Progression_Gates.md",
     "Plans/UI_Wiring_Rules.md",
     "Plans/bootstrap/Codex_Prompts.md",
-    "Plans/.plan_index/node_readiness_report.json",
     "scripts/pm-plan-index.py",
     "scripts/pm-implementation-readiness.py",
     "scripts/pm-pnc019-certification-harness.py",
@@ -5621,7 +5620,7 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     )
     checks["event_denominator_residual_remains_fail_closed"] = any(
         failure.get("error") == "event_denominator_unresolved"
-        and failure.get("registered_kernel_rows") == 39
+        and failure.get("registered_kernel_rows") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
         and failure.get("quarantined_row_count") == 252
         and failure.get("denominator_status") == "UNKNOWN_OPEN"
         and failure.get("bulk_registration_allowed") is False
@@ -5635,7 +5634,7 @@ def case_l_verification_self_test_checks() -> dict[str, bool]:
     )
     checks["event_contract_depth_residual_remains_fail_closed"] = any(
         failure.get("error") == "event_family_contract_depth_unresolved"
-        and failure.get("registered_kernel_rows") == 39
+        and failure.get("registered_kernel_rows") == EVENT_FAMILY_REGISTRY_KERNEL_ROW_COUNT
         and failure.get("contract_depth_complete") is False
         for failure in residual_failures
     )
