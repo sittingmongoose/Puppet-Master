@@ -692,7 +692,7 @@ acceptance_criteria:
   SSH trust/key-install effects require their own exact human Server-owner apply and terminal readback; a setup commit, read receipt or mode/grant cannot impersonate consent, create a Project or replay an unknown remote effect.
 validation_surfaces:
 - Plans/project_system_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_pjct_009
@@ -760,6 +760,8 @@ owner_doc: Plans/Project_System.md
 canonical_text: |-
   The same reviewed setup owns the following exact chains. For github_cloud and currently host-policy-admitted github_enterprise create, preserve cmd.project.new_github_repo with sole handlers::github::project_new_repo and PJCT-008/GI-042 results. For gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo and gitea, use cmd.project.add_existing with registration_kind=forge_created as the root Project composition. That root first admits and reserves the actual Project identity, calls cmd.forge.repository.create through sole handlers::forge::repository_create with FGI-023 service options, adopts its exact verified remote identity/result/receipt, prepares the selected source through the backend owner, adds or binds its remote through SCS-025, optionally publishes only when explicitly included in Review, then completes stable config, Settings and atomic registry/readback. There is no new per-service wrapper command and no substitution of providers in the GitHub command. Hosting APIs do not create paid accounts or Azure team projects.
 
+  Every GitHub/GitLab chain consumes FGI-023's normative profile-to-variant mapping through creation and binding: gitlab_saas resolves to gitlab_com, gitlab_self_managed to gitlab_self_managed, and the two GitHub profiles retain their matching variant spellings. gitlab_dedicated has no New Project create profile. Validate the paired options/result binding before adopting its remote identity; do not rename a profile or infer a variant from a service label.
+
   Source preparation is exact per draft: an empty new source is materialized and initialized once through the selected backend owner; existing history binds without grafting another history; copying an existing remote uses cmd.source_control.repository.clone for Git or cmd.jujutsu.git.clone for Jujutsu. A clone is not also run against settled local content. If initial files/local history exist, the hosted repository starts empty and any first upload is separately listed; conflicting initial histories are refused. Plain Git addresses are transport-only and cannot enter create. Optional online setup added to an already listed Project is a Forge/SCM mutation, not re-registration or a new Project setup recovery anchor.
 
   P2 fork contribution uses root cmd.project.add_existing, native git_clone or jujutsu_clone registration, and acquisition_provenance.kind=fork_contribute. At reviewed commit call cmd.forge.repository.fork through handlers::forge::repository_fork for GitHub/GHES only, adopt the verified fork result, clone that exact fork once, add original upstream through SCS-025, create the exact branch/bookmark through the backend owner, bind the original/base and fork/head repositories under FGI-024, then Settings and registry/readback. Using a previously verified existing fork is an explicit branch of the preview and performs no fork-create effect. Non-contribution remote acquisition uses acquisition_provenance.kind=online_import with git_clone or jujutsu_clone. A verified mounted source uses mounted_existing. Preserve all nine pre-existing registration kinds including new_local, existing_local, git_clone, jujutsu_clone, forge_created, ssh_remote, restore_same_project, restore_as_new and migration; acquisition provenance is a closed orthogonal object, not a generic clone kind or other-app import.
@@ -780,10 +782,10 @@ acceptance_criteria:
 - Failures before effect, unknown effect and each local phase after create/fork leave no half-listed Project; resume
   never repeats settled create/fork/clone/bind/Settings/registry effects.
 - Concurrent fresh resumes are rejected/coalesced through the retained claim and stale claim results are discarded.
-- Original nine kinds stay exact; mounted_existing and closed provenance are frozen with F before fixtures.
+- Original nine kinds stay exact; mounted_existing and closed provenance match the adopted schema and fixtures.
 validation_surfaces:
 - Plans/project_system_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_pjct_010
@@ -857,7 +859,7 @@ acceptance_criteria:
 - Online-copy basics have one Advanced editor and never create a second remote history for existing content.
 validation_surfaces:
 - Plans/project_system_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_pjct_011
@@ -934,7 +936,7 @@ acceptance_criteria:
   shared GUI primitives and owner status.
 validation_surfaces:
 - Plans/project_system_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_pjct_012

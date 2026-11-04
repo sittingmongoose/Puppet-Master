@@ -8323,6 +8323,282 @@
         "produced_at_utc": "2026-09-01T12:00:01Z",
         "expires_at_utc": "2026-09-01T12:05:00Z"
       }
+    },
+    {
+      "name": "wonder-create-profile-binding-github_cloud",
+      "definition": "ForgeCreateProfileBindingV1",
+      "value": {
+        "create_options": {
+          "provider_id": "github",
+          "instance_profile": "github_cloud",
+          "instance_ref": "instance:github.com",
+          "account_ref": "account:github_cloud:1",
+          "owner_ref": "group-alpha",
+          "container_ref": "namespace:group-alpha",
+          "team_project_ref": null,
+          "workspace_ref": null,
+          "project_key": null,
+          "name": "service-one",
+          "slug": "service-one",
+          "visibility": "private",
+          "default_branch": "main",
+          "description": "",
+          "initial_file_choices_ref": null,
+          "capability_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "capability:github_cloud",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 4,
+            "generation": 7
+          },
+          "admission_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "admission:github_cloud",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "revision": 4,
+            "generation": 7
+          }
+        },
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:github_cloud:created",
+          "provider": "github",
+          "provider_variant": "github_cloud",
+          "normalized_host": "github.com",
+          "account_id": "account:github_cloud:1",
+          "repo_id": "repo:github_cloud:created",
+          "provider_repository_id": "provider-repo:github_cloud:481",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:gitlab:1",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge-support:generation-6",
+          "binding_generation": 3
+        }
+      }
+    },
+    {
+      "name": "wonder-create-profile-binding-github_enterprise",
+      "definition": "ForgeCreateProfileBindingV1",
+      "value": {
+        "create_options": {
+          "provider_id": "github",
+          "instance_profile": "github_enterprise",
+          "instance_ref": "instance:github.example.invalid",
+          "account_ref": "account:github_enterprise:1",
+          "owner_ref": "group-alpha",
+          "container_ref": "namespace:group-alpha",
+          "team_project_ref": null,
+          "workspace_ref": null,
+          "project_key": null,
+          "name": "service-one",
+          "slug": "service-one",
+          "visibility": "private",
+          "default_branch": "main",
+          "description": "",
+          "initial_file_choices_ref": null,
+          "capability_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "capability:github_enterprise",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 4,
+            "generation": 7
+          },
+          "admission_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "admission:github_enterprise",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "revision": 4,
+            "generation": 7
+          }
+        },
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:github_enterprise:created",
+          "provider": "github",
+          "provider_variant": "github_enterprise",
+          "normalized_host": "github.example.invalid",
+          "account_id": "account:github_enterprise:1",
+          "repo_id": "repo:github_enterprise:created",
+          "provider_repository_id": "provider-repo:github_enterprise:481",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:gitlab:1",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge-support:generation-6",
+          "binding_generation": 3
+        }
+      }
+    },
+    {
+      "name": "wonder-create-profile-binding-gitlab_saas",
+      "definition": "ForgeCreateProfileBindingV1",
+      "value": {
+        "create_options": {
+          "provider_id": "gitlab",
+          "instance_profile": "gitlab_saas",
+          "instance_ref": "instance:gitlab.com",
+          "account_ref": "account:gitlab_saas:1",
+          "owner_ref": "group-alpha",
+          "container_ref": "namespace:group-alpha",
+          "team_project_ref": null,
+          "workspace_ref": null,
+          "project_key": null,
+          "name": "service-one",
+          "slug": "service-one",
+          "visibility": "private",
+          "default_branch": "main",
+          "description": "",
+          "initial_file_choices_ref": null,
+          "capability_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "capability:gitlab_saas",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 4,
+            "generation": 7
+          },
+          "admission_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "admission:gitlab_saas",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "revision": 4,
+            "generation": 7
+          }
+        },
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:gitlab_saas:created",
+          "provider": "gitlab",
+          "provider_variant": "gitlab_com",
+          "normalized_host": "gitlab.com",
+          "account_id": "account:gitlab_saas:1",
+          "repo_id": "repo:gitlab_saas:created",
+          "provider_repository_id": "provider-repo:gitlab_saas:481",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:gitlab:1",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge-support:generation-6",
+          "binding_generation": 3
+        }
+      }
+    },
+    {
+      "name": "wonder-create-profile-binding-gitlab_self_managed",
+      "definition": "ForgeCreateProfileBindingV1",
+      "value": {
+        "create_options": {
+          "provider_id": "gitlab",
+          "instance_profile": "gitlab_self_managed",
+          "instance_ref": "instance:gitlab.example.invalid",
+          "account_ref": "account:gitlab_self_managed:1",
+          "owner_ref": "group-alpha",
+          "container_ref": "namespace:group-alpha",
+          "team_project_ref": null,
+          "workspace_ref": null,
+          "project_key": null,
+          "name": "service-one",
+          "slug": "service-one",
+          "visibility": "private",
+          "default_branch": "main",
+          "description": "",
+          "initial_file_choices_ref": null,
+          "capability_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "capability:gitlab_self_managed",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 4,
+            "generation": 7
+          },
+          "admission_evidence": {
+            "schema_id": "pm.server.owner_evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "Plans/Forge_Integrations.md#FGI-023",
+            "source_ref": "admission:gitlab_self_managed",
+            "source_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "revision": 4,
+            "generation": 7
+          }
+        },
+        "repository_binding": {
+          "schema_id": "pm.forge.repository_binding.v1",
+          "binding_id": "forge-binding:gitlab_self_managed:created",
+          "provider": "gitlab",
+          "provider_variant": "gitlab_self_managed",
+          "normalized_host": "gitlab.example.invalid",
+          "account_id": "account:gitlab_self_managed:1",
+          "repo_id": "repo:gitlab_self_managed:created",
+          "provider_repository_id": "provider-repo:gitlab_self_managed:481",
+          "repository_locator": {
+            "organization_or_workspace": "group-alpha",
+            "project": null,
+            "repository_slug": "service-one"
+          },
+          "authority": {
+            "storage": "authority",
+            "review": "authority",
+            "checks": "authority",
+            "automation": "authority",
+            "issues": "authority",
+            "transport": "authority",
+            "mirror": "not_applicable"
+          },
+          "credential_ref": "credential:forge:gitlab:1",
+          "adapter_ref": "adapter:gitlab:1",
+          "capability_catalog_ref": "catalog:forge-support:generation-6",
+          "binding_generation": 3
+        }
+      }
     }
   ],
   "invalid": [
@@ -10595,6 +10871,39 @@
           "origin_cli_missing_on_selected_environment"
         ]
       }
+    },
+    {
+      "name": "wonder-gitlab-saas-rejects-self-managed-variant",
+      "base_valid": "wonder-create-profile-binding-gitlab_saas",
+      "patch": {
+        "repository_binding.provider_variant": "gitlab_self_managed"
+      },
+      "expected_error": "FGI-023 maps gitlab_saas only to gitlab_com."
+    },
+    {
+      "name": "wonder-gitlab-saas-rejects-wrong-provider",
+      "base_valid": "wonder-create-profile-binding-gitlab_saas",
+      "patch": {
+        "create_options.provider_id": "github"
+      },
+      "expected_error": "The GitLab create profile must use provider gitlab."
+    },
+    {
+      "name": "wonder-gitlab-dedicated-has-no-create-profile",
+      "base_valid": "wonder-create-profile-binding-gitlab_saas",
+      "patch": {
+        "create_options.instance_profile": "gitlab_dedicated",
+        "repository_binding.provider_variant": "gitlab_dedicated"
+      },
+      "expected_error": "Dedicated retains its provider variant but has no New Project create profile."
+    },
+    {
+      "name": "wonder-github-cloud-rejects-enterprise-variant",
+      "base_valid": "wonder-create-profile-binding-github_cloud",
+      "patch": {
+        "repository_binding.provider_variant": "github_enterprise"
+      },
+      "expected_error": "GitHub profile and resulting variant must match FGI-023."
     }
   ],
   "semantic_counterexamples": [

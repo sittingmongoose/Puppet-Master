@@ -9071,9 +9071,9 @@ acceptance_criteria:
 - Old Workflow/Project exact source fixtures remain accepted unchanged and cannot be cast as app evidence.
 - A conversion racing Stop, cancel or a schedule produces one authentic settled result or typed recovery hold.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

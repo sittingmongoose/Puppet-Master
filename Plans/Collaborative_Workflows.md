@@ -3713,9 +3713,9 @@ acceptance_criteria:
 - Crew Auto reads one committed revision and parent ceiling; app Build With Crew publishes PlanRun/Crew/To-Dos together.
 - Conversion fences participants and board claims; invalid links quarantine and old teams/transcripts remain immutable.
 validation_surfaces:
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F-delivered semantic fixtures)'
-- 'Phase 2: python3 scripts/pm-assistant-contract-check.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-assistant-contract-check.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody
 reasoning_tier: high
 context_scope: application_and_project_workflows

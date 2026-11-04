@@ -374,11 +374,11 @@ plan_unit_id: SSYS-007
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Settings_System.md
-canonical_text: >-
+canonical_text: |-
   Copy Settings From Another Project is one detached exact-ID transaction through SSYS-018. The default copy_basis=own_values
   brings the source's portable own values, selected owner things and switches/reach additions through their owners,
-  and intended account IDs with destination readiness under MA-074/MACS-006. It never creates inheritance, a live
-  link, or later source propagation from that source. A new Project independently follows Everywhere for unset
+  and intended account IDs with destination readiness under MA-074/MACS-006. The detached copy has no inheritance,
+  live link or later source propagation from that source. A new Project independently follows Everywhere for unset
   values. Advanced effective_values (Keep them fixed) freezes only the previewed portable values at offered destination
   levels; computer programs, paths, screen values and secrets are never made portable by freezing.
 
@@ -393,6 +393,22 @@ canonical_text: >-
   each writer's admitted part and rolls back that part on failure. Cross-Computer batches honestly report done/not_reached/refused,
   with one report and Undo; they promise no cross-Computer atomicity and queue nothing. SSYS-062 owns the complete
   copy contract.
+
+  These plain names are the shared visible vocabulary in Settings Transfer, New Project and onboarding:
+
+  | Selector ID | Visible name |
+  |---|---|
+  | appearance_workspace | Look and layout |
+  | assistant_chat | Assistant and chat |
+  | providers_accounts_models_routing | AI accounts and models |
+  | planning_goal | Planning and Goals |
+  | orchestrator_automation | Automation |
+  | tools_integrations | Tools and connections |
+  | testing_browser_devices | Testing, browser and devices |
+  | permissions_security | Permissions and safety |
+  | memory_retention_history | Memory and history |
+  | notifications_usage_budgets | Notifications & limits |
+  | project_only_rows | About its own files |
 
   New Project/onboarding offers this step only while creating a new registry Project, including registering previously
   unregistered content; never on Later, connect-only or merely opening a registered Project. A draft preview binds
@@ -1612,9 +1628,10 @@ acceptance_criteria:
 - Project-relative paths stay portable with that Project; Computer programs/paths/ports never become Everywhere
   or copied Project values.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_059
@@ -1623,7 +1640,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -1733,9 +1750,10 @@ acceptance_criteria:
 - Stale index results disclose as-of/unreachable sources rather than false equality.
 - Join keeps Project own values and every alternative, with 30-day currentness-safe Undo and no secret transfer.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_060
@@ -1744,7 +1762,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -1825,9 +1843,10 @@ acceptance_criteria:
 - Whole versions use existing protected-builtin/ID rules and copy/Undo goes through the owner.
 - Install/auth/profile/route/status records remain distinct from ordinary Settings values.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_061
@@ -1836,7 +1855,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -1905,7 +1924,7 @@ canonical_text: >-
   apply uses the bound current preview, per-writer restore points and readback; multi-Computer results are done/not_reached/refused,
   queue nothing, and offer explicit Finish. One batch report and Undo removes copied values/things/reach additions
   subject to currentness, never remote resources. Regular uses required confirmation; a clear requested YOLO copy
-  uses D's mode authority without a second yes and still shows preview/report/Undo. Account setup needing a person
+  uses Plans/Permissions_System.md's mode authority without a second yes and still shows preview/report/Undo. Account setup needing a person
   remains protected. P12's selector label is Notifications & limits everywhere this copy flow appears.
 gui_related: true
 gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
@@ -1927,9 +1946,10 @@ acceptance_criteria:
 - Batch outcomes are honest, no work queues offline, and Undo preserves unrelated later changes and the destination
   Project.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_062
@@ -1938,7 +1958,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -2039,9 +2059,10 @@ acceptance_criteria:
 - Only for changes the exact narrow target through one compensating transaction; stale Undo never overwrites later
   work.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_063
@@ -2050,7 +2071,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -2127,9 +2148,10 @@ acceptance_criteria:
 - Ambiguous provenance/ties require explicit choice, not clock-last-wins or lossy selection.
 - Legacy discovery, startup, a partial upgrade and YOLO alone never auto-apply the fold.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_064
@@ -2138,7 +2160,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -2176,10 +2198,10 @@ canonical_text: >-
   otherwise actual Computer/Device where offered; thing changes remain with their owner. A read grant or a message
   to another Project gives no setting-write authority. In Regular an agent Everywhere write needs the person's
   current affected-context confirmation through the ordinary Settings preview/apply. In YOLO a clearly requested
-  Everywhere write, or an Everywhere-only row, uses D's task/mode authority without another ordinary yes; it never
+  Everywhere write, or an Everywhere-only row, uses Plans/Permissions_System.md's task/mode authority without another ordinary yes; it never
   widens a Project-only task to Everywhere or forges a human confirmation. It still shows preview, actor/place
   report, History and Undo. No agent changes credentials, Managed values, settings home, Server-peer trust or
-  another Project's values. Source/repository loosening and Always scope are D's S15/S16 protected choices, never
+  another Project's values. Source/repository loosening and Always scope are Plans/Permissions_System.md's S15/S16 protected choices, never
   skipped merely by YOLO.
 
   Defaults, home, reach and readiness never authorize a tool dispatch, protected auth, grant issuance or cross-Project
@@ -2229,9 +2251,10 @@ acceptance_criteria:
 - Later sets up AI at actual app/Computer scope and enters No project; no fake Project or silent local claim.
 - Onboarding/update mapping respects offered levels and never overwrites explicit existing values with seeds.
 validation_surfaces:
-- Plans/settings_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/settings_system_contracts.schema.json
+- Plans/settings_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: settings_authority_or_scope_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_ssys_065
@@ -2240,7 +2263,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:

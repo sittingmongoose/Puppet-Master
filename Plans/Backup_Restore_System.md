@@ -2085,7 +2085,7 @@ acceptance_criteria:
 - Later and failed test/Kit/policy leave a listed Project intact and incomplete backup truth visible.
 validation_surfaces:
 - Plans/backup_restore_system_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_brs_032
@@ -2178,7 +2178,7 @@ acceptance_criteria:
   Chat Undo expiry cannot purge independently retained canonical task/permission/audit/shared-payload sources; restored grants remain historical and rebind stays unavailable without its own admitted protocol.
 validation_surfaces:
 - Plans/backup_restore_system_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_brs_033

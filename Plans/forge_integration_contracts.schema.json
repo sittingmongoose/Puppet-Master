@@ -10400,6 +10400,201 @@
           }
         }
       ]
+    },
+    "ForgeCreateProfileBindingV1": {
+      "description": "FGI-023 GitHub/GitLab profile-to-variant assertion over existing create options and the resulting repository binding. This versioned static tuple is not a new command, runtime receipt or storage family; historical request/result shapes are unchanged.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "create_options",
+        "repository_binding"
+      ],
+      "properties": {
+        "create_options": {
+          "$ref": "#/$defs/create_options_v2"
+        },
+        "repository_binding": {
+          "$ref": "#/$defs/repository_binding"
+        }
+      },
+      "allOf": [
+        {
+          "properties": {
+            "create_options": {
+              "properties": {
+                "instance_profile": {
+                  "enum": [
+                    "github_cloud",
+                    "github_enterprise",
+                    "gitlab_saas",
+                    "gitlab_self_managed"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "instance_profile": {
+                    "const": "github_cloud"
+                  }
+                },
+                "required": [
+                  "instance_profile"
+                ]
+              }
+            },
+            "required": [
+              "create_options"
+            ]
+          },
+          "then": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "provider_id": {
+                    "const": "github"
+                  }
+                }
+              },
+              "repository_binding": {
+                "properties": {
+                  "provider": {
+                    "const": "github"
+                  },
+                  "provider_variant": {
+                    "const": "github_cloud"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "instance_profile": {
+                    "const": "github_enterprise"
+                  }
+                },
+                "required": [
+                  "instance_profile"
+                ]
+              }
+            },
+            "required": [
+              "create_options"
+            ]
+          },
+          "then": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "provider_id": {
+                    "const": "github"
+                  }
+                }
+              },
+              "repository_binding": {
+                "properties": {
+                  "provider": {
+                    "const": "github"
+                  },
+                  "provider_variant": {
+                    "const": "github_enterprise"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "instance_profile": {
+                    "const": "gitlab_saas"
+                  }
+                },
+                "required": [
+                  "instance_profile"
+                ]
+              }
+            },
+            "required": [
+              "create_options"
+            ]
+          },
+          "then": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "provider_id": {
+                    "const": "gitlab"
+                  }
+                }
+              },
+              "repository_binding": {
+                "properties": {
+                  "provider": {
+                    "const": "gitlab"
+                  },
+                  "provider_variant": {
+                    "const": "gitlab_com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "instance_profile": {
+                    "const": "gitlab_self_managed"
+                  }
+                },
+                "required": [
+                  "instance_profile"
+                ]
+              }
+            },
+            "required": [
+              "create_options"
+            ]
+          },
+          "then": {
+            "properties": {
+              "create_options": {
+                "properties": {
+                  "provider_id": {
+                    "const": "gitlab"
+                  }
+                }
+              },
+              "repository_binding": {
+                "properties": {
+                  "provider": {
+                    "const": "gitlab"
+                  },
+                  "provider_variant": {
+                    "const": "gitlab_self_managed"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   }
 }

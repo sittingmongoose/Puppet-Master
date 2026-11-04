@@ -36644,16 +36644,15 @@ acceptance_criteria:
   real results; stale, unconfirmed, or expanded plans dispatch nothing.
 - 'DL-259 H2/FF-20: first_project exposes New, Existing and Restore as three aligned keyboard-reachable groups; Existing’s
   local/online/device choices open in its joined tray, before the other groups. All four semantic source intents stay
-  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Start
-  fresh is the settings default; explicit copy offers a searchable real-Project picker, source-context summary and Settings
-  preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
+  reachable without an unrelated More/Other disclosure, and Project Later works. Each choice creates only a draft. Your usual settings is the settings default;
+  explicit copy offers a searchable real-Project picker, source-context summary and Settings preview, never bulk copies secrets, machine paths, runtime state, or account capability.'
 - 'Source-control setup keeps two independent visible axes: local Safe History uses Git or Jujutsu on the selected computer,
   while an optional forge account/repository keeps a separate online copy; Jujutsu is never presented as an account,
   website, or online-copy provider, and FileSafe is described only as complementary local recovery.'
 - 'After current Review confirmation, a new-project owner route follows the reviewed Safe History choice through `cmd.project.new_local`
-  and its backend-native child owner: local Git initializes only when the reviewed draft selected Git, a reviewed Jujutsu
-  choice routes through the existing Jujutsu owner route and is never silently substituted with Git, and explicit no-history
-  initializes no Git per PJCT-007 and Project_System.md:93; local-engine selection uses the canonical Source Control
+  and its backend-native child owner: Git and Jujutsu are equal local history choices under PJCT-009, existing verified history wins, and a folder
+  without a repository still initializes the reviewed Git-or-Jujutsu backend. A reviewed Jujutsu choice routes through
+  its existing owner route and is never silently substituted with Git; local-engine selection uses the canonical Source Control
   owner, while GitHub, GitLab, Azure DevOps, Bitbucket, Forgejo and Gitea account verification, repository creation/selection,
   visibility, and binding remain explicit forge/auth owner routes. Forgejo and Gitea each require the person’s own server
   (DL-273).'
@@ -36900,15 +36899,13 @@ acceptance_criteria:
   data and exact return destinations, show a human-readable missing choice, and never paint an empty Creating or unselected-service details screen.'
 
 validation_surfaces:
-- Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (owner-referenced
-  eleven/six/deferred stage graphs, draft/copy/preflight/commit/paid/free phase fences; F3-521 retains the separate v3
-  Guided Tour contract)
-- Plans/product_onboarding_contracts.schema.json and Plans/product_onboarding_contract_fixtures.json (v2 owner actions,
-  durable bounded draft, exact commit/result binding and phase continuation)
+- Plans/final_gui_interaction_contracts.schema.json
+- Plans/final_gui_interaction_contract_fixtures.json
+- Plans/product_onboarding_contracts.schema.json
+- Plans/product_onboarding_contract_fixtures.json
 - tests/test_pm_onboarding_phases.py
 - tests/test_pm_settings_draft_transfer.py
-- Verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal,
-  accessibility and short-window behavior.
+- future verify F3-520's onboarding presentation, owner-bound actions, ephemeral pre-Project look choices, return routes, interruption/reversal, accessibility and short-window behavior.
 - future ten-theme, Reduced Motion, interruption, reversal, and short-window film review
 risk_class: onboarding_overload_or_motion_blocking
 reasoning_tier: high
@@ -37030,8 +37027,9 @@ negative_constraints:
   Connected Server pairing/trust, restore, repository/filesystem mutation, or Project commit before exact current Review
   confirmation. Do not treat a detected account, reachable endpoint, ref prefix, cached result, or GUI choice as owner
   authorization.
-- Do not initialize local Git for an explicit no-history choice, substitute Git for a reviewed Jujutsu choice, or let
-  a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
+- Offer only Git and Jujutsu as equal local history choices under PJCT-009; preserve existing verified history and
+  initialize the reviewed backend when the folder has no repository. Do not substitute Git for a reviewed Jujutsu choice
+  or let a legacy `init_git` payload summary override the reviewed PJCT-007 draft binding.
 - Do not hide any of the four First Project choices behind More/Other project choices or frontload unrelated advanced
   Settings.
 - Do not use left-edge accent rails, floating footer actions that cover scrollable content, multiple simultaneously expanded
@@ -50063,8 +50061,8 @@ acceptance_criteria:
 - Open/Details/More are keyboard accessible with full-path access and truthful backup facts.
 - Remove, archive, rename and Delete data retain distinct effects.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50133,8 +50131,8 @@ acceptance_criteria:
 - Backup/copy/recovery/Later are truthful and preserve current PM7 admission and auth fences.
 - SSH setup uses SRV-018 preview and protected human apply, retaining the exact draft and owner result on refusal or return.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50212,8 +50210,8 @@ acceptance_criteria:
 - Panel keyboard/narrow-host/Close/focus/Undo and masked outcomes are truthful.
 - Five Settings primaries and all 38 manager owners are preserved.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50299,8 +50297,8 @@ acceptance_criteria:
 - Both conversions/paused recovery/report/Undo account for every CV-367 family and preserve one writer.
 - Screen use remains off until admitted; the strip Stop and double Esc fence only the named session, with unavailable joins and protected prompts refused before capture/input.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50389,8 +50387,8 @@ acceptance_criteria:
 - Same-path/different-Host and different-thread board/notebook content remains isolated.
 - Conversion keeps historical binding and exact new destination admission.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50454,8 +50452,8 @@ acceptance_criteria:
 - No agent self-issuance or same-name cleanup; changed target/Stop/revoke blocks final dispatch.
 - Remote outcomes remain truthful and link existing owner receipts.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows
@@ -50520,8 +50518,8 @@ acceptance_criteria:
 - App pause is visibly separate, user-only and missing-custody fail-closed.
 - Conversion/Stop/timer races have explicit paused or refused outcomes without duplicate dispatch.
 validation_surfaces:
-- 'Phase 2: focused owner/companion semantic fixtures and scripts/pm-projects-refresh-contracts.py'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: scope_authority_and_custody_drift
 reasoning_tier: high
 context_scope: projects_refresh_application_workflows

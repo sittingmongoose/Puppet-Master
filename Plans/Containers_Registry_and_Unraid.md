@@ -6907,9 +6907,8 @@ acceptance_criteria:
 - Grant-created exact-resource cleanup can pass; same-name/pre-existing/unrelated or unlisted resource refuses.
 - Stop/revoke/current target and capability drift prevents new effects and action rows remain honest.
 validation_surfaces:
-- 'Phase 2: owner/companion semantic fixtures and exact positive/negative checks in D-requests.md.'
-- 'Phase 2: python3 scripts/pm-projects-refresh-contracts.py (F deliverable; not run in phase 1).'
-- 'Phase 2: python3 scripts/pm-plan-index.py validate; static success is not native execution proof.'
+- scripts/pm-projects-refresh-contracts.py
+- scripts/pm-plan-index.py
 risk_class: authority_scope_and_target_drift
 reasoning_tier: high
 context_scope: project_refresh_permissions_and_automation

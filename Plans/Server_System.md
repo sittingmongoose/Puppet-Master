@@ -623,7 +623,7 @@ canonical_text: >-
   warning and a role fence that rejects the old home if it returns; never automatic election. A freshness/loss
   acknowledgement alone is not a writer fence: promotion must establish the admitted role-generation/lease revocation
   that prevents the old home serving another write; if that cannot be proved, return recovery_required with no
-  writable promotion. F/A freeze that exact recovery proof before a native handler is enabled. Full Server Backup
+  writable promotion. Plans/Server_System.md and Plans/server_system_contracts.schema.json define that exact recovery proof before a native handler is enabled. Full Server Backup
   holds the role's Everywhere/history; Project Backup holds only Project own values and cannot overwrite Everywhere.
   Restore replacement remains protected and target-bound. The frozen peer operation is cmd.server.settings_peer_trust
   with handlers::server::settings_peer_trust and settings_peer_trust_command_request/settings_peer_trust_command_result
@@ -642,6 +642,34 @@ canonical_text: >-
   recovery_required. A returned former home cannot accept writes under its old role. SP-348 supplies the
   tagged Server/Execution Host/Client keys, not raw-ID aliases. SRV-018's SSH trust is separate from
   Server-peer settings trust and Client pairing.
+
+  In settings_home_transfer_request_v1, copy_sha256 is the lowercase SHA-256 of the exact
+  owner-encoded Everywhere snapshot selected from the source at preview, and history_sha256 is the
+  same digest of its exact owner-encoded retained Everywhere history. Existing Settings/storage codecs
+  define those bytes; do not hash a reserialized projection or omit fields. Preview only reads and
+  commits those source bytes, revisions and evidence; no destination copy, fencing or role change is
+  required to obtain either digest. Apply carries the same reviewed digests, a non-null preview_sha256
+  naming the retained complete preview commitment, and non-null original old_writer_fence_evidence.
+  The owner rechecks source bytes/currentness, verifies the copied destination against both digests
+  and establishes the admitted old-writer fence before switching the role once. A missing/null preview
+  hash or fence is rejected at the request boundary; unverifiable or stale evidence remains refused
+  or recovery_required rather than proving a move.
+
+  The existing cmd.server.settings_home.move and sole handlers::server::settings_home_move also carry
+  lost-home recovery through settings_home_promotion_request_v1, the distinct versioned
+  recovery_kind=lost_home_promotion member of the closed settings_home_move_request union.
+  It preserves preview/apply phases and the existing result shape. last_known_copy_evidence names
+  the exact owner-held copy on the chosen destination, copy_as_of_utc supplies its disclosed age,
+  and loss_acknowledgement_evidence binds the person's explicit choice and loss warning. The two
+  digests commit that copy's actual Everywhere snapshot and retained history at preview and apply,
+  without claiming changes after its as-of time survived. source_server_id still identifies the lost
+  home; source_catalog_evidence is its retained verified catalog, not a fabricated live observation.
+  Apply revalidates the selected copy and current destination/trust/role evidence and requires the
+  same non-null preview commitment and independently verifiable old-writer role-generation/lease
+  revocation evidence as transfer. Neither the named copy nor the loss acknowledgement supplies that
+  fence. If it cannot be established, return recovery_required with no writable promotion; when it
+  is established, the unchanged moved result reports the new role holder and generation without
+  claiming recovery of missing history. The returning former home is rejected under its old role.
 gui_related: true
 gui_classification_reason: Defines user-visible Settings, Computer, panel or work-state behavior.
 depends_on:
@@ -659,9 +687,10 @@ acceptance_criteria:
   do not create a second writer.
 - Loss requires a human-chosen fresh/stale copy with disclosed loss window and old-home return fencing.
 validation_surfaces:
-- Plans/server_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/server_system_contracts.schema.json
+- Plans/server_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: owner_scope_or_credential_authority_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_srv_016
@@ -670,7 +699,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -764,9 +793,10 @@ acceptance_criteria:
 - Client close keeps Server work live; explicit service stop accounts for app tasks and preserves restart/missed-time
   policy.
 validation_surfaces:
-- Plans/server_system_contracts.schema.json and owner companion fixtures (lane F; pending adoption)
-- python3 scripts/pm-settings-layering-check.py (lane F proposed validator; not_run)
-- Future native owner/command/writer/readback/security evidence; not_run
+- Plans/server_system_contracts.schema.json
+- Plans/server_system_contract_fixtures.json
+- scripts/pm-settings-layering-check.py
+- future native owner/command/writer/readback/security evidence; not_run
 risk_class: owner_scope_or_credential_authority_leak
 reasoning_tier: high
 context_scope: projects_refresh_20261103_srv_017
@@ -775,7 +805,7 @@ implementation_surfaces:
 - Plans/storage-plan.md
 - future shared Rust interface model and sole owner services; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
@@ -892,9 +922,10 @@ acceptance_criteria:
 - Return binds the exact initiating continuation, and missing schema/handler/source/custody evidence leaves the
   operation unavailable.
 validation_surfaces:
-- Plans/server_system_contracts.schema.json and Plans/server_system_contract_fixtures.json; F-d adoption required
-- Plans/projects_refresh_command_bindings.json and central wiring/Touch contracts; F-b adoption required
-- Future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run
+- Plans/server_system_contracts.schema.json
+- Plans/server_system_contract_fixtures.json
+- Plans/projects_refresh_command_bindings.json
+- future native protected-input, SSH currentness, remote-write/readback and restart evidence; not_run
 risk_class: ssh_host_impersonation_or_protected_key_install_authority_escape
 reasoning_tier: high
 context_scope: projects_refresh_20261103_srv_018
@@ -903,7 +934,7 @@ implementation_surfaces:
 - Plans/server_system_contracts.schema.json
 - future sole Server SSH owner and shared protected-auth broker; no implementation claimed
 node_compile_hint:
-  mode: accepted_product_contract_pending_companion_and_native_evidence
+  mode: accepted_product_contract_pending_native_evidence
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:

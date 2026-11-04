@@ -7047,101 +7047,15 @@
       }
     },
     "settings_home_move_request": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "command_id",
-        "operation",
-        "source_server_id",
-        "destination_server_id",
-        "expected_home_generation",
-        "source_catalog_evidence",
-        "destination_catalog_evidence",
-        "trust_evidence",
-        "copy_sha256",
-        "history_sha256",
-        "old_writer_fence_evidence",
-        "preview_sha256",
-        "idempotency_key",
-        "person_evidence",
-        "return_context_ref"
-      ],
-      "properties": {
-        "command_id": {
-          "const": "cmd.server.settings_home.move"
+      "description": "Closed union of the retained preview/apply transfer request and the explicit versioned lost-home promotion request; both use cmd.server.settings_home.move and its sole owner handler.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/settings_home_transfer_request_v1"
         },
-        "operation": {
-          "enum": [
-            "preview",
-            "apply"
-          ]
-        },
-        "source_server_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "destination_server_id": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "expected_home_generation": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "source_catalog_evidence": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-        },
-        "destination_catalog_evidence": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-        },
-        "trust_evidence": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-        },
-        "copy_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "history_sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "old_writer_fence_evidence": {
-          "anyOf": [
-            {
-              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "preview_sha256": {
-          "anyOf": [
-            {
-              "type": "string",
-              "pattern": "^[0-9a-f]{64}$"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "idempotency_key": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
-        },
-        "person_evidence": {
-          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
-        },
-        "return_context_ref": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 256
+        {
+          "$ref": "#/$defs/settings_home_promotion_request_v1"
         }
-      }
+      ]
     },
     "settings_home_move_result": {
       "type": "object",
@@ -9219,6 +9133,288 @@
           }
         }
       ]
+    },
+    "settings_home_transfer_request_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation",
+        "source_server_id",
+        "destination_server_id",
+        "expected_home_generation",
+        "source_catalog_evidence",
+        "destination_catalog_evidence",
+        "trust_evidence",
+        "copy_sha256",
+        "history_sha256",
+        "old_writer_fence_evidence",
+        "preview_sha256",
+        "idempotency_key",
+        "person_evidence",
+        "return_context_ref"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.server.settings_home.move"
+        },
+        "operation": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "source_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_home_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_catalog_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "destination_catalog_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "copy_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the exact owner-encoded source Everywhere snapshot selected by preview; apply must match source and verified destination bytes."
+        },
+        "history_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the exact owner-encoded source Everywhere history selected by preview; apply must match source and verified destination bytes."
+        },
+        "old_writer_fence_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "person_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "apply"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "required": [
+              "preview_sha256",
+              "old_writer_fence_evidence"
+            ],
+            "properties": {
+              "preview_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "old_writer_fence_evidence": {
+                "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "settings_home_promotion_request_v1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "operation",
+        "source_server_id",
+        "destination_server_id",
+        "expected_home_generation",
+        "source_catalog_evidence",
+        "destination_catalog_evidence",
+        "trust_evidence",
+        "copy_sha256",
+        "history_sha256",
+        "old_writer_fence_evidence",
+        "preview_sha256",
+        "idempotency_key",
+        "person_evidence",
+        "return_context_ref",
+        "schema_id",
+        "schema_version",
+        "recovery_kind",
+        "last_known_copy_evidence",
+        "copy_as_of_utc",
+        "loss_acknowledgement_evidence"
+      ],
+      "properties": {
+        "command_id": {
+          "const": "cmd.server.settings_home.move"
+        },
+        "operation": {
+          "enum": [
+            "preview",
+            "apply"
+          ]
+        },
+        "source_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "destination_server_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_home_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "source_catalog_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "destination_catalog_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "trust_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "copy_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the exact owner-encoded source Everywhere snapshot selected by preview; apply must match source and verified destination bytes."
+        },
+        "history_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the exact owner-encoded source Everywhere history selected by preview; apply must match source and verified destination bytes."
+        },
+        "old_writer_fence_evidence": {
+          "anyOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "person_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "schema_id": {
+          "const": "pm.server.settings_home.promotion_request.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "recovery_kind": {
+          "const": "lost_home_promotion"
+        },
+        "last_known_copy_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "copy_as_of_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "loss_acknowledgement_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operation": {
+                "const": "apply"
+              }
+            },
+            "required": [
+              "operation"
+            ]
+          },
+          "then": {
+            "required": [
+              "preview_sha256",
+              "old_writer_fence_evidence"
+            ],
+            "properties": {
+              "preview_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "old_writer_fence_evidence": {
+                "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+              }
+            }
+          }
+        }
+      ],
+      "description": "SRV-016 explicit lost-home promotion of a named last-known copy through the same cmd.server.settings_home.move handler. Current owner-authenticated role-generation/lease revocation must fence the former home; acknowledgement or copy age never supplies that proof."
     }
   },
   "x-contract-status": "specified_static_only",

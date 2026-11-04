@@ -1945,6 +1945,18 @@ canonical_text: |-
 
   The offered API profiles are github_cloud, github_enterprise, gitlab_saas, gitlab_self_managed, azure_devops_services, azure_devops_server, bitbucket_cloud, bitbucket_data_center, forgejo and gitea. GitHub binds personal or eligible organization owner, with Internal only where the enterprise organization capability admits it; GHES additionally requires current github_host_policy, instance/host/certification and scope admission. GitLab binds the exact personal/group/subgroup namespace; self-managed Internal is capability-probed and namespace visibility caps remain. Azure Services binds organization and an existing provider_project_id; Server binds collection URI and an existing team Project with signed version support; privacy follows that Project and TFVC is refused. Bitbucket Cloud binds authorized workspace and explicit grouping Project, private/public compatible with that Project, with workspace/repository address; Data Center binds normalized host and actual project key/personal project plus slug and its server/license/privacy rules. Forgejo/Gitea remain distinct self-managed adapters with actual instance address, account/organization and Public/Private privacy. Names and Git refs use each current provider/backend validator, never one universal regex or display label.
 
+  This is the normative GitHub/GitLab API-profile-to-provider-variant mapping for FGI-015, create_options_v2.instance_profile and the resulting repository_binding.provider_variant. Preserve both vocabularies across discovery, reviewed creation and the PJCT-010 handoff; a display label never supplies either identity.
+
+  | API profile (profile_id / instance_profile) | Provider | Resulting provider_variant | New Project create |
+  |---|---|---|---|
+  | github_cloud | github | github_cloud | Offered under current admission |
+  | github_enterprise | github | github_enterprise | Offered only under current GHES host policy |
+  | gitlab_saas | gitlab | gitlab_com | Offered under current admission |
+  | gitlab_self_managed | gitlab | gitlab_self_managed | Offered under current admission |
+  | No create profile | gitlab | gitlab_dedicated | Not offered; retains its separately gated owner variant |
+
+  ForgeCreateProfileBindingV1 in Plans/forge_integration_contracts.schema.json validates this mapping over the existing create options and resulting binding. It is a versioned static cross-record assertion, not a new command, runtime receipt or storage family, and does not change historical request/result shapes. A mismatched pair fails before the Project adopts the remote binding. GitHub's profile and variant spellings already coincide; GitLab's hosted profile and variant deliberately retain their distinct spellings.
+
   Authentication methods remain provider/instance catalog data and protected owner handoffs. Git transport and API auth are independent; sign-in is neither account creation nor repository-write proof. Creation of a code repository does not publish a website, change branch policy, create topics not admitted by the schema, administer Azure team Projects or authorize paid signup. README/ignore/licence stay in online-copy Advanced and a source with existing history creates an empty remote. generic_git is transport-only with no create/review/check API; gitlab_dedicated is not offered in this setup. DL-273 retired hosted Forgejo/Gitea/Codeberg/Origin admission and the deferred repository-restricted Forgejo token route are unchanged.
 
   cmd.forge.repository.list extends its existing verified account-container variant with a closed explicit account/instance/owner discovery scope, optionally a named public owner and query, actual access policy and bounded coverage/pagination. Before repository binding it carries no Project/repository identity and zero repository generation. Reads may discover only what that account or admitted public scope can inspect; no inaccessible result is reported as absence. Selection still independently resolves stable repository identity and capability before binding. The same sole handler and typed family serve all consumers; no new generic search/clone wrapper, standalone receipt family or EventRecord is introduced.
@@ -1963,7 +1975,7 @@ acceptance_criteria:
 - Current provider naming/ref/privacy and secret-exclusion checks survive create/retry and Review invalidation.
 validation_surfaces:
 - Plans/forge_integration_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_fgi_023
@@ -2043,7 +2055,7 @@ acceptance_criteria:
 - Non-GitHub guided fork refuses; team-project branch and direct-work choices remain distinct and capability-checked.
 validation_surfaces:
 - Plans/forge_integration_contracts.schema.json
-- F companion positive/negative semantic fixtures; not_run in phase 1
+- scripts/pm-projects-refresh-contracts.py
 risk_class: identity_authority_or_false_completion
 reasoning_tier: high
 context_scope: projects_refresh_fgi_024
