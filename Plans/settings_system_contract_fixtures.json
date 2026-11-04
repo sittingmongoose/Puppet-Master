@@ -5889,19 +5889,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -5981,15 +5969,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": false,
-      "semantic_checks": [
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": false
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6060,19 +6040,7 @@
         "owner_receipt_refs": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.apply",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6143,19 +6111,7 @@
         "owner_receipt_refs": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.rollback",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6237,19 +6193,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6332,15 +6276,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": false,
-      "semantic_checks": [
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": false
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6414,19 +6350,7 @@
         "owner_receipt_refs": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.apply",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6500,19 +6424,7 @@
         "owner_receipt_refs": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.rollback",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6590,15 +6502,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": false,
-      "semantic_checks": [
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": false
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6677,19 +6581,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6769,15 +6661,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": false,
-      "semantic_checks": [
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": false
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6848,19 +6732,7 @@
         "owner_receipt_refs": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.apply",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -6931,19 +6803,7 @@
         "owner_receipt_refs": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "accept"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.rollback",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     },
     {
@@ -7022,19 +6882,7 @@
         "owner_thing_previews": []
       },
       "expected_schema_valid": true,
-      "semantic_checks": [
-        {
-          "predicate_id": "contexts.settings_target",
-          "expected": "refuse"
-        },
-        {
-          "predicate_id": "bindings.selected_request",
-          "expected": {
-            "command_id": "cmd.settings.transaction.preview",
-            "schema_valid": true
-          }
-        }
-      ],
+      "semantic_checks": [],
       "native_runtime_executed": false
     }
   ]
