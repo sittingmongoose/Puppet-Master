@@ -1,111 +1,95 @@
-# DCH — Event Authority wave 2, 2026-11-04
+# DCH — Event Authority wave 2, review round 1
 
-Branch: `plans/ea-w2-chat-20261104`. Base: `be4766513f`. First pushed contract commit: `d6ea5d97c5`. Final contract edition and this report are committed together.
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `2cc5f4246638ee4367d6ab14f3f6fceadc36ac6e`. Fix contract commit: `2444634dc45b1df0c9d80c7f8d8ee3ccaadd11bc`. This report and its self-grade follow in a report-only commit.
 
-**Outcome:** 16 prepared without admission (retention assignment open for RT), one stopped for Jared, no exclusions. Membership remains ABSENT for every row. Native execution NOT_RUN; independent Sol/Astra review and integration are the lead’s work. No registry/admission/Decision Log/governance edits. `chat.response_stop_requested` and its held card remain untouched.
+**Outcome:** seventeen families prepared without admission; no archive product stop and no exclusions. Every family has ten PASS cells, PARTIAL retention and ABSENT membership. This is the worker's post-fix assessment; independent re-review is pending. Native execution remains NOT_RUN. No admission, event registry append, Decision Log entry, governance seal or `main` push occurred. The held `chat.response_stop_requested` record/card is untouched.
 
-| Family | Outcome | Self-grade | Units (ACD / CV / SP) |
+## Review round 1: findings and responses
+
+- **F1 — fixed (`2444634dc45b1df0c9d80c7f8d8ee3ccaadd11bc`).** Each of the sixteen affected ACD/CV pairs explicitly selects the existing CV-366 application key: `application@1:` plus lowercase hex of exact UTF-8 `scope.server_id`, colon, and lowercase hex of the original `operation_id`. `owner_operation_id` is this original source operation, frozen before effect; no additional optional effect component is defined. Original Server/Computer/thread/source joins remain mandatory. The separate Project `dch:` key and Storage lifetime tuple remain explicit. Representative owner: `Plans/Contracts_V0.md:24474` (CV-630); the self-grade cites each family's own units. All seventeen application records now conform, including the new archive record. Same-operation/same-semantics returns original evidence, changed semantics conflicts, and unavailable dedupe refuses. Verify with `python3 scripts/pm_dch_events.py`; deliberately restoring every old application key makes the full checker fail.
+- **F2 — fixed (`2444634dc45b1df0c9d80c7f8d8ee3ccaadd11bc`).** All Project positives and EventRecord payloads now bind `p1` to `project~cDE`. Dependent event IDs and Project keys were recomputed. `scripts/pm_dch_events.py:21` checks both strict decode equality to exact UTF-8 Project identity and canonical unpadded encode equality, independently of JSON Schema and envelope matching. Every Project edition includes valid and mismatched punctuation/Unicode cases, composed/decomposed distinctions, raw-ID, padding, invalid UTF-8 and noncanonical pad-bit negatives. Even a wrong partition with a recomputed matching event ID/key/envelope is rejected. Verify with the full checker; restoring `project~p1` makes it fail.
+- **F3 — fixed (`2444634dc45b1df0c9d80c7f8d8ee3ccaadd11bc`).** Verified the current accepted text directly: DL-287 says “No chat auto-archives” (`Plans/Decision_Log.md:20343`); DL-280 gives approved recommendations and later rulings precedence (`Plans/Decision_Log.md:19967`). ACD-071 applies shared lifecycle scope (`Plans/assistant-chat-design.md:7024`) and ACD-508 says archive is never automatic (`Plans/assistant-chat-design.md:28766`). There is no Project exception. The two stale lifecycle trigger rows (`Plans/assistant-chat-design.md:1122`, `:1123`) now allow manual archive only. New ACD-613 at `Plans/assistant-chat-design.md:30157`, CV-633 at `Plans/Contracts_V0.md:25607`, and SP-613 at `Plans/storage-plan.md:31666` prepare this exact family with closed Project/application payloads, original-source joins, receipt ordering, concrete reader/projector/checkpoint, recovery/withdrawal and positive/negative oracles. The existing cataloged `cmd.chat.archive` action (`Plans/UI_Command_Catalog.md:730`) reaches the lifecycle owner interface `cmd.chat.thread.archive`; no new command is registered. Existing selected-thread/no-active-run guards, active/suspended predecessor, revision CAS/readback, stable lineage/folder/worktree, and current-state/tombstone fences remain. Retention assignment stays explicitly pending RT. Verify with the full checker and archive source/transition cases. No Jared question remains on automatic archive.
+
+No findings are disputed or stopped for Jared. No notes require an integration change outside this lane.
+
+## Per-family grades before and after
+
+Before is the independent Sol review at the reviewed head, which supersedes the original overclaimed self-grade. P=PASS, Pa=PARTIAL, C=CONFLICT, A=ABSENT. After is the worker self-grade of the fix commit. No row is a twelve-cell complete/admitted family while membership and retention remain open.
+
+| Family | Before (review) | After (self) | Units ACD / CV / SP |
 |---|---|---|---|
-| `bundle.selection_forward_blocked` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-610 / CV-630 / SP-610 |
-| `bundle.selection_sent_to_chat` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-611 / CV-631 / SP-611 |
-| `chat.message` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-612 / CV-632 / SP-612 |
-| `chat.thread_archived` | Stopped: Jared question | 3 CONFLICT / 9 ABSENT | None |
-| `chat.thread_created` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-614 / CV-634 / SP-614 |
-| `chat.thread_deleted` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-615 / CV-635 / SP-615 |
-| `chat.thread_worktree_bound` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-616 / CV-636 / SP-616 |
-| `chat.thread_worktree_create_failed` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-617 / CV-637 / SP-617 |
-| `chat.thread_worktree_merge_failed` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-618 / CV-638 / SP-618 |
-| `chat.thread_worktree_merged` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-619 / CV-639 / SP-619 |
-| `chat.thread_worktree_pr_created` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-620 / CV-640 / SP-620 |
-| `chat.thread_worktree_pr_failed` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-621 / CV-641 / SP-621 |
-| `chat.thread_worktree_pre_merge_test_failed` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-622 / CV-642 / SP-622 |
-| `chat.thread_worktree_pre_merge_test_passed` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-623 / CV-643 / SP-623 |
-| `chat.thread_worktree_pre_merge_test_started` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-624 / CV-644 / SP-624 |
-| `chat.thread_worktree_renamed` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-625 / CV-645 / SP-625 |
-| `chat.thread_worktree_unbound` | Prepared without admission; retention open | 10 PASS / 1 PARTIAL retention / 1 ABSENT membership | ACD-626 / CV-646 / SP-626 |
+| `bundle.selection_forward_blocked` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-610 / CV-630 / SP-610 |
+| `bundle.selection_sent_to_chat` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-611 / CV-631 / SP-611 |
+| `chat.message` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-612 / CV-632 / SP-612 |
+| `chat.thread_archived` | 3 Pa / 9 A | 10 P / 1 Pa retention / 1 A membership | ACD-613 / CV-633 / SP-613 |
+| `chat.thread_created` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-614 / CV-634 / SP-614 |
+| `chat.thread_deleted` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-615 / CV-635 / SP-615 |
+| `chat.thread_worktree_bound` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-616 / CV-636 / SP-616 |
+| `chat.thread_worktree_create_failed` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-617 / CV-637 / SP-617 |
+| `chat.thread_worktree_merge_failed` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-618 / CV-638 / SP-618 |
+| `chat.thread_worktree_merged` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-619 / CV-639 / SP-619 |
+| `chat.thread_worktree_pr_created` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-620 / CV-640 / SP-620 |
+| `chat.thread_worktree_pr_failed` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-621 / CV-641 / SP-621 |
+| `chat.thread_worktree_pre_merge_test_failed` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-622 / CV-642 / SP-622 |
+| `chat.thread_worktree_pre_merge_test_passed` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-623 / CV-643 / SP-623 |
+| `chat.thread_worktree_pre_merge_test_started` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-624 / CV-644 / SP-624 |
+| `chat.thread_worktree_renamed` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-625 / CV-645 / SP-625 |
+| `chat.thread_worktree_unbound` | 7 P / 2 Pa / 2 C / 1 A | 10 P / 1 Pa retention / 1 A membership | ACD-626 / CV-646 / SP-626 |
 
-## Recovery and checks
+## Binding searches and premise checks
 
-Initial VM capacity: 21 GB available RAM, 43 GB free disk. Read both task briefs in full. All 35 new DCH JSON files parse; all 32 schemas pass Draft 2020-12 schema validation, and the full storage registry validates against its schema. Every added owner section is complete. The interrupted run left later prose outside its earlier canonical_text: synchronized the new units, including the domain projector bindings and ATS-305. No existing owner passages were rewritten. Regenerated shards and indexes from owner sources, with all 15 ignored currentness-edition files copied and SHA-256 matched to the shared source. Only the five edited source documents’ shard folders changed.
+`DCH-binding-search.json` retains the initial per-family lineage and adds a fresh `review_round_1` search for every exact family against the immutable reviewed head: 928 live owner/schema/registry files, excluding hidden/generated/bootstrap/ledger material. Each row records exact hits, paths, lines, file hashes, existing CV-365/366 adoption and explicit negative evidence. For the sixteen already drafted rows, original event_id, producer, readers, domain projector/checkpoint and withdrawal bindings are retained; the incompatible application key is removed. No sibling is evidence for another family's binding.
 
-| Check | Exit | Result |
+Archive's own search found existing lifecycle/name mentions and generic SP-278/SP-286, but no complete archive payload/reader/domain projector/checkpoint/withdrawal binding. Its new owner contract explicitly authors `reader.chat.chat_thread_archived@1.0.0`, `projector.chat.chat_thread_archived@1.0.0`, `projector.checkpoint.dch.chat_thread_archived.v1:{storage_instance_id}:{scope_partition}`, stored family `dch_chat_thread_archived_checkpoint`, and schema `Plans/dch_event_payloads/dch_chat_thread_archived_checkpoint.schema.json` (`pm.storage_value.dch_chat_thread_archived_checkpoint.v1`, 1.0.0). Its closed payload editions are `pm.dch_event.chat_thread_archived.project.v1` and `pm.dch_event.chat_thread_archived.application.v1` in `Plans/dch_event_payloads/chat_thread_archived.schema.json`. These are newly authored technical bindings under DL-045, for manual behavior already decided. SP-613 separately adopts the existing generic `projector.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and nine-field SP-278/DL-076 token; no persisted redb_snapshot_id. The derived value has a registered profile and existing RP-PROJECTION-3GEN policy, source-order/CAS/shadow publication, coherent rebuild and withdrawal fencing.
+
+- **DL-045:** the current exact 285-family table still includes all seventeen names (`Plans/Decision_Log.md:603`); the bounded technical-authoring scope and reuse-first requirement remain (`:564–566`). No feature or retention choice is made.
+- **CV-365/366:** the current scope/key owner clauses at `Plans/Contracts_V0.md:24018` and `:24099` still apply. The old DCH replacement key and invalid positive partitions failed this premise check and are corrected.
+- **DL-280/287 and ACD-071/508:** the former archive product question was based on obsolete trigger wording. Direct inspection establishes manual-only archive for Project and application chats; no conflicting accepted owner choice remains.
+- **DL-076:** current SP-278 still requires the durable nine-field token; archive adopts it explicitly and its checkpoint negatives reject redb_snapshot_id.
+- **Retention:** all source policy objects stay PENDING_RETENTION_DECISION for RT; chat.message retains its existing Case L-3 Chat content class binding (thread lifetime, 250,000/thread linked successor). All seventeen derived checkpoints adopt existing RP-PROJECTION-3GEN and its three-generation/604800-second eligible-retired bound with current/staged/hold/live-ref protection. Archive authorizes no expiry or deletion. Existing deletion semantics and the held Stop card remain unchanged.
+
+## Scope, IDs and checks
+
+Initial capacity: 17 GB available RAM and 125 GB free disk, above the 6 GB/50 GB hard limits. Used detached sparse `~/pm-worktrees/DCH-fix1` from the local clone at the named branch head. Fifteen ignored currentness-edition files were copied from the shared source and SHA-256 matched before index generation. No pm-mail, subagent, admission, frozen-validator edit or governance operation occurred.
+
+Shared changes: existing lane ACD-610–612/614–626 and CV-630–632/634–646 identity prose and matching canonical_text; two old ACD lifecycle table cells; new ACD-613/CV-633/SP-613 appended units; ATS-305 oracle coverage; exactly one appended storage checkpoint row and one profile. Existing Storage units and registry rows/profiles are preserved. The only regenerated shard owners are assistant-chat-design, contracts_v0, storage-plan, automated_testing_system and storage_value_registry. Schema, fixture, checker and report companions remain inside lane scope; no test file was edited.
+
+**New IDs this round:** ACD-613, CV-633, SP-613. Scanned 500 fetched origin refs / 145 distinct owner blobs; no collision. **Total lane IDs:** ACD-610–626, CV-630–646, SP-610–626 and ATS-305. No other IDs minted.
+
+| Command/check | Exit | Result |
 |---|---:|---|
-| pm_dch_events.py | 0 | 1,317 checks; 32 payload editions / records, 16 checkpoint positives and negatives |
-| JSON parsing and storage registry schema | 0 | All pass |
-| pm-shard-plans.py --generate / --check | 0 | Regenerated; body/path verification pass |
-| pm-plan-index.py generate / validate | 0 | Top-level status pass; runtime certification remains blocked |
-| pm-storage-profile-check.py | 1 | Same 41 errors as captured base; no new errors |
-| pm-assistant-contract-check.py | 1 | Same errors array as captured base; gaps_found |
-| Origin ID scan | 0 | Assigned blocks checked across every fetched origin ref; no collisions before first push |
-| git diff --check | 0 | Pass |
+| `python3 scripts/pm_dch_events.py` | 0 | 2,209 checks, 34 payload editions/records and 17 checkpoint suites |
+| Full checker with original defects deliberately restored in memory | 1 / 1 expected | Rejects old application keys and invalid Project partitions; repository inputs unchanged |
+| JSON/Schema/owner integrity | 0 | 34 schemas, full storage registry schema, 51 exact prose/canonical_text pairs |
+| Per-family self-grade citation check | 0 | 204 cells and all disposition/cell citations match current bytes |
+| `pm-shard-plans.py --generate` / `--check` | 0 / 0 | 99 sources, 3,135 shards verified; only five edited source owners changed |
+| `pm-plan-index.py generate` / `validate` | 0 / 0 | Both top-level status=pass; runtime certification remains blocked |
+| `pm-storage-profile-check.py` | 1 | Identical 41 baseline errors; no new error |
+| `pm-assistant-contract-check.py` | 1 | Same gaps_found baseline; errors and projects_refresh_static_failures remain empty |
+| Origin ID / source-scope audits | 0 / 0 | No collisions, protected artifacts/Stop preserved |
+| `git diff --check` | 0 | Pass |
 
-The two broader failures are preserved, not repaired outside lane scope. No native runtime or governance pass is claimed. Final rerun outputs and command exit codes are in the external evidence directory.
-
-## Newly authored bindings and searches
-
-[DCH-binding-search.json](DCH-binding-search.json) records each of the 17 exact-family searches separately: live non-pipeline Plans markdown, schemas and registries, excluding ledgers/shards/hidden governance. Its per-family hits cite paths, lines and file hashes; its negative-evidence entry records missing versioned family consumers/projectors/checkpoints, full identity and withdrawal definitions. Rechecked every recovered hit against the base: no line mismatch. Generic SP-278/SP-286 exist and are reused; restore-point/compaction bindings do not authorize sibling reuse. Current owner behavior was read in the lifecycle/selection/W.2/W.7/W.8/W.9 sections, CV-366 and SP-278/286/338/349. The exact families are inside DL-045’s canonical 285-name table at Decision_Log.md:603; none relies on DL-046 or DL-090 expansion.
-
-Each non-stopped row receives its **own newly authored owner contract**, not a sibling-derived contract. Exact identifiers are enumerated below; schemas, payload editions, producer and scope joins are enumerated per row in `Plans/dch_event_contracts.json`. Common recipe is separately written in each owner unit: RFC 8785 tuple `[exact event_type, "1.0.0", storage_instance_id, WorkflowScopeV2 scope, computer_id, thread_id, original operation_id]`; event ID `evt_dch_` plus SHA-256, idempotency key `dch:` plus the same digest. Original operation identity freezes before effect and survives retries; changed semantic digest conflicts. Each family adopts SP-286/CV-339 first receipt and SP-278/DL-076 nine-field durable token, reuses `projector.storage.event_record_index@1.0.0` with `event_record_index_checkpoint.v1:{storage_instance_id}`, and adds its own derived checkpoint below. Reader/version, CAS/shadow publication, global source-order rebuild, custody and withdrawal are newly authored technical bindings, never pre-existing evidence.
-
-| Event | New reader | New domain projector | New checkpoint key / stored family |
-|---|---|---|
-| `bundle.selection_forward_blocked` | `reader.chat.bundle_selection_forward_blocked@1.0.0` | `projector.chat.bundle_selection_forward_blocked@1.0.0` | `projector.checkpoint.dch.bundle_selection_forward_blocked.v1:{storage_instance_id}:{scope_partition}` / `dch_bundle_selection_forward_blocked_checkpoint` |
-| `bundle.selection_sent_to_chat` | `reader.chat.bundle_selection_sent_to_chat@1.0.0` | `projector.chat.bundle_selection_sent_to_chat@1.0.0` | `projector.checkpoint.dch.bundle_selection_sent_to_chat.v1:{storage_instance_id}:{scope_partition}` / `dch_bundle_selection_sent_to_chat_checkpoint` |
-| `chat.message` | `reader.chat.chat_message@1.0.0` | `projector.chat.chat_message@1.0.0` | `projector.checkpoint.dch.chat_message.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_message_checkpoint` |
-| `chat.thread_created` | `reader.chat.chat_thread_created@1.0.0` | `projector.chat.chat_thread_created@1.0.0` | `projector.checkpoint.dch.chat_thread_created.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_created_checkpoint` |
-| `chat.thread_deleted` | `reader.chat.chat_thread_deleted@1.0.0` | `projector.chat.chat_thread_deleted@1.0.0` | `projector.checkpoint.dch.chat_thread_deleted.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_deleted_checkpoint` |
-| `chat.thread_worktree_bound` | `reader.chat.chat_thread_worktree_bound@1.0.0` | `projector.chat.chat_thread_worktree_bound@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_bound.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_bound_checkpoint` |
-| `chat.thread_worktree_create_failed` | `reader.chat.chat_thread_worktree_create_failed@1.0.0` | `projector.chat.chat_thread_worktree_create_failed@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_create_failed.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_create_failed_checkpoint` |
-| `chat.thread_worktree_merge_failed` | `reader.chat.chat_thread_worktree_merge_failed@1.0.0` | `projector.chat.chat_thread_worktree_merge_failed@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_merge_failed.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_merge_failed_checkpoint` |
-| `chat.thread_worktree_merged` | `reader.chat.chat_thread_worktree_merged@1.0.0` | `projector.chat.chat_thread_worktree_merged@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_merged.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_merged_checkpoint` |
-| `chat.thread_worktree_pr_created` | `reader.chat.chat_thread_worktree_pr_created@1.0.0` | `projector.chat.chat_thread_worktree_pr_created@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_pr_created.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_pr_created_checkpoint` |
-| `chat.thread_worktree_pr_failed` | `reader.chat.chat_thread_worktree_pr_failed@1.0.0` | `projector.chat.chat_thread_worktree_pr_failed@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_pr_failed.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_pr_failed_checkpoint` |
-| `chat.thread_worktree_pre_merge_test_failed` | `reader.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` | `projector.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_failed.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_pre_merge_test_failed_checkpoint` |
-| `chat.thread_worktree_pre_merge_test_passed` | `reader.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` | `projector.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_passed.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_pre_merge_test_passed_checkpoint` |
-| `chat.thread_worktree_pre_merge_test_started` | `reader.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` | `projector.chat.chat_thread_worktree_pre_merge_test_started@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_started.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_pre_merge_test_started_checkpoint` |
-| `chat.thread_worktree_renamed` | `reader.chat.chat_thread_worktree_renamed@1.0.0` | `projector.chat.chat_thread_worktree_renamed@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_renamed.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_renamed_checkpoint` |
-| `chat.thread_worktree_unbound` | `reader.chat.chat_thread_worktree_unbound@1.0.0` | `projector.chat.chat_thread_worktree_unbound@1.0.0` | `projector.checkpoint.dch.chat_thread_worktree_unbound.v1:{storage_instance_id}:{scope_partition}` / `dch_chat_thread_worktree_unbound_checkpoint` |
-
-Each checkpoint has its own closed schema in `Plans/dch_event_payloads/`, registered storage value, profile and RP-PROJECTION-3GEN assignment. No source family is admitted. Each new Project/application payload edition is closed, with distinct schema IDs; operation IDs, ref-only message bodies and current access/deletion checks do not extend existing features.
-
-## Premise checks and open questions
-
-- **DL-045:** Decision_Log.md:560–573 authorizes bounded missing technical bindings for already specified behavior only; the current exact-name scope still lists these families. The current chat lifecycle, worktree operations and selection handoff still exist. This authority applies to the technical draft, not retention choices or admission.
-- **DL-076:** current SP-278 still requires the durable nine-field token without persisted redb_snapshot_id. Each checkpoint adopts that definition by name; negative cases reject a persisted snapshot ID. No historical token assumption is carried over.
-- **Projection retention:** the existing RP-PROJECTION-3GEN policy and current SP-340 budget still support the disposable per-family checkpoints (three generations, 604800-second retired generation window, hold/live-ref protection). No new retention policy is invented.
-- **Chat retention:** Storage Case L-3 (Chat content row, line 17412 at base) already specifies thread lifetime and 250,000/thread linked-successor rollover. SP-612 explicitly binds chat.message to that class. Its structured policy object remains pending RT. Other source events retain explicit PENDING_RETENTION_DECISION with candidate Chat content versus audit-authority classes and their Case L-3 citations; RT resolves exact assignments. No source expiry is authorized by the draft.
-- **Failed current-premise reconciliation / Jared question:** Does the lifecycle table’s permission for retention-policy automatic archive still apply to Project chats, or does ACD-508’s “Archive keeps the folder and is never automatic” prohibit automatic archive for every chat? The conflicting current passages are assistant-chat-design.md:1122–1123 and the ACD-508 paragraph. Whole chat.thread_archived family stopped. No invented answer or archive-specific schema/unit.
-- **Deletion:** the existing lifecycle text, including DL-270 amendment, still requires immediate hiding, 24-hour unheld content purge, indefinite content-free tombstone and at-most-30-day backup retention unless held. ACD-615 repeats those existing semantics; its event assignment does not turn every deletion payload into an indefinite tombstone.
-
-## Shared hunks and IDs
-
-All shared-file owner changes are appended PlanUnits: Contracts_V0 CV-630–632 and CV-634–646; storage-plan SP-610–612 and SP-614–626; Automated_Testing_System ATS-305. assistant-chat-design appends ACD-610–612 and ACD-614–626. storage_value_registry appends exactly 16 dch_*_checkpoint families and their profiles; no existing rows, policy objects, critical-family lists or event-family registry membership changed. The source chat.message retention clarification is confined to SP-612 and its companion row.
-
-**IDs used:** ACD-610–612, ACD-614–626; CV-630–632, CV-634–646; SP-610–612, SP-614–626; ATS-305. The archived-family slots ACD-613/CV-633/SP-613 are unused. No other IDs minted. Origin scan excludes no remote branches.
+No aggregate governance/native pass or admission is claimed. RT assignment, independent review and later integration/admission remain with the lead. The required fix worktree is removed after all pushes.
 
 ## Evidence
 
-External bundle: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/`. The report, self-grade and binding search are copied there. SHA-256 pins for evidence already captured during recovery:
+Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round1/`. Paths below are relative to that directory; each pin is SHA-256. The report, self-grade and updated binding search are also copied to the parent DCH draft directory.
 
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/binding-search.json` — SHA-256 `7847763f15c2a196245c1a9b9e9394656fd7fe79db06d9af99852722c1bec602`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/binding-search-verification.json` — SHA-256 `7b3834f2142cd465f227499b1e1d173b9a3b19e7a70e02dd73a0b6207eafe4f3`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/currentness-resume-sha256.txt` — SHA-256 `ca78c6c3db2fc74b0d3e2c208ee7b6394aad0f09a55eafb9838fea3ce9981ca5`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/id-scan-resume.json` — SHA-256 `ff8730e74a307289cd19a961112c86dce6da19b57c776ed1bce901124ae54768`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/json-parse-resume.json` — SHA-256 `b1c20cebe6f16d20b4abeca116a194be2c448e566925537d356b15c2b83452a9`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/static-check-resume.log` — SHA-256 `ec301653a9610b8090d1f84b84b348cf157ccaf4800727b3167b6e1e707a040e`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/storage-profile-resume.log` — SHA-256 `fc5885fa872722fec087a51bbfe1f79e9a91803254bd03e69d3eb464a3cee17f`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/storage-profile-base.json` — SHA-256 `89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/assistant-check-resume.log` — SHA-256 `aa3dc19a5d8a9c8a1c4809309f45fea3bd00579fa49e9ac5f0fc3ca46823658c`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/assistant-base.json` — SHA-256 `51430f696784138de1e9a24d0419471a75d97112f87d8620ca17faefde89f505`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/index-validate-resume.json` — SHA-256 `9aa42f497585e3884eba8c14123c12e2edfb4d3aaee523fa867dbc659f4cce79`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/shard-check-resume.log` — SHA-256 `8608385cf79177a3cea843bb0334c1f228f82142115199d7947618612d8acd89`
-
-Final rerun evidence (source retention clarification included):
-
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/shard-generate-final.log` — SHA-256 `21fade79fb8dcc12af318bb85e3c023f60da5b288b0d36b7925e2fa06600a63b`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/index-generate-final.log` — SHA-256 `30591bc38a04858aeee745842aa8a23565c5d896a35f38f9aa04bc0d95d72ecf`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/static-final.log` — SHA-256 `ec301653a9610b8090d1f84b84b348cf157ccaf4800727b3167b6e1e707a040e`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/shard-check-final.log` — SHA-256 `8608385cf79177a3cea843bb0334c1f228f82142115199d7947618612d8acd89`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/storage-profile-final.log` — SHA-256 `fc5885fa872722fec087a51bbfe1f79e9a91803254bd03e69d3eb464a3cee17f`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/final-exit-codes.json` — SHA-256 `6e61700fcb69a92150a550943ca9ee6cb14566dda74c3cf61af8430efe2f866b`
-- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/index-validate-final.json` — SHA-256 `7e26818709e754b36c1957070b0765ab008ecc1d1ee00fbb2faabe6d2c2bd1fc`; exit 0, top-level status pass.
+| Evidence | SHA-256 |
+|---|---|
+| `dch-static.json` | `eb09b0ffab853d8441c47b835554cb9117276b8089cb31f544f9b8e20fe17461` |
+| `original-defect-regressions.json` | `edf0c7e006d8e5a30a0e8f03529a964db8cd46d27a81a48186a4e84233712535` |
+| `integrity-results.json` | `3636a55d86390b96c4c3ebbe001fc5a3a10f87e355c1af8852e66fad6ef102f4` |
+| `grade-citation-check.json` | `d2ef5487a20d0c0a0e35ed66f51080c910de0d6281d42a17fea16246458c61d2` |
+| `scope-audit.json` | `7fd561fef7c55acc124c60ad66285791c3019a428bb3da9c60e1e65119e4ed9a` |
+| `derived-scope.json` | `6525af00f82b120f628ed1a4371776249b097f80ec432a72a2117f1acf206ec9` |
+| `id-scan.json` | `9a8720683be4aad9e54c4a195bbdc3e63acfebf849d659cbaf530d766aaa4b61` |
+| `currentness-sha256.json` | `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c` |
+| `base-comparison.json` | `4caefa8dea08a4ecb19844f5d0ba5d463fea0668a68b9ced4394e371d9538abd` |
+| `shard-generate.log` | `a860c43269caab92d401c4ed0955268da735a36aee6a0f1d26608e7f426ade81` |
+| `shard-check.log` | `6749d1671ce42bb36b5a4b623875e0db779efaf197186095421986d7d5490039` |
+| `index-generate.log` | `d031f5b1bfa46765866e3b51502a4cd804716695bf3fed95ebfd149ce1e1b7c8` |
+| `index-validate.json` | `7d71a3b5614d6c0361c250b999829ddd23d7f5d6a2f75c0cf14edd9c8feeb720` |
+| `storage-profile.log` | `61b57de32ef976006a497d80df135d0ecd3a6841e3efb447572a6c3e3543c8e2` |
+| `assistant-contract.log` | `8a541e973fc9979fa6396c54fd0fef531c84d7e468c4f9f424f33332a1c31b48` |
+| `exit-codes.json` | `7ca33d6392ea974542b54a4adf9b50965748162e02b5af99e6463467e1071647` |
