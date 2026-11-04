@@ -192,7 +192,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 | Cap | Default | Scope | Kill / behavior |
 |---|---|---|---|
-| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. |
+| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. A waiting start is a child in the `queued` state, not a separate request record (DL-088). |
 | `max_concurrent_agents_per_crew` | 8 | Per active crew context | Reviewer or worker spawns queue rather than widening the limit. |
 | `max_total_active_agents` | 32 | Entire run | Global cap across all crews and direct child agents. |
 
