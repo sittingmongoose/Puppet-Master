@@ -358,7 +358,7 @@ def add_layout_cases(suite):
             corrupt=copy.deepcopy(objects);ident=external['payload_ref']['blake3_id'];media,data=corrupt[ident];at=data.index(b'xxxxxxxx');corrupt[ident]=(media,data[:at]+b'y'+data[at+1:])
             suite.negative('layout:boundary_corrupt_reference','verified_reference_resolution',lambda e=external,o=corrupt:not layout_event_errors(e,o))
     # One panel move changes placement for all its tabs. Keep both captures and affected ids coherent.
-    ids=[];objects={}
+    ids=list(slot['candidate_layout']['root']['tab_ids']);objects={}
     for key in ('prior_layout','candidate_layout'):
         layout=slot[key];template=next(v for v in layout['tabs'].values() if v['kind']=='editor')
         for i in range(load('Plans/event_authority_ds_round2_fixtures.json')['large_layout_tab_count']):
@@ -375,7 +375,7 @@ def add_layout_cases(suite):
     data=home.stored_bytes('transaction_slot',slot);ident=route.blake3_hex(data);objects[ident]=(route.MEDIA,data)
     ref={'stored_form':'payload_ref','schema_id':slot['schema_id'],'schema_version':slot['schema_version'],'storage_instance_id':slot['storage_instance_id'],'logical_key':home.logical_key('transaction_slot',slot),'value_ref':{'blake3_id':ident,'byte_size':len(data),'media_type':route.MEDIA},'value_sha256':home.sha(data)}
     checker=home.Checker(ROOT);store=home.PayloadStore(objects)
-    suite.positive('layout:1200_affected_ids_external_event',lambda:not layout_event_errors(large,objects) and len(route.resolved_body(large,objects)[0]['affected_tab_ids'])==1200)
+    suite.positive('layout:1208_affected_ids_external_event',lambda:not layout_event_errors(large,objects) and set(route.resolved_body(large,objects)[0]['affected_tab_ids'])==set(slot['candidate_layout']['root']['tab_ids']) and len(ids)==1208)
     suite.positive('layout:1200_tab_complete_home4_value_reference',lambda:not checker.schema_errors('stored_value_ref',ref) and not checker.semantic('stored_value_ref',ref,store))
     retry=copy.deepcopy(large);retry.update(sequence_id=999,observed_at_utc='2026-11-04T00:00:00Z',persisted_at_utc='2026-11-04T00:00:01Z')
     gate,_=created.candidate_gate(ROOT);digest=gate.envelope_oracle().event_producer_semantic_digest
