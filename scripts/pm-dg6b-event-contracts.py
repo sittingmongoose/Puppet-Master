@@ -14,6 +14,122 @@ ROOT = Path(__file__).resolve().parents[1]
 def load_plan(path):
     return json.loads((ROOT / path).read_text())
 
+
+def resolve_schema_graph(schema):
+    """Resolve every reference eagerly, including unused defs/union branches.
+
+    Only the selected local owner resources are trusted; no network retrieval.
+    Walk with each resource's resolver so nested IDs retain their own base URI.
+    """
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    paths = ('Plans/shared_integration_runtime.schema.json',
+             'Plans/shared_integration_runtime_expansion_contracts.schema.json',
+             'Plans/event_record.schema.json', 'Plans/event_record_index_checkpoint.schema.json')
+    documents = [schema] + [load_plan(path) for path in paths]
+    resources = [(doc['$id'], Resource.from_contents(doc)) for doc in documents]
+    resources.append(('https://puppetmaster.local/Plans/shared_integration_runtime.schema.json',
+                      resources[1][1]))
+    registry = Registry().with_resources(resources).crawl()
+    count = 0
+
+    def walk(node, resolver, root=False):
+        nonlocal count
+        if isinstance(node, dict):
+            if not root and '$id' in node:
+                resolver = resolver.in_subresource(Resource.from_contents(node, default_spec=DRAFT202012))
+            for keyword in ('$ref', '$dynamicRef'):
+                if keyword in node:
+                    try:
+                        resolver.lookup(node[keyword])
+                    except Exception as exc:
+                        raise ValueError('unresolved_schema_ref: ' + node[keyword]) from exc
+                    count += 1
+            for value in node.values():
+                walk(value, resolver)
+        elif isinstance(node, list):
+            for value in node:
+                walk(value, resolver)
+
+    for doc, (_, resource) in zip(documents, resources):
+        Draft202012Validator.check_schema(doc)
+        walk(doc, registry.resolver_with_root(resource), root=True)
+    return count
+
+
+def make_operation(name, case):
+    p, source, event = case['payload'], case['source'], case['event_record']
+    return {'schema_id': 'pm.storage_value.' + name.replace('.', '_') + '_operation.v1',
+            'schema_version': '1.0.0', 'event_type': name, 'scope_key': source_scope_key(source),
+            'server_id': source_scope(source)['server_id'], 'actor_ref': source['actor_ref'],
+            'payload': p, 'state': 'effect_committed',
+            'effect_receipt_ref': p.get('owner_result_ref', p.get('plugin_receipt_ref', 'ref:result/auth')),
+            'event_id': event['event_id'], 'idempotency_key': event['idempotency_key'],
+            'replay_policy': event['replay_policy']}
+
+
+def store_operation(logical, force_reference=False):
+    """SP-337 physical value: complete logical operation or closed reference."""
+    from blake3 import blake3
+    from pm_event_index_binding import binding_bytes
+    body = binding_bytes(logical)
+    if len(body) <= 16384 and not force_reference:
+        return copy.deepcopy(logical), None
+    digest = blake3(body).hexdigest()
+    value = {key: logical[key] for key in ('schema_id', 'schema_version', 'event_type')}
+    value['payload_ref'] = {'blake3_id': digest, 'byte_size': len(body), 'media_type': 'application/msgpack'}
+    resolved = {'ref': 'ref:payload/' + digest, **value['payload_ref'], 'bytes_hex': body.hex(),
+                'durable': True, 'access_current': True}
+    return value, resolved
+
+
+def operation_contract(name, value, resolved, expected, schema):
+    import msgpack
+    from pm_event_index_binding import binding_bytes
+    if len(binding_bytes(value)) > 16384:
+        raise ValueError('operation_value_too_large')
+    definition = schema['$defs'][name.replace('.', '_') + '_operation']
+    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(value)):
+        raise ValueError('operation_schema')
+    if 'payload_ref' in value:
+        ref = value['payload_ref']
+        try:
+            body = bytes.fromhex(resolved['bytes_hex']) if resolved is not None else b''
+            transport(body, 'ref:payload/' + ref['blake3_id'], resolved)
+            if any(ref[key] != resolved[key] for key in ('blake3_id', 'byte_size', 'media_type')):
+                raise ValueError('payload_ref_integrity')
+            logical = msgpack.unpackb(body, raw=False, strict_map_key=True)
+            if binding_bytes(logical) != body:
+                raise ValueError('payload_ref_integrity')
+        except (TypeError, KeyError, msgpack.UnpackException) as exc:
+            raise ValueError('payload_ref_integrity') from exc
+        if list(Draft202012Validator(definition['oneOf'][0], format_checker=FORMAT).iter_errors(logical)):
+            raise ValueError('operation_schema')
+        if any(value[key] != logical[key] for key in ('schema_id', 'schema_version', 'event_type')):
+            raise ValueError('operation_source_join')
+    else:
+        logical = value
+    # Authenticated bytes alone do not prove original payload/receipt custody.
+    if logical != expected:
+        raise ValueError('operation_source_join')
+    return logical
+
+
+def history_contract(name, case, schema):
+    """Validate immutable at-write custody; current live state is not history.
+
+    Original source evidence remains frozen. live_state describes subsequent
+    disconnect/update/delete/CAS/selection state and never grants read access.
+    """
+    if not case['retained'] or not case['authentic'] or not case['admitted_when_written']:
+        raise ValueError('historical_provenance')
+    if case['family_withdrawn'] or not case['reader_current']:
+        raise ValueError('historical_withdrawn')
+    if not case['access_current'] or case['body_deleted']:
+        raise ValueError('historical_access')
+    # This is the original admission evidence, never the current writer lease.
+    return append_contract(name, case['original'], schema)
+
 def identity(name, payload, scope_key, server_id=None):
     preimage = [name, payload['storage_instance_id'], scope_key, payload['operation_id'], payload['revision']]
     digest = hashlib.sha256(json.dumps(preimage, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
@@ -375,26 +491,21 @@ def check_append_contract(row, schema):
         append_contract(name, matching, schema)
     for case in row['append_valid']:
         append_contract(name, case, schema)
-        p, source = case['payload'], case['source']
-        operation = {'schema_id': 'pm.storage_value.' + name.replace('.', '_') + '_operation.v1',
-                     'schema_version': '1.0.0', 'event_type': name, 'scope_key': source_scope_key(source),
-                     'server_id': source_scope(source)['server_id'], 'actor_ref': source['actor_ref'],
-                     'payload': p, 'state': 'effect_committed',
-                     'effect_receipt_ref': p.get('owner_result_ref', p.get('plugin_receipt_ref', 'ref:result/auth')),
-                     'event_id': case['event_record']['event_id'],
-                     'idempotency_key': case['event_record']['idempotency_key'],
-                     'replay_policy': case['event_record']['replay_policy']}
+        source = case['source']
+        logical = make_operation(name, case)
+        operation, resolved = store_operation(logical)
+        operation_contract(name, operation, resolved, logical, schema)
         op_validator = Draft202012Validator(schema['$defs'][name.replace('.', '_') + '_operation'], format_checker=FORMAT)
         op_validator.validate(operation)
         for field in ('idempotency_key', 'actor_ref'):
-            bad_operation = copy.deepcopy(operation)
+            bad_operation = copy.deepcopy(logical)
             bad_operation[field] += '\n'
             assert list(op_validator.iter_errors(bad_operation)), (name, 'operation trailing LF', field)
-        withdrawn_policy = {**operation, 'replay_policy': 'projector_replay_only'}
+        withdrawn_policy = {**logical, 'replay_policy': 'projector_replay_only'}
         assert list(op_validator.iter_errors(withdrawn_policy)), (name, 'operation replay-only accepted')
         wrong_key = (name + ':' + '0' * 64 if source_scope(source)['scope_kind'] == 'application'
                      else 'application@1:11:22')
-        assert list(op_validator.iter_errors({**operation, 'idempotency_key': wrong_key})), (name, 'wrong operation scope/key')
+        assert list(op_validator.iter_errors({**logical, 'idempotency_key': wrong_key})), (name, 'wrong operation scope/key')
         retry = copy.deepcopy(case)
         retry['event_record'].update(sequence_id=999, observed_at_utc='2026-11-04T13:00:00Z',
                                      persisted_at_utc='2026-11-04T14:00:00Z')
@@ -406,6 +517,24 @@ def check_append_contract(row, schema):
                        'idempotency_conflict', name, 'caller_semantic_change')
     for case in row['append_invalid']:
         expect_failure(lambda: append_contract(name, case, schema), case['expected_error'], name, case['label'])
+    for case in row['operation_cases']:
+        call = lambda: operation_contract(name, case['value'], case['resolved'], case['logical'], schema)
+        if 'expected_error' in case:
+            expect_failure(call, case['expected_error'], name, case['label'])
+        else:
+            call()
+    for case in row['history_cases']:
+        call = lambda: history_contract(name, case, schema)
+        if 'expected_error' in case:
+            expect_failure(call, case['expected_error'], name, case['label'])
+        else:
+            call()
+    for case in row['retry_cases']:
+        call = lambda: append_contract(name, case['candidate'], schema, original=case['original'])
+        if 'expected_error' in case:
+            expect_failure(call, case['expected_error'], name, case['label'])
+        else:
+            assert call() == append_contract(name, case['original'], schema), (name, 'retry digest drift')
     # Each family exercises the same byte-stage cutoff before payload dispatch;
     # these synthetic boundary bytes are not claimed as family schema positives.
     from blake3 import blake3
@@ -429,11 +558,13 @@ def check_append_contract(row, schema):
                            error, name, 'reference_' + field)
     return {'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
             'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
+            'operation_cases': len(row['operation_cases']), 'history_cases': len(row['history_cases']),
             'storage_metadata_retry': 'same_semantic_digest', 'caller_semantic_retry': 'idempotency_conflict'}
 
 
 def run(fixtures_path=None):
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
+    resolved_references = resolve_schema_graph(schema)
     fixtures = json.loads((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
     expected = {'auth.github.authenticated', 'auth.github.device_code.issued', 'auth.github.disconnected',
                 'auth.github.failed', 'auth.github.token.polling', 'plugin.hook.blocked', 'plugin.hook.error',
@@ -442,6 +573,9 @@ def run(fixtures_path=None):
                 'persona.exported', 'persona.imported', 'persona.selected', 'persona.updated'}
     assert {r['event_type'] for r in fixtures['families']} == expected
     assert len(fixtures['families']) == len(expected)
+    grade = load_plan('reports/event-authority-20261104/DG6B.self-grade.json')
+    assert {r['event_type'] for r in grade['rows']} == expected
+    assert all(r['disposition'] == 'UNDISPOSITIONED' for r in grade['rows']), 'unadmitted_disposition'
     results = []
     for row in fixtures['families']:
         name, p = row['event_type'], row['valid']
@@ -501,7 +635,8 @@ def run(fixtures_path=None):
         assert value['value_schema'] == schema['$defs'][slug + '_operation']
     for row, result in zip(fixtures['families'], results):
         result['append_oracles'] = check_append_contract(row, schema)
-    return {'status': 'pass', 'native_execution': 'NOT_RUN', 'rows': results}
+    return {'status': 'pass', 'native_execution': 'NOT_RUN',
+            'resolved_schema_references': resolved_references, 'rows': results}
 
 if __name__ == '__main__':
     import argparse
