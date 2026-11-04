@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8180-L8603
+Source lines: L8186-L8891
 
-Source SHA256: `bdd7b936e4da3985dd9ce43f3826855399d736b01208720d71486a32e4b9c7e9`
+Source SHA256: `2799727129b753f2c42a03e35fca9d7d03de933a6d3d69a4b8047b8efbfeaa5d`
 
 ---
 
@@ -432,3 +432,285 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-087, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-367, ContractName:Plans/storage-plan.md#SP-350
+
+### GRS-203 - Current Project goal.blocked successor
+
+```yaml
+plan_unit_id: GRS-203
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Newly authored Project goal.blocked v3 contract preserves GRS-048/050 and GREPLAY-004..010, uses
+  only the shared body metadata CAS, and refuses unbound host-source and lifecycle edges.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-050
+- GRS-064
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact original host, body/currentness/epoch and caller evidence precede the lifecycle metadata commit.
+- Retained whole-v2 interpretation is unchanged; native activation waits for the named unbound original source edition.
+- No event, model claim or helper witness can bypass Stop, cancellation or the complete shared body fence.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_blocked.v3.schema.json
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm_goal_lifecycle_successor_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: grs-203_event_authority
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.blocked` and `pm.goal_runtime_event.goal_blocked.schema.v3`. The existing whole `goal_blocked.schema.json` v2 resource, original envelope/identity, D-R01 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.
+
+**Per-family current-source search.** At base `0c40a7809826bcf509bbb16483bbdd8f4c48760b`, searched every live top-level `Plans/*.md`, `Plans/*.json`, event payloads, Goal body/source schemas, all Goal named bindings and the admission-record directory for `goal.blocked`. Found the required Goal V2 name, its old D-R row and schema, GRS-048/050, GREPLAY-004..010, GRS-064/SP-287 sole body custody and dormant CV-366 app selector. Found no current V2-compatible family producer, original host-source edition, family observation binding or v3 identity. The old generic v2 recipe cannot supply current source authority. These technical bindings are authored here for this exact family; no sibling binding is inferred.
+
+**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-422, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.blocked`, payload_schema_id is `pm.goal_runtime_event.goal_blocked.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum.
+
+**Sole writer, ordering and fences.** The host-only semantic producer `owner.goal.lifecycle.blocked.v1` uses only `owner.goal.body.mutation@1.0.0` under GRS-064/SP-287. It admits a metadata_update, never an objective write: increment the one ordinary revision by exactly one, preserve objective/accepted-head/history/origin bytes, identity, created_at and active_run_ref unless its separate association owner supplies an admitted mutation. Authenticate exact prior body/control/currentness/accepted head, native host owner and permissions, cancellation/Stop/continuation epochs, caller/run identity and current Storage writer/maintenance/deletion/hold state. Capture every original input independently before helpers. Reserve the complete original metadata intent and genuine external authority under the shared body/control CAS; before terminal commit compare the whole actual reserved preimage and all original/current owner predicates after the final helper, with no helper between the pure predicate and commit.
+
+The family protocol orders original host decision and original caller evidence, original producer custody/reservation, narrow atomic body/control/receipt commit, frozen EventRecord input, SP-286 first AppendReceipt, then terminal producer publication. Before body commit, a proven no-effect outcome produces no event or success; after a body commit, event failure cannot undo or repeat it and must preserve the original pending producer operation until exact append/receipt resolution. Unknown is fenced, never converted to no-effect by timeout or absence. The standalone shared body receipt proves only its body effect. A terminal producer publication requires the exact retained body receipt and original event's first SP-286 receipt/full-value commitment; an event observation does not alone publish success or allow another continuation. **Unbound producer edge:** no complete registered physical original host-decision/source-and-pending-result edition currently carries this family protocol across the body-to-event boundary. Authoring this order does not invent one: native reserve/append is refused until that source edition, method installation, backup coherence and original-result resolver are supplied and adopted. This is owner implementation work, not a new product decision.
+
+Continuation operation identity preserves GRS-050's tuple `(goal_id, goal_revision, owning_run_id, next_attempt_ref)`; completion has no new next dispatch. Capture its original nullable next_attempt_ref exactly. Rechecking an already accepted tuple resolves the immutable original effect/result, rather than creating a new lifecycle revision. Stop/Pause/Cancel, objective/bound-Plan revision and run replacement fence the appropriate epochs under GREPLAY-009..010; a stale epoch is never refreshed into success. An owner outage, missing source, unresolved receipt, required-work barrier or unknown recovery fact is unavailable/fenced, never completion or permission to resume.
+**Exact blocked predicates and bounded edges.** GRS-048 defines blocked as an owner-supplied condition preventing safe progress and requires blocked_reason_ref. GRS-050's host continuation result must be blocked, its nonnull reason must resolve to that exact original caller's condition/currentness, and the same reason is committed into GoalRecordV2 and the payload. The ordinary active -> blocked edge is bound here. blocked -> blocked may commit only a new ordinary revision with changed original blocker evidence/reason; an equal continuation identity returns its original result, with no new revision. This event does not clear Stop or dispatch any allowed action. A completed source refuses. **Unbound individual edge:** paused -> blocked while a manual Stop latch is held lacks an owner contract reconciling that authoritative pause with a new continuation evaluation; it remains refused. Clearing a blocked condition, resume and any required named event retain their own independent admission; this event grants none. Old D-R01 action sets/recovery choices do not become new Goal fields. Their actual permission/recovery owners remain authoritative; unknown recovery truth never becomes completed.
+
+### GRS-204 - Current Project goal.completed successor
+
+```yaml
+plan_unit_id: GRS-204
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: Newly authored Project goal.completed v3 contract preserves GRS-048/050 and GREPLAY-004..010, uses
+  only the shared body metadata CAS, and refuses unbound host-source and lifecycle edges.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-050
+- GRS-064
+- DL-045
+unblocks: []
+acceptance_criteria:
+- Exact original host, body/currentness/epoch and caller evidence precede the lifecycle metadata commit.
+- Retained whole-v2 interpretation is unchanged; native activation waits for the named unbound original source edition.
+- No event, model claim or helper witness can bypass Stop, cancellation or the complete shared body fence.
+validation_surfaces:
+- Plans/event_payloads/goal_runtime/goal_completed.v3.schema.json
+- Plans/goal_lifecycle_successor_fixtures.json
+- python3 scripts/pm_goal_lifecycle_successor_oracles.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: grs-204_event_authority
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Newly authored owner contract under DL-045; prepared Project successor, no admission (2026-11-04).** This unit applies only to `goal.completed` and `pm.goal_runtime_event.goal_completed.schema.v3`. The existing whole `goal_completed.schema.json` v2 resource, original envelope/identity, D-R04 predicates and legacy v1 reader retain their historical meaning. There is no v2-to-v3 cast and no app adoption; the unused app sibling remains governed by CV-366 until its separate owner adoption. The registry still selects v2 pending review and integration.
+
+**Per-family current-source search.** At base `0c40a7809826bcf509bbb16483bbdd8f4c48760b`, searched every live top-level `Plans/*.md`, `Plans/*.json`, event payloads, Goal body/source schemas, all Goal named bindings and the admission-record directory for `goal.completed`. Found the required Goal V2 name, its old D-R row and schema, GRS-048/050, GREPLAY-004..010, GRS-064/SP-287 sole body custody and dormant CV-366 app selector. Found no current V2-compatible family producer, original host-source edition, family observation binding or v3 identity. The old generic v2 recipe cannot supply current source authority. These technical bindings are authored here for this exact family; no sibling binding is inferred.
+
+**Envelope and lifecycle custody.** Adopt `Plans/Contracts_V0.md#EventRecord` pm.event.v0@2.0.0 and CV-423, not a local envelope. Explicit Project/thread/Goal/Storage identity must match the actual canonical body and original host caller. Outer event_type is `goal.completed`, payload_schema_id is `pm.goal_runtime_event.goal_completed.schema.v3`, Project and thread equal payload values, run_id equals the owning continuation run, and actor/correlation/causation/account facts come from that original caller. No focus/main/null-Project fallback. The immutable event has no objective text, retired Goal topology or provider/tool output. Raw secrets reject before reservation/append. The body remains exactly GRS-048's four states active|paused|blocked|completed, with cancellation outside the enum.
+
+**Sole writer, ordering and fences.** The host-only semantic producer `owner.goal.lifecycle.completed.v1` uses only `owner.goal.body.mutation@1.0.0` under GRS-064/SP-287. It admits a metadata_update, never an objective write: increment the one ordinary revision by exactly one, preserve objective/accepted-head/history/origin bytes, identity, created_at and active_run_ref unless its separate association owner supplies an admitted mutation. Authenticate exact prior body/control/currentness/accepted head, native host owner and permissions, cancellation/Stop/continuation epochs, caller/run identity and current Storage writer/maintenance/deletion/hold state. Capture every original input independently before helpers. Reserve the complete original metadata intent and genuine external authority under the shared body/control CAS; before terminal commit compare the whole actual reserved preimage and all original/current owner predicates after the final helper, with no helper between the pure predicate and commit.
+
+The family protocol orders original host decision and original caller evidence, original producer custody/reservation, narrow atomic body/control/receipt commit, frozen EventRecord input, SP-286 first AppendReceipt, then terminal producer publication. Before body commit, a proven no-effect outcome produces no event or success; after a body commit, event failure cannot undo or repeat it and must preserve the original pending producer operation until exact append/receipt resolution. Unknown is fenced, never converted to no-effect by timeout or absence. The standalone shared body receipt proves only its body effect. A terminal producer publication requires the exact retained body receipt and original event's first SP-286 receipt/full-value commitment; an event observation does not alone publish success or allow another continuation. **Unbound producer edge:** no complete registered physical original host-decision/source-and-pending-result edition currently carries this family protocol across the body-to-event boundary. Authoring this order does not invent one: native reserve/append is refused until that source edition, method installation, backup coherence and original-result resolver are supplied and adopted. This is owner implementation work, not a new product decision.
+
+Continuation operation identity preserves GRS-050's tuple `(goal_id, goal_revision, owning_run_id, next_attempt_ref)`; completion has no new next dispatch. Capture its original nullable next_attempt_ref exactly. Rechecking an already accepted tuple resolves the immutable original effect/result, rather than creating a new lifecycle revision. Stop/Pause/Cancel, objective/bound-Plan revision and run replacement fence the appropriate epochs under GREPLAY-009..010; a stale epoch is never refreshed into success. An owner outage, missing source, unresolved receipt, required-work barrier or unknown recovery fact is unavailable/fenced, never completion or permission to resume.
+**Exact ordinary completion predicates and bounded edges.** The host alone decides complete from an original GRS-050 continuation evaluation with nonempty owning-caller completion_evidence_refs, not a model final message, provider final, body receipt, event or generic accepted marker. At the final body boundary, reload exact canonical Goal/currentness/Stop epoch and adopt GREPLAY-004..008 by name: (1) every required current To-Do in the exact current list identity/revision is resolved, with a skipped item requiring an explicit accepted skip disposition; a removed historical item cannot satisfy it; (2) no admitted tool/background subagent/work, bound PlanRun or recovery-required/unresolved work remains; (3) an internal workflow predicate is met by reference to that actual owner and current source identity, without copying phases or criteria into Goal state. The ordinary bound edge is active -> completed after all these predicates. The committed body clears blocked_reason_ref. Repeated original continuation identity returns the original effect/result. A completed source accepts no new transition. **Unbound individual edges:** completion directly from paused under a manual Stop, or from blocked without a separately admitted resolution/current continuation evaluation, is refused until its owner binding is explicit. Neither current evidence alone nor a late callback bypasses Stop, body CAS or those barriers.
+
+**DL-081 route stays refused.** The approved-exception completion semantics remain approved and historically preserved, but GRS-065 still lacks the separate Goal/Workflow/HITL original exception/waiver route. This v3 successor admits only ordinary evidence-gated completion. It cannot consume certified_with_approved_exception, truthful completed_with_approved_verification_exception or an incomplete-item disposition as ordinary proof. No new product question is raised; the missing route is a specific owner contract dependency.
+
+### GRS-205 - Historical-only goal.evidence_captured in both scopes
+
+```yaml
+plan_unit_id: GRS-205
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: DL-079 and Card 3 A prohibit every current goal.evidence_captured writer in both scopes before dedupe;
+  retain exact historical predicates and approved next-checkpoint app withdrawal.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-049
+- GRS-064
+- DL-079
+unblocks: []
+acceptance_criteria:
+- Every new/equal retry is refused in both scopes before any owned effect.
+- Exact originally lawful history remains readable without present action authority.
+- Unused app edition withdrawal is approved for integration, never performed here.
+validation_surfaces:
+- Plans/goal_evidence_captured_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: grs-205_event_authority
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.evidence_captured` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R07/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact-family owner contract under DL-045, applying DL-079 and Card 3 A.** `goal.evidence_captured` is historical-only in both application and Project scope. No host, worker, Workflow callback, command, timer, recovery, retry, migration or future app adopter may write it. Refuse before dedupe/CAS/outbox/append, including equal old keys, a valid old schema and projector_replay_only. This is the explicit current-writer cutoff. A retained lawful original may be read; a new forbidden append never acquires authority by surviving in seglog.
+
+Goal evidence collection moved to the actual Workflow/run evidence owner; GoalRecordV2 carries no evidence ledger. Preserve original evidence_kind/source_spans/content_hash/currentness/redaction and optional snapshot/retention refs. Non-validator spans, artifact snapshots, outer/inner redaction equality, provenance/hash/span bounds, original source/permission and nonterminal-state preservation are required. Unknown currentness cannot satisfy verification or completion.
+
+The unchanged whole Project v2 resource `pm.goal_runtime_event.goal_evidence_captured.schema.v2` at `Plans/event_payloads/goal_runtime/goal_evidence_captured.schema.json#` and original v1 compatibility route retain their exact historical bytes/semantics. Current four-state Goal/currentness and Workflow facts never fill historical gaps or resurrect old Goal structure. SP-431 owns the sole exact historical reader `storage.goal_evidence_captured_history_read.v1@1.0.0`, explicitly adopted by SP-339 pm inspect and F3-666 only for that EventRecord's original interpretation. Neither pm tail nor pm export invokes it; their generic raw read remains SP-339. No current Goal state, To-Do, notification, continuation, tool action, certification or replacement event is derived. Withdrawing this reader disables interpretation and preserves original custody. CV-424 qualifies every old current-write roster/matrix claim for this exact family. ATS-211 covers conditional original-lawful and refusal oracles; no historical instance or native reader is asserted.
+
+**Approved checkpoint follow-up.** Withdraw only `goal.evidence_captured`'s unused application edition at the next registry checkpoint under Card 3 A; keep old Project records, v2 schema and retention unchanged. This branch records the approved instruction and edits neither registry nor app schema/source edition. It does not choose permanent frozen registration or future app writers.
+
+### GRS-206 - Historical-only goal.receipt_recorded in both scopes
+
+```yaml
+plan_unit_id: GRS-206
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: DL-079 and Card 3 A prohibit every current goal.receipt_recorded writer in both scopes before dedupe;
+  retain exact historical predicates and approved next-checkpoint app withdrawal.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-049
+- GRS-064
+- DL-079
+unblocks: []
+acceptance_criteria:
+- Every new/equal retry is refused in both scopes before any owned effect.
+- Exact originally lawful history remains readable without present action authority.
+- Unused app edition withdrawal is approved for integration, never performed here.
+validation_surfaces:
+- Plans/goal_receipt_recorded_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: grs-206_event_authority
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.receipt_recorded` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R09/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact-family owner contract under DL-045, applying DL-079 and Card 3 A.** `goal.receipt_recorded` is historical-only in both application and Project scope. No host, worker, Workflow callback, command, timer, recovery, retry, migration or future app adopter may write it. Refuse before dedupe/CAS/outbox/append, including equal old keys, a valid old schema and projector_replay_only. This is the explicit current-writer cutoff. A retained lawful original may be read; a new forbidden append never acquires authority by surviving in seglog.
+
+The actual Workflow/run owns certification and receipts; Goal V2 has no certification tier, child receipt graph or receipt-driven state. Preserve original receipt/kind/tier/output/dependency refs and original certifier decision. Require pre-existing valid original receipt, exact dependency completeness, original exception approval/residual-risk evidence and rejection/block reason evidence. The original running|verifying|repairing|degraded|blocked state is preserved; terminal/created/scheduled/paused/stopped originals reject. Recording receipt history never completes a current Goal.
+
+The unchanged whole Project v2 resource `pm.goal_runtime_event.goal_receipt_recorded.schema.v2` at `Plans/event_payloads/goal_runtime/goal_receipt_recorded.schema.json#` and original v1 compatibility route retain their exact historical bytes/semantics. Current four-state Goal/currentness and Workflow facts never fill historical gaps or resurrect old Goal structure. SP-432 owns the sole exact historical reader `storage.goal_receipt_recorded_history_read.v1@1.0.0`, explicitly adopted by SP-339 pm inspect and F3-666 only for that EventRecord's original interpretation. Neither pm tail nor pm export invokes it; their generic raw read remains SP-339. No current Goal state, To-Do, notification, continuation, tool action, certification or replacement event is derived. Withdrawing this reader disables interpretation and preserves original custody. CV-425 qualifies every old current-write roster/matrix claim for this exact family. ATS-211 covers conditional original-lawful and refusal oracles; no historical instance or native reader is asserted.
+
+**Approved checkpoint follow-up.** Withdraw only `goal.receipt_recorded`'s unused application edition at the next registry checkpoint under Card 3 A; keep old Project records, v2 schema and retention unchanged. This branch records the approved instruction and edits neither registry nor app schema/source edition. It does not choose permanent frozen registration or future app writers.
+
+### GRS-207 - Historical-only goal.tool_check_recorded in both scopes
+
+```yaml
+plan_unit_id: GRS-207
+unit_type: owner_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: DL-079 and Card 3 A prohibit every current goal.tool_check_recorded writer in both scopes before
+  dedupe; retain exact historical predicates and approved next-checkpoint app withdrawal.
+gui_related: false
+gui_classification_reason: Internal event, custody and host predicates; no new visual surface.
+split_recommended: false
+depends_on:
+- GRS-048
+- GRS-049
+- GRS-064
+- DL-079
+unblocks: []
+acceptance_criteria:
+- Every new/equal retry is refused in both scopes before any owned effect.
+- Exact originally lawful history remains readable without present action authority.
+- Unused app edition withdrawal is approved for integration, never performed here.
+validation_surfaces:
+- Plans/goal_tool_check_recorded_history_contract_fixtures.json
+- python3 scripts/pm_goal_history_reader_fixtures.py
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_event_authority
+reasoning_tier: high
+context_scope: grs-207_event_authority
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- event-authority-20261104/reviews/DG-sol/REVIEW.md
+preserved_exact_tokens: []
+negative_constraints:
+- No registry or app edition change, native admission or runtime proof.
+owner_hints:
+- Plans/Goal_Runtime_System.md
+```
+
+**Per-family current-source search (2026-11-04).** Searched all live top-level Plans documents/JSON, exact-family v2 and app resources, Goal/Workflow/Permissions source graphs, production wiring and admission records for `goal.tool_check_recorded` at `0c40a7809826bcf509bbb16483bbdd8f4c48760b`. Found old D-R13/Known-37 schema-minima/identity listings and the unadopted CV-366 application selector; no current original producer, admitted source edition, family read/checkpoint binding or admission record names this exact event. GRS-048/049/052/064 and GRS-065 retain the ownership move in DL-079. E-CARDS-1 Card 3 A (DL-409 on unlanded origin/plans/ea-cards1-answers-20261104) confirms it for both scopes and approves withdrawal of this exact unused app edition at the next registry checkpoint. No new product or retention decision is taken.
+**Newly authored exact-family owner contract under DL-045, applying DL-079 and Card 3 A.** `goal.tool_check_recorded` is historical-only in both application and Project scope. No host, worker, Workflow callback, command, timer, recovery, retry, migration or future app adopter may write it. Refuse before dedupe/CAS/outbox/append, including equal old keys, a valid old schema and projector_replay_only. This is the explicit current-writer cutoff. A retained lawful original may be read; a new forbidden append never acquires authority by surviving in seglog.
+
+The executing Workflow/run owns tool checks and evidence; Permissions owns policy/approval resolution. Goal V2 has no tool-check loop or Goal-owned worker authority. Preserve tool_call_id/name/check_kind/result/policy_decision and original output/log refs. Passed+allow/not_applicable needs an original output/log; failed/blocked/unknown needs an original log; approval_required needs original common approval/block proof and cannot pass; deny cannot pass. All output stays by reference with original secret handling. Preserve scheduled|running|verifying|repairing|degraded|blocked; any state change was a separately named event.
+
+The unchanged whole Project v2 resource `pm.goal_runtime_event.goal_tool_check_recorded.schema.v2` at `Plans/event_payloads/goal_runtime/goal_tool_check_recorded.schema.json#` and original v1 compatibility route retain their exact historical bytes/semantics. Current four-state Goal/currentness and Workflow facts never fill historical gaps or resurrect old Goal structure. SP-433 owns the sole exact historical reader `storage.goal_tool_check_recorded_history_read.v1@1.0.0`, explicitly adopted by SP-339 pm inspect and F3-666 only for that EventRecord's original interpretation. Neither pm tail nor pm export invokes it; their generic raw read remains SP-339. No current Goal state, To-Do, notification, continuation, tool action, certification or replacement event is derived. Withdrawing this reader disables interpretation and preserves original custody. CV-426 qualifies every old current-write roster/matrix claim for this exact family. ATS-211 covers conditional original-lawful and refusal oracles; no historical instance or native reader is asserted.
+
+**Approved checkpoint follow-up.** Withdraw only `goal.tool_check_recorded`'s unused application edition at the next registry checkpoint under Card 3 A; keep old Project records, v2 schema and retention unchanged. This branch records the approved instruction and edits neither registry nor app schema/source edition. It does not choose permanent frozen registration or future app writers.

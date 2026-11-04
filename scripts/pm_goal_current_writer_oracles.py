@@ -18,6 +18,8 @@ from pathlib import Path
 
 try:
     import jsonschema
+    from pm_goal_oracle_common import (Audit, Gates, FORMATS, StrictValidator, schema_registry,
+        append_result, append_guards, print_result, load, validator)
 except ImportError as exc:  # pragma: no cover
     print(json.dumps({"status": "error", "reason": f"missing dependency: {exc}"}))
     sys.exit(2)
@@ -32,15 +34,7 @@ CURRENT_SCHEMA = {
 }
 S, C, CE = "goal_run.started", "goal_run.cancelled", "goal_run.certified"
 
-FORMAT_CHECKER = jsonschema.FormatChecker(formats=())
-
-
-@FORMAT_CHECKER.checks("date-time")
-def _utc(instance) -> bool:
-    if not isinstance(instance, str):
-        return True
-    return re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$", instance) is not None
-
+FORMAT_CHECKER = FORMATS
 
 def jcs_strings(values: list[str]) -> bytes:
     # RFC 8785 for an array of strings: compact separators, literal UTF-8, standard JSON escapes.
@@ -53,57 +47,59 @@ def recipe(family: str, inputs: dict) -> tuple[str, str]:
     return f"{family}.v1:{digest}", f"{family}.command.v1:{digest}"
 
 
-def walk(sequence: list[str], edges: list[list[str]]) -> bool:
-    allowed = {tuple(e) for e in edges}
-    if not sequence or sequence[0] != "source_admitted":
-        return False
-    return all((a, b) in allowed for a, b in zip(sequence, sequence[1:]))
+def walk(sequence, edges, disabled=(), trace=False):
+    g=Gates(disabled)
+    g.require('progress/source',bool(sequence) and sequence[0]=='source_admitted')
+    g.require('progress/edge',all((a,b) in {tuple(e) for e in edges} for a,b in zip(sequence,sequence[1:])))
+    return g.errors if trace else not g.errors
 
 
-def dedupe(case: dict) -> str:
-    if not case["proof_available"]:
-        return "dedupe_unavailable"
-    if not case["existing"]:
-        return "append_new"
-    return "return_original_receipt" if case["same_digest"] else "idempotency_conflict"
+def dedupe(case: dict, disabled=()) -> str:
+    return append_result(case, disabled)
 
 
-def reduce_rows(rows: list[dict], mode: str) -> dict:
-    supported = {"started": {S}, "cancelled": {S, C}, "certified": {S, C, CE}}[mode]
-    row = None
-    keys: dict[str, str] = {}
-    for i, r in enumerate(rows):
-        if not r.get("verified", False) or r.get("scope_mismatch"):
-            return {"outcome": "halt_before", "index": i, "row": row}
-        if r["run"] != "this":
-            continue
-        ev, key = r["event_type"], r["event_key"]
-        if ev not in supported:
-            return {"outcome": "halt_before", "index": i, "row": row}
-        if key in keys.values() and keys.get(ev) == key:
-            return {"outcome": "coverage_failure", "index": i, "row": row}
-        if ev == S:
-            if row is None:
-                row, keys[S] = S, key
-                continue
-            if mode == "cancelled" and row == C:
-                return {"outcome": "refused", "index": i, "row": row}
-            if mode == "certified" and row in (C, CE):
-                return {"outcome": "halt_before", "index": i, "row": row}
-            return {"outcome": "custody_mismatch", "index": i, "row": row}
-        if ev == C:
-            if row in (C, CE):
-                outcome = "refused" if mode == "cancelled" else "halt_before"
-                return {"outcome": outcome, "index": i, "row": row}
-            if mode == "certified" and row is None:
-                return {"outcome": "halt_before", "index": i, "row": row}
-            row, keys[C] = C, key
-            continue
-        if ev == CE:
-            if row != S:
-                return {"outcome": "halt_before", "index": i, "row": row}
-            row, keys[CE] = CE, key
-    return {"outcome": "advanced", "row": row}
+def late_guards(case, disabled=()):
+    g = Gates(disabled)
+    t, fin = case['template'], case['final']
+    g.require('late/key_set', set(fin) == set(t))
+    for k in t:
+        if k != 'sequence_id':
+            g.require('late/value/' + k, fin.get(k) == t[k])
+    g.require('late/sequence', type(fin.get('sequence_id')) is int and fin['sequence_id'] >= 0)
+    return g.errors
+
+
+def reduce_rows(rows, mode, disabled=(), trace=False):
+    supported={'started':{S},'cancelled':{S,C},'certified':{S,C,CE}}[mode]
+    row=None;keys={};g=Gates(disabled)
+    def refuse(outcome,index):
+        return g.errors if trace else {'outcome':outcome,'index':index,'row':row}
+    for i,r in enumerate(rows):
+        g.require('reducer/verified',r.get('verified',False))
+        g.require('reducer/scope',not r.get('scope_mismatch'))
+        if g.errors:return refuse('halt_before',i)
+        if r['run']!='this':continue
+        ev,key=r['event_type'],r['event_key']
+        g.require('reducer/'+mode+'/supported',ev in supported)
+        if g.errors:return refuse('halt_before',i)
+        if ev not in supported:continue
+        if ev==S:
+            g.require('reducer/'+mode+'/single_start',row is None)
+            if g.errors:
+                if keys.get(S)==key:return refuse('coverage_failure',i)
+                if mode=='cancelled' and row==C:return refuse('refused',i)
+                if mode=='certified' and row in (C,CE):return refuse('halt_before',i)
+                return refuse('custody_mismatch',i)
+            if row is None:row,keys[S]=S,key
+        elif ev==C:
+            g.require('reducer/'+mode+'/cancel_edge',row not in (C,CE) and (mode!='certified' or row is not None))
+            if g.errors:return refuse('refused' if mode=='cancelled' else 'halt_before',i)
+            row,keys[C]=C,key
+        elif ev==CE:
+            g.require('reducer/certified/certify_edge',row==S)
+            if g.errors:return refuse('halt_before',i)
+            row,keys[CE]=CE,key
+    return g.errors if trace else {'outcome':'advanced','row':row}
 
 
 def main() -> int:
@@ -117,27 +113,39 @@ def main() -> int:
             failures.append(label)
 
     fams = doc["families"]
+    audit = Audit()
+    schema_registry([ROOT / f["payload_schema"] for f in fams.values() if "payload_schema" in f])
     for family in ("goal.updated", "goal.cancelled"):
         f = fams[family]
         schema = json.loads((ROOT / f["payload_schema"]).read_text(encoding="utf-8"))
-        v = jsonschema.Draft202012Validator(schema, format_checker=FORMAT_CHECKER)
+        v = validator(schema)
         for case in f["payload_cases"]:
             check((not list(v.iter_errors(case["value"]))) == case["valid"], f"{family} payload:{case['id']}")
+            def payload(value, disabled, v=v, family=family):
+                g=Gates(disabled);g.schema(v,value,family+'/payload');return g.errors
+            audit.case(family+'/payload/'+case['id'],payload,case['value'],case['valid'])
         seen: dict[str, tuple] = {}
         for case in f["identity_cases"]:
             ev, key = recipe(family, case["inputs"])
             ok = case["inputs"]["command_id"] == COMMANDS[family] and case["event_id"] == ev and case["idempotency_key"] == key
             check(ok == case["valid"], f"{family} identity:{case['id']}")
+            def identity(value,disabled,family=family):
+                g=Gates(disabled);ev,key=recipe(family,value['inputs'])
+                g.require('identity/'+family+'/command',value['inputs']['command_id']==COMMANDS[family])
+                g.require('identity/'+family+'/event',value['event_id']==ev)
+                g.require('identity/'+family+'/key',value['idempotency_key']==key)
+                return g.errors
+            audit.case(family+'/identity/'+case['id'],identity,case,case['valid'])
             if ok:
                 inp = tuple(sorted(case["inputs"].items()))
                 prior = seen.get(ev)
                 check(prior is None or prior == inp, f"{family} identity-collision:{case['id']}")
                 seen[ev] = inp
-        for case in f["replay_cases"]:
-            check(dedupe(case) == case["expected"], f"{family} replay:{case['id']}")
+
     up = fams["goal.updated"]
     for case in up["progress_cases"]:
         check(walk(case["sequence"], up["progress_edges"]) == case["valid"], f"goal.updated progress:{case['id']}")
+        audit.case('goal.updated/progress/'+case['id'],lambda value,disabled:walk(value,up['progress_edges'],disabled,True),case['sequence'],case['valid'])
     for case in up["reader_cases"]:
         got = "observation" if case["payload_schema_id"] == CURRENT_SCHEMA["goal.updated"] else "unsupported_payload"
         check(got == case["expected"], f"goal.updated reader:{case['id']}")
@@ -147,10 +155,18 @@ def main() -> int:
         ok = (p["operation_id"] == n["operation_id"] == p["cancellation_id"]
               and p["command_instance_id"] == n["command_instance_id"] and p["goal_id"] == n["goal_id"])
         check(ok == case["valid"], f"goal.cancelled join:{case['id']}")
+        def joined(value,disabled):
+            g=Gates(disabled);n,p=value['normalized'],value['payload']
+            for field in ('operation_id','command_instance_id','goal_id'):
+                g.require('cancel_join/'+field,n[field]==p[field])
+            g.require('cancel_join/cancellation_id',p['operation_id']==p['cancellation_id'])
+            return g.errors
+        audit.case('goal.cancelled/join/'+case['id'],joined,case,case['valid'])
     for case in ca["late_assignment_cases"]:
         t, fin = case["template"], case["final"]
-        ok = all(fin[k] == t[k] for k in t if k != "sequence_id") and isinstance(fin.get("sequence_id"), int)
+        ok = not late_guards(case)
         check(ok == case["valid"], f"goal.cancelled late:{case['id']}")
+        audit.case('goal.cancelled/late/'+case['id'],late_guards,case,case['valid'])
     for case in ca["inspection_cases"]:
         got = "observation" if case["payload_schema_id"] == CURRENT_SCHEMA["goal.cancelled"] else "unsupported_payload"
         check(got == case["expected"], f"goal.cancelled inspect:{case['id']}")
@@ -160,10 +176,24 @@ def main() -> int:
             exp = case["expected"]
             same = got["outcome"] == exp["outcome"] and got.get("row") == exp.get("row") and got.get("index") == exp.get("index")
             check(same, f"{family} reducer:{case['id']} got {got}")
-    result = {"status": "pass" if not failures else "fail", "case_counts": counts, "failures": failures,
-              "native_execution": "NOT_RUN"}
-    print(json.dumps(result, indent=2))
-    return 0 if not failures else 1
+            audit.case(family+'/reducer/'+case['id'],lambda value,disabled,mode=mode:reduce_rows(value,mode,disabled,True),case['rows'],exp['outcome']=='advanced')
+    for family, f in fams.items():
+        for case in f['replay_cases']:
+            check(dedupe(case) == case['expected'],family+'/replay:'+case['id'])
+            audit.case(family+'/replay/'+case['id'],append_guards,case,case['expected'] in ('append_new','return_original_receipt'))
+        for case in f['protocol_cases']:
+            def protocol(value, disabled):
+                g=Gates(disabled)
+                g.require('append/replay_policy',value['event']['replay_policy']!='projector_replay_only')
+                g.require('append/admission',value['admitted'])
+                return g.errors
+            audit.case(family+'/append/'+case['id'],protocol,case['input'],case['valid'])
+    result=audit.run()
+    result['failures'].extend(failures)
+    result['status']='fail' if result['failures'] else 'pass'
+    result['case_counts']=counts
+    return print_result(result,sys.argv)
+
 
 
 if __name__ == "__main__":

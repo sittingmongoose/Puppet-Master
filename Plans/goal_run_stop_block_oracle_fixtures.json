@@ -384,6 +384,113 @@
             "goal_run_revision": 4,
             "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
           }
+        },
+        {
+          "id": "pause_resumable_at_safe_point_trailing_lf_occurred_at_utc",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z\n",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "abort_not_resumable_trailing_lf_occurred_at_utc",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z\n",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": false
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "invalid_calendar_utc",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2026-02-30T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
         }
       ],
       "identity_cases": [
@@ -441,6 +548,20 @@
           },
           "event_id": "goal_run.stopped.v1:68240f0d58b4e2d75b75179cf5a4085173cfe26db001f17c18a49edbd4bf30f4",
           "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+          "valid": false
+        },
+        {
+          "id": "foreign_idempotency_key",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:pause:1"
+          },
+          "event_id": "goal_run.stopped.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4",
+          "idempotency_key": "foreign",
           "valid": false
         }
       ],
@@ -521,6 +642,1014 @@
       "still_open": [
         "fresh Workflow source edition that installs owner.executor.workflow_run.stop.v1",
         "native settlement, append and projector evidence"
+      ],
+      "replay_cases": [
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "same_body",
+          "expected": "return_original_receipt"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2026-11-04T01:00:00Z",
+            "persisted_at_utc": "2026-11-04T01:00:01Z",
+            "sequence_id": 999,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "storage_metadata_only",
+          "expected": "return_original_receipt"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:2"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "changed_semantic_body",
+          "expected": "idempotency_conflict"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": false,
+          "id": "proof_unavailable",
+          "expected": "dedupe_unavailable"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": null,
+          "admitted": true,
+          "proof_available": true,
+          "id": "new_key",
+          "expected": "append_new"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "projector_replay_only",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "replay_only_retry",
+          "expected": "replay_only_not_appendable"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "projector_replay_only",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": null,
+          "admitted": true,
+          "proof_available": true,
+          "id": "replay_only_new",
+          "expected": "replay_only_not_appendable"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": false,
+          "proof_available": true,
+          "id": "unadmitted_retry",
+          "expected": "refused_before_dedupe"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.stopped",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.stopped",
+            "payload": {
+              "opaque_reference": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": null,
+          "admitted": true,
+          "proof_available": true,
+          "id": "oversized_inline_new_append",
+          "expected": "inline_payload_limit"
+        }
+      ],
+      "protocol_cases": [
+        {
+          "id": "admitted",
+          "valid": true,
+          "input": {
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.stopped",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.stopped",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "original": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.stopped",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.stopped",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "admitted": true,
+            "proof_available": true
+          }
+        },
+        {
+          "id": "replay_only",
+          "valid": false,
+          "input": {
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.stopped",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.stopped",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "projector_replay_only",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "original": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.stopped",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.stopped",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "admitted": true,
+            "proof_available": true
+          }
+        },
+        {
+          "id": "unadmitted",
+          "valid": false,
+          "input": {
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.stopped",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.stopped",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "original": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.stopped",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.stopped",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "admitted": false,
+            "proof_available": true
+          }
+        }
+      ],
+      "semantic_payload_cases": [
+        {
+          "id": "valid_recipe_revision",
+          "valid": true,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "idempotency_key_wrong",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "foreign"
+          }
+        },
+        {
+          "id": "goal_run_revision_wrong",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 999,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4"
+          }
+        },
+        {
+          "id": "idempotency_trailing_lf",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.stopped",
+            "schema_version": "pm.goal_runtime_event.goal_run_stopped.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "stop_reason_code": "user_stopped",
+              "child_settlement_refs": [],
+              "settlement_refs": [
+                "safestop:settle:1"
+              ],
+              "resumable": true,
+              "safe_point_ref": "safe_point:1"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.stopped.writer.v1:8d8379d4ecb2f89772053e091318ffbbefd4fbe286e959b817ff46a835ce8aa4\n"
+          }
+        }
       ]
     },
     "goal_run.blocked": {
@@ -941,6 +2070,142 @@
             "expected_goal_run_revision": 3,
             "goal_run_revision": 4
           }
+        },
+        {
+          "id": "permission_block_trailing_lf_occurred_at_utc",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z\n",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "approval_block_no_mutation_trailing_lf_occurred_at_utc",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z\n",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "approval_required",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "invalid_calendar_utc",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2026-02-30T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
         }
       ],
       "identity_cases": [
@@ -984,6 +2249,20 @@
           },
           "event_id": "goal_run.blocked.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
           "idempotency_key": "goal_run.blocked.writer.v1:e4cdf444612837165c753298fc1e3492da74aaeed90538ddf77b571fd522f763",
+          "valid": false
+        },
+        {
+          "id": "foreign_event_id",
+          "inputs": {
+            "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_run_id": "run:1",
+            "expected_goal_run_revision": 3,
+            "operation_id": "op:block:1"
+          },
+          "event_id": "foreign",
+          "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb",
           "valid": false
         }
       ],
@@ -1064,6 +2343,1054 @@
       "still_open": [
         "fresh Workflow source edition that installs owner.executor.workflow_run.block.v1",
         "native block receipt, append and projector evidence"
+      ],
+      "replay_cases": [
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "same_body",
+          "expected": "return_original_receipt"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2026-11-04T01:00:00Z",
+            "persisted_at_utc": "2026-11-04T01:00:01Z",
+            "sequence_id": 999,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "storage_metadata_only",
+          "expected": "return_original_receipt"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:2"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "changed_semantic_body",
+          "expected": "idempotency_conflict"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": false,
+          "id": "proof_unavailable",
+          "expected": "dedupe_unavailable"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": null,
+          "admitted": true,
+          "proof_available": true,
+          "id": "new_key",
+          "expected": "append_new"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "projector_replay_only",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": true,
+          "proof_available": true,
+          "id": "replay_only_retry",
+          "expected": "replay_only_not_appendable"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "projector_replay_only",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": null,
+          "admitted": true,
+          "proof_available": true,
+          "id": "replay_only_new",
+          "expected": "replay_only_not_appendable"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "operation_ref": "operation:1"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "admitted": false,
+          "proof_available": true,
+          "id": "unadmitted_retry",
+          "expected": "refused_before_dedupe"
+        },
+        {
+          "event": {
+            "schema_id": "pm.event.v0",
+            "schema_version": "2.0.0",
+            "scope_kind": "project",
+            "event_id": "fixture:event_id",
+            "event_type": "goal_run.blocked",
+            "project_id": "fixture:project_id",
+            "thread_id": null,
+            "run_id": null,
+            "node_id": null,
+            "attempt_id": null,
+            "actor_ref": "fixture:actor_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "observed_at_utc": "2020-01-01T00:00:00Z",
+            "persisted_at_utc": "2020-01-01T00:00:00Z",
+            "sequence_id": 41,
+            "producer_sequence_id": null,
+            "correlation_id": "fixture:correlation_id",
+            "causation_event_id": null,
+            "parent_event_id": null,
+            "idempotency_key": "fixture:idempotency_key",
+            "payload_schema_id": "fixture.goal_run.blocked",
+            "payload": {
+              "opaque_reference": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            },
+            "payload_ref": null,
+            "redaction_profile": "no_secrets",
+            "replay_policy": "dedupe_by_idempotency_key",
+            "migration": {
+              "migrated_from_schema_id": null,
+              "migrated_from_schema_version": null,
+              "migration_id": null,
+              "compatibility_event_type": null
+            }
+          },
+          "original": null,
+          "admitted": true,
+          "proof_available": true,
+          "id": "oversized_inline_new_append",
+          "expected": "inline_payload_limit"
+        }
+      ],
+      "protocol_cases": [
+        {
+          "id": "admitted",
+          "valid": true,
+          "input": {
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.blocked",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.blocked",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "original": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.blocked",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.blocked",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "admitted": true,
+            "proof_available": true
+          }
+        },
+        {
+          "id": "replay_only",
+          "valid": false,
+          "input": {
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.blocked",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.blocked",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "projector_replay_only",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "original": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.blocked",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.blocked",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "admitted": true,
+            "proof_available": true
+          }
+        },
+        {
+          "id": "unadmitted",
+          "valid": false,
+          "input": {
+            "event": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.blocked",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.blocked",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "original": {
+              "schema_id": "pm.event.v0",
+              "schema_version": "2.0.0",
+              "scope_kind": "project",
+              "event_id": "fixture:event_id",
+              "event_type": "goal_run.blocked",
+              "project_id": "fixture:project_id",
+              "thread_id": null,
+              "run_id": null,
+              "node_id": null,
+              "attempt_id": null,
+              "actor_ref": "fixture:actor_ref",
+              "requested_account_ref": "fixture:requested_account_ref",
+              "effective_account_ref": "fixture:effective_account_ref",
+              "occurred_at_utc": "2020-01-01T00:00:00Z",
+              "observed_at_utc": "2020-01-01T00:00:00Z",
+              "persisted_at_utc": "2020-01-01T00:00:00Z",
+              "sequence_id": 41,
+              "producer_sequence_id": null,
+              "correlation_id": "fixture:correlation_id",
+              "causation_event_id": null,
+              "parent_event_id": null,
+              "idempotency_key": "fixture:idempotency_key",
+              "payload_schema_id": "fixture.goal_run.blocked",
+              "payload": {
+                "operation_ref": "operation:1"
+              },
+              "payload_ref": null,
+              "redaction_profile": "no_secrets",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "migration": {
+                "migrated_from_schema_id": null,
+                "migrated_from_schema_version": null,
+                "migration_id": null,
+                "compatibility_event_type": null
+              }
+            },
+            "admitted": false,
+            "proof_available": true
+          }
+        }
+      ],
+      "semantic_payload_cases": [
+        {
+          "id": "valid_recipe_revision",
+          "valid": true,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "idempotency_key_wrong",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "foreign"
+          }
+        },
+        {
+          "id": "goal_run_revision_wrong",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 999,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb"
+          }
+        },
+        {
+          "id": "idempotency_trailing_lf",
+          "valid": false,
+          "value": {
+            "event_name": "goal_run.blocked",
+            "schema_version": "pm.goal_runtime_event.goal_run_blocked.schema.v3",
+            "occurred_at_utc": "2020-01-01T00:00:00Z",
+            "project_id": "fixture:project_id",
+            "goal_id": "fixture:goal_id",
+            "goal_revision": 2,
+            "actor_ref": "fixture:actor_ref",
+            "execution_role": "runtime_controller",
+            "requested_provider_ref": "fixture:requested_provider_ref",
+            "effective_provider_ref": "fixture:effective_provider_ref",
+            "requested_model_ref": "fixture:requested_model_ref",
+            "effective_model_ref": "fixture:effective_model_ref",
+            "requested_account_ref": "fixture:requested_account_ref",
+            "effective_account_ref": "fixture:effective_account_ref",
+            "correlation_id": "fixture:correlation_id",
+            "evidence_refs": [],
+            "artifact_refs": [],
+            "payload": {
+              "goal_run_id": "run:1",
+              "blocked_reason_code": "permission_denied",
+              "blocked_scope": {
+                "scope_kind": "project",
+                "include_refs": [
+                  "project:alpha"
+                ],
+                "exclude_refs": [],
+                "write_allowed": false
+              },
+              "allowed_action_ids": [
+                "request_approval",
+                "cancel_goal"
+              ],
+              "preserved_work_refs": [
+                "worknode:3"
+              ],
+              "block_receipt_ref": "permission_denial:7"
+            },
+            "expected_goal_run_revision": 3,
+            "goal_run_revision": 4,
+            "idempotency_key": "goal_run.blocked.writer.v1:d4f1be8d48383f536db7f25178714a29a594d6c911491960ede3d852e4924ffb\n"
+          }
+        }
       ]
     }
   },
@@ -1100,74 +3427,185 @@
   "projection_cases": [
     {
       "id": "start_block_stop_cancel",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.blocked",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         },
         {
           "event_type": "goal_run.stopped",
           "goal_run_revision": 3,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ]
         },
         {
           "event_type": "goal_run.cancelled",
           "goal_run_revision": 4,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 3,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:3"
+          ]
         }
       ],
       "expected": {
         "outcome": "advanced",
         "status": "cancelled",
         "revision": 4
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "reblock_higher_revision",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.blocked",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         },
         {
           "event_type": "goal_run.blocked",
           "goal_run_revision": 3,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ]
         }
       ],
       "expected": {
         "outcome": "advanced",
         "status": "blocked",
         "revision": 3
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "revision_skip_halts",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.stopped",
           "goal_run_revision": 3,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         }
       ],
       "expected": {
@@ -1175,26 +3613,67 @@
         "index": 1,
         "status": "started",
         "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "certified_after_stop_halts",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.stopped",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         },
         {
           "event_type": "goal_run.certified",
           "goal_run_revision": 3,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ]
         }
       ],
       "expected": {
@@ -1202,26 +3681,67 @@
         "index": 2,
         "status": "stopped",
         "revision": 2
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "block_after_stop_halts",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.stopped",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         },
         {
           "event_type": "goal_run.blocked",
           "goal_run_revision": 3,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ]
         }
       ],
       "expected": {
@@ -1229,21 +3749,52 @@
         "index": 2,
         "status": "stopped",
         "revision": 2
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "v2_stopped_row_halts",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.stopped",
           "goal_run_revision": 2,
-          "payload_major": 2
+          "payload_major": 2,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         }
       ],
       "expected": {
@@ -1251,26 +3802,67 @@
         "index": 1,
         "status": "started",
         "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "replanned_still_halts",
-      "qualifying_birth": true,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.blocked",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         },
         {
           "event_type": "goal_run.replanned",
           "goal_run_revision": 3,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:2"
+          ]
         }
       ],
       "expected": {
@@ -1278,21 +3870,52 @@
         "index": 2,
         "status": "blocked",
         "revision": 2
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "v7_birth_keeps_grs085_halt",
-      "qualifying_birth": false,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "9f194c7201862d6d94cceafbb7be242704e5ee8ebd565fba0d6eaab1bbcdf6d0",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.blocked",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "9f194c7201862d6d94cceafbb7be242704e5ee8ebd565fba0d6eaab1bbcdf6d0",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         }
       ],
       "expected": {
@@ -1300,27 +3923,698 @@
         "index": 1,
         "status": "started",
         "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     },
     {
       "id": "cancel_from_started_unchanged",
-      "qualifying_birth": false,
       "rows": [
         {
           "event_type": "goal_run.started",
           "goal_run_revision": 1,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "9f194c7201862d6d94cceafbb7be242704e5ee8ebd565fba0d6eaab1bbcdf6d0",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
         },
         {
           "event_type": "goal_run.cancelled",
           "goal_run_revision": 2,
-          "payload_major": 3
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "9f194c7201862d6d94cceafbb7be242704e5ee8ebd565fba0d6eaab1bbcdf6d0",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
         }
       ],
       "expected": {
         "outcome": "advanced",
         "status": "cancelled",
         "revision": 2
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "unverified",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": false,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "wrong_expected_revision",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 1000,
+          "payload_major": 3,
+          "expected_goal_run_revision": 999,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "bad_next_revision",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 999,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "foreign_source",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "foreign",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "forged_source_digest",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "foreign_storage",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "foreign",
+          "checkpoint_storage_instance_id": "foreign",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "checkpoint_foreign_storage",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "foreign",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "profile_mismatch",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "foreign",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "missing_evidence",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": []
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "unadmitted_original_source",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 1,
+        "status": "started",
+        "revision": 1
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "unadmitted",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "first_row_not_started",
+      "rows": [
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 0,
+        "status": null,
+        "revision": null
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
+      }
+    },
+    {
+      "id": "reblock_without_new_evidence",
+      "rows": [
+        {
+          "event_type": "goal_run.started",
+          "goal_run_revision": 1,
+          "payload_major": 3,
+          "expected_goal_run_revision": 0,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:0"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 2,
+          "payload_major": 3,
+          "expected_goal_run_revision": 1,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        },
+        {
+          "event_type": "goal_run.blocked",
+          "goal_run_revision": 3,
+          "payload_major": 3,
+          "expected_goal_run_revision": 2,
+          "verified": true,
+          "source_edition": "fixture.future.stop_block.source",
+          "birth_source_digest": "42a42232d123f07654107a60546792fda4514100e48be56d74616d69c422f46d",
+          "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "checkpoint_storage_instance_id": "00000000-0000-4000-8000-000000000001",
+          "profile": "fixture.future.stop_block.profile",
+          "evidence_refs": [
+            "evidence:1"
+          ]
+        }
+      ],
+      "expected": {
+        "outcome": "halt_before",
+        "index": 2,
+        "status": "blocked",
+        "revision": 2
+      },
+      "birth": {
+        "source_edition": "fixture.future.stop_block.source",
+        "admission": "admitted_original",
+        "storage_instance_id": "00000000-0000-4000-8000-000000000001",
+        "descriptor": {
+          "installed_writers": [
+            "owner.executor.workflow_run.stop.v1",
+            "owner.executor.workflow_run.block.v1"
+          ],
+          "profile": "fixture.future.stop_block.profile"
+        }
       }
     }
   ],

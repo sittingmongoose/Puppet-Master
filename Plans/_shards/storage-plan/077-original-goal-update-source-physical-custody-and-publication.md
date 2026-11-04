@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L24514-L27208
+Source lines: L24514-L27210
 
-Source SHA256: `766a752a876a25d16a5e6447036af63a0c4c510f91a68447dd0a3e2ca1f2de0c`
+Source SHA256: `59ba89b11f45f854d665be07625e8c1b24f1919124f7574e5b416d542380656f`
 
 ---
 
@@ -768,6 +768,8 @@ owner_hints:
 **Per-family search (DL-045), 2026-11-04, at `origin/main` `be4766513f`.** Scope: every `Plans/*.md` and `Plans/*.json` file that names one of the seven event types, the whole Decision Log and `reports/event-authority-20260911/admission-records/`. Found for every family: its historical-only owner unit, which refuses current writers (GRS-060, GRS-061, GRS-062, GRS-069, GRS-070, GRS-071, GRS-072, with CV-334, CV-335, CV-336, CV-343, CV-344, CV-345, CV-346; CV-366 and GRS-086 restate zero writes in both scopes); the payload-minima matrix rows; and the Known-37 materialization, which says that "new writes select exactly one self-contained v2 root per event" but marks authority and persistence behavior `NON_EXECUTABLE_UNDER_THIS_TRANSACTION` and names no emitter. One production wiring row, `catalog.runtime_replan` in `Plans/Wiring_Matrix.production.json`, lists `goal.replanned` as an expected event of `cmd.runtime.replan`; GRS-070 refuses that emission, and a wiring expectation is not writer admission. No admission record names any of the seven. Negative evidence: no owner unit, Decision Log entry or admission record names an admitted writer for any of the seven registered payload versions, so member 2 resolves for no record.
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/Decision_Log.md#DL-039, ContractName:Plans/Decision_Log.md#DL-045
+
+**Conditional original-lawful oracle (round 1 clarification).** The search conclusion above is an absence of demonstrated original writer admission in current canon, not a claim that retirement invalidates an authentic retained original. For each adopting reader, if the exact original first receipt and accepted-at-issue writer/checkpoint pair is supplied through authentic retained custody, the original contract predicates determine historical validation independently of today's live state and writer availability. Synthetic original-lawful fixtures test this conditional rule and supply no evidence that such a real instance exists. Missing proof retains each reader's own unavailable/unresolved outcome. SP-431, SP-432 and SP-433 individually adopt this same proof prerequisite with unavailable for missing original admission; their own units decide the answer.
 
 ### SP-304 - Original cancellation stages and custody
 

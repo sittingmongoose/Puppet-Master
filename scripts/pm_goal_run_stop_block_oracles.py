@@ -16,6 +16,7 @@ from pathlib import Path
 
 try:
     import jsonschema
+    from pm_goal_oracle_common import Audit, Gates, FORMATS, StrictValidator, schema_registry, print_result, load, append_result, append_guards, sha, validator
 except ImportError as exc:  # pragma: no cover
     print(json.dumps({"status": "error", "reason": f"missing dependency: {exc}"}))
     sys.exit(2)
@@ -34,15 +35,7 @@ WRITERS = {
     ("cmd.runtime.abort_run", "goal_run.stopped"): "owner.executor.workflow_run.stop.v1",
     (None, "goal_run.blocked"): "owner.executor.workflow_run.block.v1",
 }
-FORMAT_CHECKER = jsonschema.FormatChecker(formats=())
-
-
-@FORMAT_CHECKER.checks("date-time")
-def _utc(instance) -> bool:
-    if not isinstance(instance, str):
-        return True
-    return re.match(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$", instance) is not None
-
+FORMAT_CHECKER = FORMATS
 
 def recipe(family: str, inputs: dict) -> tuple[str, str]:
     order = ["storage_instance_id", "project_id", "goal_id", "goal_run_id", "expected_goal_run_revision", "operation_id"]
@@ -59,28 +52,54 @@ EDGES = {
 }
 
 
-def project(rows: list[dict], qualifying: bool) -> dict:
+def project(rows: list[dict], birth, disabled=(), *, trace=False):
     status, rev = None, None
-    for i, r in enumerate(rows):
-        ev = r["event_type"]
+    g=Gates(disabled)
+    for i,r in enumerate(rows):
+        ev=r['event_type']
+        g.require('projection/verified',r['verified'])
+        g.require('projection/source_edition',r['source_edition']==birth['source_edition'])
+        g.require('projection/source_digest',r['birth_source_digest']==sha(birth['descriptor']))
+        g.require('projection/storage',r['storage_instance_id']==birth['storage_instance_id'])
+        g.require('projection/checkpoint_storage',r['checkpoint_storage_instance_id']==r['storage_instance_id'])
+        stop_block=ev in ('goal_run.blocked','goal_run.stopped')
+        if stop_block:
+            writer='owner.executor.workflow_run.'+('stop.v1' if ev.endswith('stopped') else 'block.v1')
+            g.require('projection/source_admission',birth['admission']=='admitted_original')
+            g.require('projection/installed_writer',writer in birth['descriptor']['installed_writers'])
+            g.require('projection/profile',r['profile']==birth['descriptor']['profile'])
+            g.require('projection/payload_major',r['payload_major']==3)
+            g.require('projection/evidence',bool(r['evidence_refs']))
         if status is None:
-            if ev != "goal_run.started":
-                return {"outcome": "halt_before", "index": i, "status": status, "revision": rev}
-            status, rev = "started", r["goal_run_revision"]
-            continue
-        stop_block = ev in ("goal_run.blocked", "goal_run.stopped")
-        if stop_block and (not qualifying or r.get("payload_major") != 3):
-            return {"outcome": "halt_before", "index": i, "status": status, "revision": rev}
-        if (status, ev) not in EDGES or r["goal_run_revision"] != rev + 1:
-            return {"outcome": "halt_before", "index": i, "status": status, "revision": rev}
-        status = ev.split(".", 1)[1]
-        rev = r["goal_run_revision"]
-    return {"outcome": "advanced", "status": status, "revision": rev}
+            g.require('projection/first_started',ev=='goal_run.started')
+        else:
+            g.require('projection/edge', (status,ev) in EDGES)
+            g.require('projection/expected_revision',r['expected_goal_run_revision']==rev)
+            g.require('projection/revision_step',r['goal_run_revision']==r['expected_goal_run_revision']+1)
+            if status==ev.split('.',1)[1] and stop_block:
+                g.require('projection/new_evidence',r['evidence_refs']!=rows[i-1]['evidence_refs'])
+        if g.errors:
+            result={'outcome':'halt_before','index':i,'status':status,'revision':rev}
+            return g.errors if trace else result
+        status,rev=ev.split('.',1)[1],r['goal_run_revision']
+    return g.errors if trace else {'outcome':'advanced','status':status,'revision':rev}
 
+
+def payload_semantics(family,value,disabled=()):
+    g=Gates(disabled)
+    _,key=recipe(family,{'storage_instance_id':'00000000-0000-4000-8000-000000000001',
+        'project_id':value['project_id'],'goal_id':value['goal_id'],'goal_run_id':value['payload']['goal_run_id'],
+        'expected_goal_run_revision':value['expected_goal_run_revision'],
+        'operation_id':'op:pause:1' if family=='goal_run.stopped' else 'op:block:1'})
+    g.require('payload/'+family+'/idempotency_recipe',value['idempotency_key']==key)
+    g.require('payload/'+family+'/revision_step',value['goal_run_revision']==value['expected_goal_run_revision']+1)
+    return g.errors
 
 def main() -> int:
     doc = json.loads(FIXTURES.read_text(encoding="utf-8"))
     failures: list[str] = []
+    audit=Audit()
+    schema_registry([ROOT/f["payload_schema"] for f in doc["families"].values()])
     counts: dict[str, int] = {}
 
     def check(ok: bool, label: str) -> None:
@@ -90,7 +109,7 @@ def main() -> int:
             failures.append(label)
 
     for family, f in doc["families"].items():
-        v = jsonschema.Draft202012Validator(json.loads((ROOT / f["payload_schema"]).read_text(encoding="utf-8")), format_checker=FORMAT_CHECKER)
+        v = validator(json.loads((ROOT / f["payload_schema"]).read_text(encoding="utf-8")))
         for case in f["payload_cases"]:
             valid = not list(v.iter_errors(case["value"]))
             if valid:
@@ -100,24 +119,56 @@ def main() -> int:
                                           "operation_id": "op:pause:1" if family == "goal_run.stopped" else "op:block:1"})
                 valid = case["value"]["idempotency_key"] == key and case["value"]["goal_run_revision"] == case["value"]["expected_goal_run_revision"] + 1
             check(valid == case["valid"], f"{family} payload:{case['id']}")
+            def payload(value,disabled,v=v,family=family):
+                g=Gates(disabled);g.schema(v,value,family+'/payload');return g.errors
+            audit.case(family+'/payload/'+case['id'],payload,case['value'],case['valid'])
+        for case in f['semantic_payload_cases']:
+            audit.case(family+'/payload_semantics/'+case['id'],lambda value,disabled,family=family:payload_semantics(family,value,disabled),case['value'],case['valid'])
         for case in f["identity_cases"]:
             ev, key = recipe(family, case["inputs"])
             check((case["event_id"] == ev and case["idempotency_key"] == key) == case["valid"], f"{family} identity:{case['id']}")
+            def identity(value,disabled,family=family):
+                g=Gates(disabled);event,key=recipe(family,value['inputs'])
+                g.require('identity/'+family+'/event',value['event_id']==event)
+                g.require('identity/'+family+'/key',value['idempotency_key']==key)
+                return g.errors
+            audit.case(family+'/identity/'+case['id'],identity,case,case['valid'])
         for case in f["source_status_cases"]:
             s = case["source_status"]
             legal = s in LEGAL[family] and (s != SELF[family] or case["new_evidence"])
             check(legal == case["legal"], f"{family} source:{case['id']}")
+            def source(value,disabled,family=family):
+                g=Gates(disabled)
+                g.require('source/'+family+'/status',value['source_status'] in LEGAL[family])
+                if value['source_status']==SELF[family]:g.require('source/'+family+'/new_evidence',value['new_evidence'])
+                return g.errors
+            audit.case(family+'/source/'+case['id'],source,case,case['legal'])
     for case in doc["wiring_cases"]:
         got = WRITERS.get((case["command_id"], case["family"]))
         check(got == case["writer"], f"wiring:{case['id']}")
     for case in doc["projection_cases"]:
-        got = project(case["rows"], case["qualifying_birth"])
+        got = project(case["rows"], case["birth"])
         exp = case["expected"]
         same = all(got.get(k) == exp.get(k) for k in ("outcome", "index", "status", "revision"))
         check(same, f"projection:{case['id']} got {got}")
-    result = {"status": "pass" if not failures else "fail", "case_counts": counts, "failures": failures, "native_execution": "NOT_RUN"}
-    print(json.dumps(result, indent=2))
-    return 0 if not failures else 1
+        def projection(value,disabled):return project(value['rows'],value['birth'],disabled,trace=True)
+        audit.case('projection/'+case['id'],projection,case,exp['outcome']=='advanced')
+    for family,f in doc['families'].items():
+        for case in f['replay_cases']:
+            check(append_result(case)==case['expected'],family+'/replay:'+case['id'])
+            audit.case(family+'/replay/'+case['id'],append_guards,case,case['expected'] in ('append_new','return_original_receipt'))
+        for case in f['protocol_cases']:
+            def protocol(value,disabled):
+                g=Gates(disabled)
+                g.require('append/replay_policy',value['event']['replay_policy']!='projector_replay_only')
+                g.require('append/admission',value['admitted'])
+                return g.errors
+            audit.case(family+'/append/'+case['id'],protocol,case['input'],case['valid'])
+    result=audit.run();result['failures'].extend(failures)
+    result['status']='fail' if result['failures'] else 'pass'
+    result['case_counts']=counts
+    return print_result(result,sys.argv)
+
 
 
 if __name__ == "__main__":
