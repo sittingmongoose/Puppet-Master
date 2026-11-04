@@ -66,9 +66,30 @@ async function says(t, f, want, ms = 9000) {
 	}
 	return { ok: false, p };
 }
-/* every line the bubble starts, in order (its whole text, typed or not), from now until played() */
+/* eventual line order (not the visible-frame regression below): every line the bubble starts, in order (its whole text, typed or not), from now until played() */
 const record = (f) => f.evaluate((root) => { clearInterval(window.__fo41T); window.__fo41 = []; let last = ''; window.__fo41T = setInterval(() => { const b = document.querySelector(root + ' .pst-bubble'), t = b && b.classList.contains('on') ? ((b.querySelector('.pst-bt') || {}).textContent || '').trim() : ''; if (t && t !== last) { last = t; window.__fo41.push(t); } }, 40); }, ROOT);
 const played = (f) => f.evaluate(() => { clearInterval(window.__fo41T); return window.__fo41 || []; });
+/* FO-41 R1: inspect only the typed span, every animation frame. Start before the operation,
+   and keep sampling for 750 ms after the rendered result first enables Continue. Film verifies paint. */
+const watchResult = (f, screen) => f.evaluate(([root, screen]) => {
+    cancelAnimationFrame(window.__fo41Frame);
+    const rows = window.__fo41Frames = []; let greenAt = null;
+    const sample = (at) => {
+        const layer = document.querySelector(root + ' .o55-layer:not(.o55-out)'), b = document.querySelector(root + ' .pst-bubble');
+        const p = layer && layer.querySelector('.o55-primary');
+        const green = layer && layer.dataset.screen === screen && !!layer.querySelector('.o55-ph-done') && p && !p.disabled && p.getAttribute('aria-disabled') !== 'true';
+        if (green && greenAt === null) greenAt = at;
+        if (greenAt !== null) rows.push({ at, green: !!green, text: b && b.classList.contains('on') ? (b.querySelector('.pst-bt-on')?.textContent || '').trim() : '' });
+        if (greenAt === null || at - greenAt < 750) window.__fo41Frame = requestAnimationFrame(sample);
+    };
+    window.__fo41Frame = requestAnimationFrame(sample);
+}, [ROOT, screen]);
+async function resultHandoff(t, f, screen, checking) {
+    await t.page.waitForTimeout(800);
+    const rows = await f.evaluate(() => window.__fo41Frames || []);
+    const stale = rows.slice(1).filter((r) => r.green && r.text.length > 3 && checking.startsWith(r.text));
+    await t.check(screen + ': visible checking speech leaves by the next result frame', rows.length > 1 && stale.length === 0, JSON.stringify({ frames: rows.length, stale }));
+}
 const show = (p) => p ? `bubble ${p.painted ? '' : '(not painted) '}"${p.text}", lineId ${p.lineId}, screen ${p.screen}` : 'no stage';
 async function clickIn(f, sel) { const el = f.locator(`${LAYER} ${sel}`).first(); await el.scrollIntoViewIfNeeded(); await el.click(); }
 async function typeIn(t, f, bind, text) { await clickIn(f, `[data-o55-bind="${bind}"]`); await t.page.keyboard.type(text, { delay: 30 }); }
@@ -91,13 +112,14 @@ export default async function (t) {
             await clickIn(f, '.o55-primary'); await settled(f, 'nas-find');
             await clickIn(f, '[data-o55-do="method"][data-arg="mounted"]');
             await clickIn(f, '[data-o55-do="volume"]');
-            await record(f); await t.mark('drive selected ' + mode);
+            await record(f); await watchResult(f, 'nas-mounted'); await t.mark('drive selected ' + mode);
             await clickIn(f, '.o55-primary');
             const ran = await checkIs(f, 'nas-mounted', 'running', 4000);
             const p = await f.evaluate(PIP, ROOT);
             await t.check(`drive checking wording ${mode}: stage follows running check`, ran && p.lineId === 'checking', show(p));
             await t.check('drive check completes', await checkIs(f, 'nas-mounted', 'done'), '');
             const done = await line(f, 'nas-mounted', 'done'), checking = await line(f, 'nas-mounted', 'checking');
+            await resultHandoff(t, f, 'nas-mounted', checking);
             await says(t, f, [done]);
             const seq = await played(f);
             await t.check(`drive checking wording ${mode}: bubble starts checking then done, no drive question`, seq.includes(checking) && seq.indexOf(done) > seq.indexOf(checking) && !seq.includes(await line(f, 'nas-mounted', 'enter')), seq.join(' > '));
@@ -106,13 +128,15 @@ export default async function (t) {
     });
     if (t.args.driveOnly) return;
 
-	for (const [i, look] of looks.entries()) {
-		await t.step(`${look} · smb`, async () => {
+	for (const [i, pair] of looks.flatMap((look) => [[look, 0], [look, 1]]).entries()) {
+        const [look, mode] = pair;
+		await t.step(`${look} · smb · wording ${mode}`, async () => {
 			const f = await t.app.open();
 			await t.app.look(look);
 			if (t.args.motion === 'on') await t.emulate({ reducedMotion: 'no-preference' });
 			if (!(await openAt(t, f, 'nas-smb'))) return t.check(`${look}: Sign in to the shared folder opens`, false, 'not opened from its row', { hard: true });
 			await settled(f, 'nas-smb');
+            if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
 			const enter = await line(f, 'nas-smb', 'enter'), done = await line(f, 'nas-smb', 'done'), checking = await line(f, 'nas-smb', 'checking');
 			await t.check(`${look} smb: the done line is in the copy`, !!done && !/^pip\./.test(done), done);
 			let r = await says(t, f, [enter]);
@@ -120,12 +144,13 @@ export default async function (t) {
 			await typeIn(t, f, 'user', 'jared');
 			await typeIn(t, f, 'pw', 'correct horse');
 			await leaveFields(t, f);
-			await record(f);
+			await record(f); await watchResult(f, 'nas-smb');
 			await clickIn(f, '.o55-primary');
 			const ran = await checkIs(f, 'nas-smb', 'running', 4000);
 			const during = await f.evaluate(PIP, ROOT);
 			await t.check(`${look} smb: the stage is on the checking line while the check runs`, ran && during.lineId === 'checking', show(during));
 			await t.check(`${look} smb: the check passes`, await checkIs(f, 'nas-smb', 'done'), 'check state');
+			await resultHandoff(t, f, 'nas-smb', checking);
 			r = await says(t, f, [done]);
 			await t.check(`${look} smb: the done line once the check passes`, r.ok && r.p.lineId === 'done', show(r.p));
 			/* the bubble's lines from the press: the checking line, then the done line (the bubble queues a line until the one
@@ -139,7 +164,7 @@ export default async function (t) {
 			const pr = await primary(f);
 			r = await says(t, f, [enter]);
 			await t.check(`${look} smb: the account changed: the opening line again`, r.ok && r.p.lineId === 'enter' && !!pr && pr.label === (await f.evaluate(() => window.O55.t('nas.smb.check'))), `${show(r.p)}; primary ${JSON.stringify(pr)}`);
-			if (i === 0) {
+			if (i < 2) {
 				/* a refused password: Pip's oops line; then the right one: the done line (its cheer may be said first) */
 				const wrong = await f.evaluate(() => (window.O55.fixtures.DEMO || {}).wrongPassword || 'not-the-password');
 				await typeIn(t, f, 'pw', wrong);
@@ -159,12 +184,13 @@ export default async function (t) {
 				await t.check(`${look} smb: put right: the done line or its cheer`, r.ok && r.p.lineId === 'done', show(r.p));
 			}
 		});
-		await t.step(`${look} · drive, then nfs`, async () => {
+		await t.step(`${look} · drive, then nfs · wording ${mode}`, async () => {
 			const f = await t.app.open();
 			await t.app.look(look);
 			if (t.args.motion === 'on') await t.emulate({ reducedMotion: 'no-preference' });
 			if (!(await openAt(t, f, 'nas-mounted'))) return t.check(`${look}: Checking the drive opens`, false, 'not opened from its row', { hard: true });
 			await settled(f, 'nas-mounted');
+            if (mode) await f.locator('#pm-o55-onboarding button.o55-talk').first().click();
 			await t.check(`${look} drive: the check passes`, await checkIs(f, 'nas-mounted', 'done'), 'check state');
 			const dDone = await line(f, 'nas-mounted', 'done');
 			await t.check(`${look} drive: the done line is in the copy`, !!dDone && !/^pip\./.test(dDone), dDone);
@@ -179,9 +205,11 @@ export default async function (t) {
 			const picked = await f.evaluate((L) => !!document.querySelector(L + ' [data-o55-do="share"][aria-checked="true"]'), LAYER);
 			if (!picked) await clickIn(f, '[data-o55-do="share"]');
 			await t.page.waitForTimeout(400);
+			await watchResult(f, 'nas-nfs');
 			await clickIn(f, '.o55-primary');
 			await settled(f, 'nas-nfs');
 			await t.check(`${look} nfs: the check passes`, await checkIs(f, 'nas-nfs', 'done'), 'check state');
+			await resultHandoff(t, f, 'nas-nfs', await line(f, 'nas-nfs', 'enter'));
 			const nDone = await line(f, 'nas-nfs', 'done');
 			r = await says(t, f, [nDone]);
 			await t.check(`${look} nfs: the done line once the check passes`, r.ok && r.p.lineId === 'done', show(r.p));

@@ -579,7 +579,9 @@
       this.loopSnd('work', this.work ? 1 : 0);
       this.loopSnd('power', Math.min(1, this.power / 2));
       // a new screen's line starts at once; changes within a screen take their turn (see say)
-      const fresh = spec.sayNow || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
+      const owned = this.speechOperation, next = spec.speechOperation;
+      const staleOperation = owned && next && owned.screen === next.screen && owned.state !== next.state;
+      const fresh = spec.sayNow || staleOperation || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
       if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh);
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
@@ -631,6 +633,7 @@
       const b = this.bubble, S = snd();
       if (this.typeT) this.typeT.cancel();
       this.saying = text;
+      this.speechOperation = this.spec && this.spec.speechOperationText === text ? this.spec.speechOperation : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
       let r = null;

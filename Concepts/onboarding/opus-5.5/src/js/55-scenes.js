@@ -218,6 +218,20 @@
       out.label = O55.t('pip.stage.labels.oops');
       out.oops = o.oops.key || 'unknown';
     }
+    /* NAS result speech belongs to the current operation, including its input key. The rig can invalidate
+       that speech when the result changes, without interrupting hover, typing or other unrelated speech. */
+    let check = null;
+    if (/^nas-(smb|nfs|mounted)$/.test(id)) {
+      const key = O55.nas.checkKey(S, id), st = shareCheck(S, id);
+      check = key + ':' + (st ? st.state : 'none');
+    } else if (id === 'nas-install') {
+      const n = S.sess.nas || {}, key = n.opKey || 'sshinstall:' + (n.device || '') + ':' + (n.key || 'new');
+      const st = op(S, key); check = key + ':' + (st ? st.state : 'none');
+    }
+    if (check !== null) {
+      out.speechOperation = { screen: id, state: check };
+      if (o.oops || (!h && !o.typing)) out.speechOperationText = out.say;
+    }
     return out;
   }
   O55.pipScenes = { spec, SCREENS, FACES, line };
