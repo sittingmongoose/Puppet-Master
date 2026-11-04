@@ -5,7 +5,7 @@
   "evidence_level": "static_contract_examples_only",
   "native_runtime_executed": false,
   "source_companion_ref": "Plans/projects_refresh_command_bindings.json",
-  "source_companion_sha256": "f7995454f0a01dddbe8bd5e182a4677f9333a5a577c48195b57e0b4e37782a89",
+  "source_companion_sha256": "3738f2a1e52abb01c6244968121d06784544760d98e6d146bc06d36e7547b566",
   "projects_refresh_cases": [
     {
       "case_id": "fd-binding-commands",
@@ -3484,8 +3484,8 @@
             "command_id": "cmd.chat.attachment.add",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
             "handler": "handlers::chat_attachments::attachment_add",
-            "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV2",
-            "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV2",
+            "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV3",
+            "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV3",
             "group": "no_project",
             "gui_consumers": [
               "Puppet Master Assistant > composer.attach"
@@ -20226,8 +20226,8 @@
             "command_id": "cmd.project_template.create_project",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_create_project",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -20275,8 +20275,8 @@
             "command_id": "cmd.project_template.delete",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_delete",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -20324,8 +20324,8 @@
             "command_id": "cmd.project_template.rename",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_rename",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -20373,8 +20373,8 @@
             "command_id": "cmd.project_template.save",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_save",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -21002,7 +21002,7 @@
             "command_id": "cmd.settings.transaction.apply",
             "owner_ref": "Plans/Settings_System.md#SSYS-059",
             "handler": "handlers::settings::transaction_apply",
-            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v2",
+            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v3",
             "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
             "group": "settings",
             "gui_consumers": [
@@ -21051,8 +21051,8 @@
             "command_id": "cmd.settings.transaction.preview",
             "owner_ref": "Plans/Settings_System.md#SSYS-059",
             "handler": "handlers::settings::transaction_preview",
-            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2",
-            "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2",
+            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+            "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v3",
             "group": "settings",
             "gui_consumers": [
               "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper / Pip parts editor (Settings, wand, title bar) / status bar Numbers or Words"
@@ -21100,7 +21100,7 @@
             "command_id": "cmd.settings.transaction.rollback",
             "owner_ref": "Plans/Settings_System.md#SSYS-059",
             "handler": "handlers::settings::transaction_rollback",
-            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v2",
+            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v3",
             "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
             "group": "settings",
             "gui_consumers": [
@@ -31125,8 +31125,8 @@
             "command_id": "cmd.chat.attachment.add",
             "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
             "handler": "handlers::chat_attachments::attachment_add",
-            "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV2",
-            "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV2",
+            "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV3",
+            "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV3",
             "group": "no_project",
             "gui_consumers": [
               "Puppet Master Assistant > composer.attach"
@@ -47867,8 +47867,8 @@
             "command_id": "cmd.project_template.create_project",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_create_project",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -47916,8 +47916,8 @@
             "command_id": "cmd.project_template.delete",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_delete",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -47965,8 +47965,8 @@
             "command_id": "cmd.project_template.rename",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_rename",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -48014,8 +48014,8 @@
             "command_id": "cmd.project_template.save",
             "owner_ref": "Plans/Project_System.md#PJCT-011",
             "handler": "handlers::project::template_save",
-            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+            "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+            "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
             "group": "projects",
             "gui_consumers": [
               "Projects page; K3 Project manager; Product Onboarding First Project; palette/API"
@@ -48643,7 +48643,7 @@
             "command_id": "cmd.settings.transaction.apply",
             "owner_ref": "Plans/Settings_System.md#SSYS-059",
             "handler": "handlers::settings::transaction_apply",
-            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v2",
+            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v3",
             "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
             "group": "settings",
             "gui_consumers": [
@@ -48692,8 +48692,8 @@
             "command_id": "cmd.settings.transaction.preview",
             "owner_ref": "Plans/Settings_System.md#SSYS-059",
             "handler": "handlers::settings::transaction_preview",
-            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2",
-            "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2",
+            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+            "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v3",
             "group": "settings",
             "gui_consumers": [
               "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper / Pip parts editor (Settings, wand, title bar) / status bar Numbers or Words"
@@ -48741,7 +48741,7 @@
             "command_id": "cmd.settings.transaction.rollback",
             "owner_ref": "Plans/Settings_System.md#SSYS-059",
             "handler": "handlers::settings::transaction_rollback",
-            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v2",
+            "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v3",
             "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
             "group": "settings",
             "gui_consumers": [

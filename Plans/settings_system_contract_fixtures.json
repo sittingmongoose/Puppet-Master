@@ -5812,6 +5812,1230 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-everywhere-preview",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-reject-fabricated-thread-everywhere",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          },
+          "thread_id": "fabricated-thread"
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-everywhere-apply",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.apply.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.apply",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_generation": 1,
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_receipt_refs": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.apply",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-everywhere-rollback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.rollback.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.rollback",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "destination_target": {
+          "level": "everywhere",
+          "level_key": "everywhere",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "preview_id": "preview-everywhere",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_generation": 1,
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_receipt_refs": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.rollback",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-computer-preview",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-reject-fabricated-thread-computer",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          },
+          "thread_id": "fabricated-thread"
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-computer-apply",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.apply.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.apply",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "destination_target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "preview_id": "preview-computer",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_generation": 1,
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_receipt_refs": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.apply",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-computer-rollback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.rollback.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.rollback",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "destination_target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "preview_id": "preview-computer",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_generation": 1,
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_receipt_refs": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.rollback",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-reject-thread-origin-without-thread",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "thread"
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "computer",
+          "level_key": "computer-a",
+          "computer_key": {
+            "kind": "server",
+            "id": "server-a"
+          },
+          "project_id": null,
+          "client_id": null,
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.interaction.mode"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.interaction.mode": "eli5"
+        },
+        "expected_setting_revisions": {
+          "general.interaction.mode": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-device-preview",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "device",
+          "level_key": "device-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.visual.reduce-animations"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.visual.reduce-animations": true
+        },
+        "expected_setting_revisions": {
+          "general.visual.reduce-animations": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-reject-fabricated-thread-device",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          },
+          "thread_id": "fabricated-thread"
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "device",
+          "level_key": "device-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.visual.reduce-animations"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.visual.reduce-animations": true
+        },
+        "expected_setting_revisions": {
+          "general.visual.reduce-animations": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-device-apply",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.apply.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.apply",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "destination_target": {
+          "level": "device",
+          "level_key": "device-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "preview_id": "preview-device",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_generation": 1,
+        "expected_setting_revisions": {
+          "general.visual.reduce-animations": 1
+        },
+        "owner_receipt_refs": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.apply",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-threadless-device-rollback",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.rollback.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.rollback",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "destination_target": {
+          "level": "device",
+          "level_key": "device-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "client-a",
+          "provider_id": null,
+          "account_id": null
+        },
+        "preview_id": "preview-device",
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "expected_generation": 1,
+        "expected_setting_revisions": {
+          "general.visual.reduce-animations": 1
+        },
+        "owner_receipt_refs": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.rollback",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-settings-reject-wrong-device",
+      "schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "record": {
+        "schema_id": "pm.settings.layered.preview.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.settings.transaction.preview",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "person-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "expected_generation": 1,
+          "return_context_ref": "return-a",
+          "origin": {
+            "kind": "settings_surface",
+            "initiating_client_id": "client-a",
+            "route_ref": "settings",
+            "focus_ref": "control-a",
+            "context_revision": 1
+          }
+        },
+        "operation": "edit",
+        "source_target": null,
+        "destination_target": {
+          "level": "device",
+          "level_key": "device-a",
+          "computer_key": null,
+          "project_id": null,
+          "client_id": "other-client",
+          "provider_id": null,
+          "account_id": null
+        },
+        "copy_basis": "own_values",
+        "selectors": [],
+        "picked_setting_ids": [
+          "general.visual.reduce-animations"
+        ],
+        "include_project_only": false,
+        "proposed_values": {
+          "general.visual.reduce-animations": true
+        },
+        "expected_setting_revisions": {
+          "general.visual.reduce-animations": 1
+        },
+        "owner_thing_previews": []
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "contexts.settings_target",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.settings.transaction.preview",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }

@@ -28776,7 +28776,9 @@ canonical_text: 'No project is a first-class chat place with project_id=null, sc
   Plan/schedules/conversion, then cross-project reads/requests, then computer use/continue elsewhere/cross-computer
   conversion; unfinished routes disclose typed unavailability. The shared CV-365 execution envelope permits explicit
   empty admitted roots and null working_directory for talk-only/internal planning. The actual granted or newly created
-  folder supplies process cwd; no HOME or viewing-device fallback is inferred.'
+  folder supplies process cwd; no HOME or viewing-device fallback is inferred.
+
+  Pre-message intake selects AttachmentAddRequestV3/ResultV3 and AttachmentOwnerContextV1: draft_id/revision, actual Computer/Environment/roots, initiating Client, exact composer destination/generation, source digest/read grant and idempotency remain draft-owned. First-message commit alone mints the real thread and performs AttachmentDraftAdoptionV1 once against the complete immutable attachment manifest and both writer generations. Exact retry returns the same adoption receipt; conflicting digest/generation refuses and preserves the draft. Cancellation before commit cleans only unheld draft payloads after the owner receipt; late intake never inserts into a different composer. No first-message evidence means no adoption and no early thread creation.'
 gui_related: true
 gui_classification_reason: Defines user-visible availability, controls, preview, scope or outcome.
 depends_on:

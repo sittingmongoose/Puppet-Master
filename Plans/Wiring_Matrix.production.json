@@ -4485,8 +4485,8 @@
         "Assert cmd.chat.attachment.add records only its typed result, receipt, or projection and emits no unregistered persisted domain event.",
         "Assert a refusal, a stale target, or an idempotent replay produces no duplicate durable effect."
       ],
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV2"
+      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddRequestV3",
+      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentAddResultV3"
     },
     "assistant.redesign.w_003.chat_attachment_download": {
       "ui_element_id": "assistant.redesign.w_003.chat_attachment_download",
@@ -54179,8 +54179,8 @@
       "evidence_required": "Future production evidence for cmd.project_template.create_project: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::project::template_create_project",
-      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
       "state_selector": "state.commands.project_template_create_project.availability",
       "test_evidence": [
         {
@@ -54258,8 +54258,8 @@
       "evidence_required": "Future production evidence for cmd.project_template.delete: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::project::template_delete",
-      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
       "state_selector": "state.commands.project_template_delete.availability",
       "test_evidence": [
         {
@@ -54337,8 +54337,8 @@
       "evidence_required": "Future production evidence for cmd.project_template.rename: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::project::template_rename",
-      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
       "state_selector": "state.commands.project_template_rename.availability",
       "test_evidence": [
         {
@@ -54416,8 +54416,8 @@
       "evidence_required": "Future production evidence for cmd.project_template.save: source-hashed dispatcher and native handler, typed request/result fixtures, state and disabled-reason fixtures, permission/FileSafe/currentness/idempotency and restart/race negatives, receipt/projection assertion with zero unregistered events, render/control/accessibility evidence, and exact reverse coverage. This production-intent row alone proves none of those runtime facts.",
       "expected_event_types": [],
       "handler_location": "handlers::project::template_save",
-      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV2",
-      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV2",
+      "request_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandRequestV3",
+      "result_schema_ref": "Plans/project_system_contracts.schema.json#/$defs/ProjectCompositionCommandResultV3",
       "state_selector": "state.commands.project_template_save.availability",
       "test_evidence": [
         {
@@ -64775,7 +64775,7 @@
       "ui_location": "Settings K3 workspace > confirmed current transaction preview; Project-owner commit chain applying the SSYS-036 explicitly selected settings copy after Project commit; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper / Pip parts editor (Settings, wand, title bar) / status bar Numbers or Words; Projects refresh reverse consumers: Settings level panel/manager/Transfer/History; hosted All uses Everywhere; New Project/onboarding/copy",
       "ui_command_id": "cmd.settings.transaction.apply",
       "handler_location": "handlers::settings::transaction_apply",
-      "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v2",
+      "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_apply_request_v3",
       "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
       "expected_event_types": [],
       "acceptance_checks": [
@@ -64870,8 +64870,8 @@
       "ui_location": "Settings K3 workspace > every pending value, import, reset, and bulk-change review; Product Onboarding uncreated Project Copy settings from preview and postcommit rebind through SSYS-036; the title-bar theme selector's family rows and NieR Mode checkbox, the Guided Tour bar's Look menu (family, Light/Dark, NieR Mode) and sound control, and every live edit in the NieR Mode editor popup (presets, parts, background, its Turn on) (SSYS-043, DL-153); Usage page > Accounts room > provider plate Auto-switch toggle and switch-level stepper and menu (its Shared setting choice sends inherit), and the same controls on the Accounts hero cells and the Overview headroom card, at scope provider (SSYS-044, MA-073); Usage page > Accounts room > each account's switch-level button and menu on its account card (its Follow choice sends inherit) and the Switch at N% used action in that account's Details, at scope account with the account id (SSYS-044, D43 2026-10-10); both Customize screens All scope and all exact Settings ids in Plans/pm7_control_bindings.json, including Wallpaper / Pip parts editor (Settings, wand, title bar) / status bar Numbers or Words; Projects refresh reverse consumers: Settings level panel/manager/Transfer/History; hosted All uses Everywhere; New Project/onboarding/copy",
       "ui_command_id": "cmd.settings.transaction.preview",
       "handler_location": "handlers::settings::transaction_preview",
-      "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v2",
-      "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v2",
+      "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_request_v3",
+      "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_preview_v3",
       "expected_event_types": [],
       "acceptance_checks": [
         "Resolve exact stable setting IDs and owner routes without committing",
@@ -64965,7 +64965,7 @@
       "ui_location": "Settings K3 workspace > eligible transaction receipt and recovery surface; Projects refresh reverse consumers: Settings level panel/manager/Transfer/History; hosted All uses Everywhere; New Project/onboarding/copy",
       "ui_command_id": "cmd.settings.transaction.rollback",
       "handler_location": "handlers::settings::transaction_rollback",
-      "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v2",
+      "request_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_rollback_request_v3",
       "result_schema_ref": "Plans/settings_system_contracts.schema.json#/$defs/settings_transaction_result_v2",
       "expected_event_types": [],
       "acceptance_checks": [

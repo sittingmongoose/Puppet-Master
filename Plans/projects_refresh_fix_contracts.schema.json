@@ -2401,6 +2401,419 @@
           "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultApplicationV2"
         }
       ]
+    },
+    "SettingsOperationContextV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "storage_instance_id",
+        "command_instance_id",
+        "idempotency_key",
+        "actor_ref",
+        "permission_evidence",
+        "writer_evidence",
+        "expected_generation",
+        "return_context_ref",
+        "origin"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "origin": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "initiating_client_id",
+                "route_ref",
+                "focus_ref",
+                "context_revision"
+              ],
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "settings_surface",
+                    "setup"
+                  ]
+                },
+                "initiating_client_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "route_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "focus_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "context_revision": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "kind",
+                "thread_context"
+              ],
+              "properties": {
+                "kind": {
+                  "const": "thread"
+                },
+                "thread_context": {
+                  "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AttachmentOwnerContextV1": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner_kind",
+            "draft_id",
+            "scope",
+            "storage_instance_id",
+            "execution_host_id",
+            "execution_environment_id",
+            "roots",
+            "initiating_client_id",
+            "composer_destination_ref",
+            "composer_generation",
+            "expected_draft_revision",
+            "command_instance_id",
+            "idempotency_key",
+            "actor_ref",
+            "permission_evidence",
+            "writer_evidence",
+            "return_context_ref"
+          ],
+          "properties": {
+            "owner_kind": {
+              "const": "draft"
+            },
+            "draft_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "scope": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "execution_host_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "execution_environment_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "roots": {
+              "type": "array",
+              "items": {
+                "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowRootRefV1"
+              },
+              "uniqueItems": true
+            },
+            "initiating_client_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "composer_destination_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "composer_generation": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expected_draft_revision": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "command_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "idempotency_key": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "actor_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "permission_evidence": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            "writer_evidence": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+            },
+            "return_context_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "owner_kind",
+            "context",
+            "initiating_client_id",
+            "composer_destination_ref",
+            "composer_generation"
+          ],
+          "properties": {
+            "owner_kind": {
+              "const": "thread"
+            },
+            "context": {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+            },
+            "initiating_client_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "composer_destination_ref": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "composer_generation": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "AttachmentDraftAdoptionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "draft_id",
+        "expected_draft_revision",
+        "composer_destination_ref",
+        "composer_generation",
+        "attachment_manifest_ref",
+        "attachment_manifest_sha256",
+        "destination_thread_id",
+        "first_message_evidence",
+        "adoption_idempotency_key",
+        "draft_writer_evidence",
+        "destination_writer_evidence",
+        "return_context_ref"
+      ],
+      "properties": {
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "expected_draft_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "composer_destination_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "composer_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attachment_manifest_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "attachment_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "destination_thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "first_message_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "adoption_idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "draft_writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "destination_writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "StarterCatalogContextV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "storage_instance_id",
+        "command_instance_id",
+        "idempotency_key",
+        "actor_ref",
+        "permission_evidence",
+        "writer_evidence",
+        "expected_generation",
+        "return_context_ref",
+        "initiating_client_id",
+        "route_ref",
+        "focus_ref",
+        "context_revision"
+      ],
+      "properties": {
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "command_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "permission_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "writer_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "expected_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "initiating_client_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "route_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "focus_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "context_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
     }
   }
 }
