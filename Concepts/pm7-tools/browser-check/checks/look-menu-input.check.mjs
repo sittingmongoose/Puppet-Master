@@ -37,4 +37,22 @@ export default async function(t) {
     const note=document.querySelector('.o55-lookslot [role="note"]');
     return q.getAttribute('aria-expanded') === 'true' && !!note && q.getAttribute('aria-controls') === note.id && !!q.getAttribute('aria-label') && note.querySelector('.o55-sr').textContent === note.querySelector('.o55-explainer-w').textContent;
   }));
+  const adjust = f.locator('.o55-lookslot .o55-tipq[data-arg="lookNierAdjust:nier-adjust"]');
+  await adjust.click(); // close the note opened by the keyboard case
+  for (const [width,height] of [[1280,500],[740,768],[860,900],[1024,900],[1280,900],[1390,900],[1920,1080]]) {
+    await t.viewport(width,height);
+    for (const mode of ['light','dark']) {
+      await f.locator(`.o55-lookslot [data-o55-do="lookMode"][data-arg="${mode}"]`).click();
+      for (const wording of ['ELI5','Expert']) {
+        await f.evaluate(m => window.O55.talk.set(m,'menu-input-check'),wording);
+        await adjust.click();
+        const result = await reachableMenuLines(t,f,'lookNierAdjust:nier-adjust');
+        const actual = await f.evaluate(() => window.O55.theme().mode);
+        t.log(JSON.stringify({width,height,mode,wording,actual,...result}));
+        await t.check(`FO-56 Adjust NieR ${mode}/${wording} ${width}x${height}: every line reachable in the actual selected mode`,actual === mode && result.ok);
+        await adjust.click();
+      }
+    }
+  }
+
 }

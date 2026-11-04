@@ -65,6 +65,7 @@ export default async function (t) {
         const observations = [];
         for (const id of menuIds.filter(id => family === 'nier' || !id.startsWith('lookNierAdjust'))) {
           if (id.startsWith('lookMode:')) await f.locator(`.o55-lookslot [data-o55-do="lookMode"][data-arg="${id.split(':')[1]}"]`).click();
+          if (id.startsWith('lookNierAdjust:')) await f.locator(`.o55-lookslot [data-o55-do="lookMode"][data-arg="${themeMode}"]`).click();
           const q = f.locator(`.o55-lookslot .o55-tipq[data-arg="${id}"]`);
           await q.click();
           const expected = tips.find(x => x.g === 'chrome' && x.id === id)[key];
