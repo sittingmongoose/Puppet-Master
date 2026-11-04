@@ -5950,6 +5950,630 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-backup-create-absent-cas",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_policy_first_write_v2",
+      "record": {
+        "command_id": "cmd.backup.policy.update",
+        "write_kind": "create_if_absent",
+        "server_id": "server:home-01",
+        "project_id": "project:alpha",
+        "policy_key": "policy-a",
+        "expected_revision": null,
+        "expected_absent": true,
+        "policy": {
+          "schema_id": "pm.backup_restore_system.backup_policy.v2",
+          "schema_version": "2.0.0",
+          "backup_policy_id": "backup-policy:project-alpha",
+          "policy_revision": 1,
+          "policy_origin": "new_v2_default",
+          "initial_policy_seed_id": "backup-policy-seed:2026-09-01-7-4-6",
+          "scope_review_status": "not_required",
+          "scope_review_receipt_ref": null,
+          "scope": "project_backup",
+          "server_id": "server:home-01",
+          "project_ids": [
+            "project:alpha"
+          ],
+          "repository_binding_ids": [
+            "repository-binding:project-alpha"
+          ],
+          "destination_binding_ids": [
+            "backup-destination:nas",
+            "backup-destination:b2"
+          ],
+          "mode": "automatic",
+          "schedule_ref": "schedule:project-alpha",
+          "schedule_policy": {
+            "timezone": "America/New_York",
+            "daily_local_time": "02:30",
+            "dst_policy": "next_valid_time_after_gap",
+            "catch_up_policy": "coalesce_one_missed",
+            "permitted_hours_ref": null,
+            "minimum_spacing_seconds": 21600
+          },
+          "included_family_ids": [
+            "project.settings",
+            "project.files",
+            "project.source_git_jj_closure"
+          ],
+          "excluded_family_ids": [
+            "tsnet.identity_keys_state_enrollment"
+          ],
+          "source_code_inclusion_mode": "complete_project_source_git_jj",
+          "portable_secret_envelope": "excluded",
+          "verification_policy": "required",
+          "test_restore_policy": "scheduled_by_ref",
+          "retention_rules": [
+            {
+              "rule_id": "retention-rule:daily",
+              "rule_kind": "keep_daily",
+              "count": 7,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:weekly",
+              "rule_kind": "keep_weekly",
+              "count": 4,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:monthly",
+              "rule_kind": "keep_monthly",
+              "count": 6,
+              "minimum_age_seconds": 0
+            }
+          ],
+          "protection_policy_ref": "protection-policy:project-alpha",
+          "created_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:00:00Z"
+        },
+        "destination_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-backup-create-needs-absence",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_policy_first_write_v2",
+      "record": {
+        "command_id": "cmd.backup.policy.update",
+        "write_kind": "create_if_absent",
+        "server_id": "server:home-01",
+        "project_id": "project:alpha",
+        "policy_key": "policy-a",
+        "expected_revision": null,
+        "expected_absent": false,
+        "policy": {
+          "schema_id": "pm.backup_restore_system.backup_policy.v2",
+          "schema_version": "2.0.0",
+          "backup_policy_id": "backup-policy:project-alpha",
+          "policy_revision": 1,
+          "policy_origin": "new_v2_default",
+          "initial_policy_seed_id": "backup-policy-seed:2026-09-01-7-4-6",
+          "scope_review_status": "not_required",
+          "scope_review_receipt_ref": null,
+          "scope": "project_backup",
+          "server_id": "server:home-01",
+          "project_ids": [
+            "project:alpha"
+          ],
+          "repository_binding_ids": [
+            "repository-binding:project-alpha"
+          ],
+          "destination_binding_ids": [
+            "backup-destination:nas",
+            "backup-destination:b2"
+          ],
+          "mode": "automatic",
+          "schedule_ref": "schedule:project-alpha",
+          "schedule_policy": {
+            "timezone": "America/New_York",
+            "daily_local_time": "02:30",
+            "dst_policy": "next_valid_time_after_gap",
+            "catch_up_policy": "coalesce_one_missed",
+            "permitted_hours_ref": null,
+            "minimum_spacing_seconds": 21600
+          },
+          "included_family_ids": [
+            "project.settings",
+            "project.files",
+            "project.source_git_jj_closure"
+          ],
+          "excluded_family_ids": [
+            "tsnet.identity_keys_state_enrollment"
+          ],
+          "source_code_inclusion_mode": "complete_project_source_git_jj",
+          "portable_secret_envelope": "excluded",
+          "verification_policy": "required",
+          "test_restore_policy": "scheduled_by_ref",
+          "retention_rules": [
+            {
+              "rule_id": "retention-rule:daily",
+              "rule_kind": "keep_daily",
+              "count": 7,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:weekly",
+              "rule_kind": "keep_weekly",
+              "count": 4,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:monthly",
+              "rule_kind": "keep_monthly",
+              "count": 6,
+              "minimum_age_seconds": 0
+            }
+          ],
+          "protection_policy_ref": "protection-policy:project-alpha",
+          "created_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:00:00Z"
+        },
+        "destination_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-backup-create-no-existing-revision",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_policy_first_write_v2",
+      "record": {
+        "command_id": "cmd.backup.policy.update",
+        "write_kind": "create_if_absent",
+        "server_id": "server:home-01",
+        "project_id": "project:alpha",
+        "policy_key": "policy-a",
+        "expected_revision": 0,
+        "expected_absent": true,
+        "policy": {
+          "schema_id": "pm.backup_restore_system.backup_policy.v2",
+          "schema_version": "2.0.0",
+          "backup_policy_id": "backup-policy:project-alpha",
+          "policy_revision": 1,
+          "policy_origin": "new_v2_default",
+          "initial_policy_seed_id": "backup-policy-seed:2026-09-01-7-4-6",
+          "scope_review_status": "not_required",
+          "scope_review_receipt_ref": null,
+          "scope": "project_backup",
+          "server_id": "server:home-01",
+          "project_ids": [
+            "project:alpha"
+          ],
+          "repository_binding_ids": [
+            "repository-binding:project-alpha"
+          ],
+          "destination_binding_ids": [
+            "backup-destination:nas",
+            "backup-destination:b2"
+          ],
+          "mode": "automatic",
+          "schedule_ref": "schedule:project-alpha",
+          "schedule_policy": {
+            "timezone": "America/New_York",
+            "daily_local_time": "02:30",
+            "dst_policy": "next_valid_time_after_gap",
+            "catch_up_policy": "coalesce_one_missed",
+            "permitted_hours_ref": null,
+            "minimum_spacing_seconds": 21600
+          },
+          "included_family_ids": [
+            "project.settings",
+            "project.files",
+            "project.source_git_jj_closure"
+          ],
+          "excluded_family_ids": [
+            "tsnet.identity_keys_state_enrollment"
+          ],
+          "source_code_inclusion_mode": "complete_project_source_git_jj",
+          "portable_secret_envelope": "excluded",
+          "verification_policy": "required",
+          "test_restore_policy": "scheduled_by_ref",
+          "retention_rules": [
+            {
+              "rule_id": "retention-rule:daily",
+              "rule_kind": "keep_daily",
+              "count": 7,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:weekly",
+              "rule_kind": "keep_weekly",
+              "count": 4,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:monthly",
+              "rule_kind": "keep_monthly",
+              "count": 6,
+              "minimum_age_seconds": 0
+            }
+          ],
+          "protection_policy_ref": "protection-policy:project-alpha",
+          "created_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:00:00Z"
+        },
+        "destination_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-backup-update-revision-cas",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_policy_first_write_v2",
+      "record": {
+        "command_id": "cmd.backup.policy.update",
+        "write_kind": "update_existing",
+        "server_id": "server:home-01",
+        "project_id": "project:alpha",
+        "policy_key": "policy-a",
+        "expected_revision": 0,
+        "expected_absent": false,
+        "policy": {
+          "schema_id": "pm.backup_restore_system.backup_policy.v2",
+          "schema_version": "2.0.0",
+          "backup_policy_id": "backup-policy:project-alpha",
+          "policy_revision": 1,
+          "policy_origin": "new_v2_default",
+          "initial_policy_seed_id": "backup-policy-seed:2026-09-01-7-4-6",
+          "scope_review_status": "not_required",
+          "scope_review_receipt_ref": null,
+          "scope": "project_backup",
+          "server_id": "server:home-01",
+          "project_ids": [
+            "project:alpha"
+          ],
+          "repository_binding_ids": [
+            "repository-binding:project-alpha"
+          ],
+          "destination_binding_ids": [
+            "backup-destination:nas",
+            "backup-destination:b2"
+          ],
+          "mode": "automatic",
+          "schedule_ref": "schedule:project-alpha",
+          "schedule_policy": {
+            "timezone": "America/New_York",
+            "daily_local_time": "02:30",
+            "dst_policy": "next_valid_time_after_gap",
+            "catch_up_policy": "coalesce_one_missed",
+            "permitted_hours_ref": null,
+            "minimum_spacing_seconds": 21600
+          },
+          "included_family_ids": [
+            "project.settings",
+            "project.files",
+            "project.source_git_jj_closure"
+          ],
+          "excluded_family_ids": [
+            "tsnet.identity_keys_state_enrollment"
+          ],
+          "source_code_inclusion_mode": "complete_project_source_git_jj",
+          "portable_secret_envelope": "excluded",
+          "verification_policy": "required",
+          "test_restore_policy": "scheduled_by_ref",
+          "retention_rules": [
+            {
+              "rule_id": "retention-rule:daily",
+              "rule_kind": "keep_daily",
+              "count": 7,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:weekly",
+              "rule_kind": "keep_weekly",
+              "count": 4,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:monthly",
+              "rule_kind": "keep_monthly",
+              "count": 6,
+              "minimum_age_seconds": 0
+            }
+          ],
+          "protection_policy_ref": "protection-policy:project-alpha",
+          "created_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:00:00Z"
+        },
+        "destination_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-backup-update-null-revision",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_policy_first_write_v2",
+      "record": {
+        "command_id": "cmd.backup.policy.update",
+        "write_kind": "update_existing",
+        "server_id": "server:home-01",
+        "project_id": "project:alpha",
+        "policy_key": "policy-a",
+        "expected_revision": null,
+        "expected_absent": false,
+        "policy": {
+          "schema_id": "pm.backup_restore_system.backup_policy.v2",
+          "schema_version": "2.0.0",
+          "backup_policy_id": "backup-policy:project-alpha",
+          "policy_revision": 1,
+          "policy_origin": "new_v2_default",
+          "initial_policy_seed_id": "backup-policy-seed:2026-09-01-7-4-6",
+          "scope_review_status": "not_required",
+          "scope_review_receipt_ref": null,
+          "scope": "project_backup",
+          "server_id": "server:home-01",
+          "project_ids": [
+            "project:alpha"
+          ],
+          "repository_binding_ids": [
+            "repository-binding:project-alpha"
+          ],
+          "destination_binding_ids": [
+            "backup-destination:nas",
+            "backup-destination:b2"
+          ],
+          "mode": "automatic",
+          "schedule_ref": "schedule:project-alpha",
+          "schedule_policy": {
+            "timezone": "America/New_York",
+            "daily_local_time": "02:30",
+            "dst_policy": "next_valid_time_after_gap",
+            "catch_up_policy": "coalesce_one_missed",
+            "permitted_hours_ref": null,
+            "minimum_spacing_seconds": 21600
+          },
+          "included_family_ids": [
+            "project.settings",
+            "project.files",
+            "project.source_git_jj_closure"
+          ],
+          "excluded_family_ids": [
+            "tsnet.identity_keys_state_enrollment"
+          ],
+          "source_code_inclusion_mode": "complete_project_source_git_jj",
+          "portable_secret_envelope": "excluded",
+          "verification_policy": "required",
+          "test_restore_policy": "scheduled_by_ref",
+          "retention_rules": [
+            {
+              "rule_id": "retention-rule:daily",
+              "rule_kind": "keep_daily",
+              "count": 7,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:weekly",
+              "rule_kind": "keep_weekly",
+              "count": 4,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:monthly",
+              "rule_kind": "keep_monthly",
+              "count": 6,
+              "minimum_age_seconds": 0
+            }
+          ],
+          "protection_policy_ref": "protection-policy:project-alpha",
+          "created_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:00:00Z"
+        },
+        "destination_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "sweep-l3-backup-update-not-absent",
+      "schema_ref": "Plans/backup_restore_system_contracts.schema.json#/$defs/backup_policy_first_write_v2",
+      "record": {
+        "command_id": "cmd.backup.policy.update",
+        "write_kind": "update_existing",
+        "server_id": "server:home-01",
+        "project_id": "project:alpha",
+        "policy_key": "policy-a",
+        "expected_revision": 0,
+        "expected_absent": true,
+        "policy": {
+          "schema_id": "pm.backup_restore_system.backup_policy.v2",
+          "schema_version": "2.0.0",
+          "backup_policy_id": "backup-policy:project-alpha",
+          "policy_revision": 1,
+          "policy_origin": "new_v2_default",
+          "initial_policy_seed_id": "backup-policy-seed:2026-09-01-7-4-6",
+          "scope_review_status": "not_required",
+          "scope_review_receipt_ref": null,
+          "scope": "project_backup",
+          "server_id": "server:home-01",
+          "project_ids": [
+            "project:alpha"
+          ],
+          "repository_binding_ids": [
+            "repository-binding:project-alpha"
+          ],
+          "destination_binding_ids": [
+            "backup-destination:nas",
+            "backup-destination:b2"
+          ],
+          "mode": "automatic",
+          "schedule_ref": "schedule:project-alpha",
+          "schedule_policy": {
+            "timezone": "America/New_York",
+            "daily_local_time": "02:30",
+            "dst_policy": "next_valid_time_after_gap",
+            "catch_up_policy": "coalesce_one_missed",
+            "permitted_hours_ref": null,
+            "minimum_spacing_seconds": 21600
+          },
+          "included_family_ids": [
+            "project.settings",
+            "project.files",
+            "project.source_git_jj_closure"
+          ],
+          "excluded_family_ids": [
+            "tsnet.identity_keys_state_enrollment"
+          ],
+          "source_code_inclusion_mode": "complete_project_source_git_jj",
+          "portable_secret_envelope": "excluded",
+          "verification_policy": "required",
+          "test_restore_policy": "scheduled_by_ref",
+          "retention_rules": [
+            {
+              "rule_id": "retention-rule:daily",
+              "rule_kind": "keep_daily",
+              "count": 7,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:weekly",
+              "rule_kind": "keep_weekly",
+              "count": 4,
+              "minimum_age_seconds": 0
+            },
+            {
+              "rule_id": "retention-rule:monthly",
+              "rule_kind": "keep_monthly",
+              "count": 6,
+              "minimum_age_seconds": 0
+            }
+          ],
+          "protection_policy_ref": "protection-policy:project-alpha",
+          "created_at_utc": "2026-09-01T00:00:00Z",
+          "updated_at_utc": "2026-09-01T00:00:00Z"
+        },
+        "destination_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "idempotency_key": "key-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [],
+      "native_runtime_executed": false
     }
   ]
 }
