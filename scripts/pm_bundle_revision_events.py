@@ -67,7 +67,13 @@ def main():
         for field, value in [('unknown', True), ('annotation_ids', []), ('annotation_ids', ['a', 'a']),
                              ('effective_revision_capability', 'unvalidated'), ('schema_version', '2.0.0'), ('phase_sequence', -1),
                              ('event_type', 'bundle.revision_sibling'), ('ts', 'yesterday')]:
-            p = copy.deepcopy(payload); p[field] = value; mutations.append((p, envelope, previous))
+            p = copy.deepcopy(payload); p[field] = value
+            e = copy.deepcopy(envelope); prev = copy.deepcopy(previous)
+            # Identity and predecessor observations must not mask a schema defect.
+            e['event_id'], e['idempotency_key'] = identity(p)
+            if prev is not None and field in ('annotation_ids', 'effective_revision_capability'):
+                prev[field] = copy.deepcopy(value)
+            mutations.append((p, e, prev))
         for field, value in [('event_id', 'wrong'), ('idempotency_key', 'wrong'), ('scope_kind', 'application'),
                              ('project_id', 'other'), ('thread_id', 'other'), ('correlation_id', 'other'),
                              ('causation_event_id', 'other'), ('run_id', 'run'), ('attempt_id', 'attempt'),

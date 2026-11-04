@@ -42,17 +42,24 @@ def source_reference(row, scenario):
         body=copy.deepcopy(source), readable=True, durable=True, index_durable=True)
 
 
-def seal_originals(scenario):
+def seal_originals(scenario, allow_prepared=False):
     """Issue mutually consistent synthetic originals, never repair real custody."""
     authority = scenario['authority']
     for slot in event_slots(scenario):
         event = slot['prepared_event']
+        if allow_prepared and slot['publication'] == 'prepared' and event['event_id'] not in authority['custody']:
+            if event['event_id'] in authority['events']:
+                authority['events'][event['event_id']] = copy.deepcopy(event)
+            continue
         custody = authority['custody'][event['event_id']]
         custody['scope_partition'] = 'project~' + base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('=')
         custody['producer_semantic_digest'] = m.semantic_digest(event)
         custody['original_event_value_commitment'] = m.commitment(event)
         slot['original_event_value_commitment'] = copy.deepcopy(custody['original_event_value_commitment'])
         authority['events'][event['event_id']] = copy.deepcopy(event)
+    if (scenario['source'].get('prepared_event', {}).get('event_type') == 'wizard.opened' and
+            'opened_source' in authority):
+        authority['opened_source'] = copy.deepcopy(scenario['source'])
     for member in authority.get('restore_admission', {}).get('members', []):
         custody = authority['custody'][member['event_id']]
         for key in ('event_id', 'scope_partition', 'event_type', 'idempotency_key', 'producer_semantic_digest'):
@@ -228,3 +235,44 @@ def event_case_fixture(row, scenario, case):
     refresh_restore(scenario)
     if defect == 'inventory':
         del authority['restored_event_payloads'][ref['blake3']]
+
+
+def writer_policy_fixture(row, scenario, policy='projector_replay_only'):
+    """Change one writer-policy fact, retaining coherent synthetic originals.
+
+    Admission must reject the policy itself, without relying on a stale source,
+    semantic digest, original commitment, restore inventory or overflow pack.
+    """
+    event = scenario['event']
+    event['replay_policy'] = policy
+    for slot in event_slots(scenario):
+        if slot['prepared_event']['event_id'] == event['event_id']:
+            slot['prepared_event']['replay_policy'] = policy
+    if row['event_type'] == 'wizard.opened' and 'opened_source' in scenario['authority']:
+        scenario['authority']['opened_source'] = copy.deepcopy(scenario['source'])
+    seal_originals(scenario, allow_prepared=True)
+    if row['event_type'] == 'wizard.opened' and 'opened_source' in scenario['authority']:
+        scenario['authority']['opened_source'] = copy.deepcopy(scenario['source'])
+    if 'stored_source' in scenario:
+        source_reference(row, scenario)
+    refresh_restore(scenario)
+
+
+def idempotency_key_fixture(row, scenario, key):
+    """One foreign key; all observations of that key stay coherent."""
+    event = scenario['event']
+    event['idempotency_key'] = key
+    for slot in event_slots(scenario):
+        if slot['prepared_event']['event_id'] == event['event_id']:
+            slot['prepared_event']['idempotency_key'] = key
+    if row['event_type'].startswith('wizard.'):
+        ref = row['source_family'] + ':' + key.split(':')[-1]
+        scenario['source']['source_ref'] = event['payload']['source_ref'] = ref
+        scenario['source']['prepared_event']['payload']['source_ref'] = ref
+    scenario['authority']['custody'][event['event_id']]['idempotency_key'] = key
+    if row['event_type'] == 'wizard.opened' and 'opened_source' in scenario['authority']:
+        scenario['authority']['opened_source'] = copy.deepcopy(scenario['source'])
+    seal_originals(scenario)
+    if 'stored_source' in scenario:
+        source_reference(row, scenario)
+    refresh_restore(scenario)

@@ -112,12 +112,14 @@ def audit():
                 incoming.setdefault('retry_request', copy.deepcopy(value['event']))
                 incoming['retry_request']['replay_policy'] = 'projector_replay_only'
                 test(row, 1, 'caller_policy_on_' + case['case_id'], incoming, 'retry', 'replay_only_not_appendable')
-            value['event']['replay_policy'] = 'projector_replay_only'
+            from pm_dcw_event_fixtures import writer_policy_fixture
+            writer_policy_fixture(row, value)
             test(row, 1, 'event_policy_on_' + case['case_id'], value, case['operation'], 'replay_only_not_appendable')
         # 2: project-only families refuse both valid CV-366 and malformed app keys.
         for key in ('application@1:' + b'server'.hex() + ':' + b'operation'.hex(), 'application:server:operation'):
             value = copy.deepcopy(base)
-            value['event'].update(scope_kind='application', project_id=None, idempotency_key=key)
+            from pm_dcw_event_fixtures import idempotency_key_fixture
+            idempotency_key_fixture(row, value, key)
             test(row, 2, key, value, 'append', 'identity')
         # 3: canonical project~ positives are checked by every original_receipt.
         value = copy.deepcopy(base)

@@ -580,7 +580,8 @@ def run(legacy_validate):
                     else:
                         raise AssertionError('reader-only caller retry accepted: ' + case['case_id'])
                     checks += 1
-                scenario['event']['replay_policy'] = 'projector_replay_only'
+                from pm_dcw_event_fixtures import writer_policy_fixture
+                writer_policy_fixture(row, scenario)
                 try:
                     verify(row, scenario, case['operation'], legacy_validate)
                 except Refusal as exc:

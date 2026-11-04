@@ -87,14 +87,8 @@ def additional_checks(rows, results):
         # CV-366 application key and a malformed app key are both foreign keys.
         for key in ('application@1:736572766572:6f7065726174696f6e', 'application:server:operation'):
             value = copy.deepcopy(base)
-            event_id = value['event']['event_id']
-            slot = next(s for s in event_slots(value) if s['prepared_event']['event_id'] == event_id)
-            slot['prepared_event']['idempotency_key'] = value['event']['idempotency_key'] = key
-            if row['event_type'].startswith('wizard.'):
-                source_ref = row['source_family'] + ':' + key.split(':')[-1]
-                slot['source_ref'] = slot['prepared_event']['payload']['source_ref'] = value['event']['payload']['source_ref'] = source_ref
-            value['authority']['custody'][event_id]['idempotency_key'] = key
-            seal_originals(value)
+            from pm_dcw_event_fixtures import idempotency_key_fixture
+            idempotency_key_fixture(row, value, key)
             isolated(row, 2, 'foreign_application_key_' + key, value, 'publish', 'identity', code='identity',
                      validator=legacy_without_identity)
         # 3: one original custody partition, all source and receipt facts intact.

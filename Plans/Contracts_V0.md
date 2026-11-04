@@ -24519,7 +24519,7 @@ canonical_text: '`bundle.revision_requested` has payload schema Plans/event_payl
   The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
   compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
   and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
-  equal this exact payload; node_id, requested_account_ref, effective_account_ref and payload_ref are null; all
+  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all
   migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
   equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
   not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
@@ -24596,7 +24596,7 @@ canonical_text: '`bundle.revision_started` has payload schema Plans/event_payloa
   The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
   compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
   and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
-  equal this exact payload; node_id, requested_account_ref, effective_account_ref and payload_ref are null; all
+  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all
   migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
   equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
   not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
@@ -24673,7 +24673,7 @@ canonical_text: '`bundle.revision_completed` has payload schema Plans/event_payl
   The schema is prepared without registry admission. Normal append refuses projector_replay_only as replay_only_not_appendable;
   compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord
   and Plans/event_record.schema.json, without a local envelope schema. Envelope event_type and payload_schema_id
-  equal this exact payload; node_id, requested_account_ref, effective_account_ref and payload_ref are null; all
+  equal this exact payload; node_id, requested_account_ref and effective_account_ref are null; all
   migration fields are null for current native writes; parent_event_id equals predecessor_event_id, producer_sequence_id
   equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner frozen in SP-579 source,
   not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields. Source/result/prepared-event
@@ -24750,8 +24750,8 @@ canonical_text: '`bundle.revision_interrupted` has payload schema Plans/event_pa
   or alias sibling payloads. The schema is prepared without registry admission. Normal append refuses projector_replay_only
   as replay_only_not_appendable; compatibility history remains passive and cannot select the writer. EventRecord
   follows Contracts_V0.md#EventRecord and Plans/event_record.schema.json, without a local envelope schema. Envelope
-  event_type and payload_schema_id equal this exact payload; node_id, requested_account_ref, effective_account_ref
-  and payload_ref are null; all migration fields are null for current native writes; parent_event_id equals predecessor_event_id,
+  event_type and payload_schema_id equal this exact payload; node_id, requested_account_ref and effective_account_ref
+  are null; all migration fields are null for current native writes; parent_event_id equals predecessor_event_id,
   producer_sequence_id equals phase_sequence, occurred_at_utc equals ts. Actor is the original authenticated owner
   frozen in SP-579 source, not a reader or retry actor. Storage alone assigns sequence/observed/persisted fields.
   Source/result/prepared-event equality is mandatory under SP-579.
