@@ -38,6 +38,13 @@ def schema_validate(path, value):
     jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).validate(value)
 
 
+def validate_append_policy(contract, policy):
+    # Compatibility rebuilds use the read path, never the current append model.
+    require(policy != 'projector_replay_only', 'replay_only_not_appendable')
+    require(contract['replay_policy'] == policy == 'dedupe_by_idempotency_key',
+            'family append replay policy')
+
+
 def source_observation(adapter, records):
     """Derive values and absence from complete owner reads, never the event mirror."""
     observed = {}
@@ -149,6 +156,7 @@ def validate_capture(contract, payload, capture):
     No caller-controlled `*_valid` flag is accepted here as authority.
     """
     schema_validate(contract['schema_ref'], payload)
+    validate_append_policy(contract, capture['envelope']['replay_policy'])
     adapter = contract['semantic_adapter']
     require(capture['adapter'] == adapter['id'], 'adapter dispatch')
     require(capture['family'] == contract['event_type'], 'family dispatch')
@@ -316,6 +324,11 @@ def run_trace(contract, payload, scenario):
     for operation in scenario['operations']:
         action = operation['op']
         if action in ('append', 'replay'):
+            try:
+                validate_append_policy(contract, operation.get('replay_policy', contract['replay_policy']))
+            except ValueError as error:
+                outputs.append(str(error))
+                continue
             p = copy.deepcopy(payload)
             p.update(operation.get('payload_changes', {}))
             key = identity(contract, p, 'store-001')

@@ -133,7 +133,8 @@
             "node"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "attempt.started",
@@ -258,7 +259,8 @@
             "node"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "node.blocked",
@@ -370,7 +372,8 @@
             "node"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "node.completed",
@@ -497,7 +500,8 @@
             "node"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "node.started",
@@ -614,7 +618,8 @@
             "node"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "node.unblocked",
@@ -718,7 +723,8 @@
             "node"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "plan.decomposition_degraded",
@@ -794,7 +800,8 @@
             "project"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "remediation.resolved",
@@ -943,7 +950,8 @@
           "normalized_generation": "lineage.body.generation",
           "require_normalized_equality": true
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "remediation.spawned",
@@ -1069,7 +1077,8 @@
           "normalized_generation": "lineage.body.generation",
           "require_normalized_equality": true
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "run.completed",
@@ -1154,7 +1163,8 @@
             "project"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "run.graph_integrity_failed",
@@ -1234,7 +1244,8 @@
             "project"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "run.node_backoff_expired",
@@ -1365,7 +1376,8 @@
           },
           "new_binding_status": "newly_authored_normalized_owner_reads_reusing_existing_policy"
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "run.node_backoff_started",
@@ -1498,7 +1510,8 @@
           },
           "new_binding_status": "newly_authored_normalized_owner_reads_reusing_existing_policy"
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "run.node_ready",
@@ -1591,7 +1604,8 @@
             "run"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "run.node_retry_scheduled",
@@ -1753,7 +1767,8 @@
           },
           "new_binding_status": "newly_authored_normalized_owner_reads_reusing_existing_policy"
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "scheduler.pass",
@@ -1848,7 +1863,8 @@
             "run"
           ]
         }
-      }
+      },
+      "replay_policy": "dedupe_by_idempotency_key"
     }
   ]
 }

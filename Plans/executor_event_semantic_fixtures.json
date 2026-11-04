@@ -43,7 +43,8 @@
             "run_id": "run_id-001",
             "thread_id": "thread_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -2066,7 +2067,8 @@
                   "run_id": "run_id-001",
                   "thread_id": "thread_id-001",
                   "attempt_id": "attempt_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -2581,6 +2583,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -2750,6 +2762,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -2789,7 +2850,8 @@
             "run_id": "run_id-001",
             "thread_id": "thread_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -5488,6 +5550,16 @@
             }
           ],
           "expected": "accept"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -5657,6 +5729,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -5704,7 +5825,8 @@
             "run_id": "run_id-001",
             "thread_id": "thread_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -7517,7 +7639,8 @@
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
                   "thread_id": "thread_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -8128,6 +8251,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -8297,6 +8430,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -8332,7 +8514,8 @@
             "project_id": "project_id-001",
             "run_id": "run_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -9993,7 +10176,8 @@
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
                   "attempt_id": "attempt_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -10401,6 +10585,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -10570,6 +10764,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -10599,7 +10842,8 @@
             "project_id": "project_id-001",
             "run_id": "run_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -12864,6 +13108,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -13033,6 +13287,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -13062,7 +13365,8 @@
             "project_id": "project_id-001",
             "run_id": "run_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -14238,7 +14542,8 @@
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
                   "attempt_id": "attempt_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -14437,7 +14742,8 @@
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
                   "attempt_id": "attempt_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -14634,7 +14940,8 @@
                 "envelope": {
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -14968,6 +15275,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -15137,6 +15454,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -15163,7 +15529,8 @@
           },
           "envelope": {
             "project_id": "project_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -15949,6 +16316,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -16118,6 +16495,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -16149,7 +16575,8 @@
           "envelope": {
             "project_id": "project_id-001",
             "run_id": "run_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -17383,7 +17810,8 @@
                 "envelope": {
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -17616,7 +18044,8 @@
                 "envelope": {
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -17849,7 +18278,8 @@
                 "envelope": {
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -18444,6 +18874,16 @@
             }
           ],
           "expected": "accept"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -18613,6 +19053,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -18644,7 +19133,8 @@
           "envelope": {
             "project_id": "project_id-001",
             "run_id": "run_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -20215,6 +20705,16 @@
             }
           ],
           "expected": "accept"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -20384,6 +20884,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -20411,7 +20960,8 @@
           "envelope": {
             "project_id": "project_id-001",
             "run_id": "run_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -21354,6 +21904,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -21523,6 +22083,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -21549,7 +22158,8 @@
           "envelope": {
             "project_id": "project_id-001",
             "run_id": "run_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -22320,6 +22930,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -22489,6 +23109,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -22517,7 +23186,8 @@
             "project_id": "project_id-001",
             "run_id": "run_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -28693,6 +29363,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -28862,6 +29542,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -28892,7 +29621,8 @@
             "project_id": "project_id-001",
             "run_id": "run_id-001",
             "attempt_id": "attempt_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -36457,6 +37187,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -36626,6 +37366,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -36653,7 +37442,8 @@
           "envelope": {
             "project_id": "project_id-001",
             "run_id": "run_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -37650,6 +38440,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -37819,6 +38619,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -37848,7 +38697,8 @@
           "envelope": {
             "project_id": "project_id-001",
             "run_id": "run_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -45028,6 +45878,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -45197,6 +46057,55 @@
             ],
             "effects": 0
           }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
+          }
         }
       ]
     },
@@ -45268,7 +46177,8 @@
             "project_id": "project_id-001",
             "run_id": "run_id-001",
             "thread_id": "thread_id-001",
-            "storage_instance_id": "store-001"
+            "storage_instance_id": "store-001",
+            "replay_policy": "dedupe_by_idempotency_key"
           },
           "records": {
             "project": {
@@ -46881,7 +47791,8 @@
                   "project_id": "project_id-001",
                   "run_id": "run_id-001",
                   "thread_id": "thread_id-001",
-                  "storage_instance_id": "store-001"
+                  "storage_instance_id": "store-001",
+                  "replay_policy": "dedupe_by_idempotency_key"
                 },
                 "records": {
                   "project": {
@@ -47977,6 +48888,16 @@
             }
           ],
           "expected": "reject"
+        },
+        {
+          "case": "F5-compatibility-policy-current-append",
+          "changes": [
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "projector_replay_only"
+            }
+          ],
+          "expected": "reject"
         }
       ],
       "traces": [
@@ -48145,6 +49066,55 @@
               "missing_original"
             ],
             "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-append",
+          "operations": [
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-replay",
+          "operations": [
+            {
+              "op": "replay",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "replay_only_not_appendable"
+            ],
+            "effects": 0
+          }
+        },
+        {
+          "case": "F5-compatibility-policy-before-existing-dedupe",
+          "operations": [
+            {
+              "op": "append"
+            },
+            {
+              "op": "append",
+              "replay_policy": "projector_replay_only"
+            }
+          ],
+          "expected": {
+            "outputs": [
+              "first-receipt-001",
+              "replay_only_not_appendable"
+            ],
+            "effects": 1
           }
         }
       ],
