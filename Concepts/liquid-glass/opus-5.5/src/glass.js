@@ -2642,7 +2642,10 @@
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
       if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
       found.forEach(function (s) {
-        if (stripParked(s)) { var P = lenses.get(s); if (P && P.rect) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
+        /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
+           it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was
+           removed, 2-7 frames over the next one; T3's sandbox, Continue during the reveal of a switch into Glass: SW-24) */
+        if (stripParked(s)) { var P = lenses.get(s); if (P && (P.rect || P.lens.style.opacity !== '0')) { stopLensTravel(P); P.lens.style.opacity = '0'; P.rect = null; } return; }
         /* under a look's cover, a strip whose lens is not on screen yet waits for the lift; a shown lens follows now */
         if (covered && !(lenses.get(s) && lenses.get(s).rect) && !s.closest('#pm-o55-onboarding')) { deferStrip(s); return; }
         if (cvSkipped(s)) { cvSkip(s); return; }
