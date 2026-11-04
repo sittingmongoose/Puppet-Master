@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import unicodedata
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -260,56 +261,113 @@ def registry_step_states(record):
         value = record.get(side)
         if (not isinstance(value, dict)
                 or not isinstance(value.get("revision"), str) or not value["revision"]
-                or not HEX64.fullmatch(str(value.get("sha256", "")))
+                or type(value.get("sha256")) is not str
+                or not HEX64.fullmatch(value["sha256"])
                 or type(value.get("family_count")) is not int):
             return None
-        sides.append((value["revision"], str(value["sha256"]), value["family_count"]))
+        sides.append((value["revision"], value["sha256"], value["family_count"]))
     return tuple(sides)
 
 
-def registry_step_claim(record):
-    """The (before, after) sha256 a record names, read without validating anything else.
+def strict_step_record(path):
+    """DL-412 only: never collapse duplicate keys or coerce registry state types."""
+    def pairs(items):
+        out = {}
+        for key, value in items:
+            if key in out:
+                raise ValueError("duplicate JSON key: " + key)
+            out[key] = value
+        return out
 
-    A record naming a step's SHA-256 pair must not escape the step check because
-    its revision, family count, list or any other field is malformed. Stringify
-    SHA fields as record validation does, including accepted JSON integers.
+    def constant(value):
+        raise ValueError("non-JSON constant: " + value)
+
+    def inspect(value, root=False):
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if not root and key in ("registry_before", "registry_after"):
+                    sha = child.get("sha256") if type(child) is dict else None
+                    if type(sha) is not str or not HEX64.fullmatch(sha):
+                        raise ValueError("noncanonical nested " + key + ".sha256")
+                inspect(child)
+        elif isinstance(value, list):
+            for child in value:
+                inspect(child)
+
+    record = json.loads(path.read_text("utf-8"), object_pairs_hook=pairs, parse_constant=constant)
+    inspect(record, True)
+    if type(record) is not dict:
+        raise ValueError("record must be an object")
+    if registry_step_states(record) is None:
+        raise ValueError("registry states require string revisions, lowercase 64-hex string SHA-256 and integer counts")
+    return record
+
+
+def registry_step_claim(record, hashes):
+    """Either step digest anywhere in keys/values, nested containers or scalar text.
+
+    Normalization is for conservative claim discovery only, never acceptance.
+    Malformed JSON/types/hashes are rejected independently by strict_step_record.
     """
-    shas = []
-    for side in ("registry_before", "registry_after"):
-        value = record.get(side) if isinstance(record, dict) else None
-        sha = value.get("sha256") if isinstance(value, dict) else None
-        if sha is None:
-            return None
-        shas.append(str(sha).strip().lower())
-    return tuple(shas)
+    if isinstance(record, dict):
+        return any(registry_step_claim(k, hashes) or registry_step_claim(v, hashes)
+                   for k, v in record.items())
+    if isinstance(record, list):
+        return any(registry_step_claim(v, hashes) for v in record)
+    text = unicodedata.normalize("NFKC", str(record)).lower()
+    text = "".join(str(unicodedata.decimal(c)) if c.isdecimal() else c
+                   for c in text if not c.isspace())
+    return any(sha in text for sha in hashes)
 
 
-def registry_step_problems(records, own, beyond, rejected=None) -> dict:
-    """DL-412: a registry step that added several families counts only as a whole.
+def registry_step_record_scan(record_dir):
+    """Read every directory entry; an uninspectable entry could touch any step."""
+    out = {}
+    try:
+        paths = sorted(record_dir.iterdir()) if record_dir.is_dir() else []
+    except OSError as exc:
+        return {str(record_dir): (None, str(exc))}
+    for path in paths:
+        try:
+            out[path.name] = (strict_step_record(path), None)
+        except (OSError, ValueError, TypeError, RecursionError) as exc:
+            out[path.name] = (None, str(exc))
+    return out
 
-    Every family the step lists needs its own record naming the same before and
-    after registry states and the same list; no other record file may name that
-    step's before and after SHA-256, whatever else in it is malformed (a file
-    rejected for its name or event type counts, under its file name); and every
-    member's record must be complete on its own. Only records listing a step get
-    problems here; a record without the field keeps exactly its DL-077 judgment.
-    Returns {event_type: [problem]}; empty when no record lists a step.
+
+def registry_step_problems(records, own, beyond, scanned) -> dict:
+    """Strict, fail-closed whole-step judgment; never add a legacy record problem.
+
+    Any uninspectable/noncanonical file could touch every step. A strictly read
+    foreign file touching either digest anywhere fails that step. A listed own
+    file is exempt only when its strict record equals the record being judged.
     """
-    shas = lambda s: (s[0][1], s[1][1])
     states = {et: registry_step_states(r) for et, r in records.items()}
     multi = {et: r for et, r in records.items()
              if STEP_FIELD in r and registry_step_shape_ok(r.get(STEP_FIELD), et) and states[et]}
-    claims = {et: registry_step_claim(r) for et, r in records.items()}
-    stray = {name: registry_step_claim(r) for name, r in (rejected or {}).items()}
-    out = {}
+    out = {et: ["registry_step_partial:" + et + ".json"]
+           for et, r in records.items() if STEP_FIELD in r
+           and scanned.get(et + ".json", (None, "missing"))[1] is not None}
     for et, record in sorted(multi.items()):
         if et not in own:
             continue
         step = record[STEP_FIELD]
-        mismatched = {m for m in step if m not in beyond or m not in multi
+        mismatched = {m + ".json" for m in step if m not in beyond or m not in multi
                       or multi[m][STEP_FIELD] != step or states[m] != states[et]}
-        mismatched |= {e for e, c in claims.items() if c == shas(states[et]) and e not in step}
-        mismatched |= {n for n, c in stray.items() if c == shas(states[et])}
+        hashes = (states[et][0][1], states[et][1][1])
+        for name, (candidate, error) in scanned.items():
+            member = name[:-5] if name.endswith(".json") else None
+            if error is not None:
+                mismatched.add(name)
+            elif member in step and candidate == records.get(member):
+                continue
+            else:
+                try:
+                    touches = registry_step_claim(candidate, hashes)
+                except RecursionError:
+                    touches = True  # Too deep to disambiguate: fail this step closed.
+                if touches:
+                    mismatched.add(name)
         if mismatched:
             out.setdefault(et, []).append("registry_step_partial:" + ",".join(sorted(mismatched)))
             continue
@@ -348,6 +406,7 @@ def admission_record_problems(record, family) -> list:
         value = record.get(side)
         if (not isinstance(value, dict)
                 or not isinstance(value.get("revision"), str) or not value["revision"]
+                or (multi and type(value.get("sha256")) is not str)
                 or not HEX64.fullmatch(str(value.get("sha256", "")))
                 or type(value.get("family_count")) is not int):
             problems.append(side)
@@ -433,7 +492,9 @@ def validate_post_august_admissions(registry, known37):
         except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
             own[event_type] = ["malformed: " + str(exc)]
     try:
-        steps = registry_step_problems(records, own, beyond, rejected)
+        steps = (registry_step_problems(records, own, beyond,
+                                        registry_step_record_scan(record_dir))
+                 if any(STEP_FIELD in r for r in records.values()) else {})
     except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
         steps = {et: ["registry_step_malformed: " + str(exc)] for et, r in records.items() if STEP_FIELD in r}
     for event_type in sorted(beyond):
