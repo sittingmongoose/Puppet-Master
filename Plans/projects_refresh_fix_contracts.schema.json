@@ -2180,6 +2180,227 @@
           "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/RuntimeDeclineV3ToolResult"
         }
       ]
+    },
+    "ThreadAwaitRequestApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "sender_context",
+        "await_request_id",
+        "request_id",
+        "receiver_scope",
+        "receiver_thread_id",
+        "condition_ref",
+        "timeout_utc",
+        "target_generation",
+        "outbox_commit_evidence",
+        "reply_route_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.thread.await.application.request.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.thread.await"
+        },
+        "sender_context": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowCommandContextV1"
+            },
+            {
+              "properties": {
+                "scope": {
+                  "allOf": [
+                    {
+                      "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+                    },
+                    {
+                      "properties": {
+                        "scope_kind": {
+                          "const": "application"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "await_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "receiver_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "receiver_thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "condition_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "timeout_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outbox_commit_evidence": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/OwnerEvidenceRefV1"
+        },
+        "reply_route_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ThreadAwaitResultApplicationV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "command_id",
+        "await_request_id",
+        "request_id",
+        "operation_id",
+        "status",
+        "receiver_scope",
+        "receiver_thread_id",
+        "condition_ref",
+        "target_generation",
+        "reply_ref",
+        "reply_sequence",
+        "owner_receipt_ref",
+        "return_context_ref"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.thread.await.application.result.v2"
+        },
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "command_id": {
+          "const": "cmd.thread.await"
+        },
+        "await_request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "status": {
+          "enum": [
+            "waiting",
+            "answered",
+            "declined",
+            "expired",
+            "cancelled",
+            "blocked"
+          ]
+        },
+        "receiver_scope": {
+          "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+        },
+        "receiver_thread_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "condition_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "target_generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reply_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reply_sequence": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "owner_receipt_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "return_context_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      }
+    },
+    "ThreadAwaitRequestScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_request"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitRequestApplicationV2"
+        }
+      ]
+    },
+    "ThreadAwaitResultScopeV2": {
+      "oneOf": [
+        {
+          "$ref": "https://puppetmaster.local/Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_result"
+        },
+        {
+          "$ref": "https://puppetmaster.local/Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultApplicationV2"
+        }
+      ]
     }
   }
 }

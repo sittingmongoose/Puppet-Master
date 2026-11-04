@@ -71652,8 +71652,8 @@
       "ui_location": "Assistant Chat > Thread actions",
       "ui_command_id": "cmd.thread.await",
       "handler_location": "handlers::thread::await_condition",
-      "request_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_request",
-      "result_schema_ref": "Plans/shared_runtime_command_contracts.schema.json#/$defs/thread_await_command_result",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitRequestScopeV2",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
       "expected_event_types": [],
       "acceptance_checks": [
         "Dispatching cmd.thread.await reaches only handlers::thread::await_condition with ThreadAwaitCommandRequest and returns ThreadAwaitCommandResult.",

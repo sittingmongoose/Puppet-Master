@@ -661,8 +661,9 @@ def semantic_outcome(predicate, record, corpus, pack, case):
     """Evaluate static cases. The returned outcome never admits native sources."""
     if predicate in ('bindings.selected_request', 'bindings.selected_result'):
         rule = next(r for r in case['semantic_checks'] if r['predicate_id'] == predicate)['expected']
-        row = next(r for r in corpus.document('Plans/projects_refresh_command_bindings.json')['commands']
-                   if r['command_id'] == rule['command_id'])
+        rows = (corpus.document('Plans/projects_refresh_command_bindings.json')['commands']
+                + corpus.document('Plans/shared_runtime_command_bindings.json')['bindings'])
+        row = next(r for r in rows if r['command_id'] == rule['command_id'])
         field = 'request_schema_ref' if predicate.endswith('request') else 'result_schema_ref'
         return {'command_id': rule['command_id'],
                 'schema_valid': (case['schema_ref'] == row[field]
@@ -685,6 +686,19 @@ def semantic_outcome(predicate, record, corpus, pack, case):
         return 'accept' if record['backend'] == expected else 'refuse'
     if predicate.startswith('coverage.'):
         return 'refuse' if coverage_failures(record) else 'accept'
+    if predicate == 'thread.await_exact_exchange':
+        source = pack.get('thread_exchange_sources', {}).get(case.get('owner_source_id'))
+        if source is None:
+            return 'refuse'
+        request, reply = source['request'], source['reply']
+        joins = ('await_request_id', 'request_id', 'receiver_scope', 'receiver_thread_id',
+                 'condition_ref', 'target_generation')
+        if any(record.get(k) != request.get(k) for k in joins):
+            return 'refuse'
+        if record.get('status') == 'answered' and any(record.get(k) != reply.get(k)
+                                                     for k in ('reply_ref', 'reply_sequence')):
+            return 'refuse'
+        return 'accept'
     if predicate == 'thread.receiver_ceiling':
         if record['receiver_policy'] == 'off' or record['automatic_round_trips'] > 3:
             return 'refuse'

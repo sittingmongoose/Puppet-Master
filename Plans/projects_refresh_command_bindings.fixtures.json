@@ -54577,6 +54577,728 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-await-app-to-project",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitRequestScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "sender_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "timeout_utc": "2026-11-04T23:00:00Z",
+        "target_generation": 1,
+        "outbox_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "reply_route_ref": "reply-route-project"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-await-app-to-project-reply",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "operation_id": "operation-project",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "target_generation": 1,
+        "reply_ref": "reply-project",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-project",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "project"
+    },
+    {
+      "case_id": "fix-a-await-reject-project-different-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-project",
+        "request_id": "other-request",
+        "operation_id": "operation-project",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "target_generation": 1,
+        "reply_ref": "reply-project",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-project",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "project"
+    },
+    {
+      "case_id": "fix-a-await-reject-project-different-receiver",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "operation_id": "operation-project",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "other-receiver",
+        "condition_ref": "condition-project",
+        "target_generation": 1,
+        "reply_ref": "reply-project",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-project",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "project"
+    },
+    {
+      "case_id": "fix-a-await-reject-project-out-of-order",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "operation_id": "operation-project",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "target_generation": 1,
+        "reply_ref": "reply-project",
+        "reply_sequence": 0,
+        "owner_receipt_ref": "receipt-project",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "project"
+    },
+    {
+      "case_id": "fix-a-await-no-synthetic-project-project",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitRequestScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "sender_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "timeout_utc": "2026-11-04T23:00:00Z",
+        "target_generation": 1,
+        "outbox_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "reply_route_ref": "reply-route-project",
+        "project_home_server_id": "fake"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-await-app-to-application",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitRequestScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "sender_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "timeout_utc": "2026-11-04T23:00:00Z",
+        "target_generation": 1,
+        "outbox_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "reply_route_ref": "reply-route-application"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-await-app-to-application-reply",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "operation_id": "operation-application",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "target_generation": 1,
+        "reply_ref": "reply-application",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-application",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "accept"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "application"
+    },
+    {
+      "case_id": "fix-a-await-reject-application-different-request",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-application",
+        "request_id": "other-request",
+        "operation_id": "operation-application",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "target_generation": 1,
+        "reply_ref": "reply-application",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-application",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "application"
+    },
+    {
+      "case_id": "fix-a-await-reject-application-different-receiver",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "operation_id": "operation-application",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "other-receiver",
+        "condition_ref": "condition-application",
+        "target_generation": 1,
+        "reply_ref": "reply-application",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-application",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "application"
+    },
+    {
+      "case_id": "fix-a-await-reject-application-out-of-order",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitResultScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "operation_id": "operation-application",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "target_generation": 1,
+        "reply_ref": "reply-application",
+        "reply_sequence": 0,
+        "owner_receipt_ref": "receipt-application",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "thread.await_exact_exchange",
+          "expected": "refuse"
+        },
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false,
+      "owner_source_id": "application"
+    },
+    {
+      "case_id": "fix-a-await-no-synthetic-project-application",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/ThreadAwaitRequestScopeV2",
+      "record": {
+        "schema_id": "pm.thread.await.application.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "sender_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "timeout_utc": "2026-11-04T23:00:00Z",
+        "target_generation": 1,
+        "outbox_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "reply_route_ref": "reply-route-application",
+        "project_home_server_id": "fake"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.thread.await",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ],
   "remote_sync_owner_sources": {
@@ -54617,6 +55339,210 @@
       "preview_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "preview_expires_at": "2026-11-03T06:00:00Z",
       "return_context_ref": "return_context_ref-a"
+    }
+  },
+  "thread_exchange_sources": {
+    "project": {
+      "request": {
+        "schema_id": "pm.thread.await.application.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "sender_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "timeout_utc": "2026-11-04T23:00:00Z",
+        "target_generation": 1,
+        "outbox_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "reply_route_ref": "reply-route-project"
+      },
+      "reply": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-project",
+        "request_id": "request-project",
+        "operation_id": "operation-project",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "project",
+          "scope_partition": "project~cHJvamVjdC1h",
+          "project_id": "project-a",
+          "project_home_server_id": "server-a",
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-project",
+        "condition_ref": "condition-project",
+        "target_generation": 1,
+        "reply_ref": "reply-project",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-project",
+        "return_context_ref": "return-a"
+      }
+    },
+    "application": {
+      "request": {
+        "schema_id": "pm.thread.await.application.request.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "sender_context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "timeout_utc": "2026-11-04T23:00:00Z",
+        "target_generation": 1,
+        "outbox_commit_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "reply_route_ref": "reply-route-application"
+      },
+      "reply": {
+        "schema_id": "pm.thread.await.application.result.v2",
+        "schema_version": "2.0.0",
+        "command_id": "cmd.thread.await",
+        "await_request_id": "await-application",
+        "request_id": "request-application",
+        "operation_id": "operation-application",
+        "status": "answered",
+        "receiver_scope": {
+          "schema_id": "pm.workflow_scope.v2",
+          "schema_version": "2.0.0",
+          "scope_kind": "application",
+          "scope_partition": "app",
+          "project_id": null,
+          "project_home_server_id": null,
+          "named_plan_id": null,
+          "server_id": "server-a"
+        },
+        "receiver_thread_id": "receiver-application",
+        "condition_ref": "condition-application",
+        "target_generation": 1,
+        "reply_ref": "reply-application",
+        "reply_sequence": 2,
+        "owner_receipt_ref": "receipt-application",
+        "return_context_ref": "return-a"
+      }
     }
   }
 }
