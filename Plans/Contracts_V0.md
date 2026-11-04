@@ -24480,3 +24480,45 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+
+<a id="CV-690"></a>
+### CV-690 - DG6B exact payload routes prepared without admission
+
+```yaml
+plan_unit_id: CV-690
+unit_type: contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  DG6B exact payload routes prepared without admission. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [DL-045, SP-670, SP-671]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+- `auth.github.authenticated`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_authenticated`, version `1.0.0`, semantic owner `GAAAF-077`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `auth.github.device_code.issued`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_device_code_issued`, version `1.0.0`, semantic owner `GAAAF-078`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `auth.github.disconnected`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_disconnected`, version `1.0.0`, semantic owner `GAAAF-079`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `auth.github.failed`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_failed`, version `1.0.0`, semantic owner `GAAAF-080`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `auth.github.token.polling`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/auth_github_token_polling`, version `1.0.0`, semantic owner `GAAAF-081`, storage `SP-670`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.hook.blocked`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_blocked`, version `1.0.0`, semantic owner `PLUG-131`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.hook.error`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_error`, version `1.0.0`, semantic owner `PLUG-132`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.hook.invoked`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_hook_invoked`, version `1.0.0`, semantic owner `PLUG-133`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.load_failed`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_load_failed`, version `1.0.0`, semantic owner `PLUG-134`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.loaded`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_loaded`, version `1.0.0`, semantic owner `PLUG-135`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.permission.override`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_permission_override`, version `1.0.0`, semantic owner `PLUG-136`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.tool.collision`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_collision`, version `1.0.0`, semantic owner `PLUG-137`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.
+- `plugin.tool.registered`: payload `Plans/dg6b_event_contracts.schema.json#/$defs/plugin_tool_registered`, version `1.0.0`, semantic owner `PLUG-138`, storage `SP-671`. Root and every stored operation object are closed; unknown fields/versions fail before append. This is a schema binding, not membership.

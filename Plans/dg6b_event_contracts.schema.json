@@ -1,0 +1,2959 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/dg6b_event_contracts/1.0.0/schema.json",
+  "$defs": {
+    "auth_github_authenticated": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "auth_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "const": "github"
+        },
+        "auth_realm": {
+          "const": "github_api"
+        },
+        "auth_state": {
+          "const": "authenticated"
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "credential_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "scopes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "auth_event_id",
+        "provider_id",
+        "auth_realm",
+        "auth_state",
+        "account_id",
+        "host",
+        "credential_ref",
+        "scopes"
+      ]
+    },
+    "auth_github_authenticated_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_authenticated_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.authenticated"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "auth_event_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "provider_id": {
+              "const": "github"
+            },
+            "auth_realm": {
+              "const": "github_api"
+            },
+            "auth_state": {
+              "const": "authenticated"
+            },
+            "account_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "credential_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "scopes": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 256
+              }
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "auth_event_id",
+            "provider_id",
+            "auth_realm",
+            "auth_state",
+            "account_id",
+            "host",
+            "credential_ref",
+            "scopes"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "auth_github_device_code_issued": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "auth_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "const": "github"
+        },
+        "auth_realm": {
+          "const": "github_api"
+        },
+        "auth_state": {
+          "const": "issued"
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "device_code_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "poll_interval_seconds": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "auth_event_id",
+        "provider_id",
+        "auth_realm",
+        "auth_state",
+        "account_id",
+        "host",
+        "device_code_ref",
+        "expires_at",
+        "poll_interval_seconds"
+      ]
+    },
+    "auth_github_device_code_issued_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_device_code_issued_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.device_code.issued"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "auth_event_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "provider_id": {
+              "const": "github"
+            },
+            "auth_realm": {
+              "const": "github_api"
+            },
+            "auth_state": {
+              "const": "issued"
+            },
+            "account_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "device_code_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "expires_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "poll_interval_seconds": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "auth_event_id",
+            "provider_id",
+            "auth_realm",
+            "auth_state",
+            "account_id",
+            "host",
+            "device_code_ref",
+            "expires_at",
+            "poll_interval_seconds"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "auth_github_disconnected": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "auth_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "const": "github"
+        },
+        "auth_realm": {
+          "const": "github_api"
+        },
+        "auth_state": {
+          "const": "disconnected"
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "credential_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "disconnect_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "auth_event_id",
+        "provider_id",
+        "auth_realm",
+        "auth_state",
+        "account_id",
+        "host",
+        "credential_ref",
+        "disconnect_receipt_ref"
+      ]
+    },
+    "auth_github_disconnected_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_disconnected_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.disconnected"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "auth_event_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "provider_id": {
+              "const": "github"
+            },
+            "auth_realm": {
+              "const": "github_api"
+            },
+            "auth_state": {
+              "const": "disconnected"
+            },
+            "account_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "credential_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "disconnect_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "auth_event_id",
+            "provider_id",
+            "auth_realm",
+            "auth_state",
+            "account_id",
+            "host",
+            "credential_ref",
+            "disconnect_receipt_ref"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "auth_github_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "auth_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "const": "github"
+        },
+        "auth_realm": {
+          "const": "github_api"
+        },
+        "auth_state": {
+          "const": "failed"
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "error": {
+          "enum": [
+            "expired_token",
+            "unsupported_grant_type",
+            "incorrect_client_credentials",
+            "incorrect_device_code",
+            "access_denied",
+            "network_or_rate_limited"
+          ]
+        },
+        "failure_class": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "auth_event_id",
+        "provider_id",
+        "auth_realm",
+        "auth_state",
+        "account_id",
+        "host",
+        "error",
+        "failure_class"
+      ]
+    },
+    "auth_github_failed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_failed_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.failed"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "auth_event_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "provider_id": {
+              "const": "github"
+            },
+            "auth_realm": {
+              "const": "github_api"
+            },
+            "auth_state": {
+              "const": "failed"
+            },
+            "account_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "error": {
+              "enum": [
+                "expired_token",
+                "unsupported_grant_type",
+                "incorrect_client_credentials",
+                "incorrect_device_code",
+                "access_denied",
+                "network_or_rate_limited"
+              ]
+            },
+            "failure_class": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "auth_event_id",
+            "provider_id",
+            "auth_realm",
+            "auth_state",
+            "account_id",
+            "host",
+            "error",
+            "failure_class"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "auth_github_token_polling": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "auth_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "provider_id": {
+          "const": "github"
+        },
+        "auth_realm": {
+          "const": "github_api"
+        },
+        "auth_state": {
+          "const": "polling"
+        },
+        "account_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "poll_number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outcome": {
+          "enum": [
+            "authorization_pending",
+            "slow_down",
+            "network_or_rate_limited"
+          ]
+        },
+        "previous_interval_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "poll_interval_seconds": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "auth_event_id",
+        "provider_id",
+        "auth_realm",
+        "auth_state",
+        "account_id",
+        "host",
+        "poll_number",
+        "outcome",
+        "previous_interval_seconds",
+        "poll_interval_seconds"
+      ]
+    },
+    "auth_github_token_polling_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.auth_github_token_polling_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "auth.github.token.polling"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "auth_event_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "provider_id": {
+              "const": "github"
+            },
+            "auth_realm": {
+              "const": "github_api"
+            },
+            "auth_state": {
+              "const": "polling"
+            },
+            "account_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "poll_number": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "outcome": {
+              "enum": [
+                "authorization_pending",
+                "slow_down",
+                "network_or_rate_limited"
+              ]
+            },
+            "previous_interval_seconds": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "poll_interval_seconds": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "auth_event_id",
+            "provider_id",
+            "auth_realm",
+            "auth_state",
+            "account_id",
+            "host",
+            "poll_number",
+            "outcome",
+            "previous_interval_seconds",
+            "poll_interval_seconds"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_hook_blocked": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "hook_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "invocation_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "reason_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "hook_name",
+        "invocation_ref",
+        "reason_ref"
+      ]
+    },
+    "plugin_hook_blocked_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_hook_blocked_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.hook.blocked"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "hook_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "invocation_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "reason_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "hook_name",
+            "invocation_ref",
+            "reason_ref"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_hook_error": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "hook_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "invocation_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "error_class": {
+          "enum": [
+            "exception",
+            "timeout"
+          ]
+        },
+        "error_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "hook_name",
+        "invocation_ref",
+        "error_class",
+        "error_ref"
+      ]
+    },
+    "plugin_hook_error_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_hook_error_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.hook.error"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "hook_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "invocation_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "error_class": {
+              "enum": [
+                "exception",
+                "timeout"
+              ]
+            },
+            "error_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "hook_name",
+            "invocation_ref",
+            "error_class",
+            "error_ref"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_hook_invoked": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "hook_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "invocation_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "hook_name",
+        "invocation_ref",
+        "duration_ms"
+      ]
+    },
+    "plugin_hook_invoked_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_hook_invoked_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.hook.invoked"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "hook_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "invocation_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "duration_ms": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "hook_name",
+            "invocation_ref",
+            "duration_ms"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_load_failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "load_attempt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "error_class": {
+          "enum": [
+            "invalid_manifest",
+            "entry_error"
+          ]
+        },
+        "error_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "load_attempt_ref",
+        "error_class",
+        "error_ref"
+      ]
+    },
+    "plugin_load_failed_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_load_failed_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.load_failed"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "load_attempt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "error_class": {
+              "enum": [
+                "invalid_manifest",
+                "entry_error"
+              ]
+            },
+            "error_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "load_attempt_ref",
+            "error_class",
+            "error_ref"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_loaded": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "load_attempt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "load_attempt_ref",
+        "manifest_sha256"
+      ]
+    },
+    "plugin_loaded_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_loaded_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.loaded"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "load_attempt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "manifest_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "load_attempt_ref",
+            "manifest_sha256"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_permission_override": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "invocation_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "override_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "decision": {
+          "enum": [
+            "allow",
+            "deny"
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "invocation_ref",
+        "override_receipt_ref",
+        "decision"
+      ]
+    },
+    "plugin_permission_override_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_permission_override_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.permission.override"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "invocation_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "override_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "decision": {
+              "enum": [
+                "allow",
+                "deny"
+              ]
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "invocation_ref",
+            "override_receipt_ref",
+            "decision"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_tool_collision": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "tool_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "registration_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "resolution_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "tool_name",
+        "registration_ref",
+        "resolution_ref"
+      ]
+    },
+    "plugin_tool_collision_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_tool_collision_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.tool.collision"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "tool_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "registration_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "resolution_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "tool_name",
+            "registration_ref",
+            "resolution_ref"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    },
+    "plugin_tool_registered": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "subject_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ts": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "redaction_profile": {
+          "const": "refs_only"
+        },
+        "plugin_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "plugin_receipt_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "tool_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "registration_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "storage_instance_id",
+        "subject_ref",
+        "revision",
+        "ts",
+        "redaction_profile",
+        "plugin_id",
+        "plugin_receipt_ref",
+        "tool_name",
+        "registration_ref"
+      ]
+    },
+    "plugin_tool_registered_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_id": {
+          "const": "pm.storage_value.plugin_tool_registered_operation.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "plugin.tool.registered"
+        },
+        "scope_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "actor_ref": {
+          "type": "string",
+          "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+          "maxLength": 512
+        },
+        "payload": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "operation_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "storage_instance_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "subject_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "ts": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "redaction_profile": {
+              "const": "refs_only"
+            },
+            "plugin_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "plugin_receipt_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            "tool_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            },
+            "registration_ref": {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            }
+          },
+          "required": [
+            "schema_version",
+            "operation_id",
+            "storage_instance_id",
+            "subject_ref",
+            "revision",
+            "ts",
+            "redaction_profile",
+            "plugin_id",
+            "plugin_receipt_ref",
+            "tool_name",
+            "registration_ref"
+          ]
+        },
+        "state": {
+          "enum": [
+            "prepared",
+            "effect_committed",
+            "appended",
+            "withdrawn"
+          ]
+        },
+        "effect_receipt_ref": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^ref:[a-zA-Z0-9_:/.-]+$",
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        }
+      },
+      "required": [
+        "schema_id",
+        "schema_version",
+        "event_type",
+        "scope_key",
+        "actor_ref",
+        "payload",
+        "state",
+        "effect_receipt_ref",
+        "event_id",
+        "idempotency_key"
+      ]
+    }
+  }
+}

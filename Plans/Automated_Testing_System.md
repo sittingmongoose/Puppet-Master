@@ -7234,3 +7234,47 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+<a id="ATS-335"></a>
+### ATS-335 - DG6B per-family oracle obligations
+
+```yaml
+plan_unit_id: ATS-335
+unit_type: contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  DG6B per-family oracle obligations. This is a newly authored owner contract under DL-045, prepared without admission.
+gui_related: false
+gui_classification_reason: Defines persisted contract behavior and no visual presentation.
+depends_on: [CV-690, SP-670, SP-671]
+unblocks: []
+acceptance_criteria:
+- Exact-family schema and semantic checks pass; no event is emitted before separate admission.
+validation_surfaces: [scripts/pm-dg6b-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: event_authority_dg6b
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DG6B.md
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/dg6b_event_contracts.schema.json]
+node_compile_hint: {mode: contract_only, create_worknodes: false}
+```
+
+Each following family owns its own cases in Plans/dg6b_event_contract_fixtures.json; scripts/pm-dg6b-event-contracts.py validates schemas, exact-family identity, original retry stability, changed-payload conflict, wrong scope/identity, and poll slow_down cadence. These static models do not execute native producers.
+
+- `auth.github.authenticated`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `auth.github.device_code.issued`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `auth.github.disconnected`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `auth.github.failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `auth.github.token.polling`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.hook.blocked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.hook.error`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.hook.invoked`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.load_failed`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.loaded`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.permission.override`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.tool.collision`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.
+- `plugin.tool.registered`: positive closed payload and original-identity retry; negatives raw secret/extension field, missing operation ID, unsupported version, revision zero, raw redaction, malformed UTC, scope substitution, event-ID substitution and changed original payload. Native obligations: real owner effect→append→first receipt→terminal publication; crash at each cut; unavailable original custody; coherent backup/restore; withdrawal and stale-read refusal. All native obligations **NOT_RUN**.

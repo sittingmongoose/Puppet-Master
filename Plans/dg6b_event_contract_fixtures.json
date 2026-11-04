@@ -1,0 +1,1997 @@
+{
+  "native_execution": "NOT_RUN",
+  "families": [
+    {
+      "event_type": "auth.github.authenticated",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "auth_event_id": "auth-one",
+        "provider_id": "github",
+        "auth_realm": "github_api",
+        "auth_state": "authenticated",
+        "account_id": "account-one",
+        "host": "github.com",
+        "credential_ref": "ref:credential/one",
+        "scopes": [
+          "repo"
+        ]
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "authenticated",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "scopes": [
+            "repo"
+          ],
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "authenticated",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "scopes": [
+            "repo"
+          ]
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "authenticated",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "scopes": [
+            "repo"
+          ]
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "authenticated",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "scopes": [
+            "repo"
+          ]
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "authenticated",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "scopes": [
+            "repo"
+          ]
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "authenticated",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "scopes": [
+            "repo"
+          ]
+        }
+      ],
+      "expected_event_id": "evt_auth_github_authenticated_8c334bbdfbee78201250581a2791c1d599588c56b97d007df37931eaf91bb14a",
+      "expected_idempotency_key": "auth.github.authenticated:8c334bbdfbee78201250581a2791c1d599588c56b97d007df37931eaf91bb14a",
+      "native_oracles": [
+        {
+          "case_id": "auth.github.authenticated.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.authenticated.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.authenticated.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.authenticated.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.authenticated.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.authenticated.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "auth.github.device_code.issued",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "auth_event_id": "auth-one",
+        "provider_id": "github",
+        "auth_realm": "github_api",
+        "auth_state": "issued",
+        "account_id": "account-one",
+        "host": "github.com",
+        "device_code_ref": "ref:device/one",
+        "expires_at": "2026-11-04T12:15:00Z",
+        "poll_interval_seconds": 5
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "issued",
+          "account_id": "account-one",
+          "host": "github.com",
+          "device_code_ref": "ref:device/one",
+          "expires_at": "2026-11-04T12:15:00Z",
+          "poll_interval_seconds": 5,
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "issued",
+          "account_id": "account-one",
+          "host": "github.com",
+          "device_code_ref": "ref:device/one",
+          "expires_at": "2026-11-04T12:15:00Z",
+          "poll_interval_seconds": 5
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "issued",
+          "account_id": "account-one",
+          "host": "github.com",
+          "device_code_ref": "ref:device/one",
+          "expires_at": "2026-11-04T12:15:00Z",
+          "poll_interval_seconds": 5
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "issued",
+          "account_id": "account-one",
+          "host": "github.com",
+          "device_code_ref": "ref:device/one",
+          "expires_at": "2026-11-04T12:15:00Z",
+          "poll_interval_seconds": 5
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "issued",
+          "account_id": "account-one",
+          "host": "github.com",
+          "device_code_ref": "ref:device/one",
+          "expires_at": "2026-11-04T12:15:00Z",
+          "poll_interval_seconds": 5
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "issued",
+          "account_id": "account-one",
+          "host": "github.com",
+          "device_code_ref": "ref:device/one",
+          "expires_at": "2026-11-04T12:15:00Z",
+          "poll_interval_seconds": 5
+        }
+      ],
+      "expected_event_id": "evt_auth_github_device_code_issued_f63b2da1c577b27000fc458a061715c44fa5903b691fda096ff52ce122f84336",
+      "expected_idempotency_key": "auth.github.device_code.issued:f63b2da1c577b27000fc458a061715c44fa5903b691fda096ff52ce122f84336",
+      "native_oracles": [
+        {
+          "case_id": "auth.github.device_code.issued.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.device_code.issued.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.device_code.issued.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.device_code.issued.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.device_code.issued.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.device_code.issued.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "auth.github.disconnected",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "auth_event_id": "auth-one",
+        "provider_id": "github",
+        "auth_realm": "github_api",
+        "auth_state": "disconnected",
+        "account_id": "account-one",
+        "host": "github.com",
+        "credential_ref": "ref:credential/one",
+        "disconnect_receipt_ref": "ref:receipt/disconnect"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "disconnected",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "disconnect_receipt_ref": "ref:receipt/disconnect",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "disconnected",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "disconnect_receipt_ref": "ref:receipt/disconnect"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "disconnected",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "disconnect_receipt_ref": "ref:receipt/disconnect"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "disconnected",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "disconnect_receipt_ref": "ref:receipt/disconnect"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "disconnected",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "disconnect_receipt_ref": "ref:receipt/disconnect"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "disconnected",
+          "account_id": "account-one",
+          "host": "github.com",
+          "credential_ref": "ref:credential/one",
+          "disconnect_receipt_ref": "ref:receipt/disconnect"
+        }
+      ],
+      "expected_event_id": "evt_auth_github_disconnected_0e3d74b6be1e2fe6e11a22484ddf74bc5ac860ef71eb888222c5cee4dfa62143",
+      "expected_idempotency_key": "auth.github.disconnected:0e3d74b6be1e2fe6e11a22484ddf74bc5ac860ef71eb888222c5cee4dfa62143",
+      "native_oracles": [
+        {
+          "case_id": "auth.github.disconnected.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.disconnected.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.disconnected.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.disconnected.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.disconnected.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.disconnected.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "auth.github.failed",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "auth_event_id": "auth-one",
+        "provider_id": "github",
+        "auth_realm": "github_api",
+        "auth_state": "failed",
+        "account_id": "account-one",
+        "host": "github.com",
+        "error": "access_denied",
+        "failure_class": "auth_required"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "failed",
+          "account_id": "account-one",
+          "host": "github.com",
+          "error": "access_denied",
+          "failure_class": "auth_required",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "failed",
+          "account_id": "account-one",
+          "host": "github.com",
+          "error": "access_denied",
+          "failure_class": "auth_required"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "failed",
+          "account_id": "account-one",
+          "host": "github.com",
+          "error": "access_denied",
+          "failure_class": "auth_required"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "failed",
+          "account_id": "account-one",
+          "host": "github.com",
+          "error": "access_denied",
+          "failure_class": "auth_required"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "failed",
+          "account_id": "account-one",
+          "host": "github.com",
+          "error": "access_denied",
+          "failure_class": "auth_required"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "failed",
+          "account_id": "account-one",
+          "host": "github.com",
+          "error": "access_denied",
+          "failure_class": "auth_required"
+        }
+      ],
+      "expected_event_id": "evt_auth_github_failed_feb27eed5fb9c6c85fd550ab36d5af0697529493bbb9865018ca1ce7c3241c7c",
+      "expected_idempotency_key": "auth.github.failed:feb27eed5fb9c6c85fd550ab36d5af0697529493bbb9865018ca1ce7c3241c7c",
+      "native_oracles": [
+        {
+          "case_id": "auth.github.failed.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.failed.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.failed.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.failed.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.failed.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.failed.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "auth.github.token.polling",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "auth_event_id": "auth-one",
+        "provider_id": "github",
+        "auth_realm": "github_api",
+        "auth_state": "polling",
+        "account_id": "account-one",
+        "host": "github.com",
+        "poll_number": 1,
+        "outcome": "slow_down",
+        "previous_interval_seconds": 5,
+        "poll_interval_seconds": 10
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "polling",
+          "account_id": "account-one",
+          "host": "github.com",
+          "poll_number": 1,
+          "outcome": "slow_down",
+          "previous_interval_seconds": 5,
+          "poll_interval_seconds": 10,
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "polling",
+          "account_id": "account-one",
+          "host": "github.com",
+          "poll_number": 1,
+          "outcome": "slow_down",
+          "previous_interval_seconds": 5,
+          "poll_interval_seconds": 10
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "polling",
+          "account_id": "account-one",
+          "host": "github.com",
+          "poll_number": 1,
+          "outcome": "slow_down",
+          "previous_interval_seconds": 5,
+          "poll_interval_seconds": 10
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "polling",
+          "account_id": "account-one",
+          "host": "github.com",
+          "poll_number": 1,
+          "outcome": "slow_down",
+          "previous_interval_seconds": 5,
+          "poll_interval_seconds": 10
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "polling",
+          "account_id": "account-one",
+          "host": "github.com",
+          "poll_number": 1,
+          "outcome": "slow_down",
+          "previous_interval_seconds": 5,
+          "poll_interval_seconds": 10
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "auth_event_id": "auth-one",
+          "provider_id": "github",
+          "auth_realm": "github_api",
+          "auth_state": "polling",
+          "account_id": "account-one",
+          "host": "github.com",
+          "poll_number": 1,
+          "outcome": "slow_down",
+          "previous_interval_seconds": 5,
+          "poll_interval_seconds": 10
+        }
+      ],
+      "expected_event_id": "evt_auth_github_token_polling_da2886f38339f8dae4a9b58b3b2e77a3cb036e8659913cf365a6701cfa200f2a",
+      "expected_idempotency_key": "auth.github.token.polling:da2886f38339f8dae4a9b58b3b2e77a3cb036e8659913cf365a6701cfa200f2a",
+      "native_oracles": [
+        {
+          "case_id": "auth.github.token.polling.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.token.polling.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.token.polling.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.token.polling.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.token.polling.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "auth.github.token.polling.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.blocked",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "hook_name": "tool.before",
+        "invocation_ref": "ref:invocation/one",
+        "reason_ref": "ref:reason/block"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "reason_ref": "ref:reason/block"
+        }
+      ],
+      "expected_event_id": "evt_plugin_hook_blocked_573251784191418d0262481f9a734f3ad4ae523502b77c1d9fd640239d5c0609",
+      "expected_idempotency_key": "plugin.hook.blocked:573251784191418d0262481f9a734f3ad4ae523502b77c1d9fd640239d5c0609",
+      "native_oracles": [
+        {
+          "case_id": "plugin.hook.blocked.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.blocked.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.blocked.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.blocked.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.blocked.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.blocked.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.error",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "hook_name": "tool.before",
+        "invocation_ref": "ref:invocation/one",
+        "error_class": "timeout",
+        "error_ref": "ref:error/one"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "error_class": "timeout",
+          "error_ref": "ref:error/one",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "error_class": "timeout",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "error_class": "timeout",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "error_class": "timeout",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "error_class": "timeout",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "error_class": "timeout",
+          "error_ref": "ref:error/one"
+        }
+      ],
+      "expected_event_id": "evt_plugin_hook_error_39ff07f9f1b91a44fec1efe8b2bfe07cda6c4c43e5c7d0f1f31dcd0c9281900b",
+      "expected_idempotency_key": "plugin.hook.error:39ff07f9f1b91a44fec1efe8b2bfe07cda6c4c43e5c7d0f1f31dcd0c9281900b",
+      "native_oracles": [
+        {
+          "case_id": "plugin.hook.error.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.error.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.error.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.error.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.error.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.error.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.hook.invoked",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "hook_name": "tool.before",
+        "invocation_ref": "ref:invocation/one",
+        "duration_ms": 12
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "duration_ms": 12,
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "duration_ms": 12
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "duration_ms": 12
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "duration_ms": 12
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "duration_ms": 12
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "hook_name": "tool.before",
+          "invocation_ref": "ref:invocation/one",
+          "duration_ms": 12
+        }
+      ],
+      "expected_event_id": "evt_plugin_hook_invoked_720069a63d77da0f078f07f6fa1cd790e63a48fd2fa727f633b98652d3a5c338",
+      "expected_idempotency_key": "plugin.hook.invoked:720069a63d77da0f078f07f6fa1cd790e63a48fd2fa727f633b98652d3a5c338",
+      "native_oracles": [
+        {
+          "case_id": "plugin.hook.invoked.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.invoked.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.invoked.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.invoked.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.invoked.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.hook.invoked.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.load_failed",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "load_attempt_ref": "ref:load/one",
+        "error_class": "invalid_manifest",
+        "error_ref": "ref:error/one"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "error_class": "invalid_manifest",
+          "error_ref": "ref:error/one",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "error_class": "invalid_manifest",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "error_class": "invalid_manifest",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "error_class": "invalid_manifest",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "error_class": "invalid_manifest",
+          "error_ref": "ref:error/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "error_class": "invalid_manifest",
+          "error_ref": "ref:error/one"
+        }
+      ],
+      "expected_event_id": "evt_plugin_load_failed_e49328aeeb94c630598f7c52153e57cab3d062ed11c21ca58fc4183115813ea1",
+      "expected_idempotency_key": "plugin.load_failed:e49328aeeb94c630598f7c52153e57cab3d062ed11c21ca58fc4183115813ea1",
+      "native_oracles": [
+        {
+          "case_id": "plugin.load_failed.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.load_failed.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.load_failed.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.load_failed.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.load_failed.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.load_failed.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.loaded",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "load_attempt_ref": "ref:load/one",
+        "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "load_attempt_ref": "ref:load/one",
+          "manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "expected_event_id": "evt_plugin_loaded_fde5b2044d3ad944be2f768f9515e053c8070bd34fb9a7065fe43cecb5a6713e",
+      "expected_idempotency_key": "plugin.loaded:fde5b2044d3ad944be2f768f9515e053c8070bd34fb9a7065fe43cecb5a6713e",
+      "native_oracles": [
+        {
+          "case_id": "plugin.loaded.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.loaded.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.loaded.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.loaded.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.loaded.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.loaded.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.permission.override",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "invocation_ref": "ref:invocation/one",
+        "override_receipt_ref": "ref:receipt/override",
+        "decision": "deny"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "invocation_ref": "ref:invocation/one",
+          "override_receipt_ref": "ref:receipt/override",
+          "decision": "deny",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "invocation_ref": "ref:invocation/one",
+          "override_receipt_ref": "ref:receipt/override",
+          "decision": "deny"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "invocation_ref": "ref:invocation/one",
+          "override_receipt_ref": "ref:receipt/override",
+          "decision": "deny"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "invocation_ref": "ref:invocation/one",
+          "override_receipt_ref": "ref:receipt/override",
+          "decision": "deny"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "invocation_ref": "ref:invocation/one",
+          "override_receipt_ref": "ref:receipt/override",
+          "decision": "deny"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "invocation_ref": "ref:invocation/one",
+          "override_receipt_ref": "ref:receipt/override",
+          "decision": "deny"
+        }
+      ],
+      "expected_event_id": "evt_plugin_permission_override_9488deaf0ab6dadeff6b7990d9bf7b9e357a414b1bf1cad4d73e9cbb6876d5d2",
+      "expected_idempotency_key": "plugin.permission.override:9488deaf0ab6dadeff6b7990d9bf7b9e357a414b1bf1cad4d73e9cbb6876d5d2",
+      "native_oracles": [
+        {
+          "case_id": "plugin.permission.override.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.permission.override.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.permission.override.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.permission.override.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.permission.override.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.permission.override.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.tool.collision",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "tool_name": "example.tool",
+        "registration_ref": "ref:registration/one",
+        "resolution_ref": "ref:resolution/one"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "resolution_ref": "ref:resolution/one",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "resolution_ref": "ref:resolution/one"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "resolution_ref": "ref:resolution/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "resolution_ref": "ref:resolution/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "resolution_ref": "ref:resolution/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "resolution_ref": "ref:resolution/one"
+        }
+      ],
+      "expected_event_id": "evt_plugin_tool_collision_1ffe86601655866228fc42a63889fd74cd2a022aedab661f500af64b0e70e395",
+      "expected_idempotency_key": "plugin.tool.collision:1ffe86601655866228fc42a63889fd74cd2a022aedab661f500af64b0e70e395",
+      "native_oracles": [
+        {
+          "case_id": "plugin.tool.collision.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.collision.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.collision.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.collision.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.collision.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.collision.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    },
+    {
+      "event_type": "plugin.tool.registered",
+      "valid": {
+        "schema_version": "1.0.0",
+        "operation_id": "op-one",
+        "storage_instance_id": "store-one",
+        "subject_ref": "ref:subject/one",
+        "revision": 1,
+        "ts": "2026-11-04T12:00:00Z",
+        "redaction_profile": "refs_only",
+        "plugin_id": "example-plugin",
+        "plugin_receipt_ref": "ref:receipt/plugin",
+        "tool_name": "example.tool",
+        "registration_ref": "ref:registration/one"
+      },
+      "invalid": [
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one",
+          "token": "must-reject"
+        },
+        {
+          "schema_version": "1.0.0",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one"
+        },
+        {
+          "schema_version": "9.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 0,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "2026-11-04T12:00:00Z",
+          "redaction_profile": "raw",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one"
+        },
+        {
+          "schema_version": "1.0.0",
+          "operation_id": "op-one",
+          "storage_instance_id": "store-one",
+          "subject_ref": "ref:subject/one",
+          "revision": 1,
+          "ts": "invalid",
+          "redaction_profile": "refs_only",
+          "plugin_id": "example-plugin",
+          "plugin_receipt_ref": "ref:receipt/plugin",
+          "tool_name": "example.tool",
+          "registration_ref": "ref:registration/one"
+        }
+      ],
+      "expected_event_id": "evt_plugin_tool_registered_b37599eefbbea0e2cc44d313c5c34fda1dcdd414f41f3379d23054ccb9bcb201",
+      "expected_idempotency_key": "plugin.tool.registered:b37599eefbbea0e2cc44d313c5c34fda1dcdd414f41f3379d23054ccb9bcb201",
+      "native_oracles": [
+        {
+          "case_id": "plugin.tool.registered.original_commit",
+          "input": "Actual authorized original source result, known operation and supported schema; native admission installed after retention decision.",
+          "expected": "One source effect, one append, original synced first AppendReceipt before terminal publication.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.registered.lost_ack",
+          "input": "Crash after actual append, before observer acknowledgment; retry same operation and semantic bytes.",
+          "expected": "Original event ID, original sequence and original receipt, no repeated source effect.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.registered.missing_original",
+          "input": "Restore operation record without matching original source or first-AppendReceipt custody.",
+          "expected": "Unavailable and fenced; no new event or guessed terminal success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.registered.stale_consumer",
+          "input": "Current read token changes source, snapshot or frontier during body disclosure.",
+          "expected": "Refuse disclosure and reacquire original supported source; no stale success.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.registered.withdrawal",
+          "input": "Writer/reader binding withdrawn while an original receipt obligation remains.",
+          "expected": "New append refused; read consumer unavailable; original custody preserved for verified successor.",
+          "execution": "NOT_RUN"
+        },
+        {
+          "case_id": "plugin.tool.registered.deleted_body",
+          "input": "Kept event refers to body whose actual owner deletion/access gate refuses it.",
+          "expected": "Metadata history only; never disclose body, recreate it, or extend retention.",
+          "execution": "NOT_RUN"
+        }
+      ]
+    }
+  ]
+}
