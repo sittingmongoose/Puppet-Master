@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L12645-L13859
+Source lines: L12645-L13909
 
-Source SHA256: `c4cb9ca3fa25e70f507796433dbd9e83ba283a71129d4544302c71caf3b11b54`
+Source SHA256: `b83442f9bbee686461c19e71a2bccc31cb928f2f418996da8abc9852e3f2a055`
 
 ---
 
@@ -787,7 +787,17 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.
   the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
   owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
   the genuine original committed transition under its original schema/policy; disappearance or changed current state
-  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  Original-source resolution is mandatory on append, retry and historical inspection. Resolve before_record_ref
+  and after_record_ref in the authenticated original owner store, not against a caller-supplied observation.
+  Each resolved record agrees with the operation on subject, workspace where applicable, Storage instance,
+  Home Server, Computer, exact scope, Project/thread and actual Run/node/Attempt lineage, record identity and revision.
+  Non-execution operations have null Run/Attempt and no node. Complete before/after facts agree with every
+  payload observation; a matching reference spelling without its genuine record is unavailable. Live stop-generation
+  admission applies only to current append/retry, never to a retained original. Original schema/policy, genuine
+  source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -887,7 +897,17 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.
   the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
   owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
   the genuine original committed transition under its original schema/policy; disappearance or changed current state
-  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  Original-source resolution is mandatory on append, retry and historical inspection. Resolve before_record_ref
+  and after_record_ref in the authenticated original owner store, not against a caller-supplied observation.
+  Each resolved record agrees with the operation on subject, workspace where applicable, Storage instance,
+  Home Server, Computer, exact scope, Project/thread and actual Run/node/Attempt lineage, record identity and revision.
+  Non-execution operations have null Run/Attempt and no node. Complete before/after facts agree with every
+  payload observation; a matching reference spelling without its genuine record is unavailable. Live stop-generation
+  admission applies only to current append/retry, never to a retained original. Original schema/policy, genuine
+  source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -985,7 +1005,17 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.
   the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
   owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
   the genuine original committed transition under its original schema/policy; disappearance or changed current state
-  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  Original-source resolution is mandatory on append, retry and historical inspection. Resolve before_record_ref
+  and after_record_ref in the authenticated original owner store, not against a caller-supplied observation.
+  Each resolved record agrees with the operation on subject, workspace where applicable, Storage instance,
+  Home Server, Computer, exact scope, Project/thread and actual Run/node/Attempt lineage, record identity and revision.
+  Non-execution operations have null Run/Attempt and no node. Complete before/after facts agree with every
+  payload observation; a matching reference spelling without its genuine record is unavailable. Live stop-generation
+  admission applies only to current append/retry, never to a retained original. Original schema/policy, genuine
+  source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -1084,7 +1114,17 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.
   the generic checkpoint. Crash/rebuild reacquires the generic index and recomputes the answer, never reruns an
   owner command, emits an event, restores a lease, charges Usage or injects a prompt. Historical validation evaluates
   the genuine original committed transition under its original schema/policy; disappearance or changed current state
-  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.'
+  of the live subject does not invalidate a retained event. Withdrawn or forged sources still refuse.
+
+  Original-source resolution is mandatory on append, retry and historical inspection. Resolve before_record_ref
+  and after_record_ref in the authenticated original owner store, not against a caller-supplied observation.
+  Each resolved record agrees with the operation on subject, workspace where applicable, Storage instance,
+  Home Server, Computer, exact scope, Project/thread and actual Run/node/Attempt lineage, record identity and revision.
+  Non-execution operations have null Run/Attempt and no node. Complete before/after facts agree with every
+  payload observation; a matching reference spelling without its genuine record is unavailable. Live stop-generation
+  admission applies only to current append/retry, never to a retained original. Original schema/policy, genuine
+  source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -1186,7 +1226,17 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly browser.
   recomputes the answer, never reruns an owner command, emits an event, restores a lease, charges Usage or injects
   a prompt. Historical validation evaluates the genuine original committed transition under its original schema/policy;
   disappearance or changed current state of the live subject does not invalidate a retained event. Withdrawn or
-  forged sources still refuse.'
+  forged sources still refuse.
+
+  Original-source resolution is mandatory on append, retry and historical inspection. Resolve before_record_ref
+  and after_record_ref in the authenticated original owner store, not against a caller-supplied observation.
+  Each resolved record agrees with the operation on subject, workspace where applicable, Storage instance,
+  Home Server, Computer, exact scope, Project/thread and actual Run/node/Attempt lineage, record identity and revision.
+  Non-execution operations have null Run/Attempt and no node. Complete before/after facts agree with every
+  payload observation; a matching reference spelling without its genuine record is unavailable. Live stop-generation
+  admission applies only to current append/retry, never to a retained original. Original schema/policy, genuine
+  source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:

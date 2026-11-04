@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6715-L7284
+Source lines: L6715-L7298
 
-Source SHA256: `1af8b0321a641e5ee5d064b60e281e0d5541ce4691b0c154e7e0fb28a6d04509`
+Source SHA256: `3a3fd47a2044feebed4d969cba9a07364b4e2013f8306fef36f2425d25880575`
 
 ---
 
@@ -543,6 +543,20 @@ canonical_text: The six exact DCN families have per-family positive, negative an
   enforcement remain NOT_RUN. Synthetic owner/authenticity observations test contract predicates and cannot admit
   a writer or establish native proof. No new test file under tests/ is authorized by .gitignore, so this lane keeps
   its executable oracle in scripts/.
+
+  Check 11 is at individual predicate granularity, including each checkpoint key/source/identity/digest join.
+  A foreign-Storage checkpoint negative is internally coherent, including source selection, generation, anchor,
+  key/reference/dataset and both observations; only its join to this event is wrong. Resolve before/after record
+  references and lineage from independent original owner records. Validate Storage original/receipt custody
+  before retry result comparison; reject forged identity, schema, sequence and timestamp observations. Recompute
+  CURRENT/manifest byte hashes and SP-278 binding commitments. Exact memory before/after semantic deltas cover
+  every successful command and automatic mutation; requested/failed/unchanged verifies retain command results only.
+  Retained-read positives include replay-only and other originally valid policies after a changed stop generation
+  or absent live subject. Current policy guards never reach those historical originals. Remove each real predicate,
+  prove all its isolated negatives flip, prove all other negatives retain their own refusal, then restore it.
+  Intentional duplicate schema/format/value guards are named and removed together, with an explicit reason;
+  unrelated stale copies or post-state contradictions are never accepted as a duplicate proof.
+
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:

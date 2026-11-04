@@ -29608,8 +29608,8 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
-  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
+  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29646,7 +29646,18 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
 
   No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
   generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
-  mirror, policy object, Spec Lock or governance refresh is implied.'
+  mirror, policy object, Spec Lock or governance refresh is implied.
+
+  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching
+  caller token copies. SHA-256 the exact CURRENT and manifest bytes. Apply the unchanged SP-278 canonical
+  MessagePack binding codec to its source-value commitments, birth anchor, generation identity and current frontier;
+  verify all source selection generations/epoch against decoded owner controls. Independently join token Storage
+  identity to this event, source identity to token identity, checkpoint key/reference and dataset to the selected
+  generation. A valid checkpoint from another Storage database is still foreign. Recompute every hash even when
+  capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
+  admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
+  control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -29703,8 +29714,8 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
-  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
+  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29741,7 +29752,18 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
 
   No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
   generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
-  mirror, policy object, Spec Lock or governance refresh is implied.'
+  mirror, policy object, Spec Lock or governance refresh is implied.
+
+  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching
+  caller token copies. SHA-256 the exact CURRENT and manifest bytes. Apply the unchanged SP-278 canonical
+  MessagePack binding codec to its source-value commitments, birth anchor, generation identity and current frontier;
+  verify all source selection generations/epoch against decoded owner controls. Independently join token Storage
+  identity to this event, source identity to token identity, checkpoint key/reference and dataset to the selected
+  generation. A valid checkpoint from another Storage database is still foreign. Recompute every hash even when
+  capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
+  admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
+  control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -29798,8 +29820,8 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
-  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
+  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29836,7 +29858,18 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
 
   No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
   generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
-  mirror, policy object, Spec Lock or governance refresh is implied.'
+  mirror, policy object, Spec Lock or governance refresh is implied.
+
+  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching
+  caller token copies. SHA-256 the exact CURRENT and manifest bytes. Apply the unchanged SP-278 canonical
+  MessagePack binding codec to its source-value commitments, birth anchor, generation identity and current frontier;
+  verify all source selection generations/epoch against decoded owner controls. Independently join token Storage
+  identity to this event, source identity to token identity, checkpoint key/reference and dataset to the selected
+  generation. A valid checkpoint from another Storage database is still foreign. Recompute every hash even when
+  capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
+  admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
+  control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -29893,8 +29926,8 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
-  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
+  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -29931,7 +29964,18 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
 
   No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
   generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
-  mirror, policy object, Spec Lock or governance refresh is implied.'
+  mirror, policy object, Spec Lock or governance refresh is implied.
+
+  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching
+  caller token copies. SHA-256 the exact CURRENT and manifest bytes. Apply the unchanged SP-278 canonical
+  MessagePack binding codec to its source-value commitments, birth anchor, generation identity and current frontier;
+  verify all source selection generations/epoch against decoded owner controls. Independently join token Storage
+  identity to this event, source identity to token identity, checkpoint key/reference and dataset to the selected
+  generation. A valid checkpoint from another Storage database is still foreign. Recompute every hash even when
+  capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
+  admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
+  control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -29988,8 +30032,8 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
-  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
+  (Case L-3, Card 1 retention assignments: G10 for this exact browser.session name; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -30027,7 +30071,18 @@ canonical_text: 'Newly authored Storage owner contract for exactly browser.sessi
 
   No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
   generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
-  mirror, policy object, Spec Lock or governance refresh is implied.'
+  mirror, policy object, Spec Lock or governance refresh is implied.
+
+  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching
+  caller token copies. SHA-256 the exact CURRENT and manifest bytes. Apply the unchanged SP-278 canonical
+  MessagePack binding codec to its source-value commitments, birth anchor, generation identity and current frontier;
+  verify all source selection generations/epoch against decoded owner controls. Independently join token Storage
+  identity to this event, source identity to token identity, checkpoint key/reference and dataset to the selected
+  generation. A valid checkpoint from another Storage database is still foreign. Recompute every hash even when
+  capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
+  admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
+  control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -30084,8 +30139,8 @@ canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_s
   BLAKE3 pack payload_ref with id, byte size and media type, durable bytes before acknowledgment, never an enlarged
   inline limit.
 
-  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232
-  (the source commit/hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
+  Exact retention_policy_ref is RP-AUTHORITY-INDEFINITE@1.0.0, by the per-name G03/G10 assignment on 2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults
+  (Case L-3, Card 1 retention assignments: G03 exactly memory.gist_state_changed; the source hash is pinned in the DCN report). This is a citation and adoption of that assignment, not
   another retention choice. That Storage text governs holds, backups, Project-data deletion and storage-pressure
   refusal, and this contract does not restate different terms. Metadata outlives the subject as assigned; it never
   keeps the subject''s body alive merely to render history. Resolve each body/evidence ref only through the current
@@ -30123,7 +30178,18 @@ canonical_text: 'Newly authored Storage owner contract for exactly memory.gist_s
 
   No new durable family projection/checkpoint exists, so there is no derived retention object to assign; the unchanged
   generic index/checkpoint retains its own SP-278 policy. No registry admission, storage registry family, duplicate
-  mirror, policy object, Spec Lock or governance refresh is implied.'
+  mirror, policy object, Spec Lock or governance refresh is implied.
+
+  Recompute checkpoint commitments from genuine Storage source bytes and records, never from two matching
+  caller token copies. SHA-256 the exact CURRENT and manifest bytes. Apply the unchanged SP-278 canonical
+  MessagePack binding codec to its source-value commitments, birth anchor, generation identity and current frontier;
+  verify all source selection generations/epoch against decoded owner controls. Independently join token Storage
+  identity to this event, source identity to token identity, checkpoint key/reference and dataset to the selected
+  generation. A valid checkpoint from another Storage database is still foreign. Recompute every hash even when
+  capture and disclosure tokens agree. Source adapters, frame validation, complete coverage and authentic generation
+  admission remain native obligations; synthetic fixture bytes are explicit owner-codec witnesses, never production
+  control encodings. Do not require obsolete birth CURRENT/manifest files to survive beyond SP-278 custody.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:

@@ -28,9 +28,10 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "retention_assignment_source": "origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232",
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
       "prepare_only": true,
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.created"
     },
     {
       "event_type": "browser.session.state_changed",
@@ -60,9 +61,10 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "retention_assignment_source": "origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232",
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
       "prepare_only": true,
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.state_changed"
     },
     {
       "event_type": "browser.session.closed",
@@ -88,9 +90,10 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "retention_assignment_source": "origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232",
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
       "prepare_only": true,
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.closed"
     },
     {
       "event_type": "browser.session.promoted",
@@ -116,9 +119,10 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "retention_assignment_source": "origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232",
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
       "prepare_only": true,
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.promoted"
     },
     {
       "event_type": "browser.session.takeover_state_changed",
@@ -147,9 +151,10 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "retention_assignment_source": "origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232",
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
       "prepare_only": true,
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G10: browser.session.takeover_state_changed"
     },
     {
       "event_type": "memory.gist_state_changed",
@@ -182,9 +187,10 @@
         "policy_id": "RP-AUTHORITY-INDEFINITE",
         "policy_version": "1.0.0"
       },
-      "retention_assignment_source": "origin/plans/ea-retention-cards1-20261104:Plans/storage-plan.md#SP-232",
+      "retention_assignment_source": "2663667e14346235daaa561d193e959422640b6e:Plans/storage-plan.md#retention-authority-and-defaults",
       "prepare_only": true,
-      "replay_policy": "dedupe_by_idempotency_key"
+      "replay_policy": "dedupe_by_idempotency_key",
+      "retention_assignment_group": "G03: memory.gist_state_changed"
     }
   ]
 }

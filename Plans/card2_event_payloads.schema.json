@@ -1430,7 +1430,8 @@
               "run_id",
               "thread_id"
             ]
-          }
+          },
+          "description": "Exact set of changed canonical semantic fields from authenticated complete before/after MemoryGist facts; absence differs from null. Revision is checked separately. Never a selected subset."
         },
         "ts": {
           "type": "string",

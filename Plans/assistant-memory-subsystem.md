@@ -3216,7 +3216,29 @@ canonical_text: 'Newly authored owner contract under DL-045 for exactly memory.g
   recomputes the answer, never reruns an owner command, emits an event, restores a lease, charges Usage or injects
   a prompt. Historical validation evaluates the genuine original committed transition under its original schema/policy;
   disappearance or changed current state of the live subject does not invalidate a retained event. Withdrawn or
-  forged sources still refuse.'
+  forged sources still refuse.
+
+  Original-source resolution is mandatory on append, retry and historical inspection. Resolve before_record_ref
+  and after_record_ref in the authenticated original owner store, not against a caller-supplied observation.
+  Each resolved record agrees with the operation on subject, workspace where applicable, Storage instance,
+  Home Server, Computer, exact scope, Project/thread and actual Run/node/Attempt lineage, record identity and revision.
+  Non-execution operations have null Run/Attempt and no node. Complete before/after facts agree with every
+  payload observation; a matching reference spelling without its genuine record is unavailable. Live stop-generation
+  admission applies only to current append/retry, never to a retained original. Original schema/policy, genuine
+  source, withdrawal, access and deletion validation remain mandatory even after the live subject changes or disappears.
+
+
+  DL-407 coverage requires complete immutable MemoryGist before/after facts. changed_fields is exactly
+  the set of canonical semantic fields whose values differ, including presence versus absence; it is never a
+  manually selected subset. Revision is checked separately and is not a semantic field. Payload previous_pinned,
+  pinned, previous_verification_state, verification_state, source and evidence_refs equal their resolved facts.
+  For a new automatic gist, the absent before record makes every present semantic field part of changed_fields;
+  previous_verification_state is null and previous_pinned is the false absence sentinel. Edits, pin/unpin, discard,
+  successful verify and automatic changes all use the same exact-delta rule, including combined changes and changes
+  to claims, provenance, access, evidence/currentness and derived fields. Requested, failed and unchanged verification
+  have identical canonical before/after facts, zero history events and a retained command result. The seven
+  retirements above depend on these complete coverage and no-event obligations; they grant no maintenance policy.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:

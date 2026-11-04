@@ -24528,7 +24528,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.created@
   from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
   historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
   and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
-  refuses. This unit grants no registration and no native proof.'
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -24610,7 +24622,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.state_ch
   from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
   historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
   and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
-  refuses. This unit grants no registration and no native proof.'
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -24692,7 +24716,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.closed@1
   from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
   historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
   and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
-  refuses. This unit grants no registration and no native proof.'
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -24774,7 +24810,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.promoted
   from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
   historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
   and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
-  refuses. This unit grants no registration and no native proof.'
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -24856,7 +24904,19 @@ canonical_text: 'Newly authored owner contract, exactly browser.session.takeover
   from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
   historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
   and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
-  refuses. This unit grants no registration and no native proof.'
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:
@@ -24938,7 +24998,19 @@ canonical_text: 'Newly authored owner contract, exactly memory.gist_state_change
   from still-admitted genuine sources. A removed reader is fenced even for historical events; an authorized retained
   historical reader does not compare the old transition to today''s subject state. Restore preserves cutoff/withdrawal
   and original results; missing source, ambiguous version, incoherent backup, forged receipt or withdrawn source
-  refuses. This unit grants no registration and no native proof.'
+  refuses. This unit grants no registration and no native proof.
+
+  Before retry returns or recovers an original, authenticate its exact EventRecord from Storage and validate
+  its envelope, family/version/payload schema, recomputed event/idempotency identity, original immutable owner
+  records and original transition. Verify the original observation byte-for-value against that record; verify
+  sequence_id, observed_at_utc and persisted_at_utc independently against the Storage-issued first receipt,
+  including integer bounds and real timestamp syntax/calendar validity. These assigned fields remain excluded
+  from caller-semantic equality. A changed candidate observation time or sequence does not create a conflict;
+  a forged original or receipt never becomes the original result. Historical original validation uses its original
+  accepted schema/policy, including genuine compatibility replay-only history, without current live-state or
+  current-writer policy guards. Current candidate append/retry still refuses replay_only_not_appendable, and
+  withdrawn, forged, foreign or unavailable custody refuses on every path.
+'
 gui_related: false
 gui_classification_reason: Defines event semantics, metadata and custody for existing behavior; no visual presentation.
 depends_on:

@@ -1631,7 +1631,7 @@
         "Plans/settings_system_contracts.schema.json",
         "Plans/storage-plan.md"
       ],
-      "line_count": 3257,
+      "line_count": 3279,
       "path": "Plans/assistant-memory-subsystem.md",
       "plan_unit_count": 55,
       "plan_unit_ids": [
@@ -1730,7 +1730,7 @@
         "storage_boundary",
         "storage_layout"
       ],
-      "sha256": "4a989dd463eb33abdfcf6ada53185909952ddcb1f098449753a19b30c7210604",
+      "sha256": "9ebce5022051b1505a60d893d0c9eb76e17f4b14704037d30724884f32323dde",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 55
@@ -1996,7 +1996,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7284,
+      "line_count": 7298,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2149,7 +2149,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "1af8b0321a641e5ee5d064b60e281e0d5541ce4691b0c154e7e0fb28a6d04509",
+      "sha256": "3a3fd47a2044feebed4d969cba9a07364b4e2013f8306fef36f2425d25880575",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -4591,7 +4591,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24961,
+      "line_count": 25033,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 367,
       "plan_unit_ids": [
@@ -5323,7 +5323,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "c5ea0478de343c94d441fed165f9317256d8abc88018624bc02afa4b88c7bd64",
+      "sha256": "e4b2882f0397cdbda1ac01c4cc33a062c5bc07a4075603d3b5a0f24bf4610ca2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 367
@@ -17065,7 +17065,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm_browser_program_semantics.py"
       ],
-      "line_count": 13859,
+      "line_count": 13909,
       "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
       "plan_unit_count": 180,
       "plan_unit_ids": [
@@ -17390,7 +17390,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "c4cb9ca3fa25e70f507796433dbd9e83ba283a71129d4544302c71caf3b11b54",
+      "sha256": "b83442f9bbee686461c19e71a2bccc31cb928f2f418996da8abc9852e3f2a055",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 176,
@@ -18706,7 +18706,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 30056,
+      "line_count": 30122,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 347,
       "plan_unit_ids": [
@@ -19180,7 +19180,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "452eb063ad8c3c01bf9f26a9383d387ce73c1773bb7ae6c3665f05070f03ce8d",
+      "sha256": "e1fc75290eaaef881210d7a7bde664fb47f56b3715c87f83709aef9f0485b826",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 343,
@@ -21559,7 +21559,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T21:51:21Z",
+  "generated_at_utc": "2026-11-04T22:40:42Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
