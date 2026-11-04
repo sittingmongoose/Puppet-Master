@@ -52,7 +52,7 @@ export default async function(t){
   for(const look of ['glass-dark','glass-light']){
    await t.app.look(look);
    await f.evaluate(()=>{PM56_COLLAB.openConfigure('crew');(window.PM56_APP?.ctx()||PM56_EXT.ctx()).openDialog({type:'collab-configure'});});
-   await t.page.waitForTimeout(800);
+   await t.page.waitForTimeout(1600);
    const pip=f.locator('.pmx-sheet .pmx-pip-host').last();
    await t.mark('pre-flat '+look);
    await t.crop('pre-flat-'+look,pip,'Pre-flat source head, native comparison');

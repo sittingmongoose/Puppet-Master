@@ -31,7 +31,7 @@ export const tests={
   for(const look of LOOKS){
   await f.evaluate(name=>{PM56_DEMO.setTheme(name);PM56_DEMO.openActivity('subagents');},look);
   await t.page.waitForTimeout(300);
-  const r=await f.evaluate(()=>({theme:PM56_APP.ctx().state.theme,rows:[...document.querySelectorAll('.pmap-agent-mark .pmx-pip')].map(e=>e.children.length),kit:!!window.PMLogo,marks:[...document.querySelectorAll('.pmx-mark')].map(e=>e.querySelectorAll('path,rect,circle').length),pip:PM56_SHELL.pmxPip({mood:'idle',size:22})}));
+  const r=await f.evaluate(()=>({theme:PM56_EXT.ctx().state.theme,rows:[...document.querySelectorAll('.pmap-agent-mark .pmx-pip')].map(e=>e.children.length),kit:!!window.PMLogo,marks:[...document.querySelectorAll('.pmx-mark')].map(e=>e.querySelectorAll('path,rect,circle').length),pip:PM56_SHELL.pmxPip({mood:'idle',size:22})}));
   t.log(look+' '+JSON.stringify(r));await t.check(look+' standalone Pip kit and nonempty mark',r.theme===look&&r.kit&&r.pip.length>0&&r.rows.length>0&&r.rows.every(n=>n>0));
   }
  }
