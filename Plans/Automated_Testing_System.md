@@ -7234,3 +7234,207 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-300 - Event Authority format.applied positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-300
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  format.applied positive and negative oracles
+  Validate its closed payload, scope/identity joins, lost-ack original receipt, replay without effects, stale token refusal, source deletion refusal and reader withdrawal using Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native obligations NOT_RUN: cut before body commit/append/frame sync/receipt/custody; crash after receipt; compare restored originals; concurrent CAS and revoked-source disclosure. Family retention remains PENDING_RETENTION_DECISION. No native success or Event Authority admission follows.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- FS-075
+- CV-620
+- SP-600
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-301 - Event Authority lsp.server.lifecycle_changed positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-301
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  lsp.server.lifecycle_changed positive and negative oracles
+  Validate its closed payload, scope/identity joins, lost-ack original receipt, replay without effects, stale token refusal, source deletion refusal and reader withdrawal using Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native obligations NOT_RUN: cut before body commit/append/frame sync/receipt/custody; crash after receipt; compare restored originals; concurrent CAS and revoked-source disclosure. Family retention remains PENDING_RETENTION_DECISION. No native success or Event Authority admission follows.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- LSPS-173
+- CV-621
+- SP-601
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-302 - Event Authority model.catalog_refreshed positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-302
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  model.catalog_refreshed positive and negative oracles
+  Validate its closed payload, scope/identity joins, lost-ack original receipt, replay without effects, stale token refusal, source deletion refusal and reader withdrawal using Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native obligations NOT_RUN: cut before body commit/append/frame sync/receipt/custody; crash after receipt; compare restored originals; concurrent CAS and revoked-source disclosure. Family retention remains PENDING_RETENTION_DECISION. No native success or Event Authority admission follows.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- MS-199
+- CV-622
+- SP-602
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-303 - Event Authority subagent.context_rehydrated positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-303
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  subagent.context_rehydrated positive and negative oracles
+  Validate its closed payload, scope/identity joins, lost-ack original receipt, replay without effects, stale token refusal, source deletion refusal and reader withdrawal using Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native obligations NOT_RUN: cut before body commit/append/frame sync/receipt/custody; crash after receipt; compare restored originals; concurrent CAS and revoked-source disclosure. Family retention remains RP-RUNTIME-365D. No native success or Event Authority admission follows.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- PP-151
+- CV-623
+- SP-603
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### ATS-304 - Event Authority subagent.context_shrunk positive and negative oracles
+
+```yaml
+plan_unit_id: ATS-304
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  subagent.context_shrunk positive and negative oracles
+  Validate its closed payload, scope/identity joins, lost-ack original receipt, replay without effects, stale token refusal, source deletion refusal and reader withdrawal using Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native obligations NOT_RUN: cut before body commit/append/frame sync/receipt/custody; crash after receipt; compare restored originals; concurrent CAS and revoked-source disclosure. Family retention remains RP-RUNTIME-365D. No native success or Event Authority admission follows.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- PP-152
+- CV-624
+- SP-604
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+project.added — ATS-304 independent oracle supplement. Its own Plans/small_owner_event_fixtures.json payload, required-field negatives, identity vectors and read fences run through scripts/pm-small-owner-events.py. Native NOT_RUN obligations: original owner completion versus accepted/unknown/cancelled result, lost acknowledgement without a second effect, late source deletion, backup/restore and admission withdrawal. No sibling oracle supplies credit. Retention remains PENDING_RETENTION_DECISION.
+
+
+project.created — ATS-304 independent oracle supplement. Its own Plans/small_owner_event_fixtures.json payload, required-field negatives, identity vectors and read fences run through scripts/pm-small-owner-events.py. Native NOT_RUN obligations: original owner completion versus accepted/unknown/cancelled result, lost acknowledgement without a second effect, late source deletion, backup/restore and admission withdrawal. No sibling oracle supplies credit. Retention remains PENDING_RETENTION_DECISION.
+
+
+git.clone.completed — ATS-304 independent oracle supplement. Its own Plans/small_owner_event_fixtures.json payload, required-field negatives, identity vectors and read fences run through scripts/pm-small-owner-events.py. Native NOT_RUN obligations: original owner completion versus accepted/unknown/cancelled result, lost acknowledgement without a second effect, late source deletion, backup/restore and admission withdrawal. No sibling oracle supplies credit. Retention remains PENDING_RETENTION_DECISION.

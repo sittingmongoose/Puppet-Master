@@ -6037,3 +6037,97 @@ negative_constraints: [No event-to-prompt auto-attachment., No authority or budg
 ```
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md#PP-083, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-166, ContractName:Plans/browser_event_admission.json
+
+
+### PP-151 - Event Authority subagent.context_rehydrated 1.0.0 — newly authored owner contract under DL-045.
+
+```yaml
+plan_unit_id: PP-151
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: |-
+  subagent.context_rehydrated 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/subagent_context_rehydrated.schema.json (pm.event_payload.subagent_context_rehydrated.v1); no sibling or legacy spelling is admitted. Scope is application_or_project; project_id is a real immutable Project ID or, only for application scope, null; never an empty or sentinel Project. Payload project_id equals the envelope join. Existing CV-365/366 scope and child lineage rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient. Context before_revision and after_revision require after=before+1; run_id identifies the parent and child_run_id the exact child, joined to the original lineage. LSP previous_state and state must differ and the original supervisor observation must prove the edge under section 14.3. A valid enum alone never proves a transition.
+  Producer: effective-context runtime rehydration adapter. When an already supported rehydration restores effective context, bind the original source refs and before/after effective-context revisions to the exact child identity. Source access/deletion checks precede restoration. No source history is rewritten, no missing source is fabricated, and replay never rehydrates or calls a provider.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["subagent.context_rehydrated", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; idempotency_key="subagent.context_rehydrated:"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=redacted_refs_only. occurred_at is the original completion/observation timestamp, not retry time. Storage alone supplies sequence, observed/persisted times; unrelated envelope fields are null unless proved by the original operation. Full producer semantic digest uses CV-339, not only the identity tuple.
+  Operating consumer reader.context.rehydrated@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Custody remains with effective-context runtime rehydration adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. file_path, where present, is a FileSafe-approved project-relative display path. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.context.rehydrated@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- CV-623
+- SP-603
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```
+
+
+### PP-152 - Event Authority subagent.context_shrunk 1.0.0 — newly authored owner contract under DL-045.
+
+```yaml
+plan_unit_id: PP-152
+unit_type: event_contract
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: |-
+  subagent.context_shrunk 1.0.0 — newly authored owner contract under DL-045.
+  Prepared without admission. Exact payload is Plans/event_payloads/subagent_context_shrunk.schema.json (pm.event_payload.subagent_context_shrunk.v1); no sibling or legacy spelling is admitted. Scope is application_or_project; project_id is a real immutable Project ID or, only for application scope, null; never an empty or sentinel Project. Payload project_id equals the envelope join. Existing CV-365/366 scope and child lineage rules remain mandatory. Optional envelope lineage comes from the original operation, never ambient focus. Schema-only validity is insufficient. Context before_revision and after_revision require after=before+1; run_id identifies the parent and child_run_id the exact child, joined to the original lineage. LSP previous_state and state must differ and the original supervisor observation must prove the edge under section 14.3. A valid enum alone never proves a transition.
+  Producer: effective-context runtime shrinking adapter. When the existing effective-context shrinker commits a shorter replacement, preserve source refs and rehydration handles. Automatic default scope remains tool results; optional retrieved/plan blocks require their existing configuration. Protected working-set, system/provider/persona/tool definitions remain immune. No original history is rewritten and replay never shrinks or calls a provider.
+  Freeze operation_id from fresh entropy in the original owning operation before its effect; preserve it and all source facts on retry/restart. Freeze the completion payload after owner success, before append. If the original operation cannot durably retain its intent/result, publication fails closed: never rerun the effect to reconstruct evidence. This contract creates no independent operation journal or stored value. The owner retains its existing intent/result and source refs under its existing storage contract.
+  Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved retention or unavailable source custody prevents activation. Referenced bodies commit under SP-337 before append. The first original AppendReceipt is exposed only after the durable group frame; terminal event success publication follows that receipt. Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.
+  Identity digest is SHA-256 of UTF-8 compact JSON array ["subagent.context_shrunk", "1.0.0", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order preserved. event_id="evt_"+digest; idempotency_key="subagent.context_shrunk:"+digest; family_revision=1.0.0, replay_policy=dedupe_by_idempotency_key, redaction_profile=redacted_refs_only. occurred_at is the original completion/observation timestamp, not retry time. Storage alone supplies sequence, observed/persisted times; unrelated envelope fields are null unless proved by the original operation. Full producer semantic digest uses CV-339, not only the identity tuple.
+  Operating consumer reader.context.shrunk@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/revision/scope only after the complete CURRENT-selected global frontier is verified. Its checkpoint is the existing checkpoints key event_record_index_checkpoint.v1:{storage_instance_id}, value Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint; no family-specific persisted cursor or projection is introduced. Generic rows and frontier advance atomically by the existing SP-278 CAS; a failed CAS preserves the old publication and is retried from a fresh snapshot. Operating reads are passive with no durable progress, so their own checkpoint is explicitly none. Each read uses the exact live ten-field read_token in one real redb snapshot; any stored read token must instead be the nine-field DL-076 durable token with redb_snapshot_id removed, never a persisted snapshot identity. Rebuild uses original retained seglog through SP-278, preserving identity and no side effects. Unauthorized, deleted, unsupported, stale or unresolved source reads return unavailable; they cannot produce empty-success evidence.
+  Custody remains with effective-context runtime shrinking adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, provider response, private absolute path or credential content. file_path, where present, is a FileSafe-approved project-relative display path. Recheck current permission, source deletion/tombstone and hold gates before each disclosure; a ref is not permission. Backup captures coherent original events, refs and first-receipt custody under BRS-031; derived index is rebuildable, never backup authority. Restore verifies original identities and current source availability; missing originals remain unavailable rather than reconstructed from an index.
+  Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY-INDEFINITE (audit/source lineage) per Case L-3; RT must settle the actual role. Existing generic checkpoint/index retain RP-PROJECTION-3GEN and SP-278 source-coupled constraints; no new stored derived record is owned here.
+  Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guessed payload. Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.context.shrunk@1.0.0 refuses disclosure and fences its in-memory token; generic global indexing remains available for other families. Re-enable only after governed schema/admission validation and verified SP-278 rebuild/currentness. No source deletion, history rewrite or zero-cursor substitution is authorized.
+  Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CAS tests are authored obligations, NOT_RUN. No writer, handler or native availability follows from this preparation.
+gui_related: false
+gui_classification_reason: Backend EventRecord contract, not a visual specification.
+depends_on:
+- CV-624
+- SP-604
+unblocks: []
+acceptance_criteria:
+- Exact family semantics, schema, identity, replay and withdrawal checks pass; no admission or native proof follows.
+validation_surfaces:
+- python3 scripts/pm-small-owner-events.py
+risk_class: event_authority_binding_drift
+reasoning_tier: high
+context_scope: event_authority_DM_20261104
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- reports/event-authority-20261104/DM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No Event Authority admission, native readiness, retention choice or new user-visible behavior.
+```

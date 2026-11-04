@@ -1,0 +1,467 @@
+[
+  {
+    "event_type": "format.applied",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/00-plans-index.md",
+        "line": 789,
+        "quote": "| `Formatters_System.md` | Canonical formatter system | SSOT for formatter lifecycle (HTE-only, triggered on File.Edited), built-in formatter table (21 formatters), per-formatter config (disabled/command/environment/extensions, `$FILE` placeholder), evidence tracking via `format.applied` events, GUI requirements (Settings > Formatters), and OpenCode baseline/deltas. |"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 584,
+        "quote": "| `Plans/Formatters_System.md` | \u2014 | `format.applied` | \u2014 |"
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 69,
+        "quote": "When a formatter modifies a file beyond whitespace-only changes, the diff between the tool's output and the formatted output is recorded in the evidence ledger as a `format.applied` event:"
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 73,
+        "quote": "  \"event_type\": \"format.applied\","
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 236,
+        "quote": "3. **Evidence tracking:** OpenCode does not explicitly track formatting diffs. Puppet Master records `format.applied` events with diff metadata in the evidence ledger."
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 268,
+        "quote": "**AC-FMT06:** Formatting changes MUST be recorded as `format.applied` events in the evidence ledger with diff metadata."
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 462,
+        "quote": "canonical_text: When formatter output differs beyond whitespace-only changes, Puppet Master records the tool-output-to-formatted-output diff in the evidence ledger as a format.applied event with formatter_id, file_path, diff_bytes, and timestamp metadata."
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 488,
+        "quote": "- format.applied"
+      },
+      {
+        "path": "Plans/Formatters_System.md",
+        "line": 973,
+        "quote": "- format.applied"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "git.clone.completed",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 599,
+        "quote": "| `Plans/Source_Control_System.md` | \u2014 | `git.clone.completed` | \u2014 |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 3073,
+        "quote": "- git.clone.completed"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "lsp.server.lifecycle_changed",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 948,
+        "quote": "| `lsp.server.lifecycle_changed` | LSP supervisor | editor, Problems, chat, storage | `project_id`, `host_id`, `server_id`, `root_identity`, `lsp_session_id?`, `previous_state?`, `state`, `state_reason?`, `ts` |"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 959,
+        "quote": "Legacy `lsp.server_started` and `lsp.server_crashed` event names normalize to `lsp.server.lifecycle_changed` with `state` and `state_reason?`; producers must not fork a second LSP lifecycle family when the normalized event can carry the transition."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7170,
+        "quote": "  Runtime event catalog minima preserve lsp.server.lifecycle_changed,"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7173,
+        "quote": "  lsp.server.lifecycle_changed with state and state_reason? rather than forking"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7181,
+        "quote": "  - lsp.server.lifecycle_changed preserves platform/root/session/state payload minima."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7183,
+        "quote": "  - Legacy lsp.server_started and lsp.server_crashed normalize to lsp.server.lifecycle_changed."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7203,
+        "quote": "  - \"`lsp.server.lifecycle_changed`\""
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 7210,
+        "quote": "  - \"Legacy lsp.server_started and lsp.server_crashed normalize to lsp.server.lifecycle_changed.\""
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 587,
+        "quote": "| `Plans/LSPSupport.md` | \u2014 | `lsp.server.lifecycle_changed` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "model.catalog_refreshed",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 588,
+        "quote": "| `Plans/Models_System.md` | \u2014 | `model.catalog_refreshed` | \u2014 |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8578,
+        "quote": "| `cmd.model.refresh` | `project_id?`, `provider_id?`, `account_id?`, `refresh_reason`, `idempotency_key` | `model_catalog_revision`, `provider_status_refs[]` | `permission_denied`, `handler_unavailable`, `stale_projection` | `model.catalog_refreshed` |"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 45784,
+        "quote": "        \"model.catalog_refreshed\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 45800,
+        "quote": "          \"model.catalog_refreshed\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 45833,
+        "quote": "          \"requirement\": \"Assert cmd.model.refresh emits model.catalog_refreshed with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 45837,
+        "quote": "        \"Assert cmd.model.refresh emits model.catalog_refreshed with command_id, origin, correlation_id, and handler target.\""
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "project.added",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 593,
+        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 3071,
+        "quote": "- project.added"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "project.created",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 593,
+        "quote": "| `Plans/Project_System.md` | \u2014 | `project.added`, `project.created` | \u2014 |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 3072,
+        "quote": "- project.created"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "settings.theme.updated",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 598,
+        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8555,
+        "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (resolved theme; in `auto` it tracks OS `prefers-color-scheme` live), `contrast_profile` | `stale_projection`, `permission_denied`, `invalid_args` | `settings.theme.updated` |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8556,
+        "quote": "| `cmd.theme.set_accent` | `project_id?`, `scope`, `accent_token`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_accent_token` | `invalid_args`, `stale_projection` | `settings.theme.updated` |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8557,
+        "quote": "| `cmd.theme.set_density` | `project_id?`, `scope`, `density`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_density` | `invalid_args`, `stale_projection` | `settings.theme.updated` |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8558,
+        "quote": "| `cmd.theme.reset` | `project_id?`, `scope`, `expected_theme_revision`, `idempotency_key` | `theme_revision`, `reset_scope` | `stale_projection`, `permission_denied` | `settings.theme.updated` |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8648,
+        "quote": "  dispatch no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the one resolved Everywhere/Device/actual-Project"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 8685,
+        "quote": "  pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71407,
+        "quote": "        \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71423,
+        "quote": "          \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71456,
+        "quote": "          \"requirement\": \"Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71460,
+        "quote": "        \"Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71469,
+        "quote": "        \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71485,
+        "quote": "          \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71518,
+        "quote": "          \"requirement\": \"Assert cmd.theme.set_accent emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71522,
+        "quote": "        \"Assert cmd.theme.set_accent emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71531,
+        "quote": "        \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71547,
+        "quote": "          \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71580,
+        "quote": "          \"requirement\": \"Assert cmd.theme.set_density emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71584,
+        "quote": "        \"Assert cmd.theme.set_density emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71593,
+        "quote": "        \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71610,
+        "quote": "          \"settings.theme.updated\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71643,
+        "quote": "          \"requirement\": \"Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.json",
+        "line": 71647,
+        "quote": "        \"Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "settings.updated",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 443,
+        "quote": "The selected future event identity is `settings.updated`, preserving the exact guard key `app.agent_rules.dry_method_default_guard` and the current Settings transaction identity. Settings, Command Catalog and Wiring reconcile the historical dedicated event requirement to this choice. The old `settings.agent_rules.dry_method_default_guard.updated` spelling remains read-only history/source lineage, with no assumed payload alias or byte rewrite. The retired per-setting command is not revived. The k"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 598,
+        "quote": "| `Plans/Settings_System.md` | \u2014 | `settings.theme.updated`, `settings.updated` | \u2014 |"
+      },
+      {
+        "path": "Plans/Settings_System.md",
+        "line": 2312,
+        "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and the existing `transaction_id` from `pm.settings_transaction_result.v1`; its `request_id`, `project_id`, `changed_setting_ids`, revisions and `receipt_ref` remain the current transaction join, not new event fields admitted here. A key spelling still grants no scope or writer authority; genuine application level"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1118,
+        "quote": "| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6229,
+        "quote": "- settings.updated"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 7826,
+        "quote": "  The approved future event identity for this change is settings.updated, carrying that exact setting key and"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 7860,
+        "quote": "- Future settings.updated records preserve app.agent_rules.dry_method_default_guard and the existing committed"
+      },
+      {
+        "path": "Plans/UI_Wiring_Rules.md",
+        "line": 977,
+        "quote": "Under DL-041, the DRY default-guard toggle may use the existing preview/apply transaction sequence only after the exact owner-key-to-valid-setting-ID and writer mapping is proven; until then, `owner_contract_missing` disables mutation dispatch and setting writes. `cmd.settings.agent_rules.dry_method_default_guard.set` is retired source lineage and must not have a primary production row, handler or dispatch alias. The selected future event name is `settings.updated`, preserving `app.agent_rules.d"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.md",
+        "line": 4395,
+        "quote": "  preserving enabled | disabled_by_user and default enabled. The approved future event spelling is settings.updated;"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.md",
+        "line": 4404,
+        "quote": "  Authority admission, no settings.updated EventRecord is emitted. Assistant Chat and run-detail DRY disclosure"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.md",
+        "line": 4436,
+        "quote": "- Only settings.updated is the approved future event name for that change; independent admission is required,"
+      },
+      {
+        "path": "Plans/Wiring_Matrix.production.exclusions.json",
+        "line": 306,
+        "quote": "    \"cmd.settings.agent_rules.dry_method_default_guard.set\": \"DL-041 / UCC-104 / WM-040: retired per-setting command; no primary handler, production row or dispatch alias. The approved future settings.updated identity preserves the exact owner key and existing transaction identity but does not admit an event. Current preview/apply targets remain disabled with owner_contract_missing for this guard until its exact key-to-valid-setting-ID and writer mapping is owner-proven; no mutation dispatch or "
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "line": 28944,
+        "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a second scope envelope. Legacy settings.updated is not inferred as an alias and stays owner_contract_missing until separately resolved. Full Server Backup includes home/Everywhere/Computer canonical values/history/join and referenced assets; Project Backup includes only Project own values/assets and converted canon"
+      },
+      {
+        "path": "Plans/touch_closure.json",
+        "line": 3182,
+        "quote": "        \"Historical settings.agent_rules.dry_method_default_guard.updated remains read-only lineage without automatic aliasing or payload rewrite; future settings.updated emission requires separate Event Authority admission.\""
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "subagent.context_rehydrated",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 2977,
+        "quote": "In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. Child identity and lineage are not optional metadata: they are part of the event contract. A row that over-summarizes child lineage into generic status text is non-compliant with this contract."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3198,
+        "quote": "Runtime projection may emit `subagent.context_shrunk` and `subagent.context_rehydrated` events where effective-context state changes need to be inspectable or replayable. These events supplement, but do not replace, canonical child history and source references."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 17031,
+        "quote": "  subagent.context_rehydrated where effective-context changes need inspection or"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 17040,
+        "quote": "  - \"subagent.context_shrunk and subagent.context_rehydrated may be emitted for inspectable or replayable effective-context state changes.\""
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 17060,
+        "quote": "  - \"`subagent.context_rehydrated`\""
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 594,
+        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  },
+  {
+    "event_type": "subagent.context_shrunk",
+    "scope": "All live top-level Plans/*.md and Plans/*.json, including semantic owners, Contracts, Storage, command catalog, registry and decisions; excludes ledgers and generated shards. Shared SP-278/SP-286 and CV-339 read separately.",
+    "hits": [
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 2977,
+        "quote": "In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. Child identity and lineage are not optional metadata: they are part of the event contract. A row that over-summarizes child lineage into generic status text is non-compliant with this contract."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 3198,
+        "quote": "Runtime projection may emit `subagent.context_shrunk` and `subagent.context_rehydrated` events where effective-context state changes need to be inspectable or replayable. These events supplement, but do not replace, canonical child history and source references."
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 17030,
+        "quote": "  Runtime projection may emit subagent.context_shrunk and"
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 17040,
+        "quote": "  - \"subagent.context_shrunk and subagent.context_rehydrated may be emitted for inspectable or replayable effective-context state changes.\""
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "line": 17059,
+        "quote": "  - \"`subagent.context_shrunk`\""
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 594,
+        "quote": "| `Plans/Prompt_Pipeline.md` | \u2014 | `subagent.context_rehydrated`, `subagent.context_shrunk` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+  }
+]

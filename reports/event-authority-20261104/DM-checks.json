@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/shard-generate.txt",
+      "sha256": "48c09691cf1c0464d1276a594016813a0df26d1a721256cd653580869c58d3c4"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/index-generate.txt",
+      "sha256": "bd92dffa9f19becfa9f75cc519da947c7b7ac256127f25ecac4a41faa3985a5c"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/shard-check.txt",
+      "sha256": "3df84afb0ff89f7052554bb9700a1bc3294714b9109ec8257ee2b7ab46a86b21"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0,
+      "top_level_status": "pass",
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/index-validate.txt",
+      "sha256": "942c57a5c364f1e75d6bf773e196cfbb345b903e487ade0479a3657b976ed9d3"
+    },
+    {
+      "command": "python3 scripts/pm-small-owner-events.py",
+      "exit_code": 0,
+      "top_level_status": "PASS",
+      "assertions": 272,
+      "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/targeted-check.txt",
+      "sha256": "8cb6880c244bbd962e47e6d41d61f50d4927a5fbc44f74a031d108585299d731"
+    },
+    {
+      "command": "git diff --check HEAD",
+      "exit_code": 0
+    },
+    {
+      "command": "forbidden path and registry diff against HEAD",
+      "exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/currentness-copy.json",
+      "sha256": "d509feb987c108bc388c76e45560986cd3536255c35eb914a76f07977b982e84"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/id-check.json",
+      "sha256": "84d5083d8e825706ab10a00b75d80b417c87073e756e44efec65ff00108853a2"
+    }
+  ],
+  "intermediate_repairs": [
+    "Date-time format validator required an explicit checker in this environment; fixed and targeted check rerun.",
+    "Pre-format validation runs were superseded; final validation ran sequentially after final generation."
+  ],
+  "native_execution": "NOT_RUN"
+}

@@ -1,0 +1,2619 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-DM-SELF-20261104",
+  "assessment_kind": "branch_local_self_grade",
+  "assessed_tree": {
+    "branch": "plans/ea-w2-small-owners-20261104",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "method": "Current working-tree owner text; committed with this report. A later independent review is required."
+  },
+  "rubric": {
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ],
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "rubric_md_sha256": "81f1d8b25ee407975fea50d14ecf44f94127608b912e08b27edd7f62f9b10221"
+  },
+  "rows": [
+    {
+      "event_type": "format.applied",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "FS-075",
+        "CV-620",
+        "SP-600",
+        "ATS-300"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1109,
+              "line_end": 1109,
+              "quote": "### FS-075 - Event Authority format.applied 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1119,
+              "line_end": 1119,
+              "quote": "Producer: HTE formatter completion adapter. After a successful HTE write/edit formatter changes the tool output beyond whitespace, capture the tool-output and formatted-output evidence refs ",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/format_applied.schema.json",
+              "unit": "CV-620",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.format_applied.v1\",",
+              "file_sha256": "b476f2d93b877e8094798c0967c44a37326dff4615a00967ed34eb1812f542b4"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1122,
+              "line_end": 1122,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"format.applied\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and ",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1121,
+              "line_end": 1121,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: RT must decide role among Case L-3 classes; generic index retains existing projection policy.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1125,
+              "line_end": 1125,
+              "quote": "Retention policy: PENDING_RETENTION_DECISION. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. Fo",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1124,
+              "line_end": 1124,
+              "quote": "Custody remains with HTE formatter completion adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, s",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1119,
+              "line_end": 1119,
+              "quote": "Producer: HTE formatter completion adapter. After a successful HTE write/edit formatter changes the tool output beyond whitespace, capture the tool-output and formatted-output evidence refs ",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1123,
+              "line_end": 1123,
+              "quote": "Operating consumer reader.evidence.format_applied@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1126,
+              "line_end": 1126,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.evidence.format_applied@1.0.0 refuses disc",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1127,
+              "line_end": 1127,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "f1c8ff3cda61042a0055174f04a331160e6196d01fe93c30e8c2f98344d2bbd1"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS.",
+        "PENDING_RETENTION_DECISION; RT owns the retention answer."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0"
+    },
+    {
+      "event_type": "git.clone.completed",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "SCS-085",
+        "CV-627",
+        "SP-607",
+        "ATS-304"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2142,
+              "line_end": 2142,
+              "quote": "### SCS-085 - Event Authority git.clone.completed 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2152,
+              "line_end": 2152,
+              "quote": "Producer: ordinary Git clone terminal adapter. Observe succeeded cmd.source_control.repository.clone with scm_backend=git only after owner native completion, destination verification and ter",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/git_clone_completed.schema.json",
+              "unit": "CV-627",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.git_clone_completed.v1\",",
+              "file_sha256": "dfa18e538553cea95a511136ad8be1da609c3334a1f63d60568fb721301c660f"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2155,
+              "line_end": 2155,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"git.clone.completed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2154,
+              "line_end": 2154,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: RT must decide role among Case L-3 classes; generic index retains existing projection policy.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2158,
+              "line_end": 2158,
+              "quote": "Retention policy: PENDING_RETENTION_DECISION. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. Fo",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2157,
+              "line_end": 2157,
+              "quote": "Custody remains with ordinary Git clone terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2152,
+              "line_end": 2152,
+              "quote": "Producer: ordinary Git clone terminal adapter. Observe succeeded cmd.source_control.repository.clone with scm_backend=git only after owner native completion, destination verification and ter",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2156,
+              "line_end": 2156,
+              "quote": "Operating consumer reader.scm.git_clone_completed@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2159,
+              "line_end": 2159,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.scm.git_clone_completed@1.0.0 refuses disc",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2160,
+              "line_end": 2160,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "2cf68d5b3231b605682cd30a504ebd21fb425a4fb38abc6ff8038df92f553c1b"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS.",
+        "PENDING_RETENTION_DECISION; RT owns the retention answer."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0"
+    },
+    {
+      "event_type": "lsp.server.lifecycle_changed",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "LSPS-173",
+        "CV-621",
+        "SP-601",
+        "ATS-301"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "### LSPS-173 - Event Authority lsp.server.lifecycle_changed 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7258,
+              "line_end": 7258,
+              "quote": "Producer: LspSupervisor lifecycle adapter. Observe one LspSupervisor transition for the exact Host/server/root attachment. Use canonical states Starting, Initializing, Ready, RestartBackoff,",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/lsp_server_lifecycle_changed.schema.json",
+              "unit": "CV-621",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.lsp_server_lifecycle_changed.v1\",",
+              "file_sha256": "1c0cccab46a9f4b846088f61f44f51428b5a7731e393c98e9cda5b39fc320543"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7261,
+              "line_end": 7261,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"lsp.server.lifecycle_changed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no w",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7260,
+              "line_end": 7260,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: RT must decide role among Case L-3 classes; generic index retains existing projection policy.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7264,
+              "line_end": 7264,
+              "quote": "Retention policy: PENDING_RETENTION_DECISION. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. Fo",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7263,
+              "line_end": 7263,
+              "quote": "Custody remains with LspSupervisor lifecycle adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, se",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7258,
+              "line_end": 7258,
+              "quote": "Producer: LspSupervisor lifecycle adapter. Observe one LspSupervisor transition for the exact Host/server/root attachment. Use canonical states Starting, Initializing, Ready, RestartBackoff,",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7262,
+              "line_end": 7262,
+              "quote": "Operating consumer reader.lsp.lifecycle@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact eve",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7265,
+              "line_end": 7265,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.lsp.lifecycle@1.0.0 refuses disclosure and",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7266,
+              "line_end": 7266,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "19975d1cf8b386315dffbc72ef575cea4c397f926230c203f4c7442542bfe6f0"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS.",
+        "PENDING_RETENTION_DECISION; RT owns the retention answer."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0"
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "MS-199",
+        "CV-622",
+        "SP-602",
+        "ATS-302"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9907,
+              "line_end": 9907,
+              "quote": "### MS-199 - Event Authority model.catalog_refreshed 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9917,
+              "line_end": 9917,
+              "quote": "Producer: shared model capability resolver refresh completion adapter. Capture completion of cmd.model.refresh, or the already specified automatic refresh, after the resolver publishes its e",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+              "unit": "CV-622",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.model_catalog_refreshed.v1\",",
+              "file_sha256": "59b3691b9ef31824e9aba5a52467b1a589431cb2b3d3a46442ba417692b591d3"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9920,
+              "line_end": 9920,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"model.catalog_refreshed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whites",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9919,
+              "line_end": 9919,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: RT must decide role among Case L-3 classes; generic index retains existing projection policy.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9923,
+              "line_end": 9923,
+              "quote": "Retention policy: PENDING_RETENTION_DECISION. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. Fo",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9922,
+              "line_end": 9922,
+              "quote": "Custody remains with shared model capability resolver refresh completion adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; ",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9917,
+              "line_end": 9917,
+              "quote": "Producer: shared model capability resolver refresh completion adapter. Capture completion of cmd.model.refresh, or the already specified automatic refresh, after the resolver publishes its e",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9921,
+              "line_end": 9921,
+              "quote": "Operating consumer reader.models.catalog_refresh@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this ",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9924,
+              "line_end": 9924,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.models.catalog_refresh@1.0.0 refuses discl",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9925,
+              "line_end": 9925,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "cf33d3d1caf423273c29588a0b3c868c8e6fab71952311e27584753e39854f33"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS.",
+        "PENDING_RETENTION_DECISION; RT owns the retention answer."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0"
+    },
+    {
+      "event_type": "project.added",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "PJCT-072",
+        "CV-625",
+        "SP-605",
+        "ATS-304"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 984,
+              "line_end": 984,
+              "quote": "### PJCT-072 - Event Authority project.added 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 994,
+              "line_end": 994,
+              "quote": "Producer: Project registration commit adapter. After cmd.project.add_existing completes atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content ",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/project_added.schema.json",
+              "unit": "CV-625",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.project_added.v1\",",
+              "file_sha256": "66a8af706de034b13af49c6642f27b046034f0b905788295f7fb9ebe94ad2bcd"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 997,
+              "line_end": 997,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 996,
+              "line_end": 996,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: RT must decide role among Case L-3 classes; generic index retains existing projection policy.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 1000,
+              "line_end": 1000,
+              "quote": "Retention policy: PENDING_RETENTION_DECISION. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. Fo",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 999,
+              "line_end": 999,
+              "quote": "Custody remains with Project registration commit adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 994,
+              "line_end": 994,
+              "quote": "Producer: Project registration commit adapter. After cmd.project.add_existing completes atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content ",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 998,
+              "line_end": 998,
+              "quote": "Operating consumer reader.project.added@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact eve",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 1001,
+              "line_end": 1001,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.project.added@1.0.0 refuses disclosure and",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 1002,
+              "line_end": 1002,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS.",
+        "PENDING_RETENTION_DECISION; RT owns the retention answer."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.project.added@1.0.0"
+    },
+    {
+      "event_type": "project.created",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "PJCT-073",
+        "CV-626",
+        "SP-606",
+        "ATS-304"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1031,
+              "line_end": 1031,
+              "quote": "### PJCT-073 - Event Authority project.created 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1041,
+              "line_end": 1041,
+              "quote": "Producer: Project creation composition terminal adapter. After cmd.project.new_local or an admitted current forge-create composition completes all reviewed owner steps and atomic Project reg",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/project_created.schema.json",
+              "unit": "CV-626",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.project_created.v1\",",
+              "file_sha256": "489554915dee68add2a4936bacd67b5d08613d91aaed1e55938ee296a7776abc"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1044,
+              "line_end": 1044,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.created\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1043,
+              "line_end": 1043,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: RT must decide role among Case L-3 classes; generic index retains existing projection policy.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1047,
+              "line_end": 1047,
+              "quote": "Retention policy: PENDING_RETENTION_DECISION. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. Fo",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1046,
+              "line_end": 1046,
+              "quote": "Custody remains with Project creation composition terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript,",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1041,
+              "line_end": 1041,
+              "quote": "Producer: Project creation composition terminal adapter. After cmd.project.new_local or an admitted current forge-create composition completes all reviewed owner steps and atomic Project reg",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1045,
+              "line_end": 1045,
+              "quote": "Operating consumer reader.project.created@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact e",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1048,
+              "line_end": 1048,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.project.created@1.0.0 refuses disclosure a",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1049,
+              "line_end": 1049,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "72c4c89e5056096e5971301e4258fe5939804041455a16890780c38c83ad429d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS.",
+        "PENDING_RETENTION_DECISION; RT owns the retention answer."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.project.created@1.0.0"
+    },
+    {
+      "event_type": "settings.theme.updated",
+      "family_id": null,
+      "family_revision": null,
+      "outcome": "blocked_on_Jared",
+      "disposition": "UNDISPOSITIONED",
+      "current_owner_units": [
+        "SSYS-060",
+        "DL-041",
+        "DL-300",
+        "SP-348"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "owner_doc": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "Added GUI command families",
+              "line_start": 8555,
+              "line_end": 8555,
+              "quote": "| `cmd.theme.set_mode` | `project_id?`, `scope`, `mode` (`light`, `dark`, or `auto`), `expected_theme_revision`, `idempotency_key` | `theme_revision`, `effective_mode`, `effective_variant` (",
+              "file_sha256": "c6745d5e43cc13f85bdf0a46c2588e27bc467f0db3a7ba45d8ee5ff70eb3c121"
+            },
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS current writer boundary",
+              "line_start": 2310,
+              "line_end": 2310,
+              "quote": "Settings semantically registers the five command IDs in SSYS-018 and the six route-only UI action IDs in SSYS-019. Central command/catalog/wiring owners must consume those exact contracts; u",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: Does the retained cmd.theme.* exact-event requirement survive as a distinct settings.theme.updated family beside the current atomic theme-pair Settings transactions and admitted settings.layer.changed, or should the old requirement receive an explicit historical-only/alias disposition? No alias or duplicate emission is inferred."
+      ],
+      "static_checks_seen": [],
+      "notes": "No new contract, alias, admission or owner answer authored. retention_policy_ref=PENDING_RETENTION_DECISION."
+    },
+    {
+      "event_type": "settings.updated",
+      "family_id": null,
+      "family_revision": null,
+      "outcome": "blocked_on_Jared",
+      "disposition": "UNDISPOSITIONED",
+      "current_owner_units": [
+        "SSYS-060",
+        "DL-041",
+        "DL-300",
+        "SP-348"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "owner_doc": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Owner reconciliation held; no missing technical binding is used as exclusion evidence.",
+          "evidence": [
+            {
+              "path": "Plans/Settings_System.md",
+              "unit": "SSYS default guard boundary",
+              "line_start": 2312,
+              "line_end": 2312,
+              "quote": "Under DL-041, for the DRY default-guard naming decision, the approved future event identity is `settings.updated` with exact setting identity `app.agent_rules.dry_method_default_guard` and t",
+              "file_sha256": "f71b285708555024df3f3e33b0357743cc7b825c78f237997ee0780162520faf"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-348",
+              "line_start": 28944,
+              "line_end": 28944,
+              "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
+              "file_sha256": "9ffa6181e9495d97560319e11de964a8e3be6c8b110c3eb81e46dd8a0b1a636d"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current owner requirements remain unresolved."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: How should the retained settings.updated obligations (including memory auto-save and the DL-041 default guard) relate to current settings.layer.changed, given SSYS-060/SP-348 leave settings.updated owner_contract_missing? DL-041 already decides the spelling; this asks only for resolution of the competing owner obligations, not a new naming answer. The guard stays disabled until its exact key-to-valid-setting-ID and writer mapping is established."
+      ],
+      "static_checks_seen": [],
+      "notes": "No new contract, alias, admission or owner answer authored. retention_policy_ref=PENDING_RETENTION_DECISION."
+    },
+    {
+      "event_type": "subagent.context_rehydrated",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "PP-151",
+        "CV-623",
+        "SP-603",
+        "ATS-303"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6042,
+              "line_end": 6042,
+              "quote": "### PP-151 - Event Authority subagent.context_rehydrated 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6052,
+              "line_end": 6052,
+              "quote": "Producer: effective-context runtime rehydration adapter. When an already supported rehydration restores effective context, bind the original source refs and before/after effective-context re",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/subagent_context_rehydrated.schema.json",
+              "unit": "CV-623",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.subagent_context_rehydrated.v1\",",
+              "file_sha256": "9db8cc990623783ac1307339549a0822ea271e0cdc9dc9cea7816c250fcf11a3"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6055,
+              "line_end": 6055,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_rehydrated\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no wh",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6054,
+              "line_end": 6054,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6058,
+              "line_end": 6058,
+              "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6057,
+              "line_end": 6057,
+              "quote": "Custody remains with effective-context runtime rehydration adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript,",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6052,
+              "line_end": 6052,
+              "quote": "Producer: effective-context runtime rehydration adapter. When an already supported rehydration restores effective context, bind the original source refs and before/after effective-context re",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6056,
+              "line_end": 6056,
+              "quote": "Operating consumer reader.context.rehydrated@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exac",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6059,
+              "line_end": 6059,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.context.rehydrated@1.0.0 refuses disclosur",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6060,
+              "line_end": 6060,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0"
+    },
+    {
+      "event_type": "subagent.context_shrunk",
+      "family_id": null,
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared_draft",
+      "disposition": "CURRENT_WRITER",
+      "current_owner_units": [
+        "PP-152",
+        "CV-624",
+        "SP-604",
+        "ATS-304"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "Prepared without admission; exact event absent from event_family_registry.json.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "#/families",
+              "line_start": 8,
+              "line_end": 8,
+              "quote": "  \"families\": [",
+              "file_sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6089,
+              "line_end": 6089,
+              "quote": "### PP-152 - Event Authority subagent.context_shrunk 1.0.0 \u2014 newly authored owner contract under DL-045.",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "producer": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6099,
+              "line_end": 6099,
+              "quote": "Producer: effective-context runtime shrinking adapter. When the existing effective-context shrinker commits a shorter replacement, preserve source refs and rehydration handles. Automatic def",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/subagent_context_shrunk.schema.json",
+              "unit": "CV-624",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "  \"$id\": \"pm.event_payload.subagent_context_shrunk.v1\",",
+              "file_sha256": "3b4e564d9eb7b4d31e90876beceea4cd07bfe492e572016b0b48214fbe91b025"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6102,
+              "line_end": 6102,
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_shrunk\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whites",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6101,
+              "line_end": 6101,
+              "quote": "Lost acknowledgement returns that original full stored result and receipt, never a second effect or new receipt; equal identity with different semantic digest is a conflict, not a retry.",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "retention": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6105,
+              "line_end": 6105,
+              "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "redaction_custody": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6104,
+              "line_end": 6104,
+              "quote": "Custody remains with effective-context runtime shrinking adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, d",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6099,
+              "line_end": 6099,
+              "quote": "Producer: effective-context runtime shrinking adapter. When the existing effective-context shrinker commits a shorter replacement, preserve source refs and rehydration handles. Automatic def",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6103,
+              "line_end": 6103,
+              "quote": "Operating consumer reader.context.shrunk@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact ev",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "New exact owner contract explicitly binds this facet; static planning evidence only.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6106,
+              "line_end": 6106,
+              "quote": "Withdrawal first disables the exact producer's admission, drains/fences outstanding intents and prohibits append under stale admission. Then reader.context.shrunk@1.0.0 refuses disclosure an",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Static schema, identity, retry and read-fence vectors pass. Full family-specific original-intent/frame/custody, envelope-join and activation/withdrawal oracle matrices are not complete; native remains NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6107,
+              "line_end": 6107,
+              "quote": "Static schema and semantic oracles are Plans/small_owner_event_fixtures.json and scripts/pm-small-owner-events.py. Native append durability, crash cuts, backup/restore and live permission/CA",
+              "file_sha256": "1956bbd54b0e22e2109d337f884d843845b77f352c1cfc6911063562aa139764"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DM branch-local self-grade; no sibling grade carried forward."
+        }
+      },
+      "remaining_gaps": [
+        "Not admission-ready: complete per-family oracle coverage before a full depth PASS."
+      ],
+      "static_checks_seen": [
+        "python3 scripts/pm-small-owner-events.py"
+      ],
+      "notes": "CURRENT_WRITER describes the candidate producer contract, not installed writer authority. No membership or native proof.",
+      "newly_authored_operating_reader": "reader.context.shrunk@1.0.0"
+    }
+  ],
+  "native_execution": "NOT_RUN",
+  "status_counts": {
+    "PASS": 74,
+    "PARTIAL": 28,
+    "ABSENT": 18,
+    "CONFLICT": 0
+  }
+}

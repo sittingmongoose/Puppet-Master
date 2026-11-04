@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.format_applied.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "formatter_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "file_path": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$",
+      "maxLength": 1024
+    },
+    "diff_bytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40
+    },
+    "tool_output_ref": {
+      "type": "string",
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
+      "maxLength": 256
+    },
+    "formatted_output_ref": {
+      "type": "string",
+      "pattern": "^ref:[A-Za-z0-9_.:-]+$",
+      "maxLength": 256
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "project_id",
+    "formatter_id",
+    "file_path",
+    "diff_bytes",
+    "timestamp",
+    "tool_output_ref",
+    "formatted_output_ref"
+  ]
+}

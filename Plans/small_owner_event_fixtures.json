@@ -1,0 +1,676 @@
+{
+  "schema_id": "pm.small_owner_event_fixtures.v1",
+  "families": [
+    {
+      "event_type": "format.applied",
+      "schema": "Plans/event_payloads/format_applied.schema.json",
+      "scope_policy": "project_only",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": "original-1",
+        "formatter_id": "original-1",
+        "file_path": "src/main.rs",
+        "diff_bytes": 1,
+        "timestamp": "2026-11-04T12:00:00Z",
+        "tool_output_ref": "ref:source.1",
+        "formatted_output_ref": "ref:source.1"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "execution_mode": "HTE",
+        "formatter_exit_code": 0,
+        "beyond_whitespace": true,
+        "original_evidence_retained": true
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_execution_mode",
+          "witness": {
+            "execution_mode": "wrong_owner_or_state",
+            "formatter_exit_code": 0,
+            "beyond_whitespace": true,
+            "original_evidence_retained": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_formatter_exit_code",
+          "witness": {
+            "execution_mode": "HTE",
+            "formatter_exit_code": 1,
+            "beyond_whitespace": true,
+            "original_evidence_retained": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_beyond_whitespace",
+          "witness": {
+            "execution_mode": "HTE",
+            "formatter_exit_code": 0,
+            "beyond_whitespace": false,
+            "original_evidence_retained": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_original_evidence_retained",
+          "witness": {
+            "execution_mode": "HTE",
+            "formatter_exit_code": 0,
+            "beyond_whitespace": true,
+            "original_evidence_retained": false
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "lsp.server.lifecycle_changed",
+      "schema": "Plans/event_payloads/lsp_server_lifecycle_changed.schema.json",
+      "scope_policy": "project_only",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": "original-1",
+        "host_id": "original-1",
+        "server_id": "original-1",
+        "root_identity": "original-1",
+        "lsp_session_id": "original-1",
+        "previous_state": "Starting",
+        "state": "Initializing",
+        "state_reason": "original-1",
+        "ts": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "supervisor_edge_proven": true,
+        "host_root_join": true,
+        "original_observation": true
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_supervisor_edge_proven",
+          "witness": {
+            "supervisor_edge_proven": false,
+            "host_root_join": true,
+            "original_observation": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_host_root_join",
+          "witness": {
+            "supervisor_edge_proven": true,
+            "host_root_join": false,
+            "original_observation": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_original_observation",
+          "witness": {
+            "supervisor_edge_proven": true,
+            "host_root_join": true,
+            "original_observation": false
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "model.catalog_refreshed",
+      "schema": "Plans/event_payloads/model_catalog_refreshed.schema.json",
+      "scope_policy": "application_or_project",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": null,
+        "model_catalog_revision": 1,
+        "provider_status_refs": [
+          "ref:source.1"
+        ],
+        "refresh_reason": "original-1",
+        "provider_id": null,
+        "account_id": null,
+        "completed_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "revision_published": true,
+        "provider_status_original": true,
+        "stale_cache_is_success": false
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_revision_published",
+          "witness": {
+            "revision_published": false,
+            "provider_status_original": true,
+            "stale_cache_is_success": false
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_provider_status_original",
+          "witness": {
+            "revision_published": true,
+            "provider_status_original": false,
+            "stale_cache_is_success": false
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_stale_cache_is_success",
+          "witness": {
+            "revision_published": true,
+            "provider_status_original": true,
+            "stale_cache_is_success": true
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.context_rehydrated",
+      "schema": "Plans/event_payloads/subagent_context_rehydrated.schema.json",
+      "scope_policy": "application_or_project",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": null,
+        "agent_id": "original-1",
+        "run_id": "original-1",
+        "child_run_id": "original-1",
+        "before_revision": 1,
+        "after_revision": 2,
+        "source_refs": [
+          "ref:source.1"
+        ],
+        "effective_context_ref": "ref:source.1",
+        "occurred_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "source_access_current": true,
+        "source_history_preserved": true,
+        "source_present": true,
+        "child_identity_join": true
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_source_access_current",
+          "witness": {
+            "source_access_current": false,
+            "source_history_preserved": true,
+            "source_present": true,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_source_history_preserved",
+          "witness": {
+            "source_access_current": true,
+            "source_history_preserved": false,
+            "source_present": true,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_source_present",
+          "witness": {
+            "source_access_current": true,
+            "source_history_preserved": true,
+            "source_present": false,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_child_identity_join",
+          "witness": {
+            "source_access_current": true,
+            "source_history_preserved": true,
+            "source_present": true,
+            "child_identity_join": false
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "subagent.context_shrunk",
+      "schema": "Plans/event_payloads/subagent_context_shrunk.schema.json",
+      "scope_policy": "application_or_project",
+      "retention_policy_ref": "RP-RUNTIME-365D",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": null,
+        "agent_id": "original-1",
+        "run_id": "original-1",
+        "child_run_id": "original-1",
+        "before_revision": 1,
+        "after_revision": 2,
+        "source_refs": [
+          "ref:source.1"
+        ],
+        "effective_context_ref": "ref:source.1",
+        "occurred_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "immune_block_touched": false,
+        "protected_working_set_touched": false,
+        "source_history_preserved": true,
+        "shorter_effective_block": true,
+        "child_identity_join": true
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_immune_block_touched",
+          "witness": {
+            "immune_block_touched": true,
+            "protected_working_set_touched": false,
+            "source_history_preserved": true,
+            "shorter_effective_block": true,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_protected_working_set_touched",
+          "witness": {
+            "immune_block_touched": false,
+            "protected_working_set_touched": true,
+            "source_history_preserved": true,
+            "shorter_effective_block": true,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_source_history_preserved",
+          "witness": {
+            "immune_block_touched": false,
+            "protected_working_set_touched": false,
+            "source_history_preserved": false,
+            "shorter_effective_block": true,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_shorter_effective_block",
+          "witness": {
+            "immune_block_touched": false,
+            "protected_working_set_touched": false,
+            "source_history_preserved": true,
+            "shorter_effective_block": false,
+            "child_identity_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_child_identity_join",
+          "witness": {
+            "immune_block_touched": false,
+            "protected_working_set_touched": false,
+            "source_history_preserved": true,
+            "shorter_effective_block": true,
+            "child_identity_join": false
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "project.added",
+      "schema": "Plans/event_payloads/project_added.schema.json",
+      "scope_policy": "project_only",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": "original-1",
+        "project_revision": 1,
+        "stable_config_ref": "ref:source.1",
+        "registration_kind": "original-1",
+        "operation_receipt_ref": "ref:source.1",
+        "completed_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "atomic_registration_readback": true,
+        "permission_and_handoffs_committed": true,
+        "temporary_mount_only": false,
+        "semantic_action": "existing_content"
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_atomic_registration_readback",
+          "witness": {
+            "atomic_registration_readback": false,
+            "permission_and_handoffs_committed": true,
+            "temporary_mount_only": false,
+            "semantic_action": "existing_content"
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_permission_and_handoffs_committed",
+          "witness": {
+            "atomic_registration_readback": true,
+            "permission_and_handoffs_committed": false,
+            "temporary_mount_only": false,
+            "semantic_action": "existing_content"
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_temporary_mount_only",
+          "witness": {
+            "atomic_registration_readback": true,
+            "permission_and_handoffs_committed": true,
+            "temporary_mount_only": true,
+            "semantic_action": "existing_content"
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_semantic_action",
+          "witness": {
+            "atomic_registration_readback": true,
+            "permission_and_handoffs_committed": true,
+            "temporary_mount_only": false,
+            "semantic_action": "wrong_owner_or_state"
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "project.created",
+      "schema": "Plans/event_payloads/project_created.schema.json",
+      "scope_policy": "project_only",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": "original-1",
+        "project_revision": 1,
+        "stable_config_ref": "ref:source.1",
+        "creation_result_ref": "ref:source.1",
+        "operation_receipt_ref": "ref:source.1",
+        "completed_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "atomic_registration_readback": true,
+        "permission_and_handoffs_committed": true,
+        "remote_effect_unknown": false,
+        "semantic_action": "new_creation"
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_atomic_registration_readback",
+          "witness": {
+            "atomic_registration_readback": false,
+            "permission_and_handoffs_committed": true,
+            "remote_effect_unknown": false,
+            "semantic_action": "new_creation"
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_permission_and_handoffs_committed",
+          "witness": {
+            "atomic_registration_readback": true,
+            "permission_and_handoffs_committed": false,
+            "remote_effect_unknown": false,
+            "semantic_action": "new_creation"
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_remote_effect_unknown",
+          "witness": {
+            "atomic_registration_readback": true,
+            "permission_and_handoffs_committed": true,
+            "remote_effect_unknown": true,
+            "semantic_action": "new_creation"
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_semantic_action",
+          "witness": {
+            "atomic_registration_readback": true,
+            "permission_and_handoffs_committed": true,
+            "remote_effect_unknown": false,
+            "semantic_action": "wrong_owner_or_state"
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    },
+    {
+      "event_type": "git.clone.completed",
+      "schema": "Plans/event_payloads/git_clone_completed.schema.json",
+      "scope_policy": "project_only",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "positive_payload": {
+        "schema_version": "1.0.0",
+        "operation_id": "original-1",
+        "project_id": "original-1",
+        "repo_id": "original-1",
+        "workspace_id": "original-1",
+        "host_id": "original-1",
+        "environment_id": "original-1",
+        "source_location_ref": "ref:source.1",
+        "operation_receipt_ref": "ref:source.1",
+        "completed_at_utc": "2026-11-04T12:00:00Z"
+      },
+      "native_execution": "NOT_RUN",
+      "retry_cases": [
+        {
+          "case_id": "same_original_retry",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "return_original_without_effect"
+        },
+        {
+          "case_id": "same_identity_changed_semantics",
+          "original_semantic_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "retry_semantic_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "original_receipt_ref": "ref:receipt.original",
+          "expected": "identity_conflict_without_effect"
+        }
+      ],
+      "producer_witness_positive": {
+        "scm_backend": "git",
+        "terminal_result": "succeeded",
+        "destination_verified": true,
+        "terminal_receipt_original": true,
+        "reserved_lineage_join": true
+      },
+      "producer_witness_negatives": [
+        {
+          "case_id": "reject_scm_backend",
+          "witness": {
+            "scm_backend": "wrong_owner_or_state",
+            "terminal_result": "succeeded",
+            "destination_verified": true,
+            "terminal_receipt_original": true,
+            "reserved_lineage_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_terminal_result",
+          "witness": {
+            "scm_backend": "git",
+            "terminal_result": "wrong_owner_or_state",
+            "destination_verified": true,
+            "terminal_receipt_original": true,
+            "reserved_lineage_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_destination_verified",
+          "witness": {
+            "scm_backend": "git",
+            "terminal_result": "succeeded",
+            "destination_verified": false,
+            "terminal_receipt_original": true,
+            "reserved_lineage_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_terminal_receipt_original",
+          "witness": {
+            "scm_backend": "git",
+            "terminal_result": "succeeded",
+            "destination_verified": true,
+            "terminal_receipt_original": false,
+            "reserved_lineage_join": true
+          },
+          "expected": "refuse_publication"
+        },
+        {
+          "case_id": "reject_reserved_lineage_join",
+          "witness": {
+            "scm_backend": "git",
+            "terminal_result": "succeeded",
+            "destination_verified": true,
+            "terminal_receipt_original": true,
+            "reserved_lineage_join": false
+          },
+          "expected": "refuse_publication"
+        }
+      ]
+    }
+  ]
+}

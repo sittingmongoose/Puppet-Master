@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.event_payload.model_catalog_refreshed.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "operation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "project_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "model_catalog_revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "provider_status_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^ref:[A-Za-z0-9_.:-]+$",
+        "maxLength": 256
+      },
+      "maxItems": 128,
+      "uniqueItems": true
+    },
+    "refresh_reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "provider_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "account_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "completed_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation_id",
+    "project_id",
+    "model_catalog_revision",
+    "provider_status_refs",
+    "refresh_reason",
+    "provider_id",
+    "account_id",
+    "completed_at_utc"
+  ]
+}
