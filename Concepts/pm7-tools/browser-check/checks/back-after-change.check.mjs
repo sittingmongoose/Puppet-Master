@@ -402,7 +402,9 @@ const INVAR = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas ||
   if (!/^existing_/.test(d.project_mode) && d.project_source_ref) out.push('source ' + d.project_source_ref + ' for a ' + d.project_mode + ' Project');
   if (d.project_mode !== 'restore' && d.backup_source_ref) out.push('backup ' + d.backup_source_ref + ' for a ' + d.project_mode + ' Project');
   if (d.online_mode === 'none' && ((d.forge && d.forge !== 'none') || d.repository_ref || d.forge_account_ref)) out.push('online service ' + d.forge + ' / ' + (d.repository_ref || d.forge_account_ref) + ' with no online copy or source');
-  if (!nasSource && !nasFiles && d.project_mode !== 'restore' && nasRefs.length) out.push('NAS access ' + nasRefs.join(', ') + ' with no NAS in the plan');
+  /* (SW-41: a restore keeps NAS access only when it restores from the NAS) */
+  const nasRestore = d.project_mode === 'restore' && (S.sess.restore || {}).source === 'nas';
+  if (!nasSource && !nasFiles && !nasRestore && nasRefs.length) out.push('NAS access ' + nasRefs.join(', ') + ' with no NAS in the plan');
   nasRefs.filter((r) => /^(ssh-key:|preflight:ssh:)/.test(r)).forEach((r) => { if (!n.profile || r.indexOf(n.profile) < 0) out.push('SSH access ' + r + ' not for the current NAS profile ' + (n.profile || '(none)')); });
   return out; };
 /* FO-45, widened: no reference the plan stores shows raw where a person reads a place. A raw reference is one of the
@@ -436,16 +438,19 @@ const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not
    person's click lands, and this row judges what the click does */
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
-const pickOther = async (A) => {
-  const c = await A.frame().evaluate(() => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
+const pickOther = async (A, which = 'first') => {
+  const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
     const NAV = ['loc:network']; /* (a pick that is itself a step on: the files place on a NAS opens the NAS steps) */
     /* (truly on show: not in a closed sheet or an inert part, and with a size and visibility of its own) */
     const shown = (b) => { const r = b.getBoundingClientRect(), cs = getComputedStyle(b); return r.width > 0 && r.height > 0 && cs.visibility !== 'hidden' && Number(cs.opacity) > 0 && !b.closest('.o55-sheet:not([data-open="true"])') && !b.closest('[inert]') && !b.closest('[aria-hidden="true"]'); };
     const all = [...new Set([sheet, l].filter(Boolean).flatMap((x) => [...x.querySelectorAll('[role="radio"]')]))].filter((b) => shown(b) && b.getAttribute('aria-checked') !== 'true' && b.getAttribute('aria-disabled') !== 'true' && !b.disabled && !NAV.includes(b.getAttribute('data-o55-do') + ':' + b.getAttribute('data-arg')));
     document.querySelectorAll('[data-kit-pick]').forEach((x) => x.removeAttribute('data-kit-pick'));
-    const b = all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
+    /* (which: 'first' or 'last' of the alternatives; 'last' answers only when there is a second one: SW-41) */
+    if (which === 'last' && all.length < 2) return null;
+    const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg') }; }
+    if (which === 'last') return null;
     const f = [...(l || document).querySelectorAll('input[type="text"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
-    return f ? { field: f.id, value: f.value } : null; });
+    return f ? { field: f.id, value: f.value } : null; }, which);
   if (!c) return null;
   if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
@@ -467,7 +472,7 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
     restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
     server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
-    nasPick: [n.key || null, n.user || '', n.userEdit || false] }; };
+    nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* the steps whose own work is a check, a sign-in, a pairing, an install or a Server's setup (60-ui-core's NO_TXN): no pick */
 const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'r-preview', 's-ready', 'c-pair', 'c-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* Back from Review to Welcome, and on every step on the way another value picked (or typed) first: Back must take the
@@ -510,6 +515,13 @@ const ABANDON = { 'Home NAS files over SSH': ['files on This computer', filesHer
   'Home NAS source mounted': ['Begins as New', beginNew], 'a completed new Server': ['This computer', computerHere], 'a connected existing Server': ['This computer', computerHere],
   'restore from a Recovery Kit': ['Begins as New', beginNew], 'restore from a cloud drive': ['Begins as New', beginNew], 'online import': ['Begins as New', beginNew],
   'online new copy': ['Not now for the copy', copyNotNow], 'away with Tailscale': ['This computer', computerHere] };
+/* the steps an answer given up must take with it, an oracle of the kit's own beside the page's onBranch (SW-41) */
+const ABANDON_NOT = { 'Home NAS files over SSH': NAS_STEPS, 'Home NAS files mounted': NAS_STEPS, 'Home NAS source over SSH': NAS_STEPS, 'Home NAS source mounted': NAS_STEPS,
+  'a completed new Server': [...SERVER_STEPS, 'away', 'away-setup'], 'a connected existing Server': ['c-route', 'c-review', 'c-pair', 'c-ready'],
+  'restore from a Recovery Kit': ['r-source', 'r-unlock', 'r-pick', 'r-preview'], 'restore from a cloud drive': ['r-source', 'r-unlock', 'r-pick', 'r-preview'],
+  'online import': ['ex-repos'], 'online new copy': ['online-service', 'online-signin', 'online-details'], 'away with Tailscale': [...SERVER_STEPS, 'away', 'away-setup'] };
+/* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 */
+const richOf = (t) => (t.args.rich ? RICH.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : RICH);
 const KEEP = () => { const S = O55.S, d = S.sess.drafts.main, n = S.sess.nas || {}, r = S.sess.restore || {}, c = document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="commit"]');
   return { mode: d.project_mode, name: d.project_name, src: d.project_source_ref, transport: d.project_transport, loc: d.local_location, online: d.online_mode, forge: d.forge, repo: d.repository_ref,
     backup: d.backup_source_ref, btransport: d.backup_transport, storage: d.storage_mode, preflight: d.preflight_result_refs, auth: d.source_access_authorization_refs,
@@ -927,12 +939,12 @@ export const tests = {
      rich configurations, and for each every Edit link its Review shows, Edit > Continue with nothing changed > Review: the
      draft deep-equals the draft before (but its revision counter), Review shows the same rows, the Back path is the same */
   async 'row 20 · generated: every Review Edit link of each rich configuration (Home NAS files over SSH and mounted, a Home NAS source over SSH and mounted, a completed new Server, a connected existing Server, restore from a Recovery Kit and a cloud drive, online import and new copy, backup on Home NAS and a cloud drive, away with Tailscale), Edit and Continue unchanged: draft, Review rows and Back path all unchanged'(t) {
-    for (const [kind, est] of RICH)
+    for (const [kind, est] of richOf(t))
       await flow(t, `20 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
         if (!links.length) bad.push(`20 ${kind}: Review shows no Edit link`);
         for (const tg of links) {
-          const before = await A.frame().evaluate(SNAP20);
+          const before = await A.frame().evaluate(SNAP20), ans0 = await A.frame().evaluate(ANSWERS);
           await A.click('edit', tg); await A.sleep(700); const opened = (await A.snap()).screen;
           const walked = await keepOn(A);
           if (walked[walked.length - 1] !== 'review') { bad.push(`20 ${kind} Edit ${tg} (${opened}): Continue unchanged never came back to Review: ${walked.join(' > ')}`); break; }
@@ -941,6 +953,12 @@ export const tests = {
           const rk = [...new Set([...before.rows, ...after.rows])].filter((r) => !before.rows.includes(r) || !after.rows.includes(r));
           if (rk.length) bad.push(`20 ${kind} Edit ${tg} kept: Review's rows changed: ${rk.join(' | ')}`);
           if (JSON.stringify(before.history) !== JSON.stringify(after.history)) bad.push(`20 ${kind} Edit ${tg} kept: the Back path changed: ${before.history.join(' > ')} became ${after.history.join(' > ')}`);
+          /* (SW-41: and the session's own answers and settled facts, not only the plan: the NAS, restore, online, backup,
+             Computer, sign-in and connect state, the hosts and keys a device knows, nasFacts and forgeAccounts. --set
+             selftest=dropfacts drops nasFacts and forgeAccounts after the kept Edit, and this row must fail) */
+          if (SELFTEST === 'dropfacts') await A.frame().evaluate(() => { const S = O55.S; if (Object.keys(S.sess.nasFacts || {}).length) S.sess.nasFacts = {}; if (Object.keys(S.sess.forgeAccounts || {}).length) S.sess.forgeAccounts = {}; });
+          const ans1 = await A.frame().evaluate(ANSWERS), ak = Object.keys(ans0).filter((k) => k !== 'draft' && JSON.stringify(ans0[k]) !== JSON.stringify(ans1[k]));
+          if (ak.length) bad.push(`20 ${kind} Edit ${tg} kept: the session changed: ${ak.map((k) => k + ' ' + String(JSON.stringify(ans0[k])).slice(0, 70) + ' > ' + String(JSON.stringify(ans1[k])).slice(0, 70)).join('; ')}`);
           t.log(`20 ${kind} Edit ${tg}: ${walked.join(' > ')}`);
         }
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind}: the plan holds references no answer gives: ${inv.join('; ')}`);
@@ -954,10 +972,11 @@ export const tests = {
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); });
     /* abandoning an answer clears what it gave the plan (Astra AST-D6: files moved to This computer kept the NAS place and
        its key): each configuration's own answer given up, then every reference in the plan still describes an answer */
-    for (const [kind, est] of RICH) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
+    for (const [kind, est] of richOf(t)) { if (!ABANDON[kind]) continue; const [to, move] = ABANDON[kind];
       await flow(t, `20 ${kind} given up: ${to}`, async (A, bad) => { await est(A); await A.screen('review'); await move(A); await A.screen('review');
         const inv = await A.frame().evaluate(INVAR); if (inv.length) bad.push(`20 ${kind} > ${to}: the plan still holds ${inv.join('; ')}`);
         const seq = await walkBack(A, [], bad, `20 ${kind} > ${to}`);
+        const kept = (ABANDON_NOT[kind] || []).filter((x) => seq.includes(x)); if (kept.length) bad.push(`20 ${kind} > ${to}: the Back run still shows the given-up answer's steps ${kept.join(', ')} (${seq.join(' > ')})`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`20 ${kind} > ${to}: the Back run from Review stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`); }); }
     /* Astra AST-D5: Begins as kept, then another device's address typed at the NAS step: it starts from nothing (no trust,
        install, profile or access of the Home NAS), and a reload invents no settled fact for it */
@@ -997,9 +1016,11 @@ export const tests = {
       await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
       await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900);
       if ((await A.snap()).screen !== 'nas-pmpair') { bad.push('a Puppet Master NAS did not open pairing: on ' + (await A.snap()).screen); return; }
-      if (await A.has('pair')) await A.click('pair');
+      /* (SW-40: a case that cannot reach its state fails, it never passes by not running; --set selftest=nopair leaves the
+         pairing unstarted and this case must fail) */
+      if (await A.has('pair') && SELFTEST !== 'nopair') await A.click('pair');
       const paired = await A.frame().waitForFunction(() => !!(O55.S.sess.nas || {}).paired, null, { timeout: 20000 }).then(() => true).catch(() => false);
-      if (!paired) { t.log('20 PM NAS: pairing by approval did not complete in this fixture within 20 s; the case could not run'); return; }
+      if (!paired) { bad.push('20 PM NAS: pairing by approval did not complete within 20 s, so nothing of this case was checked'); return; }
       /* (on to the folder step, where a folder is picked, then on to Review) */
       await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); await throughNas(A); await onToReview(A, nameOn);
       if ((await A.snap()).screen !== 'review') { bad.push('never reached Review: on ' + (await A.snap()).screen); return; }
@@ -1045,13 +1066,17 @@ export const tests = {
      configuration and every Edit link its Review shows, another value picked (or typed), then Back without Continue: the
      draft, Review's rows, the screen's own selection (opened again) and the Back path are all as they were */
   async 'row 21 · generated twin of row 20: every Review Edit link of each rich configuration, another value picked or typed, then Back without Continue: draft, Review rows, the screen\'s own selection and the Back path all unchanged (lead ruling 1103040758)'(t) {
-    for (const [kind, est] of RICH)
+    for (const [kind, est] of richOf(t))
       await flow(t, `21 ${kind}`, async (A, bad) => { await est(A); await A.screen('review');
         const links = [...new Set((await A.snap()).buttons.filter((b) => b.action === 'edit').map((b) => b.arg))];
-        for (const tg of links) {
+        /* (SW-41: each Edit target with its first alternative, then its last where it has a second; a screen with nothing to
+           pick or type fails, except the verification steps the lead's ruling leaves without picks, NO_PICK) */
+        for (const [tg, which] of links.flatMap((x) => [[x, 'first'], [x, 'last']])) {
           const before = await A.frame().evaluate(SNAP20);
           await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL);
-          const did = await pickOther(A); if (!did) { t.log(`21 ${kind} Edit ${tg}: nothing to pick on ${sel0.screen}`); await pressBack(A); await A.sleep(700); continue; }
+          const did = await pickOther(A, which);
+          if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
+            for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); } continue; }
           if ((await A.snap()).screen !== sel0.screen) { bad.push(`21 ${kind} Edit ${tg}: ${did} left ${sel0.screen} for ${(await A.snap()).screen} without Continue`); break; }
           for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); }
           if ((await A.snap()).screen !== 'review') { bad.push(`21 ${kind} Edit ${tg}: Back after ${did} on ${sel0.screen} did not return to Review`); break; }
@@ -1105,7 +1130,10 @@ export const tests = {
         async (A) => { await A.click('edit', 'safe', 'safe'); await A.click('online', undefined, 'online-service'); }, async (A) => { await A.fill('o55f-address', 'https://gitea2.platyr.test'); }],
       ['the repository name', async (A) => { await toDetails(A); await A.click('next', undefined, 'safe'); await toReview(A); }, async (A) => { await A.click('edit', 'online-details', 'online-details'); }, async (A) => { await A.fill('o55f-repo', 'garden-plot'); }],
       ['a custom folder path', async (A) => { await A.toSafe('Notes'); await toReview(A); }, async (A) => { await A.click('edit', 'name', 'name'); },
-        async (A) => { await A.click('change'); await clickOrSend(A, '.o55-layer:not(.o55-out) [data-o55-do="loc"][data-arg="custom"]'); await A.sleep(400); await A.fill('o55f-custom', '~/Projects/elsewhere'); }]
+        async (A) => { await A.click('change'); await clickOrSend(A, '.o55-layer:not(.o55-out) [data-o55-do="loc"][data-arg="custom"]'); await A.sleep(400); await A.fill('o55f-custom', '~/Projects/elsewhere'); }],
+      /* (SW-41: the S3 bucket fields: a restore from a cloud drive, its place switched to an S3 bucket and a bucket typed) */
+      ['an S3 bucket for a restore', toCloudRestore, async (A) => { await editBeginTo(A); await pressOn(A); await A.screen('r-source'); },
+        async (A) => { await A.click('cloud', 's3'); await A.sleep(500); await A.fill('o55f-acc-bucket', 'another-bucket'); }]
     ];
     for (const [what, est, reach, type] of TYPED)
       await flow(t, `21 typed: ${what}, then Back`, async (A, bad) => { await est(A); await A.screen('review'); const start = await A.frame().evaluate(SNAP20);
@@ -1218,8 +1246,10 @@ export const tests = {
        off and Approve off */
     await flow(t, '21 a guest\'s words ticked on s-ready, then Back', async (A, bad) => { await toNewServer(A, 's-ready'); await A.sleep(600);
       if ((await A.snap()).screen !== 's-ready') { bad.push('not on s-ready: ' + (await A.snap()).screen); return; }
+      /* (SW-40: --set selftest=noguest turns the concept's owner host off here, so no guest ever asks: this case must fail) */
+      if (SELFTEST === 'noguest') await A.frame().evaluate(() => { window.__O55_CONCEPT_HOST_OFF__ = true; const sv = O55.S.sess.server; sv.candidates = []; O55.S.save(); O55.ui.refresh(); });
       const has = await A.frame().waitForFunction(() => !!document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]'), null, { timeout: 12000 }).then(() => true).catch(() => false);
-      if (!has) { t.log('21 s-ready: no waiting guest appeared in this fixture within 12 s; the tick case could not run'); return; }
+      if (!has) { bad.push('21 s-ready: no waiting guest appeared within 12 s, so the tick case checked nothing'); return; }
       const id = await A.frame().evaluate(() => document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="match"]').getAttribute('data-arg'));
       await A.click('match', id); await A.sleep(400);
       const on = await A.frame().evaluate((id) => !!((O55.S.sess.server.candidates || []).find((c) => c.id === id) || {}).confirmed, id); if (!on) { bad.push('the tick did not take'); return; }
@@ -1420,41 +1450,72 @@ export const tests = {
         }
         const hits = rawIn(texts, refs); if (hits.length) bad.push(`24 ${kind}: a raw locator is shown: ${hits.join(' | ')}`); });
   },
-  /* 4b (fo-kit, 2026-11-04; reported as the pane drifting about 0.3 px a frame, fields "harness only"): a card under a
-     resting pointer stays still. After Review > Edit name > Change, the click leaves the pointer on the Change link and the
-     files sheet opens with a card under it; the card's own hover lift (10-window.css .o55-card:hover translateY(-1px), a
-     0.18 s transition) carried its bottom edge past a pointer resting within 1 px of it and back, and the card trembled
-     0.3-0.9 px for as long as the pointer rested (Basic Light 1920x1080: the click left it 0.51 px inside the 'custom'
-     card's bottom edge). In Basic, Friendly and Glass (Retro and NieR have no lift): the pointer where the click left it,
-     then 0.5 px inside the bottom edge of each card of the sheet in turn; each card under it holds one position over 90
-     frames (rAF reads of its box) and is still on compositor frames (t.still). Fails on main be4766513f. */
-  async 'row 25 · a card under a resting pointer stays still: after Review > Edit name > Change, with the pointer where the click left it and 0.5 px inside each files-sheet card\'s bottom edge, in Basic, Friendly and Glass (4b)'(t) {
-    const SAMPLE = ([n]) => new Promise((res) => { const e = document.querySelector('[data-kit-still="1"]'), seen = []; const tick = () => { const r = e.getBoundingClientRect(); seen.push(r.x.toFixed(2) + ',' + r.y.toFixed(2)); if (seen.length < n) requestAnimationFrame(tick); else res({ n: seen.length, distinct: [...new Set(seen)], transform: getComputedStyle(e).transform }); }; requestAnimationFrame(tick); });
-    const mark = (A, [x, y]) => A.frame().evaluate(([x, y]) => { document.querySelectorAll('[data-kit-still]').forEach((e) => e.removeAttribute('data-kit-still')); const h = document.elementFromPoint(x, y), c = h && h.closest('.o55-sheet[data-open="true"] .o55-card');
-      if (!c) return null; c.setAttribute('data-kit-still', '1'); return (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''); }, [x, y]);
-    for (const look of [['basic', 'light'], ['friendly', 'light'], ['glass', 'light']]) {
-      SELFTEST = t.args.selftest || ''; const A = onboardingApp(t), bad = [], label = `25 ${look.join(' ')}`;
-      await A.boot({ look }); await A.toSafe('Notes'); await toReview(A); await A.click('edit', 'name', 'name');
-      /* (the frame's offset in the window: page.mouse speaks window coordinates, the page its own) */
-      const fe = A.frame() === t.page.mainFrame() ? null : await A.frame().frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
-      const ch = await A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="change"]').first().boundingBox();
-      const at = [ch.x - off.x + ch.width / 2, ch.y - off.y + ch.height / 2];
-      await A.click('change'); await A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {}); await A.sleep(1500);
-      const judge = async (where) => { await A.sleep(900); const r = await A.frame().evaluate(SAMPLE, [90]);
-        t.log(`${label} ${where}: ${r.distinct.length} position(s) in ${r.n} frames${r.distinct.length > 1 ? ' (' + r.distinct.slice(0, 6).join(' | ') + ')' : ''}, transform ${r.transform}`);
-        if (r.distinct.length > 1) bad.push(`${where}: the card moved under a resting pointer, ${r.distinct.length} positions in ${r.n} frames`);
-        await t.still('[data-kit-still="1"]', `${label} ${where}: still on compositor frames`, { ms: 1200 }); };
-      const under = await mark(A, at);
-      if (under) await judge(`pointer where the click on Change left it (${at.map((v) => v.toFixed(2)).join(', ')}), on ${under}`); else t.log(`${label}: no card under the pointer where the click on Change left it`);
-      /* each card's rest box, with the pointer away */
-      await t.page.mouse.move(2, 2); await A.sleep(700);
-      const cards = await A.frame().evaluate(() => [...document.querySelectorAll('.o55-sheet[data-open="true"] .o55-card')].filter((c) => c.getClientRects().length).map((c) => { const r = c.getBoundingClientRect(); return { id: (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''), x: r.left + r.width / 2, y: r.bottom - 0.5, transform: getComputedStyle(c).transform }; }));
-      if (!cards.length) bad.push('the files sheet shows no card');
-      /* (the card is found at that point while it rests, before the pointer comes: a lift that moves its box would take it away) */
-      for (const c of cards) { const got = await mark(A, [c.x, c.y]);
-        if (got !== c.id) { bad.push(`0.5 px inside ${c.id}'s bottom edge, at rest, is ${got || 'nothing'}`); continue; }
-        await t.page.mouse.move(off.x + c.x, off.y + c.y); await judge(`pointer 0.5 px inside ${c.id}'s bottom edge`); await t.page.mouse.move(2, 2); await A.sleep(500); }
-      t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500));
-    }
+  /* 4b / FO-49 (fo-kit, 2026-11-04; reported as the pane drifting about 0.3 px a frame, fields "harness only"): a card or a
+     tile under a resting pointer stays still. After Review > Edit name > Change the click leaves the pointer on the Change
+     link and the files sheet opens with a card under it; the card's own hover lift (10-window.css .o55-card:hover
+     translateY(-1px), .o55-tile:hover translateY(-2px)) carried its bottom edge past a pointer resting within that lift of
+     it, the hover dropped, the box came back under the pointer, and it trembled for as long as the pointer rested (Basic
+     Light 1920x1080: the click left the pointer 0.51 px inside the 'custom' card's bottom edge; under Reduce Motion the
+     hover flips every frame). With motion on and under Reduce Motion: the files sheet's cards in Basic, Friendly and Glass
+     (the pointer where Change's click left it, then 0.5 px inside each card's bottom edge) and the look screen's tiles in
+     Basic, Friendly, Glass and Retro (0.5 px inside each tile's bottom edge). Each box under the pointer holds one
+     position and its :hover never flips over 90 frames (rAF reads), and it is still on compositor frames (t.still).
+     Fails on main be4766513f. */
+  async 'row 25 · a card or tile under a resting pointer stays still: files-sheet cards after Review > Edit name > Change (where the click left the pointer, and 0.5 px inside each bottom edge) in Basic, Friendly and Glass, look tiles in Basic, Friendly, Glass and Retro, motion on and Reduce Motion (4b, FO-49)'(t) {
+    const SAMPLE = ([n]) => new Promise((res) => { const e = document.querySelector('[data-kit-still="1"]'), seen = []; let flips = 0, was = null;
+      const tick = () => { const r = e.getBoundingClientRect(), h = e.matches(':hover'); seen.push(r.x.toFixed(2) + ',' + r.y.toFixed(2)); if (was !== null && h !== was) flips++; was = h;
+        if (seen.length < n) requestAnimationFrame(tick); else res({ n: seen.length, distinct: [...new Set(seen)], flips, hovered: h, transform: getComputedStyle(e).transform }); }; requestAnimationFrame(tick); });
+    const mark = (A, sel, [x, y]) => A.frame().evaluate(([sel, x, y]) => { document.querySelectorAll('[data-kit-still]').forEach((e) => e.removeAttribute('data-kit-still')); const h = document.elementFromPoint(x, y), c = h && h.closest(sel);
+      if (!c) return null; c.setAttribute('data-kit-still', '1'); return (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''); }, [sel, x, y]);
+    const boxes = (A, sel) => A.frame().evaluate((sel) => [...document.querySelectorAll(sel)].filter((c) => c.getClientRects().length && !c.closest('.o55-out')).map((c) => { const r = c.getBoundingClientRect(); return { id: (c.getAttribute('data-o55-do') || '') + ':' + (c.getAttribute('data-arg') || ''), x: r.left + r.width / 2, y: r.bottom - 0.5 }; }), sel);
+    for (const motion of ['no-preference', 'reduce'])
+      for (const look of [['basic', 'light'], ['friendly', 'light'], ['glass', 'light'], ['retro', 'light']]) {
+        SELFTEST = t.args.selftest || ''; const A = onboardingApp(t), bad = [], label = `25 ${look.join(' ')} ${motion === 'reduce' ? 'Reduce Motion' : 'motion on'}`;
+        await A.boot({ look }); await t.emulate({ reducedMotion: motion });
+        /* (the frame's offset in the window: page.mouse speaks window coordinates, the page its own) */
+        const fe = A.frame() === t.page.mainFrame() ? null : await A.frame().frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+        const judge = async (where) => { await A.sleep(900); const r = await A.frame().evaluate(SAMPLE, [90]);
+          t.log(`${label} ${where}: ${r.distinct.length} position(s), ${r.flips} hover flip(s) in ${r.n} frames, hovered ${r.hovered}${r.distinct.length > 1 ? ' (' + r.distinct.slice(0, 6).join(' | ') + ')' : ''}, transform ${r.transform}`);
+          if (r.distinct.length > 1 || r.flips) bad.push(`${where}: under a resting pointer it moved or its hover flipped: ${r.distinct.length} positions, ${r.flips} flips in ${r.n} frames`);
+          await t.still('[data-kit-still="1"]', `${label} ${where}: still on compositor frames`, { ms: 1200 }); };
+        const atEdges = async (sel, what) => { await t.page.mouse.move(2, 2); await A.sleep(700); const list = await boxes(A, sel);
+          if (!list.length) bad.push(`no ${what} on show`);
+          /* (each box is found at that point while it rests, before the pointer comes: a lift that moves its box would take it away) */
+          for (const c of list) { const got = await mark(A, sel, [c.x, c.y]); if (got !== c.id) { bad.push(`0.5 px inside ${c.id}'s bottom edge, at rest, is ${got || 'nothing'}`); continue; }
+            await t.page.mouse.move(off.x + c.x, off.y + c.y); await judge(`pointer 0.5 px inside ${what} ${c.id}'s bottom edge`); await t.page.mouse.move(2, 2); await A.sleep(400); } };
+        /* the look screen's tiles (Back from Where to the look step) */
+        await pressBack(A); await A.screen('look'); await A.sleep(600);
+        await atEdges('.o55-pane > .o55-layer:not(.o55-out) .o55-tile', 'tile');
+        if (look[0] !== 'retro') {
+          /* the files sheet's cards, after Review > Edit name > Change */
+          await A.click('next', undefined, 'where'); await A.toSafe('Notes'); await toReview(A); await A.click('edit', 'name', 'name');
+          const ch = await A.frame().locator('.o55-pane > .o55-layer:not(.o55-out) [data-o55-do="change"]').first().boundingBox();
+          const at = [ch.x - off.x + ch.width / 2, ch.y - off.y + ch.height / 2];
+          await A.click('change'); await A.waitFor(() => !!document.querySelector('.o55-sheet[data-open="true"]'), null, 4000).catch(() => {}); await A.sleep(1500);
+          const under = await mark(A, '.o55-sheet[data-open="true"] .o55-card', at);
+          if (under) await judge(`pointer where the click on Change left it (${at.map((v) => v.toFixed(2)).join(', ')}), on ${under}`); else t.log(`${label}: no card under the pointer where the click on Change left it`);
+          await atEdges('.o55-sheet[data-open="true"] .o55-card', 'card');
+        }
+        t.log(label + (bad.length ? '\n  ' + bad.join('\n  ') : ': clean')); await t.check(label, !bad.length, bad.join(' | ').slice(0, 1500));
+      }
+    await t.emulate({ reducedMotion: 'no-preference' });
+  },
+  /* SW-48: the raw-text rule (LOOK's raw: a lower-case word_with_underscores reads as an enum key) on nas-key, where the
+     key list shows the SSH key files ~/.ssh/id_ed25519 and ~/.ssh/id_rsa: the files are named on screen, the pattern
+     matches them, and the rule's exemption for SSH key file names (id_rsa, id_ecdsa, id_ed25519, id_dsa) keeps them from
+     failing the screen; any other raw key there still would */
+  async 'row 26 · the raw-text rule on nas-key: the SSH key file name id_rsa shown on the key step is not a raw key (SW-48)'(t) {
+    await flow(t, '26 nas-key shows id_rsa', async (A, bad) => {
+      await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+      await A.click('device', 'nas-home'); await A.click('next', undefined, 'nas-identity'); await A.click('trust', undefined, 'nas-key');
+      await A.waitFor(() => Object.entries(O55.S.sess.ops || {}).some(([k, v]) => k.startsWith('keys:nas-home') && v.state === 'done'), null, 8000).catch(() => {});
+      await A.waitFor(() => /id_rsa/.test((document.querySelector('.o55-pane > .o55-layer:not(.o55-out)') || {}).innerText || ''), null, 8000).catch(() => {});
+      const s = await look(A);
+      if (s.screen !== 'nas-key') { bad.push('not on nas-key: ' + s.screen); return; }
+      if (!/\bid_rsa\b/.test(s.text)) { bad.push('nas-key does not name id_rsa, so the rule met nothing to judge: ' + s.text.slice(0, 200)); return; }
+      const hits = [...s.text.matchAll(/\b[a-z]+(?:_[a-z]+)+\b/g)].map((m) => m[0]);
+      if (!hits.includes('id_rsa')) bad.push('the raw pattern does not match id_rsa here, so the exemption was not exercised: ' + JSON.stringify(hits));
+      const before = bad.length; judge(s, [], '26', bad);
+      t.log(`26 nas-key: pattern matches ${JSON.stringify([...new Set(hits)])}; raw after the exemption ${JSON.stringify(s.raw)}${bad.length > before ? '' : ': none'}`); });
   }
 };
