@@ -13,7 +13,7 @@
     {
       "path": "Plans/filesafe_event_sources/safe_point_restored.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/safe_point_restored/1.0.0",
-      "sha256": "4a73781a930187b3442f935f1fdc608f6bb53f2d44af0ef6e94f0b9f960f4637"
+      "sha256": "fd75d91a032b5f08ed1e00d33d9c128ffcec36eed58d70b9a78dd31082b8b661"
     },
     {
       "path": "Plans/event_payloads/safe_point_restored_v2.schema.json",
@@ -66,7 +66,8 @@
         "recover_same_operation"
       ],
       "adoption_disposition": "specified_unimplemented",
-      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance.",
+      "complete_original_records_root_ref": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_records"
     }
   ],
   "request_payload_joins": [
@@ -172,5 +173,36 @@
     "recovered_after_restart",
     "conflict_reason_code"
   ],
-  "graph_sha256": "bd1431cedc2e5f3b2ffca2febe3bed10539f11ed170d64936239201cd7a29435"
+  "graph_sha256": "0cbbeabffda5483d062a27657b0ee9017ffca0355fd449c02bb7594a6944c667",
+  "application_body_roots": {
+    "restore_request": "#/$defs/application_request",
+    "safe_point_record": "#/$defs/application_records/properties/safe_point_record",
+    "snapshot_manifest": "#/$defs/application_records/properties/snapshot_manifest",
+    "snapshot_blobs": "#/$defs/application_records/properties/snapshot_blobs",
+    "pre_restore_manifest": "#/$defs/application_records/properties/pre_restore_manifest",
+    "post_restore_manifest": "#/$defs/application_records/properties/post_restore_manifest",
+    "restore_transaction": "#/$defs/application_records/properties/restore_transaction",
+    "equality_result": "#/$defs/application_records/properties/equality_result"
+  },
+  "application_body_codecs": {
+    "restore_request": "pm.application.physical_messagepack.v1",
+    "safe_point_record": "pm.application.physical_messagepack.v1",
+    "snapshot_manifest": "RFC8785",
+    "snapshot_blobs": "pm.application.physical_messagepack.v1",
+    "pre_restore_manifest": "RFC8785",
+    "post_restore_manifest": "RFC8785",
+    "restore_transaction": "pm.application.physical_messagepack.v1",
+    "equality_result": "pm.application.physical_messagepack.v1"
+  },
+  "application_original_composition_root": "Plans/filesafe_event_sources/safe_point_restored.schema.json#/$defs/application_records",
+  "application_required_body_roles": [
+    "restore_request",
+    "safe_point_record",
+    "snapshot_manifest",
+    "snapshot_blobs",
+    "pre_restore_manifest",
+    "post_restore_manifest",
+    "restore_transaction",
+    "equality_result"
+  ]
 }

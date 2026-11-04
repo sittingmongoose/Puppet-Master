@@ -121,13 +121,13 @@
     {
       "ordinal": 9,
       "role": "retention_release",
-      "barrier": "PENDING_RETENTION_DECISION; this graph selects no deletion or lifetime policy"
+      "barrier": "RP-OPERATIONAL-2555D; apply existing Case L-3 exact-kind policy and independent owner holds; no admission or body deletion authority"
     }
   ],
   "consumer_id": "storage.filesafe_policy_degraded_history_read.v1@1.0.0",
   "family_checkpoint": "none_required",
-  "retention_policy_ref": "PENDING_RETENTION_DECISION",
+  "retention_policy_ref": "RP-OPERATIONAL-2555D",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "dafd3823a9457addfbf115223d17100a554e5e9acf8b456b67c6dd3739f86edc"
+  "graph_sha256": "e5223cd758e4ab5580d491ec4a3c5533c10e7acb82f52f30b7e10ef1d58934d0"
 }
