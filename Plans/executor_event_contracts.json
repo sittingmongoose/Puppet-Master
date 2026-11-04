@@ -36,7 +36,102 @@
           true
         ]
       },
-      "source_predicate_contract": "Before completion the exact original attempt is active and in-flight work is reconciled. Terminal success is done; terminal failure has its canonical classified failure."
+      "source_predicate_contract": "Before completion the exact original attempt is active and in-flight work is reconciled. Terminal success is done; terminal failure has its canonical classified failure.",
+      "semantic_adapter": {
+        "id": "executor.attempt_completed.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "execution": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "attempt",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "thread_id": "run.body.thread_id",
+          "node_id": "node.body.worknode_id",
+          "attempt_id": "attempt.body.attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "terminal_state": "operation.body.terminal_state",
+          "retry_count": "operation.body.retry_count",
+          "runtime_snapshot_ref": "execution.body.runtime_snapshot_ref",
+          "failure_class": "operation.body.failure_class",
+          "success": "operation.body.success",
+          "backoff_until_utc": "operation.body.backoff_until_utc",
+          "verification_result_refs": "operation.body.verification_result_refs",
+          "reviewer_result_refs": "operation.body.reviewer_result_refs",
+          "safe_point_id": "execution.body.safe_point_id",
+          "remediation_root_id": "operation.body.remediation_root_id",
+          "remediation_parent_attempt_id": "operation.body.remediation_parent_attempt_id"
+        },
+        "transitions": [
+          {
+            "before": "active",
+            "after": "done",
+            "when": {
+              "terminal_state": "done"
+            }
+          },
+          {
+            "before": "active",
+            "after": "failed",
+            "when": {
+              "terminal_state": "failed"
+            }
+          }
+        ],
+        "requirements": {
+          "execution.body.in_flight": "reconciled"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "terminal_publications": 1
+        },
+        "context_join_fields": [
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "requested_account_id",
+          "effective_account_id",
+          "requested_account_binding",
+          "operational_identity",
+          "approval_scope_key",
+          "permission_snapshot_id"
+        ],
+        "evidence_lists": [
+          "verification_result_refs",
+          "reviewer_result_refs"
+        ],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "execution": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "attempt.started",
@@ -75,7 +170,91 @@
           true
         ]
       },
-      "source_predicate_contract": "The exact new attempt is admitted, immutable requested/effective snapshots are durable, and the owner worktree baseline is valid. Append before worker spawn."
+      "source_predicate_contract": "The exact new attempt is admitted, immutable requested/effective snapshots are durable, and the owner worktree baseline is valid. Append before worker spawn.",
+      "semantic_adapter": {
+        "id": "executor.attempt_started.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "execution": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "attempt",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "thread_id": "run.body.thread_id",
+          "node_id": "node.body.worknode_id",
+          "attempt_id": "attempt.body.attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "scheduler_lane": "execution.body.scheduler_lane",
+          "permission_snapshot_id": "execution.body.permission_snapshot_id",
+          "requested_model_snapshot_id": "execution.body.requested_model_snapshot_id",
+          "effective_model_snapshot_id": "execution.body.effective_model_snapshot_id",
+          "runtime_snapshot_ref": "execution.body.runtime_snapshot_ref",
+          "safe_point_id": "execution.body.safe_point_id",
+          "remediation_root_id": "operation.body.remediation_root_id",
+          "remediation_parent_attempt_id": "operation.body.remediation_parent_attempt_id",
+          "requested_account_snapshot_id": "execution.body.requested_account_snapshot_id",
+          "effective_account_snapshot_id": "execution.body.effective_account_snapshot_id"
+        },
+        "transitions": [
+          {
+            "before": "admitted",
+            "after": "started",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "execution.body.snapshot_commit": "durable",
+          "execution.body.baseline": "verified",
+          "execution.body.permission": "current"
+        },
+        "effects": {
+          "worker_dispatches": 1,
+          "counter_increments": 1
+        },
+        "context_join_fields": [
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "requested_account_id",
+          "effective_account_id",
+          "requested_account_binding",
+          "operational_identity",
+          "approval_scope_key",
+          "permission_snapshot_id"
+        ],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "execution": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "node.blocked",
@@ -111,7 +290,81 @@
           true
         ]
       },
-      "source_predicate_contract": "The same node has a newly accepted block cause and a reserved new blocked_sequence. Retry resolves that original episode rather than minting another sequence."
+      "source_predicate_contract": "The same node has a newly accepted block cause and a reserved new blocked_sequence. Retry resolves that original episode rather than minting another sequence.",
+      "semantic_adapter": {
+        "id": "executor.node_blocked.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "episode": "Plans/Contracts_V0.md"
+        },
+        "transition_record": "episode",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "thread_id": "run.body.thread_id",
+          "node_id": "node.body.worknode_id",
+          "replan_generation": "run.body.replan_generation",
+          "blocked_sequence": "episode.body.blocked_sequence",
+          "blocked_reason_code": "operation.body.blocked_reason_code",
+          "allowed_action_ids": "operation.body.allowed_action_ids",
+          "preserved_local_work": "operation.body.preserved_local_work",
+          "attempt_id": "attempt.body.attempt_id",
+          "detail_ref": "operation.body.detail_ref",
+          "failure_class": "operation.body.failure_class",
+          "timeout_class": "operation.body.timeout_class",
+          "wait_state_class": "operation.body.wait_state_class",
+          "auth_realm": "operation.body.auth_realm",
+          "missing_scopes": "operation.body.missing_scopes",
+          "requires_safe_point_restore": "operation.body.requires_safe_point_restore",
+          "safe_point_id": "operation.body.safe_point_id",
+          "anchor_ref": "operation.body.anchor_ref"
+        },
+        "transitions": [
+          {
+            "before": "new",
+            "after": "unresolved",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "episode.body.cause_status": "current"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "blocked_episodes": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "episode": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "node.completed",
@@ -148,7 +401,95 @@
           true
         ]
       },
-      "source_predicate_contract": "For result_outcome=done the original node is verified; for failed it is verify_pending. Actual verifier evidence must resolve and match the attempt."
+      "source_predicate_contract": "For result_outcome=done the original node is verified; for failed it is verify_pending. Actual verifier evidence must resolve and match the attempt.",
+      "semantic_adapter": {
+        "id": "executor.node_completed.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "execution": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "node",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "attempt_id": "attempt.body.attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "result_outcome": "operation.body.result_outcome",
+          "evidence_refs": "operation.body.evidence_refs",
+          "artifact_refs": "operation.body.artifact_refs",
+          "runtime_snapshot_ref": "execution.body.runtime_snapshot_ref"
+        },
+        "transitions": [
+          {
+            "before": "verified",
+            "after": "done",
+            "when": {
+              "result_outcome": "done"
+            }
+          },
+          {
+            "before": "verify_pending",
+            "after": "failed",
+            "when": {
+              "result_outcome": "failed"
+            }
+          }
+        ],
+        "requirements": {
+          "execution.body.verification": "accepted",
+          "execution.body.packaging": "passed"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "node_terminal_publications": 1
+        },
+        "context_join_fields": [
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "requested_account_id",
+          "effective_account_id",
+          "requested_account_binding",
+          "operational_identity",
+          "approval_scope_key",
+          "permission_snapshot_id"
+        ],
+        "evidence_lists": [
+          "evidence_refs",
+          "artifact_refs"
+        ],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "execution": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "node.started",
@@ -187,7 +528,83 @@
           true
         ]
       },
-      "source_predicate_contract": "The node is queued, actual dependencies satisfy readiness, and the exact attempt is admitted; transition only then to in_progress."
+      "source_predicate_contract": "The node is queued, actual dependencies satisfy readiness, and the exact attempt is admitted; transition only then to in_progress.",
+      "semantic_adapter": {
+        "id": "executor.node_started.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "execution": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "node",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "attempt_id": "attempt.body.attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "execution_unit_context_ref": "execution.body.execution_unit_context_ref",
+          "runtime_snapshot_ref": "execution.body.runtime_snapshot_ref"
+        },
+        "transitions": [
+          {
+            "before": "queued",
+            "after": "in_progress",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "execution.body.dependency_state": "satisfied",
+          "execution.body.attempt_admission": "accepted",
+          "execution.body.permission": "current",
+          "execution.body.baseline": "verified"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "node_start_publications": 1
+        },
+        "context_join_fields": [
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "requested_account_id",
+          "effective_account_id",
+          "requested_account_binding",
+          "operational_identity",
+          "approval_scope_key",
+          "permission_snapshot_id"
+        ],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "execution": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "node.unblocked",
@@ -226,7 +643,70 @@
           true
         ]
       },
-      "source_predicate_contract": "The exact original blocked_sequence is unresolved; its resolution evidence is durable and any required recovery-anchor release is permitted by the existing owner. Unblocking itself grants no restore success."
+      "source_predicate_contract": "The exact original blocked_sequence is unresolved; its resolution evidence is durable and any required recovery-anchor release is permitted by the existing owner. Unblocking itself grants no restore success.",
+      "semantic_adapter": {
+        "id": "executor.node_unblocked.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "episode": "Plans/Contracts_V0.md"
+        },
+        "transition_record": "episode",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "replan_generation": "run.body.replan_generation",
+          "blocked_sequence": "episode.body.blocked_sequence",
+          "resolution": "operation.body.resolution",
+          "attempt_id": "attempt.body.attempt_id"
+        },
+        "transitions": [
+          {
+            "before": "unresolved",
+            "after": "resolved",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "episode.body.resolution_commit": "durable",
+          "episode.body.release_state": "permitted"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "episode_resolutions": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "episode": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "plan.decomposition_degraded",
@@ -256,7 +736,51 @@
           true
         ]
       },
-      "source_predicate_contract": "Decomposition input is pre_lock and actual shape/evidence match the original analysis. Locked graph failure is refused as degradation."
+      "source_predicate_contract": "Decomposition input is pre_lock and actual shape/evidence match the original analysis. Locked graph failure is refused as degradation.",
+      "semantic_adapter": {
+        "id": "executor.plan_decomposition_degraded.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "decomposition": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "decomposition",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "source_stage": "operation.body.source_stage",
+          "reason_code": "operation.body.reason_code",
+          "original_shape": "operation.body.original_shape",
+          "degraded_shape": "operation.body.degraded_shape",
+          "evidence_ref": "operation.body.evidence_ref"
+        },
+        "transitions": [
+          {
+            "before": "pre_lock",
+            "after": "degraded_pre_lock",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "decomposition.body.graph_lock": "unlocked",
+          "decomposition.body.evidence_state": "retained"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "degradation_publications": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project"
+          ],
+          "decomposition": [
+            "project"
+          ]
+        }
+      }
     },
     {
       "event_type": "remediation.resolved",
@@ -297,7 +821,107 @@
           true
         ]
       },
-      "source_predicate_contract": "The exact root/child is active, the referenced child is terminal and resolution evidence is durable; fixed additionally requires child success. Other current resolutions keep their existing owner meaning."
+      "source_predicate_contract": "The exact root/child is active, the referenced child is terminal and resolution evidence is durable; fixed additionally requires child success. Other current resolutions keep their existing owner meaning.",
+      "semantic_adapter": {
+        "id": "executor.remediation_resolved.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "lineage": "Plans/Executor_Protocol.md",
+          "parent_attempt": "Plans/Executor_Protocol.md",
+          "child_attempt": "Plans/Executor_Protocol.md",
+          "root": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "lineage",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "child_attempt_id": "lineage.body.child_attempt_id",
+          "remediation_root_id": "lineage.body.remediation_root_id",
+          "remediation_parent_attempt_id": "lineage.body.remediation_parent_attempt_id",
+          "remediation_generation": "lineage.body.remediation_generation",
+          "replan_generation": "run.body.replan_generation",
+          "finding_refs": "operation.body.finding_refs",
+          "resolution": "operation.body.resolution"
+        },
+        "transitions": [
+          {
+            "before": "active",
+            "after": "fixed",
+            "when": {
+              "resolution": "fixed"
+            }
+          },
+          {
+            "before": "active",
+            "after": "superseded",
+            "when": {
+              "resolution": "superseded"
+            }
+          },
+          {
+            "before": "active",
+            "after": "abandoned",
+            "when": {
+              "resolution": "abandoned"
+            }
+          },
+          {
+            "before": "active",
+            "after": "replan_required",
+            "when": {
+              "resolution": "replan_required"
+            }
+          }
+        ],
+        "requirements": {
+          "lineage.body.child_terminal": "settled",
+          "lineage.body.evidence_commit": "durable"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "remediation_resolutions": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [
+          "finding_refs"
+        ],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "lineage": [
+            "project",
+            "run",
+            "node"
+          ],
+          "parent_attempt": [
+            "project",
+            "run"
+          ],
+          "child_attempt": [
+            "project",
+            "run"
+          ],
+          "root": [
+            "project",
+            "run"
+          ]
+        }
+      }
     },
     {
       "event_type": "remediation.spawned",
@@ -338,7 +962,84 @@
           true
         ]
       },
-      "source_predicate_contract": "The actual parent has a classified failure, existing remediation ceilings permit this generation, and the exact distinct child is admitted; append before child dispatch."
+      "source_predicate_contract": "The actual parent has a classified failure, existing remediation ceilings permit this generation, and the exact distinct child is admitted; append before child dispatch.",
+      "semantic_adapter": {
+        "id": "executor.remediation_spawned.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "lineage": "Plans/Executor_Protocol.md",
+          "parent_attempt": "Plans/Executor_Protocol.md",
+          "child_attempt": "Plans/Executor_Protocol.md",
+          "root": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "lineage",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "child_attempt_id": "lineage.body.child_attempt_id",
+          "remediation_root_id": "lineage.body.remediation_root_id",
+          "remediation_parent_attempt_id": "lineage.body.remediation_parent_attempt_id",
+          "remediation_generation": "lineage.body.remediation_generation",
+          "replan_generation": "run.body.replan_generation",
+          "finding_refs": "operation.body.finding_refs",
+          "parent_failure_class": "operation.body.parent_failure_class"
+        },
+        "transitions": [
+          {
+            "before": "classified_failure",
+            "after": "active",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "lineage.body.parent_classification": "recorded",
+          "lineage.body.child_admission": "accepted"
+        },
+        "effects": {
+          "worker_dispatches": 1,
+          "lineage_publications": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [
+          "finding_refs"
+        ],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "lineage": [
+            "project",
+            "run",
+            "node"
+          ],
+          "parent_attempt": [
+            "project",
+            "run"
+          ],
+          "child_attempt": [
+            "project",
+            "run"
+          ],
+          "root": [
+            "project",
+            "run"
+          ]
+        }
+      }
     },
     {
       "event_type": "run.completed",
@@ -375,7 +1076,53 @@
           true
         ]
       },
-      "source_predicate_contract": "The run is active, in-flight work is reconciled and owner terminal evidence is valid, in addition to mandatory Document Set packaging checks."
+      "source_predicate_contract": "The run is active, in-flight work is reconciled and owner terminal evidence is valid, in addition to mandatory Document Set packaging checks.",
+      "semantic_adapter": {
+        "id": "executor.run_completed.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "run",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "replan_generation": "run.body.replan_generation",
+          "terminal_outcome": "operation.body.terminal_outcome",
+          "usage_ref": "operation.body.usage_ref",
+          "result_ref": "operation.body.result_ref"
+        },
+        "transitions": [
+          {
+            "before": "active",
+            "after": "terminal",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "run.body.in_flight": "reconciled",
+          "run.body.packaging": "passed",
+          "run.body.terminal_evidence": "accepted"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "run_terminal_publications": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ]
+        }
+      }
     },
     {
       "event_type": "run.graph_integrity_failed",
@@ -409,7 +1156,51 @@
           true
         ]
       },
-      "source_predicate_contract": "The actual active run graph has failed validation; this is evidence of graph integrity failure and only the owner replan path may repair it."
+      "source_predicate_contract": "The actual active run graph has failed validation; this is evidence of graph integrity failure and only the owner replan path may repair it.",
+      "semantic_adapter": {
+        "id": "executor.run_graph_integrity_failed.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "run",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "replan_generation": "run.body.replan_generation",
+          "reason_code": "operation.body.reason_code",
+          "detail_ref": "operation.body.detail_ref"
+        },
+        "transitions": [
+          {
+            "before": "active",
+            "after": "integrity_failed",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "run.body.integrity_result": "failed",
+          "run.body.recovery_route": "replan"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "integrity_failure_publications": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ]
+        }
+      }
     },
     {
       "event_type": "run.node_backoff_expired",
@@ -445,7 +1236,68 @@
           true
         ]
       },
-      "source_predicate_contract": "The exact prior attempt has an active backoff and its timer matches the original backoff record; now must be at or beyond backoff_until_utc. Expiry is only a wake."
+      "source_predicate_contract": "The exact prior attempt has an active backoff and its timer matches the original backoff record; now must be at or beyond backoff_until_utc. Expiry is only a wake.",
+      "semantic_adapter": {
+        "id": "executor.run_node_backoff_expired.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "retry": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "retry",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "attempt_id": "attempt.body.attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "failure_class": "operation.body.failure_class"
+        },
+        "transitions": [
+          {
+            "before": "active",
+            "after": "elapsed",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "retry.body.timer_identity": "original"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "wake_publications": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "retry": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "run.node_backoff_started",
@@ -481,7 +1333,70 @@
           true
         ]
       },
-      "source_predicate_contract": "The prior attempt has a classified retryable failure and its actual per-error retry budget remains. backoff_until_utc cannot precede the first recorded observation."
+      "source_predicate_contract": "The prior attempt has a classified retryable failure and its actual per-error retry budget remains. backoff_until_utc cannot precede the first recorded observation.",
+      "semantic_adapter": {
+        "id": "executor.run_node_backoff_started.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "attempt": "Plans/Executor_Protocol.md",
+          "retry": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "retry",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "attempt_id": "attempt.body.attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "failure_class": "operation.body.failure_class",
+          "backoff_until_utc": "operation.body.backoff_until_utc",
+          "retry_count": "operation.body.retry_count"
+        },
+        "transitions": [
+          {
+            "before": "classified_failure",
+            "after": "active",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "retry.body.classification_state": "recorded"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "timer_creations": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "attempt": [
+            "project",
+            "run",
+            "node"
+          ],
+          "retry": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "run.node_ready",
@@ -519,7 +1434,60 @@
           true
         ]
       },
-      "source_predicate_contract": "The node was not ready; its actual dependencies and graph/Spec Lock now satisfy readiness. Continuing readiness preserves the original timestamp rather than another entry event."
+      "source_predicate_contract": "The node was not ready; its actual dependencies and graph/Spec Lock now satisfy readiness. Continuing readiness preserves the original timestamp rather than another entry event.",
+      "semantic_adapter": {
+        "id": "executor.run_node_ready.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "node",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "replan_generation": "run.body.replan_generation",
+          "ready_since_utc": "operation.body.ready_since_utc",
+          "wake_reason": "operation.body.wake_reason"
+        },
+        "transitions": [
+          {
+            "before": "not_ready",
+            "after": "ready",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "node.body.dependencies": "satisfied",
+          "node.body.graph_integrity": "valid",
+          "node.body.spec_lock": "current",
+          "node.body.backoff": "inactive",
+          "node.body.blockers": "resolved"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "ready_entries": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ]
+        }
+      }
     },
     {
       "event_type": "run.node_retry_scheduled",
@@ -558,7 +1526,83 @@
           true
         ]
       },
-      "source_predicate_contract": "The exact prior attempt is classified, actual retry budget remains and baseline is valid; no new attempt may dispatch without fresh permission and safe-point owner checks."
+      "source_predicate_contract": "The exact prior attempt is classified, actual retry budget remains and baseline is valid; no new attempt may dispatch without fresh permission and safe-point owner checks.",
+      "semantic_adapter": {
+        "id": "executor.run_node_retry_scheduled.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "node": "Plans/Executor_Protocol.md",
+          "retry": "Plans/Executor_Protocol.md",
+          "execution": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "retry",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "node_id": "node.body.worknode_id",
+          "prior_attempt_id": "retry.body.prior_attempt_id",
+          "replan_generation": "run.body.replan_generation",
+          "retry_count": "operation.body.retry_count",
+          "failure_class": "operation.body.failure_class",
+          "safe_point_id": "execution.body.safe_point_id"
+        },
+        "transitions": [
+          {
+            "before": "classified_failure",
+            "after": "scheduled",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "execution.body.baseline": "verified",
+          "execution.body.permission": "current",
+          "retry.body.safe_point": "verified"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "successor_admissions": 1
+        },
+        "context_join_fields": [
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "requested_account_id",
+          "effective_account_id",
+          "requested_account_binding",
+          "operational_identity",
+          "approval_scope_key",
+          "permission_snapshot_id"
+        ],
+        "evidence_lists": [],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "node": [
+            "project",
+            "run"
+          ],
+          "retry": [
+            "project",
+            "run",
+            "node"
+          ],
+          "execution": [
+            "project",
+            "run",
+            "node"
+          ]
+        }
+      }
     },
     {
       "event_type": "scheduler.pass",
@@ -589,7 +1633,65 @@
           false
         ]
       },
-      "source_predicate_contract": "The exact wake set is pending with no previously committed pass. Original pass identity, ready/selected/nonselected partition, scores, capacity and first recovery wake are preserved."
+      "source_predicate_contract": "The exact wake set is pending with no previously committed pass. Original pass identity, ready/selected/nonselected partition, scores, capacity and first recovery wake are preserved.",
+      "semantic_adapter": {
+        "id": "executor.scheduler_pass.source_adapter.v1@1.0.0",
+        "source_records": {
+          "project": "Plans/Project_System.md",
+          "operation": "Plans/Executor_Protocol.md",
+          "run": "Plans/Executor_Protocol.md",
+          "scheduler": "Plans/Executor_Protocol.md"
+        },
+        "transition_record": "scheduler",
+        "joins": {
+          "project_id": "project.body.project_id",
+          "event_sequence": "operation.body.event_sequence",
+          "run_id": "run.body.run_id",
+          "thread_id": "run.body.thread_id",
+          "replan_generation": "run.body.replan_generation",
+          "scheduler_pass_id": "operation.body.scheduler_pass_id",
+          "wake_reason": "operation.body.wake_reason",
+          "available_slots": "operation.body.available_slots",
+          "ready_nodes": "operation.body.ready_nodes",
+          "selected_nodes": "operation.body.selected_nodes",
+          "non_selected_nodes": "operation.body.non_selected_nodes",
+          "coalesced_wake_reasons": "operation.body.coalesced_wake_reasons",
+          "wake_event_refs": "operation.body.wake_event_refs"
+        },
+        "transitions": [
+          {
+            "before": "pending",
+            "after": "committed",
+            "when": {}
+          }
+        ],
+        "requirements": {
+          "scheduler.body.prior_pass": "absent",
+          "scheduler.body.generation_state": "current"
+        },
+        "effects": {
+          "worker_dispatches": 0,
+          "pass_publications": 1
+        },
+        "context_join_fields": [],
+        "evidence_lists": [
+          "wake_event_refs"
+        ],
+        "parent_joins": {
+          "project": [],
+          "operation": [
+            "project",
+            "run"
+          ],
+          "run": [
+            "project"
+          ],
+          "scheduler": [
+            "project",
+            "run"
+          ]
+        }
+      }
     }
   ]
 }

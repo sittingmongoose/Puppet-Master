@@ -1,65 +1,194 @@
 {
+  "assessment": "DX-P2",
+  "starting_head": "d1c0c8616b194db30dc470e775fc2e230b9856b7",
   "checks": [
     {
-      "command": "python3 scripts/pm_executor_event_contracts.py",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_event_index_binding.py"
+      ],
       "exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/executor-check.log",
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-event-index-tests.log",
+      "sha256": "19209a188642f3985f1a2cc2a7d02d0a4cce6d61cac64564439a9338c4b885b1"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "generate"
+      ],
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-index-generate.log",
+      "sha256": "5393fdbcfa7eebcc68c34b698bced544c4c20f87a1d26c6bf82aa3fef28db263",
+      "top_level_status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-index-validate.log",
+      "sha256": "595face24df8a0bf212da8384709f58c315ded6376160abef9cd17921e835163",
+      "top_level_status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pm_runtime_vocabulary_migration.py"
+      ],
+      "exit_code": 1,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-runtime-vocabulary.log",
+      "sha256": "08362183cc21daf66cbd0ef48d1c7abab7e397b7109d9180bd23b28f746d87b8"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_semantics.py"
+      ],
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-semantics.log",
+      "sha256": "9f47757f6a8217e9388322d0aef4c5f08c6a7ee7144f8ecd712892f4ff1de03c",
+      "top_level_status": "pass"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm_executor_event_contracts.py"
+      ],
+      "exit_code": 0,
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-shape.log",
       "sha256": "89dfebf69fee32c551d548ab1c53533d41be23a68520f75c6a7202e1b7852c74",
       "top_level_status": "pass"
     },
     {
-      "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
       "exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/shard-generate.log",
-      "sha256": "7c402e79b75330851d3bf3a867d74ea90582022879515094474c74c5aa6d9387",
-      "top_level_status": "pass"
-    },
-    {
-      "command": "python3 scripts/pm-plan-index.py generate",
-      "exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/index-generate.log",
-      "sha256": "73d08cfa865b9fc6b778569f1d80e26b0e0941edd2162d9ab956e3f86e8f8910",
-      "top_level_status": "pass"
-    },
-    {
-      "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
-      "exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/shard-check.log",
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-shard-check.log",
       "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53",
       "top_level_status": "pass"
     },
     {
-      "command": "python3 scripts/pm-plan-index.py validate",
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
+      ],
       "exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/index-validate.log",
-      "sha256": "511d74bcee4698fd25b45a980033d71ded0c1f3913e6f3163b8e1be5d7b6f30e",
-      "top_level_status": "pass"
+      "top_level_status": "pass",
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-shard-generate.log",
+      "sha256": "7c402e79b75330851d3bf3a867d74ea90582022879515094474c74c5aa6d9387"
     },
     {
-      "command": "python3 -m unittest discover -s tests -p test_pm_event_index_binding.py",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
       "exit_code": 0,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/event-index-tests.log",
-      "sha256": "35bc426e3d4c7ca79fe7fb3b5cbc39969388fb3b2e40c2182d7bac8ea99c0ce2"
-    },
-    {
-      "command": "python3 -m unittest discover -s tests -p test_pm_runtime_vocabulary_migration.py",
-      "exit_code": 1,
-      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/runtime-vocabulary-tests.log",
-      "sha256": "a87617598aef4215dfd496f0969f57faf646a81e06436251859d406a413c68d7"
+      "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
   ],
   "evidence": [
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/binding-search.json",
-      "sha256": "5c17e252b884e1f4ac1d574f73f06a9648d49ba78901729586091c2a4ee91578"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-binding-search.json",
+      "sha256": "bf22655fd256e6ec4e3cfbfde40da9b90cc84f4b487573365a8d41184a9b7600"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/runtime-baseline-evidence.log",
-      "sha256": "b120ce9fbcc38d4fef55e430fdfbbc10073fa138f53022d5e20c18dee2e581aa"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-id-search.json",
+      "sha256": "c329cfa01802d3529a337baac0205a34824ec84317f0fe899a70af7b6c096400"
     },
     {
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/currentness-sha256.log",
-      "sha256": "b5a29ac1e489d4be07bd5e577a7650f10a6f1684722210300bce4ab45d76bd19"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/pass2-runtime-baseline.json",
+      "sha256": "abac3b4abdee0293aebdb2863521002a67ce5f5eaf1a7694e90518f8df898e1b"
     }
-  ]
+  ],
+  "prior_pass_checks": {
+    "checks": [
+      {
+        "command": "python3 scripts/pm_executor_event_contracts.py",
+        "exit_code": 0,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/executor-check.log",
+        "sha256": "89dfebf69fee32c551d548ab1c53533d41be23a68520f75c6a7202e1b7852c74",
+        "top_level_status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json",
+        "exit_code": 0,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/shard-generate.log",
+        "sha256": "7c402e79b75330851d3bf3a867d74ea90582022879515094474c74c5aa6d9387",
+        "top_level_status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plan-index.py generate",
+        "exit_code": 0,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/index-generate.log",
+        "sha256": "73d08cfa865b9fc6b778569f1d80e26b0e0941edd2162d9ab956e3f86e8f8910",
+        "top_level_status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json",
+        "exit_code": 0,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/shard-check.log",
+        "sha256": "4a1c09a582f61dc63e15de67ebc4b6bd3d7834c23b8b6cce5bea75870d8f7a53",
+        "top_level_status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "exit_code": 0,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/index-validate.log",
+        "sha256": "511d74bcee4698fd25b45a980033d71ded0c1f3913e6f3163b8e1be5d7b6f30e",
+        "top_level_status": "pass"
+      },
+      {
+        "command": "python3 -m unittest discover -s tests -p test_pm_event_index_binding.py",
+        "exit_code": 0,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/event-index-tests.log",
+        "sha256": "35bc426e3d4c7ca79fe7fb3b5cbc39969388fb3b2e40c2182d7bac8ea99c0ce2"
+      },
+      {
+        "command": "python3 -m unittest discover -s tests -p test_pm_runtime_vocabulary_migration.py",
+        "exit_code": 1,
+        "output_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/runtime-vocabulary-tests.log",
+        "sha256": "a87617598aef4215dfd496f0969f57faf646a81e06436251859d406a413c68d7"
+      }
+    ],
+    "evidence": [
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/binding-search.json",
+        "sha256": "5c17e252b884e1f4ac1d574f73f06a9648d49ba78901729586091c2a4ee91578"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/runtime-baseline-evidence.log",
+        "sha256": "b120ce9fbcc38d4fef55e430fdfbbc10073fa138f53022d5e20c18dee2e581aa"
+      },
+      {
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/currentness-sha256.log",
+        "sha256": "b5a29ac1e489d4be07bd5e577a7650f10a6f1684722210300bce4ab45d76bd19"
+      }
+    ]
+  },
+  "native_execution": "NOT_RUN"
 }

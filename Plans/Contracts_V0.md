@@ -24490,6 +24490,8 @@ Newly authored owner contract: `attempt.completed@1.0.0` uses the independently 
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `attempt.completed`: EP-210 and `executor.attempt_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-500
 unit_type: requirement
@@ -24536,6 +24538,8 @@ Newly authored owner contract: `attempt.started@1.0.0` uses the independently cl
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-211 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `attempt.started`: EP-211 and `executor.attempt_started.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-501
@@ -24584,6 +24588,8 @@ Newly authored owner contract: `node.blocked@1.0.0` uses the independently close
 
 Exact legacy alias for this family: `run.node_blocked`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `node.blocked`: EP-212 and `executor.node_blocked.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-502
 unit_type: requirement
@@ -24630,6 +24636,8 @@ Newly authored owner contract: `node.completed@1.0.0` uses the independently clo
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-213 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `node.completed`: EP-213 and `executor.node_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-503
@@ -24678,6 +24686,8 @@ Newly authored owner contract: `node.started@1.0.0` uses the independently close
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `node.started`: EP-214 and `executor.node_started.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-504
 unit_type: requirement
@@ -24724,6 +24734,8 @@ Newly authored owner contract: `node.unblocked@1.0.0` uses the independently clo
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-215 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `run.node_unblocked`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `node.unblocked`: EP-215 and `executor.node_unblocked.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-505
@@ -24772,6 +24784,8 @@ Newly authored owner contract: `plan.decomposition_degraded@1.0.0` uses the inde
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `plan.decomposition_degraded`: EP-216 and `executor.plan_decomposition_degraded.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-506
 unit_type: requirement
@@ -24818,6 +24832,8 @@ Newly authored owner contract: `remediation.resolved@1.0.0` uses the independent
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-217 remain normative beyond schema shape checks. `remediation.resolved` retains the current success -> fixed, ceiling_exceeded -> replan_required, terminal failed -> abandoned import mapping; nonterminal failed is never guessed. This compatibility statement changes no sibling's payload.
 
 Exact legacy alias for this family: `run.remediation_completed`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `remediation.resolved`: EP-217 and `executor.remediation_resolved.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-507
@@ -24866,6 +24882,8 @@ Newly authored owner contract: `remediation.spawned@1.0.0` uses the independentl
 
 Exact legacy alias for this family: `run.remediation_started`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `remediation.spawned`: EP-218 and `executor.remediation_spawned.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-508
 unit_type: requirement
@@ -24912,6 +24930,8 @@ Newly authored owner contract: `run.completed@1.0.0` uses the independently clos
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-219 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.completed`: EP-219 and `executor.run_completed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-509
@@ -24960,6 +24980,8 @@ Newly authored owner contract: `run.graph_integrity_failed@1.0.0` uses the indep
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `run.graph_integrity_failed`: EP-220 and `executor.run_graph_integrity_failed.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-510
 unit_type: requirement
@@ -25006,6 +25028,8 @@ Newly authored owner contract: `run.node_backoff_expired@1.0.0` uses the indepen
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-221 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.node_backoff_expired`: EP-221 and `executor.run_node_backoff_expired.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-511
@@ -25054,6 +25078,8 @@ Newly authored owner contract: `run.node_backoff_started@1.0.0` uses the indepen
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `run.node_backoff_started`: EP-222 and `executor.run_node_backoff_started.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-512
 unit_type: requirement
@@ -25100,6 +25126,8 @@ Newly authored owner contract: `run.node_ready@1.0.0` uses the independently clo
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-223 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `run.node_ready`: EP-223 and `executor.run_node_ready.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-513
@@ -25148,6 +25176,8 @@ Newly authored owner contract: `run.node_retry_scheduled@1.0.0` uses the indepen
 
 Exact legacy alias for this family: `none`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
 
+Pass-two source contract for `run.node_retry_scheduled`: EP-224 and `executor.run_node_retry_scheduled.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
+
 ```yaml
 plan_unit_id: CV-514
 unit_type: requirement
@@ -25194,6 +25224,8 @@ Newly authored owner contract: `scheduler.pass@1.0.0` uses the independently clo
 `project_id` equals EventRecord.project_id and scope_partition is the Storage project partition for that exact Project. Every payload run_id/thread_id/attempt_id equals the corresponding envelope value when present; no fabricated node/attempt for pre-attempt work. Existing runtime snapshot refs resolve immutable pm.requested_effective_runtime with its package/seam/lane/worktree/account joins; execution_unit_context_ref resolves the versioned Executor schema. All present refs must resolve under source permission/deletion checks. Conditional minima in EP-225 remain normative beyond schema shape checks.
 
 Exact legacy alias for this family: `run.scheduler_analysis`. Import normalization uses Case L-5's existing legacy identity recipe, preserves original bytes/IDs and records source provenance; current writers reject aliases and unsupported revisions. Current writes use the schema above only after separate family admission; no upgrading old payloads on read or silent enum/string substitution.
+
+Pass-two source contract for `scheduler.pass`: EP-225 and `executor.scheduler_pass.source_adapter.v1@1.0.0` bind every source join and conditional presence; the exact companion row supplies the lifecycle table and source roles. Static normalized read captures in `Plans/executor_event_semantic_fixtures.json` are not runtime packets or persisted schema substitutes. Existing payload version/schema, closed enum domains, whole runtime/execution schemas and historical import provenance remain authoritative. No silent alias, discarded original discriminator or missing join may enter a current writer. Run `python3 scripts/pm_executor_event_semantics.py` for this family's own source/transition and receipt/replay/withdrawal oracles.
 
 ```yaml
 plan_unit_id: CV-515
