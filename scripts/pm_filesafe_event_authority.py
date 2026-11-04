@@ -13,12 +13,12 @@ import struct
 import blake3
 from functools import lru_cache
 from pathlib import Path
-from urllib.parse import urljoin
 from datetime import datetime
 from jsonschema import Draft202012Validator, FormatChecker
-from referencing import Registry, Resource
+from referencing import Resource
 from referencing.jsonschema import DRAFT202012
 import pm_filesafe_event_contracts as payload_owner
+import pm_filesafe_schema_graph as schema_graph
 from pm_projects_refresh_contracts import semantic_hash
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -64,18 +64,7 @@ def source_commitment(source):
 @lru_cache(maxsize=None)
 def context(family):
     slug=family.replace('.','_')
-    graph=load(f'Plans/filesafe_event_sources/{slug}.contract.json')
-    docs={row['path']:load(row['path']) for row in graph['resources']}
-    shared=docs['Plans/shared_integration_runtime.schema.json']
-    registry=Registry()
-    for row in graph['resources']:
-        path=row['path'];doc=docs[path]
-        resource=Resource.from_contents(doc,default_specification=DRAFT202012)
-        registry=registry.with_resource(row['uri'],resource)
-        registry=registry.with_resource('https://puppetmaster.local/'+path,resource)
-    # Legacy opaque shared $id is resolved literally and relative to each payload realm.
-    for row in graph['resources']:
-        registry=registry.with_resource(urljoin(row['uri'],shared['$id']),Resource.from_contents(shared))
+    graph,docs,registry=schema_graph.context(family)
     schema=docs[f'Plans/filesafe_event_sources/{slug}.schema.json']
     def validator(root):
         return Draft202012Validator({'$ref':schema['$id']+'#/$defs/'+root},registry=registry,format_checker=FormatChecker())
@@ -104,6 +93,9 @@ def graph_failures(family):
     for row in graph['resources']:
         doc=load(row['path']);Draft202012Validator.check_schema(doc)
         if doc.get('$id',row['uri']) != row['uri']: failures.append('resource_uri')
+    _,docs,registry=schema_graph.context(family)
+    failures.extend(schema_graph.reference_failures(graph,docs,registry))
+    failures.extend(schema_graph.negative_case_failures(family,graph,docs))
     failures.extend(retention_binding_failures(family,graph['retention_policy_ref']))
     if graph['native_admission'] != 'unavailable_until_complete_owner_adoption': failures.append('admission_overclaim')
     return failures
@@ -551,9 +543,33 @@ class ProtocolOracle:
                 or self.bank['reader_generation']!=self.reader_generation):return 'verified_rebuild_required'
             self.bank['reader_generation']+=1;self.reader_generation+=1
             self.reader_fenced=False;return 'reader_generation_published'
-        if action=='read':
+        if action in ('read','read_body'):
             if self.reader_fenced:return 'reader_unavailable'
-            if materialization_failures(self.family,c,self.bank):return 'read_unavailable'
+            # Historical authority is the independently retained issued value and
+            # unchanged first receipt, not the current writer's epoch/controls.
+            eid=c['event']['event_id'];expected=self.boundary.get(eid)
+            value=self.bank['issued'].get(eid)
+            if (expected is None or self.bank['retained_boundary'].get(eid)!=expected
+                or {k:c[k] for k in ('event','custody')}!=expected
+                or self.bank['storage_instance_id']!=expected['custody']['storage_instance_id']
+                or self.bank['reader_generation']!=self.reader_generation
+                or issued_failures(self.family,value,expected,self.bank)):
+                return 'read_unavailable'
+            if action=='read_body':
+                # A separate body-dependent request retains the original owner's
+                # availability fence. An event-row read never recreates a body.
+                source=c['source'];request=source['original_request']
+                if (self.bank['sources'].get(source['source_ref'])!=source
+                    or source_commitment(source)!=source['accepted_source_sha256']
+                    or source['original_result']!=event_payload(self.family,c['event'],self.bank)[0]):
+                    return 'read_unavailable'
+                members=source['body_members']+[{'ref':request['original_input_ref'],
+                                                'sha256':request['original_input_sha256']}]
+                for member in members:
+                    raw=self.bank['bodies'].get(member['ref'])
+                    if (not isinstance(raw,str)
+                        or hashlib.sha256(bytes.fromhex(raw)).hexdigest()!=member['sha256']):
+                        return 'read_unavailable'
             return 'original_history_no_effect'
         raise ValueError('unknown action '+action)
 
@@ -569,7 +585,10 @@ def check():
     if tuple(r['event_type'] for r in pack['families'])!=FAMILIES:failures.append('fixture_family_census')
     for row in pack['families']:
         family=row['event_type'];counts[family]={'positive':0,'negative':0,'protocol':0}
-        failures += [family+':'+f for f in graph_failures(family)]
+        graph_errors=graph_failures(family)
+        failures += [family+':'+f for f in graph_errors]
+        if any(f.startswith('unresolved_schema_ref:') for f in graph_errors):
+            continue
         graph,_=context(family)
         for policy in ('PENDING_RETENTION_DECISION','RP-AUTHORITY-INDEFINITE','RP-OPERATIONAL-2555D'):
             if policy!=graph['retention_policy_ref'] and not retention_binding_failures(family,policy):

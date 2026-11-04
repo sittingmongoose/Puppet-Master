@@ -39,6 +39,11 @@
       "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point.v1.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point.v1.schema.json",
       "sha256": "062e302fe0805f330c99c470df5c20cc247de7032cb424eecca2844b1b2f700e"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
     }
   ],
   "methods": [
@@ -180,7 +185,7 @@
     "branch_name",
     "HEAD_sha"
   ],
-  "graph_sha256": "037ef2c272fd5d3b3aed41a0543fefa128f8798f6a4a02f1685d29a9c8de19b2",
+  "graph_sha256": "4095a02051cdfbf352012da721071f8718c94114663f5cdb9a6fec2e91bbade8",
   "application_body_roots": {
     "capture_request": "#/$defs/application_request",
     "safe_point_record": "#/$defs/application_records/properties/safe_point_record",

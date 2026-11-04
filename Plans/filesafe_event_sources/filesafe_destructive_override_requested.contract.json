@@ -34,6 +34,11 @@
       "path": "Plans/event_append_receipt_contracts.schema.json",
       "uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
       "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
     }
   ],
   "methods": [
@@ -134,5 +139,5 @@
   "retention_policy_ref": "PENDING_RETENTION_DECISION",
   "native_admission": "unavailable_until_complete_owner_adoption",
   "preserved_project_resources": [],
-  "graph_sha256": "33cb23f3ba1edded7d8626d64418d6edaba3fafb747be6eb22569214161a3f55"
+  "graph_sha256": "9f9470d9e4dea7da936ec9cc14cee667f826dab17b83ca5a11304ce7b105b09d"
 }

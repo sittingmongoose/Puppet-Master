@@ -6,9 +6,8 @@ import copy
 import hashlib
 from datetime import datetime
 import json
-from urllib.parse import urljoin
 from jsonschema import Draft202012Validator, FormatChecker
-from referencing import Registry, Resource
+import pm_filesafe_schema_graph as schema_graph
 ROOT = Path(__file__).resolve().parents[1]
 
 def partition(scope):
@@ -83,16 +82,19 @@ def semantic(payload, *, inline=True):
 
 def main():
     fixture = json.loads((ROOT/'Plans/filesafe_event_contract_fixtures.json').read_text())
-    shared = json.loads((ROOT/'Plans/shared_integration_runtime.schema.json').read_text())
-    registry = Registry().with_resource(shared['$id'], Resource.from_contents(shared))
     failures, counts = [], {}
     for row in fixture['families']:
         f = row['event_type']
         schema = json.loads((ROOT/('Plans/event_payloads/'+f.replace('.','_')+'_v2.schema.json')).read_text())
         Draft202012Validator.check_schema(schema)
-        family_registry = registry.with_resource(urljoin(schema["$id"], shared["$id"]), Resource.from_contents(shared))
-        validator = Draft202012Validator(schema, registry=family_registry, format_checker=FormatChecker())
         counts[f] = {'positive':0, 'negative':0, 'identity':0}
+        graph,documents,registry = schema_graph.context(f)
+        ref_errors = schema_graph.reference_failures(graph, documents, registry)
+        failures.extend(f + ':' + error for error in ref_errors)
+        failures.extend(schema_graph.negative_case_failures(f, graph, documents))
+        if ref_errors:
+            continue
+        validator = Draft202012Validator(schema, registry=registry, format_checker=FormatChecker())
         for p in row['positive_payloads']:
             errs = list(validator.iter_errors(p))
             if errs or not semantic(p): failures.append(f+': positive '+str(errs[:1]))

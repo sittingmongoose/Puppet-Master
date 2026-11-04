@@ -39,6 +39,11 @@
       "path": "Plans/executor_cancellation_contracts/schemas/original-safe-point-restore-transaction.v1.schema.json",
       "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/original-project/original-safe-point-restore-transaction.v1.schema.json",
       "sha256": "b6d192c96c552880e7f5e8041c12888e2c3f016076c3aeaef7661c74dbca1e47"
+    },
+    {
+      "path": "Plans/shared_integration_runtime_expansion_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/shared_integration_runtime/expansion/1.0.0/shared_integration_runtime_expansion_contracts.schema.json",
+      "sha256": "5da19b80dc3ec29fc83e0bd03a450d8b195d83e321edfd8d7e7a471a22aa4d60"
     }
   ],
   "methods": [
@@ -173,7 +178,7 @@
     "recovered_after_restart",
     "conflict_reason_code"
   ],
-  "graph_sha256": "6252482d4150766fec92a1b967b34642baca1c726f0752de2f468d736d2fee5e",
+  "graph_sha256": "28b4acc92e49b643d5d0b47671c40e8c5faeb5804e075eb2ed18fa0280de4392",
   "application_body_roots": {
     "restore_request": "#/$defs/application_request",
     "safe_point_record": "#/$defs/application_records/properties/safe_point_record",
