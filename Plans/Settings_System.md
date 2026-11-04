@@ -3102,7 +3102,8 @@ Settings manager refresh under USER-SETTINGS-MANAGER-REFRESH-20260908 (§22, SSY
   `commands-shortcuts`; one System workspace, Server & Project Location, presents `server-claim-bootstrap`,
   `servers-hosts-environments`, `clients-continuity`, `project-hosting-files`, `project-sync-move-copy`,
   `ssh-remote`, and `remote-access`; Single Owners and Browser & SCM governance detail are Advanced
-  disclosures; Back Seat Driver is its own kit manager. Every workspace carries `data-manager-key`. Domain
+  disclosures; Back Seat Driver is its own kit manager. Every workspace stays bound to its existing manager
+  identity and renders through the shared manager kit. Domain
   switches never blank (first frame at least 85 percent of settled brightness, per F3-513), built-in sounds play
   as labelled demonstration tones (F3-405), and All Settings scrolls with the page while staying
   variable-height virtualized (SSYS-005).
@@ -3277,7 +3278,7 @@ depends_on: [SSYS-032, SSYS-005, SSYS-006, SSYS-015, SSYS-024]
 unblocks: []
 acceptance_criteria:
 - "Every manager workspace mounts through the shared kit with zero header-level action buttons, at most six tabs, and one Advanced disclosure per view."
-- "Registry keys, routes, detail ids, command ids, and the settings inventory are unchanged; every workspace carries data-manager-key."
+- "Registry keys, routes, detail ids, command ids, and the settings inventory are unchanged; every workspace stays bound to its existing manager identity through the shared manager kit."
 - "A domain switch's first frame is at least 85 percent of settled brightness; sound previews follow F3-405’s provenance and actual-playback rules; All Settings has no nested scroller; no page errors occur."
 - "Panel open/close, inspector open/close, domain switch, tab switch, and sound play show no blank frames and settle within the spring's own duration."
 - "(USER-SETTINGS-MANAGER-REFRESH-20260909) State renders as dot-plus-text status tokens and no capsule pill remains except keyboard keys; every select is a themed listbox and every menu shares its popout motion; rosters scroll inside their manager block; manager-topic canonical settings render inline inside their manager before its Advanced disclosure and every concept id renders exactly once (SSYS-035)."
@@ -3302,6 +3303,7 @@ source_lineage:
 - SSYS-032
 - USER-SETTINGS-MANAGER-REFRESH-20260909
 - Concepts/pm7-tools/SETTINGS_REFRESH_README.md
+- "DL-260/DL-280 source lineage only (no product DOM obligation): data-manager-key was the concept's manager-wrapper attribute; existing manager identities and the shared manager kit remain the product contract."
 - 'source_ref:projects-pass2-20261103:S1–S14; Jared: "I approve the outstanding questions with their recommended
   settings."; SETTINGS-PROPOSAL.md and PLANS-EDIT-PLAN.md §3 A'
 preserved_exact_tokens:

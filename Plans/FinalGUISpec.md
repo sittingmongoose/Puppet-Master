@@ -1093,39 +1093,40 @@ canonical_text: >-
   firm low-bounce spring while the canvas stays stationary and the connected shape visibly travels rather than
   crossfading. The shape recomputes stable target bounds on window resize, tab-width change, theme or motion
   change, and fonts-ready. Reduced motion removes the spring travel and retains immediate state changes. Amended
-  2026-08-13 - the tab rail is a translucent plate (--ed-rail-solid split from --ed-rail-bg at 72 percent alpha)
+  2026-08-13 - the tab rail is a translucent plate with separate opaque and translucent fill roles, at 72 percent alpha,
   over the existing backdrop blur so scrolled code ghosts under the strip; the concave shoulders are masked
   cutouts through which the frosted rail shows while the active tab and the canvas keep the shared opaque fill;
-  the silhouette layer mounts only after a successful measure and mounts as the strip's last child (slot 0 is
-  uncontested: the grip moved out of the strip to the surface corner); fitters are mutation-free in steady
-  state. Amended 2026-08-13 (tweak wave) - the silhouette geometry is redesigned: the strip is 40 px tall (36 px
+  the silhouette layer appears only after a successful measure and draws above the strip without competing with
+  its grip or tab controls; fitters are mutation-free in steady state. Amended 2026-08-13 (tweak wave) - the
+  silhouette geometry is redesigned: the strip is 40 px tall (36 px
   on the dashboard) with a near-full-height active tab, a 13 px squircle crown that is theme-tunable through
-  --ed-top-radius (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
-  canvas / 8 px cutout maxima; the JS now writes only the contact PROGRESS custom properties --ed-lp and --ed-rp
-  (0..1 per side, same 20 px threshold) and the CSS derives the per-theme radii from them; corner caps render
+  the shared crown-radius token (friendly 16, glass 14, retro 6), and shoulder and canvas radii of 12 px, retiring the 10 px
+  canvas / 8 px cutout maxima; the shared tab renderer derives per-theme radii from independent contact progress
+  (0..1 per side, same 20 px threshold); corner caps render
   the canvas-corner morph at the visible rail boundary; tabs start flush at the panel's left edge; per-theme
   skins apply (friendly mint canvas with lime active label, glass plate with edge highlight, retro sharp corners
   with lime). The dashboard tab strip (Main/Metrics/Monitoring) enrolls in the same connected-surface system -
-  EDSHAPE syncs .dashboard-tabs and the dashboard header plate uses the shared rail recipe at the same alpha -
+  the shared tab presentation owner updates that strip, and the dashboard header plate uses the shared rail
+  recipe at the same alpha -
   while the title-bar page tabs keep their sliding ink (the F3-464 boundary is unchanged). The editor scrollbar
   is excluded from the frosted rail band via a scrollbar-track margin. Amended 2026-08-13 (wave 3) - the
-  silhouette gains theme skin tokens: --ed-shape-outline, --ed-shape-crown with --ed-shape-crown-h, and
-  --ed-tab-inactive-ring with its ring radius. Retro draws its signature hard outline with square inactive-tab
+  silhouette gains shared theme tokens for its outline, crown material and height, and inactive-tab ring and
+  radius. Retro draws its signature hard outline with square inactive-tab
   rings; basic draws a 2 px accent-blue crown over a 9 px top radius; glass draws a three-edge glass-edge bevel
   and re-tunes the rail alpha to 84 percent (the wave-2 88 percent value is retired with this dated
   disposition). Wave-3 follow-up (2026-08-13): the retro outline lives on the ACTIVE TAB as a three-edge inset
   ring that snaps on arrival, not on the travelling connected shape - the outline-on-the-travelling-shape
   rendering is retired with this dated disposition. Amended 2026-08-14 (wave 6) - silhouette construction canon:
-  the connected shape is ONE JS-composed clip-path path() per frame. The crown corners are
+  the connected shape is one shared geometric path per frame. The crown corners are
   superellipse-approximating cubic beziers with a handle factor of 0.5523 + 0.35 x progress, and each side
   descends through an ogee - a concave flare of radius shoulder-max x progress into a convex neck of radius
   canvas-max x progress landing tangent on the canvas line. This renders identically in Safari and Chromium,
   which is the explicit motivation: the corner-shape/superellipse enhancement path was engine-split
-  (Chromium-only). The glass bevel becomes a 1 px --glass-edge crown strip clipped by the same path. Morph gap
+  (Chromium-only). The glass bevel becomes a 1 px crown strip using the shared Glass edge token, clipped by the same path. Morph gap
   canon (measured against the reference explainer's debug HUD): progress = clamp(gap / 20 px, 0, 1) LINEAR; the
   canvas(neck) to shoulder(flare) radii ratio is 10:8; each side's gap is the distance to the NEAREST CONTACT -
   the static strip content-box edge or the adjacent tab's transform-free layout edge - and the strip-end caps
-  key off the strip box edges only. Glass-dark deepens --ed-rail-solid via a 55 percent black canvas-bg mix so
+  key off the strip box edges only. Glass-dark deepens the opaque rail fill via a 55 percent black canvas-bg mix so
   the silhouette is visible (measured: about 1 sRGB channel level before, 16 levels after). Wave-6 follow-up
   (2026-08-14, defect-fix refinement of the path canon): the ogee construction is height-clamped - flare and
   neck scale together to fit below the crown (the unclamped first cut inverted the wall segment into a visible
@@ -1142,14 +1143,14 @@ canonical_text: >-
   matching the reference explainer's two-corner model (tab cutout r and canvas r are separate corners). Both
   ogee constructions - the height-clamped 0.55-handle form and the 0.9/0.18 asymmetric-handle retune - are
   retired with this dated disposition as a misreading of the reference. Fourth follow-up (2026-08-14, the second
-  corner made literal): the CANVAS surface's own top corners round via real animated border-radius on the editor
-  area (calc of --ed-lp/--ed-rp x --ed-canvas-rx-max), driven by the same per-side edge progress as the tab, so
+  corner made literal): the CANVAS surface's own top corners round on the editor area (per-side contact progress
+  times the maximum canvas-corner radius), driven by the same per-side edge progress as the tab, so
   the panel corner and the tab cutout JOIN when flush (both flat = one continuous surface) and the corner blooms
   back as the tab moves away. The masked wedge caps for editor panes are retired with this dated disposition -
   they painted rail-coloured overlays at the strip ends and were invisible at panel scale; the dashboard header
   caps are unchanged this round. Radii retuned for legibility: shoulder-rx-max 14 px default / 16 friendly / 8
   retro, canvas-rx-max 16 px default / 18 friendly / 10 retro. Fifth follow-up (2026-08-14): corner-notch
-  CONTRAST canon - the shape-on editor pane's own background is --ed-cap-bg (the rail-over-canvas composite), so
+  CONTRAST canon - the editor pane behind the measured silhouette uses the rail-over-canvas composite fill, so
   the rounded-away canvas corner reveals a visibly darker backdrop; a corner exposing a same-tone backdrop reads
   as no corner (user-reported: the radius was applying at 18 px yet invisible). Strip heights re-tune with this
   dated disposition: editor 40 to 35 px and dashboard 36 to 31 px (the resizer column top follows 44 to 39 px), with the minimap/code alignment verified
@@ -1157,10 +1158,10 @@ canonical_text: >-
   follow-up's animated border-radius canvas corner is RETIRED with cause - the canvas slides UNDER the
   translucent rail (the scroll frost), so the area's true box corner is invisible and a border-radius there
   rounds nothing a user can see. The masked wedge caps are RESTORED as the canonical frost-preserving
-  construction for the VISIBLE emergence line, now filled with var(--ed-rail-solid) - the old --ed-cap-bg
+  construction for the VISIBLE emergence line, now filled with the opaque rail fill - the old rail-over-canvas
   composite fill was the invisibility cause, not the wedge architecture - at 18 px (20 friendly) width by 16 px
-  height (--ed-corner-ry 12 to 16; --ed-canvas-rx-max 18 default / 20 friendly), and the shape-on pane
-  background stays --ed-rail-solid. The shared tab presentation owner keeps the Retro phosphor block, DOS full inversion and CRT scanline wipe visible on dashboard and editor tabs. Neutralizing the ordinary tab plate must not suppress an effect’s foreground, fill or background. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
+  height (the vertical corner-radius token 12 to 16; the maximum canvas-corner radius 18 default / 20 friendly), and the pane
+  background behind the measured silhouette stays the opaque rail fill. The shared tab presentation owner keeps the Retro phosphor block, DOS full inversion and CRT scanline wipe visible on dashboard and editor tabs. Neutralizing the ordinary tab plate must not suppress an effect’s foreground, fill or background. The editor minimap is the ONLY code-pane scrollbar - native scrollbars are suppressed
   - and the minimap band aligns with the frosted rail via margin rather than padding, retiring the wave-2
   scrollbar-track-margin exclusion with this dated disposition. Amended 2026-08-15 (wave 8), SNAP-WHILE-DRAGGING
   CONTRACT: this unit's 1:1 canon above ("direct dragging is one-to-one with the pointer and corner values are
@@ -1191,10 +1192,10 @@ unblocks: []
 acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
-- "Only the horizontal extent of a corner animates, driven by the per-side contact progress --ed-lp/--ed-rp against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
+- "Only the horizontal extent of a corner animates, driven by the per-side contact progress against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
 - "Every panel's strip, a dashboard tab's panel included, participates in the same connected-surface system, and tabs start flush at the panel's left edge (amended 2026-10-09, DL-180; F3-631, F3-638)."
 - "Per-look silhouette skins follow F3-631 and F3-647: no look draws an accent crown strip, an underline or a separately coloured plate on the active tab; Glass keeps its 1 px glass rim along the fused shape's crown as part of its material, never in an accent colour (amended 2026-10-09, DL-180)."
-- "The silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
+- "The silhouette is one shared geometric path per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
 - "Any silhouette sync taken while the strip contains a dragging tab snaps in the same frame rather than springing, including the sync caused by grabbing a non-active tab, and sub-pixel pointer moves never preserve an in-flight spring during a drag; selection springs are unaffected (wave 8, 2026-08-15)."
@@ -1202,12 +1203,12 @@ acceptance_criteria:
 - "No dark pinhole at a join, no one-frame square or round pop at the start or end of a transition, and no shrinking circular dimple near a collision boundary."
 - "Resizing the window or changing tab widths recomputes stable target bounds; reduced motion snaps without spring travel."
 - "The rail band ghosts scrolled content beneath it in non-glass themes (pixels change when the code canvas scrolls under the strip); Glass consumes F3-652's Liquid Glass material and optics budget; the active tab and canvas keep the shared opaque fill so the join stays seamless."
-- "The silhouette never renders half-dressed: chrome classes apply only after a successful measure, so --ed-shape-x/--ed-shape-w are never stuck at zero while the strip is in the shape-on state, and the shape layer mounts as the strip's last child without contending for slot 0."
+- "The shared tab presentation owner reveals the silhouette only after a successful measure, with its position and width valid in the first visible frame; layer ordering never displaces the strip’s grip or tab controls."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "Verify the contact-aware tab silhouette, drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
-- "Cases written for the retired four-panel Home model do not prove this row; replacement executable cases are owed (ATS-075/076)."
-- python3 scripts/pm-plan-index.py validate
+- "future contact-aware tab silhouette acceptance: drag tracking, join geometry, opacity and reduced-motion behavior against F3-505 and F3-631."
+- "future replacement executable cases under ATS-075/076; cases for the retired four-panel Home model do not prove this row."
+- scripts/pm-plan-index.py
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -1216,11 +1217,12 @@ node_compile_hint:
   mode: contact_aware_editor_tab_silhouette
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM, CSS, JavaScript or exact-token obligation): .dashboard-tabs, EDSHAPE, clip-path path(), strip last-child/slot-0 mounting, shape-on classes, --ed-lp/--ed-rp, --ed-shape-x/--ed-shape-w, --ed-rail-solid/--ed-rail-bg, --ed-top-radius, --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, --ed-tab-inactive-ring, --ed-canvas-rx-max, --ed-cap-bg, --ed-corner-ry and --glass-edge were the concept silhouette renderer’s selectors and paint bridges. Product geometry, materials and synchronization stay with F3-505/F3-631/F3-647."
 - "DL-260 source lineage only (no product API or implementation obligation): The browser’s drag-scoped Glass selector was an adapter to the retained 0.92 drag opacity: glass gains a drag-scoped frost, [data-theme^=\"glass\"] .editor-tabs.ed-shape-on:has(.tab.dragging) .ed-tab-shape { opacity: .92; } -"
 - "DL-260 source lineage only (no product API or implementation obligation): The prototype snap-while-dragging repair and measured samples below are source evidence, not a required EDSHAPE/sync/draggingLive/animation-frame API: The violation was structural, not decorative: grabbing a NON-ACTIVE tab flips the strip's active key, so sync() read the lastActive change as a selection, set animate = true and sprang the plate across over roughly 12 frames while the carried tab painted nothing, and sub-0.5 px pointermoves then parked in the spring-preservation early return and held that state indefinitely. Contract with this dated disposition: ANY EDSHAPE sync taken while the strip contains a .tab.dragging child must SNAP - draggingLive is computed immediately after the lastActive update, it forces animate = false, and the spring-preservation guard is qualified by \"&& !draggingLive\" so the snap branch cancels the in-flight rAF, jumps x and w to target, zeroes velocities and paints in the activating frame. Click, snap and keyboard SELECTION springs are explicitly unaffected, as is the release settle owned by the reorder gesture. Measured: worst plate-versus-tab lag 0.00 px over 2,615 samples of a deliberately slow non-active drag; 18 distinct monotonic intermediates on a click-to-select, no overshoot."
 - "DL-260 source lineage only (no product API or implementation obligation): The historical browser repair used --pm6-editor-tabs-h/--pm6-dash-head-h and the following CSS precedence changes; these are not native product code requirements: Dashboard retro is UNBLOCKED: the dashboard pill neutralization uses !important, and important declarations beat CSS animations, so all background-based retro effects were dead on dashboard tabs (the DOS blink rendered as an empty box - its non-important color applied while its background lost); effect-classed tabs ([class*=\"pm-retro\"]) now escape the important rule via :not() and receive a normal-weight twin that keeps the pill suppressed without outranking keyframes. Seventh follow-up (2026-08-14): the sixth follow-up's exemption left the dashboard CRT fill dead through a SPECIFICITY TIE - the effect rules and the normal-weight neutralization twin both weighed (0,5,0), and the twin, later in the assembled cascade, won the tie for plain background declarations (phosphor survived only through its keyframes, which sit above the normal cascade). All fourteen retro effect selectors now include .ed-shape-on, weighing (0,6,0) and outranking the twin; the tied (0,5,0) effect selectors are retired with this dated disposition. Watched verification: the phosphor block, the DOS full inversion, and the CRT scanline wipe all paint on dashboard tabs."
 - "Concepts/PMConcept7.html (source-lineage-only per Plans/usage-feature.md)"
-preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle", "--ed-lp", "--ed-rp"]
+preserved_exact_tokens: ["20", "10", "8", "13", "12", "clamp", "squircle"]
 negative_constraints:
 - "Do not render the active-editor-tab treatment as a pill or an underline sliding between labels."
 - "Do not retain a decorative notch where the tab and the canvas are flush."
@@ -30070,9 +30072,8 @@ canonical_text: >-
   the stream wrap: content-sized at max-content with a max-width of the stream minus side
   margins, single-row nowrap layout with tight padding. The stream is see-through around the
   pill: the message stream extends behind the pill, stream content may scroll beneath it, and
-  no opaque band or full-width strip renders around the pill. A stack-height variable
-  (--chat-footer-stack-height) and a footer inset (--chat-footer-inset, computed as footer
-  height plus bottom offset plus 8px clearance) reserve bottom content space inside the
+  no opaque band or full-width strip renders around the pill. The shared chat layout owner measures the footer stack and computes a bottom inset
+  from footer height plus bottom offset plus 8px clearance, reserving bottom content space inside the
   scrollport (a content inset, not a scrollport shrink) so the newest row clears the pill when
   pinned, and position the jump-to-latest control above the pill at a higher z-order. The
   jump-to-latest control stays hidden until the stream is scrolled away from the bottom by
@@ -30091,14 +30092,14 @@ depends_on: [F3-131, F3-189, F3-420, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
-- "The bottom content inset tracks measured footer height through --chat-footer-stack-height and --chat-footer-inset (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
+- "The bottom content inset tracks measured footer height through the shared chat layout owner (footer height plus bottom offset plus 8px clearance) inside the scrollport, and stream content may scroll beneath the pill."
 - "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
 - "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 - "The footer has no capsule shape in any look (amended 2026-10-09, DL-184; F3-648)."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -30108,12 +30109,11 @@ node_compile_hint:
   mode: chat_footer_pill_and_jump_to_latest_geometry
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --chat-footer-stack-height and --chat-footer-inset were concept measurement/paint bridges; F3-422 retains the footer reserve arithmetic and scroll behavior through the shared chat layout owner."
 - "Plans/FinalGUISpec.md:13639"
 - "Plans/assistant-chat-design.md:4086"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--chat-footer-stack-height"
-- "--chat-footer-inset"
 - "max-content"
 - "24"
 - "8px"
@@ -30509,7 +30509,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Glass themes expose a user-facing transparency control bound to --glass-alpha. Defaults are
+  Glass themes expose a user-facing transparency control bound to the shared Glass transparency scalar. Defaults are
   .60 for glass-dark and .55 for glass-light. Values clamp per theme: .35 through .85 for
   glass-dark and .45 through .88 for glass-light. Changes apply live to every alpha-driven
   glass fill and persist at glass_alpha:v1. The slider is a glass-only setting and renders
@@ -30525,14 +30525,14 @@ split_recommended: false
 depends_on: [F3-427, F3-444]
 unblocks: []
 acceptance_criteria:
-- "The --glass-alpha control defaults to .60 on glass-dark and .55 on glass-light."
+- "The Glass transparency control defaults to .60 on glass-dark and .55 on glass-light."
 - "Values clamp to .35 through .85 on glass-dark and .45 through .88 on glass-light."
 - "Slider changes apply live to alpha-driven glass fills and persist at glass_alpha:v1."
 - "The slider is glass-only."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -30542,11 +30542,11 @@ node_compile_hint:
   mode: glass_alpha_transparency_slider
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - "Plans/FinalGUISpec.md:964"
 - "Plans/FinalGUISpec.md:2292"
 - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
 preserved_exact_tokens:
-- "--glass-alpha"
 - ".60"
 - ".55"
 - ".35"
@@ -30764,6 +30764,12 @@ owner_hints:
 Settings appearance overrides (2026-09-27): the per-variant tables below are what every variant renders while no appearance setting has been changed. Settings appearance rows (size, text size, line spacing, animation speed, spacing, padding, border width, corner roundness, scrollbar width, app font, high contrast, focus outline, Retro textures, accent) apply as overrides over the active variant's table, write nothing while unchanged, remove exactly what they wrote on reset, and use precomputed per-mode accent values; `Plans/Settings_System.md#SSYS-041` owns that model and this unit's no-runtime-colour-derivation rule still applies.
 
 ### Theme Token Tables (F3-426 spec data)
+
+The shared theme owner retains the token roles and literal design values below. CSS selectors, source-part
+labels, root/local cascade descriptions and browser paint-expression syntax in these tables are
+**source_lineage only (DL-260/DL-280)**, with no product DOM, CSS or exact-token obligation. Product renderers
+resolve the corresponding roles and values through F3-426/F3-431 and the current presentation owners; later
+Glass, Wallpaper, tab and editor amendments remain authoritative.
 
 Values below are transcribed verbatim from the concept CSS: `Concepts/pm6-build/parts/02-css-tokens.part.html` (root contract :28-66, theme blocks :140-552, glass background stage :554-733), `Concepts/pm6-build/parts/03-css-glass-a.part.html` (:19-49, :59-153), `Concepts/pm6-build/parts/04-css-glass-b.part.html` (:11-56, :138-196), `Concepts/pm6-build/parts/10x-pm6-css-global.part.html` (:139-176 friendly chrome), `Concepts/pm6-build/parts/10-css-settings.part.html` (:580-590, :912-940), and `Concepts/pm6-build/parts/29-js-settings-engine.part.html` (:60-86 alpha clamps). Values containing `calc()`, `color-mix()`, or `var()` chains are runtime-derived in concept; precompute per F3-431. Since 2026-10-08 the retro-dark and retro-light tables carry PMConcept7's retro values instead (DL-151; see the dated note after F3-426).
 
@@ -31236,7 +31242,11 @@ The concept shows seven diff-tint custom properties per variant for six variants
 
 Companion editor treatments carried in the same span (04-css-glass-b.part.html:144-196), for completeness of the :138-196 extraction:
 
-| Family scope | Rule | Value |
+This is a concept selector/declaration inventory. The shared appearance owner retains the matching minimap,
+change-mark, viewport-indicator and current-line design values; the selector and CSS declaration spellings are
+source lineage only. F3-505/F3-631/F3-639/F3-647 govern current tab and editor presentation.
+
+| Family scope | Source selector (lineage only) | Design value / source declaration |
 |---|---|---|
 | glass-dark | `.editor-minimap` | `background: rgba(16,10,32,0.5); border-left: 1px solid rgba(255,255,255,0.04);` |
 | glass-dark | `.minimap-heat-strip` | `box-shadow: none;` |
@@ -31288,7 +31298,11 @@ Lineage (amended 2026-10-17, DL-228): this table records the 2026-07 PM6 parts. 
 
 #### Backdrop-filter budget (F3-431 enumeration)
 
-| Scope | Surface | Filter | Concept source |
+Concept selectors and filter syntax in this inventory are source lineage for F3-431's renderer remediation,
+not required product markup or paint APIs. The stated surface/material values and native popup capability
+boundary remain with F3-431/F3-582 and the later F3-652 Glass owner.
+
+| Scope | Surface / concept selector (lineage only) | Material value / source filter | Source or product owner |
 |---|---|---|---|
 | Glass themes | `.app-shell` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:71-72 |
 | Glass themes | `.floating-chat` | `blur(34px) saturate(160%)` | 03-css-glass-a.part.html:148-149 |
@@ -31896,7 +31910,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
+  The instant-apply model binds specific settings to live shell surfaces: the theme setting drives the theme engine and persists at `theme:v1`; the shared Wallpaper setting drives F3-653 through SSYS-054 and SP-333; `glass_background_mode:v1` is a retired migration input with no live writer; the glass alpha setting drives the shared Glass transparency scalar within the per-theme clamps of F3-429 and persists at `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10, DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies on change with no reload. The concept's interface-density live-apply hook had no consumer and is demo residue excluded from this canonical wiring map. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Existing theme:v1/glass_alpha:v1 names are compatibility/reader bindings, not additional independent writers; SP-348 owns level storage.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
@@ -31910,8 +31924,8 @@ acceptance_criteria:
 - The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -31921,6 +31935,7 @@ node_compile_hint:
   mode: settings_live_apply_wiring_map
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product CSS or exact-token obligation): --glass-alpha was the concept paint scalar; current Glass transparency remains owned by SSYS-010 and F3-652, with existing storage compatibility names unchanged."
 - Plans/FinalGUISpec.md:1329
 - Plans/FinalGUISpec.md:2291
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
@@ -31930,7 +31945,6 @@ preserved_exact_tokens:
 - "theme:v1"
 - "glass_background_mode:v1"
 - "glass_alpha:v1"
-- "--glass-alpha"
 negative_constraints:
 - "Do not promote the concept's interface-density hook into the live-apply wiring map; it had no consumer and is demo residue."
 compatibility_only_notes:
@@ -32385,7 +32399,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: 'All staged notices appear beneath the title-bar bell/stack on every page, including Usage. Four urgency
-  levels share this staging owner: Quiet confirmations last 3.4 s and leave no alert-store entry; Notice lasts 3.4 s,
+  levels share this staging owner: Quiet confirmations last 3.4s and leave no alert-store entry; Notice lasts 3.4 s,
   Attention 5.2 s and Blocking 6.8 s before joining F3-453''s lasting inbox. Reading timers are not shortened by Animation
   speed; hovering any toast or focusing within one holds every staged timer, with a visible remaining-time line. Newest
   is on top and at most five stage together; overflow retires the oldest quiet notice or moves the oldest lasting notice
@@ -32399,12 +32413,12 @@ canonical_text: 'All staged notices appear beneath the title-bar bell/stack on e
   prompt may arrive again. Tour page notes use the quiet staging route. F3-1, Jared 2026-10-30, replaces the earlier
   Jared #19 control-clearance rule: on every page the notice stage hangs tight below the title bar at the bell. The first
   card starts at the theme selector menu''s resting top while the inbox is closed, not at a fixed distance below the
-  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to #themeMenuWrap''s bottom plus MENU_GAP (6 px); selector
+  title-bar bottom. F3-1 final GUI 70b30f482f maps that top to the resting bottom of the theme selector control plus the shared 6 px menu gap; selector
   height varies by look, so title-bar-bottom plus 6 px is not equivalent. Placement may lift the stage with a negative
   drop to match the resting top. If no selector is drawn, preserve the title-bar-based nonnegative-drop fallback. Native
   components use equivalent owner geometry, not a new persisted DOM or placement field. Home panel strips and the chat
   head add no vertical clearance or page-specific offset. Lead ruling 2026-10-30 (mail 1030131044-4c44, preserving Jared''s
-  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the existing --pmn-push offset;
+  bf5115d9d9 fix): while the shared inbox is open the stage sits under it, retaining the shared inbox owner’s measured stage offset;
   the inbox itself hangs from the bell. This open-inbox state exception is the lead''s interpretation, separate from
   Jared''s quoted F3-1 words. Otherwise notices may cover the controls beneath them. Page changes and relevant title-bar
   geometry changes recompute the bell anchor, never reuse another page''s coordinates. The stage remains inside the viewport;
@@ -32433,7 +32447,7 @@ canonical_text: 'All staged notices appear beneath the title-bar bell/stack on e
   (A4, D9, G10; PM7): D9 Notify me uses the alert owner once per item with coalescing; no view-local notification store.
   OS Pip faces follow A4; new OS badge/flow implementation is deferred under G10 and later reads the shared needs-you
   projection. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell
-  inbox through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
+  inbox through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu
   resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines visible ephemeral toast staging, lifetime, and dismissal behavior.
@@ -32464,11 +32478,11 @@ acceptance_criteria:
   placement/removal instantly; pending placement is still guarded. Settled cards keep their existing source/owner actions
   and read semantics.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -32478,6 +32492,7 @@ node_compile_hint:
   mode: toast_stack_contract
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Plans/FinalGUISpec.md:1484
 - Plans/FinalGUISpec.md:1918
 - Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)
@@ -32940,11 +32955,10 @@ canonical_text: 'The title-bar bell and unread stack sit between page tabs and s
   branding become Pip; completion notices route through this alert owner and never add a second affordance. A4 A, Jared
   2026-10-30; joined PM7 review fix 4c49e10567: Friendly’s notification tile draws one decorative 24 px shared Pip mark. The item’s severity maps through the existing status/mood owner: info→idle, success→complete, warn→waiting,
   error→failed. Its kind glyph remains beside the title; the tile is no additional control. Other looks retain their kind-glyph tile. Toasts, banners and inbox rows repaint through the same shared notification presentation owner when the look changes. F3-1, Jared 2026-10-30: the stage hangs tight under this bell on every page;
-  its first card uses the theme selector menu''s resting top while the inbox is closed (#themeMenuWrap bottom plus MENU_GAP,
-  6 px in 70b30f482f), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
+  its first card uses the theme selector menu''s resting top while the inbox is closed (the resting bottom of the theme selector control plus the shared 6 px menu gap), not title-bar bottom plus that gap. It may cover controls and the chat head. F3-447 owns that
   anchor, the lead''s open-inbox push exception and the entry/exit click guard on every page (F3-5), including Usage''s
   local pointer styling; no per-page or control-clearance placement survives. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed
-  on 2026-10-31 that staged toasts stay below the open bell inbox through the existing --pmn-push; it is his ruling,
+  on 2026-10-31 that staged toasts stay below the open bell inbox through the shared inbox owner’s measured stage offset; it is his ruling,
   not an unresolved lead exception. Closed-inbox theme-menu resting-top placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible title-bar notification stack, staging, join, and count badge behavior.
@@ -32962,7 +32976,7 @@ acceptance_criteria:
   material since the 2026-10-15 publication, and Reduced Motion removes spatial/typing effects.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
@@ -32976,6 +32990,7 @@ node_compile_hint:
   mode: title_bar_notification_stack_and_count_badge
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)
 - Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)
 - /mnt/Cursor/share/puppet-master/2026-10-13-notifications/NOTES.md, SHA-256 f09d2b8856652950762b6580b8ebab43022bdf053272738f52720de25922a895
@@ -33044,8 +33059,7 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   deduplicated/coalesced by work identity and completion generation, with one durable notice and its existing transient
   treatment. Agent delivery never wakes a user-stopped thread. L8 B, PM7 Step4, 2026-10-30: the live notification inbox consumes DR-079’s shared menu lifecycle, including open/close and size changes. Alert content/acknowledgment/routing/focus
   remain here and in F3-453; no separate per-look inbox motion owner is exempted. A retired source panel is not evidence of live-inbox closure. F3-1, Jared 2026-10-30, with the lead''s explicit 2026-10-30 open-inbox exception (mail 1030131044-4c44,
-  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the existing
-  --pmn-push offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
+  preserving bf5115d9d9): this inbox hangs from the bell, and while it is open the stage sits under it via the shared inbox owner’s measured stage offset. When closed the stage returns tight below the title bar at the bell, aligned to the theme menu’s
   resting top under its selector wrapper (F3-447). No chat-head or control-clearance offset is added. The existing inbox
   owner, actions, keyboard focus and alert lifecycle stay here; the exception is the lead''s ruling, not an added quote
   from Jared. F3-6, final GUI 5abe285507, 2026-10-30: publish the authoritative push only after the shared menu owner has opened the inbox and restored its layout visibility, on first open and every reopen. Read its resting layout height, never
@@ -33053,7 +33067,7 @@ canonical_text: 'Clicking the title-bar notification stack expands a sprout inbo
   Recompute after content/height changes and window resize, and clear the offset on close. Preserve the existing gap
   (8 px in this concept), menu-sprout ownership and the one stage; no page-local timer, list or persisted geometry is
   added. DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox
-  through the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
+  through the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top
   placement and entry/exit click guards remain.'
 gui_related: true
 gui_classification_reason: This unit defines the visible sprout inbox panel, its dismiss and clear motions, and kind-specific compact action rows.
@@ -33072,7 +33086,7 @@ acceptance_criteria:
 - The inbox list bottom fade starts at 96% and bottom padding keeps card bottoms unclipped.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 - 'DL-259, Jared 2026-10-31: Q2 A: Jared confirmed on 2026-10-31 that staged toasts stay below the open bell inbox through
-  the existing --pmn-push; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
+  the shared inbox owner’s measured stage offset; it is his ruling, not an unresolved lead exception. Closed-inbox theme-menu resting-top placement
   and entry/exit click guards remain.'
 validation_surfaces:
 - "scripts/pm-plan-migration.py"
@@ -33086,6 +33100,7 @@ node_compile_hint:
   mode: notification_inbox_sprout_panel_and_kind_action_rows
   create_worknodes: false
 source_lineage:
+- "DL-260/DL-280 source lineage only (no product DOM or CSS obligation): #themeMenuWrap, MENU_GAP and --pmn-push were concept selector/paint shims. F3-447 owns the theme-menu resting-top anchor; F3-461 supplies the inbox owner’s resting/destination-height stage offset, update triggers and close cleanup."
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
 - "DL-260 source lineage only (no product API or implementation obligation): #pmnPanel, retired #rsPanel and PM6_SPROUT were concept inbox selectors/lifecycle adapters; native presentation keeps the resting-height measurement and shared menu owner."
@@ -34348,12 +34363,12 @@ unblocks: []
 acceptance_criteria:
 - "No rail-panel popup is ever clipped by a panel scroller, accordion clip wrapper, or transform containing block; the Slint surface for every such popup is PopupWindow."
 - "Opening an expander rotates exactly one chevron (its own header chevron); nested collapsed rows inside an open ancestor keep right-pointing chevrons."
-- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide tier attribute."
+- "Label shortening decisions are made by measurement against available width via the declared fit ladder; no label truncation decision keys off the min/mid/wide layout tier."
 - "Panel activation animates once and leaves no persistent animation on the active view; accordion remeasure never runs on continuous drag frames."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -34367,11 +34382,11 @@ source_lineage:
 - "Plans/Decision_Log.md#DL-162 (owner decision, 2026-10-09; amends (3) for the left rail)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (source-lineage-only)"
 - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves-files.html (source-lineage-only)"
+- "DL-260/DL-280 source lineage only (no product DOM or exact-token obligation): data-fit recorded the concept's measured label-fit choice; F3-480 and the later F3-620 left-rail amendment own product fitting."
 preserved_exact_tokens:
 - "PopupWindow"
-- "data-fit"
 negative_constraints:
-- "Do not re-clip popups inside panel scrollers; do not decide label truncation from width-tier attributes; do not leave persistent enter animations on active views."
+- "Do not re-clip popups inside panel scrollers; do not decide label truncation from layout tiers; do not leave persistent enter animations on active views."
 compatibility_only_notes:
 - "Slint portability: popup layering via PopupWindow; label variants precomputed and chosen by measured width; enter animation is a one-shot property animation; no arbitrary-content backdrop blur, no SVG filters, precomputed color math."
 stale_retired_dispositions:
@@ -35613,14 +35628,14 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The F3-471 width envelope (240 minimum, 280 default, 480 maximum) is applied to
-  the PM7 shell: --files-panel-w defaults to 280px, the narrow-range 220px floors
-  become 240px (220 remains the adversarial test-only width and is not a product
-  floor), the side-panel-slot clamp becomes min-width 240px and max-width
-  min(480px, 50vw), the drag resizer caps at 480px, and the former !important
-  220px narrow-viewport override now resolves through the 240px floor. The
-  data-wtier attribute is computed on the slot by measure (min under 250px, mid
-  through 400px, wide above) and gates layout chrome only, never label text per
-  F3-480's measure-based fitting rule.
+  the product shell's panel host: its default width is 280px, its minimum is
+  240px and its maximum is the lesser of 480px and half the viewport width,
+  with the same bounds on drag resize and narrow viewports. The 220px width
+  remains an adversarial test-only case and is never a product floor. The
+  panel presentation owner derives layout tiers from measured host width
+  (min under 250px, mid from 250px through 400px, wide above 400px). Tiers gate
+  layout chrome only. Labels fit by measurement under F3-480, with the later
+  F3-620 amendment controlling left-rail fitting.
 gui_related: true
 gui_classification_reason: This unit pins the user-visible side panel width behavior of the PM7 shell to the ratified envelope.
 split_recommended: false
@@ -35628,11 +35643,12 @@ depends_on: [F3-471, F3-497]
 unblocks: []
 acceptance_criteria:
 - "The side panel defaults to 280px, clamps between 240px and 480px (viewport permitting), and no 220px product floor remains in the shell."
-- "data-wtier on the slot reflects the measured width and gates only layout chrome."
+- "The panel host's measured width selects min below 250px, mid from 250px through 400px and wide above 400px; these tiers gate layout chrome only."
+- "The viewport clamp is the lesser of 480px and half the viewport width; label fitting remains measurement-based under F3-480 and F3-620."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
-- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
-- "python3 scripts/pm-plan-index.py validate"
+- "scripts/pm-plan-migration.py"
+- "scripts/pm-plan-index.py"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: pm7_cozy_shelves_integration
@@ -35642,14 +35658,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/FinalGUISpec.md (F3-471 width envelope pin)"
+- "DL-260/DL-280 source lineage only (no product DOM, CSS or exact-token obligation): --files-panel-w, the side-panel-slot CSS clamp and !important narrow-viewport repair, and data-wtier were concept implementations of the retained panel width and chrome-tier rules."
 preserved_exact_tokens:
 - "240"
 - "280"
 - "480"
-- "data-wtier"
 negative_constraints:
 - "Do not reintroduce a 220px product floor; 220 remains adversarial test-only."
-- "Do not gate label text on data-wtier; labels shorten by measure only (F3-480)."
+- "Do not gate label text on layout tiers; labels fit by measure under F3-480 and the later F3-620 left-rail amendment."
 compatibility_only_notes:
 - "Slint: the same clamp constants apply to the Slint panel host; measure-based fitting maps to layout re-evaluation, not width-class breakpoints."
 stale_retired_dispositions: []
