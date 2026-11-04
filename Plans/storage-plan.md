@@ -29585,3 +29585,564 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+### SP-580 - approval.requested prepared event contract
+
+```yaml
+plan_unit_id: SP-580
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.requested only. Producer HITLBlockedEpisodeOwner.requested calls storage.dt.approval_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For approval.requested, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.approval_requested.reader.v1@1.0.0 serves HITL resolver, runtime blocked controls and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.approval_requested:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/approval_requested_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-AUTHORITY-INDEFINITE. Case L-3 directly names Approval: indefinite, no count eviction, fail closed under pressure. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-290. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_requested, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-581 - approval.granted prepared event contract
+
+```yaml
+plan_unit_id: SP-581
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.granted only. Producer HITLBlockedEpisodeOwner.granted calls storage.dt.approval_granted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For approval.granted, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.approval_granted.reader.v1@1.0.0 serves HITL resolver, runtime blocked controls and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.approval_granted:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/approval_granted_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-AUTHORITY-INDEFINITE. Case L-3 directly names Approval: indefinite, no count eviction, fail closed under pressure. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-290. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_granted, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-582 - approval.denied prepared event contract
+
+```yaml
+plan_unit_id: SP-582
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.denied only. Producer HITLBlockedEpisodeOwner.denied calls storage.dt.approval_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For approval.denied, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.approval_denied.reader.v1@1.0.0 serves HITL resolver, runtime blocked controls and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.approval_denied:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/approval_denied_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-AUTHORITY-INDEFINITE. Case L-3 directly names Approval: indefinite, no count eviction, fail closed under pressure. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-291. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_denied, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-583 - approval.timeout prepared event contract
+
+```yaml
+plan_unit_id: SP-583
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.timeout only. Producer HITLBlockedEpisodeOwner.timeout calls storage.dt.approval_timeout.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For approval.timeout, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.approval_timeout.reader.v1@1.0.0 serves HITL resolver, runtime blocked controls and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.approval_timeout:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/approval_timeout_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-AUTHORITY-INDEFINITE. Case L-3 directly names Approval: indefinite, no count eviction, fail closed under pressure. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-291. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_timeout, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-584 - config.migrated prepared event contract
+
+```yaml
+plan_unit_id: SP-584
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for config.migrated only. Producer SettingsMigrationCoordinator.branch_granularity calls storage.dt.config_migrated.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For config.migrated, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, source_ref, source_sha256], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.config_migrated.reader.v1@1.0.0 serves Settings migration recovery and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.config_migrated:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/config_migrated_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION for application-scope counting; candidate RP-OPERATIONAL-2555D. Case L-3 directly names migration/recovery operational history: 2,555 days, 2,000,000/project, expired unheld rows only, otherwise fail closed. Application bucket counting is not decided here; retain pending until RT binds it for the actual source scope. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-292. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/config_migrated, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-585 - gate.evaluation_started prepared event contract
+
+```yaml
+plan_unit_id: SP-585
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for gate.evaluation_started only. Producer ProgressionGateRunner.evaluation_started calls storage.dt.gate_evaluation_started.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For gate.evaluation_started, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, gate_id, run_id, evaluation_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.gate_evaluation_started.reader.v1@1.0.0 serves progression scheduler, validation reports and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.gate_evaluation_started:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-292. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-586 - gate.failed prepared event contract
+
+```yaml
+plan_unit_id: SP-586
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for gate.failed only. Producer ProgressionGateRunner.failed calls storage.dt.gate_failed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For gate.failed, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, gate_id, run_id, evaluation_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.gate_failed.reader.v1@1.0.0 serves progression scheduler, validation reports and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.gate_failed:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/gate_failed_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-293. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/gate_failed, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-587 - gate.passed prepared event contract
+
+```yaml
+plan_unit_id: SP-587
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for gate.passed only. Producer ProgressionGateRunner.passed calls storage.dt.gate_passed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For gate.passed, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, gate_id, run_id, evaluation_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.gate_passed.reader.v1@1.0.0 serves progression scheduler, validation reports and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.gate_passed:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/gate_passed_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-293. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/gate_passed, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-588 - requirements.clarification_requested prepared event contract
+
+```yaml
+plan_unit_id: SP-588
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for requirements.clarification_requested only. Producer RequirementsQualityGate.request_clarification calls storage.dt.requirements_clarification_requested.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For requirements.clarification_requested, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, wizard_id, thread_id, report_ref], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.requirements_clarification_requested.reader.v1@1.0.0 serves requirements gate escalation, thread badge and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.requirements_clarification_requested:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 runtime (run-linked detail), authority (audit/approval/source lineage), operational history or chat-content class as applicable; usage.event has a decided ai.usage.usage-retention window (90-day default) under SP-341/UF-108 but no matching structured policy object in current registry. RT must bind the exact existing/approved policy before admission. This marker authorizes no expiry or eviction. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-294. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-589 - run.background_enqueued prepared event contract
+
+```yaml
+plan_unit_id: SP-589
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for run.background_enqueued only. Producer BackgroundRunQueue.enqueue calls storage.dt.run_background_enqueued.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For run.background_enqueued, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, enqueue_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.run_background_enqueued.reader.v1@1.0.0 serves background queue recovery and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.run_background_enqueued:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-294. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-590 - tool.denied prepared event contract
+
+```yaml
+plan_unit_id: SP-590
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.denied only. Producer ToolDispatcher.denied calls storage.dt.tool_denied.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For tool.denied, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.tool_denied.reader.v1@1.0.0 serves policy audit, blocked runtime recovery and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.tool_denied:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/tool_denied_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 runtime (run-linked detail), authority (audit/approval/source lineage), operational history or chat-content class as applicable; usage.event has a decided ai.usage.usage-retention window (90-day default) under SP-341/UF-108 but no matching structured policy object in current registry. RT must bind the exact existing/approved policy before admission. This marker authorizes no expiry or eviction. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-295. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_denied, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-591 - tool.execution_completed prepared event contract
+
+```yaml
+plan_unit_id: SP-591
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.execution_completed only. Producer ToolRunner.execution_completed calls storage.dt.tool_execution_completed.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For tool.execution_completed, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.tool_execution_completed.reader.v1@1.0.0 serves run graph, tool recovery, history and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.tool_execution_completed:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-295. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-592 - tool.execution_started prepared event contract
+
+```yaml
+plan_unit_id: SP-592
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.execution_started only. Producer ToolRunner.execution_started calls storage.dt.tool_execution_started.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For tool.execution_started, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.tool_execution_started.reader.v1@1.0.0 serves run graph, tool recovery, history and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.tool_execution_started:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = RP-RUNTIME-365D. Case L-3 directly names Runtime/run/node/attempt: 365 days after actual run completion, 1,000,000/run and 5,000,000/project, successor compaction. Holds, original anchors and dependency checks are unchanged; retries never reset the retention anchor. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-593 - tool.invoked prepared event contract
+
+```yaml
+plan_unit_id: SP-593
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.invoked only. Producer ToolDispatcher.completed_invocation calls storage.dt.tool_invoked.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For tool.invoked, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.tool_invoked.reader.v1@1.0.0 serves tool_usage analytics, history and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.tool_invoked:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/tool_invoked_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 runtime (run-linked detail), authority (audit/approval/source lineage), operational history or chat-content class as applicable; usage.event has a decided ai.usage.usage-retention window (90-day default) under SP-341/UF-108 but no matching structured policy object in current registry. RT must bind the exact existing/approved policy before admission. This marker authorizes no expiry or eviction. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_invoked, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-594 - usage.event prepared event contract
+
+```yaml
+plan_unit_id: SP-594
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for usage.event only. Producer UsageTracker.normalize_finish_step calls storage.dt.usage_event.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For usage.event, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, usage_record_id, dedupe_key, settlement_status, observed_at_utc], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.usage_event.reader.v1@1.0.0 serves UsageTracker rollup accounting, Ledger and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.usage_event:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/usage_event_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 runtime (run-linked detail), authority (audit/approval/source lineage), operational history or chat-content class as applicable; usage.event has a decided ai.usage.usage-retention window (90-day default) under SP-341/UF-108 but no matching structured policy object in current registry. RT must bind the exact existing/approved policy before admission. This marker authorizes no expiry or eviction. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-297. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/usage_event, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-595 - worktree.created prepared event contract
+
+```yaml
+plan_unit_id: SP-595
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for worktree.created only. Producer WorktreeLifecycleOwner.created calls storage.dt.worktree_created.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For worktree.created, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, project_id, worktree_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.worktree_created.reader.v1@1.0.0 serves worktree allocator recovery, cleanup owner and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.worktree_created:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/worktree_created_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 runtime (run-linked detail), authority (audit/approval/source lineage), operational history or chat-content class as applicable; usage.event has a decided ai.usage.usage-retention window (90-day default) under SP-341/UF-108 but no matching structured policy object in current registry. RT must bind the exact existing/approved policy before admission. This marker authorizes no expiry or eviction. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-297. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/worktree_created, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### SP-596 - worktree.deleted prepared event contract
+
+```yaml
+plan_unit_id: SP-596
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for worktree.deleted only. Producer WorktreeLifecycleOwner.deleted calls storage.dt.worktree_deleted.append.v1@1.0.0. Validate exact family/version and actual source, scope, permissions and transition before body/intent commit; record the immutable source/result reference durably before append. Adopt SP-286 and CV-339 storage.first_append_receipt.resolve.v2 by name, including full-value custody, and SP-336/SP-347 group durability. First AppendReceipt follows committed group durability; approval/receipt barriers require full flush. Publish terminal result, progression or queue release only after the original receipt resolves. Uncertain append fences later subject work until resolution; missing receipt never authorizes a fresh identity or repeated external effect. Replay retrieves original source/result and never dispatches a tool, issues approval, recreates/deletes a worktree, enqueues work, charges usage or sends a notification. For worktree.deleted, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, project_id, worktree_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. The operating consumer storage.dt.worktree_deleted.reader.v1@1.0.0 serves worktree allocator recovery, cleanup owner and inspection; it directly filters verified EventRecord index reads for this exact family, not an invented second domain database. It explicitly adopts SP-278 and DL-076's nine-field durable token, never persisted redb_snapshot_id. Checkpoint key projector.checkpoint.dt.worktree_deleted:{storage_instance_id}:{scope_partition} stores Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted_checkpoint. The inclusive examined_through_sequence_id advances over every examined source row, including nonmatching rows; last_applied_event_id is the last matching row or null. Validate storage instance, partition, token generation/frontier/coverage/source selection and exact admitted family/version before publication. Process a prefix and publish the cursor/token/filter completeness atomically under exact previous-value CAS and a fenced writer lease; losing CAS publishes nothing. Empty source is proven by the source token, never guessed from no matches. Readers require current/healthy/filter_complete coverage for their requested prefix and recheck current permission, tombstones, source selection and withdrawal before returning any record. Rebuild from verified retained source with recovery holds, never from checkpoint alone; source gaps return unavailable, never silently skip them. Derived checkpoint retention is RP-PROJECTION-3GEN with source holds and at most three same-key generations. Canonical seglog originals and referenced bodies remain under mandatory coherent backup/restore, source access and deletion checks; opaque refs grant no access. Keep credentials, tool arguments, raw output and private file contents out of this payload; refs are opaque permission-checked locators, bounded reasons/previews are redacted before persistence. Backup restores original source, dedupe/receipt custody and references coherently or fences mutation; checkpoints rebuild, and an older restore never revives a resolved approval or deleted worktree. Unknown version refuses current mutation and disclosure until a validating reader/upgrader is installed; legacy aliases normalize before persistence only with original source proof, never by replay side effects. Withdrawal first cuts off this family's append admission, then fences its consumer/readers and marks checkpoint withdrawn with a fixed timestamp. No advance or ordinary read follows; governed compatible rebuild and revalidated source/admission are required to resume. No zero-cursor reset, sibling substitution or history rewrite. retention_policy_ref = PENDING_RETENTION_DECISION. Candidates: Case L-3 runtime (run-linked detail), authority (audit/approval/source lineage), operational history or chat-content class as applicable; usage.event has a decided ai.usage.usage-retention window (90-day default) under SP-341/UF-108 but no matching structured policy object in current registry. RT must bind the exact existing/approved policy before admission. This marker authorizes no expiry or eviction. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-298. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286

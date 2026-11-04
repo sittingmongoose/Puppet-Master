@@ -24480,3 +24480,564 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Contracts_V0
 | app eligibility error additions | application_automation_paused, app_automation_pause_unavailable; existing Project error tokens and codecs remain untouched. No alias equates the two scopes. |
 
 The selected app request union accepts only an authenticated user actor. A malformed or non-user request still returns the owner’s refusal without fabricating a structurally valid user input. Changed canonical pause record, its epoch and original result custody commit under one internal whole-value CAS/write/readback; retries that observe the already desired value return the current unchanged record with no new epoch. An unavailable result may not reconstruct pause from an event, Setting or absence. The physical wrapper/key/retention and never-born birth proof are defined only in SP-352.
+
+
+### CV-600 - approval.requested prepared event contract
+
+```yaml
+plan_unit_id: CV-600
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.requested@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). An actual current blocked episode creates one ordered action request; it is not a grant. Tool requests carry tool_use_id; other requests omit it. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/approval_requested with schema_id pm.event_payload.approval_requested.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For approval.requested, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-290. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_requested, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-601 - approval.granted prepared event contract
+
+```yaml
+plan_unit_id: CV-601
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.granted@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode and an authenticated human selecting a member of its ordered allowed_action_ids; PAUSE precedence and live revocation remain enforced. Grant resolves only this episode. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/approval_granted with schema_id pm.event_payload.approval_granted.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For approval.granted, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-290. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_granted, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-602 - approval.denied prepared event contract
+
+```yaml
+plan_unit_id: CV-602
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode; terminal denial never unblocks or executes the tool. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/approval_denied with schema_id pm.event_payload.approval_denied.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For approval.denied, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-291. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_denied, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-603 - approval.timeout prepared event contract
+
+```yaml
+plan_unit_id: CV-603
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for approval.timeout@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/human-in-the-loop.md (Contracts_V0.md:954-957 / CV-355; human-in-the-loop.md:50-110; CV-366). Requires the exact unresolved requested episode and the original owner timeout expiry evidence; terminal timeout never authorizes work. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/approval_timeout with schema_id pm.event_payload.approval_timeout.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For approval.timeout, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, node_id, blocked_sequence, approval_scope_key], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-291. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/approval_timeout, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-604 - config.migrated prepared event contract
+
+```yaml
+plan_unit_id: CV-604
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for config.migrated@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:594-612). Only first-load single→None, per_phase→Phase and per_task→Task are accepted. Original immutable input hash and committed Settings result are retained. Replay never writes Settings again. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/config_migrated with schema_id pm.event_payload.config_migrated.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For config.migrated, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, source_ref, source_sha256], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-292. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/config_migrated, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-605 - gate.evaluation_started prepared event contract
+
+```yaml
+plan_unit_id: CV-605
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for gate.evaluation_started@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). A fresh evaluation_id is captured with the exact gate inputs before evaluation. Neither this event nor a previous pass permits progression. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started with schema_id pm.event_payload.gate_evaluation_started.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For gate.evaluation_started, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, gate_id, run_id, evaluation_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-292. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/gate_evaluation_started, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-606 - gate.failed prepared event contract
+
+```yaml
+plan_unit_id: CV-606
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for gate.failed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). Exactly one failed result follows the matching evaluation_started with failure code and evidence. A blocked GATE-012 report with clarification items is BLOCKED, not falsely classified FAIL or PASS. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/gate_failed with schema_id pm.event_payload.gate_failed.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For gate.failed, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, gate_id, run_id, evaluation_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-293. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/gate_failed, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-607 - gate.passed prepared event contract
+
+```yaml
+plan_unit_id: CV-607
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for gate.passed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Contracts_V0.md:943-945; Progression_Gates.md GATE-012). Exactly one result follows the matching evaluation_started; all gate-specific PASS predicates and evidence must hold. GATE-012 requires a valid PASS report with zero clarification items. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/gate_passed with schema_id pm.event_payload.gate_passed.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For gate.passed, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, gate_id, run_id, evaluation_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-293. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/gate_passed, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-608 - requirements.clarification_requested prepared event contract
+
+```yaml
+plan_unit_id: CV-608
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for requirements.clarification_requested@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Progression_Gates.md (Progression_Gates.md:428-475; Contracts_V0.md:1451). Only a schema-valid blocked requirements report with nonempty needs_user_clarification emits. question_ids equals the complete report question set. No automatic answers or progression; explicit answers and a new PASS report are required. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested with schema_id pm.event_payload.requirements_clarification_requested.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For requirements.clarification_requested, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, wizard_id, thread_id, report_ref], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-294. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/requirements_clarification_requested, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-609 - run.background_enqueued prepared event contract
+
+```yaml
+plan_unit_id: CV-609
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for run.background_enqueued@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/storage-plan.md (storage-plan.md:1656; CV-365/CV-366). Append only after the durable enqueue intent captures authenticated actual scope/Host/root. Queue release follows receipt. Missing worktree fields never choose main Project or application scope. Replay never enqueues again. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued with schema_id pm.event_payload.run_background_enqueued.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For run.background_enqueued, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, enqueue_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-294. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/run_background_enqueued, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-610 - tool.denied prepared event contract
+
+```yaml
+plan_unit_id: CV-610
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.denied@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2; Contracts_V0.md 3 tool.denied, CV-355/CV-366). Denial follows policy/FileSafe/schema refusal and precedes any tool dispatch; never executes or contributes to executed-call tool_usage rollups. Current runtime node denials retain all blocked and attempt joins. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/tool_denied with schema_id pm.event_payload.tool_denied.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For tool.denied, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-295. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_denied, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-611 - tool.execution_completed prepared event contract
+
+```yaml
+plan_unit_id: CV-611
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.execution_completed@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Contracts_V0.md:941-942; Tools.md 8.2). Exactly one terminal record follows a matching execution_started; result_ref joins original result custody and duration_ms is nonnegative. Replay never reexecutes. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed with schema_id pm.event_payload.tool_execution_completed.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For tool.execution_completed, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-295. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_execution_completed, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-612 - tool.execution_started prepared event contract
+
+```yaml
+plan_unit_id: CV-612
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.execution_started@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Contracts_V0.md:941-942; Tools.md 8.2). After every dispatch policy/schema/hook gate succeeds, record the admitted tool-use start before invoking the tool. No start is emitted for a policy denial. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started with schema_id pm.event_payload.tool_execution_started.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For tool.execution_started, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_execution_started, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-613 - tool.invoked prepared event contract
+
+```yaml
+plan_unit_id: CV-613
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for tool.invoked@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/Tools.md (Tools.md 8.0/8.2/8.4; Contracts_V0.md 3 and 3.4). A completed or attempted-completed operation emits exactly one record; success=false contributes to error_count. Refused calls use tool.denied and never increment executed-call rollups. index_used describes actual acceleration and never guesses. Web operations stay this family, never web.operation.*. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/tool_invoked with schema_id pm.event_payload.tool_invoked.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For tool.invoked, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, run_id, tool_use_id, attempt_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-296. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/tool_invoked, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-614 - usage.event prepared event contract
+
+```yaml
+plan_unit_id: CV-614
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for usage.event@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/usage-feature.md (usage-feature.md UF-085, UF-108; storage-plan.md SP-341; CV-366). Normalize actual provider/header/CLI/estimate observations; null means unknown, never zero. Cache/reasoning subset fields are not added to inclusive totals. Adjustments replace the prior contribution for usage_record_id atomically, never add it twice. Opening Usage reads rollups and does not scan events; JSONL is import/export only. Daily account/provider/model totals survive detail expiry. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/usage_event with schema_id pm.event_payload.usage_event.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is application_or_project; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For usage.event, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, usage_record_id, dedupe_key, settlement_status, observed_at_utc], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. UF-085 remains accounting authority; nullable buckets represent unknown and do not fabricate zeros. Existing provider mapper cost, quota, pricing and authority detail remains required when exposed; this schema does not admit an analytics-thin replacement. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-297. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/usage_event, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-615 - worktree.created prepared event contract
+
+```yaml
+plan_unit_id: CV-615
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for worktree.created@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947). Original allocation ownership and branch/path custody must exist before created is appended and before a node starts work. Creation replay inspects original allocation, never creates another tree. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/worktree_created with schema_id pm.event_payload.worktree_created.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For worktree.created, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, project_id, worktree_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-297. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/worktree_created, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
+
+
+### CV-616 - worktree.deleted prepared event contract
+
+```yaml
+plan_unit_id: CV-616
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for worktree.deleted@1.0.0 only, prepared without admission. Semantic behavior remains owned by Plans/WorktreeGitImprovement.md (WorktreeGitImprovement.md:200-221; Contracts_V0.md:946-947). Delete only after original result custody, grace period, file-lock and active-lock/safe-point dependency checks pass. Active lock references must be empty or proven released; no held safe point may lose its dependencies. Replay never deletes another tree. The closed payload is Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted with schema_id pm.event_payload.worktree_deleted.v1, schema_version 1.0.0. Adopt Contracts_V0 EventRecord without a local envelope. Scope policy is project_only; payload identity and timestamp fields equal their envelope joins where present. Actual Project-native node/gate/worktree identity never becomes nullable app identity. An application-capable record must use the genuine CV-365/366 admitted source and captured scope, never infer it from missing Project. Tool node/attempt/lane/package/role/provider/account/operational refs are mandatory when applicable to the captured runtime source; optional absence is accepted only when the authenticated source proves inapplicability. Approval tool_use_id echoes its request and is present exactly for a tool request. For worktree.deleted, allocate the original source operation identity before any effect. Its idempotency_key is 'dt:' plus lowercase SHA-256 of RFC 8785 JSON [event_type, scope_partition, project_id, worktree_id], preserving those exact source values. event_id is 'evt_dt_' plus SHA-256 of UTF-8 idempotency_key. Use dedupe_by_idempotency_key and the complete CV-EventRecord producer_semantic_digest; same identity/different semantic digest refuses idempotency_conflict. Retries retain occurred_at_utc and every source/envelope field. Checks and positive/negative fixtures: python3 scripts/pm-dt-event-contracts.py; ATS-298. Native execution remains NOT_RUN. No registry append, admission, owner decision or seal follows.
+gui_related: false
+gui_classification_reason: Technical event persistence and contract custody.
+depends_on: [DL-045]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract and closed schema are checked without granting admission.
+validation_surfaces:
+  - python3 scripts/pm-dt-event-contracts.py
+risk_class: event_authority_identity_or_replay
+reasoning_tier: high
+context_scope: event_authority_DT_20261104
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - reports/event-authority-20261104/DT-binding-search.json
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/dt_event_contracts.json, ContractName:Plans/dt_event_contracts.schema.json#/$defs/worktree_deleted, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286

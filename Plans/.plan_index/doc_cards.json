@@ -1878,10 +1878,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 30,
+        "False": 39,
         "True": 47
       },
-      "heading_count": 152,
+      "heading_count": 161,
       "implementation_surfaces": [
         "Concepts/pm7-tools/home_workspace_source.py",
         "Concepts/pm7-tools/verify/home_workspace_matrix.mjs",
@@ -1929,6 +1929,7 @@
         "Plans/collaborative_workflows_contracts.schema.json",
         "Plans/coordination_event_admission.json",
         "Plans/coordination_event_contract_fixtures.json",
+        "Plans/dt_event_contract_fixtures.json",
         "Plans/event_family_registry.json",
         "Plans/event_payloads/workspace_layout_changed.schema.json",
         "Plans/event_payloads/workspace_layout_changed_v2.schema.json",
@@ -1993,9 +1994,9 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7236,
+      "line_count": 7515,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 77,
+      "plan_unit_count": 86,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-023",
@@ -2073,7 +2074,16 @@
         "ATS-082",
         "ATS-083",
         "ATS-084",
-        "ATS-085"
+        "ATS-085",
+        "ATS-290",
+        "ATS-291",
+        "ATS-292",
+        "ATS-293",
+        "ATS-294",
+        "ATS-295",
+        "ATS-296",
+        "ATS-297",
+        "ATS-298"
       ],
       "reasoning_tiers": [
         "high",
@@ -2097,6 +2107,7 @@
         "eli5_second_response_or_rewrite",
         "eval_policy_escape_or_false_proof",
         "event_authority_and_false_completion",
+        "event_authority_false_pass",
         "evidence_authority_and_false_completion",
         "false_dap_lifecycle_proof",
         "false_green_home_certification",
@@ -2144,10 +2155,10 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "76ba098f914899db177bae3445d45612d22b6b60c5e3f02f84a3a3bd2f7a0647",
+      "sha256": "0cd515ab8e1b64abf645b30b5f384936c824c07132805a1ff0b0fa77727b13a1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 76,
+        "accepted": 85,
         "superseded": 1
       },
       "title": "Automated Testing System",
@@ -2158,7 +2169,8 @@
         "requirement": 30,
         "schema_contract": 3,
         "validation_contract": 1,
-        "validation_criterion": 33
+        "validation_criterion": 33,
+        "validation_gate": 9
       },
       "validation_surfaces": [
         "Future Assistant Chat visibility and toggle tests.",
@@ -2265,6 +2277,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-dt-event-contracts.py",
         "python3 scripts/pm-forge-backup-acceptance-verify.py",
         "python3 scripts/pm-integration-packet-audit.py census",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -4479,10 +4492,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 285,
+        "False": 302,
         "True": 76
       },
-      "heading_count": 561,
+      "heading_count": 578,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -4586,9 +4599,9 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24482,
+      "line_count": 25043,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 361,
+      "plan_unit_count": 378,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -4950,7 +4963,24 @@
         "CV-365",
         "CV-366",
         "CV-367",
-        "CV-368"
+        "CV-368",
+        "CV-600",
+        "CV-601",
+        "CV-602",
+        "CV-603",
+        "CV-604",
+        "CV-605",
+        "CV-606",
+        "CV-607",
+        "CV-608",
+        "CV-609",
+        "CV-610",
+        "CV-611",
+        "CV-612",
+        "CV-613",
+        "CV-614",
+        "CV-615",
+        "CV-616"
       ],
       "reasoning_tiers": [
         "high",
@@ -5062,6 +5092,7 @@
         "effective_context_source_truth_confusion",
         "envelope_schema_drift",
         "event_alias_precedence_drift",
+        "event_authority_identity_or_replay",
         "event_catalog_payload_owner_drift",
         "event_envelope_compatibility_break",
         "event_payload_gap",
@@ -5311,10 +5342,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "078ea0299d9a8cbba000a9e5b550f2c95ca1f02c7d8a4525dc53c6427bdad8c5",
+      "sha256": "5c54e9d034f66e7fff7c1863ef09dd4ee79a0b8e8567aec42dff304c6213d91b",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 360,
+        "accepted": 377,
         "retired": 1
       },
       "title": "Contracts V0 (Canonical)",
@@ -5327,7 +5358,7 @@
         "interface_contract": 6,
         "owner_boundary": 1,
         "requirement": 230,
-        "schema_contract": 28,
+        "schema_contract": 45,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -5448,6 +5479,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-browser-event-admission.py",
+        "python3 scripts/pm-dt-event-contracts.py",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-plan-index.py validate",
@@ -18688,10 +18720,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 231,
+        "False": 248,
         "True": 110
       },
-      "heading_count": 818,
+      "heading_count": 835,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18786,9 +18818,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29587,
+      "line_count": 30148,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 341,
+      "plan_unit_count": 358,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -19130,7 +19162,24 @@
         "SP-350",
         "SP-351",
         "SP-352",
-        "SP-353"
+        "SP-353",
+        "SP-580",
+        "SP-581",
+        "SP-582",
+        "SP-583",
+        "SP-584",
+        "SP-585",
+        "SP-586",
+        "SP-587",
+        "SP-588",
+        "SP-589",
+        "SP-590",
+        "SP-591",
+        "SP-592",
+        "SP-593",
+        "SP-594",
+        "SP-595",
+        "SP-596"
       ],
       "reasoning_tiers": [
         "high",
@@ -19148,6 +19197,7 @@
         "dry_method_provenance_storage_gap",
         "duplicate_first_acknowledgement_or_lost_canonical_receipt_authority",
         "durable_contract_claim_without_physical_family_or_nonpersisted_boundary",
+        "event_authority_identity_or_replay",
         "event_record_storage_boundary_drift",
         "event_source_and_checkpoint_authority_drift",
         "eventrecord_scope_legacy_dedupe_drift",
@@ -19253,10 +19303,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "46b65fa5cef7d5b67ad27e23a573b372e74628124d8a2210af1f16d9011b6b4e",
+      "sha256": "f991c681438650181e48ade7dfc8cfe412f04a38b8c5aad80e28d2634829d575",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 337,
+        "accepted": 354,
         "retired": 3,
         "superseded": 1
       },
@@ -19268,7 +19318,7 @@
         "migration_contract": 2,
         "owner_boundary": 2,
         "requirement": 277,
-        "schema_contract": 23,
+        "schema_contract": 40,
         "security_contract": 1,
         "storage_contract": 27,
         "storage_security_contract": 1
@@ -19513,6 +19563,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-browser-event-admission.py",
+        "python3 scripts/pm-dt-event-contracts.py",
         "python3 scripts/pm-implementation-readiness.py self-test",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-implementation-readiness.py validate-case-l",
@@ -21633,7 +21684,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T13:57:35Z",
+  "generated_at_utc": "2026-11-05T15:28:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21641,13 +21692,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3674,
+      "False": 3717,
       "True": 3813
     },
-    "plan_unit_count": 7487,
+    "plan_unit_count": 7530,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7268,
+      "accepted": 7311,
       "retired": 196,
       "superseded": 23
     },
@@ -21723,7 +21774,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 123,
+      "schema_contract": 157,
       "schema_mirror": 1,
       "security_constraint": 3,
       "security_contract": 18,
@@ -21746,6 +21797,7 @@
       "validation": 13,
       "validation_contract": 1,
       "validation_criterion": 37,
+      "validation_gate": 9,
       "validation_requirement": 3,
       "validation_rule": 24,
       "variant_contract": 2,
