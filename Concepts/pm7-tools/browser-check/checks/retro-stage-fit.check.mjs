@@ -28,7 +28,7 @@ const SAMPLE = async () => {
 	if (!st) return { err: 'no stage' };
 	const R = (e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; };
 	const out = (a, c) => Math.max(c.l - a.l, a.r - c.r, c.t - a.t, a.b - c.b);
-	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0 }, seen = { sign: 0, props: 0 }, who = {};
+	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
 	while (performance.now() - t0 < 600) {
@@ -42,6 +42,27 @@ const SAMPLE = async () => {
 		const feet = (pr ? [pr, ...pr.children] : []).concat(cmd ? [cmd] : []).map(R).filter((q) => q.b > q.t);
 		const foot = feet.length ? Math.min(...feet.map((q) => q.t)) : c.b;
 		const head = R(st.gHead), hand = R(st.gCtl), pip = { l: Math.min(head.l, hand.l), t: Math.min(head.t, hand.t), r: Math.max(head.r, hand.r), b: Math.max(head.b, hand.b) };
+		// the stage's own words a person can see (Retro's title line, NieR's readouts): not Pip's bubble or note, the boot
+		// text that types and goes, or the command line (the foot); Pip's hand or head over one is FO-55
+		if (st.hudEl) {
+			const tw = document.createTreeWalker(st.hudEl, NodeFilter.SHOW_TEXT);
+			for (let nd; (nd = tw.nextNode());) {
+				const p = nd.parentElement;
+				if (!nd.textContent.trim() || p.closest('.pst-term-boot, .pst-ntip, .pst-term-cmd')) continue;
+				let shown = true;
+				for (let a = p; a && a !== st.hudEl.parentElement; a = a.parentElement) { const s = getComputedStyle(a); if (s.visibility === 'hidden' || +s.opacity < .05) { shown = false; break; } }
+				if (!shown) continue;
+				const rg = document.createRange(); rg.selectNodeContents(nd);
+				for (const q of rg.getClientRects()) {
+					const wq = { l: Math.max(q.left, c.l), t: Math.max(q.top, c.t), r: Math.min(q.right, c.r), b: Math.min(q.bottom, c.b) };
+					if (wq.r - wq.l < 1 || wq.b - wq.t < 1) continue;
+					for (const part of [hand, head]) {
+						const ix = Math.min(part.r, wq.r) - Math.max(part.l, wq.l), iy = Math.min(part.b, wq.b) - Math.max(part.t, wq.t);
+						if (ix > 0 && iy > 0 && Math.min(ix, iy) > worst.words) { worst.words = Math.min(ix, iy); who.words = `${part === hand ? 'hand' : 'head'} over "${nd.textContent.trim().slice(0, 28)}"`; }
+					}
+				}
+			}
+		}
 		worst.pip = Math.max(worst.pip, out(pip, c));
 		worst.headFoot = Math.max(worst.headFoot, head.b - foot);
 		const props = [...st.props.values()].filter((p) => p.state !== 'out' && p.op > .95);
@@ -58,7 +79,7 @@ const SAMPLE = async () => {
 		last = { crop: [c.l, c.t, c.r, c.b].map(Math.round), pip: [pip.l, pip.t, pip.r, pip.b].map(Math.round), foot: Math.round(foot) };
 	}
 	const r1 = (v) => (v < -1e8 ? null : Math.round(v * 10) / 10);
-	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), who, last };
+	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
 };
 
 // the tube powered on (the paper fed in, the line opened) and its stepped draw caught up
@@ -85,14 +106,32 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
 	}
 	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}`);
+	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
+	// FO-55: drawn smaller only where the span cannot hold it (.77, Retro Light at 740, the lead's call): never under 75%
+	await t.check(`${at}: Pip drawn at no less than 75% of its size`, r.pipK >= .75, `scale ${r.pipK}`);
+	if (r.pipK < 1) t.log(`${at}: Pip drawn at ${r.pipK} of its size`);
 	return r;
 }
 
-// every resting prop where it will stay: settled on its spring and all but still
+// every resting prop where it will stay, settled on its spring and all but still, and Pip hanging still at its spot
 const propsAtRest = (f) => f.waitForFunction(() => {
-	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
-	return !!st && [...st.props.values()].every((p) => p.state === 'out' || (p.settled && Math.abs(p.a) < .01 && Math.abs(p.lenv) < 2 && Math.abs(p.axv) < 2));
+	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), ps = st && st.ps;
+	return !!st && [...st.props.values()].every((p) => p.state === 'out' || (p.settled && Math.abs(p.a) < .01 && Math.abs(p.lenv) < 2 && Math.abs(p.axv) < 2))
+		&& !!ps && Math.abs(ps.C.y - ps.Ct.y) < 1 && Math.abs(ps.C.vy) < 2 && Math.abs(ps.thv) < .05;
 }, null, { timeout: 9000 }).catch(() => {});
+
+// a person arriving: the real pointer travels over the stage, which wakes Pip (Welcome's sleep lasts until a real
+// arrival). Screens past Welcome are judged with Pip awake, as a person reaches them; Welcome with Pip asleep.
+async function arrive(t, f) {
+	const asleep = () => f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!(st && st.sleepZ); });
+	if (!(await asleep())) return true;
+	const fe = await f.frameElement().catch(() => null), off = (fe && (await fe.boundingBox())) || { x: 0, y: 0 };
+	const b = await f.evaluate(() => { const r = O55.S.root.querySelector('.o55-stage').getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height }; });
+	const x0 = off.x + b.x + b.w * .3, y0 = off.y + b.y + b.h * .5;
+	await t.page.mouse.move(x0, y0);
+	for (let i = 1; i <= 8; i++) await t.page.mouse.move(x0 + i * 8, y0 + (i % 2) * 4);
+	return f.waitForFunction(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && !st.sleepZ; }, null, { timeout: 4000 }).then(() => true, () => false);
+}
 
 // the look, as the window's look menu picks it (the page's own theme switch does not reach an open setup window)
 async function stageLook(t, f, look) {
@@ -170,10 +209,105 @@ async function everyScreen(t, mode) {
 				if (!ok) { await t.check(`${mode} ${look} ${scr} ${w}x${h}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
 				await f.waitForTimeout(300);
 				const now = await f.evaluate(() => window.O55.S.sess.screen);
+				if (now !== 'welcome' && !(await arrive(t, f))) t.log(`${mode} ${look} ${scr} ${w}x${h}: Pip did not wake on the pointer's arrival`);
 				await propsAtRest(f);
 				await judge(t, f, `${mode} ${look} ${scr}${now !== scr ? ` (opened as ${now})` : ''} ${w}x${h}`, { sign: false, props: true });
 			}
 		}
+	}
+	await t.viewport(1920, 1080);
+}
+
+// FO-55 and FO-50 awake, every look: Pip whole and clear of the stage's own words (Retro's title line, NieR's readouts)
+// at every window size, asleep on Welcome and awake on Name (the pointer arriving), opened fresh, and no resting prop
+// over its head as it sways; where the span is too short for Pip at rest it is drawn smaller, once (.77 in Retro Light
+// at 740, 1 elsewhere), never under 75%. --set looks=retro-light,nier-dark for some.
+const ALL_LOOKS = ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'retro-light', 'retro-dark', 'nier-light', 'nier-dark'];
+const EVERY_SIZE = [[1920, 1080], [1390, 900], [1024, 768], [860, 768], [740, 768], [1280, 500]];
+async function clearOfWords(t, mode) {
+	const reduce = t.args.motion === 'reduce', looks = t.args.looks ? String(t.args.looks).split(',') : ALL_LOOKS;
+	for (const look of looks) {
+		for (const [w, h] of EVERY_SIZE) {
+			await t.viewport(w, h);
+			const f = await frameFor(t, mode);
+			await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
+			await stageLook(t, f, look);
+			for (const scr of ['welcome', 'name']) {
+				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
+				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
+				if (!ok) { await t.check(`${mode} ${look} ${scr} ${w}x${h}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
+				await f.waitForTimeout(300);
+				if (scr !== 'welcome' && !(await arrive(t, f))) await t.check(`${mode} ${look} ${scr} ${w}x${h}: Pip wakes on the pointer's arrival`, false, 'still asleep after 4 s');
+				await propsAtRest(f);
+				await judge(t, f, `${mode} ${look} ${scr} ${w}x${h}`, { sign: false, props: true });
+			}
+		}
+	}
+	await t.viewport(1920, 1080);
+}
+
+// SW-23: a new layout shows what the stage already showed, finished, and plays no entrance again (Retro Light's paper
+// fed in anew and Retro Dark's tube switched on anew on every resize past a layout's edge; Pip's line was typed and
+// voiced again on the new bubble, Retro's command line typed again, NieR's label left blank). Every look, Name with a
+// name typed, the window open 3 s, then resized 1024 -> 740 -> 1280x500 -> 860: after each layout change the tube is
+// not powering on, Pip's line is whole on its box, not typing, not said again and its box not popping in, the command
+// line and NieR's label read as before. Then a new line after the resize is typed and said as usual, and a look switch
+// still plays the entrances (none under Reduced Motion).
+const ENTRANCE = /^(pstOn|pstFeedIn|pstBubble|pstBox|pstDlg)$/;
+const stageNow = (f) => f.evaluate((re) => {
+	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+	if (!st) return null;
+	const rx = new RegExp(re), b = st.bubble, q = (sel) => { const n = st.hudEl && st.hudEl.querySelector(sel); return n ? n.textContent : null; };
+	return {
+		layout: st.layoutName, theme: st.theme, sayAt: st.sayAt || 0, line: (b.querySelector('.pst-bt-on') || {}).textContent || '', on: b.classList.contains('on'), typing: b.classList.contains('typing'),
+		cmd: q('.pst-term-in'), dec: q('.pst-decode'), decoding: st.decoded != null && q('.pst-decode') !== st.decoded,
+		power: st.content.getAnimations().filter((x) => rx.test(x.animationName || '') && x.playState === 'running').map((x) => x.animationName),
+		pop: b.getAnimations().filter((x) => rx.test(x.animationName || '') && x.playState === 'running').map((x) => x.animationName)
+	};
+}, ENTRANCE.source);
+async function noReplay(t, mode) {
+	const reduce = t.args.motion === 'reduce', looks = t.args.looks ? String(t.args.looks).split(',') : ALL_LOOKS;
+	for (const look of looks) {
+		await t.viewport(1024, 768);
+		const f = await frameFor(t, mode);
+		await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
+		await lookAndName(t, f, look);
+		await f.waitForTimeout(3000);
+		let was = await stageNow(f), prev = '1024x768';
+		for (const [w, h] of [[740, 768], [1280, 500], [860, 768]]) {
+			await t.viewport(w, h);
+			await f.waitForFunction((l) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && st.layoutName !== l; }, was.layout, { timeout: 2500 }).catch(() => {});
+			await f.waitForTimeout(120);
+			const now = await stageNow(f), tag = `${mode} ${look} Name ${prev} -> ${w}x${h} [${was.layout} -> ${now.layout}]`;
+			prev = `${w}x${h}`;
+			if (now.layout === was.layout) { t.log(`${tag}: the layout did not change, nothing to judge`); continue; }
+			if (/^retro/.test(look)) await t.check(`${tag}: the tube is not powered on again`, now.power.length === 0, now.power.join(', '));
+			await t.check(`${tag}: Pip's line whole on its box, not typed again`, now.on && !now.typing && now.line === was.line && !!was.line, JSON.stringify({ was: was.line, now: now.line, on: now.on, typing: now.typing }));
+			await t.check(`${tag}: Pip's line not said again`, now.sayAt === was.sayAt, `said at ${was.sayAt} then ${now.sayAt}`);
+			await t.check(`${tag}: Pip's box does not pop in again`, now.pop.length === 0, now.pop.join(', '));
+			if (/^retro/.test(look)) await t.check(`${tag}: the command line reads as before`, now.cmd === was.cmd && !!was.cmd, JSON.stringify({ was: was.cmd, now: now.cmd }));
+			if (/^nier/.test(look)) await t.check(`${tag}: NieR's label reads as before, decoded`, now.dec === was.dec && !!was.dec && !now.decoding, JSON.stringify({ was: was.dec, now: now.dec, decoding: now.decoding }));
+			was = now;
+		}
+		// a new line after the resize is typed and said as usual
+		const fld = f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]').first();
+		await fld.click();
+		await t.page.keyboard.press('End');
+		await t.page.keyboard.type(' two', { delay: 12 });
+		const said = await f.waitForFunction((x) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && (st.sayAt || 0) !== x; }, was.sayAt, { timeout: 5000 }).then(() => true, () => false);
+		const nl = await stageNow(f);
+		await t.check(`${mode} ${look} Name 860x768: a new line after the resize is said`, said, JSON.stringify({ said, line: nl.line }));
+		if (!reduce) await t.check(`${mode} ${look} Name 860x768: and typed`, said && nl.typing, `typing ${nl.typing}`);
+		// a look switch still plays the look's entrances
+		await f.waitForTimeout(1500);
+		const before = await stageNow(f), other = look.replace(/-(light|dark)$/, (m, x) => (x === 'light' ? '-dark' : '-light'));
+		await f.evaluate(([fam, m]) => window.O55.ui.applyLook(fam, m), other.split('-'));
+		await f.waitForFunction((lk) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && st.theme === lk; }, other, { timeout: 15000 }).catch(() => {});
+		await f.waitForTimeout(60);
+		const sw = await stageNow(f), at = `${mode} ${look} -> ${other}`;
+		if (/^retro/.test(look)) await t.check(`${at}: the look switch powers the tube on${reduce ? ' (not under Reduced Motion)' : ''}`, reduce ? sw.power.length === 0 : sw.power.length > 0, sw.power.join(', ') || 'none');
+		if (/^nier/.test(look)) await t.check(`${at}: the look switch decodes NieR's label${reduce ? ' at once under Reduced Motion' : ''}`, reduce ? !sw.decoding : sw.decoding, JSON.stringify({ dec: sw.dec, decoding: sw.decoding }));
+		await t.check(`${at}: the look switch says Pip's line in the new look`, sw.sayAt !== before.sayAt, `said at ${before.sayAt} then ${sw.sayAt}`);
 	}
 	await t.viewport(1920, 1080);
 }
@@ -208,5 +342,9 @@ export const tests = {
 	'retro stage fit normal': (t) => (t.args.film ? film(t) : on('normal', fit)(t)),
 	'retro stage fit sandbox': (t) => (t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t)),
 	'retro props every screen normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', everyScreen)(t)),
-	'retro props every screen sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', everyScreen)(t))
+	'retro props every screen sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', everyScreen)(t)),
+	'pip clear of the stage words every look normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', clearOfWords)(t)),
+	'pip clear of the stage words every look sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', clearOfWords)(t)),
+	'layout change replays nothing normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', noReplay)(t)),
+	'layout change replays nothing sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', noReplay)(t))
 };
