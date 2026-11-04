@@ -4,7 +4,8 @@ export default async function(t) {
   await t.emulate({reducedMotion:'reduce'});
   const f = await t.app.open({onboarding:true,query:'o55=screen=look'});
   await f.locator('[data-o55-do="pickFamily"][data-arg="nier"]').last().click();
-  await f.locator('.o55-lookbtn').click();
+  await f.locator('.o55-lookbtn').focus();
+  await t.page.keyboard.press('Enter');
   await f.locator('.o55-lookslot .o55-tipq[data-arg="lookFamily:nier"]').click();
   for (const [width,height] of [[1280,500],[740,768],[1920,1080]]) {
     await t.viewport(width,height);

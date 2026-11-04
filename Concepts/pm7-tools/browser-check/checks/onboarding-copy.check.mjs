@@ -60,7 +60,8 @@ export default async function (t) {
       for (const [mode,key] of [['ELI5','text'],['Expert','expert']]) {
         await f.locator(`[data-o55-do="pickMode"][data-arg="${themeMode}"]`).last().click();
         await f.evaluate(m => window.O55.talk.set(m,'copy-check'),mode);
-        await f.locator('.o55-lookbtn').click();
+        await f.locator('.o55-lookbtn').focus();
+        await t.page.keyboard.press('Enter');
         const observations = [];
         for (const id of menuIds.filter(id => family === 'nier' || !id.startsWith('lookNierAdjust'))) {
           if (id.startsWith('lookMode:')) await f.locator(`.o55-lookslot [data-o55-do="lookMode"][data-arg="${id.split(':')[1]}"]`).click();
@@ -90,7 +91,8 @@ export default async function (t) {
         }
         t.log(JSON.stringify({width,height,family,themeMode,mode,observations}));
         await t.check(`FO-56 ${width}x${height} ${family}/${themeMode} ${mode}: every note written and every painted line reachable by wheel`, observations.every(x => x.ok));
-        await f.locator('.o55-lookbtn').click();
+        await f.locator('.o55-lookbtn').focus();
+        await t.page.keyboard.press('Enter');
       }
     }
   }
