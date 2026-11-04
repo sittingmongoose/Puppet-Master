@@ -132,7 +132,12 @@ export const tests = {
 		await t.page.waitForTimeout(Number(t.args.setupDelay ?? 1500));
 		// Request an actual census through its owner API: a previous Usage page
 		// visit in this context may legitimately have completed its initial scan.
-		await f.evaluate(() => window.PM_HOVER_TAG_CONTROLLER.scheduleScan(document.querySelector('#panel-usage')));
+		await f.evaluate(() => {
+			// Use the board's real warm-build entry point. GPU discovery may skip
+			// opportunistic boot prewarming on a loaded VM; that is not a job witness.
+			PMU.board.mount(PMU.board.state.room,{warm:true});
+			window.PM_HOVER_TAG_CONTROLLER.scheduleScan(document.querySelector('#panel-usage'));
+		});
 		await f.waitForFunction(() => { const jobs=window.__pmIdleRec.pending(); return /\bat (?:buildSliced|lateNext|prewarmSoon|prewarm|idleStill)\b/.test(jobs.map(j=>j.stack).join('\n')); }, null, {timeout:15000}).catch(() => {});
 		const pending = await f.evaluate(() => window.__pmIdleRec.pending());
 		for (const [owner] of OWNERS.slice(0,3)) {
