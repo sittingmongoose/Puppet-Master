@@ -4573,7 +4573,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24487,
+      "line_count": 24491,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 361,
       "plan_unit_ids": [
@@ -5298,7 +5298,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "3cd5d173dfcdc574aa0682b09999a21766bbd0894ef372298a41f49cf47dfa83",
+      "sha256": "a577c1b288b95f4b39b1c457d85f35be8a2ccd07d8c8def05e16e278dd16344a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 361
@@ -9572,7 +9572,7 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 8387,
+      "line_count": 8391,
       "path": "Plans/Goal_Runtime_System.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -9744,7 +9744,7 @@
         "workflow_activation_original_source_or_lifetime_drift",
         "workflow_state_absorbed_into_goal"
       ],
-      "sha256": "f125e9da0e9754917dd36fb49da931569bea80454605d49c6c27fa35da2d5f0e",
+      "sha256": "c549ad1ef21e893e631e0b3b8336cafd7e29a7335a58c738a5da5e8444d4e06f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 76,
@@ -18578,10 +18578,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 232,
+        "False": 234,
         "True": 110
       },
-      "heading_count": 818,
+      "heading_count": 820,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -18676,9 +18676,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29579,
+      "line_count": 29702,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 342,
+      "plan_unit_count": 344,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -18974,12 +18974,14 @@
         "SP-297",
         "SP-298",
         "SP-299",
+        "SP-421",
         "SP-300",
         "SP-301",
         "SP-302",
         "SP-303",
         "SP-420",
         "SP-304",
+        "SP-422",
         "SP-305",
         "SP-306",
         "SP-307",
@@ -19055,11 +19057,13 @@
         "false_original_recovery_effect_or_receipt_publication",
         "false_original_update_or_lost_accepted_effect",
         "goal_body_physical_origin_cas_retention_or_restore_authority_escape",
+        "goal_cancel_event_identity_drift",
         "goal_cancellation_original_authority_or_effect_loss",
         "goal_progressed_historical_authority_confusion",
         "goal_replanned_historical_authority_confusion",
         "goal_runtime_persistence_owner_gap",
         "goal_stopped_historical_authority_confusion",
+        "goal_update_event_identity_drift",
         "goal_verification_decided_historical_authority_confusion",
         "goalrun_evidence_persistence_gap",
         "governance_runtime_storage_gap",
@@ -19145,10 +19149,10 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4d824813b878dbc92bb980bb3742832494a5bdff6340b350b9bc27a7c5378275",
+      "sha256": "2027a741fd4df6dbf20b12c85e459e958142ad41a589fcb72171a893abdc5585",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 338,
+        "accepted": 340,
         "retired": 3,
         "superseded": 1
       },
@@ -19162,7 +19166,7 @@
         "requirement": 277,
         "schema_contract": 23,
         "security_contract": 1,
-        "storage_contract": 28,
+        "storage_contract": 30,
         "storage_security_contract": 1
       },
       "validation_surfaces": [
@@ -21526,7 +21530,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:26:36Z",
+  "generated_at_utc": "2026-11-04T17:46:51Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -21534,13 +21538,13 @@
     "docs_with_plan_units": 96,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3631,
+      "False": 3633,
       "True": 3791
     },
-    "plan_unit_count": 7422,
+    "plan_unit_count": 7424,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 7205,
+      "accepted": 7207,
       "retired": 194,
       "superseded": 23
     },
@@ -21629,7 +21633,7 @@
       "source_lineage_reconciliation": 2,
       "source_lineage_residual_disposition": 2,
       "ssot_rule": 3,
-      "storage_contract": 28,
+      "storage_contract": 30,
       "storage_security_contract": 1,
       "structural_anchor": 5,
       "supersession_amendment": 1,

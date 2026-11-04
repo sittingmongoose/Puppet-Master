@@ -6604,6 +6604,8 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-04 (DL-045 depth): the goal.updated v3 event ID and event idempotency key follow SP-421.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342
 
 ### GRS-069 - Exact historical goal.progressed contract
@@ -7089,6 +7091,8 @@ Current Activity is the existing canonical Goal/body-control view, not an event-
 The NEW reader.goal.cancel_command_audit@1.0.0 accepts exact original Storage/project/thread/Goal/operation and a closed member selector. It resolves only the actual source, Stop receipt, minimal receipt, immutable progress/head, control publication or terminal at the physical keys in SP-304 physical and digest contract. Explicit epoch is required only for progress_epoch; other selectors require null. Missing future member is member_pending when original progress proves pending, otherwise missing_original/unavailable; absence cannot fabricate no-effect. Receipt may exist before event/control; terminal success and minimal receipt are different members. Source audit is content-free. Terminal replay selects its original immutable epoch even if the head advanced. No current-body/thread visibility is required for audit-only disclosure, but current app/Project audit permission and original physical origin/install/codec/backup/retention guards remain mandatory; thread deletion does not waive them.
 
 The actual original SIR replay owner returns the exact immutable original outcome/result/response from Terminal with CV-333's existing replay decoration only (original_dispatch_id, replayed). It does not call the cancellation handler, relatch Stop, issue another receipt/event/control mutation or change terminal unknown to success. Replaying cancellation success proves original cancellation, not current body visibility, an active session or completion of a Workflow. A different user action uses a new command identity but an already cancelled Goal stays permanently noncontinuable.
+
+Amended 2026-11-04 (DL-045 depth): the goal.cancelled v3 event ID and event idempotency key follow SP-422.
 
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
 

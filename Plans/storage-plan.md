@@ -24714,7 +24714,68 @@ owner_hints:
 - Plans/Contracts_V0.md
 ```
 
+Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured in ProducerMetadata follow SP-421.
+
 ContractRef: ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/storage-plan.md#SP-287, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Goal_Runtime_System.md#GRS-068, ContractName:Plans/Shared_Integration_Runtime.md#SIR-049, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/goal_update_schema_resources.json
+
+### SP-421 - Goal update event identity recipe
+
+```yaml
+plan_unit_id: SP-421
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal.updated, Project edition, payload pm.goal_runtime_event.goal_updated.schema.v3. At U0 source admission the original update producer derives D = SHA256(JCS(["pm.goal.updated.command.v1", "project", storage_instance_id, project_id, thread_id, command_id, command_instance_id, operation_id, goal_id])) from the admitted SourceAudit: command_id, command_instance_id and operation_id from normalized_identity, scope from its owner_identity and the source scope, goal_id from the requested existing Goal. Event ID is goal.updated.v1:{D}; event idempotency key is goal.updated.command.v1:{D}. ProducerMetadata and the frozen ProducerInput carry exactly these two values. The SIR command idempotency key in normalized_identity stays unchanged and separate.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-299
+- SP-286
+- CV-342
+- GRS-068
+- SIR-049
+- DL-045
+unblocks: []
+acceptance_criteria:
+- ProducerMetadata.event_id equals goal.updated.v1:{D} and ProducerMetadata.idempotency_key equals goal.updated.command.v1:{D}, with D computed from the admitted SourceAudit only.
+- ProducerInput frozen at event_ready repeats both values byte for byte; no later stage recomputes or replaces them.
+- A retry, recovery or restore of the same original operation yields the same D; a new operation yields a new D even for identical text.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution for this event ID and key, never through a fresh ID.
+validation_surfaces:
+- Plans/goal_update_command_custody.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_update_event_identity_drift
+reasoning_tier: high
+context_scope: goal_update_event_identity
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- pm.goal.updated.command.v1
+- "goal.updated.v1:{D}"
+- "goal.updated.command.v1:{D}"
+negative_constraints:
+- No schema, wrapper, key or payload change; the recipe constrains values of existing members only.
+- No reuse of the goal.created recipe, its domain string or its identifiers.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Members and encoding.** JCS is RFC 8785 over the nine-member array in the order given; every member is the exact nonempty string from its source, with no Unicode normalization, trimming or case folding. SHA-256 output is 64 lowercase hexadecimal digits. `command_id` is the constant `cmd.chat.goal.update` that `NormalizedIdentity` fixes for both the direct Save source and a resolved approval source, so the recipe does not depend on which source authenticated the change. The scope literal is `project`: the application edition keeps its own CV-366 `application@1` identity and is not covered here.
+
+**Search (DL-045).** Scope: GRS-068, SP-299 and its six prose sections, CV-342, SIR-049, `Plans/goal_update_command_custody.schema.json`, `Plans/goal_update_schema_resources.json`, `Plans/goal_updated_consumer_contracts.schema.json` and the Known-37 common-v2 section 7.1, plus a whole-`Plans/` search for `goal.updated.v`, `goal.updated.command` and `evt_goal_`. Found: SP-299 captures "the complete original producer metadata with its original event ID ... and replay identity" at source admission and types both members as `non_empty_string`; section 7.1's v2 recipe is superseded for active updates (SP-299, event version section). Negative evidence: no unit derives the v3 event ID or event idempotency key. This recipe is new and is not inferred from `goal.created` (SP-294), whose domain string, command and members differ.
+
+**Use.** The producer computes D once, at U0, from the admitted original source, before any body reservation, so a crash at any later stage finds the same values in Progress. Storage's `dedupe_by_idempotency_key` uses the event idempotency key; same key and digest return the original receipt (SP-286), same key with a different digest is `idempotency_conflict`, and `dedupe_unavailable` appends nothing. U3 publication uses exactly the frozen values; a lost acknowledgement leaves `event_unknown`, resolved only from retained original append custody by this event ID and key.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-299, ContractName:Plans/Contracts_V0.md#CV-342, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-300 - Exact historical goal.progressed source reader
 
@@ -25386,7 +25447,69 @@ The complete method contract is `Plans/goal_cancel_contracts/methods.json`. Its 
 
 SP-214's historical cancelled-v2 event projection and checkpoints apply only to the admitted old route; they do not define a current cancelled state or a current durable projector. SP-305 supersedes only the generic execution-association/possible-assignment dependencies in these stages. Every other remaining source integration is explicit there.
 
+Amended 2026-11-04 (DL-045 depth): the v3 event ID and event idempotency key captured at C-source follow SP-422.
+
 ContractRef: ContractName:Plans/Goal_Runtime_System.md#GRS-073, ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-305
+
+### SP-422 - Goal cancellation event identity recipe
+
+```yaml
+plan_unit_id: SP-422
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 (2026-11-04) for exactly goal.cancelled, Project edition, payload pm.goal_runtime_event.goal_cancelled.schema.v3. At C-source the original cancellation producer derives D = SHA256(JCS(["pm.goal.cancelled.command.v1", "project", storage_instance_id, project_id, thread_id, command_id, command_instance_id, operation_id, goal_id])) from the admitted SourceAudit: command_id, command_instance_id and operation_id from normalized_identity, scope from its owner_identity and the source scope, goal_id from the requested Goal. Event ID is goal.cancelled.v1:{D}; event idempotency key is goal.cancelled.command.v1:{D}. SourceAudit.producer_metadata carries exactly these values, and every later stage, including the GRS-078/SP-310 Workflow late-assignment profile, keeps them.
+gui_related: false
+gui_classification_reason: Defines internal event identity or withdrawal custody; no visual surface.
+split_recommended: false
+depends_on:
+- SP-304
+- SP-310
+- SP-286
+- CV-347
+- GRS-073
+- GRS-078
+- DL-045
+unblocks: []
+acceptance_criteria:
+- SourceAudit.producer_metadata.event_id equals goal.cancelled.v1:{D} and its idempotency_key equals goal.cancelled.command.v1:{D}, computed at C-source only.
+- The payload operation_id, cancellation_id and command_instance_id equal the normalized_identity members used in D.
+- The Workflow late-assignment profile assigns only sequence_id late; event ID and idempotency key never change after C-source.
+- A lost acknowledgement resolves through SP-286 retained receipt resolution for this event ID and key, never through a fresh ID.
+validation_surfaces:
+- Plans/goal_cancel_command_custody.schema.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: goal_cancel_event_identity_drift
+reasoning_tier: high
+context_scope: goal_cancel_event_identity
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/D1a/REPORT.md (items 8 and 9)
+preserved_exact_tokens:
+- pm.goal.cancelled.command.v1
+- "goal.cancelled.v1:{D}"
+- "goal.cancelled.command.v1:{D}"
+negative_constraints:
+- No schema, wrapper, key or payload change; the recipe constrains values of existing members only.
+- No reuse of the goal.created or goal.updated recipe, domain string or identifiers.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+**Members and encoding.** JCS is RFC 8785 over the nine-member array in the order given; members are exact nonempty strings with no normalization, and SHA-256 output is 64 lowercase hexadecimal digits. `command_id` is the constant `cmd.chat.goal.cancel` that the cancellation `NormalizedIdentity` fixes. `operation_id` is the same value SP-304 calls the cancellation operation O and the payload carries as both `operation_id` and `cancellation_id`. The scope literal is `project`; the application edition keeps its own CV-366 identity.
+
+**Search (DL-045).** Scope: GRS-073..078, SP-304, SP-305, SP-306, SP-310, CV-347, SIR-050..052, `Plans/goal_cancel_command_custody.schema.json`, `Plans/goal_cancel_contracts/`, `Plans/goal_workflow_cancel_contracts/` and the Known-37 common-v2 section 7.1, plus a whole-`Plans/` search for `goal.cancelled.v`, `goal.cancelled.command` and `evt_goal_`. Found: SP-304 says "Event identity, occurrence, actor/account/causality and idempotency originate here" (C-source) and GRS-078 says C-event keeps "The original accepted event ID, idempotency key"; ProducerMetadata types both as `non_empty_string`. Negative evidence: no unit derives them. This recipe is new and is not inferred from a sibling.
+
+**Use.** D is computed once at C-source, before any Stop effect, so C-stop, C-receipt, C-event and terminal recovery read the same values from SourceAudit. Dedupe, conflict and `dedupe_unavailable` follow Storage's `dedupe_by_idempotency_key`; same key and digest return the original receipt through SP-286. Under the Workflow profile SP-310's event template keeps identities as fixed terms and its sole late term is `sequence_id`, so the late assignment cannot change either value.
+
+ContractRef: ContractName:Plans/storage-plan.md#SP-304, ContractName:Plans/storage-plan.md#SP-310, ContractName:Plans/Contracts_V0.md#CV-347, ContractName:Plans/storage-plan.md#SP-286, ContractName:Plans/Decision_Log.md#DL-045
 
 ### SP-305 - Execution binding custody and original append reservation
 
