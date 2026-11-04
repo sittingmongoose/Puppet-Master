@@ -1,89 +1,509 @@
-# DM — DL-408 application fix 1
+# DM — review round 4
 
-Worker: **DM-APPLY-FIX1**, VM. Branch: `plans/ea-w2-small-owners-20261104`. Input: `90f7e163614575558644d291f283c19ae6f305a9`. Companion/checker fix: `66655ae43ec98be050816fb574ef26d9d9e8709c`. Exclusion application: `e2cfea7c5823e1ea822cfd088db0c125a0327d5b`. The final reporting commit contains this assessment and the derived index; its parent source/data revision is the application head above.
+Branch: `plans/ea-w2-small-owners-20261104`. Input/reviewed head: `fb0cac9bd45b983c1fe03118d5641788c6a4f166`. Code/fixture/derived head: `70302c381703c315ab93e0b3155c0bbd269f2472`. This reporting commit records the final assessment. Worker: DM-fix4, VM. Native execution: **NOT_RUN**.
 
-**B4 and B5 are fixed. All eight prepared families preserve their cycle-3 grades.** The full lane checker passes **4,965 assertions**; **72/72** standing-check regressions and **40/40** Settings regressions fail through the complete checker with exit **1** and the expected assertion. All eight failure-oracle guards reject exit **0**. These are static contract/model checks; native execution remains **NOT_RUN**.
+B1 and B2 are fixed. All eight families are **PASS AS PREPARED**, without admission. The complete checker passes **9,681 assertions**. The whole-lane check-11 audit passes **442 guard removals across 2,174 independent negative witnesses**; every mutant fails the complete checker. All eight corrupted-witness child runs exit 1; their failure matchers refuse success exit 0. The two DL-408 Settings exclusions and their application remain unchanged.
 
-## Review round 3: findings and responses (DM-APPLY-FIX1)
+## Review round 4: findings and responses
 
-- **B4 — fixed (`66655ae43ec98be050816fb574ef26d9d9e8709c`). Where:** `Plans/Wiring_Matrix.production.json:71407` through the four theme entries, `Plans/touch_closure.json:3182`, and `Plans/Wiring_Matrix.production.exclusions.json:306`. **Cause:** sixteen theme requirements and two future-DRY passages retained the superseded names. **Fix:** all four theme commands use only `settings.layer.changed`; the DRY companion passages use that successor under SSYS-060/DL-300 and existing owner-adoption prerequisites. The DRY guard retains empty event refs, absent handler/wiring, `owner_contract_missing`, zero mutation dispatch and zero writes. Historical dedicated DRY records remain read-only without aliasing or payload rewrite. `scripts/pm-small-owner-events.py:64` checks the actual current companions; `:89` exercises forty authored refusal cases. The fixture adds no retired-family writer or positive EventRecord. Verification: the complete checker passes; forty separate full-checker processes catch retired-name reintroduction in every theme requirement field and both DRY passages, premature guard claims, and loss of historical readability.
-- **B5 — fixed (`e2cfea7c5823e1ea822cfd088db0c125a0327d5b`). Where:** `Plans/.audits/event-authority-2026-08-12/individual-disposition/rows/ROW_settings.theme.updated.json:5`, `ROW_settings.updated.json:5`, the mirrored ledger lines 251–252 and census lines 255–256. **Cause:** the approved retirement had no Step 9 exclusion application. **Fix:** both exact names now have `RECLASSIFY_TO_EXCLUDED` in all six representations. `DM-settings-exclusions-application.json` records each row's before/after SHA-256, both whole-ledger hashes and each changed line's hashes, thirteen exact checked source quotes, the pinned DL-408 decision branch and immutable fields. The row rationale and appended citations distinguish historical August depth evidence from current retirement evidence. Verification: `apply-fix1/verify-exclusions.py` passes; only the two named lines in each ledger change, mirrors agree, every recorded hash and quote matches, and all frozen fields and inherited evidence remain intact. No denominator removal is claimed.
-- **N1 — carried qualification (this report/index commit).** Index generation changes the four existing top-level `generated_at_utc` fields. Its only substantive change is expected staleness for the edited production Wiring Matrix hash and exclusions source; no unrelated owner, PlanUnit, shard, JSONL index or generator changed. `scope-derived-audit.json` checks the exact two-source delta. Literal derived byte identity is qualified by those clock fields and the required edited-source staleness update.
-- **N2 — fixed (this report/search commit).** Every retained `hits` collection in `DM-search.json` is labelled with capture revision `81746599e17375fda60b8b51c8ac2bfd3c2b09d7`. All **79** historical hits match that revision; the **22** other current binding quotes still match current source. They are no longer presented as current search verification. All **248** current self-grade quotes and source hashes were checked and the moved checker definitions re-anchored.
+- **B1 — fixed (`70302c381703c315ab93e0b3155c0bbd269f2472`). Where:** `scripts/pm-small-owner-events.py:469` and each family's `reader_cases`/`rebuild_cases` in `Plans/small_owner_event_fixtures.json`. **Cause:** operating reads/rebuild reran current writer admission and trusted Storage metadata from the supplied event. **Fix:** authenticate the retained EventRecord through protected original full-value custody and selected source/frontier, using Storage's own instance and original event/receipt/result. Read paths require no old owner request, admission epoch or owner session. Replay-only retained history is accepted after owner retirement. Append/current retry retain their separate replay-only refusal. Forged sequence/observed/persisted metadata, coherent foreign family authority, foreign selected source, withdrawal, permission/deletion/hold/source/version/CAS failures refuse disclosure or preserve the complete old publication. Each family's three owner copies state this explicitly. **Verify:** full checker and `receipt.full_value`, `reader.retained_value`, `rebuild.retained_value`, `history.*`, reader fences and rebuild fences in the guard table.
+- **B2 — fixed (`70302c381703c315ab93e0b3155c0bbd269f2472`). Where:** checkpoint grammar cases in every fixture row; `scripts/pm-small-owner-guard-audit.py`. **Cause:** stale dataset, selected/durable or Storage/source observation copies masked format removal. **Fix:** every grammar witness starts from a valid case and changes one semantic identifier fact while keeping all related copies coherent. Both generation and dataset now follow the malformed generation; short/long/non-hex generation cases supplement LF cases. Grammar-valid identity mismatches remain separate. Missing-field/schema witnesses use the actual schema gate; operating publication witnesses use complete valid shapes, so an undefined dereference cannot impersonate guard isolation. **Verify:** `token.generation_dataset_grammar` now admits its 48 intended negatives when removed, every other matrix negative still rejects, and the full checker fails. The broad token-format mutant and every other rule are independently covered below. No production guard is weakened.
+- **N1 — fixed (this reporting commit). Where:** `DM-self-grade.json`. **Cause:** eight citations selected a matching sibling passage. **Fix:** all evidence anchors are verified inside the claimed unit when it is a PlanUnit citation; all source hashes and moved checker lines are current. The eight cited defects are corrected; 58 moved anchors were re-resolved, and all 256 final evidence entries verify. **Verify:** final self-grade plus `fix4/citation-updates.json` and its manifest hash.
+- **N2 — retained integration qualification (this reporting commit).** Index regeneration is qualified by the four existing `generated_at_utc` clocks and the substantive updated owner hashes/text/readiness staleness. No literal whole-index byte-identity claim is made. Shards and indexes were regenerated by the repository tools; changed shard groups belong only to edited owners. No generator changed.
 
-No finding is disputed or stopped for Jared. No decision beyond **2d A** is made.
+## Standing checks and guard-removal method
 
-## Authority and boundaries
+All eleven standing checks apply to each prepared family. Current append/retry refuses replay-only; application keys retain CV-366's exact UTF-8 hex recipe; Project partitions retain encoded `project~`; SP-337 and the 16 KiB boundary remain; identifier syntax/CRLF checks remain; semantic retries still exclude all three Storage metadata fields; checkpoints join Storage's original identity; failure matchers require exit 1; all schema references, including unused definitions, resolve; historical operating reads/rebuild use retained authority; and the guard-removal matrix below proves isolation.
 
-DL-408 is pinned to `origin/plans/ea-cards1-answers-20261104` at `b6332f391a7870bad5f01a29a7e9d080050dac27`; its Decision Log integration remains a dependency. Jared's exact answer, the as-presented **2d A**, and current Settings/UCC/UIW/Storage passages are checked in the application record. The as-presented card SHA-256 is `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`. DL-408 replaces DL-041's naming premise only. The prior DL-039 phase-1 evidence remains historical.
+The table enumerates enforcement rules, including every admission/rebuild/disclosure fence, original-operation and receipt joins, source/frontier joins, token format/identity/schema gates, all authored payload-schema enforcement keywords, schema references/meta-validation, date-time checks and the unchanged Settings rules. Forwarded schema/semantic checks reuse their underlying witnesses; redundant pattern and CR/LF implementations are removed together as one syntax rule. A not(pattern) constraint also imposes a string type, so its implicit non-string fence is relaxed with the explicit type when testing type refusal, while preserving CR/LF rejection. Nullable-union branches and array-item containers are enumerated explicitly. Algorithm/codec recipes retain their independent exact golden-value checks in the full checker. Existing multi-stage withdrawal/crash scenarios remain supplementary transition regressions; isolation credit comes from the single-fact witnesses, which the ordinary full checker also runs.
 
-Every Settings change uses only `settings.layer.changed`; `settings.updated` and `settings.theme.updated` are retired as superseded. Older `settings.agent_rules.dry_method_default_guard.updated` records stay readable. The DRY guard stays disabled pending exact key-to-valid-setting-ID/writer proof. The Memory switch, theme transactions, existing result/receipt joins, preview non-emission and owner-adoption gates retain their current owners. No alias, event-byte rewrite, writer adoption, scope/identity choice, retention/deletion choice or new admission is supplied.
+Mutants exist only in isolated module dictionaries. No fixture or production guard is rewritten on disk. `main(guard_first=...)` changes only assertion order, so the entire checker remains enabled and fails first at the selected rule's witness. Each row verifies its exact expected flip set and every other matrix refusal. Identical refusal results may be reused only when the tested function and all transitive subject dependencies, including the registered date-time callback, have identical AST fingerprints. Schema mutations invalidate the affected family's observations. The raw table lists every flipped/still-rejected ID, source mutation and full-checker failure. Execution was segmented: the initial catalogue, corrected redundant-type mutation groups, and thirteen composite schema gates. matrix-equivalence.json verifies that every one of the 2,174 positive/negative inputs and acceptance predicates stayed identical across those phases; the final table replaces all superseded mutation rows and checks its full guard set and edits against the final script. Probe IDs include the enforcement group so read and rebuild cases with the same family label remain distinct; probe-id-disambiguation.json records the direct function rechecks of those assignments. The compact committed table represents still-rejected IDs as the exact complement of the flipped set in `all_probe_ids`.
 
-No owner Markdown was edited, and no shard changed. No registry append, admission record, Decision Log entry, governance reseal, frozen validator, cohort map, Spec Lock or auto-decision was changed. No pm-mail, subagent, browser, server, landing lock or main push was used.
+Raw table: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/fix4/guard-removal.json`, SHA-256 `e87073d656dd98084c6cbe0d8c87eede540f63f8da70c7dadbfd953d336a6bb1`. Reproduce with `python3 -B scripts/pm-small-owner-guard-audit.py <external-output.json>`.
 
-## All nine standing checks, all eight prepared families
-
-| Exact family | 1 replay-only | 2 key | 3 partition | 4 bytes | 5 LF | 6 semantics | 7 checkpoint | 8 failure exit | 9 refs |
-|---|---|---|---|---|---|---|---|---|---|
-| `format.applied` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `lsp.server.lifecycle_changed` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `model.catalog_refreshed` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `subagent.context_rehydrated` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `subagent.context_shrunk` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `project.added` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `project.created` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-| `git.clone.completed` | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS |
-
-1. Each current retry refuses even a genuine retained `projector_replay_only` original; immutable historical reads remain unchanged.
-2. The three application-capable families retain CV-366's exact actual-Server/original-operation UTF-8-hex key. The five Project-only families retain their own exact recipes and reject foreign application keys.
-3. All eight retain their validating encoded `project~` Project positive.
-4. All eight retain Storage's 16 KiB inline gate; the three legally large-body families keep SP-337 external-body cases. No external-body product behavior is added to the five bounded schemas.
-5. Existing payload and coherent checkpoint trailing-LF refusals remain. No trimming or normalization is accepted.
-6. Caller semantic comparison excludes Storage `sequence_id`, `observed_at_utc` and `persisted_at_utc`; full-value identity still rejects changed stored bytes.
-7. Foreign Storage/source/key/generation, selected live-token/frontier and persisted-snapshot mismatches preserve old publication.
-8. An invalid original witness makes the complete checker fail; the separate failure guard accepts only expected exit 1 and refuses exit 0.
-9. `scripts/pm-small-owner-events.py:34` resolves every `$ref`, including unused definitions, in all eight payload schemas and their shared envelope/receipt/checkpoint schemas. References use an offline registry of the checked schema corpus. Every family has an unused dangling-reference negative; a separate mutated full-checker run must fail. An unresolved reference is never counted as an expected data refusal.
-
-The matrix runs with one process-local mutation at a time, keeping every other family and original assertion enabled. `DM-apply-fix1-standing-checks.json` records each child command, exact failure, exit code and external output path/SHA-256. Existing original fixture vectors are byte-semantically unchanged after removing only the added negative matrices. No existing refusal was weakened.
+| Guard removed | Negatives that flip | Negatives that stay rejected | Complete checker |
+|---|---|---|---|
+| `envelope.schema` | 248 IDs in `DM-guard-removal.json` | All other 1926 IDs | FAIL as required |
+| `custody.schema` | 128 IDs in `DM-guard-removal.json` | All other 2046 IDs | FAIL as required |
+| `writer.owner` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `writer.result` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `writer.original_joins` | 112 IDs in `DM-guard-removal.json` | All other 2062 IDs | FAIL as required |
+| `writer.payload_project` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `writer.time` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `writer.family_schema` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `writer.profile_policy` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `writer.identity_key` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `writer.migration` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `producer.witness` | 32 IDs in `DM-guard-removal.json` | All other 2142 IDs | FAIL as required |
+| `semantic.project` | 5 IDs in `DM-guard-removal.json` | All other 2169 IDs | FAIL as required |
+| `retry.semantic_conflict` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.replay_policy` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `retry.replay_only` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `retry.current_policy` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `receipt.full_value` | 72 IDs in `DM-guard-removal.json` | All other 2102 IDs | FAIL as required |
+| `receipt.protected_authority` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `receipt.custody_identity` | 48 IDs in `DM-guard-removal.json` | All other 2126 IDs | FAIL as required |
+| `receipt.incoming_semantics` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `receipt.append_result` | 32 IDs in `DM-guard-removal.json` | All other 2142 IDs | FAIL as required |
+| `receipt.event_join` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `receipt.original_receipt` | 88 IDs in `DM-guard-removal.json` | All other 2086 IDs | FAIL as required |
+| `append.current_event` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.receipt_delivery` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.terminal_delivery` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.membership` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.retention_resolved` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.schema_admitted` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.writer_enabled` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.permission_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.dedupe_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.source_custody_available` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.original_intent_available` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.original_result_available` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.owner_acceptance_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.body_committed` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.lease_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.restore_controls_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.same_restore_occurrence` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.protected_origin_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `append.epoch` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `append.session_restore` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `append.durability` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `append.receipt_delivery_identity` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.token_identity` | 32 IDs in `DM-guard-removal.json` | All other 2142 IDs | FAIL as required |
+| `reader.retained_value` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `reader.reader_enabled` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.permission_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.source_present` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.deletion_clear` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.hold_allows_disclosure` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.current_frontier_verified` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.version` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `reader.selected_token` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.checkpoint` | 232 IDs in `DM-guard-removal.json` | All other 1942 IDs | FAIL as required |
+| `rebuild.retained_value` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `rebuild.originals_present` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.source_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.coverage_complete` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.schema_supported` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.current_frontier_verified` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.cas_matches` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.reader_enabled` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.permission_current` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.source_present` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.deletion_clear` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.hold_allows_disclosure` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `rebuild.version` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `checkpoint.outer_revision` | 16 IDs in `DM-guard-removal.json` | All other 2158 IDs | FAIL as required |
+| `checkpoint.selected_token` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `token.storage_instance_id` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `token.source_storage` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `token.checkpoint_key` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `token.dataset_generation` | 24 IDs in `DM-guard-removal.json` | All other 2150 IDs | FAIL as required |
+| `history.family` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `history.schema` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `history.source_selection` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `token.generation_dataset_grammar` | 48 IDs in `DM-guard-removal.json` | All other 2126 IDs | FAIL as required |
+| `token.other_string_grammar` | 168 IDs in `DM-guard-removal.json` | All other 2006 IDs | FAIL as required |
+| `token.durable_snapshot` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `token.schema` | 112 IDs in `DM-guard-removal.json` | All other 2062 IDs | FAIL as required |
+| `payload.inline_cap` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `payload.schema` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `read_helper.token` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `read_helper.permission` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `read_helper.source` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `read_helper.withdrawal` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `read_helper.version` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `schema.references` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `schema.meta` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `schema.format.applied:type` | `schema.format.applied:type|format.applied:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:additionalProperties` | `schema.format.applied:additionalProperties|format.applied:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.0` | `schema.format.applied:required.0|format.applied:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.1` | `schema.format.applied:required.1|format.applied:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.2` | `schema.format.applied:required.2|format.applied:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.3` | `schema.format.applied:required.3|format.applied:schema:missing_formatter_id` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.4` | `schema.format.applied:required.4|format.applied:schema:missing_file_path` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.5` | `schema.format.applied:required.5|format.applied:schema:missing_diff_bytes` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.6` | `schema.format.applied:required.6|format.applied:schema:missing_timestamp` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.7` | `schema.format.applied:required.7|format.applied:schema:missing_tool_output_ref` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:required.8` | `schema.format.applied:required.8|format.applied:schema:missing_formatted_output_ref` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.schema_version.const` | `schema.format.applied:properties.schema_version.const|format.applied:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.operation_id.type` | `schema.format.applied:properties.operation_id.type|format.applied:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.operation_id.minLength` | `schema.format.applied:properties.operation_id.minLength|format.applied:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.operation_id.maxLength` | `schema.format.applied:properties.operation_id.maxLength|format.applied:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.project_id.type` | `schema.format.applied:properties.project_id.type|format.applied:schema:properties.project_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.project_id.minLength` | `schema.format.applied:properties.project_id.minLength|format.applied:schema:properties.project_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.project_id.maxLength` | `schema.format.applied:properties.project_id.maxLength|format.applied:schema:properties.project_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.formatter_id.type` | `schema.format.applied:properties.formatter_id.type|format.applied:schema:properties.formatter_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.formatter_id.minLength` | `schema.format.applied:properties.formatter_id.minLength|format.applied:schema:properties.formatter_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.formatter_id.maxLength` | `schema.format.applied:properties.formatter_id.maxLength|format.applied:schema:properties.formatter_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.file_path.type` | `schema.format.applied:properties.file_path.type|format.applied:schema:properties.file_path.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.file_path.maxLength` | `schema.format.applied:properties.file_path.maxLength|format.applied:schema:properties.file_path.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.file_path.pattern` | `schema.format.applied:properties.file_path.pattern|format.applied:schema:properties.file_path.pattern`; `schema.format.applied:properties.file_path.pattern|format.applied:schema:LF:file_path` | All other 2172 IDs | FAIL as required |
+| `schema.format.applied:properties.diff_bytes.type` | `schema.format.applied:properties.diff_bytes.type|format.applied:schema:properties.diff_bytes.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.diff_bytes.minimum` | `schema.format.applied:properties.diff_bytes.minimum|format.applied:schema:properties.diff_bytes.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.diff_bytes.maximum` | `schema.format.applied:properties.diff_bytes.maximum|format.applied:schema:properties.diff_bytes.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.timestamp.type` | `schema.format.applied:properties.timestamp.type|format.applied:schema:properties.timestamp.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.timestamp.maxLength` | `schema.format.applied:properties.timestamp.maxLength|format.applied:schema:properties.timestamp.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.timestamp.format` | `schema.format.applied:properties.timestamp.format|format.applied:schema:properties.timestamp.format` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.tool_output_ref.type` | `schema.format.applied:properties.tool_output_ref.type|format.applied:schema:properties.tool_output_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.tool_output_ref.maxLength` | `schema.format.applied:properties.tool_output_ref.maxLength|format.applied:schema:properties.tool_output_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.tool_output_ref.pattern` | `schema.format.applied:properties.tool_output_ref.pattern|format.applied:schema:properties.tool_output_ref.pattern`; `schema.format.applied:properties.tool_output_ref.pattern|format.applied:schema:LF:tool_output_ref` | All other 2172 IDs | FAIL as required |
+| `schema.format.applied:properties.formatted_output_ref.type` | `schema.format.applied:properties.formatted_output_ref.type|format.applied:schema:properties.formatted_output_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.formatted_output_ref.maxLength` | `schema.format.applied:properties.formatted_output_ref.maxLength|format.applied:schema:properties.formatted_output_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.format.applied:properties.formatted_output_ref.pattern` | `schema.format.applied:properties.formatted_output_ref.pattern|format.applied:schema:properties.formatted_output_ref.pattern`; `schema.format.applied:properties.formatted_output_ref.pattern|format.applied:schema:LF:formatted_output_ref` | All other 2172 IDs | FAIL as required |
+| `semantic.edge` | `semantic.edge|lsp.server.lifecycle_changed:lifecycle_edge` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:type` | `schema.lsp.server.lifecycle_changed:type|lsp.server.lifecycle_changed:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:additionalProperties` | `schema.lsp.server.lifecycle_changed:additionalProperties|lsp.server.lifecycle_changed:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.0` | `schema.lsp.server.lifecycle_changed:required.0|lsp.server.lifecycle_changed:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.1` | `schema.lsp.server.lifecycle_changed:required.1|lsp.server.lifecycle_changed:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.2` | `schema.lsp.server.lifecycle_changed:required.2|lsp.server.lifecycle_changed:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.3` | `schema.lsp.server.lifecycle_changed:required.3|lsp.server.lifecycle_changed:schema:missing_host_id` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.4` | `schema.lsp.server.lifecycle_changed:required.4|lsp.server.lifecycle_changed:schema:missing_server_id` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.5` | `schema.lsp.server.lifecycle_changed:required.5|lsp.server.lifecycle_changed:schema:missing_root_identity` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.6` | `schema.lsp.server.lifecycle_changed:required.6|lsp.server.lifecycle_changed:schema:missing_lsp_session_id` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.7` | `schema.lsp.server.lifecycle_changed:required.7|lsp.server.lifecycle_changed:schema:missing_previous_state` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.8` | `schema.lsp.server.lifecycle_changed:required.8|lsp.server.lifecycle_changed:schema:missing_state` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.9` | `schema.lsp.server.lifecycle_changed:required.9|lsp.server.lifecycle_changed:schema:missing_state_reason` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:required.10` | `schema.lsp.server.lifecycle_changed:required.10|lsp.server.lifecycle_changed:schema:missing_ts` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.schema_version.const` | `schema.lsp.server.lifecycle_changed:properties.schema_version.const|lsp.server.lifecycle_changed:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.operation_id.type` | `schema.lsp.server.lifecycle_changed:properties.operation_id.type|lsp.server.lifecycle_changed:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.operation_id.minLength` | `schema.lsp.server.lifecycle_changed:properties.operation_id.minLength|lsp.server.lifecycle_changed:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.operation_id.maxLength` | `schema.lsp.server.lifecycle_changed:properties.operation_id.maxLength|lsp.server.lifecycle_changed:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.project_id.type` | `schema.lsp.server.lifecycle_changed:properties.project_id.type|lsp.server.lifecycle_changed:schema:properties.project_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.project_id.minLength` | `schema.lsp.server.lifecycle_changed:properties.project_id.minLength|lsp.server.lifecycle_changed:schema:properties.project_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.project_id.maxLength` | `schema.lsp.server.lifecycle_changed:properties.project_id.maxLength|lsp.server.lifecycle_changed:schema:properties.project_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.host_id.type` | `schema.lsp.server.lifecycle_changed:properties.host_id.type|lsp.server.lifecycle_changed:schema:properties.host_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.host_id.minLength` | `schema.lsp.server.lifecycle_changed:properties.host_id.minLength|lsp.server.lifecycle_changed:schema:properties.host_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.host_id.maxLength` | `schema.lsp.server.lifecycle_changed:properties.host_id.maxLength|lsp.server.lifecycle_changed:schema:properties.host_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.server_id.type` | `schema.lsp.server.lifecycle_changed:properties.server_id.type|lsp.server.lifecycle_changed:schema:properties.server_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.server_id.minLength` | `schema.lsp.server.lifecycle_changed:properties.server_id.minLength|lsp.server.lifecycle_changed:schema:properties.server_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.server_id.maxLength` | `schema.lsp.server.lifecycle_changed:properties.server_id.maxLength|lsp.server.lifecycle_changed:schema:properties.server_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.root_identity.type` | `schema.lsp.server.lifecycle_changed:properties.root_identity.type|lsp.server.lifecycle_changed:schema:properties.root_identity.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.root_identity.minLength` | `schema.lsp.server.lifecycle_changed:properties.root_identity.minLength|lsp.server.lifecycle_changed:schema:properties.root_identity.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.root_identity.maxLength` | `schema.lsp.server.lifecycle_changed:properties.root_identity.maxLength|lsp.server.lifecycle_changed:schema:properties.root_identity.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.lsp_session_id.type` | `schema.lsp.server.lifecycle_changed:properties.lsp_session_id.type|lsp.server.lifecycle_changed:schema:properties.lsp_session_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.lsp_session_id.minLength` | `schema.lsp.server.lifecycle_changed:properties.lsp_session_id.minLength|lsp.server.lifecycle_changed:schema:properties.lsp_session_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.lsp_session_id.maxLength` | `schema.lsp.server.lifecycle_changed:properties.lsp_session_id.maxLength|lsp.server.lifecycle_changed:schema:properties.lsp_session_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.previous_state.enum` | `schema.lsp.server.lifecycle_changed:properties.previous_state.enum|lsp.server.lifecycle_changed:schema:properties.previous_state.enum` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.state.enum` | `schema.lsp.server.lifecycle_changed:properties.state.enum|lsp.server.lifecycle_changed:schema:properties.state.enum` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.state_reason.type` | `schema.lsp.server.lifecycle_changed:properties.state_reason.type|lsp.server.lifecycle_changed:schema:properties.state_reason.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.state_reason.minLength` | `schema.lsp.server.lifecycle_changed:properties.state_reason.minLength|lsp.server.lifecycle_changed:schema:properties.state_reason.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.state_reason.maxLength` | `schema.lsp.server.lifecycle_changed:properties.state_reason.maxLength|lsp.server.lifecycle_changed:schema:properties.state_reason.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.ts.type` | `schema.lsp.server.lifecycle_changed:properties.ts.type|lsp.server.lifecycle_changed:schema:properties.ts.type` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.ts.maxLength` | `schema.lsp.server.lifecycle_changed:properties.ts.maxLength|lsp.server.lifecycle_changed:schema:properties.ts.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.lsp.server.lifecycle_changed:properties.ts.format` | `schema.lsp.server.lifecycle_changed:properties.ts.format|lsp.server.lifecycle_changed:schema:properties.ts.format` | All other 2173 IDs | FAIL as required |
+| `writer.server_identity` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_pack_synced` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_index_synced` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_source_present` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_permission_current` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_deletion_clear` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_hold_allows_disclosure` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_exclusivity` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `payload.external_descriptor` | 6 IDs in `DM-guard-removal.json` | All other 2168 IDs | FAIL as required |
+| `payload.external_ref` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:type` | `schema.model.catalog_refreshed:type|model.catalog_refreshed:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:additionalProperties` | `schema.model.catalog_refreshed:additionalProperties|model.catalog_refreshed:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.0` | `schema.model.catalog_refreshed:required.0|model.catalog_refreshed:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.1` | `schema.model.catalog_refreshed:required.1|model.catalog_refreshed:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.2` | `schema.model.catalog_refreshed:required.2|model.catalog_refreshed:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.3` | `schema.model.catalog_refreshed:required.3|model.catalog_refreshed:schema:missing_model_catalog_revision` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.4` | `schema.model.catalog_refreshed:required.4|model.catalog_refreshed:schema:missing_provider_status_refs` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.5` | `schema.model.catalog_refreshed:required.5|model.catalog_refreshed:schema:missing_refresh_reason` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.6` | `schema.model.catalog_refreshed:required.6|model.catalog_refreshed:schema:missing_provider_id` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.7` | `schema.model.catalog_refreshed:required.7|model.catalog_refreshed:schema:missing_account_id` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:required.8` | `schema.model.catalog_refreshed:required.8|model.catalog_refreshed:schema:missing_completed_at_utc` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.schema_version.const` | `schema.model.catalog_refreshed:properties.schema_version.const|model.catalog_refreshed:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.operation_id.type` | `schema.model.catalog_refreshed:properties.operation_id.type|model.catalog_refreshed:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.operation_id.minLength` | `schema.model.catalog_refreshed:properties.operation_id.minLength|model.catalog_refreshed:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.operation_id.maxLength` | `schema.model.catalog_refreshed:properties.operation_id.maxLength|model.catalog_refreshed:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.project_id.anyOf.0.type` | `schema.model.catalog_refreshed:properties.project_id.anyOf.0.type|model.catalog_refreshed:schema:properties.project_id.anyOf.0.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.project_id.anyOf.0.minLength` | `schema.model.catalog_refreshed:properties.project_id.anyOf.0.minLength|model.catalog_refreshed:schema:properties.project_id.anyOf.0.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.project_id.anyOf.0.maxLength` | `schema.model.catalog_refreshed:properties.project_id.anyOf.0.maxLength|model.catalog_refreshed:schema:properties.project_id.anyOf.0.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.model_catalog_revision.type` | `schema.model.catalog_refreshed:properties.model_catalog_revision.type|model.catalog_refreshed:schema:properties.model_catalog_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.model_catalog_revision.minimum` | `schema.model.catalog_refreshed:properties.model_catalog_revision.minimum|model.catalog_refreshed:schema:properties.model_catalog_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.model_catalog_revision.maximum` | `schema.model.catalog_refreshed:properties.model_catalog_revision.maximum|model.catalog_refreshed:schema:properties.model_catalog_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_status_refs.type` | `schema.model.catalog_refreshed:properties.provider_status_refs.type|model.catalog_refreshed:schema:properties.provider_status_refs.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_status_refs.maxItems` | `schema.model.catalog_refreshed:properties.provider_status_refs.maxItems|model.catalog_refreshed:schema:properties.provider_status_refs.maxItems` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_status_refs.uniqueItems` | `schema.model.catalog_refreshed:properties.provider_status_refs.uniqueItems|model.catalog_refreshed:schema:properties.provider_status_refs.uniqueItems` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_status_refs.items.type` | `schema.model.catalog_refreshed:properties.provider_status_refs.items.type|model.catalog_refreshed:schema:properties.provider_status_refs.items.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_status_refs.items.maxLength` | `schema.model.catalog_refreshed:properties.provider_status_refs.items.maxLength|model.catalog_refreshed:schema:properties.provider_status_refs.items.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_status_refs.items.pattern` | `schema.model.catalog_refreshed:properties.provider_status_refs.items.pattern|model.catalog_refreshed:schema:properties.provider_status_refs.items.pattern`; `schema.model.catalog_refreshed:properties.provider_status_refs.items.pattern|model.catalog_refreshed:schema:LF:provider_status_refs.0` | All other 2172 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.refresh_reason.type` | `schema.model.catalog_refreshed:properties.refresh_reason.type|model.catalog_refreshed:schema:properties.refresh_reason.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.refresh_reason.minLength` | `schema.model.catalog_refreshed:properties.refresh_reason.minLength|model.catalog_refreshed:schema:properties.refresh_reason.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.refresh_reason.maxLength` | `schema.model.catalog_refreshed:properties.refresh_reason.maxLength|model.catalog_refreshed:schema:properties.refresh_reason.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_id.anyOf.0.type` | `schema.model.catalog_refreshed:properties.provider_id.anyOf.0.type|model.catalog_refreshed:schema:properties.provider_id.anyOf.0.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_id.anyOf.0.minLength` | `schema.model.catalog_refreshed:properties.provider_id.anyOf.0.minLength|model.catalog_refreshed:schema:properties.provider_id.anyOf.0.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.provider_id.anyOf.0.maxLength` | `schema.model.catalog_refreshed:properties.provider_id.anyOf.0.maxLength|model.catalog_refreshed:schema:properties.provider_id.anyOf.0.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.account_id.anyOf.0.type` | `schema.model.catalog_refreshed:properties.account_id.anyOf.0.type|model.catalog_refreshed:schema:properties.account_id.anyOf.0.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.account_id.anyOf.0.minLength` | `schema.model.catalog_refreshed:properties.account_id.anyOf.0.minLength|model.catalog_refreshed:schema:properties.account_id.anyOf.0.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.account_id.anyOf.0.maxLength` | `schema.model.catalog_refreshed:properties.account_id.anyOf.0.maxLength|model.catalog_refreshed:schema:properties.account_id.anyOf.0.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.completed_at_utc.type` | `schema.model.catalog_refreshed:properties.completed_at_utc.type|model.catalog_refreshed:schema:properties.completed_at_utc.type` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.completed_at_utc.maxLength` | `schema.model.catalog_refreshed:properties.completed_at_utc.maxLength|model.catalog_refreshed:schema:properties.completed_at_utc.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.model.catalog_refreshed:properties.completed_at_utc.format` | `schema.model.catalog_refreshed:properties.completed_at_utc.format|model.catalog_refreshed:schema:properties.completed_at_utc.format` | All other 2173 IDs | FAIL as required |
+| `writer.child_run` | `writer.child_run|subagent.context_rehydrated:child_run`; `writer.child_run|subagent.context_shrunk:child_run` | All other 2172 IDs | FAIL as required |
+| `semantic.revision` | `semantic.revision|subagent.context_rehydrated:revision_successor`; `semantic.revision|subagent.context_shrunk:revision_successor` | All other 2172 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:type` | `schema.subagent.context_rehydrated:type|subagent.context_rehydrated:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:additionalProperties` | `schema.subagent.context_rehydrated:additionalProperties|subagent.context_rehydrated:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.0` | `schema.subagent.context_rehydrated:required.0|subagent.context_rehydrated:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.1` | `schema.subagent.context_rehydrated:required.1|subagent.context_rehydrated:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.2` | `schema.subagent.context_rehydrated:required.2|subagent.context_rehydrated:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.3` | `schema.subagent.context_rehydrated:required.3|subagent.context_rehydrated:schema:missing_agent_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.4` | `schema.subagent.context_rehydrated:required.4|subagent.context_rehydrated:schema:missing_run_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.5` | `schema.subagent.context_rehydrated:required.5|subagent.context_rehydrated:schema:missing_child_run_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.6` | `schema.subagent.context_rehydrated:required.6|subagent.context_rehydrated:schema:missing_before_revision` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.7` | `schema.subagent.context_rehydrated:required.7|subagent.context_rehydrated:schema:missing_after_revision` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.8` | `schema.subagent.context_rehydrated:required.8|subagent.context_rehydrated:schema:missing_source_refs` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.9` | `schema.subagent.context_rehydrated:required.9|subagent.context_rehydrated:schema:missing_effective_context_ref` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:required.10` | `schema.subagent.context_rehydrated:required.10|subagent.context_rehydrated:schema:missing_occurred_at_utc` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.schema_version.const` | `schema.subagent.context_rehydrated:properties.schema_version.const|subagent.context_rehydrated:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.operation_id.type` | `schema.subagent.context_rehydrated:properties.operation_id.type|subagent.context_rehydrated:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.operation_id.minLength` | `schema.subagent.context_rehydrated:properties.operation_id.minLength|subagent.context_rehydrated:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.operation_id.maxLength` | `schema.subagent.context_rehydrated:properties.operation_id.maxLength|subagent.context_rehydrated:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.project_id.anyOf.0.type` | `schema.subagent.context_rehydrated:properties.project_id.anyOf.0.type|subagent.context_rehydrated:schema:properties.project_id.anyOf.0.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.project_id.anyOf.0.minLength` | `schema.subagent.context_rehydrated:properties.project_id.anyOf.0.minLength|subagent.context_rehydrated:schema:properties.project_id.anyOf.0.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.project_id.anyOf.0.maxLength` | `schema.subagent.context_rehydrated:properties.project_id.anyOf.0.maxLength|subagent.context_rehydrated:schema:properties.project_id.anyOf.0.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.agent_id.type` | `schema.subagent.context_rehydrated:properties.agent_id.type|subagent.context_rehydrated:schema:properties.agent_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.agent_id.minLength` | `schema.subagent.context_rehydrated:properties.agent_id.minLength|subagent.context_rehydrated:schema:properties.agent_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.agent_id.maxLength` | `schema.subagent.context_rehydrated:properties.agent_id.maxLength|subagent.context_rehydrated:schema:properties.agent_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.run_id.type` | `schema.subagent.context_rehydrated:properties.run_id.type|subagent.context_rehydrated:schema:properties.run_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.run_id.minLength` | `schema.subagent.context_rehydrated:properties.run_id.minLength|subagent.context_rehydrated:schema:properties.run_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.run_id.maxLength` | `schema.subagent.context_rehydrated:properties.run_id.maxLength|subagent.context_rehydrated:schema:properties.run_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.child_run_id.type` | `schema.subagent.context_rehydrated:properties.child_run_id.type|subagent.context_rehydrated:schema:properties.child_run_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.child_run_id.minLength` | `schema.subagent.context_rehydrated:properties.child_run_id.minLength|subagent.context_rehydrated:schema:properties.child_run_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.child_run_id.maxLength` | `schema.subagent.context_rehydrated:properties.child_run_id.maxLength|subagent.context_rehydrated:schema:properties.child_run_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.before_revision.type` | `schema.subagent.context_rehydrated:properties.before_revision.type|subagent.context_rehydrated:schema:properties.before_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.before_revision.minimum` | `schema.subagent.context_rehydrated:properties.before_revision.minimum|subagent.context_rehydrated:schema:properties.before_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.before_revision.maximum` | `schema.subagent.context_rehydrated:properties.before_revision.maximum|subagent.context_rehydrated:schema:properties.before_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.after_revision.type` | `schema.subagent.context_rehydrated:properties.after_revision.type|subagent.context_rehydrated:schema:properties.after_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.after_revision.minimum` | `schema.subagent.context_rehydrated:properties.after_revision.minimum|subagent.context_rehydrated:schema:properties.after_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.after_revision.maximum` | `schema.subagent.context_rehydrated:properties.after_revision.maximum|subagent.context_rehydrated:schema:properties.after_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.type` | `schema.subagent.context_rehydrated:properties.source_refs.type|subagent.context_rehydrated:schema:properties.source_refs.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.minItems` | `schema.subagent.context_rehydrated:properties.source_refs.minItems|subagent.context_rehydrated:schema:properties.source_refs.minItems` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.maxItems` | `schema.subagent.context_rehydrated:properties.source_refs.maxItems|subagent.context_rehydrated:schema:properties.source_refs.maxItems` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.uniqueItems` | `schema.subagent.context_rehydrated:properties.source_refs.uniqueItems|subagent.context_rehydrated:schema:properties.source_refs.uniqueItems` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.items.type` | `schema.subagent.context_rehydrated:properties.source_refs.items.type|subagent.context_rehydrated:schema:properties.source_refs.items.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.items.maxLength` | `schema.subagent.context_rehydrated:properties.source_refs.items.maxLength|subagent.context_rehydrated:schema:properties.source_refs.items.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.source_refs.items.pattern` | `schema.subagent.context_rehydrated:properties.source_refs.items.pattern|subagent.context_rehydrated:schema:properties.source_refs.items.pattern`; `schema.subagent.context_rehydrated:properties.source_refs.items.pattern|subagent.context_rehydrated:schema:LF:source_refs.0` | All other 2172 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.effective_context_ref.type` | `schema.subagent.context_rehydrated:properties.effective_context_ref.type|subagent.context_rehydrated:schema:properties.effective_context_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.effective_context_ref.maxLength` | `schema.subagent.context_rehydrated:properties.effective_context_ref.maxLength|subagent.context_rehydrated:schema:properties.effective_context_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.effective_context_ref.pattern` | `schema.subagent.context_rehydrated:properties.effective_context_ref.pattern|subagent.context_rehydrated:schema:properties.effective_context_ref.pattern`; `schema.subagent.context_rehydrated:properties.effective_context_ref.pattern|subagent.context_rehydrated:schema:LF:effective_context_ref` | All other 2172 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.occurred_at_utc.type` | `schema.subagent.context_rehydrated:properties.occurred_at_utc.type|subagent.context_rehydrated:schema:properties.occurred_at_utc.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.occurred_at_utc.maxLength` | `schema.subagent.context_rehydrated:properties.occurred_at_utc.maxLength|subagent.context_rehydrated:schema:properties.occurred_at_utc.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_rehydrated:properties.occurred_at_utc.format` | `schema.subagent.context_rehydrated:properties.occurred_at_utc.format|subagent.context_rehydrated:schema:properties.occurred_at_utc.format` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:type` | `schema.subagent.context_shrunk:type|subagent.context_shrunk:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:additionalProperties` | `schema.subagent.context_shrunk:additionalProperties|subagent.context_shrunk:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.0` | `schema.subagent.context_shrunk:required.0|subagent.context_shrunk:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.1` | `schema.subagent.context_shrunk:required.1|subagent.context_shrunk:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.2` | `schema.subagent.context_shrunk:required.2|subagent.context_shrunk:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.3` | `schema.subagent.context_shrunk:required.3|subagent.context_shrunk:schema:missing_agent_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.4` | `schema.subagent.context_shrunk:required.4|subagent.context_shrunk:schema:missing_run_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.5` | `schema.subagent.context_shrunk:required.5|subagent.context_shrunk:schema:missing_child_run_id` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.6` | `schema.subagent.context_shrunk:required.6|subagent.context_shrunk:schema:missing_before_revision` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.7` | `schema.subagent.context_shrunk:required.7|subagent.context_shrunk:schema:missing_after_revision` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.8` | `schema.subagent.context_shrunk:required.8|subagent.context_shrunk:schema:missing_source_refs` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.9` | `schema.subagent.context_shrunk:required.9|subagent.context_shrunk:schema:missing_effective_context_ref` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:required.10` | `schema.subagent.context_shrunk:required.10|subagent.context_shrunk:schema:missing_occurred_at_utc` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.schema_version.const` | `schema.subagent.context_shrunk:properties.schema_version.const|subagent.context_shrunk:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.operation_id.type` | `schema.subagent.context_shrunk:properties.operation_id.type|subagent.context_shrunk:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.operation_id.minLength` | `schema.subagent.context_shrunk:properties.operation_id.minLength|subagent.context_shrunk:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.operation_id.maxLength` | `schema.subagent.context_shrunk:properties.operation_id.maxLength|subagent.context_shrunk:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.project_id.anyOf.0.type` | `schema.subagent.context_shrunk:properties.project_id.anyOf.0.type|subagent.context_shrunk:schema:properties.project_id.anyOf.0.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.project_id.anyOf.0.minLength` | `schema.subagent.context_shrunk:properties.project_id.anyOf.0.minLength|subagent.context_shrunk:schema:properties.project_id.anyOf.0.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.project_id.anyOf.0.maxLength` | `schema.subagent.context_shrunk:properties.project_id.anyOf.0.maxLength|subagent.context_shrunk:schema:properties.project_id.anyOf.0.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.agent_id.type` | `schema.subagent.context_shrunk:properties.agent_id.type|subagent.context_shrunk:schema:properties.agent_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.agent_id.minLength` | `schema.subagent.context_shrunk:properties.agent_id.minLength|subagent.context_shrunk:schema:properties.agent_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.agent_id.maxLength` | `schema.subagent.context_shrunk:properties.agent_id.maxLength|subagent.context_shrunk:schema:properties.agent_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.run_id.type` | `schema.subagent.context_shrunk:properties.run_id.type|subagent.context_shrunk:schema:properties.run_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.run_id.minLength` | `schema.subagent.context_shrunk:properties.run_id.minLength|subagent.context_shrunk:schema:properties.run_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.run_id.maxLength` | `schema.subagent.context_shrunk:properties.run_id.maxLength|subagent.context_shrunk:schema:properties.run_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.child_run_id.type` | `schema.subagent.context_shrunk:properties.child_run_id.type|subagent.context_shrunk:schema:properties.child_run_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.child_run_id.minLength` | `schema.subagent.context_shrunk:properties.child_run_id.minLength|subagent.context_shrunk:schema:properties.child_run_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.child_run_id.maxLength` | `schema.subagent.context_shrunk:properties.child_run_id.maxLength|subagent.context_shrunk:schema:properties.child_run_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.before_revision.type` | `schema.subagent.context_shrunk:properties.before_revision.type|subagent.context_shrunk:schema:properties.before_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.before_revision.minimum` | `schema.subagent.context_shrunk:properties.before_revision.minimum|subagent.context_shrunk:schema:properties.before_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.before_revision.maximum` | `schema.subagent.context_shrunk:properties.before_revision.maximum|subagent.context_shrunk:schema:properties.before_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.after_revision.type` | `schema.subagent.context_shrunk:properties.after_revision.type|subagent.context_shrunk:schema:properties.after_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.after_revision.minimum` | `schema.subagent.context_shrunk:properties.after_revision.minimum|subagent.context_shrunk:schema:properties.after_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.after_revision.maximum` | `schema.subagent.context_shrunk:properties.after_revision.maximum|subagent.context_shrunk:schema:properties.after_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.type` | `schema.subagent.context_shrunk:properties.source_refs.type|subagent.context_shrunk:schema:properties.source_refs.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.minItems` | `schema.subagent.context_shrunk:properties.source_refs.minItems|subagent.context_shrunk:schema:properties.source_refs.minItems` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.maxItems` | `schema.subagent.context_shrunk:properties.source_refs.maxItems|subagent.context_shrunk:schema:properties.source_refs.maxItems` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.uniqueItems` | `schema.subagent.context_shrunk:properties.source_refs.uniqueItems|subagent.context_shrunk:schema:properties.source_refs.uniqueItems` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.items.type` | `schema.subagent.context_shrunk:properties.source_refs.items.type|subagent.context_shrunk:schema:properties.source_refs.items.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.items.maxLength` | `schema.subagent.context_shrunk:properties.source_refs.items.maxLength|subagent.context_shrunk:schema:properties.source_refs.items.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.source_refs.items.pattern` | `schema.subagent.context_shrunk:properties.source_refs.items.pattern|subagent.context_shrunk:schema:properties.source_refs.items.pattern`; `schema.subagent.context_shrunk:properties.source_refs.items.pattern|subagent.context_shrunk:schema:LF:source_refs.0` | All other 2172 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.effective_context_ref.type` | `schema.subagent.context_shrunk:properties.effective_context_ref.type|subagent.context_shrunk:schema:properties.effective_context_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.effective_context_ref.maxLength` | `schema.subagent.context_shrunk:properties.effective_context_ref.maxLength|subagent.context_shrunk:schema:properties.effective_context_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.effective_context_ref.pattern` | `schema.subagent.context_shrunk:properties.effective_context_ref.pattern|subagent.context_shrunk:schema:properties.effective_context_ref.pattern`; `schema.subagent.context_shrunk:properties.effective_context_ref.pattern|subagent.context_shrunk:schema:LF:effective_context_ref` | All other 2172 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.occurred_at_utc.type` | `schema.subagent.context_shrunk:properties.occurred_at_utc.type|subagent.context_shrunk:schema:properties.occurred_at_utc.type` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.occurred_at_utc.maxLength` | `schema.subagent.context_shrunk:properties.occurred_at_utc.maxLength|subagent.context_shrunk:schema:properties.occurred_at_utc.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.subagent.context_shrunk:properties.occurred_at_utc.format` | `schema.subagent.context_shrunk:properties.occurred_at_utc.format|subagent.context_shrunk:schema:properties.occurred_at_utc.format` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:type` | `schema.project.added:type|project.added:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:additionalProperties` | `schema.project.added:additionalProperties|project.added:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.0` | `schema.project.added:required.0|project.added:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.1` | `schema.project.added:required.1|project.added:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.2` | `schema.project.added:required.2|project.added:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.3` | `schema.project.added:required.3|project.added:schema:missing_project_revision` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.4` | `schema.project.added:required.4|project.added:schema:missing_stable_config_ref` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.5` | `schema.project.added:required.5|project.added:schema:missing_registration_kind` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.6` | `schema.project.added:required.6|project.added:schema:missing_operation_receipt_ref` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:required.7` | `schema.project.added:required.7|project.added:schema:missing_completed_at_utc` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.schema_version.const` | `schema.project.added:properties.schema_version.const|project.added:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.operation_id.type` | `schema.project.added:properties.operation_id.type|project.added:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.operation_id.minLength` | `schema.project.added:properties.operation_id.minLength|project.added:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.operation_id.maxLength` | `schema.project.added:properties.operation_id.maxLength|project.added:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.project_id.type` | `schema.project.added:properties.project_id.type|project.added:schema:properties.project_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.project_id.minLength` | `schema.project.added:properties.project_id.minLength|project.added:schema:properties.project_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.project_id.maxLength` | `schema.project.added:properties.project_id.maxLength|project.added:schema:properties.project_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.project_revision.type` | `schema.project.added:properties.project_revision.type|project.added:schema:properties.project_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.project_revision.minimum` | `schema.project.added:properties.project_revision.minimum|project.added:schema:properties.project_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.project_revision.maximum` | `schema.project.added:properties.project_revision.maximum|project.added:schema:properties.project_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.stable_config_ref.type` | `schema.project.added:properties.stable_config_ref.type|project.added:schema:properties.stable_config_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.stable_config_ref.maxLength` | `schema.project.added:properties.stable_config_ref.maxLength|project.added:schema:properties.stable_config_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.stable_config_ref.pattern` | `schema.project.added:properties.stable_config_ref.pattern|project.added:schema:properties.stable_config_ref.pattern`; `schema.project.added:properties.stable_config_ref.pattern|project.added:schema:LF:stable_config_ref` | All other 2172 IDs | FAIL as required |
+| `schema.project.added:properties.registration_kind.type` | `schema.project.added:properties.registration_kind.type|project.added:schema:properties.registration_kind.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.registration_kind.minLength` | `schema.project.added:properties.registration_kind.minLength|project.added:schema:properties.registration_kind.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.registration_kind.maxLength` | `schema.project.added:properties.registration_kind.maxLength|project.added:schema:properties.registration_kind.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.operation_receipt_ref.type` | `schema.project.added:properties.operation_receipt_ref.type|project.added:schema:properties.operation_receipt_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.operation_receipt_ref.maxLength` | `schema.project.added:properties.operation_receipt_ref.maxLength|project.added:schema:properties.operation_receipt_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.operation_receipt_ref.pattern` | `schema.project.added:properties.operation_receipt_ref.pattern|project.added:schema:properties.operation_receipt_ref.pattern`; `schema.project.added:properties.operation_receipt_ref.pattern|project.added:schema:LF:operation_receipt_ref` | All other 2172 IDs | FAIL as required |
+| `schema.project.added:properties.completed_at_utc.type` | `schema.project.added:properties.completed_at_utc.type|project.added:schema:properties.completed_at_utc.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.completed_at_utc.maxLength` | `schema.project.added:properties.completed_at_utc.maxLength|project.added:schema:properties.completed_at_utc.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.added:properties.completed_at_utc.format` | `schema.project.added:properties.completed_at_utc.format|project.added:schema:properties.completed_at_utc.format` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:type` | `schema.project.created:type|project.created:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:additionalProperties` | `schema.project.created:additionalProperties|project.created:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.0` | `schema.project.created:required.0|project.created:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.1` | `schema.project.created:required.1|project.created:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.2` | `schema.project.created:required.2|project.created:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.3` | `schema.project.created:required.3|project.created:schema:missing_project_revision` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.4` | `schema.project.created:required.4|project.created:schema:missing_stable_config_ref` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.5` | `schema.project.created:required.5|project.created:schema:missing_creation_result_ref` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.6` | `schema.project.created:required.6|project.created:schema:missing_operation_receipt_ref` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:required.7` | `schema.project.created:required.7|project.created:schema:missing_completed_at_utc` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.schema_version.const` | `schema.project.created:properties.schema_version.const|project.created:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.operation_id.type` | `schema.project.created:properties.operation_id.type|project.created:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.operation_id.minLength` | `schema.project.created:properties.operation_id.minLength|project.created:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.operation_id.maxLength` | `schema.project.created:properties.operation_id.maxLength|project.created:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.project_id.type` | `schema.project.created:properties.project_id.type|project.created:schema:properties.project_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.project_id.minLength` | `schema.project.created:properties.project_id.minLength|project.created:schema:properties.project_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.project_id.maxLength` | `schema.project.created:properties.project_id.maxLength|project.created:schema:properties.project_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.project_revision.type` | `schema.project.created:properties.project_revision.type|project.created:schema:properties.project_revision.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.project_revision.minimum` | `schema.project.created:properties.project_revision.minimum|project.created:schema:properties.project_revision.minimum` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.project_revision.maximum` | `schema.project.created:properties.project_revision.maximum|project.created:schema:properties.project_revision.maximum` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.stable_config_ref.type` | `schema.project.created:properties.stable_config_ref.type|project.created:schema:properties.stable_config_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.stable_config_ref.maxLength` | `schema.project.created:properties.stable_config_ref.maxLength|project.created:schema:properties.stable_config_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.stable_config_ref.pattern` | `schema.project.created:properties.stable_config_ref.pattern|project.created:schema:properties.stable_config_ref.pattern`; `schema.project.created:properties.stable_config_ref.pattern|project.created:schema:LF:stable_config_ref` | All other 2172 IDs | FAIL as required |
+| `schema.project.created:properties.creation_result_ref.type` | `schema.project.created:properties.creation_result_ref.type|project.created:schema:properties.creation_result_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.creation_result_ref.maxLength` | `schema.project.created:properties.creation_result_ref.maxLength|project.created:schema:properties.creation_result_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.creation_result_ref.pattern` | `schema.project.created:properties.creation_result_ref.pattern|project.created:schema:properties.creation_result_ref.pattern`; `schema.project.created:properties.creation_result_ref.pattern|project.created:schema:LF:creation_result_ref` | All other 2172 IDs | FAIL as required |
+| `schema.project.created:properties.operation_receipt_ref.type` | `schema.project.created:properties.operation_receipt_ref.type|project.created:schema:properties.operation_receipt_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.operation_receipt_ref.maxLength` | `schema.project.created:properties.operation_receipt_ref.maxLength|project.created:schema:properties.operation_receipt_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.operation_receipt_ref.pattern` | `schema.project.created:properties.operation_receipt_ref.pattern|project.created:schema:properties.operation_receipt_ref.pattern`; `schema.project.created:properties.operation_receipt_ref.pattern|project.created:schema:LF:operation_receipt_ref` | All other 2172 IDs | FAIL as required |
+| `schema.project.created:properties.completed_at_utc.type` | `schema.project.created:properties.completed_at_utc.type|project.created:schema:properties.completed_at_utc.type` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.completed_at_utc.maxLength` | `schema.project.created:properties.completed_at_utc.maxLength|project.created:schema:properties.completed_at_utc.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.project.created:properties.completed_at_utc.format` | `schema.project.created:properties.completed_at_utc.format|project.created:schema:properties.completed_at_utc.format` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:type` | `schema.git.clone.completed:type|git.clone.completed:schema:type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:additionalProperties` | `schema.git.clone.completed:additionalProperties|git.clone.completed:schema:additionalProperties` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.0` | `schema.git.clone.completed:required.0|git.clone.completed:schema:missing_schema_version` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.1` | `schema.git.clone.completed:required.1|git.clone.completed:schema:missing_operation_id` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.2` | `schema.git.clone.completed:required.2|git.clone.completed:schema:missing_project_id` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.3` | `schema.git.clone.completed:required.3|git.clone.completed:schema:missing_repo_id` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.4` | `schema.git.clone.completed:required.4|git.clone.completed:schema:missing_workspace_id` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.5` | `schema.git.clone.completed:required.5|git.clone.completed:schema:missing_host_id` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.6` | `schema.git.clone.completed:required.6|git.clone.completed:schema:missing_environment_id` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.7` | `schema.git.clone.completed:required.7|git.clone.completed:schema:missing_source_location_ref` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.8` | `schema.git.clone.completed:required.8|git.clone.completed:schema:missing_operation_receipt_ref` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:required.9` | `schema.git.clone.completed:required.9|git.clone.completed:schema:missing_completed_at_utc` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.schema_version.const` | `schema.git.clone.completed:properties.schema_version.const|git.clone.completed:schema:properties.schema_version.const` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.operation_id.type` | `schema.git.clone.completed:properties.operation_id.type|git.clone.completed:schema:properties.operation_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.operation_id.minLength` | `schema.git.clone.completed:properties.operation_id.minLength|git.clone.completed:schema:properties.operation_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.operation_id.maxLength` | `schema.git.clone.completed:properties.operation_id.maxLength|git.clone.completed:schema:properties.operation_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.project_id.type` | `schema.git.clone.completed:properties.project_id.type|git.clone.completed:schema:properties.project_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.project_id.minLength` | `schema.git.clone.completed:properties.project_id.minLength|git.clone.completed:schema:properties.project_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.project_id.maxLength` | `schema.git.clone.completed:properties.project_id.maxLength|git.clone.completed:schema:properties.project_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.repo_id.type` | `schema.git.clone.completed:properties.repo_id.type|git.clone.completed:schema:properties.repo_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.repo_id.minLength` | `schema.git.clone.completed:properties.repo_id.minLength|git.clone.completed:schema:properties.repo_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.repo_id.maxLength` | `schema.git.clone.completed:properties.repo_id.maxLength|git.clone.completed:schema:properties.repo_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.workspace_id.type` | `schema.git.clone.completed:properties.workspace_id.type|git.clone.completed:schema:properties.workspace_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.workspace_id.minLength` | `schema.git.clone.completed:properties.workspace_id.minLength|git.clone.completed:schema:properties.workspace_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.workspace_id.maxLength` | `schema.git.clone.completed:properties.workspace_id.maxLength|git.clone.completed:schema:properties.workspace_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.host_id.type` | `schema.git.clone.completed:properties.host_id.type|git.clone.completed:schema:properties.host_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.host_id.minLength` | `schema.git.clone.completed:properties.host_id.minLength|git.clone.completed:schema:properties.host_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.host_id.maxLength` | `schema.git.clone.completed:properties.host_id.maxLength|git.clone.completed:schema:properties.host_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.environment_id.type` | `schema.git.clone.completed:properties.environment_id.type|git.clone.completed:schema:properties.environment_id.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.environment_id.minLength` | `schema.git.clone.completed:properties.environment_id.minLength|git.clone.completed:schema:properties.environment_id.minLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.environment_id.maxLength` | `schema.git.clone.completed:properties.environment_id.maxLength|git.clone.completed:schema:properties.environment_id.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.source_location_ref.type` | `schema.git.clone.completed:properties.source_location_ref.type|git.clone.completed:schema:properties.source_location_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.source_location_ref.maxLength` | `schema.git.clone.completed:properties.source_location_ref.maxLength|git.clone.completed:schema:properties.source_location_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.source_location_ref.pattern` | `schema.git.clone.completed:properties.source_location_ref.pattern|git.clone.completed:schema:properties.source_location_ref.pattern`; `schema.git.clone.completed:properties.source_location_ref.pattern|git.clone.completed:schema:LF:source_location_ref` | All other 2172 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.operation_receipt_ref.type` | `schema.git.clone.completed:properties.operation_receipt_ref.type|git.clone.completed:schema:properties.operation_receipt_ref.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.operation_receipt_ref.maxLength` | `schema.git.clone.completed:properties.operation_receipt_ref.maxLength|git.clone.completed:schema:properties.operation_receipt_ref.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.operation_receipt_ref.pattern` | `schema.git.clone.completed:properties.operation_receipt_ref.pattern|git.clone.completed:schema:properties.operation_receipt_ref.pattern`; `schema.git.clone.completed:properties.operation_receipt_ref.pattern|git.clone.completed:schema:LF:operation_receipt_ref` | All other 2172 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.completed_at_utc.type` | `schema.git.clone.completed:properties.completed_at_utc.type|git.clone.completed:schema:properties.completed_at_utc.type` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.completed_at_utc.maxLength` | `schema.git.clone.completed:properties.completed_at_utc.maxLength|git.clone.completed:schema:properties.completed_at_utc.maxLength` | All other 2173 IDs | FAIL as required |
+| `schema.git.clone.completed:properties.completed_at_utc.format` | `schema.git.clone.completed:properties.completed_at_utc.format|git.clone.completed:schema:properties.completed_at_utc.format` | All other 2173 IDs | FAIL as required |
+| `settings.retired_names` | `settings.retired_names|settings:retired_name_outside_theme` | All other 2173 IDs | FAIL as required |
+| `settings.theme_successor` | 8 IDs in `DM-guard-removal.json` | All other 2166 IDs | FAIL as required |
+| `settings.dry_unwired` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `settings.dry_disabled_reason` | `settings.dry_disabled_reason|settings:disabled_reason` | All other 2173 IDs | FAIL as required |
+| `settings.dry_migration` | 5 IDs in `DM-guard-removal.json` | All other 2169 IDs | FAIL as required |
+| `settings.dry_no_dispatch` | `settings.dry_no_dispatch|settings:premature_dispatch` | All other 2173 IDs | FAIL as required |
+| `settings.dry_exclusion` | 4 IDs in `DM-guard-removal.json` | All other 2170 IDs | FAIL as required |
+| `datetime.timezone` | `datetime.timezone|datetime:timezone` | All other 2173 IDs | FAIL as required |
+| `datetime.parse` | 9 IDs in `DM-guard-removal.json` | All other 2165 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:project_id.anyOf` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:project_id.null_branch_type` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:provider_status_refs.items` | 4 IDs in `DM-guard-removal.json` | All other 2170 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:provider_id.anyOf` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:provider_id.null_branch_type` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:account_id.anyOf` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.model.catalog_refreshed:account_id.null_branch_type` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.subagent.context_rehydrated:project_id.anyOf` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.subagent.context_rehydrated:project_id.null_branch_type` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.subagent.context_rehydrated:source_refs.items` | 4 IDs in `DM-guard-removal.json` | All other 2170 IDs | FAIL as required |
+| `schema.container.subagent.context_shrunk:project_id.anyOf` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.subagent.context_shrunk:project_id.null_branch_type` | 3 IDs in `DM-guard-removal.json` | All other 2171 IDs | FAIL as required |
+| `schema.container.subagent.context_shrunk:source_refs.items` | 4 IDs in `DM-guard-removal.json` | All other 2170 IDs | FAIL as required |
 
 ## Family grades before and after
 
-Before is the **cycle-3 independent review** at the requested input, including its two Settings compatibility PARTIAL corrections. The input self-grade had overstated those two cells as PASS. After records the completed application; N/A remains disposition-only and supplies no current-writer depth credit.
+Before is the Astra regrade at the requested input, rather than the overstated prior branch self-grade. All eight oracle cells move PARTIAL → PASS. Membership remains ABSENT. Six permitted retention cells remain PARTIAL; the two child-context families retain their existing Runtime binding. Settings remains disposition-only, without current-writer credit.
 
-| Exact family | Cycle-3 reviewed before | After |
+| Family | Reviewed before | After |
 |---|---|---|
-| `format.applied` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `git.clone.completed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `lsp.server.lifecycle_changed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `model.catalog_refreshed` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `project.added` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `project.created` | 10 PASS / 1 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
-| `settings.theme.updated` | 1 PASS / 1 PARTIAL / 1 ABSENT / 9 NOT_APPLICABLE | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE |
-| `settings.updated` | 1 PASS / 1 PARTIAL / 1 ABSENT / 9 NOT_APPLICABLE | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE |
-| `subagent.context_rehydrated` | 11 PASS / 1 ABSENT | 11 PASS / 1 ABSENT |
-| `subagent.context_shrunk` | 11 PASS / 1 ABSENT | 11 PASS / 1 ABSENT |
+| `format.applied` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `git.clone.completed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `lsp.server.lifecycle_changed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `model.catalog_refreshed` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `project.added` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `project.created` | 9 PASS / 2 PARTIAL / 1 ABSENT | 10 PASS / 1 PARTIAL / 1 ABSENT |
+| `settings.theme.updated` | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE |
+| `settings.updated` | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE | 2 PASS / 1 ABSENT / 9 NOT_APPLICABLE |
+| `subagent.context_rehydrated` | 10 PASS / 1 PARTIAL / 1 ABSENT | 11 PASS / 1 ABSENT |
+| `subagent.context_shrunk` | 10 PASS / 1 PARTIAL / 1 ABSENT | 11 PASS / 1 ABSENT |
 
-All eight remain **PASS AS PREPARED**, with membership intentionally ABSENT. Six permitted `PENDING_RETENTION_DECISION` cells remain with RT; the two child-context rows keep their reviewed existing Runtime retention binding. Other card answers, including retention, are outside this fix. Each retired name has two PASS disposition cells, intentional ABSENT membership and nine NOT_APPLICABLE current-writer cells. Aggregate: **86 PASS / 6 PARTIAL / 10 ABSENT / 18 NOT_APPLICABLE**.
+Totals: **78 PASS / 14 PARTIAL / 10 ABSENT / 18 NOT_APPLICABLE → 86 PASS / 6 PARTIAL / 10 ABSENT / 18 NOT_APPLICABLE**.
 
-## Verification and delivery
+## Scope, authority and verification
 
-| Check | Exit / result |
+The shared prose changes are confined to CV-620–627 and SP-600–607; the semantic copies are FS-075, LSPS-173, MS-199, PP-151/152, PJCT-072/073 and SCS-085. Every copy adds retained-source reader/rebuild authentication and check-11 obligations. The checker, its new guard-audit companion and authored fixtures carry the executable evidence. Shards/indexes are generated companions. N1/N2 and the grades/check/guard-table records are report changes.
+
+No new PlanUnit or runtime binding ID is minted. Existing bindings/searches remain in `DM-search.json`; their capture revisions remain source lineage. All original authoring authority and premise checks are preserved in the input report at `fix4/input-report.md` and Git object `70302c381703c315ab93e0b3155c0bbd269f2472~1:reports/event-authority-20261104/DM.md`. No new product/retention/deletion choice is made. DL-408's integration dependency on `b6332f391a7870bad5f01a29a7e9d080050dac27` remains as previously recorded.
+
+The Settings application, companions, individual/census disposition records and forty retirement fixtures are unchanged from the input. Its recorded whole-file application hashes remain bound to the original application revision; its cited Settings units and disposition bytes remain unchanged, and no application hash is restamped. SP-348's unit text is unchanged (SHA-256 `6581d906febf55abbfcc004157d62526cac21f4ff9503d7f23ac2d927f93674c`). No registry append, admission record, Decision Log entry, Spec Lock, auto-decision, frozen validator, evidence bundle or governance reseal is edited. No agent delegation, mail sending, landing lock or main push occurs. Expected governance staleness from the eight edited owner documents needs the batch integration/reseal process.
+
+| Verification | Result |
 |---|---|
-| Full lane checker | 0; 4,965 assertions, eight families PASS |
-| Nine standing checks per family | 0; 72/72 full-checker negatives rejected; 8/8 success-exit guards reject 0 |
-| DL-408 companion regressions | 0; 40/40 full-checker negatives rejected |
-| Exclusion hashes, citations and frozen fields | 0; two rows / six representations / thirteen exact checked quotes |
-| Historical/current search and self-grade quotes | 0; 79 historical hits, 22 current bindings, 248 current grade quotes |
-| Shard check | 0; parsed `pass`, 99 sources / 3,092 shards |
-| Index generate / validate | 0 / 0; parsed top-level `pass`; runtime readiness remains blocked |
-| Settings layering | 0; 135 semantic cases, 1,017 rows |
-| Existing DRY guard consumer tests | 0; ten tests |
-| Storage recovery self-test | 0; parsed `pass` |
-| Storage profile | 1; unchanged 41 missing-profile errors; output SHA-256 `89d47858adcab797033a9feca549351641cfb6a2f6ee5da75a2c62082b3d450b` matches the pinned review byte for byte |
-| Scope/derived audit and whitespace | 0; no unrelated owner output; inherited CRLF accepted with `cr-at-eol` and default whitespace rules |
+| Complete lane checker | Exit 0; 9,681 assertions |
+| Whole-lane check-11 audit | Exit 0; 442/442 mutants caught; 2,174 independent negatives |
+| Corrupted original witnesses / success exit | Eight exit-1 child runs; eight success-exit refusals |
+| Shard generation/check | Exit 0; parsed top-level pass |
+| Index generation/validation | Exit 0; parsed top-level pass; readiness remains blocked |
+| Existing DRY consumer tests | Exit 0; ten tests |
+| Scope / Settings / IDs / citations | PASS; only own shard groups, no IDs, unchanged application, 256 current quotes/hashes |
+| Whitespace | Exit 0 |
 
-`DM-checks.json` contains commands, exits and output hashes. Raw check outputs and reproducible mutation/audit scripts are under `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/apply-fix1/`; their final manifest records paths and SHA-256 values. Currentness generation input: fifteen files copied from the share and individually hash-matched before index generation. The first index validation reported the expected edited-source staleness; regeneration reconciled only that delta. No governance seal was refreshed; the edited Wiring Matrix sources still require the integration reseal.
+Fifteen ignored currentness inputs were copied from the share and hash-matched before generation. Entry resources: 121 GB free root disk and 16 GiB available RAM, above both limits. `DM-checks.json` records command results and evidence paths/hashes. Raw evidence stays outside the repository under `fix4/`; the final manifest supplies its SHA-256s. Report and self-grade are copied to the requested drafts folder after pushing; `/home/sittingmongoose/pm-worktrees/DM-fix4` is removed with the literal-path worktree command at completion.
 
-Report, self-grade, checks, search and application copies are delivered to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DM/`. The prior report/grade/check/search snapshots remain in `apply-fix1/input-DM*` for lineage. Entry resources were **128 GB free root disk / 16 GiB available memory**, above both hard limits. The required sparse worktree is removed after the final push; no other checkout is touched.
-
-**IDs used:** no new PlanUnit or runtime binding IDs. Existing lane units remain **FS-075, LSPS-173, MS-199, PP-151/152, PJCT-072/073, SCS-085, CV-620–627, SP-600–607, ATS-300–304**. The fix applies existing **DL-408 / SSYS-060 / UCC-084/104/108 / UIW / WM-040 / SP-348** authority and reuses **CV-366, SP-278, SP-286/CV-339 and SP-337**. Original per-family search and newly authored bindings remain in `DM-search.json`; no new product binding is authored in this fix.
+**IDs used:** none new. Existing **FS-075, LSPS-173, MS-199, PP-151/152, PJCT-072/073, SCS-085, CV-620–627, SP-600–607, ATS-300–304**. Reused authority: **DL-045, DL-076, DL-408, CV-366, SP-278, SP-286/CV-339 and SP-337**.
