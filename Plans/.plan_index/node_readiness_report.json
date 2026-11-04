@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T19:02:42Z",
+  "generated_at_utc": "2026-11-04T19:04:37Z",
   "gui_related_units": {
     "count": 3791,
     "units": [
@@ -46179,6 +46179,18 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/human-in-the-loop.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
