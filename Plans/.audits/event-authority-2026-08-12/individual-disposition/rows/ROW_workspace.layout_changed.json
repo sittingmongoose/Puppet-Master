@@ -7,119 +7,274 @@
   ],
   "july_classification": "live_registry_august",
   "disposition": "KEEP_REGISTERED",
-  "disposition_rationale": "Plans/Decision_Log.md#DL-039: AUG-CP-WLC-001 VETO_KEEP_REGISTERED_PROVISIONAL applied 2026-09-11T14:10:58.582468+00:00. Keep workspace.layout_changed registered and provisional; consumer/checkpoint authority remains UNKNOWN/OWNER_REQUIRED. No inferred IDs or depth closure.",
+  "disposition_rationale": "Plans/Decision_Log.md#DL-039: AUG-CP-WLC-001 VETO_KEEP_REGISTERED_PROVISIONAL applied 2026-09-11T14:10:58.582468+00:00. Keep workspace.layout_changed registered and provisional; consumer/checkpoint authority remains UNKNOWN/OWNER_REQUIRED. No inferred IDs or depth closure. Refreshed 2026-11-04T18:30:00Z (lane DS, stream E batch 1): every citation re-anchored to 66a93f80f3; the consumer, projector and checkpoint are now cited from the Plans, which is the condition DL-039 AUG-CP-WLC-001 set (\"remain unknown until cited from the Plans, and that depth work is authorized\"), so provisional is false. The owner choice AUG-CP-WLC-001 = VETO_KEEP_REGISTERED_PROVISIONAL is unchanged. Cells not PASS at this revision: producer, positive_negative_oracles (see their notes); contract depth is not complete. Application: reports/event-authority-20261104/ds-step5-august-ledger-application.json. No identifier is invented, no registry row changes, no depth or seal is claimed beyond the cells.",
   "evidence": {
     "owner_doc": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:2321-2324",
-      "note": "Project-only family names FinalGUISpec semantic_owner_doc and Contracts payload_owner_doc."
+      "citation": "Plans/event_family_registry.json:2797; Plans/event_family_registry.json:2798; Plans/Contracts_V0.md:23690",
+      "note": "Refreshed 2026-11-04: FinalGUISpec F3-515 is the semantic owner and CV-361 the 2.0.0 payload owner."
     },
     "producer": {
-      "status": "PASS",
-      "citation": "Plans/Wiring_Matrix.production.json:37154-37175; Plans/Wiring_Matrix.production.json:44230-44254",
-      "note": "Bounded rows establish named reset and move-workgroup producers of workspace layout changes only; do not claim exhaustive producer coverage."
+      "status": "FAIL",
+      "citation": "Plans/storage-plan.md:21843; Plans/storage-plan.md:21825; Plans/storage-plan.md:27503",
+      "note": "DEPTH GAP found by the 2026-11-04 refresh (was PASS against the 1.1.0-era text). The writer is named (SP-273), but SP-273's 2026-10-09 amendment leaves the v2 writer's slot and receipt schema open in SP-330, and SP-330 says it is not written and no native v2 writer is admitted through those families until it exists, while the registry admits only 2.0.0 appends. Closable under DL-045 (workspace.layout_changed is in its 285 names): author the v2 slot and receipt schema in SP-330. Matches D1b's 2026-11-04 grade (PARTIAL)."
     },
     "membership_version": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:2319-2321",
-      "note": "Registered family binds family_revision 1.0.0 to workspace.layout_changed."
+      "citation": "Plans/event_family_registry.json:2795; Plans/event_family_registry.json:2794; Plans/event_payloads/workspace_layout_changed_v2.schema.json:3; Plans/event_payloads/workspace_layout_changed_v2.schema.json:43",
+      "note": "Refreshed 2026-11-04 to the 2.0.0 row: registry 2026-11-04.1 binds family_revision 2.0.0 (DL-188) to the v2 payload schema, whose $id and schema_version const are 2.0.0. 1.1.0 is a compatibility reader only."
     },
     "closed_payload_schema": {
       "status": "PASS",
-      "citation": "Plans/event_payloads/workspace_layout_changed.schema.json:5-151",
-      "note": "Object is closed by additionalProperties=false, required fields, constrained mutation/host/edge values, and persisted=true."
+      "citation": "Plans/event_payloads/workspace_layout_changed_v2.schema.json:7; Plans/Contracts_V0.md:23690",
+      "note": "Refreshed 2026-11-04: the v2 payload root is closed (additionalProperties false); 1.1.0 stays the compatibility reader."
     },
     "scope_identity": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:2321-2337; Plans/event_payloads/workspace_layout_changed.schema.json:7-24,33-40",
-      "note": "Registry declares project_only and /payload/project_id; schema requires nonempty project_id and workspace_tab_id."
+      "citation": "Plans/event_family_registry.json:2796; Plans/storage-plan.md:21845; Plans/storage-plan.md:21849; Plans/storage-plan.md:21825",
+      "note": "Refreshed 2026-11-04: project_only; SP-273's operation digest and envelope/payload Project join, carried over to v2 writes by its 2026-10-09 amendment."
     },
     "replay_idempotency": {
       "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:1016-1019,1027-1030; Plans/storage-plan.md:473-478",
-      "note": "Required replay/idempotency fields, selected dedupe identity/conflict behavior, canonical replay ordering/scope partition, and fail-closed dedupe admission are defined."
+      "citation": "Plans/storage-plan.md:21847; Plans/storage-plan.md:21875; Plans/storage-plan.md:21877",
+      "note": "Refreshed 2026-11-04: SP-273 idempotency, crash convergence and no-backfill rules, carried over to v2 writes."
     },
     "retention": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:2350-2354; Plans/storage_value_registry.json:68-81",
-      "note": "Family assigns RP-AUTHORITY-INDEFINITE v1.0.0 and registry defines indefinite retention, retain_indefinitely=true, null TTL, expiry_action=none."
+      "citation": "Plans/event_family_registry.json:2832; Plans/storage-plan.md:21897; Plans/storage-plan.md:21857",
+      "note": "Refreshed 2026-11-04: RP-AUTHORITY-INDEFINITE for the event; the reader checkpoint is disposable RP-PROJECTION-3GEN."
     },
     "redaction_custody": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:2340-2344; Plans/storage-plan.md:480",
-      "note": "Family rejects unhandled secrets with no transform; storage invalidates raw secrets and requires non-secret refs under permission/account custody."
+      "citation": "Plans/event_family_registry.json:2815; Plans/storage-plan.md:21901; Plans/storage-plan.md:21856",
+      "note": "Refreshed 2026-11-04: reject_unhandled_secrets; SP-273 receipt custody and access/tombstone checks before disclosure, carried over to v2."
     },
     "transitions": {
       "status": "PASS",
-      "citation": "Plans/FinalGUISpec.md:334-346; Plans/Contracts_V0.md:3418-3425",
-      "note": "Verified write/readback gates success; failure restores prior state and produces no success event, aligned to applied/no-change/cancelled/failed receipts."
+      "citation": "Plans/storage-plan.md:27503; Plans/Contracts_V0.md:23706",
+      "note": "Refreshed 2026-11-04: SP-330 validate/write/readback/revision/receipt/append order; a failed or unchanged commit appends none (CV-361)."
     },
     "consumers_checkpoints": {
-      "status": "OWNER_REQUIRED",
-      "citation": "Plans/storage-plan.md:1510-1546",
-      "note": "DEPTH GAP: Plans/Decision_Log.md#DL-039 AUG-CP-WLC-001 applies VETO_KEEP_REGISTERED_PROVISIONAL. Shared mechanics do not supply event-specific workspace.layout_changed consumer/projector or checkpoint key/schema/version authority. OWNER_REQUIRED remains; invent no IDs."
+      "status": "PASS",
+      "citation": "Plans/storage-plan.md:21889; Plans/storage-plan.md:21891; Plans/storage-plan.md:21857; Plans/storage-plan.md:21893; Plans/storage-plan.md:21936; Plans/storage-plan.md:21942; Plans/storage-plan.md:21899; Plans/storage-plan.md:21825",
+      "note": "Cited from the Plans 2026-11-04 under DL-039 AUG-CP-WLC-001 (\"remain unknown until cited from the Plans, and that depth work is authorized\"). Reader/projector home.workspace_layout_event_reader.v1@1.0.0 maintains the filtered checkpoint home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id} with prior-checkpoint CAS in one redb transaction and RP-PROJECTION-3GEN rebuild; consumers home.workspace_layout_home_view.v1, home.workspace_layout_editor_routing.v1 and home.workspace_layout_terminal_presentation.v1, all 1.0.0; SP-278 adopted with the nine-field durable token (DL-076); carried over to v2 writes by SP-273's amendment. Existing identifiers only; none invented."
     },
     "compatibility_withdrawal": {
       "status": "PASS",
-      "citation": "Plans/event_family_registry.json:2331-2339; Plans/Contracts_V0.md:1029-1031",
-      "note": "Exact empty aliases/extensions/referenced-event mapping plus forward-only migration and compatibility-reader rules close current compatibility posture."
+      "citation": "Plans/storage-plan.md:21903; Plans/storage-plan.md:21905; Plans/storage-plan.md:21825",
+      "note": "Refreshed 2026-11-04: 1.0.0/1.1.0 history stays readable through the compatibility reader; SP-273 consumer and producer withdrawal rules."
     },
     "positive_negative_oracles": {
-      "status": "PASS",
-      "citation": "Plans/Contracts_V0.md:3441-3445; Plans/FinalGUISpec.md:283-291,334-346",
-      "note": "Positive criteria require exact surface/revision/host/insertion/correlation/durability truth; negatives forbid success for failed, unchanged, cancelled, or fabricated application."
+      "status": "UNKNOWN",
+      "citation": "Plans/Automated_Testing_System.md:3914; Plans/home_layout_event_contract_fixtures.json:6; Plans/storage-plan.md:21942",
+      "note": "Cannot be confirmed PASS at the 2026-11-04 refresh (was PASS against the 1.1.0-era text). In-repo oracles exist and the PM7 checker validates the workspace event fixtures against 2.0.0, but SP-273's oracle set pins an external frozen suite (v4 manifest 60f1c8ad...) that the 2026-09-24 Step 8 assessment found stores redb_snapshot_id in the persisted reader-checkpoint token, contradicting DL-076; that suite is not reachable from this grader. Closable under DL-045: re-freeze and repin the suites under the nine-field token. Matches D1b's 2026-11-04 grade (PARTIAL)."
     }
   },
   "citations_checked": [
     {
-      "citation": "Plans/event_family_registry.json:2319-2354",
+      "citation": "Plans/event_family_registry.json:2797",
       "status": "ok",
-      "notes": "membership/owner/scope/redaction/compatibility/retention windows."
+      "notes": "exact quote at 66a93f80f3: \"semantic_owner_doc\": \"Plans/FinalGUISpec.md#f3-515---settled-interaction-event-and-persistence-boundary\","
     },
     {
-      "citation": "Plans/Wiring_Matrix.production.json:37154-37175; Plans/Wiring_Matrix.production.json:44230-44254",
+      "citation": "Plans/event_family_registry.json:2798",
       "status": "ok",
-      "notes": "Bounded reset + move-workgroup producer rows (not exhaustive)."
+      "notes": "exact quote at 66a93f80f3: \"payload_owner_doc\": \"Plans/Contracts_V0.md#CV-361\","
     },
     {
-      "citation": "Plans/event_payloads/workspace_layout_changed.schema.json:5-151",
+      "citation": "Plans/Contracts_V0.md:23690",
       "status": "ok",
-      "notes": "Closed payload."
+      "notes": "exact quote at 66a93f80f3: ### CV-361 - The workspace.layout_changed 2.0.0 Payload"
     },
     {
-      "citation": "Plans/Contracts_V0.md:1016-1019,1027-1030; Plans/storage-plan.md:473-478",
+      "citation": "Plans/storage-plan.md:21843",
       "status": "ok",
-      "notes": "Replay/idempotency."
+      "notes": "exact quote at 66a93f80f3: The current writer is `home.workspace_layout_commit.v1@3.0.0`"
     },
     {
-      "citation": "Plans/event_family_registry.json:2350-2354; Plans/storage_value_registry.json:68-81",
+      "citation": "Plans/storage-plan.md:21825",
       "status": "ok",
-      "notes": "Retention policy resolution."
+      "notes": "exact quote at 66a93f80f3: the v2 writer's slot and receipt schema is an open item of SP-330"
     },
     {
-      "citation": "Plans/event_family_registry.json:2340-2344; Plans/storage-plan.md:480",
+      "citation": "Plans/storage-plan.md:27503",
       "status": "ok",
-      "notes": "Redaction/custody."
+      "notes": "exact quote at 66a93f80f3: The successor slot and receipt schema for v2 writes is not written in this addendum"
     },
     {
-      "citation": "Plans/FinalGUISpec.md:334-346; Plans/Contracts_V0.md:3418-3425",
+      "citation": "Plans/event_family_registry.json:2795",
       "status": "ok",
-      "notes": "Transitions."
+      "notes": "exact quote at 66a93f80f3: \"event_type\": \"workspace.layout_changed\","
     },
     {
-      "citation": "Plans/storage-plan.md:1519-1524; Plans/event_family_registry.schema.json:305-370",
+      "citation": "Plans/event_family_registry.json:2794",
       "status": "ok",
-      "notes": "Generic checkpoint protocol vs absent event-specific consumer."
+      "notes": "exact quote at 66a93f80f3: \"family_revision\": \"2.0.0\","
     },
     {
-      "citation": "Plans/event_family_registry.json:2331-2339; Plans/Contracts_V0.md:1029-1031",
+      "citation": "Plans/event_payloads/workspace_layout_changed_v2.schema.json:3",
       "status": "ok",
-      "notes": "Compatibility posture."
+      "notes": "exact quote at 66a93f80f3: \"$id\": \"https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0\","
     },
     {
-      "citation": "Plans/Contracts_V0.md:3441-3445; Plans/FinalGUISpec.md:283-291,334-346",
+      "citation": "Plans/event_payloads/workspace_layout_changed_v2.schema.json:43",
       "status": "ok",
-      "notes": "Positive/negative oracles."
+      "notes": "exact quote at 66a93f80f3: \"const\": \"2.0.0\""
+    },
+    {
+      "citation": "Plans/event_payloads/workspace_layout_changed_v2.schema.json:7",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: \"additionalProperties\": false,"
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:23690",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: ### CV-361 - The workspace.layout_changed 2.0.0 Payload"
+    },
+    {
+      "citation": "Plans/event_family_registry.json:2796",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: \"scope_policy\": \"project_only\","
+    },
+    {
+      "citation": "Plans/storage-plan.md:21845",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_id,workspace_tab_id,command_instance_id])))`"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21849",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Envelope project_id equals payload project_id and the actual layout project; scope_kind=project."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21825",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21847",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21875",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Crash before candidate write resumes or cancels only the same admitted operation; it cannot invent a new command."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21877",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: A missing event for an old layout is never enough to create one."
+    },
+    {
+      "citation": "Plans/event_family_registry.json:2832",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: \"policy_id\": \"RP-AUTHORITY-INDEFINITE\","
+    },
+    {
+      "citation": "Plans/storage-plan.md:21897",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: The event remains indefinite metadata under its exact registered policy."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21857",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: `home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`"
+    },
+    {
+      "citation": "Plans/event_family_registry.json:2815",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: \"mode\": \"reject_unhandled_secrets\","
+    },
+    {
+      "citation": "Plans/storage-plan.md:21901",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Apply current project/workspace access, deletion tombstones, quarantine and backup custody before every ref resolution and disclosure."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21856",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: `home_layout_operation_receipt`, key `home_layout_operation_receipt.v1:{project_id}:{workspace_tab_id}:{operation_digest}`"
+    },
+    {
+      "citation": "Plans/storage-plan.md:27503",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: **Transaction and receipt.** Every committed structural change is one admitted command"
+    },
+    {
+      "citation": "Plans/Contracts_V0.md:23706",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Every committed structural change appends exactly one workspace.layout_changed"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21889",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Define NEW `home.workspace_layout_event_reader.v1@1.0.0` over existing `event_record_index.v2`"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21891",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Three NEW read consumers share the verified token: `home.workspace_layout_home_view.v1`, `home.workspace_layout_editor_routing.v1`, and `home.workspace_layout_t"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21857",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: `home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21893",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: In one redb transaction it writes only the filtered checkpoint"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21936",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Adopt actual canonical SP-278, not an opaque generic-index pointer."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21942",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21899",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: The filtered checkpoint now materializes RP-PROJECTION-3GEN"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21825",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21903",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Payload 1.0.0 history is read-only compatibility using actual frozen source contracts where available"
+    },
+    {
+      "citation": "Plans/storage-plan.md:21905",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: Withdrawing a read consumer invalidates only its token/publication."
+    },
+    {
+      "citation": "Plans/storage-plan.md:21825",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: whose compatibility reader keeps 1.1.0 events readable"
+    },
+    {
+      "citation": "Plans/Automated_Testing_System.md:3914",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: valid workspace-event fixtures satisfy the 2.0.0 payload"
+    },
+    {
+      "citation": "Plans/home_layout_event_contract_fixtures.json:6",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: \"path\": \"/home/sittingmongoose/PM-Experiments/event-authority-step08-workspace-layout-20260911/v4/manifest.json\","
+    },
+    {
+      "citation": "Plans/storage-plan.md:21942",
+      "status": "ok",
+      "notes": "exact quote at 66a93f80f3: stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored."
     }
   ],
   "owner_veto": null,
@@ -128,11 +283,12 @@
   "inference_used": false,
   "independent_of_od_ea_003": true,
   "source_overlay": "AugustDepthClose",
-  "provisional": true,
+  "provisional": false,
   "quality_notes": [
     "CiteAuthorityLibs field-local citation matrix applied (combined citation strings in citation fields, not notes-only).",
     "producer uses bounded Wiring_Matrix.production.json handler+expected_event_types ranges (not FinalGUISpec/Section15 alone).",
-    "AUG-CP-WLC-001 owner choice is applied; provisional=true persists because event-specific consumer/checkpoint depth remains OWNER_REQUIRED."
+    "AUG-CP-WLC-001 owner choice is applied; provisional=true persists because event-specific consumer/checkpoint depth remains OWNER_REQUIRED.",
+    "2026-11-04T18:30:00Z: lane DS refresh; citations are exact single-line quotes at 66a93f80f3fe3d032d8276d4e486cf69a2f1bf05; see reports/event-authority-20261104/ds-step5-august-ledger-application.json."
   ],
   "fresh_census_merged": false,
   "fresh_census_status": "ea27_coverage_only_pending_fresh_residual_merge",
