@@ -23,6 +23,30 @@ def identity(event_type, payload):
     raw = json.dumps(['df-event-v2', partition(s), event_type, key], ensure_ascii=False, separators=(',', ':')).encode()
     return key, 'evt_df_' + hashlib.sha256(raw).hexdigest()
 
+def override_scope_semantic(grant,payload):
+    scope,ctx=payload['scope'],payload['execution_context']
+    if grant['scope_kind']!=scope['scope_kind'] or grant['project_id']!=scope['project_id']:return False
+    if grant['scope_kind']=='project':
+        if grant['run_id'] is not None and grant['run_id']!=ctx['run_id']:return False
+        if grant['worktree_id'] is not None and grant['worktree_id']!=payload.get('worktree_id'):return False
+    else:
+        if grant['server_id']!=scope['server_id']:return False
+        for k in ('computer_id','thread_id','run_id','host_id','environment_id'):
+            if grant[k]!=ctx[k]:return False
+        if not any(r['root_id']==ctx['root_id'] and r['root_generation']==ctx['root_generation'] for r in grant['recorded_roots']):return False
+    command=grant['normalized_command_identity']
+    if command is not None and 'normalized_command_identity' in payload and command!=payload['normalized_command_identity']:return False
+    return True
+
+def override_subset(granted,requested):
+    if granted['scope_kind']!=requested['scope_kind'] or granted['project_id']!=requested['project_id']:return False
+    if granted['scope_kind']=='project':
+        return all(requested[k] is None or granted[k]==requested[k] for k in ('run_id','worktree_id','normalized_command_identity'))
+    keys=('server_id','computer_id','thread_id','run_id','host_id','environment_id')
+    return (all(granted[k]==requested[k] for k in keys)
+            and all(root in requested['recorded_roots'] for root in granted['recorded_roots'])
+            and (requested['normalized_command_identity'] is None or granted['normalized_command_identity']==requested['normalized_command_identity']))
+
 def semantic(payload):
     s, ctx = payload['scope'], payload['execution_context']
     if s['scope_partition'] != partition(s):
@@ -34,11 +58,7 @@ def semantic(payload):
     if s['scope_kind'] == 'project' and 'node_id' in payload and (not payload['node_id'] or not payload['attempt_id']):
         return False
     for name in ('requested_scope', 'authorized_scope'):
-        if name in payload:
-            grant = payload[name]
-            for k in ('project_id', 'run_id', 'thread_id', 'host_id', 'root_id'):
-                if grant[k] != (s[k] if k == 'project_id' else ctx[k]):
-                    return False
+        if name in payload and not override_scope_semantic(payload[name],payload): return False
     if 'issued_at' in payload and datetime.fromisoformat(payload['expires_at'].replace('Z','+00:00')) <= datetime.fromisoformat(payload['issued_at'].replace('Z','+00:00')):
         return False
     if 'restore_outcome' in payload:
@@ -47,8 +67,6 @@ def semantic(payload):
         if outcome == 'restored_clean' and target != after: return False
         if outcome in ('restore_failed','restore_refused') and before != after: return False
         if outcome == 'restore_skipped' and not target == before == after: return False
-    if 'requested_scope' in payload and payload['requested_scope']['normalized_command_identity'] != payload['normalized_command_identity']:
-        return False
     if 'worktree_id' in payload and 'snapshot_manifest_ref' in payload:
         if not all(payload.get(k) for k in ('worktree_path','branch_name','HEAD_sha')):
             return False

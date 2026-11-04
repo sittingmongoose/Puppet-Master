@@ -65,7 +65,23 @@
     },
     "conflict_reason_code": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "enum": [
+        "worktree_path_mismatch",
+        "branch_mismatch",
+        "head_mismatch",
+        "baseline_stale",
+        "snapshot_missing",
+        "snapshot_corrupt",
+        "snapshot_scope_unsupported",
+        "target_path_conflict",
+        "restore_conflict",
+        "concurrent_edit_conflict",
+        "historical_commit_missing",
+        "restore_recovery_required",
+        "canonicalization_failed",
+        "permission_denied"
+      ]
     },
     "recovered_after_restart": {
       "type": "boolean"

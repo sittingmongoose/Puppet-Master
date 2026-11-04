@@ -67,12 +67,12 @@
       "minLength": 1
     },
     "snapshot_format_version": {
-      "type": "integer",
-      "minimum": 1
+      "type": "string",
+      "minLength": 1
     },
     "content_scope_version": {
-      "type": "integer",
-      "minimum": 1
+      "type": "string",
+      "minLength": 1
     },
     "snapshot_manifest_ref": {
       "type": "string",
