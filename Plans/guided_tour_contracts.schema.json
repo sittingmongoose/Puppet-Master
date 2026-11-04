@@ -2943,7 +2943,8 @@
           "maxItems": 4
         },
         "mounted_inside": {
-          "const": "#chatPanel"
+          "description": "The question library stays inside the current Assistant Chat container through the shared Guided Tour and chat placement owners (PWIZ-023, F3-521 and DR-075).",
+          "const": "Assistant Chat"
         },
         "library_open": {
           "const": true
