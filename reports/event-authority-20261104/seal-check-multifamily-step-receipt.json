@@ -28,7 +28,7 @@
  "contract_depth_complete": false,
  "validator_path": "Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py",
  "validator_before_sha256": "190a86f23e06362bdb98e27eb23268c9691db46cc41bc9f97e1fbb6bde1abc20",
- "validator_after_sha256": "bad3e7e852a0c4697709ca1a45083e5317cb0a5cea8ef2cf4c0eda0a5d0a544d",
+ "validator_after_sha256": "e4e988b767cbc0f594644f0606cb459603c68ae10498a0c421148ffe405e46b5",
  "prior_receipt": {
   "path": "reports/event-authority-20260911/step-10-post-august-admission-receipt.json",
   "sha256": "dceb7f21436cbe126c23822e62caa1b6dedcb45fefae3005c1804576ca34d827",
@@ -37,21 +37,22 @@
  "record_dir": "reports/event-authority-20260911/admission-records",
  "record_schema_id": "pm.assurance.event_authority.post_august_admission_record.v1",
  "record_contract_change": {
-  "registry_step_event_types": "Optional. Absent: the record is judged exactly as under DL-077 (registry_after has exactly one more family than registry_before and a different sha256; the record pins the DL-077 receipt). Present: a sorted list of two or more distinct event types, including the record's own, naming every family the registry step from registry_before to registry_after added.",
+  "registry_step_event_types": "Optional. Absent: the record is judged exactly as under DL-077 (registry_after has exactly one more family than registry_before and a different sha256; the record pins the DL-077 receipt; DL-077 and DL-078 cannot be its decision entry), and no step judgment ever adds a problem to it. Present: a sorted list of two or more distinct event types, including the record's own, naming every family the registry step from registry_before to registry_after added.",
   "with_registry_step_event_types": [
    "registry_after.family_count equals registry_before.family_count plus the number of listed families, and registry_after.sha256 differs from registry_before.sha256 (registry_before_after_not_exactly_step_families).",
-   "Every listed family is registered beyond Known37 and the August pair and has its own record carrying the identical list and the identical registry_before and registry_after (revision, sha256, family_count); no other record names the same before and after sha256 (registry_step_partial). This includes a one-family record naming those states, which then fails too.",
+   "Every listed family is registered beyond Known37 and the August pair and has its own record carrying the identical list and the identical registry_before and registry_after (revision, sha256, family_count); otherwise every record of the step fails registry_step_partial.",
+   "No other record file in the record directory names the same before and after sha256 (registry_step_partial, naming it). A record names the pair when both its sha256 fields equal it, read without validating anything else in it: a malformed revision, family count, list or other field does not hide it, a file rejected for its name or event type counts under its file name, and either form counts. Such a record keeps exactly its own problems; a record without registry_step_event_types gets no step problem.",
    "Every listed family's record is complete on its own: a step counts only as a whole (registry_step_member_incomplete).",
    "implementation_receipt_sha256 is the SHA-256 of this receipt, the receipt the record was written under.",
-   "Every other field and rule of the DL-077 record contract applies to each record unchanged: schema_id, family_id, its own decision entry naming its exact event type (which also cannot be DL-412), registry_row_sha256, and its own depth assessment row at the live family_id and family_revision with all twelve criteria PASS, each with evidence under Plans/."
+   "Every other field and rule of the DL-077 record contract applies to each record unchanged: schema_id, family_id, its own decision entry naming its exact event type (DL-077 and DL-078 cannot be cited, and a record carrying the field cannot cite DL-412 either), registry_row_sha256, and its own depth assessment row at the live family_id and family_revision with all twelve criteria PASS, each with evidence under Plans/."
   ]
  },
  "changes": [
   "Constants for DL-412: the receipt location and schema id, the DL-412 required tokens (Jared's verbatim answer, the approved option's words and the presented cards' SHA-256), the author identity and the record field registry_step_event_types.",
   "multi_family_receipt_state: this receipt must pin DL-412's prose section, the DL-077 receipt's validator_after_sha256 as its before, the current validator bytes as its after, the DL-077 receipt's exact bytes, the record directory and schema, the author, a named lander, both of them as forbidden seal appliers, and false seal, admission and depth flags.",
   "post_august_validator_pin and post_august_receipt_state: the DL-077 receipt's validator_after_sha256 must now equal this receipt's validator_before_sha256; without a valid DL-412 receipt it must still equal the current file, so any other change fails the DL-077 receipt, every post-August family and the Step 3 holding check closed.",
-  "admission_record_problems: a record carrying registry_step_event_types is judged by the step-size rule above instead of the one-family rule and pins this receipt; DL-412 joins DL-077 and DL-078 as entries that cannot be a family's decision entry. A record without the field is judged exactly as before.",
-  "registry_step_problems and validate_post_august_admissions: each record is judged on its own first; then the records of a multi-family step are judged together (registry_step_partial, registry_step_member_incomplete). With no record carrying the field, the result and its issue order are identical to DL-077's.",
+  "admission_record_problems: a record carrying registry_step_event_types is judged by the step-size rule above instead of the one-family rule, pins this receipt and cannot cite DL-412 as its decision entry. A record without the field is judged exactly as before: the one-family rule, the DL-077 receipt and the unchanged DL-077 and DL-078 decision exclusion.",
+  "registry_step_claim, registry_step_problems and validate_post_august_admissions: each record is judged on its own first; then the records of a multi-family step are judged together (registry_step_partial, registry_step_member_incomplete), and any other parseable record file whose two sha256 fields name the step's pair, whatever else in it is malformed, fails the step. Step problems go only to records that list a step, so a record without the field has exactly its DL-077 problems and admission whatever step records exist. With no record carrying the field, the result and its issue order are identical to DL-077's.",
   "The check's own output receipt pins this receipt's SHA-256 (multi_family_step_receipt_sha256), as it pins DL-077's.",
   "Documents, as DL-077's change did: INDEPENDENT_EA_VALIDATOR_SPEC.md gains a DL-412 section, and INDIVIDUAL_DISPOSITION_SCHEMA.md a note that DL-412 adds no bucket or row field."
  ],
@@ -61,9 +62,9 @@
  "does_not_relax": [
   "No family without its own record: every family registered beyond Known37 and the August pair still needs its own record file, or fails with 'no admission record', post_august_admission_incomplete and unexpected_august_set.",
   "No shared record: one record admits one family; a step record admits nothing for the other families it lists.",
-  "No partial step: if any listed family lacks a record, names a different step or list, or is incomplete on its own, every record of the step fails.",
+  "No partial step: if any listed family lacks a record, names a different step or list, or is incomplete on its own, every record of the step fails. Any other record file naming the step's before and after sha256, in either form and however malformed otherwise, also fails the whole step.",
   "No depth waiver: each record still pins its own assessment row at the live family_id and family_revision, with all twelve criteria PASS and Plans/ evidence for each PASS.",
-  "No decision waiver: each record still cites Jared's decision entry for that family, naming its exact event type; DL-077, DL-078 and DL-412 cannot be cited.",
+  "No decision waiver: each record still cites Jared's decision entry for that family, naming its exact event type; DL-077 and DL-078 cannot be cited, and a step record cannot cite DL-412 either. A record without the field keeps DL-077's rule unchanged.",
   "No change to the one-family rule, the Known37 list, the August pair, their fingerprints, the freeze digest, the census, the denominator, the holding bucket, the exclusion, owner-sheet, August-checkpoint, evidence-shape or oracle-harness checks, or any pass predicate.",
   "No re-stamp: no freeze digest, closure hash, cohort pin, historical validator receipt, earlier change receipt or admission record changes.",
   "Not stronger than before on truthfulness: as for one-family records, the check reads the records and the live registry only; whether the pinned before and after SHA-256 are the true registry bytes of that step is the record writer's claim, verified by review against git history.",
