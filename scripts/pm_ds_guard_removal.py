@@ -33,8 +33,8 @@ def weaken(fn,line,tree):
         def visit_If(self,node):
             if node.lineno==line:node.test=ast.Constant(False)
             return self.generic_visit(node)
-    namespace=dict(fn.__globals__)
-    exec(compile(ast.fix_missing_locations(Remove().visit(copy.deepcopy(tree))),inspect.getsourcefile(fn),'exec'),namespace)
+    namespace=dict(inspect.unwrap(fn).__globals__)
+    exec(compile(ast.fix_missing_locations(Remove().visit(copy.deepcopy(tree))),inspect.getsourcefile(inspect.unwrap(fn)),'exec'),namespace)
     return namespace[fn.__name__]
 
 def cohort():
@@ -97,7 +97,10 @@ def audit():
     table=[];baseline_failures=[]
     modules=[home,created,v2,reset,round2]
     source_hashes={str(Path(m.__file__).relative_to(ROOT)):__import__('hashlib').sha256(Path(m.__file__).read_bytes()).hexdigest() for m in modules}
+    for relative in ('scripts/pm_ds_guard_removal.py','scripts/pm_event_payload_route.py','scripts/pm-browser-event-admission.py'):
+        source_hashes[relative]=__import__('hashlib').sha256((ROOT/relative).read_bytes()).hexdigest()
     for module,fn,cases in cohort():
+        print('audit '+fn.__qualname__+' cases='+str(len(cases)),flush=True)
         baseline={}
         for name,test in cases:
             try:baseline[name]=bool(test())
@@ -111,7 +114,7 @@ def audit():
                 for name,test in cases:
                     try:(flipped if test() else stayed).append(name)
                     except Exception as exc:exceptions.append({'case':name,'exception':repr(exc)})
-            table.append({'guard':str(Path(inspect.getsourcefile(fn)).relative_to(ROOT))+':'+str(inspect.getsourcelines(fn)[1]+line-1),
+            table.append({'guard':str(Path(inspect.getsourcefile(inspect.unwrap(fn))).relative_to(ROOT))+':'+str(inspect.getsourcelines(fn)[1]+line-1),
                           'function':fn.__qualname__,'condition':condition,'negatives_that_flip':flipped,'negatives_that_stay_rejected':stayed,
                           'exceptions':exceptions,'status':'witnessed' if flipped and not exceptions else 'partial',
                           'limit':'Flips are observed, not automatically assigned as this guard\'s own defect. Empty/exception rows remain open.'})
