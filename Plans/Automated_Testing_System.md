@@ -7234,3 +7234,41 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+### ATS-360 — DO exact-family static and native oracles
+
+```yaml
+plan_unit_id: ATS-360
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Each of OSI-680 through OSI-704 independently adopts its exact-family fixture in
+  Plans/orchestrator_event_contract_fixtures.json and python3 scripts/pm-orchestrator-event-contracts.py.
+  Run its positive payloads for every admitted scope, then individually remove every required field,
+  add an unknown field, change schema version, use a foreign scope, zero occurrence, invalid UTC,
+  absent Project identity or fabricated application Project. Every negative refuses.
+  Identity vectors preserve a retry and distinguish operation, occurrence, Server, thread, run and family.
+  Native obligations remain NOT_RUN per family: race the exact producer predicate with cancellation,
+  commit referenced content before append, crash before and after first receipt, resolve full value on
+  uncertain acknowledgment, reject same-key changed semantics, replay without its semantic effect,
+  reject stale full SP-278 token even on nonmatching append, and fence changed permissions/deletion/hold,
+  restore and withdrawn/unsupported editions. Each fixture contract names its own predicate and reader;
+  a sibling pass supplies no evidence. Static success grants no admission or native execution proof.
+gui_related: false
+gui_classification_reason: Contract and source-authority verification.
+depends_on: [OSI-680, OSI-681, OSI-682, OSI-683, OSI-684, OSI-685, OSI-686, OSI-687, OSI-688, OSI-689, OSI-690, OSI-691, OSI-692, OSI-693, OSI-694, OSI-695, OSI-696, OSI-697, OSI-698, OSI-699, OSI-700, OSI-701, OSI-702, OSI-703, OSI-704]
+unblocks: []
+acceptance_criteria:
+- Every exact family has positive and negative static cases; native obligations stay NOT_RUN until executed.
+validation_surfaces: [python3 scripts/pm-orchestrator-event-contracts.py]
+risk_class: event_authority
+reasoning_tier: high
+context_scope: exact_event_family
+implementation_surfaces: [scripts/pm-orchestrator-event-contracts.py]
+node_compile_hint: {mode: contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage: [Plans/Decision_Log.md#DL-045]
+preserved_exact_tokens: [NOT_RUN, SP-278, SP-286]
+negative_constraints: [No registry admission or native proof follows.]
+owner_hints: [Plans/Automated_Testing_System.md]
+```
