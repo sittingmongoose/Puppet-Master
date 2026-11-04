@@ -82552,7 +82552,7 @@
         "kind": "Note",
         "status": "Active",
         "pinned": false,
-        "verification_state": "Unverified",
+        "verification_state": "Verified",
         "half_life_days": 30,
         "tags": [],
         "claims": [
@@ -82587,7 +82587,7 @@
         "kind": "Note",
         "status": "Active",
         "pinned": false,
-        "verification_state": "Unverified",
+        "verification_state": "Verified",
         "half_life_days": 30,
         "tags": [],
         "claims": [
@@ -151783,7 +151783,7 @@
       "changes": [
         [
           "/after_facts/verification_state",
-          "Verified"
+          "Unverified"
         ]
       ]
     },
@@ -164550,6 +164550,22 @@
         [
           "/command",
           "cmd.chat.memory.edit"
+        ]
+      ]
+    },
+    {
+      "id": "memory/success_without_real_change/false-unchanged-success",
+      "base": "memory/success_without_real_change",
+      "guard": "command_only_verified",
+      "defect": "false-unchanged-success",
+      "changes": [
+        [
+          "/before_facts/verification_state",
+          "Unverified"
+        ],
+        [
+          "/after_facts/verification_state",
+          "Unverified"
         ]
       ]
     }

@@ -382,6 +382,7 @@ rule('command_only_result','no_event',lambda c:not c['command_result_retained'])
 rule('command_only_command','no_event',lambda c:c['command']!='cmd.chat.memory.verify')
 rule('command_only_outcome','no_event',lambda c:c['outcome'] not in ['requested','failed','success_without_real_change'])
 rule('command_only_delta','no_event',lambda c:c['before_facts']!=c['after_facts'])
+rule('command_only_verified','no_event',lambda c:c['outcome']=='success_without_real_change' and c['before_facts']['verification_state']!='Verified')
 
 
 GUARDS_ORIGINAL_RESOLUTION = GUARDS['record_resolution']
