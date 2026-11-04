@@ -7770,9 +7770,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   carries concept_sources path/token anchors for its actual GUI adapter. DL-260: project controls, Work surfaces
   and the Pip editor consume their shared product owners; System status owner links use the existing Settings
   reveal route. Source adapter names are lineage only. No JavaScript adapter is native command/effect proof.
-  W6 identity mapping: PM_WORK item delivery maps to completion_delivery, restarting maps to pending with Restarting
-  words, and its clearFinished platform/thread:<id> views map to the invoking view. canSendInput/answer are
-  concept projections of current prompt eligibility and owner answers; native process identity, generation,
+  W6 identity mapping: Work item delivery maps to completion_delivery, restarting maps to pending with Restarting words, and Clear finished binds the exact invoking platform or thread view. Current prompt eligibility and answers come from their owner; native process identity, generation,
   permission, yes/no-only stdin and read-only-service gates remain unchanged. D2/D7, PM7 Step4 final-source
   alignment, 2026-10-30 (integration e9b15abc64): chat.work_dock.process_open maps Review/Show to existing
   pm7.processes_open / cmd.chat.processes.open. chat.work_dock.agent_review records ordinary local Subagents
@@ -7801,7 +7799,7 @@ canonical_text: 'B1/B2/B6, S1–S9, D1–D14, G1–G10. pm7_control_bindings.jso
   contracts and record the transient no-dispatch gate; static cases and actual pure-helper probes remain distinct
   from native or rendered evidence. No control-clearance or chat-head placement rule, new binding, command,
   event, setting or native certification is introduced. QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18:
-  Q13/CC5: the PM_WORK dock provider gives a live process and the next pending scheduled run a 60000 ms presentation
+  Q13/CC5: the owner-backed work dock provider gives a live process and the next pending scheduled run a 60000 ms presentation
   lifetime from first exposure in that thread’s dock projection. Key freshness by thread, work identity and
   run start/occurrence time; repaint or returning to the same run does not restart it, while a restarted/new
   occurrence gets a new lifetime. At elapsed >=60000 the non-needs line leaves. Needs-you lines bypass expiry
@@ -7847,7 +7845,7 @@ acceptance_criteria:
   requirements and one handler.
 - Touch covers each admitted action once; Stop all and all reused terminal/Settings routes retain their owner
   identity without native-certification promotion.
-- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the PM_WORK dock provider gives a live process
+- 'QA round 2, Jared 2026-10-30; DL-258; GUI 7d586bad18: Q13/CC5: the owner-backed work dock provider gives a live process
   and the next pending scheduled run a 60000 ms presentation lifetime from first exposure in that thread’s
   dock projection. Key freshness by thread, work identity and run start/occurrence time; repaint or returning
   to the same run does not restart it, while a restarted/new occurrence gets a new lifetime. At elapsed >=60000
@@ -7868,10 +7866,10 @@ acceptance_criteria:
   refusal and the exact command/local/tool binding from UCC-215; no native/event/governance proof follows from
   static closure.
 validation_surfaces:
-- python3 scripts/pm-shard-plans.py --check
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm7-build-check.py
-- python3 scripts/pm-plans-verify.py run-gates
+- "scripts/pm-shard-plans.py"
+- "scripts/pm-plan-index.py"
+- "scripts/pm7-build-check.py"
+- "scripts/pm-plans-verify.py"
 risk_class: owner_drift
 reasoning_tier: high
 context_scope: pm7_build_20261029
@@ -7889,6 +7887,8 @@ source_lineage:
   for work, PM_PIP_EDITOR and the shared parts registry for Pip, and the existing Settings reveal route for
   System status owner links.'
 - source_ref:chat:2026-11-03-projects-pass2-approved
+- "DL-260 source lineage only (no product API or implementation obligation): PM_WORK was the concept work-projection adapter; dock eligibility and lifetime are DR-078/ACD-476 product presentation rules."
+- "DL-260 source lineage only (no product API): PM7_WORK_UI/PM_WORK, clearFinished platform/thread:<id> and canSendInput/answer were concept route/view adapters; native owners retain exact command, view, prompt, generation and permission checks."
 preserved_exact_tokens: []
 negative_constraints:
 - Do not treat concept JavaScript or static fixtures as native runtime certification.

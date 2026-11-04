@@ -97,7 +97,8 @@ REPOSITORY_LOCAL_PACKET_TOKENS = {
     "cmd.source_control.backup_history.open",
 }
 CONNECTION_DRAFT_LOCAL_PACKET_TOKENS = {"cmd.connection.draft.open_details"}
-ADJUDICATION_SHA256 = "b17220f3fb91e3f0f4ebece1b1f9928dfe385b1d0416a475639863b19a1ce9ae"
+# 2026-11-04: P2-01 aligns Settings Transfer and Saved setups consumer labels; packet identity is unchanged.
+ADJUDICATION_SHA256 = "d33aef98ef2c440bbc93ca72c9a81f6508ff0fb5010037a0cb59c7923d72fa6d"
 
 
 def load_json(path: Path) -> Any:
