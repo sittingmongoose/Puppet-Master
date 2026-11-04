@@ -1,0 +1,268 @@
+[
+  {
+    "event_type": "memory.dedup_sweep.completed",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1123,
+        "text": "| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6288,
+        "text": "- memory.dedup_sweep.completed"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.dedup_sweep.started",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1123,
+        "text": "| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6287,
+        "text": "- memory.dedup_sweep.started"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.index.lexical.rebuild.completed",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1120,
+        "text": "| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6282,
+        "text": "- memory.index.lexical.rebuild.completed"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.index.lexical.rebuild.started",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1120,
+        "text": "| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6281,
+        "text": "- memory.index.lexical.rebuild.started"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.index.semantic.rebuild.completed",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1121,
+        "text": "| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6284,
+        "text": "- memory.index.semantic.rebuild.completed"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.index.semantic.rebuild.started",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1121,
+        "text": "| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6283,
+        "text": "- memory.index.semantic.rebuild.started"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.monthly_summary.completed",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1124,
+        "text": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.monthly_summary.started",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1124,
+        "text": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6289,
+        "text": "- memory.monthly_summary.started"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.prune_archive.completed",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1125,
+        "text": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6290,
+        "text": "- memory.prune_archive.completed"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.prune_archive.started",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1125,
+        "text": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.verification_sweep.completed",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1122,
+        "text": "| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6286,
+        "text": "- memory.verification_sweep.completed"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  },
+  {
+    "event_type": "memory.verification_sweep.started",
+    "base": "be4766513ff71776346fc73b84f2542990f955af",
+    "scope": "all live non-generated Plans markdown and JSON, excluding ledgers/audits/governance outputs",
+    "hits": [
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 1122,
+        "text": "| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |"
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "line": 6285,
+        "text": "- memory.verification_sweep.started"
+      },
+      {
+        "path": "Plans/Decision_Log.md",
+        "line": 604,
+        "text": "| `Plans/assistant-memory-subsystem.md` | \u2014 | `memory.dedup_sweep.completed`, `memory.dedup_sweep.started`, `memory.gist.discarded`, `memory.gist.pinned`, `memory.gist.unpinned`, `memory.gist.updated`, `memory.gist.verification_failed`, `memory.gist.verification_requested`, `memory.gist.verified`, `memory.gist_state_changed`, `memory.index.lexical.rebuild.completed`, `memory.index.lexical.rebuild.started`, `memory.index.semantic.rebuild.completed`, `memory.index.semantic.rebuild.started`, `memory.monthly_summary.completed`, `memory.monthly_summary.started`, `memory.prune_archive.completed`, `memory.prune_archive.started`, `memory.verification_sweep.completed`, `memory.verification_sweep.started` | \u2014 |"
+      }
+    ],
+    "negative_evidence": "No exact closed maintenance payload, producer recovery protocol, identity recipe or qualified consumer/checkpoint binding found. UCC-085 lists command/event pairs; AMS section 7.2 defines behavior; DL-045 scope table lists permission only. No sibling used as binding evidence."
+  }
+]

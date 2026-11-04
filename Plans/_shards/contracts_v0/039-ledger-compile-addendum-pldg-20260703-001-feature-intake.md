@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19868-L20440
+Source lines: L19851-L20424
 
-Source SHA256: `a0660a24f4ddf7eab642d0133b57475b095144ff4593d62f920b4f8619dcc221`
+Source SHA256: `6ae862941688efcf00af787942fc79d0661a461f612e6d35a58f975594c32f46`
 
 ---
 
@@ -456,7 +456,7 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
-  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. Application FileSafe uses F2-213’s authenticated scope-bound owner operation/override receipts with real Host/absolute root/thread/run evidence; CV-366 defines no filesafe.* application EventRecord successor. These unregistered app security events remain missing_event_registration/non-emitting until separate Event Authority admission and full owner adoption, and unavailable durable receipt custody fails closed. ChatToolApproval separately uses PS-145/CV-366’s approval.chat_tool_requested and approval.chat_tool_resolved payloads registered by DL-300, retaining requires_owner_adoption for app producers. Preserve exact historical Project security payloads and all fail-closed rules; chat-tool approvals do not reuse Orchestrator node/blocked_sequence payloads with null fields.
+  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied, filesafe.destructive_override_requested, filesafe.destructive_override_granted, filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe scope refs, project/run/worktree scope, authenticated operator override request/grant/denial fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement remains intact. App FileSafe/ChatToolApproval uses D’s PS-145/F2-213 and CV-366’s explicit successor envelopes with real Host/absolute root/thread/run evidence. Preserve exact Project security payloads and all fail-closed rules; approval.chat_tool_requested/resolved do not reuse Orchestrator node/blocked_sequence payloads with null fields.
 gui_related: false
 gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
 depends_on: [CV-309, CV-081, F2-199]
@@ -468,8 +468,9 @@ acceptance_criteria:
   - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, event refs, and receipt fields.
   - policy_degraded is not used when authoritative allowlist, baseline, root, canonical path, or override authority is absent.
 validation_surfaces:
-  - scripts/pm-plans-verify.py
-  - scripts/pm-plan-index.py
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: filesafe_event_payload_drift
 reasoning_tier: high
 context_scope: filesafe_fail_closed_security_repair

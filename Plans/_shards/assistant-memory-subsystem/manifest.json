@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-04T16:52:04Z",
+  "generated_at_utc": "2026-11-04T17:35:17Z",
   "index_path": "Plans/_shards/assistant-memory-subsystem/00-index.md",
-  "index_sha256": "c3936ff65a8f9015ecd60389f46e03207eb3b8834c20bc4bd5abf18fc729974d",
+  "index_sha256": "09c91b655d6d42b70a79c9db75e3c38cd2c76fbe32d1f76ae78f8d069bb91489",
   "manifest_path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/assistant-memory-subsystem/001-preamble.md",
-      "sha256": "8b2b5b15f4aa7283981d1d66d36d1430884d36d92170f7907651b156d70c7a81",
+      "sha256": "65ae2b171756b62994ea7ef1e894fdf95d467e434a52efa8fa7394de68c7d776",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/assistant-memory-subsystem/002-change-summary.md",
-      "sha256": "287ac8643e0c3a925109838d1c4d5126a6e1e1da265e9fd328e074f168e54ee6",
+      "sha256": "b220907b892ad471dbd3baaaa6331bb50b6ca5bb88ab3295938bf4d8924caa8e",
       "shard_id": "002",
       "source_line_end": 13,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope and boundary",
       "path": "Plans/_shards/assistant-memory-subsystem/003-0.-scope-and-boundary.md",
-      "sha256": "893b75cf001a7ee7da6682cd68c58b755b7f726b1a954382e5059a47890c4306",
+      "sha256": "101653407887c29b3365d5378a845d1791128da0e3f27fe905437a6ffc6a6388",
       "shard_id": "003",
       "source_line_end": 29,
       "source_line_start": 15,
@@ -35,7 +35,7 @@
     {
       "heading": "1. Capability boundary (Assistant-only)",
       "path": "Plans/_shards/assistant-memory-subsystem/004-1.-capability-boundary-assistant-only.md",
-      "sha256": "25f1dd4b1913f46c30b6e5a99ce7868f84d06e68f773ff4923e417f86a8b8d82",
+      "sha256": "d5566b4fb1db38618071656dd806446cf053a0cbbab23535eaffe301eea0e12b",
       "shard_id": "004",
       "source_line_end": 65,
       "source_line_start": 30,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Physical storage layout (per project)",
       "path": "Plans/_shards/assistant-memory-subsystem/005-2.-physical-storage-layout-per-project.md",
-      "sha256": "45c139dde75798fba6221880185094b19021c9e7c9c5a3df3554569e74fb6f35",
+      "sha256": "00d93e5fec4bc69621eec279bf2a3dbf60253e5e3098b7f9042a585547d52c98",
       "shard_id": "005",
       "source_line_end": 89,
       "source_line_start": 66,
@@ -53,7 +53,7 @@
     {
       "heading": "3. Data model (Evidence-Backed Gists; GUI-first)",
       "path": "Plans/_shards/assistant-memory-subsystem/006-3.-data-model-evidence-backed-gists-gui-first.md",
-      "sha256": "3b1d37f4c944a7acc59d6291e9c6054e0297aa90e1a44b21a4c9d4db244cbad8",
+      "sha256": "83fa8ab2a2eef3fbbe78b153b185d2111bcaec9615beae9083dfb4a770ced985",
       "shard_id": "006",
       "source_line_end": 175,
       "source_line_start": 90,
@@ -62,7 +62,7 @@
     {
       "heading": "4. Retrieval + indexing contracts",
       "path": "Plans/_shards/assistant-memory-subsystem/007-4.-retrieval-indexing-contracts.md",
-      "sha256": "e64c6e5b305a49992c99bd21439012fc13bc38cc8086fe84d8add33254112837",
+      "sha256": "48343618bb22690c62a9bc63f169d62a6a578db8d7974d8f9f7b832cac7d67e4",
       "shard_id": "007",
       "source_line_end": 231,
       "source_line_start": 176,
@@ -71,7 +71,7 @@
     {
       "heading": "5. Verification + triggers (Evidence-Backed Gists)",
       "path": "Plans/_shards/assistant-memory-subsystem/008-5.-verification-triggers-evidence-backed-gists.md",
-      "sha256": "da9922948945a9bd44a4ca44ce5df60c136a8d34ff3a653de3e894dd43f824a4",
+      "sha256": "a1d57d944d409a6e00c744210e73d07c39a14e6cf30cd12f9455c51eded5d171",
       "shard_id": "008",
       "source_line_end": 309,
       "source_line_start": 232,
@@ -80,7 +80,7 @@
     {
       "heading": "6. Prompt injection contract (token protection)",
       "path": "Plans/_shards/assistant-memory-subsystem/009-6.-prompt-injection-contract-token-protection.md",
-      "sha256": "e3173e4f6f670312dd27620e9c6bea83c8d399114e989ddb1d0d9ec376846649",
+      "sha256": "59df8e91ea2b5e74e7e0619a5c25e56b62d96e226e68444f003692c9e880f29d",
       "shard_id": "009",
       "source_line_end": 364,
       "source_line_start": 310,
@@ -89,7 +89,7 @@
     {
       "heading": "7. GUI + maintenance operations",
       "path": "Plans/_shards/assistant-memory-subsystem/010-7.-gui-maintenance-operations.md",
-      "sha256": "3630cef379b38bbbbbad2c2eb902343c05a74700fb9f7ef63539d5dd33f5cf4d",
+      "sha256": "ccc67761512306e96773ded018bf23b16c5352bf4581ff3d33bf68f81e6f817f",
       "shard_id": "010",
       "source_line_end": 417,
       "source_line_start": 365,
@@ -98,7 +98,7 @@
     {
       "heading": "8. Integration points",
       "path": "Plans/_shards/assistant-memory-subsystem/011-8.-integration-points.md",
-      "sha256": "306e322ef4257b39e76cdd403c5a345700ee3a7a63c3ede6a0679376ecf0c256",
+      "sha256": "e9e2acb4a2827693f14941d96fc7f57f2113b1ce838b3281ee3f76eade00b96b",
       "shard_id": "011",
       "source_line_end": 450,
       "source_line_start": 418,
@@ -107,7 +107,7 @@
     {
       "heading": "9. Deterministic defaults",
       "path": "Plans/_shards/assistant-memory-subsystem/012-9.-deterministic-defaults.md",
-      "sha256": "c465204c8d69f9a901f7ccd1dd7be40c08ac814e147a0edf6696fd43b7d04e92",
+      "sha256": "facc0b4db9ca7fc8af15d7135e5a9996988743759f94399f5ced8f557e6a9c9e",
       "shard_id": "012",
       "source_line_end": 514,
       "source_line_start": 451,
@@ -116,7 +116,7 @@
     {
       "heading": "10. Acceptance criteria (testable)",
       "path": "Plans/_shards/assistant-memory-subsystem/013-10.-acceptance-criteria-testable.md",
-      "sha256": "8b0868e2fe9deb00430d56572d5efd9c41ae1ca8b57aa32f3a2f580b8fda7b18",
+      "sha256": "90e30d3e9198350fd3b27da5a5a31ec5a874789f499146efb58ecac473d867e7",
       "shard_id": "013",
       "source_line_end": 537,
       "source_line_start": 515,
@@ -125,7 +125,7 @@
     {
       "heading": "11. Non-goals",
       "path": "Plans/_shards/assistant-memory-subsystem/014-11.-non-goals.md",
-      "sha256": "fb88ae65873ea6c83789fcc5ba798067013d2f82827bbbbba2e394daf3ef3fdb",
+      "sha256": "73b7932bb1770fa215b32d02ce1962b053e8974f16e5d06c0cc8edd4862da5eb",
       "shard_id": "014",
       "source_line_end": 549,
       "source_line_start": 539,
@@ -134,7 +134,7 @@
     {
       "heading": "12. Runtime Owner Reference Map",
       "path": "Plans/_shards/assistant-memory-subsystem/015-12.-runtime-owner-reference-map.md",
-      "sha256": "863736b8910132320a9002c1818d01a0b30ba88e7adf8500f610258d2dbb0af1",
+      "sha256": "5a94f6330c12dbdf867048d4e9844743b9d40e31ea511aabfbedf8b3dfdfe220",
       "shard_id": "015",
       "source_line_end": 566,
       "source_line_start": 550,
@@ -143,7 +143,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/assistant-memory-subsystem/016-owner-consumer-map.md",
-      "sha256": "061b8813824d3859bd181132b64d659a5314d52865736a4dc62cab28068f0b18",
+      "sha256": "7b118286d1e7cd60b4bd29529490cbbf0ea0c4c1b93a51572b82f542789b04e9",
       "shard_id": "016",
       "source_line_end": 572,
       "source_line_start": 568,
@@ -152,7 +152,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/assistant-memory-subsystem/017-planunits.md",
-      "sha256": "80f7924827bc93a7d2c9f2277bd5a48d13ef1f80945eeb2bb4971b8a1b576b39",
+      "sha256": "c313911439650a1b187f73375ffa1660a64a5e32f8c908e9cd38046e5c9853f7",
       "shard_id": "017",
       "source_line_end": 2376,
       "source_line_start": 574,
@@ -161,7 +161,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/assistant-memory-subsystem/018-migration-coverage.md",
-      "sha256": "bdacf9f79f49ac53f14022b269b5e3e0f58efa48f3520b00a3ff8d679dde10a7",
+      "sha256": "fc3d4811c3f87a0f060044f8d90b7823fdbaf04ec20a4fbe206eb6b138b191c7",
       "shard_id": "018",
       "source_line_end": 2392,
       "source_line_start": 2378,
@@ -170,7 +170,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/assistant-memory-subsystem/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "4a98021bb28c894c7bd7fc42e53d8e38e03b34a90721db37130179fcb0098387",
+      "sha256": "e5278e8779c4d605453685eababf3e5eed8be98c8b8783da37411a07cee6ab2c",
       "shard_id": "019",
       "source_line_end": 2568,
       "source_line_start": 2394,
@@ -179,7 +179,7 @@
     {
       "heading": "Claim-Level Verification And Notebook Boundary Addendum (2026-09-05)",
       "path": "Plans/_shards/assistant-memory-subsystem/020-claim-level-verification-and-notebook-boundary-addendum-2026-09-.md",
-      "sha256": "74ac446bec7fcaf221b7fcd9bff8287d7c47ca6e43f4e110217442e361601d2c",
+      "sha256": "dc3cdf2a8d16e3c4ef14ef3ef1ce031058c01f1acf955b01280db1499ec8808d",
       "shard_id": "020",
       "source_line_end": 2688,
       "source_line_start": 2570,
@@ -188,16 +188,16 @@
     {
       "heading": "Wand Modules Redesign Addendum (2026-09-27)",
       "path": "Plans/_shards/assistant-memory-subsystem/021-wand-modules-redesign-addendum-2026-09-27.md",
-      "sha256": "f01273224a7f303f1ae96d1db22649d7c5ab9f53fe19fdd9d4ff5e122e598d7b",
+      "sha256": "0af3caf9b525490c46d31fe29aea7b8211bb241288f5a0ee1af1b3df93dd400a",
       "shard_id": "021",
-      "source_line_end": 3149,
+      "source_line_end": 3565,
       "source_line_start": 2690,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3149,
+    "line_count": 3565,
     "path": "Plans/assistant-memory-subsystem.md",
-    "sha256": "0ac24d47058681d382a613bafe4b88d171044b5cb01c12938830f21d0d7ea2f0"
+    "sha256": "7ab211fc0aa553373865fcddf9987fcdecdc571bf4bd2404c5509b842483aa8d"
   }
 }

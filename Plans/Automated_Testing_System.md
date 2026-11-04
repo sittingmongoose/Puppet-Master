@@ -7234,3 +7234,53 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+### ATS-315 - Memory maintenance prepared event oracles
+
+```yaml
+plan_unit_id: ATS-315
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Newly authored static oracles for the eight exact families in Plans/memory_maintenance_contracts.json,
+  each independently schema-checked using Plans/memory_maintenance_event_payloads.schema.json and Plans/memory_maintenance_event_fixtures.json.
+  Run python3 scripts/pm_memory_maintenance_events.py. Every family has valid payload, unknown field, missing operation,
+  wrong version, Project mismatch, retry identity, receipt-before-effect, source-fence, terminal-before-start, replay-without-effect
+  and withdrawal cases. Static adapters are synthetic; actual SP-286 full-value custody, redb transaction/CAS atomicity,
+  SeglogFrameV2 bytes, CURRENT fencing, crash recovery before/after effect and terminal publication, no duplicate
+  gist merge, stale index swap, backup/restore and read-time deletion/permission races remain native NOT_RUN obligations.
+  These fixtures confer no Event Authority admission or deletion policy. Monthly summary/prune rows are blocked
+  on Jared and have no executable payload definition.
+gui_related: false
+gui_classification_reason: Typed events, identity, custody and recovery; no visual behavior.
+depends_on:
+- DL-045
+- SP-630
+- SP-631
+- SP-632
+- SP-633
+- SP-634
+- SP-635
+- SP-636
+- SP-637
+unblocks: []
+acceptance_criteria:
+- Exact family remains quarantined until its own admission and retention resolution.
+- Schema, identity, custody, replay and withdrawal match this unit.
+validation_surfaces:
+- python3 scripts/pm_memory_maintenance_events.py
+risk_class: event_authority_contract
+reasoning_tier: high
+context_scope: ea_wave2_DMEM_20261104
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: planning_contract
+  create_worknodes: false
+source_lineage:
+- reports/event-authority-20261104/DMEM-search.json
+preserved_exact_tokens: []
+negative_constraints:
+- No admission, deletion-policy decision, app-scope expansion or native proof.
+```

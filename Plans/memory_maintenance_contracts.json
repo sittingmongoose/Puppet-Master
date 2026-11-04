@@ -1,0 +1,206 @@
+{
+  "schema_id": "pm.memory_maintenance.preparation.v1",
+  "version": "1.0.0",
+  "admission": "none",
+  "base": "be4766513ff71776346fc73b84f2542990f955af",
+  "families": [
+    {
+      "event_type": "memory.dedup_sweep.completed",
+      "family_id": "event-family-memory-dedup-sweep-completed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-100",
+      "storage_owner": "Plans/storage-plan.md#SP-630",
+      "payload_owner": "Plans/Contracts_V0.md#CV-650",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_completed",
+      "consumer_id": "reader.memory.dedup_sweep.completed.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-100",
+        "SP-630",
+        "CV-650"
+      ]
+    },
+    {
+      "event_type": "memory.dedup_sweep.started",
+      "family_id": "event-family-memory-dedup-sweep-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-101",
+      "storage_owner": "Plans/storage-plan.md#SP-631",
+      "payload_owner": "Plans/Contracts_V0.md#CV-651",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_dedup_sweep_started",
+      "consumer_id": "reader.memory.dedup_sweep.started.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-101",
+        "SP-631",
+        "CV-651"
+      ]
+    },
+    {
+      "event_type": "memory.index.lexical.rebuild.completed",
+      "family_id": "event-family-memory-index-lexical-rebuild-completed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-102",
+      "storage_owner": "Plans/storage-plan.md#SP-632",
+      "payload_owner": "Plans/Contracts_V0.md#CV-652",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_completed",
+      "consumer_id": "reader.memory.index.lexical.rebuild.completed.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-102",
+        "SP-632",
+        "CV-652"
+      ]
+    },
+    {
+      "event_type": "memory.index.lexical.rebuild.started",
+      "family_id": "event-family-memory-index-lexical-rebuild-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-103",
+      "storage_owner": "Plans/storage-plan.md#SP-633",
+      "payload_owner": "Plans/Contracts_V0.md#CV-653",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_lexical_rebuild_started",
+      "consumer_id": "reader.memory.index.lexical.rebuild.started.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-103",
+        "SP-633",
+        "CV-653"
+      ]
+    },
+    {
+      "event_type": "memory.index.semantic.rebuild.completed",
+      "family_id": "event-family-memory-index-semantic-rebuild-completed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-104",
+      "storage_owner": "Plans/storage-plan.md#SP-634",
+      "payload_owner": "Plans/Contracts_V0.md#CV-654",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_completed",
+      "consumer_id": "reader.memory.index.semantic.rebuild.completed.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-104",
+        "SP-634",
+        "CV-654"
+      ]
+    },
+    {
+      "event_type": "memory.index.semantic.rebuild.started",
+      "family_id": "event-family-memory-index-semantic-rebuild-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-105",
+      "storage_owner": "Plans/storage-plan.md#SP-635",
+      "payload_owner": "Plans/Contracts_V0.md#CV-655",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_index_semantic_rebuild_started",
+      "consumer_id": "reader.memory.index.semantic.rebuild.started.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-105",
+        "SP-635",
+        "CV-655"
+      ]
+    },
+    {
+      "event_type": "memory.verification_sweep.completed",
+      "family_id": "event-family-memory-verification-sweep-completed",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-106",
+      "storage_owner": "Plans/storage-plan.md#SP-636",
+      "payload_owner": "Plans/Contracts_V0.md#CV-656",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_completed",
+      "consumer_id": "reader.memory.verification_sweep.completed.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-106",
+        "SP-636",
+        "CV-656"
+      ]
+    },
+    {
+      "event_type": "memory.verification_sweep.started",
+      "family_id": "event-family-memory-verification-sweep-started",
+      "family_revision": "1.0.0",
+      "outcome": "register_prepared",
+      "membership": "ABSENT",
+      "semantic_owner": "Plans/assistant-memory-subsystem.md#AMS-107",
+      "storage_owner": "Plans/storage-plan.md#SP-637",
+      "payload_owner": "Plans/Contracts_V0.md#CV-657",
+      "payload_schema_ref": "Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_verification_sweep_started",
+      "consumer_id": "reader.memory.verification_sweep.started.history.v1@1.0.0",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "retention_candidates": [
+        "ordinary telemetry: Case L-3 90 days / 2M per Project",
+        "audit authority: Case L-3 indefinite / no count eviction"
+      ],
+      "ids": [
+        "AMS-107",
+        "SP-637",
+        "CV-657"
+      ]
+    }
+  ],
+  "blocked_rows": [
+    {
+      "event_type": "memory.monthly_summary.completed",
+      "outcome": "blocked_on_Jared",
+      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+    },
+    {
+      "event_type": "memory.monthly_summary.started",
+      "outcome": "blocked_on_Jared",
+      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+    },
+    {
+      "event_type": "memory.prune_archive.completed",
+      "outcome": "blocked_on_Jared",
+      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+    },
+    {
+      "event_type": "memory.prune_archive.started",
+      "outcome": "blocked_on_Jared",
+      "question": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+    }
+  ]
+}

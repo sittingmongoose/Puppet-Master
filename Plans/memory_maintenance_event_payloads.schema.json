@@ -1,0 +1,435 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/Plans/memory_maintenance_event_payloads.schema.json",
+  "title": "Project memory maintenance events, prepared without admission",
+  "$defs": {
+    "memory_dedup_sweep_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "started_event_id",
+        "status",
+        "result_ref",
+        "result_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.dedup_sweep.completed"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.dedup_sweep"
+        },
+        "started_event_id": {
+          "type": "string",
+          "pattern": "^evt_mem_[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ]
+        },
+        "result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "memory_dedup_sweep_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.dedup_sweep.started"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.dedup_sweep"
+        }
+      }
+    },
+    "memory_index_lexical_rebuild_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "started_event_id",
+        "status",
+        "result_ref",
+        "result_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.index.lexical.rebuild.completed"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.rebuild_lexical_index"
+        },
+        "started_event_id": {
+          "type": "string",
+          "pattern": "^evt_mem_[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ]
+        },
+        "result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "memory_index_lexical_rebuild_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.index.lexical.rebuild.started"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.rebuild_lexical_index"
+        }
+      }
+    },
+    "memory_index_semantic_rebuild_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "started_event_id",
+        "status",
+        "result_ref",
+        "result_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.index.semantic.rebuild.completed"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.rebuild_semantic_index"
+        },
+        "started_event_id": {
+          "type": "string",
+          "pattern": "^evt_mem_[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ]
+        },
+        "result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "memory_index_semantic_rebuild_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.index.semantic.rebuild.started"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.rebuild_semantic_index"
+        }
+      }
+    },
+    "memory_verification_sweep_completed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id",
+        "started_event_id",
+        "status",
+        "result_ref",
+        "result_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.verification_sweep.completed"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.verification_sweep"
+        },
+        "started_event_id": {
+          "type": "string",
+          "pattern": "^evt_mem_[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed"
+          ]
+        },
+        "result_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "result_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "memory_verification_sweep_started": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_type",
+        "project_id",
+        "operation_id",
+        "source_revision_sha256",
+        "occurred_at_utc",
+        "command_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_type": {
+          "const": "memory.verification_sweep.started"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "operation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "source_revision_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "occurred_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "command_id": {
+          "const": "cmd.chat.memory.verification_sweep"
+        }
+      }
+    }
+  }
+}
