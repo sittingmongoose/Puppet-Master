@@ -3263,3 +3263,763 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-360, ContractName:Plans/UI_Command_Catalog.md#UCC-200
+
+
+## Runtime artifact event contracts prepared without admission — 2026-11-04
+
+### RAP-100 — runtime_artifact.api_web_call
+
+```yaml
+plan_unit_id: RAP-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.api_web_call@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A validated redacted web-operation artifact record becomes durable and addressable; success/failure remains payload evidence rather than event-name variation.
+  The producer is WebOperation artifact writer, through the newly named handler owner.runtime_artifacts.api_web_call.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_api_web_call.schema.json (pm.runtime_artifact.api_web_call.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=api_web_call, schema_id=pm.runtime_artifact.api_web_call.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.api_web_call.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-520]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.api_web_call"
+```
+
+
+### RAP-101 — runtime_artifact.artifact_version
+
+```yaml
+plan_unit_id: RAP-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.artifact_version@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A distinct immutable version record for one source artifact becomes durable.
+  The producer is Artifact versioning writer, through the newly named handler owner.runtime_artifacts.artifact_version.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_artifact_version.schema.json (pm.runtime_artifact.artifact_version.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=artifact_version, schema_id=pm.runtime_artifact.artifact_version.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.artifact_version.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-521]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.artifact_version"
+```
+
+
+### RAP-102 — runtime_artifact.before_after_snapshot
+
+```yaml
+plan_unit_id: RAP-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.before_after_snapshot@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A bounded before/after comparison record becomes durable with exact referenced sides and optional typed comparison results.
+  The producer is Comparison/capture writer, through the newly named handler owner.runtime_artifacts.before_after_snapshot.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_before_after_snapshot.schema.json (pm.runtime_artifact.before_after_snapshot.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=before_after_snapshot, schema_id=pm.runtime_artifact.before_after_snapshot.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.before_after_snapshot.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-522]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.before_after_snapshot"
+```
+
+
+### RAP-103 — runtime_artifact.browser_recording
+
+```yaml
+plan_unit_id: RAP-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.browser_recording@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A browser recording record is sealed with session identity, security class, recording ref, actions, and redaction profile.
+  The producer is Browser runtime recorder, through the newly named handler owner.runtime_artifacts.browser_recording.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_browser_recording.schema.json (pm.runtime_artifact.browser_recording.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=browser_recording, schema_id=pm.runtime_artifact.browser_recording.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.browser_recording.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+  Only an ordinary capturable Browser session may seal recording_ref; protected auth_session and transient Computer Use frames are rejected before persistence under current Browser ownership.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-523]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.browser_recording"
+```
+
+
+### RAP-104 — runtime_artifact.code_diff
+
+```yaml
+plan_unit_id: RAP-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.code_diff@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A code-difference record becomes durable with an exact changed-path census and optional typed diff/base/result detail.
+  The producer is Mutation/diff recorder, through the newly named handler owner.runtime_artifacts.code_diff.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_code_diff.schema.json (pm.runtime_artifact.code_diff.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=code_diff, schema_id=pm.runtime_artifact.code_diff.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.code_diff.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-524]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.code_diff"
+```
+
+
+### RAP-105 — runtime_artifact.context_snapshot
+
+```yaml
+plan_unit_id: RAP-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.context_snapshot@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A redacted context snapshot becomes durable at one exact snapshot ref with optional typed scope, revision, and inclusion metadata.
+  The producer is Context snapshot writer, through the newly named handler owner.runtime_artifacts.context_snapshot.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_context_snapshot.schema.json (pm.runtime_artifact.context_snapshot.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=context_snapshot, schema_id=pm.runtime_artifact.context_snapshot.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.context_snapshot.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-525]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.context_snapshot"
+```
+
+
+### RAP-106 — runtime_artifact.cost_usage
+
+```yaml
+plan_unit_id: RAP-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.cost_usage@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A usage/cost artifact record becomes durable as a reference-bound projection of Usage authority, not a replacement usage event.
+  The producer is Usage settlement artifact writer, through the newly named handler owner.runtime_artifacts.cost_usage.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_cost_usage.schema.json (pm.runtime_artifact.cost_usage.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=cost_usage, schema_id=pm.runtime_artifact.cost_usage.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.cost_usage.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+  usage_event_ref and usage_record_id join original Usage authority; DL-270/SP-341/UF-108 still own detailed Usage retention and permanent daily rollups. This event neither settles usage nor charges twice, shows expires-in, nor becomes a cost_usage tombstone.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-526]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.cost_usage"
+```
+
+
+### RAP-107 — runtime_artifact.document
+
+```yaml
+plan_unit_id: RAP-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.document@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A document artifact record becomes durable at one exact document ref with optional typed MIME, kind, format, digest, and source metadata.
+  The producer is Document artifact writer, through the newly named handler owner.runtime_artifacts.document.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_document.schema.json (pm.runtime_artifact.document.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=document, schema_id=pm.runtime_artifact.document.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.document.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-527]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.document"
+```
+
+
+### RAP-108 — runtime_artifact.evidence
+
+```yaml
+plan_unit_id: RAP-108
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.evidence@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: An evidence artifact record of one exact evidence kind becomes durable with optional reference-bound claim, source, digest, and verification metadata.
+  The producer is Verifier/evidence writer, through the newly named handler owner.runtime_artifacts.evidence.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_evidence.schema.json (pm.runtime_artifact.evidence.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=evidence, schema_id=pm.runtime_artifact.evidence.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.evidence.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-528]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.evidence"
+```
+
+
+### RAP-109 — runtime_artifact.failed_attempts
+
+```yaml
+plan_unit_id: RAP-109
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.failed_attempts@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A bounded failed-attempt aggregation becomes durable without overwriting any attempt record.
+  The producer is Attempt evidence aggregator, through the newly named handler owner.runtime_artifacts.failed_attempts.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_failed_attempts.schema.json (pm.runtime_artifact.failed_attempts.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=failed_attempts, schema_id=pm.runtime_artifact.failed_attempts.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.failed_attempts.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-529]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.failed_attempts"
+```
+
+
+### RAP-110 — runtime_artifact.hitl_approval
+
+```yaml
+plan_unit_id: RAP-110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.hitl_approval@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: An already-decided HITL approval receipt projection becomes durable; this event is never the approval command or unblock signal.
+  The producer is Approval-owner receipt bridge, through the newly named handler owner.runtime_artifacts.hitl_approval.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_hitl_approval.schema.json (pm.runtime_artifact.hitl_approval.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=hitl_approval, schema_id=pm.runtime_artifact.hitl_approval.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.hitl_approval.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+  Approval is already decided by the approval owner: publication cannot approve, unblock or renew a grant; re-read revocation at access.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-530]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.hitl_approval"
+```
+
+
+### RAP-111 — runtime_artifact.implementation_plan
+
+```yaml
+plan_unit_id: RAP-111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.implementation_plan@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A non-canonical implementation-plan artifact becomes durable at one exact plan ref with optional typed revision, step, dependency, and validation metadata.
+  The producer is Planning artifact writer, through the newly named handler owner.runtime_artifacts.implementation_plan.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_implementation_plan.schema.json (pm.runtime_artifact.implementation_plan.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=implementation_plan, schema_id=pm.runtime_artifact.implementation_plan.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.implementation_plan.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-531]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.implementation_plan"
+```
+
+
+### RAP-112 — runtime_artifact.reasoning_summary
+
+```yaml
+plan_unit_id: RAP-112
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.reasoning_summary@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A summary-only reasoning artifact becomes durable; private chain-of-thought or raw hidden reasoning is not captured.
+  The producer is Agent summary writer, through the newly named handler owner.runtime_artifacts.reasoning_summary.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_reasoning_summary.schema.json (pm.runtime_artifact.reasoning_summary.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=reasoning_summary, schema_id=pm.runtime_artifact.reasoning_summary.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.reasoning_summary.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+  Only the agent-authored visible summary may be sealed. No private chain-of-thought or raw hidden reasoning is admitted.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-532]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.reasoning_summary"
+```
+
+
+### RAP-113 — runtime_artifact.restore_point
+
+```yaml
+plan_unit_id: RAP-113
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  runtime_artifact.restore_point remains blocked on Jared, without admission or a new technical binding. The Option 2 owner transition includes changes to recorded availability/lifecycle, while its recommended identity [event_type, project_id, artifact_id, schema_id] contains no revision. The closed v1 payload contains mutable status, source_state, availability, retention, holds and actions. Decide whether each lifecycle change has a distinct immutable artifact_id, or the same artifact_id keeps multiple event revisions with a revised identity recipe. This draft chooses neither and changes no restore-point source, reader or action authority. DL-075 still assigns RP-AUTHORITY-INDEFINITE to its event history; it does not settle identity. RAP-059/060 and SP-268/275 retain their independent canonical restore-point authority.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: ["DL-045", "DL-075", "RAP-059"]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.restore_point"
+```
+
+
+### RAP-114 — runtime_artifact.screenshot
+
+```yaml
+plan_unit_id: RAP-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.screenshot@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A referenced screenshot artifact becomes durable at one exact media ref with optional typed digest, dimensions, surface, and redaction metadata.
+  The producer is Screenshot/capture writer, through the newly named handler owner.runtime_artifacts.screenshot.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_screenshot.schema.json (pm.runtime_artifact.screenshot.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=screenshot, schema_id=pm.runtime_artifact.screenshot.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.screenshot.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-534]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.screenshot"
+```
+
+
+### RAP-115 — runtime_artifact.subagent_lineage
+
+```yaml
+plan_unit_id: RAP-115
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.subagent_lineage@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A parent-child delegation lineage artifact becomes durable with exact parent/child attempt refs and optional typed agent, objective, lifecycle, and result metadata.
+  The producer is Orchestrator lineage writer, through the newly named handler owner.runtime_artifacts.subagent_lineage.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_subagent_lineage.schema.json (pm.runtime_artifact.subagent_lineage.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=subagent_lineage, schema_id=pm.runtime_artifact.subagent_lineage.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.subagent_lineage.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-535]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.subagent_lineage"
+```
+
+
+### RAP-116 — runtime_artifact.suggested_next_steps
+
+```yaml
+plan_unit_id: RAP-116
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.suggested_next_steps@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A bounded non-executing next-step list becomes durable with optional typed rationale, priority, dependency, and approval metadata.
+  The producer is Agent suggestion writer, through the newly named handler owner.runtime_artifacts.suggested_next_steps.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_suggested_next_steps.schema.json (pm.runtime_artifact.suggested_next_steps.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=suggested_next_steps, schema_id=pm.runtime_artifact.suggested_next_steps.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.suggested_next_steps.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-536]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.suggested_next_steps"
+```
+
+
+### RAP-117 — runtime_artifact.tool_llm_trace
+
+```yaml
+plan_unit_id: RAP-117
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.tool_llm_trace@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A redacted reference-based tool/LLM trace artifact becomes durable with lifecycle, settlement, retry, refs, and flags.
+  The producer is Tool/provider trace writer, through the newly named handler owner.runtime_artifacts.tool_llm_trace.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_tool_llm_trace.schema.json (pm.runtime_artifact.tool_llm_trace.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=tool_llm_trace, schema_id=pm.runtime_artifact.tool_llm_trace.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.tool_llm_trace.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-537]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.tool_llm_trace"
+```
+
+
+### RAP-118 — runtime_artifact.validation_test
+
+```yaml
+plan_unit_id: RAP-118
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: |-
+  Newly authored owner contract under DL-045 for runtime_artifact.validation_test@1.0.0, prepared without admission. This exact family implements only the existing Option 2 transition: A validation artifact becomes durable with an exact test-id census and optional typed command, suite, lifecycle, per-test result, duration, and evidence metadata.
+  The producer is Test/validation writer, through the newly named handler owner.runtime_artifacts.validation_test.publish@1.0.0. This handler seals one immutable artifact metadata record; it does not perform the source operation. Validate the closed schema Plans/runtime_artifact_validation_test.schema.json (pm.runtime_artifact.validation_test.schema.v1) and current producer/read permission before commit. Project root edition only: nonempty payload.project_id must equal the EventRecord 2.0.0 project_id, scope_kind=project; artifact_type=validation_test, schema_id=pm.runtime_artifact.validation_test.schema.v1. All run/attempt/thread/node/provider/usage refs must resolve to that same owning Project and original source; absent optional refs never inherit focused UI identity. Non-restore artifacts require original run_id and attempt_id. Application successor definitions in CV-366/SP-349/351/352 are separate source/key graphs and are not written into this Project edition; this draft changes none of them.
+  Identity adopts the owner-recommended four-member tuple exactly: [event_type, project_id, artifact_id, schema_id]. Each member is encoded as uint32 big-endian UTF-8 byte length followed by its exact UTF-8 bytes, in that order, without normalization; reject length overflow. idempotency_key is "ra1:" plus lowercase SHA-256 of those framed bytes. EventRecord event_id is allocated once by Storage on first accepted append and thereafter returned from original custody; sequence_id and all original timestamps are Storage-owned. Matching identity with changed producer-semantic payload is a conflict, never an overwrite. No timestamp, summary, preview or subtype is an identity substitute.
+  The producer validates and durably commits any required referenced body through its existing source owner, then freezes the exact metadata payload. The EventRecord append is the first canonical persistence of artifact metadata; no second metadata or pending-request value is introduced. It then uses ordinary Case L-2 SeglogFrameV2 append with the exact identity, explicitly adopting SP-286/CV-339 and the installed full-value v2 successor including storage.first_append_receipt.resolve_full_value.v1. First receipt issuance is the group's durable commit frame under SP-336/SP-347; the custody transaction follows sync. No terminal artifact publication precedes authentic first-receipt custody and the final source/permission guard. No durable pending-request family is invented. After crash, retry only from the same authentic sealed source identity; no redispatch of its source action. If the original source or receipt cannot be proven, report unavailable and fence publication. Lost acknowledgements return the original EventRecord/receipt through actual first-receipt resolution; replay cannot manufacture a new event_id, body, receipt or external effect.
+  The exact passive operating consumer is reader.runtime_artifacts.validation_test.history@1.0.0, for the already specified artifact evidence/history inspection path. It consumes complete EventRecord 2.0.0 source values through reader.storage.event_record_index@1.0.0 and explicitly adopts SP-278. It returns only verified original metadata and authorized refs, never dispatches actions, appends siblings or fills a missing original from a projection. The artifact index and panel projection remain independently deferred; this history reader neither enables nor redefines them.
+  Retain this event, including embedded summary/text and original provenance, under RP-AUTHORITY-INDEFINITE@1.0.0 (DL-075 and Case L-3). The payload retention_class describes the artifact/body policy, never the EventRecord policy. Artifact bodies, Usage, original receipts and other source records retain their own existing policies; deleting a linked body does not erase event-embedded text. On each read recheck current authorization, source deletion/revocation and holds; inaccessible bodies remain unavailable and are never reconstructed from the retained event. No new deletion exception or preservation hold is created. Seglog owns original event custody, coherent backup and restore; include original EventRecord and SP-286 receipt custody from the same verified store/source selection. A derived index is not a backup of either. Redact before sealing; refs and summaries must not carry secrets, private reasoning, protected auth-session captures or raw hidden content.
+  Compatibility is exact-version only: unsupported schema IDs/versions fail closed with unsupported_schema_version. Existing source-lineage values may be inspected only through their explicitly supported decoder and original provenance, never rewritten as current events. Withdrawal first closes this exact producer's admission under the owner writer lease and drains or fences in-flight publication; preserve original issued receipts and events. Stop this reader before withdrawing its installed SP-278 dependency, invalidate its ephemeral view, then reinstall a versioned compatible reader and perform a complete authorized source read. Rebuild never republishes an event or source operation. No registry entry, native dispatch, PNC-019 or readiness follows this contract.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: [DL-045, DL-075, SP-538]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "runtime_artifact.validation_test"
+```

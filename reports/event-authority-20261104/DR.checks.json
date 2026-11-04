@@ -1,0 +1,82 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--generate",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/shard-generate.log",
+    "output_sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "generate"
+    ],
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/index-generate.log",
+    "output_sha256": "50200415eabf479b935798f604620d5565a01f5e32a41761844e85d095afc315"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-shard-plans.py",
+      "--check",
+      "--config",
+      "Plans/sharding_config.json"
+    ],
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/shard-check.log",
+    "output_sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plan-index.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/validate.log",
+    "output_sha256": "118939b3bc60059297b796fddf91bca0feba8921061dac1fde06d9cf4c3b36e2"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-plans-verify.py",
+      "validate-runtime-artifact-schemas"
+    ],
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/validate-runtime-artifact-schemas.log",
+    "output_sha256": "75cff8a2120bc13cdef976c8f49ad200429eacbf4f3f6184fa392fd745f6de12"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/pm-runtime-artifact-event-drafts.py"
+    ],
+    "exit_code": 0,
+    "top_level_status": "pass",
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/pm-runtime-artifact-event-drafts.log",
+    "output_sha256": "08742445cb3eadc11b2a8c0d6af4dfa83636f85883b9d36f5f0972e44a3871f2"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "top_level_status": null,
+    "output": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/diff-check.log",
+    "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

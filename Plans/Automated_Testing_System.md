@@ -7234,3 +7234,39 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+## Runtime artifact event contracts prepared without admission — 2026-11-04
+
+### ATS-260 — DR artifact event contract oracles
+
+```yaml
+plan_unit_id: ATS-260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: |-
+  For each exact prepared family in Plans/runtime_artifact_event_drafts.json, scripts/pm-runtime-artifact-event-drafts.py checks its own closed schema against its own positive fixture and unknown-field/type/identity negative fixtures. It checks a source-join model with wrong-Project, changed-payload identity conflict, unproven receipt, unauthorized/deleted body, corrupt source, replay and withdrawal oracles. A replay returns the same original receipt and no effects; source/body unavailability never resurrects bytes. These are static contract models, not implementations of SP-278/SP-286. The blocked restore_point row has no newly enabled writer. Native acceptance must separately inject crashes before/after source commit, append, first receipt and final publication; prove real original receipt resolution after lost acknowledgement, actual SP-278 coherent source/CAS, authorization/deletion/hold races, coherent backup/restore and withdrawal fences for each producer/reader. All native obligations remain NOT_RUN.
+gui_related: false
+gui_classification_reason: Defines passive event authority and storage contracts, without changing presentation.
+depends_on: ["DL-045", "DL-075"]
+unblocks: []
+acceptance_criteria:
+  - Exact family contract is prepared without admission; native execution remains NOT_RUN.
+validation_surfaces:
+  - python3 scripts/pm-runtime-artifact-event-drafts.py
+risk_class: event_authority_identity_and_replay
+reasoning_tier: high
+context_scope: event_authority_wave2_DR
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/Decision_Log.md#DL-045
+  - Plans/Decision_Log.md#DL-075
+preserved_exact_tokens:
+  - "DR artifact event contract oracles"
+```
