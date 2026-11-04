@@ -64,7 +64,11 @@ def all_prepared_snapshot():
     registry["families"] = [row for row in registry["families"] if row["family_id"] in baseline_ids]
     # Re-frozen 2026-09-23 (was 4f701c95..., last true at 4fe66204bd) after the six landed goal v3
     # adoptions named in scripts/pm_emit_only_event_contract.py; same value as its prefix hash.
-    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "a27cf49b63d364ae0d6d6f62b0ebc8d3ebe9e66df6de8e58814d099194d81050":
+    # Re-frozen 2026-11-04 (was a27cf49b..., last true at d86090abd9) after two owner-approved row changes
+    # inside the upstream40: DL-188's workspace.layout_changed 2.0.0 row (c0d688db9f, 634412b3ac) and DL-300's
+    # eleven Goal application editions (102a7e99e8, admitted 5375bfd2a7). The reviewed-successor check below
+    # still requires those exact current rows; pm-browser-event-admission.py accepts them by exact digest.
+    if len(registry["families"]) != 40 or GATE.fingerprint(registry["families"]) != "2fe49c025e4db8adc9183a3f32c393333c203f375d9a047cc7a98d48c6f8776e":
         raise AssertionError("Synthetic admission fixture requires the unchanged live upstream40")
     preservation, failures = GATE.preexisting_preservation(context[0], registry["families"])
     if len(registry["families"]) != 40 or failures or not preservation["current_preexisting_rows_match_reviewed_successors"]:
