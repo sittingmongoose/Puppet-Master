@@ -630,7 +630,7 @@ canonical_text: >-
   Wallpaper; there is no material off state or old Glass fallback (Jared, 2026-10-19, option 1). SSYS-053 owns
   Settings first-frame geometry and in-place update/return behavior. Glass transparency has a bounded typed numeric
   input beside its slider; both edit the same existing value through SSYS-009. No second setting or visible theme-preview
-  timer is created. Amended 2026-11-04 (SW-04, Jared): Theme offers five family names only: Basic, Friendly,
+  timer is created. Amended 2026-11-04 (SW-04, Jared, DL-301): Theme offers five family names only: Basic, Friendly,
   Retro, Glass and NieR. The single Light or dark control offers Light, Dark and Auto; the title-bar quick switch
   retains the same family and scheme separation. A family pick preserves the selected scheme, including Auto,
   and commits the resolved composite storage value and unchanged mode as one SSYS-009 transaction. Existing
