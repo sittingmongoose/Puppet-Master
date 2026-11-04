@@ -242,3 +242,144 @@ Raw outputs and runnable audit scripts are outside the repository under `/mnt/Cu
 - `author_fix4.py` and `owner_fix4.py` (the fixture and owner-text authoring scripts)
 
 SHA-256 values are in `evidence-sha256.json`. The worktree `/home/sittingmongoose/pm-worktrees/DMEM-fix4` is removed with a literal-path `git worktree remove --force` after the report is pushed.
+
+
+## Card 1b applied
+
+**Source head:** `752d9d47fa28b8c615d6677b7b8eeb60a6e300a7`; base `dc4c46c58c7462f288684a6e672febdf134e3c89`. This section supersedes only this report's earlier statements that the four monthly-summary/prune families remain held. The eight other families are under separate review and their contracts, payload/operation definitions, fixture file, owner units and eight assessment row objects remain unchanged. The old top-level self-grade source pin still governs those eight; the four new rows carry their own exact source pin.
+
+**Result:** four exact families prepared without admission. Each has its own full adoption unit, closed payload, phase-valid operation custody, identity recipe, exact writer/history reader, SP-278 checkpoint adoption, SP-286/CV-339 first-start custody, replay, compatibility/withdrawal and executed oracles. None can currently write. No cutoff exists, membership is ABSENT, and canonical operation/result retention is still pending. Native execution is NOT_RUN.
+
+| Exact family | Before P/Q/A | After P/Q/A | Own unit |
+|---|---|---|---|
+| `memory.monthly_summary.completed` | 1/2/9 (held) | 10/1/1 | `SP-638` |
+| `memory.monthly_summary.started` | 1/2/9 (held) | 10/1/1 | `SP-639` |
+| `memory.prune_archive.completed` | 1/2/9 (held) | 10/1/1 | `CV-658` |
+| `memory.prune_archive.started` | 1/2/9 (held) | 10/1/1 | `CV-659` |
+
+The event-history retention cell now cites DL-401/G04's `RP-OPERATIONAL-2555D@1.0.0` (2,555 days, 2,000,000 per Project, refusal at cap, stronger holds/refs preserved) on **unlanded** `origin/plans/ea-retention-cards1-20261104` at `2663667e14346235daaa561d193e959422640b6e`, `Plans/storage-plan.md` G04 and “Memory maintenance (DL-402, DL-403)”. It remains PARTIAL because the canonical operation/result custody assignment is still open. No application bucket or app edition is selected.
+
+### Decisions and premise checks
+
+Jared's 2026-11-04 answer was “approve all except 4c B”. Apply **1b-i A** and **1b-ii A** exactly as presented in `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/decision-answers/E-CARDS-1.as-presented-578a6774.md`, SHA-256 `578a6774525bc474ce7ee36da2bd22fae52520aaf940d33c99d0a3aeeb58d696`. DL-402/DL-403 are on unlanded `origin/plans/ea-cards1-answers-20261104` at `b6332f391a7870bad5f01a29a7e9d080050dac27`; this lane writes no decision entry.
+
+- **DL-402:** both jobs only archive. Only the user deletes memories. Summary originals remain archived with every EvidenceRef and version. Neither job archives or merges a pin; verification, index rebuild and out-of-date marking still apply to pins.
+- **DL-403:** automatic and Memory-panel invocation both refuse until cutoffs exist. Both buttons are unavailable and state why. A direct invocation, arbitrary policy argument or Boolean cannot bypass the same cutoff gate. This answer selects no values.
+- **Current owner premise:** section 7.2 still names monthly Note consolidation and prune/archive; UCC-085 still names `cmd.chat.memory.summarize_monthly {project_id, month?}` and `cmd.chat.memory.prune_archive {project_id, policy?}`. The exact four names remain in DL-045's authorized list. AMS-054 separates app-thread memory, so these prepared editions stay Project-only. No prior answer is extended to a new scope or a duplicate-sweep policy. Per-family live-canon searches and negative evidence are in `DMEM-card1b-search.json`.
+- **Narrow memory-owner edit:** only section 7.2 changes: archive-only/source/pin preservation with DL-402, and unavailable-until-cutoffs with DL-403. All memory-owner text outside that section is byte-identical. No AMS unit is minted or altered.
+
+### Newly authored bindings and adoption
+
+`SP-638` is monthly summary completed; `SP-639` is monthly summary started; `CV-658` is prune/archive completed; `CV-659` is prune/archive started. The last two are full storage/payload adoption contracts in Contracts, each with its own owner_doc; the reservations contain only two remaining SP and two remaining CV ids. Every family individually adopts the appropriate SP-636/SP-637 and CV-656/CV-657 pattern and replaces all exact names, command, schema, operation and reader identifiers. No sibling is treated as admission or as per-family search evidence.
+
+Each exact emitter is `MemoryMaintenance.<job>.<phase>.v1@1.0.0`; each exact reader is `reader.memory.<job>.<phase>.history.v1@1.0.0`. The two new canonical value companions are `memory_monthly_summary_operation` and `memory_prune_archive_operation`, deferred with explicit pending operation retention and the existing canonical `coordination_and_storage` 16 KiB profile. The writer accepts only `dedupe_by_idempotency_key` and the exact new payload URI. Project partition is encoded; current app events are not adopted. Closed payloads and rows freeze cutoff ref/hash, and monthly payloads/rows freeze the exact optional month including null, so crash/retry cannot substitute a newer policy or month. No default-month rule is selected.
+
+**Start custody:** same round-4 rule and predicates, including before/commit checks, full retained original identity/digest/operation/phase/flush checks and both-edition withdrawal fence. The new checker splits canonical schema, producer and payload comparisons into named invariant checks for guard-removal proof; it never repairs or substitutes retained proof. All four models (phase, writer, boundary, reader) exercise the original custody paths. A missing live cutoff refuses current writes/effects/recovery/retry with unchanged input state and no output; historical valid originals remain readable without today's cutoff. Archive post-state oracles preserve originals, evidence, versions, pins and unselected memories; summary provenance preserves all original refs.
+
+`ATS-316` owns the new static suite. The old checker changes only its count of held rows from four to zero, with the newly prepared rows routed to `Plans/memory_archive_contracts.json`; its eight-family semantic code and fixture file are unchanged. The eight contracts/assessment rows and every prior storage value/profile are preserved by 38 assertions.
+
+### Check 11: guard-removal table for all four
+
+**938 negatives; 35 logical guard groups.** Every case first runs from its intact positive control. Remove one guard across its repeated sites, run the entire corpus, require its own negatives to accept, and require every other negative to retain its own exact expected refusal; then restore it. Requested-start custody is classified as start custody even at a requested-original check; terminal-original custody is separate. Canonical/row/payload/hash observational copies for the cutoff scope/commitment negatives are updated coherently, leaving one semantic defect. The table would fail on a masked negative or an unrelated changed refusal.
+
+Exact full names for each row are in `reports/event-authority-20261104/DMEM-card1b-guards.json` and the full external `targeted-check.json` (including each complement). In the table, “other” is exactly the cases whose `guard` differs from that row; samples below are suffixes after the exact family prefix.
+
+| Guard removed | Negatives that flip: count and samples | Other negatives keep exact refusal | Restored |
+|---|---|---:|---|
+| `admission` | 4; `not-admitted`; `not-admitted` | 934 | yes |
+| `checkpoint_join` | 8; `checkpoint-storage_instance_id`; `checkpoint-checkpoint_key` | 930 | yes |
+| `cutoff_commitment` | 4; `cutoff-changed-hash`; `cutoff-changed-hash` | 934 | yes |
+| `cutoff_record` | 4; `cutoff-boolean-is-not-authority`; `cutoff-boolean-is-not-authority` | 934 | yes |
+| `cutoff_scope` | 8; `cutoff-other-job`; `cutoff-other-project` | 930 | yes |
+| `cutoffs_unavailable` | 328; `automatic-cutoffs-absent`; `memory-panel-cutoffs-absent` | 610 | yes |
+| `effect_once` | 4; `repeated-effect`; `repeated-effect` | 934 | yes |
+| `envelope_schema` | 4; `unknown-envelope-field`; `unknown-envelope-field` | 934 | yes |
+| `evidence_preserved` | 4; `evidence-lost`; `evidence-lost` | 934 | yes |
+| `no_extra_memories` | 4; `extra-memory`; `extra-memory` | 934 | yes |
+| `no_prune_summary` | 2; `prune-invented-summary`; `prune-invented-summary` | 936 | yes |
+| `operation_cas` | 4; `stale-cas`; `stale-cas` | 934 | yes |
+| `operation_valid` | 4; `unknown-operation-field`; `unknown-operation-field` | 934 | yes |
+| `original_custody` | 4; `history-forged-digest`; `history-forged-rehashed-payload` | 934 | yes |
+| `originals_preserved` | 4; `original-deleted`; `original-deleted` | 934 | yes |
+| `partition` | 4; `raw-project-partition`; `raw-project-partition` | 934 | yes |
+| `payload_join` | 4; `payload-source`; `payload-source` | 934 | yes |
+| `payload_schema` | 78; `payload-extra`; `payload-missing-schema_version` | 860 | yes |
+| `permission_or_withdrawal` | 16; `no-permission`; `withdrawn` | 922 | yes |
+| `pins_preserved` | 4; `pin-archived`; `pin-archived` | 934 | yes |
+| `producer_join` | 4; `producer-actor`; `producer-actor` | 934 | yes |
+| `references_resolve` | 4; `dormant-unresolved-ref`; `dormant-unresolved-ref` | 934 | yes |
+| `replay_policy` | 4; `replay-only`; `replay-only` | 934 | yes |
+| `request` | 4; `request-changed`; `request-changed` | 934 | yes |
+| `selected_archived` | 4; `selected-not-archived`; `selected-not-archived` | 934 | yes |
+| `selection_exists` | 4; `missing-selection`; `missing-selection` | 934 | yes |
+| `selection_kind` | 2; `non-note-summary`; `non-note-summary` | 936 | yes |
+| `selection_pinned` | 4; `pinned-selection`; `pinned-selection` | 934 | yes |
+| `selection_unique` | 4; `duplicate-selection`; `duplicate-selection` | 934 | yes |
+| `source` | 4; `source-changed`; `source-changed` | 934 | yes |
+| `start_custody` | 390; `start-custody-missing`; `start-custody-digest` | 548 | yes |
+| `summary_provenance` | 2; `summary-lost-evidence`; `summary-lost-evidence` | 936 | yes |
+| `terminal_custody` | 4; `terminal-custody`; `terminal-custody` | 934 | yes |
+| `unselected_preserved` | 4; `unselected-changed`; `unselected-changed` | 934 | yes |
+| `versions_preserved` | 4; `version-lost`; `version-lost` | 934 | yes |
+
+### Standing checks 1–11
+
+1. Replay-only is refused by the current writer; only dedupe is selected. All four have their own refusal oracle.
+2. Project-only editions introduce no Application writer or idempotency recipe. CV-366 remains the sole Application key authority; the unchanged adopted base suite also rejects its exact canonical Application case.
+3. Writer positives use `project~cHJvamVjdC0x`; raw partitions fail.
+4. Maximum MessagePack upper bounds, even with four-byte UTF-8 per allowed string character, are {'memory.monthly_summary.completed': 5002, 'memory.monthly_summary.started': 4091, 'memory.prune_archive.completed': 4959, 'memory.prune_archive.started': 4049}. Every one is below 16 KiB. Oversize inline and unknown success-exit fields fail the closed schema; SP-337 remains the larger-body owner.
+5. Patterned identifiers use exact lengths/full-input guards. Trailing-LF negatives cover the new payload hashes and monthly month; no Python `$` loophole.
+6. Storage-assigned sequence/observed/persisted fields are excluded from semantic retry comparison; unchanged original return is tested.
+7. Checkpoint positives use the event's actual UUID storage instance throughout the source fixture; foreign storage/key negatives reject.
+8. Unknown process-success fields reject. Eight full-checker mutations (wrong oracle and dormant operation ref, one of each per family) exit 1; no failure can be counted as a success.
+9. All schema documents and the new value mirrors are walked offline, including dormant refs. Each family has an unresolved-ref negative; the four mutated operation definitions also fail the full checker.
+10. Every exact reader returns retained valid originals after live source/request/counter changes and with cutoffs absent. Access denial, withdrawal, forged originals and corrupt start custody refuse.
+11. The complete table above passes. No historical eight-family negative or expectation is edited.
+
+### Cutoff proposals — report only, for Jared
+
+No numeric proposal below is canonical, an approval, a setting, a selected default or permission to run. **Question: choose A/B/C separately for monthly summary and prune/archive.**
+
+For both jobs, evaluate independently inside one Project, or inside only the calling application thread once that edition is separately bound. Never pool scopes. Proposed age means days since the later of `updated_at` and `last_access_at` (fall back to `created_at` when absent), so recent edits/use reset eligibility. Freeze the maintenance snapshot and use section 6.3's existing activation formula, including per-kind/Done half-lives and missing BM25/ANN scores equal to zero. Pins are excluded before scoring. No count cutoff or count-triggered archival is proposed.
+
+| Job | A — recommended | B — more conservative | C |
+|---|---|---|---|
+| Monthly summary | Note originals idle at least **90 days AND activation < 0.10**, per exact scope and existing monthly grouping; no count threshold. Archive every original with all evidence refs. | **180 days AND activation < 0.05**, same scope and protections. | Keep disabled; Jared supplies different age/score values or asks for usage evidence first. |
+| Prune/archive | Any eligible unpinned gist idle at least **180 days AND activation < 0.05**, per exact scope; no count threshold. Archive only. | **365 days AND activation < 0.02**, same scope and protections. | Keep disabled; Jared supplies different age/score values or asks for usage evidence first. |
+
+**Reason from today's text:** section 7.2 distinguishes older low-activation Note consolidation from very-low-activation pruning. Section 9.2 gives Notes a 45-day half-life: 90/180 days are two/four such half-lives, while 180/365-day kinds decay much more slowly. Section 6.3 already includes access, recency, kind/status and retrieval signals, and Done accelerates decay. Using both age and score respects that distinction; no count trigger forces a recently used or high-value memory out. Card 1b-ii explicitly says there is no usage data yet, so A is a cautious proposal to review, not an inferred product default. The lack of cutoffs continues to disable both jobs after this draft.
+
+### Checks and boundaries
+
+| Check | Exit / status |
+|---|---|
+| `python3 scripts/pm_memory_archive_events.py` | 0 / pass; 938 negatives, 35 guard rows; 154 authored phase/writer steps, 22 positive boundaries, 16 historical controls each with and without cutoffs, plus all custody-path controls in the negative corpus. |
+| `python3 scripts/pm_memory_maintenance_events.py` | 0 / pass; existing eight-family suite unchanged. |
+| Full-checker failure propagation | 0 audit / all 8 child processes exit 1 as required. |
+| New operation value rows against registry schema; mirrors/profiles | 0 / two schema-valid deferred rows, exact operation mirrors and existing profile adopted. |
+| Shard generate / index generate | 0 / top-level pass. Currentness 15-file copy verified by SHA-256 first. |
+| Shard check / index validate | 0 / parsed top-level pass, failures empty. |
+| Scope/citation audit; `git diff --check` | 0 / 38 preservation assertions; 48 exact four-family citations; whitespace clean. |
+| Storage-profile checker | 1 / 41 pre-existing unrelated errors, identical to base; zero new errors. The two missing profiles found during drafting were added before final generation. |
+| Assistant contract inspector | 1 / `gaps_found`; `errors=[]`, `projects_refresh_static_failures=[]`, Browser successor check passes. Broader command/wiring/native gaps are outside this lane; no completeness claim. |
+
+Shared-file hunks are additive SP-638/SP-639 in Storage, CV-658/CV-659 in Contracts, ATS-316 in Automated Testing, and two new operation rows/profiles in the storage value registry. Memory's only hunk is section 7.2. Shards changed only for those five edited owners; index regenerated. No `.gitignore`, test file, event-family registry, Decision Log, Spec Lock, auto-decisions, evidence bundle or frozen validator changed. No mail, subagent, landing lock, admission, governance reseal or main push.
+
+**IDs used:** new `SP-638`, `SP-639`, `CV-658`, `CV-659`, `ATS-316`, checked unused across every fetched origin branch before authoring. Existing adoption IDs are reused as references only. No AMS or DL id is created.
+
+**Remaining:** Jared's cutoff decision (proposals above); operation/result custody retention; merge the cited unlanded decisions/retention sources; independent review and per-family admission; native proof. The duplicate-sweep survivor/disposition policy stays open and all eight other family contracts stay under their separate review. All 12 worker rows now total 120 PASS / 12 PARTIAL / 12 ABSENT, without upgrading the old eight.
+
+### Card 1b evidence
+
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/targeted-check.json` — SHA-256 `d08ad36a6e50c16f10b9e5c4f35170cebdfa5c1726d1d32d34ccdc0faf96caaa`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/eight-family-regression.json` — SHA-256 `c956b542368bed7b5f595aab773c2e1d54f3cb28a9cb33ab104759028fabdbca`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/scope-audit.json` — SHA-256 `080b76b2638d20ec7bd0253ca1e5e15fb39f5d1540311ba6c5067c0df64aaf5a`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/failure-propagation.json` — SHA-256 `39f9ef8aa728c463b92e0d80841b58330b50b60e9d1256209540ce7497c0c933`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/shard-check.json` — SHA-256 `a471f4cd29bb5aeac3bf0eb27f14f6ee4baeec39bd3cb3a866aea09768adca69`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/index-validate.json` — SHA-256 `a2e9a22f64bde0bb77a6117b9b2f225affcef2451ef0c578d934713bef2fe68d`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/storage-profile-baseline.json` — SHA-256 `475eee9e127101fe490e45ac871f90150d429e01e182961b07f85c7ade9b21be`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/operation-registry-schema.json` — SHA-256 `00406d31ac06235eac071d9d5cf0ca6f8ede472fa0727e7188e51f01f79d4757`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/currentness-sha256.json` — SHA-256 `ca2d5e7006f07aa13dd0c118f82ffcb29c20a655a7145631160f9516461e7c3c`.
+- `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b/regrade-validation.json` — SHA-256 `4c7a0a634e989fc440347a5fb2c6bc7b285c4b5d40248618f3f171fc7a36fc1e`.
+
+All raw authoring/probe outputs remain outside the repository at `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/card1b`. The lane report, self-grade, search and compact guard summary are copied to `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DMEM/`. The task-specific sparse worktree is removed after the report commit is pushed; this does not land the branch.

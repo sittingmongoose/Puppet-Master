@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DMEM-FIX4-SELF-GRADE-20261104",
+  "assessment_id": "EA-W2-DMEM-CARD1B-SELF-GRADE-20261104",
   "assessment_kind": "worker_self_grade",
   "rubric": {
     "criteria": [
@@ -29,9 +29,9 @@
     "sha256": "443ae71d7e6326c3673a409f63950b9f33713c67f43c256fed6efa1c0d03a653"
   },
   "status_counts": {
-    "ABSENT": 44,
-    "PARTIAL": 16,
-    "PASS": 84
+    "ABSENT": 12,
+    "PASS": 120,
+    "PARTIAL": 12
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -4021,948 +4021,1183 @@
     },
     {
       "event_type": "memory.monthly_summary.completed",
-      "family_id": null,
-      "family_revision": null,
-      "outcome": "blocked_on_Jared",
+      "family_id": "event-family-memory-monthly-summary-completed",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "outcome": "register_prepared",
       "disposition": "UNDISPOSITIONED",
       "disposition_evidence": [
         {
-          "path": "Plans/UI_Command_Catalog.md",
-          "unit": "UCC-085",
-          "line_start": 1124,
-          "line_end": 1124,
-          "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-638",
+          "line_start": 30043,
+          "line_end": 30043,
+          "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 1,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
+      "assessed_tree": {
+        "branch": "plans/ea-w2-memory-maintenance-20261104",
+        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+      },
       "current_owner_units": [
-        "UCC-085"
+        "SP-638",
+        "ATS-316",
+        "SP-636",
+        "CV-656",
+        "SP-278",
+        "SP-286",
+        "CV-339"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "absent",
+          "finding": "ABSENT by design. This exact family is quarantined; no registry append or admission.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30043,
+              "line_end": 30043,
+              "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "owner_doc": {
           "status": "PASS",
-          "representation": "listed_only",
-          "finding": "UCC-085 and AMS section 7.2 name the operation; dependent contract stopped for the reserved policy choice.",
+          "representation": "exact_normative_owner",
+          "finding": "The exact family has its own adoption unit; semantic owner section 7.2 applies DL-402/DL-403.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 29946,
+              "line_end": 29946,
+              "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "producer": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 29947,
+              "line_end": 29947,
+              "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.completed.v1@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Separate closed payload and phase-valid operation definitions include frozen cutoff identity; monthly payloads also freeze month.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 29970,
+              "line_end": 29970,
+              "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "scope_identity": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project-only identity, correlation, causation and encoded partition recipes are explicit; no app edition.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 29979,
+              "line_end": 29979,
+              "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current append/retry refuses replay-only. Original-value retry excludes Storage-assigned metadata and repeats no effect.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 29983,
+              "line_end": 29983,
+              "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30031,
+              "line_end": 30031,
+              "quote": "custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "redaction_custody": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Coherent original/operation/memory/receipt backup, current access and ref-only no-secret disclosure are explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30021,
+              "line_end": 30021,
+              "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact non-index phase model, immutable accepted request, first-start custody, atomic archive effect and original terminal CAS are adopted.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 29969,
+              "line_end": 29969,
+              "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact qualified history reader adopts SP-278 generic projector, storage-qualified checkpoint and durable-token/CAS rules.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30017,
+              "line_end": 30017,
+              "quote": "reader.storage.event_record_index@1.0.0, projector.storage.event_record_index@1.0.0, checkpoints/event_record_index_checkpoint.v1:{storage_instance_id},"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30038,
+              "line_end": 30038,
+              "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1124,
-              "line_end": 1124,
-              "quote": "| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-638",
+              "line_start": 30041,
+              "line_end": 30041,
+              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         }
       },
       "remaining_gaps": [
-        "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+        "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
+        "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
+        "No cutoff is approved: both jobs and their panel buttons remain unavailable; proposals are in the report only.",
+        "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN."
       ],
-      "static_checks_seen": [],
-      "notes": "No payload or owner contract minted for this held row."
+      "static_checks_seen": [
+        "scripts/pm_memory_archive_events.py",
+        "scripts/pm_memory_maintenance_events.py"
+      ],
+      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
     },
     {
       "event_type": "memory.monthly_summary.started",
-      "family_id": null,
-      "family_revision": null,
-      "outcome": "blocked_on_Jared",
+      "family_id": "event-family-memory-monthly-summary-started",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "outcome": "register_prepared",
       "disposition": "UNDISPOSITIONED",
       "disposition_evidence": [
         {
-          "path": "Plans/UI_Command_Catalog.md",
-          "unit": "UCC-085",
-          "line_start": 6289,
-          "line_end": 6289,
-          "quote": "- memory.monthly_summary.started"
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-639",
+          "line_start": 30190,
+          "line_end": 30190,
+          "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 1,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
+      "assessed_tree": {
+        "branch": "plans/ea-w2-memory-maintenance-20261104",
+        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+      },
       "current_owner_units": [
-        "UCC-085"
+        "SP-639",
+        "ATS-316",
+        "SP-637",
+        "CV-657",
+        "SP-278",
+        "SP-286",
+        "CV-339"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "absent",
+          "finding": "ABSENT by design. This exact family is quarantined; no registry append or admission.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30190,
+              "line_end": 30190,
+              "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "owner_doc": {
           "status": "PASS",
-          "representation": "listed_only",
-          "finding": "UCC-085 and AMS section 7.2 name the operation; dependent contract stopped for the reserved policy choice.",
+          "representation": "exact_normative_owner",
+          "finding": "The exact family has its own adoption unit; semantic owner section 7.2 applies DL-402/DL-403.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30093,
+              "line_end": 30093,
+              "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "producer": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30094,
+              "line_end": 30094,
+              "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.monthly_summary.started.v1@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Separate closed payload and phase-valid operation definitions include frozen cutoff identity; monthly payloads also freeze month.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30117,
+              "line_end": 30117,
+              "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "scope_identity": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project-only identity, correlation, causation and encoded partition recipes are explicit; no app edition.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30126,
+              "line_end": 30126,
+              "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current append/retry refuses replay-only. Original-value retry excludes Storage-assigned metadata and repeats no effect.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30130,
+              "line_end": 30130,
+              "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30178,
+              "line_end": 30178,
+              "quote": "custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "redaction_custody": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Coherent original/operation/memory/receipt backup, current access and ref-only no-secret disclosure are explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30168,
+              "line_end": 30168,
+              "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact non-index phase model, immutable accepted request, first-start custody, atomic archive effect and original terminal CAS are adopted.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30116,
+              "line_end": 30116,
+              "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_monthly"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact qualified history reader adopts SP-278 generic projector, storage-qualified checkpoint and durable-token/CAS rules.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30163,
+              "line_end": 30163,
+              "quote": "This family''s exact reader reader.memory.monthly_summary.started.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30185,
+              "line_end": 30185,
+              "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6289,
-              "line_end": 6289,
-              "quote": "- memory.monthly_summary.started"
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-639",
+              "line_start": 30188,
+              "line_end": 30188,
+              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         }
       },
       "remaining_gaps": [
-        "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+        "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
+        "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
+        "No cutoff is approved: both jobs and their panel buttons remain unavailable; proposals are in the report only.",
+        "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN."
       ],
-      "static_checks_seen": [],
-      "notes": "No payload or owner contract minted for this held row."
+      "static_checks_seen": [
+        "scripts/pm_memory_archive_events.py",
+        "scripts/pm_memory_maintenance_events.py"
+      ],
+      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
     },
     {
       "event_type": "memory.prune_archive.completed",
-      "family_id": null,
-      "family_revision": null,
-      "outcome": "blocked_on_Jared",
+      "family_id": "event-family-memory-prune-archive-completed",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "outcome": "register_prepared",
       "disposition": "UNDISPOSITIONED",
       "disposition_evidence": [
         {
-          "path": "Plans/UI_Command_Catalog.md",
-          "unit": "UCC-085",
-          "line_start": 6290,
-          "line_end": 6290,
-          "quote": "- memory.prune_archive.completed"
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-658",
+          "line_start": 24941,
+          "line_end": 24941,
+          "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 1,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
+      "assessed_tree": {
+        "branch": "plans/ea-w2-memory-maintenance-20261104",
+        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+      },
       "current_owner_units": [
-        "UCC-085"
+        "CV-658",
+        "ATS-316",
+        "SP-636",
+        "CV-656",
+        "SP-278",
+        "SP-286",
+        "CV-339"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "absent",
+          "finding": "ABSENT by design. This exact family is quarantined; no registry append or admission.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24941,
+              "line_end": 24941,
+              "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "owner_doc": {
           "status": "PASS",
-          "representation": "listed_only",
-          "finding": "UCC-085 and AMS section 7.2 name the operation; dependent contract stopped for the reserved policy choice.",
+          "representation": "exact_normative_owner",
+          "finding": "The exact family has its own adoption unit; semantic owner section 7.2 applies DL-402/DL-403.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24845,
+              "line_end": 24845,
+              "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "producer": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24846,
+              "line_end": 24846,
+              "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.completed.v1@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Separate closed payload and phase-valid operation definitions include frozen cutoff identity; monthly payloads also freeze month.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24868,
+              "line_end": 24868,
+              "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "scope_identity": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project-only identity, correlation, causation and encoded partition recipes are explicit; no app edition.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24877,
+              "line_end": 24877,
+              "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current append/retry refuses replay-only. Original-value retry excludes Storage-assigned metadata and repeats no effect.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24881,
+              "line_end": 24881,
+              "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24929,
+              "line_end": 24929,
+              "quote": "custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "redaction_custody": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Coherent original/operation/memory/receipt backup, current access and ref-only no-secret disclosure are explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24919,
+              "line_end": 24919,
+              "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact non-index phase model, immutable accepted request, first-start custody, atomic archive effect and original terminal CAS are adopted.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24867,
+              "line_end": 24867,
+              "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_a"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact qualified history reader adopts SP-278 generic projector, storage-qualified checkpoint and durable-token/CAS rules.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24914,
+              "line_end": 24914,
+              "quote": "This family''s exact reader reader.memory.prune_archive.completed.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24936,
+              "line_end": 24936,
+              "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 6290,
-              "line_end": 6290,
-              "quote": "- memory.prune_archive.completed"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-658",
+              "line_start": 24939,
+              "line_end": 24939,
+              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         }
       },
       "remaining_gaps": [
-        "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+        "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
+        "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
+        "No cutoff is approved: both jobs and their panel buttons remain unavailable; proposals are in the report only.",
+        "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN."
       ],
-      "static_checks_seen": [],
-      "notes": "No payload or owner contract minted for this held row."
+      "static_checks_seen": [
+        "scripts/pm_memory_archive_events.py",
+        "scripts/pm_memory_maintenance_events.py"
+      ],
+      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
     },
     {
       "event_type": "memory.prune_archive.started",
-      "family_id": null,
-      "family_revision": null,
-      "outcome": "blocked_on_Jared",
+      "family_id": "event-family-memory-prune-archive-started",
+      "family_revision": "1.0.0",
+      "registry_pointer": null,
+      "outcome": "register_prepared",
       "disposition": "UNDISPOSITIONED",
       "disposition_evidence": [
         {
-          "path": "Plans/UI_Command_Catalog.md",
-          "unit": "UCC-085",
-          "line_start": 1125,
-          "line_end": 1125,
-          "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-659",
+          "line_start": 25085,
+          "line_end": 25085,
+          "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
         }
       ],
-      "pass_count": 1,
+      "pass_count": 10,
       "normative_depth_complete": false,
       "native_execution": "NOT_RUN",
+      "assessed_tree": {
+        "branch": "plans/ea-w2-memory-maintenance-20261104",
+        "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7"
+      },
       "current_owner_units": [
-        "UCC-085"
+        "CV-659",
+        "ATS-316",
+        "SP-637",
+        "CV-657",
+        "SP-278",
+        "SP-286",
+        "CV-339"
       ],
       "cells": {
         "membership_version": {
           "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "absent",
+          "finding": "ABSENT by design. This exact family is quarantined; no registry append or admission.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25085,
+              "line_end": 25085,
+              "quote": "negatives, unavailable buttons and guard-removal proof. Native execution is NOT_RUN. Membership is ABSENT; no"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "owner_doc": {
           "status": "PASS",
-          "representation": "listed_only",
-          "finding": "UCC-085 and AMS section 7.2 name the operation; dependent contract stopped for the reserved policy choice.",
+          "representation": "exact_normative_owner",
+          "finding": "The exact family has its own adoption unit; semantic owner section 7.2 applies DL-402/DL-403.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 24989,
+              "line_end": 24989,
+              "quote": "Semantic owner is Plans/assistant-memory-subsystem.md section 7.2, as amended only by DL-402 and DL-403. This"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PASS"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "producer": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact emitter and existing command are bound; SP-286/CV-339 custody and cutoff refusal precede publication.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 24990,
+              "line_end": 24990,
+              "quote": "unit owns this family''s payload and storage contract. Its producer is MemoryMaintenance.prune_archive.started.v1@1.0.0"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "closed_payload_schema": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Separate closed payload and phase-valid operation definitions include frozen cutoff identity; monthly payloads also freeze month.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25012,
+              "line_end": 25012,
+              "quote": "all declared fields required, additionalProperties=false, version=1.0.0, payload_ref=null. Completed status/result"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "scope_identity": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact Project-only identity, correlation, causation and encoded partition recipes are explicit; no app edition.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25021,
+              "line_end": 25021,
+              "quote": "idempotency_key=\"memory-maintenance:\"+the same lower-hex digest. The caller-supplied semantic EventRecord fields"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "replay_idempotency": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Current append/retry refuses replay-only. Original-value retry excludes Storage-assigned metadata and repeats no effect.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25025,
+              "line_end": 25025,
+              "quote": "Current append and retry refuse projector_replay_only as replay_only_not_appendable, before any original return"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "retention": {
           "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "representation": "exact_normative_owner",
+          "finding": "DL-401/G04 gives this Project event seven years on the cited unlanded retention branch. Canonical operation/result custody retention remains pending; no application count bucket is invented.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25073,
+              "line_end": 25073,
+              "quote": "custody retention remains PENDING_RETENTION_DECISION and native activation stays fenced until its owner resolves"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "carried",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "redaction_custody": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Coherent original/operation/memory/receipt backup, current access and ref-only no-secret disclosure are explicit.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25063,
+              "line_end": 25063,
+              "quote": "and root; mismatches fail. Preserve BRS-031 coherent canonical memory/operation/receipt/EventRecord boundaries;"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "transitions": {
-          "status": "PARTIAL",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact non-index phase model, immutable accepted request, first-start custody, atomic archive effect and original terminal CAS are adopted.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25011,
+              "line_end": 25011,
+              "quote": "transaction accepted -> started -> effect_committed -> completed. The payload is its own closed definition Plans/memory_maintenance_event_payloads.schema.json#/$defs/memory_prune_a"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "PARTIAL"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "consumers_checkpoints": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact qualified history reader adopts SP-278 generic projector, storage-qualified checkpoint and durable-token/CAS rules.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25058,
+              "line_end": 25058,
+              "quote": "This family''s exact reader reader.memory.prune_archive.started.history.v1@1.0.0 explicitly adopts SP-278: reader.storage.event_record_index@1.0.0,"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "compatibility_withdrawal": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact edition, preserved historical bytes, writer cutoff, reader/token fences and explicit successor admission are defined.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25080,
+              "line_end": 25080,
+              "quote": "authorized historical reads. Withdrawal first fences this family''s command/writer, retains unresolved original"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         },
         "positive_negative_oracles": {
-          "status": "ABSENT",
-          "representation": "listed_only",
-          "finding": "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here.",
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "ATS-316 exact-family fixtures pass. All 938 negative cases are independently controlled and proved by 35 guard-removal rows; unrelated negatives keep their exact refusal. Native execution remains NOT_RUN.",
           "evidence": [
             {
-              "path": "Plans/UI_Command_Catalog.md",
-              "unit": "UCC-085",
-              "line_start": 1125,
-              "line_end": 1125,
-              "quote": "| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |"
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-659",
+              "line_start": 25083,
+              "line_end": 25083,
+              "quote": "alias or migration by resemblance. Oracles are ATS-316 and scripts/pm_memory_archive_events.py, including positive"
             }
           ],
-          "prior": null,
-          "change": "new",
-          "change_reason": "Blocked row assessed without inventing a policy."
+          "prior": {
+            "source": "DMEM held row at dc4c46c58c7462f288684a6e672febdf134e3c89",
+            "status": "ABSENT"
+          },
+          "change": "upgraded",
+          "change_reason": "Re-read this exact family at the pinned Card 1b source head after applying DL-402/DL-403; admission and operation retention remain explicit gaps."
         }
       },
       "remaining_gaps": [
-        "Which eligibility, source-preservation and archive-versus-delete policy governs monthly consolidation/prune? Section 7.2 says policy-driven and never delete pinned; no choice is made here."
+        "Admission remains ABSENT; integrate the cited unlanded decisions/retention sources before any admission.",
+        "Canonical operation/result custody retention is PENDING_RETENTION_DECISION.",
+        "No cutoff is approved: both jobs and their panel buttons remain unavailable; proposals are in the report only.",
+        "Native receipt/transaction/flush/crash/GUI proof remains NOT_RUN."
       ],
-      "static_checks_seen": [],
-      "notes": "No payload or owner contract minted for this held row."
+      "static_checks_seen": [
+        "scripts/pm_memory_archive_events.py",
+        "scripts/pm_memory_maintenance_events.py"
+      ],
+      "notes": "Conditional full contract by exact-family adoption. Ten PASS, one PARTIAL (operation retention), one ABSENT (membership). Original eight assessed row objects are preserved verbatim at their earlier assessed_tree pin."
     }
   ],
   "review_round": 4,
   "reviewed_head": "009027140a5c3ecab7df7d22214b78a92b7a4ae8",
-  "review_scope": "Eight prepared families regraded against Astra round 2 (B1 start custody on the terminal advance, B2 unresolved dormant references) after the round-4 gate redesign; four legacy held row objects preserved, not regraded. DL-402/DL-403 answer application is separate work.",
+  "review_scope": "Card 1b: four previously held monthly_summary/prune_archive families regraded at their per-row source pin 752d9d47fa28b8c615d6677b7b8eeb60a6e300a7. The eight original family row objects remain unchanged and use the original top-level assessed_tree pin; their separate review is untouched.",
   "review_baseline_prepared_status_counts": {
     "PASS": 72,
     "PARTIAL": 16,
     "ABSENT": 8
   },
   "prepared_status_counts": {
-    "ABSENT": 8,
-    "PARTIAL": 8,
-    "PASS": 80
+    "ABSENT": 12,
+    "PASS": 120,
+    "PARTIAL": 12
+  },
+  "card1b_assessment": {
+    "assessed_tree": {
+      "commit": "752d9d47fa28b8c615d6677b7b8eeb60a6e300a7",
+      "branch": "plans/ea-w2-memory-maintenance-20261104"
+    },
+    "scope": [
+      "memory.monthly_summary.completed",
+      "memory.monthly_summary.started",
+      "memory.prune_archive.completed",
+      "memory.prune_archive.started"
+    ],
+    "decisions": [
+      "DL-402",
+      "DL-403"
+    ],
+    "event_retention": "DL-401/G04 on origin/plans/ea-retention-cards1-20261104@2663667e14346235daaa561d193e959422640b6e",
+    "source_pin_rule": "Top-level assessed_tree remains the original eight rows' source pin; each of the four Card 1b rows has its own new assessed_tree. Their old eight row objects are byte-for-byte JSON-equivalent.",
+    "status_counts": {
+      "ABSENT": 4,
+      "PASS": 40,
+      "PARTIAL": 4
+    }
   }
 }
