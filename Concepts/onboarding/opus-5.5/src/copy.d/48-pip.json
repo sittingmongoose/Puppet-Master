@@ -159,15 +159,18 @@
         },
         "tour": {
           "title": "Take the Guided Tour",
-          "text": "A few minutes, with a practice example, so nothing real changes. Pick it if Puppet Master is new to you."
+          "text": "A few minutes, with a practice example, so nothing real changes. Pick it if Puppet Master is new to you.",
+          "expert": "Runs a guided practice tour without changing real data. Start it later from Settings."
         },
         "enter": {
           "title": "Enter Puppet Master",
-          "text": "Closes setup and opens Puppet Master now. You can start the Guided Tour any time from Settings."
+          "text": "Closes setup and opens Puppet Master now. You can start the Guided Tour any time from Settings.",
+          "expert": "Closes onboarding and opens the app. The Guided Tour remains available in Settings."
         },
         "startOver": {
           "title": "Start over",
-          "text": "Clears the choices from last time and begins setup again from the first page."
+          "text": "Clears the choices from last time and begins setup again from the first page.",
+          "expert": "Clears the saved onboarding choices and restarts setup."
         },
         "field:paste": {
           "title": "Code from the page",
@@ -233,95 +236,117 @@
       "chrome": {
         "lookMenu": {
           "title": "Change the look",
-          "text": "Opens the looks right here, without leaving setup. Your choices so far are kept."
+          "text": "Opens the looks right here, without leaving setup. Your choices so far are kept.",
+          "expert": "Opens the look selector without leaving onboarding; the current draft is preserved."
         },
         "sound": {
           "title": "Sound",
-          "text": "Turns setup's sounds and Pip's voice on or off. Nothing plays until you click or press a key."
+          "text": "Turns setup's sounds and Pip's voice on or off. Nothing plays until you click or press a key.",
+          "expert": "Toggles setup audio and Pip voice. Audio starts only after a user gesture."
         },
         "close": {
           "title": "Close",
-          "text": "Your choices are saved. Finish setting up brings you back to where you left off."
+          "text": "Your choices are saved. Finish setting up brings you back to where you left off.",
+          "expert": "Closes onboarding and preserves the draft for resumption."
         },
         "resume": {
           "title": "Finish setting up",
-          "text": "Opens setup again where you left off. Every choice you made is still there."
+          "text": "Opens setup again where you left off. Every choice you made is still there.",
+          "expert": "Resumes onboarding from the saved draft."
         },
         "lookFamily:basic": {
           "title": "Basic",
-          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest look."
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest look.",
+          "expert": "Basic uses clean geometry, restrained motion and quiet audio."
         },
         "lookFamily:friendly": {
           "title": "Friendly",
-          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest look."
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest look.",
+          "expert": "Friendly uses warm colours, rounded shapes and playful motion."
         },
         "lookFamily:glass": {
           "title": "Glass",
-          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable."
+          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable.",
+          "expert": "Glass uses translucent frosted panels over moving light. Panel opacity is configurable in Settings."
         },
         "lookFamily:retro": {
           "title": "Retro",
-          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light looks printed on paper."
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light looks printed on paper.",
+          "expert": "Retro uses pixel styling: a green display in Dark and printed paper in Light."
         },
         "lookFamily:nier": {
           "title": "NieR",
-          "text": "Ink and parchment inspired by NieR: Automata, with square lines, its own sounds and a scene behind the app. Adjust NieR chooses which of its pieces you want."
+          "text": "Ink and parchment inspired by NieR: Automata, with square lines, its own sounds and a scene behind the app. Adjust NieR chooses which of its pieces you want.",
+          "expert": "NieR uses ink and parchment styling, its own audio and a background scene. Adjust NieR configures its components."
         },
         "lookMode:light": {
           "title": "Light or dark",
-          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read.",
+          "expert": "Selects Light. Every look supports Light and Dark; the initial default is Basic Dark."
         },
         "lookMode:dark": {
           "title": "Light or dark",
-          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read.",
+          "expert": "Selects Dark. Every look supports Light and Dark; the initial default is Basic Dark."
         },
         "lookNier:nier": {
           "title": "NieR",
-          "text": "An ink-and-parchment look inspired by NieR: Automata, in light and dark like every look. Adjust NieR chooses its pieces."
+          "text": "An ink-and-parchment look inspired by NieR: Automata, in light and dark like every look. Adjust NieR chooses its pieces.",
+          "expert": "NieR: Automata-inspired ink and parchment styling, available in Light and Dark. Adjust NieR configures its components."
         },
         "lookNierAdjust:nier-adjust": {
           "title": "Adjust NieR",
-          "text": "Choose which pieces of NieR you want, like its menu sounds, its motion and the picture behind it."
+          "text": "Choose which pieces of NieR you want, like its menu sounds, its motion and the picture behind it.",
+          "expert": "Configures NieR components, including menu audio, motion and the background."
         }
       },
       "welcome": {
         "skipAll": {
           "title": "Skip",
-          "text": "Closes setup and opens Puppet Master as it is. Run Onboarding Again in Settings brings setup back any time."
+          "text": "Closes setup and opens Puppet Master as it is. Run Onboarding Again in Settings brings setup back any time.",
+          "expert": "Closes onboarding without further setup. Run Onboarding Again in Settings restarts it."
         }
       },
       "look": {
         "pickFamily:basic": {
           "title": "Basic",
-          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest look."
+          "text": "A clean diagram: plain shapes, calm and precise movement, quiet sounds. The calmest look.",
+          "expert": "Basic uses clean geometry, restrained motion and quiet audio."
         },
         "pickFamily:friendly": {
           "title": "Friendly",
-          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest look."
+          "text": "Warm colours, rounded shapes and playful movement, like a little paper theatre. The cosiest look.",
+          "expert": "Friendly uses warm colours, rounded shapes and playful motion."
         },
         "pickFamily:glass": {
           "title": "Glass",
-          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable."
+          "text": "Frosted glass over soft, moving light. Settings choose how see-through the panels are; text always stays readable.",
+          "expert": "Glass uses translucent frosted panels over moving light. Panel opacity is configurable in Settings."
         },
         "pickFamily:retro": {
           "title": "Retro",
-          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light looks printed on paper."
+          "text": "Pixel-sharp, like an old computer. Dark is a glowing green screen; Light looks printed on paper.",
+          "expert": "Retro uses pixel styling: a green display in Dark and printed paper in Light."
         },
         "pickFamily:nier": {
           "title": "NieR",
-          "text": "Ink and parchment inspired by NieR: Automata, with square lines, its own sounds and a scene behind the app. Adjust NieR chooses which of its pieces you want."
+          "text": "Ink and parchment inspired by NieR: Automata, with square lines, its own sounds and a scene behind the app. Adjust NieR chooses which of its pieces you want.",
+          "expert": "NieR uses ink and parchment styling, its own audio and a background scene. Adjust NieR configures its components."
         },
         "group:pickMode": {
           "title": "Light or dark",
-          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read."
+          "text": "Every look has a light and a dark version. First-time setup starts in Basic Dark; choose whichever is easier for you to read.",
+          "expert": "Selects Light or Dark for the look. The initial default is Basic Dark."
         },
         "pickNier": {
           "title": "NieR",
-          "text": "An ink-and-parchment look inspired by NieR: Automata, in light and dark like every look. Adjust NieR chooses its pieces."
+          "text": "An ink-and-parchment look inspired by NieR: Automata, in light and dark like every look. Adjust NieR chooses its pieces.",
+          "expert": "NieR: Automata-inspired ink and parchment styling, available in Light and Dark. Adjust NieR configures its components."
         },
         "adjustNier": {
           "title": "Adjust NieR",
-          "text": "Choose which pieces of NieR you want, like its menu sounds, its motion and the picture behind it."
+          "text": "Choose which pieces of NieR you want, like its menu sounds, its motion and the picture behind it.",
+          "expert": "Configures NieR components, including menu audio, motion and the background."
         }
       },
       "where": {
@@ -1663,7 +1688,7 @@
         "keep": "Your look's kept. Change it if you like.",
         "pickFamily:basic": "Clean and calm. Very tidy.",
         "pickFamily:friendly": "Soft and cosy. I like it.",
-        "pickFamily:glass": "Ooh, shiny. Am I glass now?",
+        "pickFamily:glass": "Ooh, shiny. Imagine me in glass!",
         "pickFamily:retro": "Retro! Straight out of an old computer.",
         "pickNier": "NieR? I can do stoic.",
         "pickMode:light": "Light it is. Bright and clear.",
