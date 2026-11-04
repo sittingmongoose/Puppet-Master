@@ -1,16 +1,44 @@
 {
-  "schema_id": "pm.event_authority.DR.fix1_checks.v1",
-  "implementation_head": "796707f50aa275cba7debed746bc1d363a7e24ba",
+  "schema_id": "pm.event_authority.DR.fix2_checks.v1",
+  "implementation_head": "ad863eefda44dfae7c358d5f5384ec39b0e6e0c9",
   "native_execution": "NOT_RUN",
   "admission": "NONE",
-  "environment": "Isolated --system-site-packages venv; pinned scripts/requirements-runtime-artifact-drafts.txt installed. The temporary venv is removed after push; recreate it outside the repository to rerun.",
+  "environment": "VM sparse detached fix worktree; isolated --system-site-packages venv with pinned scripts/requirements-runtime-artifact-drafts.txt. Temporary venv and worktree removed after push.",
   "checked_owner_sha256": {
-    "Plans/Runtime_Artifacts_Panel.md": "dedfde0e900f5a1bdf812195238bc2a14d17ae153070c9f241d60779d73320f1",
+    "Plans/Runtime_Artifacts_Panel.md": "103e246560f01469a0bc842a9fa27f7e067697361aeaa4e6c77c16c963b71bf8",
     "Plans/storage-plan.md": "c27cb67cf2d79f5c06dad215881fe706ea86f028126041f19b628afb94255bd6",
     "Plans/Contracts_V0.md": "0645818e1a91ee83e4d9f8a0746a8eb7eba4bc38d2dbf9730d22a36149a67bdb",
-    "Plans/Automated_Testing_System.md": "9f3d3c496c19641981fc0752dc54e7658f70bab1da29b827786b27f63696c3ef"
+    "Plans/Automated_Testing_System.md": "334c050eae1c253ab935ddec99abbe7ce0d565fbe9943883bcf6610fb6b943ed"
+  },
+  "checked_companion_sha256": {
+    "scripts/pm-runtime-artifact-event-drafts.py": "52453ff5e3280dbc24ef66e7585d52f893779cb80a242755988e3ddd699c8f7d",
+    "Plans/runtime_artifact_event_drafts.fixtures.json": "af5c8f696ca25d1ac3a8f809d6f7dfb979a3a97482ffae715bf8a6078d55407a"
   },
   "checks": [
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "7e59fce39abf814ef5e439c432999e8f62e73f91"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "draft-check",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix2-venv/bin/python",
+        "scripts/pm-runtime-artifact-event-drafts.py"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/draft-check.log",
+      "sha256": "ad722046e2d63b7ec7e417c4752654de8eb979bbd697df77ab54347161bdd8b7",
+      "top_level_status": "pass",
+      "cases": 3620
+    },
     {
       "name": "index-generate",
       "command": [
@@ -19,23 +47,62 @@
         "generate"
       ],
       "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/index-generate.log",
+      "sha256": "0bfe4c79fdf6f9282c4dee7ae321a69f3ab39919d0da16be4c50e0ed5de58951",
       "top_level_status": "pass",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/index-generate.log",
-      "sha256": "3317126f3fde5302a4331f34a489bb3e2232c3c008afe5f25becac24c696258c"
+      "cases": null
     },
     {
-      "name": "shard-generate",
+      "name": "index-validate",
       "command": [
         "python3",
-        "scripts/pm-shard-plans.py",
-        "--generate",
-        "--config",
-        "Plans/sharding_config.json"
+        "scripts/pm-plan-index.py",
+        "validate"
       ],
       "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/index-validate.log",
+      "sha256": "a43447a7ae769938eeb9b46007d59cc5b89263a4ccb402b45efe90bf3cd3b3b5",
       "top_level_status": "pass",
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/shard-generate.log",
-      "sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2"
+      "cases": null
+    },
+    {
+      "name": "regression-mutations",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix2-venv/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/regression-mutations.py",
+        "/home/sittingmongoose/pm-worktrees/DR-fix2"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/regression-mutations.log",
+      "sha256": "cfb83c1e15befdcc2af35dbb4fbaf5c3000b7d771ce60c519158b7f83f8673b2",
+      "top_level_status": "pass",
+      "cases": null
+    },
+    {
+      "name": "review-cycle2-probes",
+      "command": [
+        "/home/sittingmongoose/PM-Experiments/DR-fix2-venv/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/cycle2-probes.py",
+        "/home/sittingmongoose/pm-worktrees/DR-fix2"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/review-cycle2-probes.log",
+      "sha256": "9e3b06c1bf01b727db689a79d8caeb9e031d0a8859805f895fba08ec372316ea",
+      "top_level_status": null,
+      "cases": null
+    },
+    {
+      "name": "schema-check",
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-runtime-artifact-schemas"
+      ],
+      "exit_code": 0,
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/schema-check.log",
+      "sha256": "e91678590ca2759016a7e269bb72ffb0430c2c5d0c1b3bb7a63352040c7a6059",
+      "top_level_status": "pass",
+      "cases": null
     },
     {
       "name": "shard-check",
@@ -47,55 +114,83 @@
         "Plans/sharding_config.json"
       ],
       "exit_code": 0,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/shard-check.log",
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/shard-check.log",
       "sha256": "10cde07211161ba5007ce9acf94b977462852fb760eea82736b42c96996d0c85",
-      "top_level_status": "pass"
+      "top_level_status": "pass",
+      "cases": null
     },
     {
-      "name": "index-validate",
+      "name": "shard-generate",
       "command": [
         "python3",
-        "scripts/pm-plan-index.py",
-        "validate"
+        "scripts/pm-shard-plans.py",
+        "--generate",
+        "--config",
+        "Plans/sharding_config.json"
       ],
       "exit_code": 0,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/index-validate.log",
-      "sha256": "dff115dca1eff507d6465d613b5a052b33ffcdc4136f8a900c3849009a88329a",
-      "top_level_status": "pass"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/shard-generate.log",
+      "sha256": "fafb1c33a567c68de84f9f26c3cbd2828d5f49a400771374af7218463f00b5d2",
+      "top_level_status": "pass",
+      "cases": null
     },
     {
-      "name": "schema-check",
+      "name": "delivery-audit",
       "command": [
-        "python3",
-        "scripts/pm-plans-verify.py",
-        "validate-runtime-artifact-schemas"
+        "/home/sittingmongoose/PM-Experiments/DR-fix2-venv/bin/python",
+        "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/delivery-audit.py"
       ],
       "exit_code": 0,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/schema-check.log",
-      "sha256": "3c8290c06a486139c8506a7c1730322b2043c6344946bc28dab2ee7a4d992d9b",
-      "top_level_status": "pass"
+      "path": "/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/delivery-audit.log",
+      "sha256": "6c8f2cd2ce5d0511e1b214f930f8a0bbe5a7d21af277c9bf8edf30210b75651e",
+      "top_level_status": "pass",
+      "cases": null
+    }
+  ],
+  "review_driver_result": {
+    "family_check_count": 931,
+    "family_checks_failed": [],
+    "restore_checks_failed": [],
+    "counterexample_count": 20
+  },
+  "review_driver_provenance": "Copied cycle2-probes.py; only report provenance fields changed to identify fixed input bytes. All probe/assertion logic is unchanged. Original reviewer evidence was not overwritten.",
+  "mutation_result": {
+    "status": "pass",
+    "B5_removed_guard_full_checker_expected_failures": 209,
+    "B6_removed_guard_full_checker_expected_failures": 4
+  },
+  "evidence": [
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/currentness-copy.json",
+      "sha256": "e86c3eb59f33f0311d29561d52d4ecc90ad5155fe481a82e4074bc3ead0c13f5"
     },
     {
-      "name": "draft-check",
-      "command": [
-        "/home/sittingmongoose/PM-Experiments/DR-fix1-venv/bin/python",
-        "scripts/pm-runtime-artifact-event-drafts.py"
-      ],
-      "exit_code": 0,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/draft-check.log",
-      "sha256": "ff1d77e0b56e440f0a5ac306fe2ce225b3b827f9cdde6a254f8f41079e718ab6",
-      "top_level_status": "pass"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/scope-audit.json",
+      "sha256": "b481e87dc462f757ac81c08e3aa93b6e640aa8beb93bc0a991aefcf60c2f2b6d"
     },
     {
-      "name": "diff-check",
-      "command": [
-        "git",
-        "diff",
-        "--check"
-      ],
-      "exit_code": 0,
-      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-1/diff-check.log",
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/cycle2-probes.py",
+      "sha256": "36222e4d99a7abe28572e922b1a70485d94ea999b866b136ad321348fc53d189"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/cycle2-mutation-results.json",
+      "sha256": "59ecbf4247c95177686d0d52b058d1b318dc34e2b25395613716a11308f6eab9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/regression-mutations.py",
+      "sha256": "4f13515feaa32e187e003fac7cfafd3af807eb81d32eda7f14281b9a148f95cb"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/regression-mutations.json",
+      "sha256": "d2d580c674c297ab7d12bbbccdf426adea10c5ebfbbc079256b5eb862abd37a3"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/grade-source-audit.json",
+      "sha256": "7e89e53336de7e59344e958a319e24417cfea8ece432516ae0d07fb81fbae8f9"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DR/fix-round-2/delivery-audit.py",
+      "sha256": "fe91932aa011218ddf8830e537e00067da5912471a1789cc25d7d9737ea33413"
     }
   ]
 }
