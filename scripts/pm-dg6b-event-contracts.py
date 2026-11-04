@@ -132,8 +132,29 @@ def history_contract(name, case, schema):
         raise ValueError('historical_withdrawn')
     if not case['access_current'] or case['body_deleted']:
         raise ValueError('historical_access')
-    # This is the original admission evidence, never the current writer lease.
-    return append_contract(name, case['original'], schema)
+    # Frozen source admission is checked at its original boundary. Neither the
+    # current writer policy nor later live state selects a historical reader.
+    digest = record_contract(name, case['original'], schema)
+    historical_storage_contract(case['original'], case['storage_record'])
+    return digest
+
+
+def historical_storage_contract(original, storage_record):
+    """Independent verified Storage input, not a payload/caller assertion.
+
+    The fixture adapter stands for Storage's authenticated selected source
+    frame. It is not a new disk format or a native frame-verification claim.
+    Compare complete exact canonical EventRecord bytes: the producer digest
+    intentionally excludes Storage sequence/time and cannot prove this join.
+    """
+    from pm_event_index_binding import binding_bytes
+    if storage_record['authenticated'] is not True:
+        raise ValueError('historical_storage_source')
+    if (storage_record['storage_instance_id'] != original['durable_read_token']['storage_instance_id']
+            or storage_record['scope_partition'] != original['scope_partition']):
+        raise ValueError('historical_storage_join')
+    if binding_bytes(original['event_record']).hex() != storage_record['event_record_bytes_hex']:
+        raise ValueError('historical_storage_record')
 
 def identity(name, payload, scope_key, server_id=None):
     preimage = [name, payload['storage_instance_id'], scope_key, payload['operation_id'], payload['revision']]
@@ -458,14 +479,27 @@ def reference_available(payload_ref, resolved):
 
 
 def append_contract(name, case, schema, original=None):
-    import base64
-    import rfc8785
-    from pm_event_index_binding import binding_bytes
-    p, s, e = case['payload'], case['source'], case['event_record']
+    """Current append/retry policy; never used to admit historical readers."""
+    e = case['event_record']
     if e.get('replay_policy') == 'projector_replay_only':
         raise ValueError('replay_only_not_appendable')
     if e.get('replay_policy') != 'dedupe_by_idempotency_key':
         raise ValueError('writer_replay_policy')
+    digest = record_contract(name, case, schema)
+    if original is not None:
+        if (e['event_id'], e['idempotency_key']) != (
+                original['event_record']['event_id'], original['event_record']['idempotency_key']):
+            raise ValueError('retry_identity')
+        if semantic_record(e) != semantic_record(original['event_record']):
+            raise ValueError('idempotency_conflict')
+    return digest
+
+
+def record_contract(name, case, schema):
+    """Immutable envelope, payload and frozen at-write source validation."""
+    import rfc8785
+    from pm_event_index_binding import binding_bytes
+    p, s, e = case['payload'], case['source'], case['event_record']
     envelope = load_plan('Plans/event_record.schema.json')
     if list(Draft202012Validator(envelope, format_checker=FORMAT).iter_errors(e)):
         raise ValueError('event_record_schema')
@@ -521,14 +555,7 @@ def append_contract(name, case, schema, original=None):
             or token['source_selection']['storage_instance_id'] != p['storage_instance_id']
             or token['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + p['storage_instance_id']):
         raise ValueError('checkpoint_storage_join')
-    digest = hashlib.sha256(rfc8785.dumps(semantic_record(e))).hexdigest()
-    if original is not None:
-        if (e['event_id'], e['idempotency_key']) != (
-                original['event_record']['event_id'], original['event_record']['idempotency_key']):
-            raise ValueError('retry_identity')
-        if semantic_record(e) != semantic_record(original['event_record']):
-            raise ValueError('idempotency_conflict')
-    return digest
+    return hashlib.sha256(rfc8785.dumps(semantic_record(e))).hexdigest()
 
 
 def expect_failure(call, expected, name, label):
