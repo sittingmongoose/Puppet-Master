@@ -79,12 +79,23 @@ async function surface(t, sandbox) {
 	};
 	/* a look as the onboarding window applies it (its look menu and tiles call O55.ui.applyLook; PM_THEME alone is
 	   overruled while the window is open) */
+	const awaitLook = async (fam, mode, name) => {
+		const ok = await f.waitForFunction(([a, b]) => {
+			const th = window.O55.theme();
+			return th.chosen === a && th.mode === b
+				&& !document.documentElement.hasAttribute('data-o55-vt')
+				&& !document.querySelector('#o55np-reboot, #o55np-calm')
+				&& !window.PM_THEME_TRANSITION?.busy?.()
+				&& !window.O55.nierLook?.busy?.();
+		}, [fam, mode], { timeout: 20000 }).then(() => true, () => false);
+		await t.check(`${name}: ${fam}-${mode} applied and look cover ended`, ok, JSON.stringify(await f.evaluate(() => window.O55.theme())));
+		if (!ok) throw new Error(`${name} did not apply ${fam}-${mode} and finish its look cover`);
+		await settle();
+	};
 	const look = async (name) => {
 		const [fam, mode] = name.split('-');
 		await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, mode]);
-		const ok = await f.waitForFunction(([a, b]) => { const th = window.O55.theme(); return th.chosen === a && th.mode === b && !document.documentElement.hasAttribute('data-o55-vt'); }, [fam, mode], { timeout: 20000 }).then(() => true, () => false);
-		await settle(); await sleep(900);
-		return t.check(`look ${name} applied`, ok, JSON.stringify(await f.evaluate(() => window.O55.theme())));
+		await awaitLook(fam, mode, `look ${name}`); await sleep(900);
 	};
 	const backTo = async (want) => {
 		for (let k = 0; k < 4 && (await screen()) !== want; k++) {
@@ -160,16 +171,19 @@ async function surface(t, sandbox) {
 	}
 	await witness('look switches (all ten looks)');
 
-	/* 2. look flips by the Pick a look tiles: Basic, Friendly, Glass, Retro, NieR and back, light then dark */
+	/* 2. Required real mode/tile presses: confirm the requested family/mode and full cover completion
+	   after every press. A missing tile or ignored click fails; no fixed delay or silent skip. */
 	await look('basic-light');
 	await backTo('look');
 	for (const mode of ['light', 'dark']) {
 		const m = `${LAYER} [data-o55-do="pickMode"][data-arg="${mode}"]`;
-		if (await box(m)) { await press(m, 'mode ' + mode); await sleep(1600); }
+		const famBeforeMode = await f.evaluate(() => window.O55.theme().chosen);
+		await press(m, 'mode ' + mode);
+		await awaitLook(famBeforeMode, mode, 'mode press ' + mode);
 		for (const fam of ['friendly', 'glass', 'retro', 'nier', 'basic']) {
 			const sel = `${LAYER} .o55-tile[data-arg="${fam}"]`;
-			if (!(await box(sel))) { t.log('no tile ' + fam); continue; }
-			await press(sel, `look ${fam}-${mode}`); await sleep(2600);
+			await press(sel, `look ${fam}-${mode}`);
+			await awaitLook(fam, mode, `tile press ${fam}-${mode}`);
 		}
 	}
 	await witness('look flips by the tiles');
