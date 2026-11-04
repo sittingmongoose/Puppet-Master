@@ -1,13 +1,13 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-DM-FIX1-SELF-20261104",
+  "assessment_id": "EA-DM-FIX2-SELF-20261104",
   "assessment_kind": "branch_local_self_grade",
   "assessed_tree": {
     "branch": "plans/ea-w2-small-owners-20261104",
     "base": "be4766513ff71776346fc73b84f2542990f955af",
-    "method": "All twelve cells regraded against the fixed canonical head. Report-only follow-up changes no canonical inputs. PASS denotes normative static contract depth only; native NOT_RUN. Prepared membership remains ABSENT; pending retention is the wave-2 exception.",
-    "canonical_head": "9f276c6e08bef5d0680fe9f7b7f61ac5324408fc",
-    "reviewed_head": "247e523f69b1f647cc7b23958ba038d9a71c7397"
+    "method": "Re-read all ten families against this canonical fix head after the final permitted review cycle. Every standing check is audited across the eight prepared families; both Settings families remain explicit Jared holds with no current-writer contract or event oracles. Normative self-grade only, no independent review or native result inferred.",
+    "canonical_head": "6eb5a0ba62d6268406851a50e2d4243a38d3fdd4",
+    "reviewed_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7"
   },
   "rubric": {
     "criteria": [
@@ -56,11 +56,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -73,15 +73,15 @@
               "line_start": 1117,
               "line_end": 1117,
               "quote": "format.applied 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -94,20 +94,20 @@
               "line_start": 1121,
               "line_end": 1121,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/format_applied.schema.json",
@@ -115,7 +115,7 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "b476f2d93b877e8094798c0967c44a37326dff4615a00967ed34eb1812f542b4"
+              "file_sha256": "3d15beba7bd72ad72b3f8a6a60fbc03c1073a9ad073487a7b4f80679e4a94ed8"
             },
             {
               "path": "Plans/Formatters_System.md",
@@ -123,15 +123,15 @@
               "line_start": 1123,
               "line_end": 1123,
               "quote": "Exact envelope joins for format.applied: actor_ref is the non-empty non-secret actor reference retained by the original HTE write/edit operation from its accepted owner request, never the retrying Cli",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -144,7 +144,7 @@
               "line_start": 1123,
               "line_end": 1123,
               "quote": "Exact envelope joins for format.applied: actor_ref is the non-empty non-secret actor reference retained by the original HTE write/edit operation from its accepted owner request, never the retrying Cli",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             },
             {
               "path": "Plans/Formatters_System.md",
@@ -152,15 +152,15 @@
               "line_start": 1122,
               "line_end": 1122,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"format.applied\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array orde",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -173,15 +173,23 @@
               "line_start": 1122,
               "line_end": 1122,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"format.applied\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array orde",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
+            },
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1131,
+              "line_end": 1131,
+              "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -194,15 +202,15 @@
               "line_start": 1127,
               "line_end": 1127,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -215,7 +223,7 @@
               "line_start": 1125,
               "line_end": 1125,
               "quote": "Profile rationale for format.applied: HTE formatter output and formatted body remain behind the two authorized evidence refs; redaction_profile=secret_refs_only is an existing EventRecord value and do",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             },
             {
               "path": "Plans/Formatters_System.md",
@@ -223,15 +231,15 @@
               "line_start": 1126,
               "line_end": 1126,
               "quote": "Custody remains with HTE formatter completion adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, pr",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -244,15 +252,15 @@
               "line_start": 1119,
               "line_end": 1119,
               "quote": "Producer: HTE formatter completion adapter. After a successful HTE write/edit formatter changes the tool output beyond whitespace, capture the tool-output and formatted-output evidence refs before pub",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -265,15 +273,15 @@
               "line_start": 1124,
               "line_end": 1124,
               "quote": "Operating consumer reader.evidence.format_applied@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact eve",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -286,20 +294,20 @@
               "line_start": 1128,
               "line_end": 1128,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Formatters_System.md",
@@ -307,23 +315,31 @@
               "line_start": 1129,
               "line_end": 1129,
               "quote": "Exact-family oracle matrix for format.applied: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-fiel",
-              "file_sha256": "cca42d058cc157e9ef1aac04e089a75148cd65e082278d9e10480c649d7e1266"
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Formatters_System.md",
+              "unit": "FS-075",
+              "line_start": 1131,
+              "line_end": 1131,
+              "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -335,7 +351,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.evidence.format_applied@1.0.0"
     },
     {
@@ -366,11 +382,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -383,15 +399,15 @@
               "line_start": 2150,
               "line_end": 2150,
               "quote": "git.clone.completed 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -404,20 +420,20 @@
               "line_start": 2154,
               "line_end": 2154,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/git_clone_completed.schema.json",
@@ -425,7 +441,7 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "dfa18e538553cea95a511136ad8be1da609c3334a1f63d60568fb721301c660f"
+              "file_sha256": "6204b2b5ec787fc0259bd60c259124b880e877db60cae25bb7e6fbf9751176bc"
             },
             {
               "path": "Plans/Source_Control_System.md",
@@ -433,15 +449,15 @@
               "line_start": 2156,
               "line_end": 2156,
               "quote": "Exact envelope joins for git.clone.completed: actor_ref is the non-empty non-secret actor reference retained by the original ordinary Git clone command operation from its accepted owner request, never",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -454,7 +470,7 @@
               "line_start": 2156,
               "line_end": 2156,
               "quote": "Exact envelope joins for git.clone.completed: actor_ref is the non-empty non-secret actor reference retained by the original ordinary Git clone command operation from its accepted owner request, never",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             },
             {
               "path": "Plans/Source_Control_System.md",
@@ -462,15 +478,15 @@
               "line_start": 2155,
               "line_end": 2155,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"git.clone.completed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -483,15 +499,23 @@
               "line_start": 2155,
               "line_end": 2155,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"git.clone.completed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
+            },
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2164,
+              "line_end": 2164,
+              "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -504,15 +528,15 @@
               "line_start": 2160,
               "line_end": 2160,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -525,7 +549,7 @@
               "line_start": 2158,
               "line_end": 2158,
               "quote": "Profile rationale for git.clone.completed: source location and original terminal receipt remain behind authorized refs; URLs with credentials and private absolute destinations are forbidden; redaction",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             },
             {
               "path": "Plans/Source_Control_System.md",
@@ -533,15 +557,15 @@
               "line_start": 2159,
               "line_end": 2159,
               "quote": "Custody remains with ordinary Git clone terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -554,15 +578,15 @@
               "line_start": 2152,
               "line_end": 2152,
               "quote": "Producer: ordinary Git clone terminal adapter. Observe succeeded cmd.source_control.repository.clone with scm_backend=git only after owner native completion, destination verification and terminal oper",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -575,15 +599,15 @@
               "line_start": 2157,
               "line_end": 2157,
               "quote": "Operating consumer reader.scm.git_clone_completed@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact eve",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -596,20 +620,20 @@
               "line_start": 2161,
               "line_end": 2161,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Source_Control_System.md",
@@ -617,23 +641,31 @@
               "line_start": 2162,
               "line_end": 2162,
               "quote": "Exact-family oracle matrix for git.clone.completed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four",
-              "file_sha256": "dcb777a2cd80451ee65b7be9ac582b7c86a508a095d78b0a0eec6a2e496b8a66"
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Source_Control_System.md",
+              "unit": "SCS-085",
+              "line_start": 2164,
+              "line_end": 2164,
+              "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -645,7 +677,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.scm.git_clone_completed@1.0.0"
     },
     {
@@ -676,11 +708,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -693,15 +725,15 @@
               "line_start": 7256,
               "line_end": 7256,
               "quote": "lsp.server.lifecycle_changed 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -714,20 +746,20 @@
               "line_start": 7260,
               "line_end": 7260,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/lsp_server_lifecycle_changed.schema.json",
@@ -743,15 +775,15 @@
               "line_start": 7262,
               "line_end": 7262,
               "quote": "Exact envelope joins for lsp.server.lifecycle_changed: actor_ref is the non-empty non-secret actor reference retained by the original LspSupervisor Host/server/root/session observation identifying the",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -764,7 +796,7 @@
               "line_start": 7262,
               "line_end": 7262,
               "quote": "Exact envelope joins for lsp.server.lifecycle_changed: actor_ref is the non-empty non-secret actor reference retained by the original LspSupervisor Host/server/root/session observation identifying the",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             },
             {
               "path": "Plans/LSPSupport.md",
@@ -772,15 +804,15 @@
               "line_start": 7261,
               "line_end": 7261,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"lsp.server.lifecycle_changed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace ",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -793,15 +825,23 @@
               "line_start": 7261,
               "line_end": 7261,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"lsp.server.lifecycle_changed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace ",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
+            },
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7270,
+              "line_end": 7270,
+              "quote": "lsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -814,15 +854,15 @@
               "line_start": 7266,
               "line_end": 7266,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -835,7 +875,7 @@
               "line_start": 7264,
               "line_end": 7264,
               "quote": "Profile rationale for lsp.server.lifecycle_changed: only opaque attachment identities, canonical states and a sanitized bounded reason code are inline; raw logs, URIs, paths and server stderr are forb",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             },
             {
               "path": "Plans/LSPSupport.md",
@@ -843,15 +883,15 @@
               "line_start": 7265,
               "line_end": 7265,
               "quote": "Custody remains with LspSupervisor lifecycle adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets, pro",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -864,15 +904,15 @@
               "line_start": 7258,
               "line_end": 7258,
               "quote": "Producer: LspSupervisor lifecycle adapter. Observe one LspSupervisor transition for the exact Host/server/root attachment. Use canonical states Starting, Initializing, Ready, RestartBackoff, Degraded,",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -885,15 +925,15 @@
               "line_start": 7263,
               "line_end": 7263,
               "quote": "Operating consumer reader.lsp.lifecycle@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/re",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -906,20 +946,20 @@
               "line_start": 7267,
               "line_end": 7267,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/LSPSupport.md",
@@ -927,23 +967,31 @@
               "line_start": 7268,
               "line_end": 7268,
               "quote": "Exact-family oracle matrix for lsp.server.lifecycle_changed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt",
-              "file_sha256": "460026e0c60b10ef8b90268715e54a88e7041a84c51345ce8af8499db74171be"
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/LSPSupport.md",
+              "unit": "LSPS-173",
+              "line_start": 7270,
+              "line_end": 7270,
+              "quote": "lsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -955,7 +1003,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.lsp.lifecycle@1.0.0"
     },
     {
@@ -986,11 +1034,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1003,15 +1051,15 @@
               "line_start": 9915,
               "line_end": 9915,
               "quote": "model.catalog_refreshed 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1024,20 +1072,20 @@
               "line_start": 9919,
               "line_end": 9919,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/model_catalog_refreshed.schema.json",
@@ -1045,7 +1093,7 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "59b3691b9ef31824e9aba5a52467b1a589431cb2b3d3a46442ba417692b591d3"
+              "file_sha256": "479860e74de7f48f4aceccd7d58e25dca1eca6489996a3b026d9df0f5747b160"
             },
             {
               "path": "Plans/Models_System.md",
@@ -1053,20 +1101,20 @@
               "line_start": 9921,
               "line_end": 9921,
               "quote": "Exact envelope joins for model.catalog_refreshed: actor_ref is the non-empty non-secret actor reference retained by the original Models manual or automatic catalog refresh: the accepted cmd.model.refr",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "MS-199 freezes original actor/correlation/operation/scope/subject/nullable joins; envelope occurred_at_utc equals payload.completed_at_utc; no ambient or retry identity.",
+          "finding": "CV-366 application key uses the original actual Server and exact UTF-8 owner operation bytes, independently per family; Project/event-id identities and all original joins remain unchanged.",
           "evidence": [
             {
               "path": "Plans/Models_System.md",
@@ -1074,7 +1122,7 @@
               "line_start": 9921,
               "line_end": 9921,
               "quote": "Exact envelope joins for model.catalog_refreshed: actor_ref is the non-empty non-secret actor reference retained by the original Models manual or automatic catalog refresh: the accepted cmd.model.refr",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             },
             {
               "path": "Plans/Models_System.md",
@@ -1082,15 +1130,23 @@
               "line_start": 9920,
               "line_end": 9920,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"model.catalog_refreshed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
+            },
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9920,
+              "line_end": 9920,
+              "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366.",
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "CONFLICT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1103,15 +1159,23 @@
               "line_start": 9920,
               "line_end": 9920,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"model.catalog_refreshed\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
+            },
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9929,
+              "line_end": 9929,
+              "quote": "model.catalog_refreshed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PASS"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "CONFLICT"
           },
-          "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change": "upgraded",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1124,15 +1188,15 @@
               "line_start": 9925,
               "line_end": 9925,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1145,7 +1209,7 @@
               "line_start": 9923,
               "line_end": 9923,
               "quote": "Profile rationale for model.catalog_refreshed: provider status bodies and sensitive provider/account details remain behind authorized refs; account_id is an opaque Models identifier, never credentials",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             },
             {
               "path": "Plans/Models_System.md",
@@ -1153,15 +1217,15 @@
               "line_start": 9924,
               "line_end": 9924,
               "quote": "Custody remains with shared model capability resolver refresh completion adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcr",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1174,15 +1238,15 @@
               "line_start": 9917,
               "line_end": 9917,
               "quote": "Producer: shared model capability resolver refresh completion adapter. Capture completion of cmd.model.refresh, or the already specified automatic refresh, after the resolver publishes its exact catal",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1195,15 +1259,15 @@
               "line_start": 9922,
               "line_end": 9922,
               "quote": "Operating consumer reader.models.catalog_refresh@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact even",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1216,20 +1280,20 @@
               "line_start": 9926,
               "line_end": 9926,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Models_System.md",
@@ -1237,23 +1301,39 @@
               "line_start": 9927,
               "line_end": 9927,
               "quote": "Exact-family oracle matrix for model.catalog_refreshed: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and ",
-              "file_sha256": "7a7d06ec7580147526d4e62806217a5bef1d1a569b37e0009500ce4988b68e06"
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9929,
+              "line_end": 9929,
+              "quote": "model.catalog_refreshed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
+            },
+            {
+              "path": "Plans/Models_System.md",
+              "unit": "MS-199",
+              "line_start": 9921,
+              "line_end": 9921,
+              "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index:",
+              "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -1265,7 +1345,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.models.catalog_refresh@1.0.0"
     },
     {
@@ -1296,11 +1376,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1313,15 +1393,15 @@
               "line_start": 992,
               "line_end": 992,
               "quote": "project.added 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1334,20 +1414,20 @@
               "line_start": 996,
               "line_end": 996,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/project_added.schema.json",
@@ -1355,7 +1435,7 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "66a8af706de034b13af49c6642f27b046034f0b905788295f7fb9ebe94ad2bcd"
+              "file_sha256": "be30ffdd2962c3224c601211fde570457d4cd78f1efa8b12eda02074da99ddc7"
             },
             {
               "path": "Plans/Project_System.md",
@@ -1363,15 +1443,15 @@
               "line_start": 998,
               "line_end": 998,
               "quote": "Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, ",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1384,7 +1464,7 @@
               "line_start": 998,
               "line_end": 998,
               "quote": "Exact envelope joins for project.added: actor_ref is the non-empty non-secret actor reference retained by the original completed Project existing-content registration from its accepted owner request, ",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             },
             {
               "path": "Plans/Project_System.md",
@@ -1392,15 +1472,15 @@
               "line_start": 997,
               "line_end": 997,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1413,15 +1493,23 @@
               "line_start": 997,
               "line_end": 997,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.added\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array order",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
+            },
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 1006,
+              "line_end": 1006,
+              "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1434,15 +1522,15 @@
               "line_start": 1002,
               "line_end": 1002,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1455,7 +1543,7 @@
               "line_start": 1000,
               "line_end": 1000,
               "quote": "Profile rationale for project.added: stable config and original registration result remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not gran",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             },
             {
               "path": "Plans/Project_System.md",
@@ -1463,15 +1551,15 @@
               "line_start": 1001,
               "line_end": 1001,
               "quote": "Custody remains with Project registration commit adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, secrets,",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1484,15 +1572,15 @@
               "line_start": 994,
               "line_end": 994,
               "quote": "Producer: Project registration commit adapter. After cmd.project.add_existing completes atomic projects:v1 identity/config/permission/owner handoff and readback, record its existing-content registrati",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1505,15 +1593,15 @@
               "line_start": 999,
               "line_end": 999,
               "quote": "Operating consumer reader.project.added@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/re",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1526,20 +1614,20 @@
               "line_start": 1003,
               "line_end": 1003,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
@@ -1547,23 +1635,31 @@
               "line_start": 1004,
               "line_end": 1004,
               "quote": "Exact-family oracle matrix for project.added: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-field",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-072",
+              "line_start": 1006,
+              "line_end": 1006,
+              "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -1575,7 +1671,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.project.added@1.0.0"
     },
     {
@@ -1606,11 +1702,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1620,18 +1716,18 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1042,
-              "line_end": 1042,
+              "line_start": 1043,
+              "line_end": 1043,
               "quote": "project.created 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -1641,23 +1737,23 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1046,
-              "line_end": 1046,
+              "line_start": 1047,
+              "line_end": 1047,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/project_created.schema.json",
@@ -1665,23 +1761,23 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "489554915dee68add2a4936bacd67b5d08613d91aaed1e55938ee296a7776abc"
+              "file_sha256": "29f5fdbc166db569f296dca8934abfb72c3b1187c78876f95a5e690c5dfa7fbf"
             },
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1048,
-              "line_end": 1048,
+              "line_start": 1049,
+              "line_end": 1049,
               "quote": "Exact envelope joins for project.created: actor_ref is the non-empty non-secret actor reference retained by the original root Project creation composition from its accepted owner request, never the re",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1691,26 +1787,26 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1048,
-              "line_end": 1048,
+              "line_start": 1049,
+              "line_end": 1049,
               "quote": "Exact envelope joins for project.created: actor_ref is the non-empty non-secret actor reference retained by the original root Project creation composition from its accepted owner request, never the re",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             },
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1048,
+              "line_end": 1048,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.created\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array ord",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1720,18 +1816,26 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1047,
-              "line_end": 1047,
+              "line_start": 1048,
+              "line_end": 1048,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"project.created\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and array ord",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
+            },
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1057,
+              "line_end": 1057,
+              "quote": "project.created append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -1741,18 +1845,18 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1052,
-              "line_end": 1052,
+              "line_start": 1053,
+              "line_end": 1053,
               "quote": "Retention policy: PENDING_RETENTION_DECISION. For a PENDING marker no class is selected: candidate RP-RUNTIME-365D (runtime observation), RP-OPERATIONAL-2555D (operational diagnostic), or RP-AUTHORITY",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -1762,26 +1866,26 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1050,
-              "line_end": 1050,
+              "line_start": 1051,
+              "line_end": 1051,
               "quote": "Profile rationale for project.created: stable config, verified creation result and original terminal receipt remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecor",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             },
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1051,
-              "line_end": 1051,
+              "line_start": 1052,
+              "line_end": 1052,
               "quote": "Custody remains with Project creation composition terminal adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -1791,18 +1895,18 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1044,
-              "line_end": 1044,
+              "line_start": 1045,
+              "line_end": 1045,
               "quote": "Producer: Project creation composition terminal adapter. After cmd.project.new_local or an admitted current forge-create composition completes all reviewed owner steps and atomic Project registry/read",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1812,18 +1916,18 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1049,
-              "line_end": 1049,
+              "line_start": 1050,
+              "line_end": 1050,
               "quote": "Operating consumer reader.project.created@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1833,47 +1937,55 @@
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1053,
-              "line_end": 1053,
+              "line_start": 1054,
+              "line_end": 1054,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Project_System.md",
               "unit": "PJCT-073",
-              "line_start": 1054,
-              "line_end": 1054,
+              "line_start": 1055,
+              "line_end": 1055,
               "quote": "Exact-family oracle matrix for project.created: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and four-fie",
-              "file_sha256": "62042abd80ba94be43efd8554e5bbb02e1b51b1958a30561be3911b958f34f44"
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Project_System.md",
+              "unit": "PJCT-073",
+              "line_start": 1057,
+              "line_end": 1057,
+              "quote": "project.created append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -1885,7 +1997,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.project.created@1.0.0"
     },
     {
@@ -1924,11 +2036,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -1953,11 +2065,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PARTIAL",
@@ -1982,11 +2094,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -2011,11 +2123,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -2040,11 +2152,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -2069,11 +2181,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2098,11 +2210,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2127,11 +2239,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -2156,11 +2268,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2185,11 +2297,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2214,11 +2326,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -2243,11 +2355,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carry the independent review ABSENT; correct the branch self-grade PARTIAL because no exact-family event cases were authored.",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@247e523f69",
             "status": "PARTIAL"
@@ -2292,15 +2404,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PARTIAL",
@@ -2321,15 +2433,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PARTIAL",
@@ -2350,15 +2462,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "ABSENT",
@@ -2379,15 +2491,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PARTIAL",
@@ -2408,15 +2520,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "ABSENT",
@@ -2437,15 +2549,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PARTIAL",
@@ -2466,15 +2578,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PARTIAL",
@@ -2495,15 +2607,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PARTIAL",
@@ -2524,15 +2636,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "ABSENT",
@@ -2553,15 +2665,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "ABSENT",
@@ -2582,15 +2694,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "ABSENT",
@@ -2611,15 +2723,15 @@
               "line_start": 28944,
               "line_end": 28944,
               "quote": "  settings.layer.changed is application-only (registered by DL-300), carrying level/key/changed IDs/revisions/hash/redacted summary and receipt refs; a Project level is metadata, not a secon",
-              "file_sha256": "f9226d2795a1446e289f67d2f8504446eba8953041dfe98695f3de41250e563a"
+              "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Carry the independent review ABSENT; correct the branch self-grade PARTIAL because no exact-family event cases were authored.",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged.",
           "branch_prior": {
             "source": "DM-self-grade.json@247e523f69",
             "status": "PARTIAL"
@@ -2660,11 +2772,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2677,15 +2789,15 @@
               "line_start": 6050,
               "line_end": 6050,
               "quote": "subagent.context_rehydrated 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -2698,20 +2810,20 @@
               "line_start": 6054,
               "line_end": 6054,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/subagent_context_rehydrated.schema.json",
@@ -2719,7 +2831,7 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "9db8cc990623783ac1307339549a0822ea271e0cdc9dc9cea7816c250fcf11a3"
+              "file_sha256": "3bd2e3183f0ecebcce21c5b8a2300854d9308f6152e306208beb4b5243769f5a"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -2727,20 +2839,20 @@
               "line_start": 6056,
               "line_end": 6056,
               "quote": "Exact envelope joins for subagent.context_rehydrated: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context rehydration operation for payload.agent_id a",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PP-151 freezes original actor/correlation/operation/scope/subject/nullable joins; envelope occurred_at_utc equals payload.occurred_at_utc; no ambient or retry identity.",
+          "finding": "CV-366 application key uses the original actual Server and exact UTF-8 owner operation bytes, independently per family; Project/event-id identities and all original joins remain unchanged.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -2748,7 +2860,7 @@
               "line_start": 6056,
               "line_end": 6056,
               "quote": "Exact envelope joins for subagent.context_rehydrated: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context rehydration operation for payload.agent_id a",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -2756,15 +2868,23 @@
               "line_start": 6055,
               "line_end": 6055,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_rehydrated\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace a",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6055,
+              "line_end": 6055,
+              "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366.",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "CONFLICT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2777,15 +2897,23 @@
               "line_start": 6055,
               "line_end": 6055,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_rehydrated\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace a",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6064,
+              "line_end": 6064,
+              "quote": "subagent.context_rehydrated append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PASS"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "CONFLICT"
           },
-          "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change": "upgraded",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PASS",
@@ -2798,15 +2926,15 @@
               "line_start": 6060,
               "line_end": 6060,
               "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -2819,7 +2947,7 @@
               "line_start": 6058,
               "line_end": 6058,
               "quote": "Profile rationale for subagent.context_rehydrated: source and effective-context bodies remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not g",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -2827,15 +2955,15 @@
               "line_start": 6059,
               "line_end": 6059,
               "quote": "Custody remains with effective-context runtime rehydration adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -2848,15 +2976,15 @@
               "line_start": 6052,
               "line_end": 6052,
               "quote": "Producer: effective-context runtime rehydration adapter. When an already supported rehydration restores effective context, bind the original source refs and before/after effective-context revisions to",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2869,15 +2997,15 @@
               "line_start": 6057,
               "line_end": 6057,
               "quote": "Operating consumer reader.context.rehydrated@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_ty",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2890,20 +3018,20 @@
               "line_start": 6061,
               "line_end": 6061,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
@@ -2911,23 +3039,39 @@
               "line_start": 6062,
               "line_end": 6062,
               "quote": "Exact-family oracle matrix for subagent.context_rehydrated: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt ",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6064,
+              "line_end": 6064,
+              "quote": "subagent.context_rehydrated append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-151",
+              "line_start": 6056,
+              "line_end": 6056,
+              "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index:",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -2938,7 +3082,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.context.rehydrated@1.0.0"
     },
     {
@@ -2969,11 +3113,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2983,18 +3127,18 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6100,
-              "line_end": 6100,
+              "line_start": 6101,
+              "line_end": 6101,
               "quote": "subagent.context_shrunk 1.0.0 — newly authored owner contract under DL-045.",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "producer": {
           "status": "PASS",
@@ -3004,23 +3148,23 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6104,
-              "line_end": 6104,
+              "line_start": 6105,
+              "line_end": 6105,
               "quote": "Adopt SP-286 first-AppendReceipt custody and CV-339 full-value v2 successor by name, including SP-336/SP-347 current group-commit rules. Validate admission before append; absent membership, unresolved",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "closed_payload_schema": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Existing exact closed 1.0.0 payload is unchanged and now validated together with EventRecord 2.0.0.",
+          "finding": "Exact closed logical body at 1.0.0; patterned fields now have full-match and CR/LF guards. SP-337 external bodies use the same schema after authorized resolution; no envelope or payload-shape widening.",
           "evidence": [
             {
               "path": "Plans/event_payloads/subagent_context_shrunk.schema.json",
@@ -3028,52 +3172,60 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"additionalProperties\": false,",
-              "file_sha256": "3b4e564d9eb7b4d31e90876beceea4cd07bfe492e572016b0b48214fbe91b025"
+              "file_sha256": "30a66344f57beff1772b526c449a23ddc276eb493842497eaa11f7f2a110db22"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6106,
-              "line_end": 6106,
+              "line_start": 6107,
+              "line_end": 6107,
               "quote": "Exact envelope joins for subagent.context_shrunk: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context shrink operation for payload.agent_id and the ex",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "scope_identity": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "PP-152 freezes original actor/correlation/operation/scope/subject/nullable joins; envelope occurred_at_utc equals payload.occurred_at_utc; no ambient or retry identity.",
+          "finding": "CV-366 application key uses the original actual Server and exact UTF-8 owner operation bytes, independently per family; Project/event-id identities and all original joins remain unchanged.",
           "evidence": [
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6107,
+              "line_end": 6107,
+              "quote": "Exact envelope joins for subagent.context_shrunk: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context shrink operation for payload.agent_id and the ex",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+            },
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
               "line_start": 6106,
               "line_end": 6106,
-              "quote": "Exact envelope joins for subagent.context_shrunk: actor_ref is the non-empty non-secret actor reference retained by the original accepted child-context shrink operation for payload.agent_id and the ex",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_shrunk\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6105,
-              "line_end": 6105,
-              "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_shrunk\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "line_start": 6106,
+              "line_end": 6106,
+              "quote": "application idempotency_key=application@1:{hex(server_id)}:{hex(owner_operation_id)} exactly under CV-366.",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "CONFLICT"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3083,18 +3235,26 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6105,
-              "line_end": 6105,
+              "line_start": 6106,
+              "line_end": 6106,
               "quote": "Identity digest is SHA-256 of UTF-8 compact JSON array [\"subagent.context_shrunk\", \"1.0.0\", storage_instance_id, payload.project_id, payload.operation_id], with ensure_ascii=false, no whitespace and a",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6115,
+              "line_end": 6115,
+              "quote": "subagent.context_shrunk append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "PASS"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "CONFLICT"
           },
-          "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change": "upgraded",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "retention": {
           "status": "PASS",
@@ -3104,18 +3264,18 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6110,
-              "line_end": 6110,
+              "line_start": 6111,
+              "line_end": 6111,
               "quote": "Retention policy: RP-RUNTIME-365D. Runtime context events are Runtime/run/child attempt evidence under Storage Case L-3, 365 days, subject to existing holds and source anchors. For a PENDING marker no",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "redaction_custody": {
           "status": "PASS",
@@ -3125,26 +3285,26 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6108,
-              "line_end": 6108,
+              "line_start": 6109,
+              "line_end": 6109,
               "quote": "Profile rationale for subagent.context_shrunk: source and effective-context bodies remain behind authorized refs; redaction_profile=secret_refs_only is an existing EventRecord value and does not grant",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             },
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6109,
-              "line_end": 6109,
+              "line_start": 6110,
+              "line_end": 6110,
               "quote": "Custody remains with effective-context runtime shrinking adapter and Storage's original seglog/payload owners. Store only bounded metadata and opaque authorized source refs; no transcript, diff body, ",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-            "status": "CONFLICT"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change": "carried",
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "transitions": {
           "status": "PASS",
@@ -3154,18 +3314,18 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6102,
-              "line_end": 6102,
+              "line_start": 6103,
+              "line_end": 6103,
               "quote": "Producer: effective-context runtime shrinking adapter. When the existing effective-context shrinker commits a shorter replacement, preserve source refs and rehydration handles. Automatic default scope",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3175,18 +3335,18 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6107,
-              "line_end": 6107,
+              "line_start": 6108,
+              "line_end": 6108,
               "quote": "Operating consumer reader.context.shrunk@1.0.0 uses reader.storage.event_record_index@1.0.0 and projector.storage.event_record_index@1.0.0, explicitly adopting SP-278. It reads this exact event_type/r",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3196,47 +3356,63 @@
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6111,
-              "line_end": 6111,
+              "line_start": 6112,
+              "line_end": 6112,
               "quote": "Compatibility: only this exact 1.0.0 schema is a current writer candidate. Historical names/bytes remain unchanged; unknown future revisions halt the consumer before advance, never normalize by guesse",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; no admission, owner decision or native runtime result inferred."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         },
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Full payload/EventRecord/original joins, admission cuts, complete original receipt/result/value mutations, original-intent withdrawal and atomic read/rebuild matrices pass through pm-small-owner-events.py. Native execution remains NOT_RUN.",
+          "finding": "Exact-family envelope/original/producer/withdrawal/read/rebuild suite passes, including replay-only append/retry refusal, immutable historical reads, every first-receipt publication field, encoded Project partitions and pattern LF negatives; reachable payload byte/external boundaries are covered. Native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Prompt_Pipeline.md",
               "unit": "PP-152",
-              "line_start": 6112,
-              "line_end": 6112,
+              "line_start": 6113,
+              "line_end": 6113,
               "quote": "Exact-family oracle matrix for subagent.context_shrunk: Plans/small_owner_event_fixtures.json owns its full EventRecord, independent original owner operation/result, original eleven-field receipt and ",
-              "file_sha256": "ddd7ec632125f61396144750508281c4b89a8e661c05395cecd207e69e70c337"
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             },
             {
               "path": "scripts/pm-small-owner-events.py",
               "unit": "run_exact_family",
-              "line_start": 295,
-              "line_end": 295,
+              "line_start": 400,
+              "line_end": 400,
               "quote": "def run_exact_family(row):",
-              "file_sha256": "e2101d14c16de4b3337f93e68bc185b2784078f5acc781338d46ba89cd5c780d"
+              "file_sha256": "32095dbe79aac48bf20d4cdd0f478b724bcf3b84709c61f9374fedb1ae70d4a8"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6115,
+              "line_end": 6115,
+              "quote": "subagent.context_shrunk append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+            },
+            {
+              "path": "Plans/Prompt_Pipeline.md",
+              "unit": "PP-152",
+              "line_start": 6107,
+              "line_end": 6107,
+              "quote": "At most 16 KiB stays inline with payload_ref=null. Above 16 KiB, SP-337 owns the pack bytes/index:",
+              "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Re-read current exact-family evidence at fixed canonical head; findings 1–3 are now covered by explicit bindings and passing complete static matrices."
+          "change_reason": "Re-read the current exact-family contract and checked all standing rules; native NOT_RUN, intentional absent membership and permitted pending retention unchanged."
         }
       },
       "remaining_gaps": [
@@ -3247,7 +3423,7 @@
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json — pass",
         "python3 scripts/pm-plan-index.py validate — top-level status pass"
       ],
-      "notes": "Candidate CURRENT_WRITER describes normative producer semantics only. Original acceptance/receipt/read inputs in fixtures are bounded synthetic adapters, not native authority, journals or installed writers. No admission or retention decision.",
+      "notes": "Prepared without admission. Self-graded after cycle-2 B1/B2/B3 fixes; native execution NOT_RUN. Membership and unresolved RT retention are intentional exceptions, not closed admission.",
       "newly_authored_operating_reader": "reader.context.shrunk@1.0.0"
     }
   ],
@@ -3257,9 +3433,9 @@
     "PASS": 82,
     "PARTIAL": 18
   },
-  "review_round": 1,
+  "review_round": 2,
   "prior_review": {
-    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/regrade.json",
-    "sha256": "2370a9527dac1876c2f8ef0a8b3651be701a40454371489402930bd28e1dee1a"
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DM-sol/cycle2-regrade.json",
+    "sha256": "2319f9b7bf0c21b8ea1db65cecf659053e0b1768bcad8c3cd03516d3a3dd549a"
   }
 }

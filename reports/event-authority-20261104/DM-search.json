@@ -61,6 +61,24 @@
       "time_join": "occurred_at_utc=payload.timestamp",
       "original_actor_source": "original HTE write/edit operation",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"format.applied\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives.",
+      "current_evidence": [
+        {
+          "path": "Plans/Formatters_System.md",
+          "unit": "FS-075",
+          "line_start": 1131,
+          "line_end": 1131,
+          "quote": "format.applied append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "1493429ca6e6ff42dca93d8d951db91fca8724a43f1a13e59f2780a1df7dafca"
+        }
+      ]
     }
   },
   {
@@ -90,6 +108,24 @@
       "time_join": "occurred_at_utc=payload.completed_at_utc",
       "original_actor_source": "original ordinary Git clone command operation",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"git.clone.completed\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives.",
+      "current_evidence": [
+        {
+          "path": "Plans/Source_Control_System.md",
+          "unit": "SCS-085",
+          "line_start": 2164,
+          "line_end": 2164,
+          "quote": "git.clone.completed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "79fe54cca55a2674630d806d44974e640e2ea04f00f68dd4973d5287a6fca0c3"
+        }
+      ]
     }
   },
   {
@@ -154,6 +190,24 @@
       "time_join": "occurred_at_utc=payload.ts",
       "original_actor_source": "original LspSupervisor Host/server/root/session observation",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"lsp.server.lifecycle_changed\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives.",
+      "current_evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "unit": "LSPS-173",
+          "line_start": 7270,
+          "line_end": 7270,
+          "quote": "lsp.server.lifecycle_changed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "ce4c4b20cda5416195c8320e2376338f4f06decbf2a561365ddd1a199ab018ff"
+        }
+      ]
     }
   },
   {
@@ -203,6 +257,40 @@
       "time_join": "occurred_at_utc=payload.completed_at_utc",
       "original_actor_source": "original Models manual or automatic catalog refresh",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"model.catalog_refreshed\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced. Its reviewed unit requires a family:SHA256 application key and null ref despite >16 KiB array bodies; no exact-family SP-337 descriptor/representation binding exists outside those lane copies. Reuse CV-366 exact key and SP-337 existing store/durability/custody without redefining them.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives. Original actual Server binding and a string SP-337 BLAKE3/size/media-type descriptor with empty inline map are independently specified for this family. The closed logical body schema is unchanged after resolution.",
+      "current_evidence": [
+        {
+          "path": "Plans/Models_System.md",
+          "unit": "MS-199",
+          "line_start": 9929,
+          "line_end": 9929,
+          "quote": "model.catalog_refreshed append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "b95c9c71744038b08aa144727e5b6fe7e5c7ceeb6e5230249eb27b44cae3ad11"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-366",
+          "line_start": 24099,
+          "line_end": 24099,
+          "quote": "App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}",
+          "file_sha256": "901a704b499b0f1cd2ca9e4067299b9658c00d15fb6c36ce70b242e6e16cbb06"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-337",
+          "line_start": 28245,
+          "line_end": 28245,
+          "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
+          "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+        }
+      ]
     }
   },
   {
@@ -232,6 +320,24 @@
       "time_join": "occurred_at_utc=payload.completed_at_utc",
       "original_actor_source": "original completed Project existing-content registration",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"project.added\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives.",
+      "current_evidence": [
+        {
+          "path": "Plans/Project_System.md",
+          "unit": "PJCT-072",
+          "line_start": 1006,
+          "line_end": 1006,
+          "quote": "project.added append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
+        }
+      ]
     }
   },
   {
@@ -261,6 +367,24 @@
       "time_join": "occurred_at_utc=payload.completed_at_utc",
       "original_actor_source": "original root Project creation composition",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"project.created\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives.",
+      "current_evidence": [
+        {
+          "path": "Plans/Project_System.md",
+          "unit": "PJCT-073",
+          "line_start": 1057,
+          "line_end": 1057,
+          "quote": "project.created append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "cc3eed3df1aba8beba55239b5b8378fbc87a44a47386e3f65d8721604f7e8414"
+        }
+      ]
     }
   },
   {
@@ -383,7 +507,14 @@
         "quote": "        \"Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target.\""
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"settings.theme.updated\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "No family writer, schema, fixture or alias authored. Current owner conflict and exact product-disposition questions remain Jared's; five standing checks are recorded as stopped, not event-oracle PASS."
+    }
   },
   {
     "event_type": "settings.updated",
@@ -460,7 +591,14 @@
         "quote": "        \"Historical settings.agent_rules.dry_method_default_guard.updated remains read-only lineage without automatic aliasing or payload rewrite; future settings.updated emission requires separate Event Authority admission.\""
       }
     ],
-    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence."
+    "negative_evidence": "Exact-name passages do not define a complete family-specific payload, frozen identity recipe, operating reader and withdrawal fence. Shared generic index publication and first-receipt custody already exist and are reused, not renamed. No sibling is used as binding evidence.",
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"settings.updated\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "No family writer, schema, fixture or alias authored. Current owner conflict and exact product-disposition questions remain Jared's; five standing checks are recorded as stopped, not event-oracle PASS."
+    }
   },
   {
     "event_type": "subagent.context_rehydrated",
@@ -509,6 +647,40 @@
       "time_join": "occurred_at_utc=payload.occurred_at_utc",
       "original_actor_source": "original accepted child-context rehydration operation",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"subagent.context_rehydrated\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced. Its reviewed unit requires a family:SHA256 application key and null ref despite >16 KiB array bodies; no exact-family SP-337 descriptor/representation binding exists outside those lane copies. Reuse CV-366 exact key and SP-337 existing store/durability/custody without redefining them.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives. Original actual Server binding and a string SP-337 BLAKE3/size/media-type descriptor with empty inline map are independently specified for this family. The closed logical body schema is unchanged after resolution.",
+      "current_evidence": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "unit": "PP-151",
+          "line_start": 6064,
+          "line_end": 6064,
+          "quote": "subagent.context_rehydrated append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-366",
+          "line_start": 24099,
+          "line_end": 24099,
+          "quote": "App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}",
+          "file_sha256": "901a704b499b0f1cd2ca9e4067299b9658c00d15fb6c36ce70b242e6e16cbb06"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-337",
+          "line_start": 28245,
+          "line_end": 28245,
+          "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
+          "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+        }
+      ]
     }
   },
   {
@@ -558,6 +730,40 @@
       "time_join": "occurred_at_utc=payload.occurred_at_utc",
       "original_actor_source": "original accepted child-context shrink operation",
       "no_sibling_binding": true
+    },
+    "review_round_2": {
+      "searched_head": "81746599e17375fda60b8b51c8ac2bfd3c2b09d7",
+      "scope": "Per exact family, re-read its owner/Contracts/Storage units, complete EventRecord owner/schema, CV-366, SP-337, SP-286/CV-339, SP-278 and its exact payload/oracle fixtures. Searched all current top-level Plans/*.md and Plans/*.json, excluding ledgers/generated artifacts, for existing exact-family Server/key/ref/publication bindings before authoring technical refinements.",
+      "command": "rg -n -F \"subagent.context_shrunk\" Plans/*.md Plans/*.json; rg -n \"CV-366|SP-337|payload_ref|replay_only_not_appendable\" Plans/Contracts_V0.md Plans/storage-plan.md",
+      "native_execution": "NOT_RUN",
+      "negative_evidence": "Reviewed-head exact-family units omit replay-only retry/refusal and delivered-receipt publication joins. Existing current global envelope/receipt owners supply those rules; no sibling contract is used as authority. No additional persisted reader/checkpoint is introduced. Its reviewed unit requires a family:SHA256 application key and null ref despite >16 KiB array bodies; no exact-family SP-337 descriptor/representation binding exists outside those lane copies. Reuse CV-366 exact key and SP-337 existing store/durability/custody without redefining them.",
+      "newly_authored_owner_contract": "This exact family now binds current append/retry refusal and first-receipt publication validation; patterned fields have full-match/LF negatives. Original actual Server binding and a string SP-337 BLAKE3/size/media-type descriptor with empty inline map are independently specified for this family. The closed logical body schema is unchanged after resolution.",
+      "current_evidence": [
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "unit": "PP-152",
+          "line_start": 6115,
+          "line_end": 6115,
+          "quote": "subagent.context_shrunk append and current retry reject replay_policy=projector_replay_only as replay_only_not_appendable",
+          "file_sha256": "809523ccc0baca63bdd2598fb546503ad3852792068372e27ba0f08d25b0346c"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "CV-366",
+          "line_start": 24099,
+          "line_end": 24099,
+          "quote": "App producer idempotency keys incorporate actual server_id and original owner operation identity as application@1:{hex(server_id)}:{hex(owner_operation_id)}",
+          "file_sha256": "901a704b499b0f1cd2ca9e4067299b9658c00d15fb6c36ce70b242e6e16cbb06"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "unit": "SP-337",
+          "line_start": 28245,
+          "line_end": 28245,
+          "quote": "DL-270 card 3. An EventRecord carries at most 16 KiB of inline body.",
+          "file_sha256": "d6019bd34196106ffdd8f924d72f4e5b5315323824b52f55efb526ed658dbb33"
+        }
+      ]
     }
   }
 ]
