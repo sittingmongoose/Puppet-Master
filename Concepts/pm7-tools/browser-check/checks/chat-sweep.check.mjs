@@ -58,10 +58,10 @@ export const tests = {
     requestAnimationFrame(sample);
    };requestAnimationFrame(sample);
   });
-  await t.viewport(1177,900);await t.page.waitForTimeout(1200);
+  await t.viewport(1177,900);await t.until('twenty resize frame samples',()=>window.__dockFrames.length>=20);
   const frames=await f.evaluate(()=>{window.__dockSampling=false;return window.__dockFrames;});
   t.log(JSON.stringify(frames));
-  await t.check('every resized frame has 360 messages or cover',frames.length>5&&frames.every(x=>x.cover||x.width>=360));
+  await t.check('every resized frame has 360 messages or cover',frames.length>=20&&frames.every(x=>x.cover||x.width>=360));
   await t.painted('#pmRoot .activity-panel.cover');
  },
  'SW36 dock keeps 360 pixels': async t => {
