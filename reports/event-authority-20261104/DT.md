@@ -24,7 +24,7 @@ The draft contracts live in `Plans/dt_event_contracts.json`, closed payload/chec
 | `tool.execution_completed` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-611, SP-591, ATS-295 | RP-RUNTIME-365D |
 | `tool.execution_started` | Draft, not admission-ready | 8/12 PASS; 3 PARTIAL, 1 ABSENT | CV-612, SP-592, ATS-296 | RP-RUNTIME-365D |
 | `tool.invoked` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-613, SP-593, ATS-296 | PENDING_RETENTION_DECISION |
-| `usage.event` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-614, SP-594, ATS-297 | PENDING_RETENTION_DECISION |
+| `usage.event` | Draft, not admission-ready | 5/12 PASS; 6 PARTIAL, 1 ABSENT | CV-614, SP-594, ATS-297 | PENDING_RETENTION_DECISION |
 | `worktree.created` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-615, SP-595, ATS-297 | PENDING_RETENTION_DECISION |
 | `worktree.deleted` | Draft, not admission-ready | 7/12 PASS; 4 PARTIAL, 1 ABSENT | CV-616, SP-596, ATS-298 | PENDING_RETENTION_DECISION |
 | `tool.custom_headless.skipped` | Blocked on Jared | 1/12 PASS; 3 PARTIAL, 8 ABSENT | N2-066 | PENDING_RETENTION_DECISION |
@@ -34,6 +34,8 @@ The draft contracts live in `Plans/dt_event_contracts.json`, closed payload/chec
 - **Original producer/source custody:** exact producer/admission identifiers and first-receipt ordering are drafted, but the original immutable input/result source codecs and atomic source publication/adoption need exact per-source closure. A reference string alone does not prove it.
 - **Checkpoint oracles:** the typed per-family checkpoint and explicit SP-278 adoption are drafted, but concrete full checkpoint values and positive/negative empty-prefix, coverage, withdrawal and restore fixtures remain to be authored.
 - **Semantic oracles:** 445 static checks cover payload closure, identity isolation and retry/conflict models. Each family's transition/recovery/custody/retention obligations are named, but concrete vectors for those boundaries remain missing. The self-grade marks producer, consumers_checkpoints and positive_negative_oracles PARTIAL for every drafted row; native NOT_RUN alone is not the reason.
+
+- **Usage payload/joins:** usage.event additionally needs complete closed UF-085 provider cost/quota/pricing slots and concrete event-ref/original-observation/settlement join vectors. Its closed_payload_schema and scope_identity cells are PARTIAL too.
 
 ## Newly authored bindings and search evidence
 
