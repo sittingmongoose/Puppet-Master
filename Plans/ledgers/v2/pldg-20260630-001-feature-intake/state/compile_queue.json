@@ -3,9 +3,9 @@
   "ledger_id": "pldg-20260630-001-feature-intake",
   "status": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
   "governance_status": "sealed",
-  "last_event_id": "evt-0043",
-  "terminal_ledger_event_id": "evt-0043",
-  "updated_at_utc": "2026-07-02T20:36:00Z",
+  "last_event_id": "evt-0044",
+  "terminal_ledger_event_id": "evt-0044",
+  "updated_at_utc": "2026-11-04T18:35:42Z",
   "items": [
     {
       "queue_id": "pcq-0001",
@@ -197,9 +197,9 @@
       "code_implementation_ready": false,
       "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
       "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
-      "terminal_ledger_event_id": "evt-0043",
+      "terminal_ledger_event_id": "evt-0044",
       "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
-      "last_event_id": "evt-0043"
+      "last_event_id": "evt-0044"
     }
   ],
   "compiled_owner_docs": [
@@ -283,7 +283,7 @@
   "candidate_compile_owner_docs": [],
   "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
   "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
-  "notes": "Compiled PlanUnits are product/spec owner-coverage ready and compile validators pass. Fourth subjective/objective recheck found no missing canonical owner coverage, but direct Docker/Hosts GUI/workflow implementation-packet detail remains open; governance seal is complete and validators pass.",
+  "notes": "Compiled PlanUnits are product/spec owner-coverage ready. Docker/Hosts GUI/workflow documentation/build-packet blocker blk-0003 was closed at evt-0042, and the separate governance seal was recorded at evt-0043. Code/runtime implementation remains disabled until the PNC-007 native runtime compiler/Executor activation preflight.",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "plan_index_generate": "pass",
@@ -324,10 +324,10 @@
   "code_implementation_ready": false,
   "current_checkout_governance_validators_clean": true,
   "current_checkout_ready": true,
-  "last_updated_at_utc": "2026-07-02T20:36:00Z",
+  "last_updated_at_utc": "2026-11-04T18:35:42Z",
   "implementation_readiness_in_ledger": true,
   "current_checkout_compile_validators_clean": true,
   "record_counts": {
-    "events": 43
+    "events": 44
   }
 }
