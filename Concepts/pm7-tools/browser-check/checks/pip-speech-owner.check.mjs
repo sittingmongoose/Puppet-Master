@@ -75,7 +75,7 @@ async function verdict(t, f, name, needStates) {
 	const r = await take(f);
 	const missing = (needStates || []).filter((s) => !r.seen.includes(s));
 	await t.check(`${name}: no check line stays typed past its check by more than one frame`, r.frames > 20 && r.maxRun < 2 && !missing.length,
-		JSON.stringify({ frames: r.frames, maxRun: r.maxRun, missing, bad: r.bad, tail: r.maxRun >= 2 ? r.rows : r.rows.slice(-6) }));
+		JSON.stringify({ maxRun: r.maxRun, first: r.bad[0] ? [r.bad[0].frame, r.bad[0].state, r.bad[0].typed] : null, missing, frames: r.frames, bad: r.bad.slice(0, 2), tail: r.rows.slice(-6) }));
 	return r;
 }
 

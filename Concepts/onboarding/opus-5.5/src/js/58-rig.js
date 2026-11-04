@@ -629,7 +629,7 @@
       const shown = tn - (this.sayAt || 0), open = b.classList.contains('on');
       // the first line, or one after a calm moment, starts at once; otherwise it waits its turn
       const wait = !open ? 0 : Math.max(calm ? 0 : 380, (this.minShow || 0) - shown);
-      if (wait <= 0) { this.sayNow(text, mood); return; }
+      if (wait <= 0) { this.sayNow(text, mood, owner); return; }
       this.sayNext = [text, mood, owner];
       this.sayT = setTimeout(() => { const n = this.sayNext; this.sayNext = null; if (n && this.ownerLive(n[2])) this.sayNow(n[0], n[1], n[2]); }, wait);
     }
