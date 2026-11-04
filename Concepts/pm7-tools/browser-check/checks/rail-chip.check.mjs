@@ -220,8 +220,8 @@ export default async function (t) {
 				// the next screen comes in as a person brings it in: Continue on the chosen NAS (a pick is only an answer once
 				// continued, the lead's rule 3, so a bare jump would reach the identity screen with no NAS); a click that throws
 				// ends the case with the error, rather than leaving this promise unanswered. --set selftest=jump jumps past the
-				// identity screen instead, which the guard below must fail
-				try { if (selftest === 'jump') window.O55.ui.go('nas-key'); else document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary').click(); } catch (e) { res({ before, frames, lens, screen: window.O55.S.sess.screen, error: String(e && e.message || e) }); return; }
+				// identity screen to Name instead, which the guard below must fail
+				try { if (selftest === 'jump') window.O55.ui.go('name'); else document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-primary').click(); } catch (e) { res({ before, frames, lens, screen: window.O55.S.sess.screen, error: String(e && e.message || e) }); return; }
 				const tick = () => { try { frames.push(ghosts()); if (frames.length < n) requestAnimationFrame(tick); else res({ before, frames, lens, screen: window.O55.S.sess.screen, history: (window.O55.S.sess.history || []).slice(-3) }); } catch (e) { rej(e); } };
 				requestAnimationFrame(tick);
 			});

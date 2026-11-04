@@ -1365,7 +1365,8 @@ export const tests = {
         const after = await A.frame().evaluate(SNAP20), dk = Object.keys(Object.assign({}, before.draft, after.draft)).filter((k) => JSON.stringify(before.draft[k]) !== JSON.stringify(after.draft[k]));
         if (dk.length) bad.push(`resumed by the bell, the draft changed: ${dk.join(', ')}`);
         if (JSON.stringify(before.history) !== JSON.stringify(after.history)) bad.push(`resumed by the bell, the Back path changed: ${before.history.join(' > ')} became ${after.history.join(' > ')}`);
-        if (await A.frame().evaluate(() => !!document.querySelector('#pmnPanel .pmn-item[data-id="pin-o55-resume"]:not(.pmn-leaving)'))) bad.push('the bell still lists Finish setting up after the session was resumed');
+        /* (the bell's own list: a closed panel keeps its last rows in the DOM until it next opens) */
+        if (await A.frame().evaluate(() => (O55.notify && O55.notify.list ? O55.notify.list() : []).some((x) => x.id === 'pin-o55-resume'))) bad.push('the bell still lists Finish setting up after the session was resumed');
         const seq = await walkBack(A, [], bad, `23 ${at}`);
         if (seq[seq.length - 1] !== 'welcome') bad.push(`the Back run stopped on ${seq[seq.length - 1]} (${seq.join(' > ')})`);
         const fwd = await on(A, bad); if (fwd[fwd.length - 1] !== 'review') bad.push(`on again never reached Review: ${fwd.join(' > ')}`);
