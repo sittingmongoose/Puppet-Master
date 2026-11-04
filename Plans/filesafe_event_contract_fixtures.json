@@ -1216,12 +1216,11 @@
           "receipt_id": "receipt_id-1",
           "guard_type": "bash_guard",
           "authorized_scope": {
+            "scope_kind": "project",
             "project_id": "p1",
             "run_id": "run1",
-            "thread_id": "th1",
-            "host_id": "h1",
-            "root_id": "root1",
-            "normalized_command_identity": "normalized-redacted-command-1"
+            "normalized_command_identity": "normalized-redacted-command-1",
+            "worktree_id": "worktree_id-1"
           },
           "reason": "reason-1",
           "auth_realm": "auth_realm-1",
@@ -1260,12 +1259,22 @@
           "receipt_id": "receipt_id-1",
           "guard_type": "bash_guard",
           "authorized_scope": {
+            "scope_kind": "application",
             "project_id": null,
             "run_id": "run1",
+            "normalized_command_identity": "normalized-redacted-command-1",
+            "server_id": "srv1",
+            "computer_id": "c1",
             "thread_id": "th1",
             "host_id": "h1",
-            "root_id": "root1",
-            "normalized_command_identity": "normalized-redacted-command-1"
+            "environment_id": "e1",
+            "recorded_roots": [
+              {
+                "root_id": "root1",
+                "root_generation": "rg1",
+                "canonical_path": "/work/p1"
+              }
+            ]
           },
           "reason": "reason-1",
           "auth_realm": "auth_realm-1",
@@ -1308,12 +1317,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1355,12 +1363,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1430,12 +1437,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1477,12 +1483,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1524,12 +1529,11 @@
             "request_id": "request_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1571,12 +1575,11 @@
             "request_id": "request_id-1",
             "receipt_id": "receipt_id-1",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1659,12 +1662,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "auth_realm": "auth_realm-1",
             "operator_identity_ref": "operator_identity_ref-1",
@@ -1706,12 +1708,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "operator_identity_ref": "operator_identity_ref-1",
@@ -1753,12 +1754,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1800,12 +1800,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1847,12 +1846,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1894,12 +1892,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1941,12 +1938,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -1990,12 +1986,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -2038,12 +2033,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -2086,12 +2080,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -2134,12 +2127,11 @@
             "receipt_id": "receipt_id-1",
             "guard_type": "bash_guard",
             "authorized_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -2201,12 +2193,11 @@
           "command_preview": "command_preview-1",
           "normalized_command_identity": "normalized_command_identity-1",
           "requested_scope": {
+            "scope_kind": "project",
             "project_id": "p1",
             "run_id": "run1",
-            "thread_id": "th1",
-            "host_id": "h1",
-            "root_id": "root1",
-            "normalized_command_identity": "normalized_command_identity-1"
+            "normalized_command_identity": "normalized_command_identity-1",
+            "worktree_id": "worktree_id-1"
           },
           "requested_duration": 1,
           "reason": "reason-1",
@@ -2245,12 +2236,22 @@
           "command_preview": "command_preview-1",
           "normalized_command_identity": "normalized_command_identity-1",
           "requested_scope": {
+            "scope_kind": "application",
             "project_id": null,
             "run_id": "run1",
+            "normalized_command_identity": "normalized_command_identity-1",
+            "server_id": "srv1",
+            "computer_id": "c1",
             "thread_id": "th1",
             "host_id": "h1",
-            "root_id": "root1",
-            "normalized_command_identity": "normalized_command_identity-1"
+            "environment_id": "e1",
+            "recorded_roots": [
+              {
+                "root_id": "root1",
+                "root_generation": "rg1",
+                "canonical_path": "/work/p1"
+              }
+            ]
           },
           "requested_duration": 1,
           "reason": "reason-1",
@@ -2293,12 +2294,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2340,12 +2340,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2415,12 +2414,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2462,12 +2460,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2509,12 +2506,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2556,12 +2552,11 @@
             "guard_type": "bash_guard",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2603,12 +2598,11 @@
             "guard_type": "bash_guard",
             "command_preview": "command_preview-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized-redacted-command-1"
+              "normalized_command_identity": "normalized-redacted-command-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2691,12 +2685,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "reason": "reason-1",
             "auth_realm": "auth_realm-1",
@@ -2738,12 +2731,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "auth_realm": "auth_realm-1",
@@ -2785,12 +2777,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2832,12 +2823,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2879,12 +2869,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2926,12 +2915,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -2975,12 +2963,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -3023,12 +3010,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -3071,12 +3057,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "normalized_command_identity-1"
+              "normalized_command_identity": "normalized_command_identity-1",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -3119,12 +3104,11 @@
             "command_preview": "command_preview-1",
             "normalized_command_identity": "normalized_command_identity-1",
             "requested_scope": {
+              "scope_kind": "project",
               "project_id": "p1",
               "run_id": "run1",
-              "thread_id": "th1",
-              "host_id": "h1",
-              "root_id": "root1",
-              "normalized_command_identity": "different"
+              "normalized_command_identity": "different",
+              "worktree_id": "worktree_id-1"
             },
             "requested_duration": 1,
             "reason": "reason-1",
@@ -5125,8 +5109,8 @@
           "baseline_ref": "baseline_ref-1",
           "replan_generation": 1,
           "creation_reason": "creation_reason-1",
-          "snapshot_format_version": 1,
-          "content_scope_version": 1,
+          "snapshot_format_version": "1",
+          "content_scope_version": "1",
           "snapshot_manifest_ref": "snapshot_manifest_ref-1",
           "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5167,8 +5151,8 @@
           "baseline_ref": "baseline_ref-1",
           "replan_generation": 1,
           "creation_reason": "creation_reason-1",
-          "snapshot_format_version": 1,
-          "content_scope_version": 1,
+          "snapshot_format_version": "1",
+          "content_scope_version": "1",
           "snapshot_manifest_ref": "snapshot_manifest_ref-1",
           "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5213,8 +5197,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5258,8 +5242,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5294,8 +5278,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5329,8 +5313,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5374,8 +5358,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5419,8 +5403,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5464,8 +5448,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5509,8 +5493,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5554,8 +5538,8 @@
             "HEAD_sha": "HEAD_sha-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5599,8 +5583,8 @@
             "HEAD_sha": "HEAD_sha-1",
             "baseline_ref": "baseline_ref-1",
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5644,8 +5628,8 @@
             "HEAD_sha": "HEAD_sha-1",
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5690,7 +5674,7 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "content_scope_version": 1,
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5735,7 +5719,7 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
+            "snapshot_format_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5780,8 +5764,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "capture_status": "complete",
@@ -5825,8 +5809,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "capture_status": "complete",
@@ -5870,8 +5854,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "capture_status": "complete",
@@ -5915,8 +5899,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -5960,8 +5944,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -6007,8 +5991,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -6053,8 +6037,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -6099,8 +6083,8 @@
             "baseline_ref": "baseline_ref-1",
             "replan_generation": 1,
             "creation_reason": "creation_reason-1",
-            "snapshot_format_version": 1,
-            "content_scope_version": 1,
+            "snapshot_format_version": "1",
+            "content_scope_version": "1",
             "snapshot_manifest_ref": "snapshot_manifest_ref-1",
             "snapshot_manifest_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "content_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -6161,7 +6145,6 @@
           "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "conflict_reason_code": "conflict_reason_code-1",
           "recovered_after_restart": false,
           "execution_context": {
             "thread_id": "th1",
@@ -6197,7 +6180,6 @@
           "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-          "conflict_reason_code": "conflict_reason_code-1",
           "recovered_after_restart": false,
           "execution_context": {
             "thread_id": "th1",
@@ -6237,7 +6219,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6276,7 +6257,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6306,7 +6286,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false
           }
         },
@@ -6335,7 +6314,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6374,7 +6352,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6413,7 +6390,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6452,7 +6428,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6491,7 +6466,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6530,7 +6504,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6569,7 +6542,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6608,7 +6580,6 @@
             "restore_outcome": "restored_clean",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6647,7 +6618,6 @@
             "restore_outcome": "restored_clean",
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6686,7 +6656,6 @@
             "restore_outcome": "restored_clean",
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6726,7 +6695,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "execution_context": {
               "thread_id": "th1",
               "run_id": "run1",
@@ -6765,7 +6733,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "unknown_extension": true,
             "execution_context": {
@@ -6806,7 +6773,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6846,7 +6812,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6886,7 +6851,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6926,7 +6890,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -6966,7 +6929,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -7006,7 +6968,7 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            "conflict_reason_code": "conflict_reason_code-1",
+            "conflict_reason_code": "restore_conflict",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -7046,7 +7008,6 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            "conflict_reason_code": "conflict_reason_code-1",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",
@@ -7086,7 +7047,7 @@
             "target_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "pre_restore_state_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
             "post_restore_state_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-            "conflict_reason_code": "conflict_reason_code-1",
+            "conflict_reason_code": "permission_denied",
             "recovered_after_restart": false,
             "execution_context": {
               "thread_id": "th1",

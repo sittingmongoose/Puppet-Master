@@ -1986,7 +1986,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7441,
+      "line_count": 7446,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 82,
       "plan_unit_ids": [
@@ -2143,7 +2143,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "41ef06ad0b74e88fae09cf0d0a75111448862e1b01f97dcc2ad079a047d186c7",
+      "sha256": "323cb328c6e1ab6de46d5c9aa372881c3a0c98ccbe858d6ed32e71d038b857df",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 81,
@@ -2300,6 +2300,7 @@
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm_filesafe_event_contracts.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
@@ -4580,7 +4581,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24923,
+      "line_count": 25132,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 370,
       "plan_unit_ids": [
@@ -5315,7 +5316,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "1ba8d6d4160b3d1cf8072a6f8dc8a157cc36033a579e443067f51df2cbf52d7a",
+      "sha256": "94c02d52b218b09b8832ac156cbbb6ffefab647fe66e30e6fa47d48e43be7ce5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 370
@@ -5475,6 +5476,7 @@
         "python3 scripts/pm-shared-runtime-storage-materialize.py check",
         "python3 scripts/pm-touch-closure-verify.py --json",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm_filesafe_event_contracts.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
@@ -18682,7 +18684,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 29989,
+      "line_count": 30034,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 350,
       "plan_unit_ids": [
@@ -19159,7 +19161,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "d8eeabcf58f630756737316db88a3924c2585048956968e1a07bebfda68829cc",
+      "sha256": "d58fa28ffd97bdaa2d31d753f4285e0c9e54fa499c1206bef483fecd0152d47b",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 346,
@@ -19441,6 +19443,7 @@
         "python3 scripts/pm-working-notebook-contracts.py validate",
         "python3 scripts/pm_browser_workspace_created_v2.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm_filesafe_event_contracts.py",
         "reports/event-authority-20260911/step-06-contract-validation.md",
         "reports/event-authority-20260911/step-08-append-receipt-validation.md",
@@ -21535,7 +21538,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-04T17:36:16Z",
+  "generated_at_utc": "2026-11-04T18:13:21Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

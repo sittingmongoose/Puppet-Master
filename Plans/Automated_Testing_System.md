@@ -7250,6 +7250,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -7265,8 +7266,8 @@ negative_constraints:
 - No event registry append, retention decision, or native admission.
 ```
 
-- `filesafe.command_denied`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
-- `filesafe.destructive_override_denied`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.command_denied`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
+- `filesafe.destructive_override_denied`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
 
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
 
@@ -7293,6 +7294,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -7308,8 +7310,8 @@ negative_constraints:
 - No event registry append, retention decision, or native admission.
 ```
 
-- `filesafe.destructive_override_granted`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
-- `filesafe.destructive_override_requested`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.destructive_override_granted`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
+- `filesafe.destructive_override_requested`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
 
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
 
@@ -7336,6 +7338,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -7351,8 +7354,8 @@ negative_constraints:
 - No event registry append, retention decision, or native admission.
 ```
 
-- `filesafe.guard_init_failed`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
-- `filesafe.path_denied`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.guard_init_failed`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
+- `filesafe.path_denied`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
 
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
 
@@ -7378,6 +7381,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -7393,7 +7397,7 @@ negative_constraints:
 - No event registry append, retention decision, or native admission.
 ```
 
-- `filesafe.policy_degraded`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `filesafe.policy_degraded`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
 
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.
 
@@ -7420,6 +7424,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -7435,7 +7440,7 @@ negative_constraints:
 - No event registry append, retention decision, or native admission.
 ```
 
-- `safe_point.created`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
-- `safe_point.restored`: own Project/application positives; every required-field omission, unknown extension and scope-join negative in `Plans/filesafe_event_contract_fixtures.json`. Own retry vectors require identical original result and reject changed digest, no cross-family identity reuse. Own withdrawal, missing-source and no-effect replay obligations below.
+- `safe_point.created`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
+- `safe_point.restored`: `Plans/filesafe_event_authority_fixtures.json` contains this family's complete original-source views, closed EventRecord and strict full-value custody positives for Project/application, full envelope/source/subject/Host/root joins, authentic-bank versus forged-source negatives, missing body/receipt and altered commitment negatives. Own action traces assert original-result retry, changed-digest conflict, missing-dedupe refusal, crash before/after body/append/receipt/terminal, older-restore skew, unavailable reads and fenced withdrawal/rebuild with zero replay effect. `python3 scripts/pm_filesafe_event_authority.py` checks its own graph/resource pins and these exact cases. Native source, storage/fsync/CAS, access/hold/deletion and actual backup/withdrawal effects remain NOT_RUN; fixtures confer no admission.
 
 `python3 scripts/pm_filesafe_event_contracts.py` validates closed schemas, positive/negative payloads and deterministic identity/retry/join cases. This is static contract proof only. Native obligations, separately for each named family, are NOT_RUN: crash at intent/body/append/full-value receipt/terminal boundaries; barrier durability and backup/older-restore; actual SP-278 token/CAS/source-generation mismatch; body permission revocation and deletion; retention pending blocks admission; withdrawal and survivor rebuild; replay produces zero filesystem/command/guard/override effects. These require native implementations and genuine source custody; static fixtures grant no admission.

@@ -29501,6 +29501,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29530,6 +29531,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.command_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_command_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.command_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_command_denied.contract.json` and `CV-550` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-550, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29558,6 +29563,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29587,6 +29593,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.destructive_override_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_denied.contract.json` and `CV-551` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-551, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29615,6 +29625,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29644,6 +29655,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_granted` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_granted_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.destructive_override_granted`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_granted.contract.json` and `CV-552` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-552, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29672,6 +29687,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29701,6 +29717,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.destructive_override_requested` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_destructive_override_requested_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.destructive_override_requested`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_destructive_override_requested.contract.json` and `CV-553` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-553, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29729,6 +29749,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29758,6 +29779,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.guard_init_failed` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_guard_init_failed_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.guard_init_failed`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_guard_init_failed.contract.json` and `CV-554` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-554, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29786,6 +29811,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29815,6 +29841,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.path_denied` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_path_denied_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.path_denied`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_path_denied.contract.json` and `CV-555` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-555, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29843,6 +29873,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29872,6 +29903,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `filesafe.policy_degraded` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.filesafe_policy_degraded_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `filesafe.policy_degraded`.** Adopt the complete source graph `Plans/filesafe_event_sources/filesafe_policy_degraded.contract.json` and `CV-556` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-556, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29900,6 +29935,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29929,6 +29965,10 @@ negative_constraints:
 
 **Withdrawal and rebuild.** Cut off new `safe_point.created` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.safe_point_created_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
 
+**Exact original/issued joins for `safe_point.created`.** Adopt the complete source graph `Plans/filesafe_event_sources/safe_point_created.contract.json` and `CV-557` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
+
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-557, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286
 
 
@@ -29957,6 +29997,7 @@ acceptance_criteria:
 - Exact source, scope, retry, read and withdrawal joins fail closed.
 validation_surfaces:
 - python3 scripts/pm_filesafe_event_contracts.py
+- python3 scripts/pm_filesafe_event_authority.py
 risk_class: event_authority
 reasoning_tier: high
 context_scope: ea_wave2_DF
@@ -29985,5 +30026,9 @@ negative_constraints:
 **Retention.** `retention_policy_ref = PENDING_RETENTION_DECISION` for this event history. Candidates: Case L-3 authority/approval/receipt indefinite (`RP-AUTHORITY-INDEFINITE`), non-authority security/recovery diagnostics (`RP-OPERATIONAL-2555D`), or run/node/attempt history (`RP-RUNTIME-365D`); the original source's policy alone does not decide this event. RT must settle exact classification before admission. Existing snapshot record `RP-SAFEPOINT-90D-AFTER-RELEASE`, restore-transaction authority, index `RP-EVENT-INDEX-SOURCE` and generic checkpoint's existing policy remain independently owned; this contract creates no stored value or retention assignment. Unknown-policy fallback is materially incomplete and cannot admit the family.
 
 **Withdrawal and rebuild.** Cut off new `safe_point.restored` admissions first; reconcile prepared operations from original sources and original first receipts without a second effect. Fence `storage.safe_point_restored_history_read.v1@1.0.0` and every generic index generation whose admitted-type selection changes. Retain exact old schema dispatch and immutable historical records/custody. A successor reader activates only after a verified rebuild of the actual retained survivor set and atomic SP-278 generation publication/CAS. An unsupported schema/source, missing receipt or unresolved restore returns unavailable. No zero-cursor reset, sibling substitution, history rewrite, automatic deletion or fence clearance is permitted.
+
+**Exact original/issued joins for `safe_point.restored`.** Adopt the complete source graph `Plans/filesafe_event_sources/safe_point_restored.contract.json` and `CV-558` lifecycle table. Before append, resolve its own original source under the actual storage_instance_id/writer epoch and verify every body ref/hash. No family-owned new storage value is introduced: original domain custody and SP-286 custody remain their sole physical owners. Resolve retry by the lifetime tuple and CV-339 semantic digest; equal returns the original complete EventRecord, original_segment_ref, original_event_value_commitment and unchanged first AppendReceipt, including original acknowledged_at_utc. Different digest conflicts; dedupe or original source unavailable yields zero effect. A caller's re-encoded duplicate never becomes the original. A crash after owner commit but before append resumes that original prepared event only if absence of prior issuance is authoritative. A crash after append or receipt loss uses SP-286 full-value custody: intact issued authority returns the original; missing custody, covered torn frames, older-backup skew or unknown prior issue fences. A crash after receipt before terminal may publish only the same original terminal result; none of these paths reexecutes the domain action.
+
+This family's checker cases in `Plans/filesafe_event_authority_fixtures.json` separately cover schema/source/envelope mismatch, wrong family/scope/Host/root/subject, forged source, missing body/receipt, conflicting retry, changed complete-value commitment, every ordered crash boundary and own writer/reader withdrawal with verified survivor rebuild. The static admission oracle still returns missing_event_registration for this exact family; PENDING_RETENTION_DECISION independently blocks future admission.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#CV-558, ContractName:Plans/storage-plan.md#SP-278, ContractName:Plans/storage-plan.md#SP-286

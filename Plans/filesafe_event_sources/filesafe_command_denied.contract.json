@@ -1,0 +1,136 @@
+{
+  "schema_id": "pm.filesafe.filesafe_command_denied.source_graph.v1",
+  "schema_version": "1.0.0",
+  "event_type": "filesafe.command_denied",
+  "owner_refs": [
+    "Plans/Contracts_V0.md#CV-550",
+    "Plans/storage-plan.md#SP-550",
+    "Plans/FileSafe.md#F2-213",
+    "Plans/Contracts_V0.md#CV-366"
+  ],
+  "producer": "BaseRunner::check_command -> BashGuard::check_command -> log_blocked_command",
+  "resources": [
+    {
+      "path": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json",
+      "uri": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_command_denied/1.0.0",
+      "sha256": "1eb17225abff26a1c352baad07f29ced6db8b9259c10f45e31768482f3e76c72"
+    },
+    {
+      "path": "Plans/event_payloads/filesafe_command_denied_v2.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0",
+      "sha256": "7c0dd99bd38d3cba1f9ace9652ad98b9bd503e058ec83c146ab712d7e8c126bb"
+    },
+    {
+      "path": "Plans/shared_integration_runtime.schema.json",
+      "uri": "pm.shared_integration_runtime.command_contracts.schema.v1",
+      "sha256": "5293dd1e8d403a6e8da103bcd93e2811ddaec67aaa277541c26ede13064d3008"
+    },
+    {
+      "path": "Plans/event_record.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json",
+      "sha256": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353"
+    },
+    {
+      "path": "Plans/event_append_receipt_contracts.schema.json",
+      "uri": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0",
+      "sha256": "2f41d829ac0697998a9774267d44ccb10673df6b6ec26c8a0bbd5f552abf2cf3"
+    }
+  ],
+  "methods": [
+    {
+      "interface_id": "owner.filesafe.filesafe_command_denied.original_source.project@1.0.0",
+      "component": "BaseRunner::check_command -> BashGuard::check_command -> log_blocked_command",
+      "input_root_ref": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json#/$defs/project_request",
+      "output_root_ref": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json#/$defs/project_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+    },
+    {
+      "interface_id": "owner.filesafe.filesafe_command_denied.original_source.application@1.0.0",
+      "component": "BaseRunner::check_command -> BashGuard::check_command -> log_blocked_command",
+      "input_root_ref": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json#/$defs/application_request",
+      "output_root_ref": "Plans/filesafe_event_sources/filesafe_command_denied.schema.json#/$defs/application_source",
+      "operations": [
+        "capture_at_original_commit",
+        "read_same_operation",
+        "recover_same_operation"
+      ],
+      "adoption_disposition": "specified_unimplemented",
+      "authority": "Private view over genuine original owner custody; caller event/payload/boolean cannot create original acceptance."
+    }
+  ],
+  "request_payload_joins": [
+    "guard_type",
+    "normalized_command_identity",
+    "segment_index",
+    "permission_snapshot_id",
+    "filesafe_scope_ref"
+  ],
+  "required_body_roles": [
+    "guard_input",
+    "guard_decision"
+  ],
+  "ordered_stages": [
+    {
+      "ordinal": 0,
+      "role": "original_intent",
+      "barrier": "checked_segment: admit actual owner operation; no native write unless exact family is independently admitted and retention is resolved"
+    },
+    {
+      "ordinal": 1,
+      "role": "body_commit",
+      "barrier": "denied_no_spawn: Denial is sealed before returning the blocked-command result; spawn remains forbidden, including audit failure."
+    },
+    {
+      "ordinal": 2,
+      "role": "prepared_event",
+      "barrier": "Freeze the original semantic envelope after source/result commit; retain the same operation on retry"
+    },
+    {
+      "ordinal": 3,
+      "role": "append",
+      "barrier": "Ordinary SeglogFrameV2 barrier append; SP-026/SP-236 and SP-336/SP-347"
+    },
+    {
+      "ordinal": 4,
+      "role": "first_receipt",
+      "barrier": "SP-286/CV-339 strict full-value v2; resolve original issued value and all eleven receipt fields"
+    },
+    {
+      "ordinal": 5,
+      "role": "terminal_publication",
+      "barrier": "Publish original terminal/outbox only after full-value receipt custody; never repeat a domain effect"
+    },
+    {
+      "ordinal": 6,
+      "role": "history_read",
+      "barrier": "SP-278 verified CURRENT/index generation and fresh live token; passive consumer only"
+    },
+    {
+      "ordinal": 7,
+      "role": "backup_restore",
+      "barrier": "Original source/body/receipt/index selection share coherent backup/restore epoch; missing older-restored source fences"
+    },
+    {
+      "ordinal": 8,
+      "role": "withdrawal",
+      "barrier": "Stop new writer admissions; reconcile same pending originals, fence reader/index, then verified retained-survivor rebuild; no zero cursor"
+    },
+    {
+      "ordinal": 9,
+      "role": "retention_release",
+      "barrier": "PENDING_RETENTION_DECISION; this graph selects no deletion or lifetime policy"
+    }
+  ],
+  "consumer_id": "storage.filesafe_command_denied_history_read.v1@1.0.0",
+  "family_checkpoint": "none_required",
+  "retention_policy_ref": "PENDING_RETENTION_DECISION",
+  "native_admission": "unavailable_until_complete_owner_adoption",
+  "preserved_project_resources": [],
+  "graph_sha256": "d131e9e04a85b5ed887f620ccd81206e422d1dee831109c871356e9ab55a9f45"
+}

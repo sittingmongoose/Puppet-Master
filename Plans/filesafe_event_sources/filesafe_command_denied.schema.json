@@ -1,0 +1,653 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/filesafe_event_sources/filesafe_command_denied/1.0.0",
+  "title": "filesafe.command_denied original owner views; no persisted table or admission",
+  "$defs": {
+    "Request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "execution_context",
+        "actor_ref",
+        "original_input_ref",
+        "original_input_sha256",
+        "guard_type",
+        "normalized_command_identity"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "pm.shared_integration_runtime.command_contracts.schema.v1#/$defs/WorkflowScopeV2"
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "guard_type": {
+          "enum": [
+            "bash_guard",
+            "file_guard",
+            "security_filter"
+          ]
+        },
+        "normalized_command_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segment_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "filesafe_scope_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "Result": {
+      "$ref": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+    },
+    "project_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "execution_context",
+        "actor_ref",
+        "original_input_ref",
+        "original_input_sha256",
+        "guard_type",
+        "normalized_command_identity"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "project"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "guard_type": {
+          "enum": [
+            "bash_guard",
+            "file_guard",
+            "security_filter"
+          ]
+        },
+        "normalized_command_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segment_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "filesafe_scope_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "project_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "interface_id",
+        "source_ref",
+        "storage_instance_id",
+        "writer_epoch",
+        "original_commit_ref",
+        "original_request",
+        "original_result",
+        "body_members",
+        "accepted_source_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.filesafe_command_denied.original_source.project.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "interface_id": {
+          "const": "owner.filesafe.filesafe_command_denied.original_source.project@1.0.0"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_commit_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request": {
+          "$ref": "#/$defs/project_request"
+        },
+        "original_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+        },
+        "body_members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "ref",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "enum": [
+                  "guard_input",
+                  "guard_decision"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "accepted_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "application_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "scope",
+        "execution_context",
+        "actor_ref",
+        "original_input_ref",
+        "original_input_sha256",
+        "guard_type",
+        "normalized_command_identity"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "allOf": [
+            {
+              "$ref": "https://puppetmaster.local/Plans/shared_integration_runtime.schema.json#/$defs/WorkflowScopeV2"
+            },
+            {
+              "properties": {
+                "scope_kind": {
+                  "const": "application"
+                }
+              }
+            }
+          ]
+        },
+        "execution_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "thread_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "run_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "computer_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "host_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "environment_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "root_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "root_generation": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "working_directory": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\).+"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "thread_id",
+            "run_id",
+            "computer_id",
+            "host_id",
+            "environment_id",
+            "root_id",
+            "root_generation",
+            "working_directory"
+          ]
+        },
+        "guard_type": {
+          "enum": [
+            "bash_guard",
+            "file_guard",
+            "security_filter"
+          ]
+        },
+        "normalized_command_identity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segment_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "permission_snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "filesafe_scope_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actor_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_input_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "application_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "interface_id",
+        "source_ref",
+        "storage_instance_id",
+        "writer_epoch",
+        "original_commit_ref",
+        "original_request",
+        "original_result",
+        "body_members",
+        "accepted_source_sha256"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "pm.filesafe.filesafe_command_denied.original_source.application.v1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "interface_id": {
+          "const": "owner.filesafe.filesafe_command_denied.original_source.application@1.0.0"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "storage_instance_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "writer_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "original_commit_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_request": {
+          "$ref": "#/$defs/application_request"
+        },
+        "original_result": {
+          "$ref": "https://puppetmaster.local/schemas/event_payloads/filesafe_command_denied/2.0.0"
+        },
+        "body_members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "role",
+              "ref",
+              "sha256"
+            ],
+            "properties": {
+              "role": {
+                "enum": [
+                  "guard_input",
+                  "guard_decision"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "accepted_source_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/project_source"
+        },
+        {
+          "$ref": "#/$defs/application_source"
+        }
+      ]
+    },
+    "materialization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "event",
+        "custody"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "event": {
+          "$ref": "https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json"
+        },
+        "custody": {
+          "$ref": "https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0#/$defs/custody_v2"
+        }
+      }
+    }
+  }
+}
