@@ -19,15 +19,16 @@
     ]
   },
   "native_execution": "NOT_RUN",
-  "assessment_id": "EA-W2-DCH-FIX3-SELF-20261104",
+  "assessment_id": "EA-W2-DCH-FIX4-SELF-20261104",
   "assessed_tree": {
     "branch": "plans/ea-w2-chat-20261104",
-    "commit": "318444509707c627e6a4ca703c06371249c7c6dd",
-    "reviewed_head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
-    "final_edition": "Final fix round 3. These assessed source/companion bytes are pinned by this commit; the following report commit records validation and self-grades. Stop remains unprepared.",
+    "commit": "d383d981f6ea97e226fc94bf137047b44a5cddcb",
+    "reviewed_head": "4e1408afc1cda95ee03797deb0bb6e56a3273991",
+    "final_edition": "Targeted round 4. This commit pins all assessed owner, schema, fixture and checker bytes; the following report commit records evidence. Held Stop is unchanged.",
     "fix_commits": [
-      "26fa366c5638a23685141bdd30cca8a46d4d7356",
-      "318444509707c627e6a4ca703c06371249c7c6dd"
+      "b581a704fcf362bb64a504cc4992a15f0d23e96b",
+      "35f4d58988abb1e7b19a5c0df724a4cb1cab87e5",
+      "d383d981f6ea97e226fc94bf137047b44a5cddcb"
     ]
   },
   "rows": [
@@ -67,7 +68,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -87,7 +88,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -114,7 +115,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -141,7 +142,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -168,7 +169,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -202,7 +203,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -222,7 +223,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -242,7 +243,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -262,7 +263,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -310,8 +311,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -337,7 +338,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -346,29 +347,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "493 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "607 ordinary assertions and 622 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"event_type\": \"bundle.selection_forward_blocked\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -384,8 +385,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -436,7 +438,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -456,7 +458,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -483,7 +485,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -510,7 +512,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -537,7 +539,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -571,7 +573,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -591,7 +593,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -611,7 +613,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -631,7 +633,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -679,8 +681,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -706,7 +708,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -715,29 +717,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "527 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "641 ordinary assertions and 644 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 3704,
+              "line_end": 3704,
+              "quote": "\"event_type\": \"bundle.selection_sent_to_chat\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -753,8 +755,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -806,7 +809,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -826,7 +829,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -853,7 +856,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -880,7 +883,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -907,7 +910,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -941,7 +944,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -961,7 +964,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -981,7 +984,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1001,7 +1004,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1049,8 +1052,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -1076,7 +1079,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1085,29 +1088,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "509 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "623 ordinary assertions and 622 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 9267,
+              "line_end": 9267,
+              "quote": "\"event_type\": \"chat.message\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -1123,8 +1126,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -1176,7 +1180,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -1196,7 +1200,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1223,7 +1227,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1250,7 +1254,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1277,7 +1281,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1311,7 +1315,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1331,7 +1335,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -1351,7 +1355,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1378,7 +1382,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1426,8 +1430,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -1453,7 +1457,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1462,29 +1466,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "537 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "655 ordinary assertions and 652 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 14258,
+              "line_end": 14258,
+              "quote": "\"event_type\": \"chat.thread_archived\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -1500,8 +1504,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -1552,7 +1557,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -1572,7 +1577,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1599,7 +1604,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1626,7 +1631,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1653,7 +1658,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1687,7 +1692,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1707,7 +1712,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -1727,7 +1732,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1747,7 +1752,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1795,8 +1800,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -1822,7 +1827,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1831,29 +1836,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "487 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "601 ordinary assertions and 598 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 18471,
+              "line_end": 18471,
+              "quote": "\"event_type\": \"chat.thread_created\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -1869,8 +1874,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -1921,7 +1927,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -1941,7 +1947,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1968,7 +1974,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -1995,7 +2001,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2022,7 +2028,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2056,7 +2062,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2076,7 +2082,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -2096,7 +2102,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2116,7 +2122,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2164,8 +2170,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -2191,7 +2197,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2200,29 +2206,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "487 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "601 ordinary assertions and 594 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 22046,
+              "line_end": 22046,
+              "quote": "\"event_type\": \"chat.thread_deleted\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -2238,8 +2244,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -2290,7 +2297,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -2310,7 +2317,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2337,7 +2344,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2364,7 +2371,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2391,7 +2398,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2425,7 +2432,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2445,7 +2452,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -2465,7 +2472,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2485,7 +2492,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2533,8 +2540,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -2560,7 +2567,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2569,29 +2576,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "485 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "599 ordinary assertions and 612 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 25621,
+              "line_end": 25621,
+              "quote": "\"event_type\": \"chat.thread_worktree_bound\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -2607,8 +2614,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -2659,7 +2667,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -2679,7 +2687,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2706,7 +2714,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2733,7 +2741,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2760,7 +2768,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2794,7 +2802,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2814,7 +2822,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -2834,7 +2842,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2854,7 +2862,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2902,8 +2910,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -2929,7 +2937,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -2938,29 +2946,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "481 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "595 ordinary assertions and 596 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 29280,
+              "line_end": 29280,
+              "quote": "\"event_type\": \"chat.thread_worktree_create_failed\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -2976,8 +2984,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -3028,7 +3037,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -3048,7 +3057,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3075,7 +3084,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3102,7 +3111,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3129,7 +3138,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3163,7 +3172,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3183,7 +3192,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -3203,7 +3212,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3223,7 +3232,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3271,8 +3280,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -3298,7 +3307,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3307,29 +3316,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "489 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "603 ordinary assertions and 624 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 32855,
+              "line_end": 32855,
+              "quote": "\"event_type\": \"chat.thread_worktree_merge_failed\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -3345,8 +3354,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -3397,7 +3407,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -3417,7 +3427,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3444,7 +3454,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3471,7 +3481,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3498,7 +3508,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3532,7 +3542,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3552,7 +3562,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -3572,7 +3582,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3592,7 +3602,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3640,8 +3650,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -3667,7 +3677,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3676,29 +3686,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "493 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "607 ordinary assertions and 618 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 36598,
+              "line_end": 36598,
+              "quote": "\"event_type\": \"chat.thread_worktree_merged\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -3714,8 +3724,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -3766,7 +3777,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -3786,7 +3797,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3813,7 +3824,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3840,7 +3851,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3867,7 +3878,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3901,7 +3912,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3921,7 +3932,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -3941,7 +3952,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -3961,7 +3972,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4009,8 +4020,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -4036,7 +4047,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4045,29 +4056,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "493 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "607 ordinary assertions and 620 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 40299,
+              "line_end": 40299,
+              "quote": "\"event_type\": \"chat.thread_worktree_pr_created\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -4083,8 +4094,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -4135,7 +4147,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -4155,7 +4167,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4182,7 +4194,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4209,7 +4221,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4236,7 +4248,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4270,7 +4282,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4290,7 +4302,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -4310,7 +4322,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4330,7 +4342,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4378,8 +4390,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -4405,7 +4417,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4414,29 +4426,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "485 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "599 ordinary assertions and 612 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 44000,
+              "line_end": 44000,
+              "quote": "\"event_type\": \"chat.thread_worktree_pr_failed\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -4452,8 +4464,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -4504,7 +4517,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -4524,7 +4537,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4551,7 +4564,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4578,7 +4591,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4605,7 +4618,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4639,7 +4652,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4659,7 +4672,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -4679,7 +4692,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4706,7 +4719,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4754,8 +4767,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -4781,7 +4794,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4790,29 +4803,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "561 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "691 ordinary assertions and 692 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 47659,
+              "line_end": 47659,
+              "quote": "\"event_type\": \"chat.thread_worktree_pre_merge_test_failed\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -4828,8 +4841,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -4880,7 +4894,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -4900,7 +4914,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4927,7 +4941,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4954,7 +4968,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -4981,7 +4995,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5015,7 +5029,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5035,7 +5049,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -5055,7 +5069,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5082,7 +5096,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5130,8 +5144,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -5157,7 +5171,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5166,29 +5180,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "535 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "657 ordinary assertions and 662 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 52372,
+              "line_end": 52372,
+              "quote": "\"event_type\": \"chat.thread_worktree_pre_merge_test_passed\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -5204,8 +5218,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -5256,7 +5271,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -5276,7 +5291,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5303,7 +5318,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5330,7 +5345,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5357,7 +5372,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5391,7 +5406,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5411,7 +5426,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -5431,7 +5446,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5451,7 +5466,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5499,8 +5514,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -5526,7 +5541,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5535,29 +5550,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "485 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "599 ordinary assertions and 608 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 47922,
+              "line_end": 47922,
+              "quote": "\"event_type\": \"chat.thread_worktree_pre_merge_test_started\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -5573,8 +5588,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -5625,7 +5641,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -5645,7 +5661,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5672,7 +5688,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5699,7 +5715,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5726,7 +5742,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5760,7 +5776,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5780,7 +5796,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -5800,7 +5816,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5820,7 +5836,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5868,8 +5884,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -5895,7 +5911,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -5904,29 +5920,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "483 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "597 ordinary assertions and 608 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 60268,
+              "line_end": 60268,
+              "quote": "\"event_type\": \"chat.thread_worktree_renamed\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -5942,8 +5958,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -5994,7 +6011,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "ABSENT"
           },
           "change": "carried",
@@ -6014,7 +6031,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6041,7 +6058,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6068,7 +6085,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6095,7 +6112,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6129,7 +6146,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6149,7 +6166,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "carried",
@@ -6169,7 +6186,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6189,7 +6206,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6237,8 +6254,8 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
-            "status": "PARTIAL"
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
+            "status": "PASS"
           },
           "change": "upgraded",
           "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
@@ -6264,7 +6281,7 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PASS"
           },
           "change": "carried",
@@ -6273,29 +6290,29 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "481 checks pass for this exact family in the 8511-check full suite. All ten standing checks have separate negative full-checker cases in scripts/pm_dch_event_regressions.py, including selected/registered schema closure and populated-history LF. Original F1-F3 and first Astra B1-B5 regressions are rerun. Static source/access witnesses only; native process/receipt/CAS/CRC/durability/custody/withdrawal remain NOT_RUN. All 465 full-checker regression runs have their expected result, including the exact original maximum attachment/provenance array mutations.",
+          "finding": "595 ordinary assertions and 596 refusal witnesses for this exact family pass. All 7031 original owned-schema constraints map to proved guards. Independent frozen one-change witnesses prevent schema edits from erasing their tests. The complete table has 6100 guard entries and 10584 negatives, with zero masked cases or unproved guards. The reconciled 501-mutation campaign and final pinned review-guard rerun preserve earlier findings. Native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-305",
-              "line_start": 7239,
-              "line_end": 7239,
-              "quote": "Review rounds 2 and 3 require all ten standing checks"
+              "line_start": 7244,
+              "line_end": 7244,
+              "quote": "Review round 4 requires standing check 11 across the complete DCH lane"
             },
             {
-              "path": "Plans/Automated_Testing_System.md",
-              "unit": "ATS-305",
-              "line_start": 7242,
-              "line_end": 7242,
-              "quote": "scripts/pm_dch_event_regressions.py supplies a separate full-checker negative"
+              "path": "Plans/dch_event_contract_fixtures.json",
+              "unit": "#/event_type",
+              "line_start": 63885,
+              "line_end": 63885,
+              "quote": "\"event_type\": \"chat.thread_worktree_unbound\""
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/astra-2-eb4bac6-evidence/regrade.json",
+            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCH-sol/REVIEW-cycle4.md",
             "status": "PARTIAL"
           },
           "change": "upgraded",
-          "change_reason": "Round-3 registry equality, complete schema-reference closure, populated histories and retained-original oracles close the reviewed gap; native execution remains NOT_RUN."
+          "change_reason": "C4-B1/B2 repaired for both editions and this family checkpoint; terminal test identity repaired where applicable. Whole-lane guard-removal proof has no masked negatives or unproved listed guards."
         }
       },
       "status_counts": {
@@ -6311,8 +6328,9 @@
       ],
       "native_execution": "NOT_RUN",
       "static_checks_seen": [
-        "python3 scripts/pm_dch_events.py (exit 0; 8511 checks; all 17 families)",
-        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <evidence>/full-checker-regressions.json",
+        "python3 scripts/pm_dch_events.py (exit 0; 10477 checks; all 17 families)",
+        "python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> (exit 0; 6100 guard entries; 10584 negative cases; 7031 original schema constraints)",
+        "python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json> (501 distinct mutations; invalid-positive controls separately rerun)",
         "python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json (exit 0)",
         "python3 scripts/pm-plan-index.py validate (exit 0; top-level status=pass)"
       ],
@@ -6570,28 +6588,41 @@
       "notes": "0 PASS / 5 PARTIAL / 7 ABSENT. The DL-406 record condition is unmet. This row is a blocker assessment, not a prepared family or admission. No IDs minted."
     }
   ],
-  "review_round": 3,
+  "review_round": 4,
   "review_before": {
     "prepared_families_passing_review": 0,
     "prepared_families": 17,
-    "reviewer": "Astra round 2",
-    "head": "eb4bac6e61d0faeb38540c7d5c041e5889a6029c",
+    "reviewer": "Sol cycle 4",
+    "head": "4e1408afc1cda95ee03797deb0bb6e56a3273991",
     "counts_each": {
-      "PASS": 8,
-      "PARTIAL": 3,
+      "PASS": 9,
+      "PARTIAL": 2,
       "ABSENT": 1
     }
   },
   "review_after_self": {
     "prepared_families": 17,
+    "counts_each": {
+      "PASS": 10,
+      "PARTIAL": 1,
+      "ABSENT": 1
+    },
     "membership": "ABSENT for all 17",
     "retention": "PARTIAL for all 17; permitted pending RT",
     "native_execution": "NOT_RUN",
-    "independent_re_review": "PENDING final review",
-    "all_standing_checks": "PASS across all seventeen families; checks 5/9 fixed and check-10 coverage added in 26fa366c56",
-    "full_checker_checks": 8511,
-    "full_checker_regression_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round3/full-checker-regressions.json",
-    "full_checker_regression_runs": 465
+    "independent_re_review": "PENDING targeted review",
+    "all_standing_checks": "PASS, including the complete check-11 guard-removal corpus",
+    "full_checker_checks": 10477,
+    "guard_entries": 6100,
+    "guard_negative_cases": 10584,
+    "guard_proof_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round4/guard-removal.json",
+    "full_checker_regression_evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round4/full-checker-regressions.json",
+    "full_checker_regression_runs": 501,
+    "declared_schema_constraints": 7031,
+    "logical_schema_guards": 5998,
+    "frozen_schema_witnesses": 4923,
+    "regression_total_attempts": 535,
+    "pinned_guard_runs": 36
   },
   "apply_2b": {
     "decision": "DL-406 / 2b A",

@@ -1,3 +1,127 @@
+# DCH — targeted round 4
+
+Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `4e1408afc1cda95ee03797deb0bb6e56a3273991`. Assessed source head: `d383d981f6ea97e226fc94bf137047b44a5cddcb`. Fix commit: `b581a704fcf362bb64a504cc4992a15f0d23e96b`; fixture-generator follow-up: `35f4d58988abb1e7b19a5c0df724a4cb1cab87e5`. Complete frozen schema-guard source: `d383d981f6ea97e226fc94bf137047b44a5cddcb`. This report commit follows those source commits.
+
+**Outcome:** C4-B1, C4-B2 and C4-B3 are fixed. All seventeen families are prepared without admission at **10 PASS / 1 PARTIAL retention / 1 ABSENT membership**, versus cycle 4's **9 PASS / 2 PARTIAL / 1 ABSENT**. The upgraded cell is positive_negative_oracles. Membership and RT source-policy assignment remain the authorized exceptions. Independent re-review is pending; native execution remains NOT_RUN.
+
+## Review round 4: findings and responses
+
+- **C4-B1 — fixed (`b581a704fc`).** `Plans/dch_checkpoint_fixtures.json:523` adds a schema-valid maximum two-retired-entry positive for every family; `:647` derives the excessive-history negative by appending one complete retired generation. Its generation ID, checkpoint ref and dataset name agree. `scripts/pm_dch_events.py:581` exercises current, populated and maximum history positives against both exact schema copies; `:591` consumes the explicit negative instead of empty objects. Removing history.maxItems from both selected and registered schemas now makes each family's own four_generations negative accepted and fails the complete checker. All seventeen selected/registered pairs remain identical. No generation, staged/current, hold or retention obligation changes.
+- **C4-B2 — fixed (`b581a704fc`).** Every unsupported_original_edition case in `Plans/dch_event_contract_fixtures.json` (first `:1873`) supplies the SHA-256 commitment of the exact unsupported retained bytes. That literal witness is independent checker input, rather than recomputed by the admission oracle. The unchanged historical source-hash, access, withdrawal and original-scope joins still enforce their own rules. Forged-original negatives retain their distinct unchanged-source commitment. Removing only historical payload-schema validation in `scripts/pm_dch_events.py:95` now accepts exactly the 34 unsupported-edition controls and fails the full checker.
+- **C4-B3 — fixed (`b581a704fc`).** The four mismatched_started_started_event_id cases (first `Plans/dch_event_contract_fixtures.json:48055`) now change terminal payload.started_event_id to a different well-formed event ID and preserve the valid started record and actual outcome source. Removing only that terminal-to-started identity rejection in `scripts/pm_dch_events.py:213` now accepts all four cases and fails the full checker. Separate started extra-field, original identity and envelope-edition negatives remain executable.
+
+No finding is disputed or stopped for a new product choice. The existing Stop hold remains for Jared's second deck.
+
+## Whole-lane check 11 and guard-removal table
+
+The complete table is [DCH-guard-removal.md](DCH-guard-removal.md). It contains **6,100 separate guard rows** with the guard expression or exact schema path, the negative IDs that flip, and the exact complement that remains rejected. [DCH-guard-negative-index.json](DCH-guard-negative-index.json) resolves **10,584 negative IDs** to concrete family/edition/case names and their guard evidence. This is a report companion, not a WorkNode or admission registry.
+
+The proof runner executes **11,249 direct acceptance cases**: 10,584 refusals and 665 positive controls. Every listed guard has a flipping negative; zero fixture negatives remain masked, zero listed guards lack a witness, and zero mutation exceptions count as rejection. Guard variants exist only in memory and are restored before each row. Rejection certificates reuse the deterministic baseline only when unchanged constraints still block acceptance; every potentially admitting guard removal is reevaluated. Equivalent copies of one contract fact are identified in the table and removed together; unrelated constraints remain enforced.
+
+| Guard class | Guard rows | Own negatives that flip | Every other negative |
+|---|---:|---:|---|
+| Selected/registered history generation limit | 17 | 17 | remains rejected |
+| Historical original-edition validation boundary | 1 | 34 | remains rejected |
+| Terminal payload to started-event identity | 1 | 4 | remains rejected |
+| All table entries, including schema keywords, scope, transport, retry, historical access/commitment, test outcome, archive, checkpoint, parity and reference closure | 6,100 | all 10,584 refusal cases have witnesses | exact per-row complements retained |
+
+The declaration cross-check covers **all 7,031 primitive constraints in 34 owned schemas**, grouped into **5,998 logical schema guards**. No declared guard is omitted because the original fixtures never reached it. `Plans/dch_schema_guard_fixtures.json` freezes 4,923 added one-change witnesses and the independently expected source rule values. Default verification rejects deleted/changed clauses, including null-valued clauses, and new unsupported vocabulary; deleting a frozen witness also fails. Six read-only complete-checker controls verify these refusals without counting exceptions as rejection.
+
+The proof uses equivalent canonical schema forms for nullable primitive unions and the two disjoint required schema_id editions. Their object-type copies include the object assurance implicit in the original oneOf dispatcher. Required fixed scope tags include otherwise unreachable opposite-edition copies. Pure-schema rejection certificates account for conjunctions and alternatives; a cached rejection is reused only while every possibly admitting branch retains an unchanged blocker. The original and normalized validators agree on every accepted base and all 21,083 rejected exploration candidates. Only isolated witnesses are frozen; discarded exploration is never counted as negative evidence. The full source-rule correspondence is retained as `declared-schema-rule-map.json`.
+
+The whole-lane audit also repaired observations beyond the three headline examples: started-source semantic mutations rekey and synchronize their envelopes and both terminal/outcome event references; checkpoint-token changes synchronize the publication copy and any untargeted index/root/selection/key relations; reference-hash controls retain a valid original body; required-test-outcome deletion starts from a valid timeout body; and unavailable-dedupe retries do not also change semantics. Generated retry payload controls change a schema-valid result fact without touching identity fields, and actor changes synchronize the payload copy.
+
+Two redundant schema encodings were materialized equivalently in the failed-test editions so their guards can be isolated: conditional selectors explicitly require their already-required discriminator, and integer-nonzero-or-null uses the equivalent integer/null union plus the zero exclusion. A 640-case differential over both editions, discriminators, code types/values, evidence values and field absence finds **zero acceptance differences**. No acceptance function was changed: all thirteen pre-existing helper/acceptance function bodies are byte-identical to the reviewed head. The only new helper constructs test data.
+
+## Per-family re-grade
+
+Before is cycle 4's independent assessment. After is this worker's source-pinned self-grade. P=PASS, Pa=PARTIAL, A=ABSENT. Every family retains its own owner/schema/storage citations and independent fixtures.
+
+| Family | Before | After | Ordinary assertions / refusal witnesses |
+|---|---|---|---:|
+| `bundle.selection_forward_blocked` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 607 / 622 |
+| `bundle.selection_sent_to_chat` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 641 / 644 |
+| `chat.message` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 623 / 622 |
+| `chat.thread_archived` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 655 / 652 |
+| `chat.thread_created` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 601 / 598 |
+| `chat.thread_deleted` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 601 / 594 |
+| `chat.thread_worktree_bound` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 599 / 612 |
+| `chat.thread_worktree_create_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 595 / 596 |
+| `chat.thread_worktree_merge_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 603 / 624 |
+| `chat.thread_worktree_merged` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 607 / 618 |
+| `chat.thread_worktree_pr_created` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 607 / 620 |
+| `chat.thread_worktree_pr_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 599 / 612 |
+| `chat.thread_worktree_pre_merge_test_failed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 691 / 692 |
+| `chat.thread_worktree_pre_merge_test_passed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 657 / 662 |
+| `chat.thread_worktree_pre_merge_test_started` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 599 / 608 |
+| `chat.thread_worktree_renamed` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 597 / 608 |
+| `chat.thread_worktree_unbound` | 9 P / 2 Pa / 1 A | 10 P / 1 Pa / 1 A | 595 / 596 |
+
+Stop's separate **0 PASS / 5 PARTIAL / 7 ABSENT** assessment is unchanged, byte for byte. Its owner prose, names, outcomes and existing question are untouched. Manual archive remains manual; no source retention/deletion policy is selected.
+
+## Verification and scope
+
+| Command/check | Exit | Result |
+|---|---:|---|
+| python3 scripts/pm_dch_events.py | 0 | 10,477 assertions; all 17 families / 34 editions; no failures |
+| python3 scripts/pm_dch_guard_proofs.py --out <guard-removal.json> | 0 | 6,100 guard rows; 10,584 refusal cases; no masked cases, unproved listed guards or mutation exceptions |
+| python3 scripts/pm_dch_event_regressions.py --workers 4 --out <full-checker-regressions.json>, with separately retained invalid-positive reruns | 0 final | 501 unique mutations: 450 expected structured rejects and 51 expected accepts; 535 total attempts, including 34 reruns |
+| Pinned cycle-4 guard campaign | 0 | 36 complete-checker runs at the assessed source head: 17 paired generation-limit, 17 historical-edition and 2 terminal-identity mutants; all expected structured failures |
+| Frozen-schema fixture refusal controls | 0 | Missing fixture, deleted null constraint, lost/changed generation bound, uncovered vocabulary and deleted witness all return structured failure |
+| Schema equivalence differential | 0 | 640 cases; no acceptance difference |
+| pm-shard-plans.py --generate / --check --config Plans/sharding_config.json | 0 / 0 | 99 source owners / 3,135 shards; changed shard owner only automated_testing_system |
+| pm-plan-index.py generate / validate | 0 / 0 | Parsed top-level status=pass; 7,473 PlanUnits; index changes only ATS-owned rows, plus expected aggregate metadata |
+| Self-grade citation and scope audits | 0 | 18 rows / 216 cells / 425 exact citations; held Stop row unchanged; protected owners/registries unchanged |
+| pm-storage-profile-check.py | 1 baseline | Same 41 pre-existing errors, byte-identical to round 3 |
+| pm-assistant-contract-check.py | 1 baseline | Same gaps_found; errors and Projects-refresh failures empty; only the two ATS source/reference hash entries differ |
+| git diff --check | 0 | No whitespace errors |
+
+The initial full-checker campaign caught 19 fixture-generator exceptions when deliberate LF/extra-field mutations made its positive input invalid. Those exceptions are failures, never counted as successful rejection. The follow-up helper fix preserves the deliberate positive defect for the normal checker and changes one independently valid result field; all 34 invalid-positive controls were rerun. The initial campaign is retained separately, and the final campaign reconciles all 501 unique jobs with those reruns. The campaign began before generated retry/reference controls were finalized; the separate 36-run review-guard campaign and final ordinary/guard proofs pin the final source bytes. An earlier pinned attempt was invalidated by the helper edit and supplies no acceptance evidence.
+
+Initial capacity was **116 GB free disk / 14 GB available RAM**, above the 50 GB / 6 GB limits. A detached sparse DCH-fix4 worktree from the specified local clone was used. Fifteen ignored currentness-edition files were copied and SHA-256 matched before index generation. No pm-mail, subagent, admission, family-registry append, Decision Log entry, governance seal, main push or test-file edit occurred.
+
+Only ATS-305 changes canonical owner prose. Chat, Contracts, Storage, both registries, Decision Log, Spec Lock and auto-decisions match the reviewed head exactly. The standalone failed-test schema changes preserve its accepted set. Derived PlanUnit rows change only for the ATS owner (77 unchanged units inherit its new document hash); the new criterion yields generated ATS-305-A004. There are no newly authored product bindings or new premise choices. The prior per-family binding searches remain historical lineage at their pinned revisions.
+
+**PlanUnit IDs used:** existing ACD-610–626, CV-630–646, SP-610–626 and ATS-305. **New PlanUnit IDs: none.** Guard/negative report IDs G0001–G6100 and N0001–N10584 are local evidence labels only.
+
+No aggregate governance or native-execution pass is claimed. Independent targeted review, RT policy assignment and later per-family admission remain integration work. Stop stays held for Jared's second deck. The pushed fix worktree is removed at completion.
+
+## Round 4 retained evidence
+
+Directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/fix-round4/`. SHA-256 pins are listed below. The final report, self-grade, guard table and negative index are also copied to the parent DCH draft folder.
+
+| Evidence | SHA-256 |
+|---|---|
+| `baseline-before.json` | `a977f088bfdcc06876a315eb0d2425c3e7680e2a76e79cb55deb223ce526ce8e` |
+| `dch-static.json` | `ac7d27b941e20c1a57f91a538e9016442aa4962ff58214503cbca474d4958f8c` |
+| `guard-removal.json` | `30c12b661a300cff3f7ed8a482698bd49de8786537aeef50be4a1578afdd28d8` |
+| `declared-schema-rule-map.json` | `11fafc4ea07c507ad6bfc9ed06262714a9421bbafc3d703c5d930d2771f766ff` |
+| `schema-inventory-construction.json` | `73ebdf687096473323fb07ad8074f038f2b0698e87c50b8575032f5196479bb6` |
+| `full-checker-regressions.json` | `bd4a08e86225942b3975662045f77afa0d1c8ca785267d1d8a6275db40d4eacf` |
+| `full-checker-regressions-initial.json` | `274b6759147bbef736da9940e84b6f99fe936be90b1436fd84c3fc1a14e85498` |
+| `invalid-control-reruns.json` | `735f48fbf2d6ab355e86f3e68694cd0b0bfa07aee7d81e806910d63e8b0819bc` |
+| `pinned-check11.json` | `a4860db710d9bcf08fd145f51a305c618fbcff2ddb0c609355e2c56636bb8f1f` |
+| `frozen-fixture-regressions.json` | `4a261534943ed9fbb83d61fc6af4ba5d66bab2c0602c2a49738b8541e186d9d1` |
+| `schema-equivalence.json` | `5fe66430d7e024ddf12901a23e6fce7e38a7be614f3de30459b0343658f3dd25` |
+| `scope-integrity.json` | `a2500bab1eb6c65ade670851b24c4b4c2f9962927e21a33160ed9f523946e1c0` |
+| `grade-citation-check.json` | `c2d3bb46615b1a97cb2fcc3b3175d71e4bafa971ad3af2a7b483c5a27cffac3a` |
+| `broader-baseline-comparison.json` | `d34fbebc611c8ea53cae227c1a8eca7bbd47ff3d5d7954506edaa51d715457ff` |
+| `currentness-sha256.json` | `bff89fc88c53bba8f8f10d8c971bbaafcf44533863363b102767089c02d89e9f` |
+| `shard-generate.json` | `a860c43269caab92d401c4ed0955268da735a36aee6a0f1d26608e7f426ade81` |
+| `shard-check.json` | `6749d1671ce42bb36b5a4b623875e0db779efaf197186095421986d7d5490039` |
+| `index-generate.json` | `00ca310efa5ff35233177528bf988c98a5e8d3aa2604261ebf9f44a6792708d6` |
+| `index-validate.json` | `51a54a266c73f7ba950db802f8578e8ed6c0e90e409355e85c4d8750b4c9058c` |
+| `storage-profile.log` | `61b57de32ef976006a497d80df135d0ecd3a6841e3efb447572a6c3e3543c8e2` |
+| `assistant-contract.json` | `8f8b0f6a37e3f38672ee0451c7d494df246a24738d1bc2c71125b4db56ba893b` |
+| `pinned-check11.py` | `22074d26480fe8163bcc8cee4c8efda42cc3fe495f1ce216adb4114e6d5b73f7` |
+| `rerun-invalid-controls.py` | `885e600f28035b254d1e3a20620fe34fae5ad9dc38171d1ea4e51a157f9a4f72` |
+| `schema-rule-map.py` | `49ead8344055a9aeb22db45d27131fd6ec30232422511059f2923c99370a050f` |
+| `frozen-fixture-regressions.py` | `652d6dd72451bff29fc835034f075053120beff203abe7e5a3c53179f9a06149` |
+
+---
+
+# Earlier reports — historical, superseded by targeted round 4
+
 # DCH-FIX3 — final fix round, 2026-11-04
 
 Branch: `plans/ea-w2-chat-20261104`. Reviewed head: `eb4bac6e61d0faeb38540c7d5c041e5889a6029c`. Fix commit: `26fa366c5638a23685141bdd30cca8a46d4d7356`. Exact original maximum-array regression extension: `318444509707c627e6a4ca703c06371249c7c6dd`. The following report commit changes only the report and self-grade.
