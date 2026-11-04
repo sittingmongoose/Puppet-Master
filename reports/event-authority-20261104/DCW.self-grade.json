@@ -1,0 +1,3178 @@
+{
+  "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
+  "assessment_id": "EA-W2-DCW-20261104",
+  "assessment_kind": "worker_self_grade",
+  "assessed_tree": {
+    "branch": "plans/ea-w2-chain-wizard-20261104",
+    "base_commit": "be4766513ff71776346fc73b84f2542990f955af",
+    "read_method": "Owner/schema/fixture tree at implementation commit; subsequent report-only commit does not change assessed owner bodies.",
+    "commit": "73a678dfaa0f9f890c442eb9eb0ffe5b8f12f50f"
+  },
+  "rubric": {
+    "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
+    "criteria": [
+      "membership_version",
+      "owner_doc",
+      "producer",
+      "closed_payload_schema",
+      "scope_identity",
+      "replay_idempotency",
+      "retention",
+      "redaction_custody",
+      "transitions",
+      "consumers_checkpoints",
+      "compatibility_withdrawal",
+      "positive_negative_oracles"
+    ]
+  },
+  "rows": [
+    {
+      "event_type": "bundle.revision_requested",
+      "family_id": null,
+      "family_revision": "1.0.0 (proposed)",
+      "disposition": "CURRENT_WRITER",
+      "outcome": "register (prepared)",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-571",
+          "line_start": 29081,
+          "line_end": 29081,
+          "quote": "plan_unit_id: ACD-571"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-571",
+        "CV-590",
+        "SP-575"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No family registry append or admission is permitted in this lane.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "schema_id",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"schema_id\": \"pm.event_family_registry.v1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Named emitter, SP-286 full-value receipt ordering and recovery fence drafted; physical revision_run original evidence composition is not newly materialized here. Integration must verify source registration before admission.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_requested.schema.json",
+              "unit": "additionalProperties",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: Case L-3 receipt/audit/source-lineage versus Chat content; no policy selected.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Reference-only event custody, coherent backup and access/deletion checks drafted. Original revision_run/evidence storage composition still needs integration verification.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "179 static positive/negative shape, identity, join, predecessor and resume cases pass across the four families. Native obligations are authored NOT_RUN; complete first-receipt/source, concurrent terminal and withdrawal semantic fixture adapters are not implemented by this static checker.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-571",
+              "line_start": 29081,
+              "line_end": 29081,
+              "quote": "plan_unit_id: ACD-571"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-590",
+              "line_start": 24474,
+              "line_end": 24474,
+              "quote": "plan_unit_id: CV-590"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-575",
+              "line_start": 29483,
+              "line_end": 29483,
+              "quote": "plan_unit_id: SP-575"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        }
+      },
+      "remaining_gaps": [
+        "Individual admission remains ABSENT.",
+        "Retention remains PENDING_RETENTION_DECISION.",
+        "Resolve producer/source custody verification and semantic fixture coverage before an all-PASS admission grade."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_bundle_revision_events.py"
+      ],
+      "notes": "Prepared draft, not admission-ready and not an independent grade. The current writer is specified but remains disabled until individual admission."
+    },
+    {
+      "event_type": "bundle.revision_started",
+      "family_id": null,
+      "family_revision": "1.0.0 (proposed)",
+      "disposition": "CURRENT_WRITER",
+      "outcome": "register (prepared)",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-572",
+          "line_start": 29129,
+          "line_end": 29129,
+          "quote": "plan_unit_id: ACD-572"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-572",
+        "CV-591",
+        "SP-576"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No family registry append or admission is permitted in this lane.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "schema_id",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"schema_id\": \"pm.event_family_registry.v1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Named emitter, SP-286 full-value receipt ordering and recovery fence drafted; physical revision_run original evidence composition is not newly materialized here. Integration must verify source registration before admission.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_started.schema.json",
+              "unit": "additionalProperties",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: Case L-3 receipt/audit/source-lineage versus Chat content; no policy selected.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Reference-only event custody, coherent backup and access/deletion checks drafted. Original revision_run/evidence storage composition still needs integration verification.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "179 static positive/negative shape, identity, join, predecessor and resume cases pass across the four families. Native obligations are authored NOT_RUN; complete first-receipt/source, concurrent terminal and withdrawal semantic fixture adapters are not implemented by this static checker.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-572",
+              "line_start": 29129,
+              "line_end": 29129,
+              "quote": "plan_unit_id: ACD-572"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-591",
+              "line_start": 24540,
+              "line_end": 24540,
+              "quote": "plan_unit_id: CV-591"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-576",
+              "line_start": 29574,
+              "line_end": 29574,
+              "quote": "plan_unit_id: SP-576"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        }
+      },
+      "remaining_gaps": [
+        "Individual admission remains ABSENT.",
+        "Retention remains PENDING_RETENTION_DECISION.",
+        "Resolve producer/source custody verification and semantic fixture coverage before an all-PASS admission grade."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_bundle_revision_events.py"
+      ],
+      "notes": "Prepared draft, not admission-ready and not an independent grade. The current writer is specified but remains disabled until individual admission."
+    },
+    {
+      "event_type": "bundle.revision_completed",
+      "family_id": null,
+      "family_revision": "1.0.0 (proposed)",
+      "disposition": "CURRENT_WRITER",
+      "outcome": "register (prepared)",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-573",
+          "line_start": 29177,
+          "line_end": 29177,
+          "quote": "plan_unit_id: ACD-573"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-573",
+        "CV-592",
+        "SP-577"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No family registry append or admission is permitted in this lane.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "schema_id",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"schema_id\": \"pm.event_family_registry.v1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Named emitter, SP-286 full-value receipt ordering and recovery fence drafted; physical revision_run original evidence composition is not newly materialized here. Integration must verify source registration before admission.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_completed.schema.json",
+              "unit": "additionalProperties",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: Case L-3 receipt/audit/source-lineage versus Chat content; no policy selected.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Reference-only event custody, coherent backup and access/deletion checks drafted. Original revision_run/evidence storage composition still needs integration verification.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "179 static positive/negative shape, identity, join, predecessor and resume cases pass across the four families. Native obligations are authored NOT_RUN; complete first-receipt/source, concurrent terminal and withdrawal semantic fixture adapters are not implemented by this static checker.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-573",
+              "line_start": 29177,
+              "line_end": 29177,
+              "quote": "plan_unit_id: ACD-573"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-592",
+              "line_start": 24606,
+              "line_end": 24606,
+              "quote": "plan_unit_id: CV-592"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-577",
+              "line_start": 29664,
+              "line_end": 29664,
+              "quote": "plan_unit_id: SP-577"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        }
+      },
+      "remaining_gaps": [
+        "Individual admission remains ABSENT.",
+        "Retention remains PENDING_RETENTION_DECISION.",
+        "Resolve producer/source custody verification and semantic fixture coverage before an all-PASS admission grade."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_bundle_revision_events.py"
+      ],
+      "notes": "Prepared draft, not admission-ready and not an independent grade. The current writer is specified but remains disabled until individual admission."
+    },
+    {
+      "event_type": "bundle.revision_interrupted",
+      "family_id": null,
+      "family_revision": "1.0.0 (proposed)",
+      "disposition": "CURRENT_WRITER",
+      "outcome": "register (prepared)",
+      "disposition_evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "unit": "ACD-574",
+          "line_start": 29225,
+          "line_end": 29225,
+          "quote": "plan_unit_id: ACD-574"
+        }
+      ],
+      "current_owner_units": [
+        "ACD-574",
+        "CV-593",
+        "SP-578"
+      ],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "absent",
+          "finding": "No family registry append or admission is permitted in this lane.",
+          "evidence": [
+            {
+              "path": "Plans/event_family_registry.json",
+              "unit": "schema_id",
+              "line_start": 3,
+              "line_end": 3,
+              "quote": "\"schema_id\": \"pm.event_family_registry.v1\","
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "owner_doc": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Named emitter, SP-286 full-value receipt ordering and recovery fence drafted; physical revision_run original evidence composition is not newly materialized here. Integration must verify source registration before admission.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "closed_payload_schema": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/event_payloads/bundle_revision/revision_interrupted.schema.json",
+              "unit": "additionalProperties",
+              "line_start": 5,
+              "line_end": 5,
+              "quote": "\"additionalProperties\": false,"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "scope_identity": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "replay_idempotency": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "PENDING_RETENTION_DECISION: Case L-3 receipt/audit/source-lineage versus Chat content; no policy selected.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "Reference-only event custody, coherent backup and access/deletion checks drafted. Original revision_run/evidence storage composition still needs integration verification.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "transitions": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "consumers_checkpoints": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "compatibility_withdrawal": {
+          "status": "PASS",
+          "representation": "exact_normative_owner",
+          "finding": "Exact family contract is explicitly drafted in the cited owner units; native execution NOT_RUN.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        },
+        "positive_negative_oracles": {
+          "status": "PARTIAL",
+          "representation": "exact_normative_owner",
+          "finding": "179 static positive/negative shape, identity, join, predecessor and resume cases pass across the four families. Native obligations are authored NOT_RUN; complete first-receipt/source, concurrent terminal and withdrawal semantic fixture adapters are not implemented by this static checker.",
+          "evidence": [
+            {
+              "path": "Plans/assistant-chat-design.md",
+              "unit": "ACD-574",
+              "line_start": 29225,
+              "line_end": 29225,
+              "quote": "plan_unit_id: ACD-574"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "CV-593",
+              "line_start": 24672,
+              "line_end": 24672,
+              "quote": "plan_unit_id: CV-593"
+            },
+            {
+              "path": "Plans/storage-plan.md",
+              "unit": "SP-578",
+              "line_start": 29755,
+              "line_end": 29755,
+              "quote": "plan_unit_id: SP-578"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "First DCW self-grade of this exact current draft; no independent review claimed."
+        }
+      },
+      "remaining_gaps": [
+        "Individual admission remains ABSENT.",
+        "Retention remains PENDING_RETENTION_DECISION.",
+        "Resolve producer/source custody verification and semantic fixture coverage before an all-PASS admission grade."
+      ],
+      "static_checks_seen": [
+        "scripts/pm_bundle_revision_events.py"
+      ],
+      "notes": "Prepared draft, not admission-ready and not an independent grade. The current writer is specified but remains disabled until individual admission."
+    },
+    {
+      "event_type": "wizard.blocked",
+      "family_id": null,
+      "family_revision": null,
+      "disposition": "UNDISPOSITIONED",
+      "outcome": "blocked on Jared",
+      "disposition_evidence": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "unit": "As of 2026-06-21",
+          "line_start": 38,
+          "line_end": 38,
+          "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+        },
+        {
+          "path": "Plans/Planning_Wizard.md",
+          "unit": "Planning Wizard owns PlanningRun",
+          "line_start": 14,
+          "line_end": 14,
+          "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "#### `wizard.blocked`",
+          "line_start": 2686,
+          "line_end": 2686,
+          "quote": "#### `wizard.blocked`"
+        }
+      ],
+      "current_owner_units": [],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "owner_doc": {
+          "status": "CONFLICT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.blocked`",
+              "line_start": 2686,
+              "line_end": 2686,
+              "quote": "#### `wizard.blocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: Should the distinct wizard blocked/unblocked lifecycle survive as an active PlanningRun event pair, and if so which current owner and trigger/recovery predicates replace retired wizard_status and clarification rounds? Or should these exact families become historical-only/retired?",
+        "retention_policy_ref=PENDING_RETENTION_DECISION; original product existence and owner unresolved."
+      ],
+      "static_checks_seen": [],
+      "notes": "No exclusion application or census change: a retirement of the document is not proof this exact persisted family is retired."
+    },
+    {
+      "event_type": "wizard.deferred_payload.loaded",
+      "family_id": null,
+      "family_revision": null,
+      "disposition": "UNDISPOSITIONED",
+      "outcome": "blocked on Jared",
+      "disposition_evidence": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "unit": "As of 2026-06-21",
+          "line_start": 38,
+          "line_end": 38,
+          "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+        },
+        {
+          "path": "Plans/Planning_Wizard.md",
+          "unit": "Planning Wizard owns PlanningRun",
+          "line_start": 14,
+          "line_end": 14,
+          "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "unit": "- wizard.deferred_payload.loaded",
+          "line_start": 3075,
+          "line_end": 3075,
+          "quote": "- wizard.deferred_payload.loaded"
+        }
+      ],
+      "current_owner_units": [],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "owner_doc": {
+          "status": "CONFLICT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.deferred_payload.loaded",
+              "line_start": 3075,
+              "line_end": 3075,
+              "quote": "- wizard.deferred_payload.loaded"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: Should opening/loading the old deferred Chain Wizard payload remain a product action in PRD Builder or Planning Wizard? If yes, name the destination workflow and success boundary; otherwise may these two exact families be excluded as retired?",
+        "retention_policy_ref=PENDING_RETENTION_DECISION; original product existence and owner unresolved."
+      ],
+      "static_checks_seen": [],
+      "notes": "No exclusion application or census change: a retirement of the document is not proof this exact persisted family is retired."
+    },
+    {
+      "event_type": "wizard.opened",
+      "family_id": null,
+      "family_revision": null,
+      "disposition": "UNDISPOSITIONED",
+      "outcome": "blocked on Jared",
+      "disposition_evidence": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "unit": "As of 2026-06-21",
+          "line_start": 38,
+          "line_end": 38,
+          "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+        },
+        {
+          "path": "Plans/Planning_Wizard.md",
+          "unit": "Planning Wizard owns PlanningRun",
+          "line_start": 14,
+          "line_end": 14,
+          "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "unit": "- wizard.opened",
+          "line_start": 3074,
+          "line_end": 3074,
+          "quote": "- wizard.opened"
+        }
+      ],
+      "current_owner_units": [],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "owner_doc": {
+          "status": "CONFLICT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/UI_Command_Catalog.md",
+              "unit": "- wizard.opened",
+              "line_start": 3074,
+              "line_end": 3074,
+              "quote": "- wizard.opened"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: Should opening/loading the old deferred Chain Wizard payload remain a product action in PRD Builder or Planning Wizard? If yes, name the destination workflow and success boundary; otherwise may these two exact families be excluded as retired?",
+        "retention_policy_ref=PENDING_RETENTION_DECISION; original product existence and owner unresolved."
+      ],
+      "static_checks_seen": [],
+      "notes": "No exclusion application or census change: a retirement of the document is not proof this exact persisted family is retired."
+    },
+    {
+      "event_type": "wizard.unblocked",
+      "family_id": null,
+      "family_revision": null,
+      "disposition": "UNDISPOSITIONED",
+      "outcome": "blocked on Jared",
+      "disposition_evidence": [
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "unit": "As of 2026-06-21",
+          "line_start": 38,
+          "line_end": 38,
+          "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+        },
+        {
+          "path": "Plans/Planning_Wizard.md",
+          "unit": "Planning Wizard owns PlanningRun",
+          "line_start": 14,
+          "line_end": 14,
+          "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "unit": "#### `wizard.unblocked`",
+          "line_start": 2697,
+          "line_end": 2697,
+          "quote": "#### `wizard.unblocked`"
+        }
+      ],
+      "current_owner_units": [],
+      "cells": {
+        "membership_version": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "owner_doc": {
+          "status": "CONFLICT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "producer": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "closed_payload_schema": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "scope_identity": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "replay_idempotency": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "retention": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "redaction_custody": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "transitions": {
+          "status": "PARTIAL",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "consumers_checkpoints": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "compatibility_withdrawal": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        },
+        "positive_negative_oracles": {
+          "status": "ABSENT",
+          "representation": "listed_only",
+          "finding": "Current text names this family but does not settle the competing retired/current lifecycle; no technical draft or product disposition is inferred.",
+          "evidence": [
+            {
+              "path": "Plans/chain-wizard-flexibility.md",
+              "unit": "As of 2026-06-21",
+              "line_start": 38,
+              "line_end": 38,
+              "quote": "As of 2026-06-21 this document is not an active canonical owner for current PRD/Planning product behavior, requirements flow, GUI, command, runtime, PlanCompile, Executor, or Orchestrator impleme"
+            },
+            {
+              "path": "Plans/Planning_Wizard.md",
+              "unit": "Planning Wizard owns PlanningRun",
+              "line_start": 14,
+              "line_end": 14,
+              "quote": "Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile read"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "#### `wizard.unblocked`",
+              "line_start": 2697,
+              "line_end": 2697,
+              "quote": "#### `wizard.unblocked`"
+            }
+          ],
+          "prior": null,
+          "change": "new",
+          "change_reason": "Current DCW owner reconciliation."
+        }
+      },
+      "remaining_gaps": [
+        "PRODUCT: Should the distinct wizard blocked/unblocked lifecycle survive as an active PlanningRun event pair, and if so which current owner and trigger/recovery predicates replace retired wizard_status and clarification rounds? Or should these exact families become historical-only/retired?",
+        "retention_policy_ref=PENDING_RETENTION_DECISION; original product existence and owner unresolved."
+      ],
+      "static_checks_seen": [],
+      "notes": "No exclusion application or census change: a retirement of the document is not proof this exact persisted family is retired."
+    }
+  ]
+}
