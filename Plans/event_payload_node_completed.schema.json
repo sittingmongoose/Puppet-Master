@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/node_completed/1.0.0",
+  "title": "node.completed prepared payload contract",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "result_outcome": {
+      "enum": [
+        "done",
+        "failed"
+      ]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "runtime_snapshot_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "event_sequence",
+    "ts",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "replan_generation",
+    "result_outcome",
+    "evidence_refs",
+    "artifact_refs"
+  ]
+}

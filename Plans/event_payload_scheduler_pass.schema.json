@@ -1,0 +1,232 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/scheduler_pass/1.0.0",
+  "title": "scheduler.pass prepared payload contract",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "scheduler_pass_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "wake_reason": {
+      "enum": [
+        "prerequisite_resolved",
+        "approval_resolved",
+        "clarification_resolved",
+        "auth_recovered",
+        "startup_recovered",
+        "backoff_expired",
+        "verification_completed",
+        "remediation_resolved",
+        "safe_point_restored",
+        "capacity_available",
+        "replan_applied",
+        "watchdog_recheck"
+      ]
+    },
+    "available_slots": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ready_nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scheduler_lane": {
+            "enum": [
+              "remediation",
+              "unblocker",
+              "normal"
+            ]
+          },
+          "manual_priority": {
+            "type": "integer"
+          },
+          "transitive_unblock_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "ready_since_utc": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "Z$"
+          },
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "scheduler_lane",
+          "manual_priority",
+          "transitive_unblock_count",
+          "ready_since_utc",
+          "node_id"
+        ]
+      }
+    },
+    "selected_nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "score_tuple": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "scheduler_lane": {
+                "enum": [
+                  "remediation",
+                  "unblocker",
+                  "normal"
+                ]
+              },
+              "manual_priority": {
+                "type": "integer"
+              },
+              "transitive_unblock_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "ready_since_utc": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "Z$"
+              },
+              "node_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "scheduler_lane",
+              "manual_priority",
+              "transitive_unblock_count",
+              "ready_since_utc",
+              "node_id"
+            ]
+          },
+          "lane": {
+            "enum": [
+              "remediation",
+              "unblocker",
+              "normal"
+            ]
+          }
+        },
+        "required": [
+          "node_id",
+          "score_tuple",
+          "lane"
+        ]
+      }
+    },
+    "non_selected_nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exclusion_reason_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependency_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ready_state": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "node_id",
+          "exclusion_reason_code",
+          "ready_state"
+        ]
+      }
+    },
+    "coalesced_wake_reasons": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "prerequisite_resolved",
+          "approval_resolved",
+          "clarification_resolved",
+          "auth_recovered",
+          "startup_recovered",
+          "backoff_expired",
+          "verification_completed",
+          "remediation_resolved",
+          "safe_point_restored",
+          "capacity_available",
+          "replan_applied",
+          "watchdog_recheck"
+        ]
+      }
+    },
+    "wake_event_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "event_sequence",
+    "ts",
+    "run_id",
+    "thread_id",
+    "replan_generation",
+    "scheduler_pass_id",
+    "wake_reason",
+    "available_slots",
+    "ready_nodes",
+    "selected_nodes",
+    "non_selected_nodes"
+  ]
+}

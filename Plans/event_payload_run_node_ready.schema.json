@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/run_node_ready/1.0.0",
+  "title": "run.node_ready prepared payload contract",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ready_since_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "wake_reason": {
+      "enum": [
+        "prerequisite_resolved",
+        "approval_resolved",
+        "clarification_resolved",
+        "auth_recovered",
+        "startup_recovered",
+        "backoff_expired",
+        "verification_completed",
+        "remediation_resolved",
+        "safe_point_restored",
+        "capacity_available",
+        "replan_applied",
+        "watchdog_recheck"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "event_sequence",
+    "ts",
+    "run_id",
+    "node_id",
+    "replan_generation",
+    "ready_since_utc",
+    "wake_reason"
+  ]
+}

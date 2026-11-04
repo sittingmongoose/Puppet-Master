@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/run_graph_integrity_failed/1.0.0",
+  "title": "run.graph_integrity_failed prepared payload contract",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "detail_ref": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "event_sequence",
+    "ts",
+    "run_id",
+    "replan_generation",
+    "reason_code",
+    "detail_ref"
+  ]
+}

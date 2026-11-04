@@ -29585,3 +29585,851 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#CV-365
+
+
+## SP-500 — attempt.completed prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `attempt.completed@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:attempt.completed:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "attempt.completed", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.attempt_completed.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-500 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.attempt_completed.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-500
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: attempt.completed@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- attempt.completed uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- attempt.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-210, ContractName:Plans/Contracts_V0.md#CV-500, ContractName:Plans/storage-plan.md#SP-500
+
+
+## SP-501 — attempt.started prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `attempt.started@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:attempt.started:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "attempt.started", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.attempt_started.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-501 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.attempt_started.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-501
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: attempt.started@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- attempt.started uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- attempt.started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-211, ContractName:Plans/Contracts_V0.md#CV-501, ContractName:Plans/storage-plan.md#SP-501
+
+
+## SP-502 — node.blocked prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `node.blocked@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, blocked_sequence, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:node.blocked:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "node.blocked", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.node_blocked.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-502 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.node_blocked.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-502
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: node.blocked@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.blocked uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.blocked
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-212, ContractName:Plans/Contracts_V0.md#CV-502, ContractName:Plans/storage-plan.md#SP-502
+
+
+## SP-503 — node.completed prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `node.completed@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:node.completed:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "node.completed", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.node_completed.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-503 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.node_completed.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-503
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: node.completed@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.completed uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-213, ContractName:Plans/Contracts_V0.md#CV-503, ContractName:Plans/storage-plan.md#SP-503
+
+
+## SP-504 — node.started prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `node.started@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:node.started:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "node.started", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.node_started.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-504 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.node_started.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-504
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: node.started@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.started uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-214, ContractName:Plans/Contracts_V0.md#CV-504, ContractName:Plans/storage-plan.md#SP-504
+
+
+## SP-505 — node.unblocked prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `node.unblocked@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, blocked_sequence, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:node.unblocked:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "node.unblocked", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.node_unblocked.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-505 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.node_unblocked.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-505
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: node.unblocked@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- node.unblocked uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- node.unblocked
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-215, ContractName:Plans/Contracts_V0.md#CV-505, ContractName:Plans/storage-plan.md#SP-505
+
+
+## SP-506 — plan.decomposition_degraded prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `plan.decomposition_degraded@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, source_stage, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:plan.decomposition_degraded:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "plan.decomposition_degraded", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.plan_decomposition_degraded.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `"PENDING_RETENTION_DECISION"`. Candidates: Case L-3 Runtime/run/node/attempt RP-RUNTIME-365D versus Ordinary telemetry (no exact policy object assumed); pre-lock degradation additionally may be source-lineage authority RP-AUTHORITY-INDEFINITE. Exact classification remains for RT/Jared; unknown policy is indefinite/no-count-eviction and materially_incomplete, never an expiry grant. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-506 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.plan_decomposition_degraded.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-506
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: plan.decomposition_degraded@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- plan.decomposition_degraded uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- plan.decomposition_degraded
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-216, ContractName:Plans/Contracts_V0.md#CV-506, ContractName:Plans/storage-plan.md#SP-506
+
+
+## SP-507 — remediation.resolved prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `remediation.resolved@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, child_attempt_id, remediation_root_id, remediation_generation, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:remediation.resolved:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "remediation.resolved", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.remediation_resolved.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-507 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.remediation_resolved.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-507
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: remediation.resolved@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- remediation.resolved uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- remediation.resolved
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-217, ContractName:Plans/Contracts_V0.md#CV-507, ContractName:Plans/storage-plan.md#SP-507
+
+
+## SP-508 — remediation.spawned prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `remediation.spawned@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, child_attempt_id, remediation_root_id, remediation_generation, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:remediation.spawned:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "remediation.spawned", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.remediation_spawned.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-508 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.remediation_spawned.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-508
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: remediation.spawned@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- remediation.spawned uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- remediation.spawned
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-218, ContractName:Plans/Contracts_V0.md#CV-508, ContractName:Plans/storage-plan.md#SP-508
+
+
+## SP-509 — run.completed prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `run.completed@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:run.completed:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "run.completed", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.run_completed.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-509 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_completed.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-509
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: run.completed@1.0.0 has the exact family-local prepared contract in
+  this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.completed uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.completed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-219, ContractName:Plans/Contracts_V0.md#CV-509, ContractName:Plans/storage-plan.md#SP-509
+
+
+## SP-510 — run.graph_integrity_failed prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `run.graph_integrity_failed@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:run.graph_integrity_failed:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "run.graph_integrity_failed", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.run_graph_integrity_failed.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-510 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_graph_integrity_failed.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-510
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: run.graph_integrity_failed@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.graph_integrity_failed uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.graph_integrity_failed
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-220, ContractName:Plans/Contracts_V0.md#CV-510, ContractName:Plans/storage-plan.md#SP-510
+
+
+## SP-511 — run.node_backoff_expired prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `run.node_backoff_expired@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:run.node_backoff_expired:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "run.node_backoff_expired", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.run_node_backoff_expired.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-511 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_node_backoff_expired.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-511
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: run.node_backoff_expired@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_backoff_expired uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_backoff_expired
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-221, ContractName:Plans/Contracts_V0.md#CV-511, ContractName:Plans/storage-plan.md#SP-511
+
+
+## SP-512 — run.node_backoff_started prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `run.node_backoff_started@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:run.node_backoff_started:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "run.node_backoff_started", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.run_node_backoff_started.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-512 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_node_backoff_started.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-512
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: run.node_backoff_started@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_backoff_started uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_backoff_started
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-222, ContractName:Plans/Contracts_V0.md#CV-512, ContractName:Plans/storage-plan.md#SP-512
+
+
+## SP-513 — run.node_ready prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `run.node_ready@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:run.node_ready:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "run.node_ready", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.run_node_ready.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-513 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_node_ready.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-513
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: run.node_ready@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_ready uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_ready
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-223, ContractName:Plans/Contracts_V0.md#CV-513, ContractName:Plans/storage-plan.md#SP-513
+
+
+## SP-514 — run.node_retry_scheduled prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `run.node_retry_scheduled@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, node_id, prior_attempt_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:run.node_retry_scheduled:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "run.node_retry_scheduled", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.run_node_retry_scheduled.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `{"policy_id": "RP-RUNTIME-365D", "policy_version": "1.0.0", "registry_schema_id": "pm.storage_value_registry.v2"}`. Case L-3 explicitly names Runtime/run/node/attempt: 365 days from run completion, 1,000,000/run and 5,000,000/project, successor compaction, latest-25 terminal runs and all stronger holds unchanged. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-514 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.run_node_retry_scheduled.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-514
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: run.node_retry_scheduled@1.0.0 has the exact family-local prepared
+  contract in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- run.node_retry_scheduled uses its own closed payload, immutable identity, source-backed
+  reader and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- run.node_retry_scheduled
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-224, ContractName:Plans/Contracts_V0.md#CV-514, ContractName:Plans/storage-plan.md#SP-514
+
+
+## SP-515 — scheduler.pass prepared Event Authority contract
+
+Newly authored owner contract under DL-045 for `scheduler.pass@1.0.0` only. Family-specific search and negative evidence: reports/event-authority-20261104/DX.md. This is prepared without admission. replay_policy=dedupe_by_idempotency_key. Define I = RFC8785([project_id, run_id, scheduler_pass_id, event_sequence]) using those required payload values in exactly that order; idempotency_key = "executor:scheduler.pass:v1:" + lowerhex(SHA256(I)); event_id = "evt_executor_" + lowerhex(SHA256(RFC8785([storage_instance_id, "scheduler.pass", I]))), where I in the latter array is the UTF-8 JSON string of the first canonical array. Same scoped identity and semantic digest returns the exact original SP-286/CV-339 first receipt and full original result; different digest is idempotency_conflict; unavailable proof is dedupe_unavailable. ts is immutable first observation evidence, never dedupe input. Event bus delivery does not weaken the app-root dedupe indexes or writer-lock catch-up.
+
+The exact operating consumer is `executor.scheduler_pass.history_reader.v1@1.0.0`: an on-demand read-only history/recovery-evidence view for this family, never a command dispatcher. It adopts SP-278 by name and calls reader.storage.event_record_index@1.0.0. Reuse projector.storage.event_record_index@1.0.0, actual checkpoints table key event_record_index_checkpoint.v1:{storage_instance_id}, schema Plans/event_record_index_checkpoint.schema.json#/$defs/checkpoint, current_generation_id and exact #/generations/{generation_id} node, same-database dataset event_record_index.v2@{generation_id}, row key event_record_index.v2:{scope_partition}:{sequence_id_20}:{event_id}. Verify complete CURRENT-selected global source coverage including nonmatching records, actual immutable birth anchor and current frontier before filtering this family's Project rows. The generic projector atomically CASes its expected generation/frontier and publishes dataset rows plus advancing frontier in one transaction; stale CAS exposes nothing. Consumer has no durable local cursor or new stored value/projection family: its exact checkpoint is the existing generic one. Existing attempt_record/blocked_projection/scheduler_pass records keep their owners; this reader cannot turn them into canonical authority or claim their independent contract is complete.
+
+This family explicitly adopts SP-278's DL-076 nine-field durable read token: storage_instance_id, checkpoint_key, checkpoint_ref, generation_id, generation_anchor_sha256, frontier_revision, frontier_sha256, index_dataset_name, source_selection. No persisted redb_snapshot_id. Read within one actual redb transaction by adding that transaction's live redb_snapshot_id, verify the whole token against actual synchronized source and current frontier; revalidate before disclosure. Append, compaction, epoch change or withdrawal invalidates stale reads. Unavailable source yields unavailable/degraded evidence, never fabricated empty history. Rebuild through the generic owner from retained canonical source, with lawful gaps and source retirement translation; a matching-family maximum cannot advance its checkpoint. Replay/rebuild never appends, dispatches, retries, charges, notifies or mutates canonical bodies.
+
+Source event retention_policy_ref = `"PENDING_RETENTION_DECISION"`. Candidates: Case L-3 Runtime/run/node/attempt RP-RUNTIME-365D versus Ordinary telemetry (no exact policy object assumed); pre-lock degradation additionally may be source-lineage authority RP-AUTHORITY-INDEFINITE. Exact classification remains for RT/Jared; unknown policy is indefinite/no-count-eviction and materially_incomplete, never an expiry grant. Generic checkpoint remains under existing RP-PROJECTION-3GEN; index rows remain RP-EVENT-INDEX-SOURCE. No new local checkpoint/projection retention assignment is made.
+
+Storage holds the immutable EventRecord and exact original first receipt under SP-286 full-value v2 custody; referenced bodies remain with their existing owners and policies. Settled coherent Server/Project backup and restore must preserve source, dedupe, original receipt and referenced canonical dependencies together with actual scope/root lineage; source loss fences recovery, never synthesizes historical originals. At every read/disclosure/export recheck viewer access, Project/scope, lawful deletion, holds and source availability. Event retention grants no linked-body access or extra body lifetime. Redacted refs only; any unhandled secret rejects before append.
+
+Compatibility is exact-version dispatch; explicit legacy import from CV-515 is read-only and uses original provenance, not a second write path. Withdrawal closes this family's emitter admission under the writer fence, drains/reconciles existing original operations and retains their original receipts, then fences `executor.scheduler_pass.history_reader.v1@1.0.0` and invalidates its tokens. Generic-index retention and other families continue under their own owners. No old reader may mark this family current after withdrawal. A successor requires explicit schema/version owner installation, source-backed rebuild, original identity preservation and fresh coverage validation before reader activation. This contract registers nothing.
+
+```yaml
+plan_unit_id: SP-515
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: scheduler.pass@1.0.0 has the exact family-local prepared contract
+  in this unit, without Event Authority admission.
+gui_related: false
+depends_on:
+- DL-045
+- SP-278
+- SP-286
+unblocks: []
+acceptance_criteria:
+- scheduler.pass uses its own closed payload, immutable identity, source-backed reader
+  and publication/withdrawal fences.
+validation_surfaces:
+- Plans/executor_event_contract_fixtures.json
+- scripts/pm_executor_event_contracts.py
+risk_class: unadmitted_or_duplicate_executor_effect
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- scheduler.pass
+negative_constraints:
+- No admission, runtime proof, retention choice, WorkNode or governance seal.
+```
+
+ContractRef: ContractName:Plans/Executor_Protocol.md#EP-225, ContractName:Plans/Contracts_V0.md#CV-515, ContractName:Plans/storage-plan.md#SP-515

@@ -1,0 +1,595 @@
+{
+  "contract_status": "prepared_without_admission",
+  "authority": "DL-045",
+  "families": [
+    {
+      "event_type": "attempt.completed",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-210",
+      "payload_owner": "Plans/Contracts_V0.md#CV-500",
+      "storage_owner": "Plans/storage-plan.md#SP-500",
+      "schema_ref": "Plans/event_payload_attempt_completed.schema.json",
+      "producer": "executor.attempt_completed.emitter.v1@1.0.0",
+      "consumer": "executor.attempt_completed.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "active_attempt -> terminal_attempt; terminal outcome must have success=true or failure_class, never both; retry/backoff evidence is not a second dispatch.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "attempt_state": [
+          "active"
+        ],
+        "work_reconciled": [
+          true
+        ]
+      },
+      "source_predicate_contract": "Before completion the exact original attempt is active and in-flight work is reconciled. Terminal success is done; terminal failure has its canonical classified failure."
+    },
+    {
+      "event_type": "attempt.started",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-211",
+      "payload_owner": "Plans/Contracts_V0.md#CV-501",
+      "storage_owner": "Plans/storage-plan.md#SP-501",
+      "schema_ref": "Plans/event_payload_attempt_started.schema.json",
+      "producer": "executor.attempt_started.emitter.v1@1.0.0",
+      "consumer": "executor.attempt_started.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "admitted candidate -> started attempt; frozen permission/model/runtime snapshots and exact worktree baseline are durable before the barrier; increment policy counters once before worker spawn.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "attempt_state": [
+          "admitted"
+        ],
+        "snapshots_durable": [
+          true
+        ],
+        "baseline_valid": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The exact new attempt is admitted, immutable requested/effective snapshots are durable, and the owner worktree baseline is valid. Append before worker spawn."
+    },
+    {
+      "event_type": "node.blocked",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-212",
+      "payload_owner": "Plans/Contracts_V0.md#CV-502",
+      "storage_owner": "Plans/storage-plan.md#SP-502",
+      "schema_ref": "Plans/event_payload_node_blocked.schema.json",
+      "producer": "executor.node_blocked.emitter.v1@1.0.0",
+      "consumer": "executor.node_blocked.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "event_sequence"
+      ],
+      "legacy_alias": "run.node_blocked",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "eligible node -> blocked episode; mint blocked_sequence once per actual episode under node CAS. Before an attempt exists omit attempt_id. Required restore anchors and snapshot refs publish atomically with the block, never fabricate a prior attempt.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "episode_state": [
+          "new"
+        ],
+        "cause_current": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The same node has a newly accepted block cause and a reserved new blocked_sequence. Retry resolves that original episode rather than minting another sequence."
+    },
+    {
+      "event_type": "node.completed",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-213",
+      "payload_owner": "Plans/Contracts_V0.md#CV-503",
+      "storage_owner": "Plans/storage-plan.md#SP-503",
+      "schema_ref": "Plans/event_payload_node_completed.schema.json",
+      "producer": "executor.node_completed.emitter.v1@1.0.0",
+      "consumer": "executor.node_completed.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "verified -> done or verify_pending -> failed; preserve verifier and packaging evidence. Removing a node from the ready set cannot complete it.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "node_state": [
+          "verified",
+          "verify_pending"
+        ],
+        "verification_evidence_valid": [
+          true
+        ]
+      },
+      "source_predicate_contract": "For result_outcome=done the original node is verified; for failed it is verify_pending. Actual verifier evidence must resolve and match the attempt."
+    },
+    {
+      "event_type": "node.started",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-214",
+      "payload_owner": "Plans/Contracts_V0.md#CV-504",
+      "storage_owner": "Plans/storage-plan.md#SP-504",
+      "schema_ref": "Plans/event_payload_node_started.schema.json",
+      "producer": "executor.node_started.emitter.v1@1.0.0",
+      "consumer": "executor.node_started.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "queued -> in_progress after admitted readiness and frozen actual attempt; a ready event alone cannot start a node.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "node_state": [
+          "queued"
+        ],
+        "dependencies_satisfied": [
+          true
+        ],
+        "attempt_admitted": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The node is queued, actual dependencies satisfy readiness, and the exact attempt is admitted; transition only then to in_progress."
+    },
+    {
+      "event_type": "node.unblocked",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-215",
+      "payload_owner": "Plans/Contracts_V0.md#CV-505",
+      "storage_owner": "Plans/storage-plan.md#SP-505",
+      "schema_ref": "Plans/event_payload_node_unblocked.schema.json",
+      "producer": "executor.node_unblocked.emitter.v1@1.0.0",
+      "consumer": "executor.node_unblocked.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "event_sequence"
+      ],
+      "legacy_alias": "run.node_unblocked",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "matching unresolved blocked episode -> resolved; require the exact ordered action/current prerequisite and durable recovery result. No stale approval and no safe-point anchor release before its owner terminal result.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "episode_state": [
+          "unresolved"
+        ],
+        "resolution_evidence_durable": [
+          true
+        ],
+        "recovery_anchor_release_permitted": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The exact original blocked_sequence is unresolved; its resolution evidence is durable and any required recovery-anchor release is permitted by the existing owner. Unblocking itself grants no restore success."
+    },
+    {
+      "event_type": "plan.decomposition_degraded",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-216",
+      "payload_owner": "Plans/Contracts_V0.md#CV-506",
+      "storage_owner": "Plans/storage-plan.md#SP-506",
+      "schema_ref": "Plans/event_payload_plan_decomposition_degraded.schema.json",
+      "producer": "executor.plan_decomposition_degraded.emitter.v1@1.0.0",
+      "consumer": "executor.plan_decomposition_degraded.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "source_stage",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "transition": "pre-lock decomposition -> degraded pre-lock shape; graph_locked=true rejects. Shapes are redacted bounded shape descriptors, not plan bodies; evidence_ref resolves the original evidence.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "graph_state": [
+          "pre_lock"
+        ],
+        "degradation_evidence_valid": [
+          true
+        ]
+      },
+      "source_predicate_contract": "Decomposition input is pre_lock and actual shape/evidence match the original analysis. Locked graph failure is refused as degradation."
+    },
+    {
+      "event_type": "remediation.resolved",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-217",
+      "payload_owner": "Plans/Contracts_V0.md#CV-507",
+      "storage_owner": "Plans/storage-plan.md#SP-507",
+      "schema_ref": "Plans/event_payload_remediation_resolved.schema.json",
+      "producer": "executor.remediation_resolved.emitter.v1@1.0.0",
+      "consumer": "executor.remediation_resolved.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "child_attempt_id",
+        "remediation_root_id",
+        "remediation_generation",
+        "event_sequence"
+      ],
+      "legacy_alias": "run.remediation_completed",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "active remediation child -> fixed, superseded, abandoned or replan_required with exact original parent/root/child joins; ceiling_exceeded is blocked-state evidence, not a current resolution.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "remediation_state": [
+          "active"
+        ],
+        "child_terminal": [
+          true
+        ],
+        "resolution_evidence_durable": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The exact root/child is active, the referenced child is terminal and resolution evidence is durable; fixed additionally requires child success. Other current resolutions keep their existing owner meaning."
+    },
+    {
+      "event_type": "remediation.spawned",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-218",
+      "payload_owner": "Plans/Contracts_V0.md#CV-508",
+      "storage_owner": "Plans/storage-plan.md#SP-508",
+      "schema_ref": "Plans/event_payload_remediation_spawned.schema.json",
+      "producer": "executor.remediation_spawned.emitter.v1@1.0.0",
+      "consumer": "executor.remediation_spawned.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "child_attempt_id",
+        "remediation_root_id",
+        "remediation_generation",
+        "event_sequence"
+      ],
+      "legacy_alias": "run.remediation_started",
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "classified failed parent -> admitted remediation child, within existing generation/ceiling policy; append lineage before child dispatch; child_attempt_id is the child attempt identity, never the parent.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "parent_state": [
+          "classified_failure"
+        ],
+        "remediation_budget_available": [
+          true
+        ],
+        "child_admitted": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The actual parent has a classified failure, existing remediation ceilings permit this generation, and the exact distinct child is admitted; append before child dispatch."
+    },
+    {
+      "event_type": "run.completed",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-219",
+      "payload_owner": "Plans/Contracts_V0.md#CV-509",
+      "storage_owner": "Plans/storage-plan.md#SP-509",
+      "schema_ref": "Plans/event_payload_run_completed.schema.json",
+      "producer": "executor.run_completed.emitter.v1@1.0.0",
+      "consumer": "executor.run_completed.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "active run -> owner-declared terminal result only after all required Document Set packaging audits pass and in-flight work is reconciled. Canonical usage remains usage.event; optional usage_ref resolves the UF-085 snapshot; no legacy inline token tuple.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "run_state": [
+          "active"
+        ],
+        "work_reconciled": [
+          true
+        ],
+        "terminal_evidence_valid": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The run is active, in-flight work is reconciled and owner terminal evidence is valid, in addition to mandatory Document Set packaging checks."
+    },
+    {
+      "event_type": "run.graph_integrity_failed",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-220",
+      "payload_owner": "Plans/Contracts_V0.md#CV-510",
+      "storage_owner": "Plans/storage-plan.md#SP-510",
+      "schema_ref": "Plans/event_payload_run_graph_integrity_failed.schema.json",
+      "producer": "executor.run_graph_integrity_failed.emitter.v1@1.0.0",
+      "consumer": "executor.run_graph_integrity_failed.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "active graph validation -> integrity failure and replan path; never convert locked graph corruption into pre-lock decomposition degradation or blind retry.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "run_state": [
+          "active"
+        ],
+        "integrity_check_failed": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The actual active run graph has failed validation; this is evidence of graph integrity failure and only the owner replan path may repair it."
+    },
+    {
+      "event_type": "run.node_backoff_expired",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-221",
+      "payload_owner": "Plans/Contracts_V0.md#CV-511",
+      "storage_owner": "Plans/storage-plan.md#SP-511",
+      "schema_ref": "Plans/event_payload_run_node_backoff_expired.schema.json",
+      "producer": "executor.run_node_backoff_expired.emitter.v1@1.0.0",
+      "consumer": "executor.run_node_backoff_expired.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "matching active backoff -> elapsed wake only at or after durable backoff_until_utc; no attempt dispatch or success inferred from timer expiry.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "backoff_state": [
+          "active"
+        ],
+        "timer_matches_original": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The exact prior attempt has an active backoff and its timer matches the original backoff record; now must be at or beyond backoff_until_utc. Expiry is only a wake."
+    },
+    {
+      "event_type": "run.node_backoff_started",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-222",
+      "payload_owner": "Plans/Contracts_V0.md#CV-512",
+      "storage_owner": "Plans/storage-plan.md#SP-512",
+      "schema_ref": "Plans/event_payload_run_node_backoff_started.schema.json",
+      "producer": "executor.run_node_backoff_started.emitter.v1@1.0.0",
+      "consumer": "executor.run_node_backoff_started.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "classified retryable failure -> scheduled backoff with existing per-error budgets; no retry of graph_integrity, verification_failed or reviewer_findings; timer never converts to terminal success.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "prior_attempt_state": [
+          "classified_failure"
+        ],
+        "retry_budget_available": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The prior attempt has a classified retryable failure and its actual per-error retry budget remains. backoff_until_utc cannot precede the first recorded observation."
+    },
+    {
+      "event_type": "run.node_ready",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-223",
+      "payload_owner": "Plans/Contracts_V0.md#CV-513",
+      "storage_owner": "Plans/storage-plan.md#SP-513",
+      "schema_ref": "Plans/event_payload_run_node_ready.schema.json",
+      "producer": "executor.run_node_ready.emitter.v1@1.0.0",
+      "consumer": "executor.run_node_ready.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "not ready -> dependency-satisfying ready; all blockers resolve and current graph/Spec Lock/capacity requirements pass. Preserve ready_since_utc while continuously ready, do not dispatch from this event.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "readiness_state": [
+          "not_ready"
+        ],
+        "dependencies_satisfied": [
+          true
+        ],
+        "spec_lock_valid": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The node was not ready; its actual dependencies and graph/Spec Lock now satisfy readiness. Continuing readiness preserves the original timestamp rather than another entry event."
+    },
+    {
+      "event_type": "run.node_retry_scheduled",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-224",
+      "payload_owner": "Plans/Contracts_V0.md#CV-514",
+      "storage_owner": "Plans/storage-plan.md#SP-514",
+      "schema_ref": "Plans/event_payload_run_node_retry_scheduled.schema.json",
+      "producer": "executor.run_node_retry_scheduled.emitter.v1@1.0.0",
+      "consumer": "executor.run_node_retry_scheduled.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "node_id",
+        "prior_attempt_id",
+        "event_sequence"
+      ],
+      "legacy_alias": null,
+      "retention_policy_ref": {
+        "registry_schema_id": "pm.storage_value_registry.v2",
+        "policy_id": "RP-RUNTIME-365D",
+        "policy_version": "1.0.0"
+      },
+      "transition": "classified prior attempt -> scheduled successor admission under the existing retry budget; preserve prior identity, verify safe-point/worktree and refresh permission before any distinct successor attempt.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "prior_attempt_state": [
+          "classified_failure"
+        ],
+        "retry_budget_available": [
+          true
+        ],
+        "baseline_valid": [
+          true
+        ]
+      },
+      "source_predicate_contract": "The exact prior attempt is classified, actual retry budget remains and baseline is valid; no new attempt may dispatch without fresh permission and safe-point owner checks."
+    },
+    {
+      "event_type": "scheduler.pass",
+      "family_revision": "1.0.0",
+      "scope_policy": "project_only",
+      "semantic_owner": "Plans/Executor_Protocol.md#EP-225",
+      "payload_owner": "Plans/Contracts_V0.md#CV-515",
+      "storage_owner": "Plans/storage-plan.md#SP-515",
+      "schema_ref": "Plans/event_payload_scheduler_pass.schema.json",
+      "producer": "executor.scheduler_pass.emitter.v1@1.0.0",
+      "consumer": "executor.scheduler_pass.history_reader.v1@1.0.0",
+      "identity_fields": [
+        "project_id",
+        "run_id",
+        "scheduler_pass_id",
+        "event_sequence"
+      ],
+      "legacy_alias": "run.scheduler_analysis",
+      "retention_policy_ref": "PENDING_RETENTION_DECISION",
+      "transition": "one pending wake set -> one scored pass, before dispatch; first recovery wake is startup_recovered. Select at most available_slots using the canonical score order, retain every nonselected ready node and its exclusion reason. Legacy non_selected is import-only.",
+      "new_binding_status": "newly_authored_owner_contract",
+      "new_stored_value_families": [],
+      "source_predicate_fields": {
+        "wake_set_state": [
+          "pending"
+        ],
+        "pass_already_committed": [
+          false
+        ]
+      },
+      "source_predicate_contract": "The exact wake set is pending with no previously committed pass. Original pass identity, ready/selected/nonselected partition, scores, capacity and first recovery wake are preserved."
+    }
+  ]
+}

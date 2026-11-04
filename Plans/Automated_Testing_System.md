@@ -7234,3 +7234,317 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md#UIW-048, ContractName:Plans/UI_Wiring_Rules.md#UIW-052, ContractName:Plans/Test_Capture_and_Motion_Evidence.md#TCME-007, ContractName:Plans/FinalGUISpec.md#F3-668, ContractName:Plans/FinalGUISpec.md#F3-674
+
+
+## ATS-250 — Executor family oracles: attempt.completed, attempt.started
+
+`attempt.completed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`attempt.started` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-250
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of attempt.completed, attempt.started has its own paired positive
+  and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-210
+- EP-211
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- attempt.completed
+- attempt.started
+```
+
+
+## ATS-251 — Executor family oracles: node.blocked, node.completed
+
+`node.blocked` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`node.completed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-251
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of node.blocked, node.completed has its own paired positive and
+  negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-212
+- EP-213
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- node.blocked
+- node.completed
+```
+
+
+## ATS-252 — Executor family oracles: node.started, node.unblocked
+
+`node.started` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`node.unblocked` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-252
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of node.started, node.unblocked has its own paired positive and
+  negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-214
+- EP-215
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- node.started
+- node.unblocked
+```
+
+
+## ATS-253 — Executor family oracles: plan.decomposition_degraded, remediation.resolved
+
+`plan.decomposition_degraded` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`remediation.resolved` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-253
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of plan.decomposition_degraded, remediation.resolved has its
+  own paired positive and negative static oracle cases; native durability remains
+  NOT_RUN.
+gui_related: false
+depends_on:
+- EP-216
+- EP-217
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- plan.decomposition_degraded
+- remediation.resolved
+```
+
+
+## ATS-254 — Executor family oracles: remediation.spawned, run.completed
+
+`remediation.spawned` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.completed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-254
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of remediation.spawned, run.completed has its own paired positive
+  and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-218
+- EP-219
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- remediation.spawned
+- run.completed
+```
+
+
+## ATS-255 — Executor family oracles: run.graph_integrity_failed, run.node_backoff_expired
+
+`run.graph_integrity_failed` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.node_backoff_expired` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-255
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of run.graph_integrity_failed, run.node_backoff_expired has its
+  own paired positive and negative static oracle cases; native durability remains
+  NOT_RUN.
+gui_related: false
+depends_on:
+- EP-220
+- EP-221
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- run.graph_integrity_failed
+- run.node_backoff_expired
+```
+
+
+## ATS-256 — Executor family oracles: run.node_backoff_started, run.node_ready
+
+`run.node_backoff_started` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`run.node_ready` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-256
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of run.node_backoff_started, run.node_ready has its own paired
+  positive and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-222
+- EP-223
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- run.node_backoff_started
+- run.node_ready
+```
+
+
+## ATS-257 — Executor family oracles: run.node_retry_scheduled, scheduler.pass
+
+`run.node_retry_scheduled` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+`scheduler.pass` independently requires its positive closed-payload/publication case and negatives for foreign Project, stale generation where applicable, absent admission, withdrawn writer, unresolved refs, denied/deleted disclosure, missing original receipt and illegal transition in Plans/executor_event_contract_fixtures.json. Run `python3 scripts/pm_executor_event_contracts.py`. The checker covers synthetic predicates and identity/replay conflicts; native SP-286 crash/flush recovery, actual immutable dependency commit, SP-278 CAS/snapshot/source translation, backup skew and deletion/withdrawal concurrency remain NOT_RUN and are mandatory before runtime claims. Predicate witnesses in fixtures are synthetic, not native evidence.
+
+```yaml
+plan_unit_id: ATS-257
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Each of run.node_retry_scheduled, scheduler.pass has its own paired
+  positive and negative static oracle cases; native durability remains NOT_RUN.
+gui_related: false
+depends_on:
+- EP-224
+- EP-225
+unblocks: []
+acceptance_criteria:
+- Static owner-contract cases pass without granting admission or native proof.
+validation_surfaces:
+- scripts/pm_executor_event_contracts.py
+risk_class: false_runtime_proof
+reasoning_tier: high
+context_scope: event_authority_wave2_DX
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: contract_only
+  create_worknodes: false
+source_lineage:
+- Plans/Decision_Log.md#DL-045
+- Plans/Executor_Protocol.md
+preserved_exact_tokens:
+- run.node_retry_scheduled
+- scheduler.pass
+```

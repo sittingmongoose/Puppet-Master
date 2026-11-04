@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/attempt_completed/1.0.0",
+  "title": "attempt.completed prepared payload contract",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "thread_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "terminal_state": {
+      "enum": [
+        "done",
+        "failed"
+      ]
+    },
+    "retry_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "runtime_snapshot_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "failure_class": {
+      "enum": [
+        "provider_transient",
+        "structured_output_invalid",
+        "verification_failed",
+        "reviewer_findings",
+        "auth_expired",
+        "storage_io",
+        "quota_exceeded",
+        "rate_limited",
+        "graph_integrity"
+      ]
+    },
+    "success": {
+      "type": "boolean"
+    },
+    "backoff_until_utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "verification_result_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reviewer_result_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "safe_point_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation_root_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation_parent_attempt_id": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "event_sequence",
+    "ts",
+    "run_id",
+    "thread_id",
+    "node_id",
+    "attempt_id",
+    "replan_generation",
+    "terminal_state",
+    "retry_count",
+    "runtime_snapshot_ref"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "success"
+      ],
+      "properties": {
+        "success": {
+          "const": true
+        }
+      },
+      "not": {
+        "required": [
+          "failure_class"
+        ]
+      }
+    },
+    {
+      "required": [
+        "failure_class"
+      ],
+      "not": {
+        "required": [
+          "success"
+        ]
+      }
+    }
+  ]
+}

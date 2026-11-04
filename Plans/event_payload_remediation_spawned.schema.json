@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/remediation_spawned/1.0.0",
+  "title": "remediation.spawned prepared payload contract",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "child_attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation_root_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation_parent_attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "remediation_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "replan_generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "finding_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "parent_failure_class": {
+      "enum": [
+        "provider_transient",
+        "structured_output_invalid",
+        "verification_failed",
+        "reviewer_findings",
+        "auth_expired",
+        "storage_io",
+        "quota_exceeded",
+        "rate_limited",
+        "graph_integrity"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "event_sequence",
+    "ts",
+    "run_id",
+    "node_id",
+    "child_attempt_id",
+    "remediation_root_id",
+    "remediation_parent_attempt_id",
+    "remediation_generation",
+    "replan_generation",
+    "finding_refs",
+    "parent_failure_class"
+  ]
+}
