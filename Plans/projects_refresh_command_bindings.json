@@ -1463,8 +1463,8 @@
       "command_id": "cmd.chat.attachment.details",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat_attachments::attachment_details",
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDetailsResultV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDetailsV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDetailsV3Result",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > composer"
@@ -1519,8 +1519,8 @@
       "command_id": "cmd.chat.attachment.freeze_reference",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat_attachments::attachment_freeze_reference",
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreezeReferenceRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentFreezeReferenceResultV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentFreezeReferenceV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentFreezeReferenceV3Result",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > composer"
@@ -1575,8 +1575,8 @@
       "command_id": "cmd.chat.attachment.open",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat_attachments::attachment_open",
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentOpenResultV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentOpenV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentOpenV3Result",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > composer"
@@ -1631,8 +1631,8 @@
       "command_id": "cmd.chat.attachment.remove",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat_attachments::attachment_remove",
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRemoveResultV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRemoveV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRemoveV3Result",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > composer"
@@ -1687,8 +1687,8 @@
       "command_id": "cmd.chat.attachment.retry",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat_attachments::attachment_retry",
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentRetryResultV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRetryV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentRetryV3Result",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > composer"
@@ -3264,8 +3264,8 @@
       "command_id": "cmd.chat.attachment.download",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat_attachments::attachment_download",
-      "request_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadRequestV2",
-      "result_schema_ref": "Plans/assistant_attachment_contracts.schema.json#/$defs/AttachmentDownloadResultV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDownloadV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/AttachmentDownloadV3Result",
       "group": "no_project",
       "gui_consumers": [
         "Puppet Master Assistant > attachment.download"
@@ -3672,8 +3672,8 @@
       "command_id": "cmd.chat.plan.strategy.set",
       "owner_ref": "Plans/Assistant_Plan_Runtime.md#APR-073",
       "handler": "handlers::assistant_plan::plan_strategy_set",
-      "request_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyRequestScopeV2",
-      "result_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanStrategyResultScopeV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Result",
       "group": "plan_schedule",
       "gui_consumers": [
         "Puppet Master Assistant > mode.plan_strategy"
@@ -3758,8 +3758,8 @@
       "command_id": "cmd.chat.plan.request_revision",
       "owner_ref": "Plans/Assistant_Plan_Runtime.md#APR-073",
       "handler": "handlers::assistant_plan::plan_request_revision",
-      "request_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionRequestScopeV2",
-      "result_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRevisionResultScopeV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Result",
       "group": "plan_schedule",
       "gui_consumers": [
         "Puppet Master Assistant > plan.revise"
@@ -3930,8 +3930,8 @@
       "command_id": "cmd.chat.plan.send_to_planning_wizard",
       "owner_ref": "Plans/Planning_Wizard.md#PWIZ-037",
       "handler": "handlers::planning_wizard::assistant_plan_intake",
-      "request_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanHandoffRequestScopeV2",
-      "result_schema_ref": "Plans/assistant_plan_runtime_contracts.schema.json#/$defs/PlanningWizardIntakeResultScopeV2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Result",
       "group": "plan_schedule",
       "gui_consumers": [
         "Puppet Master Assistant > plan.wizard"
@@ -17920,8 +17920,8 @@
       "command_id": "cmd.permissions.open",
       "owner_ref": "Plans/Permissions_System.md#PS-144",
       "handler": "handlers::permissions::open",
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsOpenV3Result",
       "group": "automation",
       "gui_consumers": [
         "Settings > Permissions"
@@ -17965,8 +17965,8 @@
       "command_id": "cmd.permissions.pick_external_directory",
       "owner_ref": "Plans/Permissions_System.md#PS-144",
       "handler": "handlers::permissions::pick_external_directory",
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsDirectoryPickerV3Result",
       "group": "automation",
       "gui_consumers": [
         "Settings > Permissions > External directories picker"
@@ -18055,8 +18055,8 @@
       "command_id": "cmd.permissions.review_request",
       "owner_ref": "Plans/Permissions_System.md#PS-144",
       "handler": "handlers::permissions::review_request",
-      "request_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_request_v2",
-      "result_schema_ref": "Plans/automation_authority_contracts.schema.json#/$defs/permission_rule_command_result_v2",
+      "request_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Request",
+      "result_schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PermissionsReviewV3Result",
       "group": "automation",
       "gui_consumers": [
         "Permission prompt / attention surfaces > Review request"

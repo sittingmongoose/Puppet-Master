@@ -1648,6 +1648,741 @@
         }
       ],
       "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanStrategySetV3-exact-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.strategy.set",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "workflow": "deep_plan",
+        "strategy": "thorough",
+        "expected_mode_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.strategy.set",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanStrategySetV3-wrong-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.revise",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "workflow": "deep_plan",
+        "strategy": "thorough",
+        "expected_mode_generation": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.strategy.set",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanStrategySetV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Result",
+      "record": {
+        "command_id": "cmd.chat.plan.strategy.set",
+        "workflow": "deep_plan",
+        "strategy": "deep_thorough",
+        "backend": "ledger_bound",
+        "status": "selected",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.plan.strategy.set",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanStrategySetV3-wrong-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Result",
+      "record": {
+        "command_id": "cmd.chat.plan.strategy.set",
+        "workflow": "deep_plan",
+        "strategy": "deep_thorough",
+        "backend": "ledger_bound",
+        "status": "added",
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.plan.strategy.set",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-reject-regular-brainstorm",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanStrategySetV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.strategy.set",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "workflow": "plan",
+        "strategy": "brainstorm",
+        "expected_mode_generation": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.strategy.set",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanRequestRevisionV3-exact-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.request_revision",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "feedback_ref": "feedback-a",
+        "feedback_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "composer_destination_ref": "composer-a",
+        "composer_generation": 1
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.request_revision",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanRequestRevisionV3-wrong-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.revise",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "feedback_ref": "feedback-a",
+        "feedback_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "composer_destination_ref": "composer-a",
+        "composer_generation": 1
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.request_revision",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanRequestRevisionV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Result",
+      "record": {
+        "command_id": "cmd.chat.plan.request_revision",
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "feedback_queued",
+        "message_ref": "message-a",
+        "plan_content_edited": false,
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.plan.request_revision",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanRequestRevisionV3-wrong-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanRequestRevisionV3Result",
+      "record": {
+        "command_id": "cmd.chat.plan.request_revision",
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "status": "added",
+        "message_ref": "message-a",
+        "plan_content_edited": false,
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.plan.request_revision",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanWizardHandoffV3-exact-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.send_to_planning_wizard",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_revision_ref": "revision-a",
+        "destination_project_id": "project-a",
+        "destination_intake_generation": 1,
+        "source_to_destination_revision_map_ref": "revision-map-a",
+        "source_to_destination_revision_map_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_confirmation_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "destination_permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.send_to_planning_wizard",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanWizardHandoffV3-wrong-id",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.revise",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_revision_ref": "revision-a",
+        "destination_project_id": "project-a",
+        "destination_intake_generation": 1,
+        "source_to_destination_revision_map_ref": "revision-map-a",
+        "source_to_destination_revision_map_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_confirmation_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "destination_permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.send_to_planning_wizard",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanWizardHandoffV3-result",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Result",
+      "record": {
+        "command_id": "cmd.chat.plan.send_to_planning_wizard",
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "destination_project_id": "project-a",
+        "intake_ref": "intake-a",
+        "status": "intake_ready",
+        "orchestrator_started": false,
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": true,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.plan.send_to_planning_wizard",
+            "schema_valid": true
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-PlanWizardHandoffV3-wrong-outcome",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Result",
+      "record": {
+        "command_id": "cmd.chat.plan.send_to_planning_wizard",
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "destination_project_id": "project-a",
+        "intake_ref": "intake-a",
+        "status": "added",
+        "orchestrator_started": false,
+        "owner_receipt_ref": "receipt-a",
+        "return_context_ref": "return-a"
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_result",
+          "expected": {
+            "command_id": "cmd.chat.plan.send_to_planning_wizard",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
+    },
+    {
+      "case_id": "fix-a-plan-handoff-no-fabricated-destination",
+      "schema_ref": "Plans/projects_refresh_fix_contracts.schema.json#/$defs/PlanWizardHandoffV3Request",
+      "record": {
+        "command_id": "cmd.chat.plan.send_to_planning_wizard",
+        "context": {
+          "scope": {
+            "schema_id": "pm.workflow_scope.v2",
+            "schema_version": "2.0.0",
+            "scope_kind": "application",
+            "scope_partition": "app",
+            "project_id": null,
+            "project_home_server_id": null,
+            "named_plan_id": null,
+            "server_id": "server-a"
+          },
+          "storage_instance_id": "storage-a",
+          "thread_id": "thread-a",
+          "execution_host_id": "host-a",
+          "execution_environment_id": "environment-a",
+          "roots": [],
+          "command_instance_id": "command-a",
+          "idempotency_key": "idempotency-a",
+          "actor_ref": "actor-a",
+          "permission_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "writer_evidence": {
+            "schema_id": "pm.owner.evidence.v1",
+            "schema_version": "1.0.0",
+            "owner_ref": "owner-a",
+            "source_ref": "ref:source-a",
+            "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "revision": 1,
+            "generation": 1
+          },
+          "scope_stop_epoch": 1,
+          "task_stop_epoch": 1,
+          "expected_generation": 1,
+          "return_context_ref": "return-a"
+        },
+        "assistant_plan_id": "plan-a",
+        "plan_version": 1,
+        "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_revision_ref": "revision-a",
+        "destination_project_id": null,
+        "destination_intake_generation": 1,
+        "source_to_destination_revision_map_ref": "revision-map-a",
+        "source_to_destination_revision_map_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "person_confirmation_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        },
+        "destination_permission_evidence": {
+          "schema_id": "pm.owner.evidence.v1",
+          "schema_version": "1.0.0",
+          "owner_ref": "owner-a",
+          "source_ref": "ref:source-a",
+          "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "revision": 1,
+          "generation": 1
+        }
+      },
+      "expected_schema_valid": false,
+      "semantic_checks": [
+        {
+          "predicate_id": "bindings.selected_request",
+          "expected": {
+            "command_id": "cmd.chat.plan.send_to_planning_wizard",
+            "schema_valid": false
+          }
+        }
+      ],
+      "native_runtime_executed": false
     }
   ]
 }
