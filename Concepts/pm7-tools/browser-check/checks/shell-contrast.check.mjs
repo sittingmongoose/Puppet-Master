@@ -37,7 +37,9 @@ export default async function(t){
    await t.equal(`${look} ${screen} look retained`,()=>f.evaluate(()=>PMLogo.look()),look);
    if(screen==='where') await f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [role="radio"]').first().click();
    if(screen==='where') await measure(t,f,f.locator('#pm-o55-onboarding .o55-tag:visible').first(),look+' Recommended');
-   const el=f.locator('#pm-o55-onboarding .o55-primary:visible:not(:disabled)').first();
+   if(screen==='ai-all') await f.locator('#pm-o55-onboarding [data-o55-do="install"][data-arg="claude"]').click();
+   const el=f.locator(screen==='ai-all'?'#pm-o55-onboarding [data-o55-do="installGo"][data-arg="claude"]':'#pm-o55-onboarding .o55-foot .o55-primary:visible:not(:disabled)').first();
+   await t.check(`${look} ${screen} expected primary label`,(await el.innerText()).trim()===(screen==='where'?'Continue':screen==='ai-all'?'Install':'Done'));
    for(const state of (look.startsWith('glass')?['rest','hover','focus','pressed']:['rest','hover'])){
     await t.page.mouse.move(1,1); await el.evaluate(e=>e.blur());
     if(state==='hover'||state==='pressed') await el.hover();
