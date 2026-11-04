@@ -8,14 +8,60 @@ import json
 from pathlib import Path
 import re
 import sys
+import blake3
+import msgpack
+import rfc8785
 from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
+STORAGE_INSTANCE = '00000000-0000-4000-8000-000000000001'
+INLINE_LIMIT = 16 * 1024
+# Exact EventRecord owner commitment. event_id has a separate integrity check.
+SEMANTIC_FIELDS = (
+    'event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+    'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
+    'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
+    'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload',
+    'payload_ref', 'redaction_profile', 'migration')
 
-def identity(event, payload, storage_instance='storage-fixture'):
+def body_bytes(value):
+    """SP-236 shortest MessagePack, recursively sorted exact UTF-8 map keys."""
+    def ordered(v):
+        if isinstance(v, dict):
+            return {k: ordered(v[k]) for k in sorted(v, key=lambda k: k.encode('utf-8'))}
+        if isinstance(v, list):
+            return [ordered(x) for x in v]
+        return v
+    return msgpack.packb(ordered(value), use_bin_type=True, strict_types=True)
+
+def payload_reference(body):
+    raw = body_bytes(body)
+    return f'payload:v1:{blake3.blake3(raw).hexdigest()}:{len(raw)}:application/msgpack'
+
+def resolve_body(record, source=None, storage_instance=STORAGE_INSTANCE):
+    """Static SP-337 pack/readback/access fixture; not native durability proof."""
+    if record['payload_ref'] is None:
+        return record['payload'] if len(body_bytes(record['payload'])) <= INLINE_LIMIT else None
+    if record['payload'] != {} or not source:
+        return None
+    body = source['body']
+    raw = body_bytes(body)
+    if (record['payload_ref'] != payload_reference(body)
+            or source['key'] != 'payload:v1:' + blake3.blake3(raw).hexdigest()
+            or source['byte_size'] != len(raw) or source['media_type'] != 'application/msgpack'
+            or source['storage_instance_id'] != storage_instance
+            or source['scope'] != body['scope'] or source['computer_id'] != body['computer_id']
+            or source['thread_id'] != body['thread_id']
+            or not all(source[k] is True for k in ['authorized', 'hold_access_allowed', 'bytes_durable',
+                                           'index_durable', 'readback_verified'])
+            or source['deleted'] is not False):
+        return None
+    return body
+
+def identity(event, payload, storage_instance=STORAGE_INSTANCE):
     parts = [event, '1.0.0', storage_instance, payload['scope'], payload['computer_id'], payload['thread_id'], payload['operation_id']]
     # Fixture inputs have no floating point; this is the RFC8785 subset.
-    value = json.dumps(parts, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
+    value = rfc8785.dumps(parts)
     return 'evt_dch_' + hashlib.sha256(value).hexdigest()
 
 def valid_scope_partition(scope):
@@ -40,30 +86,113 @@ def valid_scope_partition(scope):
     except (ValueError, UnicodeError, binascii.Error):
         return False
 
-def idempotency_key(event, payload):
+def idempotency_key(event, payload, storage_instance=STORAGE_INSTANCE):
     if payload['scope']['scope_kind'] == 'application':
         return ('application@1:' + payload['scope']['server_id'].encode('utf-8').hex()
                 + ':' + payload['operation_id'].encode('utf-8').hex())
-    return 'dch:' + identity(event, payload)[len('evt_dch_'):]
+    return 'dch:' + identity(event, payload, storage_instance)[len('evt_dch_'):]
 
-def joins(record, event):
-    p = record['payload']
+def joins(record, event, source=None, storage_instance=STORAGE_INSTANCE):
+    p = resolve_body(record, source, storage_instance)
+    if p is None or record['replay_policy'] != 'dedupe_by_idempotency_key':
+        return False
     expected = {'event_type': event, 'event_id': identity(event, p),
-                'idempotency_key': idempotency_key(event, p), 'payload_schema_id': p['schema_id'],
+                'idempotency_key': idempotency_key(event, p, storage_instance), 'payload_schema_id': p['schema_id'],
                 'scope_kind': p['scope']['scope_kind'], 'project_id': p['scope']['project_id'],
                 'thread_id': p['thread_id'], 'actor_ref': p['actor_ref'], 'occurred_at_utc': p['ts'],
-                'payload_ref': None, 'run_id': None, 'node_id': None, 'attempt_id': None}
+                'run_id': None, 'node_id': None, 'attempt_id': None}
     return valid_scope_partition(p['scope']) and all(record[k] == value for k, value in expected.items())
 
 def retry_outcome(original, retry, available=True):
     """Static CV-366 oracle; does not exercise a writer, receipt or real dedupe store."""
+    if any(r['replay_policy'] == 'projector_replay_only' for r in [original, retry]):
+        return 'replay_only_not_appendable'
+    if any(r['replay_policy'] != 'dedupe_by_idempotency_key' for r in [original, retry]):
+        return 'invalid_append_policy'
     if not available:
         return 'dedupe_unavailable'
     def lifetime(r):
-        return (r['payload']['scope']['scope_partition'], r['event_type'], r['idempotency_key'])
+        # Exact scope identities are equivalent to their validated reversible
+        # partition. Keep malformed cross-scope mutations comparable as well.
+        return (r['scope_kind'], r['project_id'], r['event_type'], r['idempotency_key'])
     if lifetime(original) != lifetime(retry):
+        if original['event_id'] == retry['event_id']:
+            return 'conflict'
         return 'distinct_operation'
-    return 'original_result' if original == retry else 'conflict'
+    if original['event_id'] != retry['event_id']:
+        return 'conflict'
+    def commitment(r):
+        return hashlib.sha256(rfc8785.dumps({k: r[k] for k in SEMANTIC_FIELDS})).digest()
+    return 'original_result' if commitment(original) == commitment(retry) else 'conflict'
+
+def test_joins(payload, source, event):
+    """Original started operation and actual terminal outcome, W.9.2/W.9.3."""
+    started, outcome = source['started'], source['outcome']
+    p = started['payload']
+    schema = json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json').read_text())
+    envelope = json.loads((ROOT/'Plans/event_record.schema.json').read_text())
+    if (not Draft202012Validator(schema, format_checker=FormatChecker()).is_valid(p)
+            or not Draft202012Validator(envelope, format_checker=FormatChecker()).is_valid(started)):
+        return False
+    common = ['operation_id', 'scope', 'computer_id', 'thread_id', 'worktree_id', 'command', 'strategy']
+    if (not joins(started, 'chat.thread_worktree_pre_merge_test_started')
+            or payload['started_event_id'] != started['event_id']
+            or outcome['started_event_id'] != started['event_id']
+            or any(payload[k] != p[k] or payload[k] != outcome[k] for k in common)
+            or payload['duration_ms'] != outcome['duration_ms']):
+        return False
+    if event.endswith('_passed'):
+        return outcome['kind'] == 'exit' and type(outcome['exit_code']) is int and outcome['exit_code'] == 0
+    if payload['test_outcome'] != outcome['kind'] or payload['exit_code'] != outcome['exit_code']:
+        return False
+    if payload['error_ref'] != outcome['error_ref']:
+        return False
+    if outcome['kind'] == 'exit':
+        return type(outcome['exit_code']) is int and outcome['exit_code'] != 0 and payload['error_ref'] is None
+    return (outcome['kind'] in ['timeout', 'process_error'] and outcome['exit_code'] is None
+            and (outcome['kind'] != 'process_error' or payload['error_ref'] is not None))
+
+def checkpoint_joins(value, source, row, key):
+    """Independent synthetic source/root/dataset/publication joins under SP-278."""
+    token = value['source_token']
+    store = source['storage_instance_id']
+    generation = token['generation_id']
+    root = source['checkpoint']
+    node = root['generations'].get(generation)
+    event = source['event_record']
+    p = event['payload']
+    generic_key = 'event_record_index_checkpoint.v1:' + store
+    if not node:
+        return False
+    index = source['index_row']
+    return (value['storage_instance_id'] == token['storage_instance_id']
+            == token['source_selection']['storage_instance_id'] == root['storage_instance_id'] == store
+            and root['current_generation_id'] == generation and node['state'] == 'current'
+            and token['checkpoint_key'] == source['checkpoint_key'] == generic_key
+            and token['checkpoint_ref'] == generic_key + '#/generations/' + generation
+            and token['generation_anchor_sha256'] == node['anchor_sha256']
+            and token['frontier_revision'] == node['frontier_revision']
+            and token['frontier_sha256'] == node['frontier_sha256']
+            and token['source_selection'] == node['source_selection'] == source['current_source_selection']
+            and token['index_dataset_name'] == node['index_dataset_name'] == source['dataset_name']
+            == 'event_record_index.v2@' + generation
+            and index['checkpoint_ref'] == token['checkpoint_ref']
+            and index['event_id'] == value['last_event_id'] == event['event_id']
+            and index['sequence_id'] == value['last_sequence_id'] == event['sequence_id']
+            and index['scope_partition'] == value['scope_partition'] == p['scope']['scope_partition']
+            and index['event_type'] == value['event_type'] == row['event_type'] == event['event_type']
+            and index['source_value_sha256'] == hashlib.sha256(body_bytes(event)).hexdigest()
+            and key == row['domain_checkpoint_key'].format(storage_instance_id=store,
+                                                          scope_partition=value['scope_partition'])
+            and value['consumer_id'] == row['reader'] and value['projector_id'] == row['domain_projector']
+            and value['projection_refs'] == source['publication']['projection_refs']
+            and value['publication_id'] == source['publication']['publication_id']
+            and value['revision'] == source['publication']['revision']
+            and source['publication']['source_token'] == token
+            and source['publication']['thread_id'] == p['thread_id']
+            and source['publication']['computer_id'] == p['computer_id']
+            and source['publication']['scope'] == p['scope']
+            and value['state'] == 'current' and joins(event, row['event_type'], storage_instance=store))
 
 def archive_joins(payload, source):
     """Static original request/commit fixture joins; never an authorization receipt."""
@@ -85,13 +214,50 @@ def main():
     registry = json.loads((ROOT/'Plans/event_family_registry.json').read_text())
     failures = []
     checks = 0
+    per_family = {}
     def check(ok, label):
         nonlocal checks
         checks += 1
+        family = label.split(':', 1)[0]
+        stats = per_family.setdefault(family, {'checks': 0, 'failures': 0})
+        stats['checks'] += 1
         if not ok:
             failures.append(label)
+            stats['failures'] += 1
+    def leaf_paths(value, path=()):
+        if isinstance(value, dict):
+            for k, v in value.items():
+                yield from leaf_paths(v, path + (k,))
+        elif isinstance(value, list):
+            for k, v in enumerate(value):
+                yield from leaf_paths(v, path + (k,))
+        else:
+            yield path, value
+    def changed(value, path, replacement):
+        result = copy.deepcopy(value)
+        target = result
+        for k in path[:-1]:
+            target = target[k]
+        target[path[-1]] = replacement
+        return result
+    def trailing_lf_checks(value, schema, validator, label):
+        patterns = []
+        def collect(s):
+            if isinstance(s, dict):
+                if 'pattern' in s:
+                    patterns.append(s['pattern'])
+                    check(s['pattern'].endswith(r'$(?![\s\S])'), label + ': exact regex guard ' + s['pattern'])
+                for v in s.values(): collect(v)
+            elif isinstance(s, list):
+                for v in s: collect(v)
+        collect(schema)
+        for path, value_at_path in leaf_paths(value):
+            if isinstance(value_at_path, str) and any(re.search(p, value_at_path) for p in patterns):
+                check(not validator.is_valid(changed(value, path, value_at_path + '\n')),
+                      label + ': trailing LF ' + '.'.join(map(str, path)))
     for row in contracts:
         event = row['event_type']
+        check(row['append_policy'] == 'dedupe_by_idempotency_key', event + ': selected current append policy')
         check(event not in [f['event_type'] for f in registry['families']], event+': absent registry')
         if row['outcome']=='blocked_on_Jared':
             continue
@@ -104,6 +270,10 @@ def main():
         for case in cases:
             p = case['valid']
             check(validator.is_valid(p) and valid_scope_partition(p['scope']), event+': '+case['edition']+' positive')
+            trailing_lf_checks(p, schema, validator, event + ':' + case['edition'])
+            if 'exit_code' not in p:
+                invalid=copy.deepcopy(p);invalid['exit_code']=0
+                check(not validator.is_valid(invalid),event+': no fabricated exit-code outcome')
             ids.append(identity(event, p))
             for field in case['missing_fields']:
                 invalid=copy.deepcopy(p); del invalid[field]
@@ -138,26 +308,80 @@ def main():
     envelope=Draft202012Validator(json.loads((ROOT/'Plans/event_record.schema.json').read_text()), format_checker=FormatChecker())
     for case in fixtures:
         record=case['record']; event=case['event_type']
+        check(case['storage_instance_id']==STORAGE_INSTANCE,event+': actual Storage fixture instance')
         check(envelope.is_valid(record) and joins(record,event) and record['payload']==case['valid'], event+': envelope and source joins')
         for key in ['event_type','event_id','idempotency_key','payload_schema_id','scope_kind','project_id','thread_id','actor_ref','occurred_at_utc','payload_ref','run_id','node_id','attempt_id']:
             invalid=copy.deepcopy(record);invalid[key]='wrong'
             check(not joins(invalid,event),event+': envelope mismatch '+key)
+        for key in ['event_id','idempotency_key']:
+            invalid=copy.deepcopy(record);invalid[key]+='\n'
+            check(not joins(invalid,event),event+': identifier trailing LF '+key)
         for oracle in case['retry_oracles']:
             retry=copy.deepcopy(record)
+            retry.update(oracle.get('record_changes', {}))
             for key,value in oracle.get('payload_changes',{}).items():
                 retry['payload'][key]=value
             if 'actor_ref' in oracle.get('payload_changes',{}): retry['actor_ref']=retry['payload']['actor_ref']
             check(retry_outcome(record,retry,oracle.get('dedupe_available',True))==oracle['expected'],event+': retry '+oracle['name'])
             if oracle['expected'] in ['conflict','original_result']:
                 check(joins(retry,event),event+': retry preserves key '+oracle['name'])
+        for policy in ['projector_replay_only', 'append_once', 'dedupe_by_event_id']:
+            invalid=copy.deepcopy(record); invalid['replay_policy']=policy
+            check(envelope.is_valid(invalid) and not joins(invalid,event),event+': forbidden append '+policy)
+            expected='replay_only_not_appendable' if policy=='projector_replay_only' else 'invalid_append_policy'
+            for first, second in [(record,invalid),(invalid,record),(invalid,invalid)]:
+                check(retry_outcome(first,second)==expected,event+': forbidden retry '+policy)
+        # Every owner-included semantic field must affect the result, independently.
+        for key in SEMANTIC_FIELDS:
+            retry=copy.deepcopy(record)
+            old=retry[key]
+            if key=='payload': retry[key]['actor_ref']='pmref:fixture:semantic_mutation'
+            elif key=='migration': retry[key]['migration_id']='changed'
+            elif key=='producer_sequence_id': retry[key]=7
+            elif key=='scope_kind': retry[key]='application' if old=='project' else 'project'
+            elif key=='project_id': retry[key]='other_project'
+            else: retry[key]='changed' if old is None else str(old)+':changed'
+            check(retry_outcome(record,retry)=='conflict',event+': semantic commitment '+key)
+        retry=copy.deepcopy(record);retry['event_id']+='changed'
+        check(retry_outcome(record,retry)=='conflict',event+': global event-ID integrity')
+        for key, value in [('sequence_id',2),('observed_at_utc','2026-11-04T00:00:01Z'),('persisted_at_utc','2026-11-04T00:00:02Z')]:
+            retry=copy.deepcopy(record);retry[key]=value
+            check(retry_outcome(record,retry)=='original_result',event+': excluded Storage metadata '+key)
+        schema=json.loads((ROOT/next(r['payload_schema_ref'] for r in contracts if r['event_type']==event)).read_text())
+        validator=Draft202012Validator(schema,format_checker=FormatChecker())
+        for transport in case['transport_oracles']:
+            candidate=transport['record']; source=transport.get('source')
+            body=resolve_body(candidate,source)
+            accepted=(envelope.is_valid(candidate) and joins(candidate,event,source)
+                      and body is not None and validator.is_valid(body))
+            check(accepted==transport['expected_valid'],event+': transport '+transport['name'])
+        # Exact physical boundary independent of the family's maximum logical body.
+        for size in [INLINE_LIMIT, INLINE_LIMIT+1]:
+            probe={'probe':'x'*(size-10)}
+            while len(body_bytes(probe)) != size:
+                probe['probe']+='x' if len(body_bytes(probe))<size else ''
+                if len(body_bytes(probe))>size: probe['probe']=probe['probe'][:-1]
+            candidate=copy.deepcopy(record);candidate['payload']=probe
+            check((resolve_body(candidate) is not None)==(size<=INLINE_LIMIT),event+': encoded inline boundary '+str(size))
+        if 'test_source' in case:
+            source=case['test_source']
+            started_schema=json.loads((ROOT/'Plans/dch_event_payloads/chat_thread_worktree_pre_merge_test_started.schema.json').read_text())
+            check(Draft202012Validator(started_schema,format_checker=FormatChecker()).is_valid(source['started']['payload'])
+                  and envelope.is_valid(source['started']) and test_joins(record['payload'],source,event),event+': original test outcome join')
+            for oracle in case['test_oracles']:
+                combined={'payload':record['payload'],'source':source}
+                for path,value in oracle['changes'].items():
+                    combined=changed(combined,tuple(path.split('.')),value)
+                check((validator.is_valid(combined['payload']) and test_joins(combined['payload'],combined['source'],event))
+                      ==oracle['expected_valid'],event+': test outcome '+oracle['name'])
         if case['edition']=='application':
             invalid=copy.deepcopy(record);invalid['idempotency_key']='dch:'+identity(event,invalid['payload'])[len('evt_dch_'):]
             check(not joins(invalid,event),event+': reject incompatible application dch key')
             for key in ['server_id','operation_id']:
-                changed=copy.deepcopy(record['payload'])
-                if key=='server_id': changed['scope'][key]+=':other'
-                else: changed[key]+=':other'
-                check(idempotency_key(event,changed)!=record['idempotency_key'],event+': application original '+key)
+                changed_payload=copy.deepcopy(record['payload'])
+                if key=='server_id': changed_payload['scope'][key]+=':other'
+                else: changed_payload[key]+=':other'
+                check(idempotency_key(event,changed_payload)!=record['idempotency_key'],event+': application original '+key)
         else:
             for oracle in case['partition_oracles']:
                 if oracle['expected_valid']: continue
@@ -178,7 +402,9 @@ def main():
     for case in json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text()):
         schema=json.loads((ROOT/case['schema_ref'].split('#')[0]).read_text())
         validator=Draft202012Validator(schema, format_checker=FormatChecker())
-        check(validator.is_valid(case['valid']), case['event_type']+': checkpoint positive')
+        row=next(r for r in contracts if r['event_type']==case['event_type'])
+        check(validator.is_valid(case['valid']) and checkpoint_joins(case['valid'],case['source'],row,case['key']), case['event_type']+': checkpoint positive')
+        trailing_lf_checks(case['valid'],schema,validator,case['event_type']+': checkpoint')
         for name in case['negative_cases']:
             invalid=copy.deepcopy(case['valid'])
             if name=='persisted_redb_snapshot_id': invalid['source_token']['redb_snapshot_id']='forbidden'
@@ -187,7 +413,15 @@ def main():
             if name=='missing_source_token': del invalid['source_token']
             if name=='four_generations': invalid['history']=[{}, {}, {}]
             check(not validator.is_valid(invalid), case['event_type']+': '+name)
-    print(json.dumps({'status':'pass' if not failures else 'fail','checks':checks,'failures':failures,'native_execution':'NOT_RUN','coverage':'Static payload/identity/declaration checks only. Native receipt, CAS, replay, custody and withdrawal are NOT_RUN.'},indent=2))
+        for oracle in case['join_oracles']:
+            combined={'value':case['valid'],'source':case['source'],'key':case['key']}
+            for path,value in oracle['changes'].items():
+                combined=changed(combined,tuple(path.split('.')),value)
+            check((validator.is_valid(combined['value']) and checkpoint_joins(combined['value'],combined['source'],row,combined['key']))
+                  ==oracle['expected_valid'],case['event_type']+': checkpoint join '+oracle['name'])
+    print(json.dumps({'status':'pass' if not failures else 'fail','checks':checks,'failures':failures,
+                      'per_family':per_family,'native_execution':'NOT_RUN',
+                      'coverage':'Static append-policy, payload transport, semantic retry, schema, identity, original-test-outcome and checkpoint relational fixtures. Source adapters are synthetic. Native process, receipt, CRC, full-source coverage, redb CAS, durability, custody and withdrawal are NOT_RUN.'},indent=2))
     return bool(failures)
 
 if __name__=='__main__':

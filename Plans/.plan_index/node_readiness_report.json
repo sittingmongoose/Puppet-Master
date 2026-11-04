@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18854,
+    "depends_on_edge_count": 18888,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22062,
+    "edge_count": 22096,
     "node_count": 7473,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-04T18:36:23Z",
+  "generated_at_utc": "2026-11-04T19:24:18Z",
   "gui_related_units": {
     "count": 3808,
     "units": [
@@ -3872,8 +3872,8 @@
         "source_location": {
           "heading": "ACD-613 — chat.thread_archived",
           "heading_level": 3,
-          "heading_line": 30155,
-          "line": 30159,
+          "heading_line": 30183,
+          "line": 30187,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3972,7 +3972,7 @@
           "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
           "heading_level": 3,
           "heading_line": 29817,
-          "line": 29821,
+          "line": 29823,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3982,8 +3982,8 @@
         "source_location": {
           "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
           "heading_level": 3,
-          "heading_line": 29885,
-          "line": 29889,
+          "heading_line": 29901,
+          "line": 29907,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3993,8 +3993,8 @@
         "source_location": {
           "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
           "heading_level": 3,
-          "heading_line": 29952,
-          "line": 29956,
+          "heading_line": 29980,
+          "line": 29984,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4004,8 +4004,8 @@
         "source_location": {
           "heading": "ACD-625 — chat.thread_worktree_renamed",
           "heading_level": 3,
-          "heading_line": 30020,
-          "line": 30024,
+          "heading_line": 30048,
+          "line": 30052,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -4015,8 +4015,8 @@
         "source_location": {
           "heading": "ACD-626 — chat.thread_worktree_unbound",
           "heading_level": 3,
-          "heading_line": 30087,
-          "line": 30091,
+          "heading_line": 30115,
+          "line": 30119,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -46248,7 +46248,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "f590fc7841c7f194c07bb118200a1980cee83b5764fe202c3324e51b5717dda9",
+        "expected": "0f3d0e3aaca6d9ff72b6c97f30f8472057dc64c60e0953c89963706a2e0d6cf0",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {

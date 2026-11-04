@@ -3336,22 +3336,6 @@
     "DL-015",
     "DL-013",
     "DL-016",
-    "CV-630",
-    "CV-631",
-    "CV-632",
-    "CV-634",
-    "CV-635",
-    "CV-636",
-    "CV-637",
-    "CV-638",
-    "CV-639",
-    "CV-640",
-    "CV-641",
-    "CV-642",
-    "CV-643",
-    "CV-644",
-    "CV-645",
-    "CV-646",
     "DL-084",
     "GRS-064",
     "DL-089",
@@ -4548,6 +4532,22 @@
     "SIR-009",
     "ACD-459",
     "SP-239",
+    "CV-630",
+    "CV-631",
+    "CV-632",
+    "CV-634",
+    "CV-635",
+    "CV-636",
+    "CV-637",
+    "CV-638",
+    "CV-639",
+    "CV-640",
+    "CV-641",
+    "CV-642",
+    "CV-643",
+    "CV-644",
+    "CV-645",
+    "CV-646",
     "SP-340",
     "SP-343",
     "MI-041",
@@ -26096,8 +26096,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-630",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-631",
       "to": "ACD-611"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-631",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26106,8 +26116,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-632",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-633",
       "to": "ACD-613"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-633",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26116,8 +26136,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-634",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-635",
       "to": "ACD-615"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-635",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26126,8 +26156,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-636",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-637",
       "to": "ACD-617"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-637",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26136,8 +26176,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-638",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-639",
       "to": "ACD-619"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-639",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26146,8 +26196,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-640",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-641",
       "to": "ACD-621"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-641",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26156,8 +26216,18 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-642",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-643",
       "to": "ACD-623"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-643",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -26166,13 +26236,28 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-644",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-645",
       "to": "ACD-625"
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-645",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CV-646",
       "to": "ACD-626"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-646",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82256,6 +82341,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-610",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-611",
       "to": "ACD-611"
     },
@@ -82273,6 +82363,11 @@
       "edge_type": "depends_on",
       "from": "SP-611",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-611",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82296,6 +82391,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-612",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-613",
       "to": "ACD-613"
     },
@@ -82313,6 +82413,11 @@
       "edge_type": "depends_on",
       "from": "SP-613",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-613",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82336,6 +82441,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-614",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-615",
       "to": "ACD-615"
     },
@@ -82353,6 +82463,11 @@
       "edge_type": "depends_on",
       "from": "SP-615",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-615",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82376,6 +82491,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-616",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-617",
       "to": "ACD-617"
     },
@@ -82393,6 +82513,11 @@
       "edge_type": "depends_on",
       "from": "SP-617",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-617",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82416,6 +82541,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-618",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-619",
       "to": "ACD-619"
     },
@@ -82433,6 +82563,11 @@
       "edge_type": "depends_on",
       "from": "SP-619",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-619",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82456,6 +82591,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-620",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-621",
       "to": "ACD-621"
     },
@@ -82473,6 +82613,11 @@
       "edge_type": "depends_on",
       "from": "SP-621",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-621",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82496,6 +82641,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-622",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-623",
       "to": "ACD-623"
     },
@@ -82513,6 +82663,11 @@
       "edge_type": "depends_on",
       "from": "SP-623",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-623",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -82536,6 +82691,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-624",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-625",
       "to": "ACD-625"
     },
@@ -82556,6 +82716,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-625",
+      "to": "SP-337"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-626",
       "to": "ACD-626"
     },
@@ -82573,6 +82738,11 @@
       "edge_type": "depends_on",
       "from": "SP-626",
       "to": "SP-286"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-626",
+      "to": "SP-337"
     },
     {
       "edge_type": "depends_on",
@@ -117790,7 +117960,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-04T18:36:22Z",
+  "generated_at_utc": "2026-11-04T19:24:17Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -127441,8 +127611,8 @@
       "source_location": {
         "heading": "ACD-613 — chat.thread_archived",
         "heading_level": 3,
-        "heading_line": 30155,
-        "line": 30159,
+        "heading_line": 30183,
+        "line": 30187,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127595,7 +127765,7 @@
         "heading": "ACD-622 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
         "heading_line": 29817,
-        "line": 29821,
+        "line": 29823,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127611,8 +127781,8 @@
       "source_location": {
         "heading": "ACD-623 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 29885,
-        "line": 29889,
+        "heading_line": 29901,
+        "line": 29907,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127628,8 +127798,8 @@
       "source_location": {
         "heading": "ACD-624 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 29952,
-        "line": 29956,
+        "heading_line": 29980,
+        "line": 29984,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127645,8 +127815,8 @@
       "source_location": {
         "heading": "ACD-625 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 30020,
-        "line": 30024,
+        "heading_line": 30048,
+        "line": 30052,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -127662,8 +127832,8 @@
       "source_location": {
         "heading": "ACD-626 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 30087,
-        "line": 30091,
+        "heading_line": 30115,
+        "line": 30119,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -132202,7 +132372,7 @@
         "heading": "ATS-305 — DCH",
         "heading_level": 3,
         "heading_line": 7233,
-        "line": 7239,
+        "line": 7241,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -145258,7 +145428,7 @@
         "heading": "CV-630 — bundle.selection_forward_blocked",
         "heading_level": 3,
         "heading_line": 24472,
-        "line": 24476,
+        "line": 24480,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145274,8 +145444,8 @@
       "source_location": {
         "heading": "CV-631 — bundle.selection_sent_to_chat",
         "heading_level": 3,
-        "heading_line": 24543,
-        "line": 24547,
+        "heading_line": 24581,
+        "line": 24589,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145291,8 +145461,8 @@
       "source_location": {
         "heading": "CV-632 — chat.message",
         "heading_level": 3,
-        "heading_line": 24614,
-        "line": 24618,
+        "heading_line": 24690,
+        "line": 24698,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145308,8 +145478,8 @@
       "source_location": {
         "heading": "CV-633 — chat.thread_archived",
         "heading_level": 3,
-        "heading_line": 25605,
-        "line": 25611,
+        "heading_line": 26213,
+        "line": 26223,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145325,8 +145495,8 @@
       "source_location": {
         "heading": "CV-634 — chat.thread_created",
         "heading_level": 3,
-        "heading_line": 24684,
-        "line": 24688,
+        "heading_line": 24798,
+        "line": 24806,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145342,8 +145512,8 @@
       "source_location": {
         "heading": "CV-635 — chat.thread_deleted",
         "heading_level": 3,
-        "heading_line": 24754,
-        "line": 24758,
+        "heading_line": 24906,
+        "line": 24914,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145359,8 +145529,8 @@
       "source_location": {
         "heading": "CV-636 — chat.thread_worktree_bound",
         "heading_level": 3,
-        "heading_line": 24824,
-        "line": 24828,
+        "heading_line": 25014,
+        "line": 25022,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145376,8 +145546,8 @@
       "source_location": {
         "heading": "CV-637 — chat.thread_worktree_create_failed",
         "heading_level": 3,
-        "heading_line": 24895,
-        "line": 24899,
+        "heading_line": 25123,
+        "line": 25131,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145393,8 +145563,8 @@
       "source_location": {
         "heading": "CV-638 — chat.thread_worktree_merge_failed",
         "heading_level": 3,
-        "heading_line": 24966,
-        "line": 24970,
+        "heading_line": 25232,
+        "line": 25240,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145410,8 +145580,8 @@
       "source_location": {
         "heading": "CV-639 — chat.thread_worktree_merged",
         "heading_level": 3,
-        "heading_line": 25037,
-        "line": 25041,
+        "heading_line": 25341,
+        "line": 25349,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145427,8 +145597,8 @@
       "source_location": {
         "heading": "CV-640 — chat.thread_worktree_pr_created",
         "heading_level": 3,
-        "heading_line": 25108,
-        "line": 25112,
+        "heading_line": 25450,
+        "line": 25458,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145444,8 +145614,8 @@
       "source_location": {
         "heading": "CV-641 — chat.thread_worktree_pr_failed",
         "heading_level": 3,
-        "heading_line": 25179,
-        "line": 25183,
+        "heading_line": 25559,
+        "line": 25567,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145461,8 +145631,8 @@
       "source_location": {
         "heading": "CV-642 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
-        "heading_line": 25250,
-        "line": 25254,
+        "heading_line": 25668,
+        "line": 25676,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145478,8 +145648,8 @@
       "source_location": {
         "heading": "CV-643 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 25321,
-        "line": 25325,
+        "heading_line": 25777,
+        "line": 25785,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145495,8 +145665,8 @@
       "source_location": {
         "heading": "CV-644 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 25392,
-        "line": 25396,
+        "heading_line": 25886,
+        "line": 25894,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145512,8 +145682,8 @@
       "source_location": {
         "heading": "CV-645 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 25463,
-        "line": 25467,
+        "heading_line": 25995,
+        "line": 26003,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145529,8 +145699,8 @@
       "source_location": {
         "heading": "CV-646 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 25534,
-        "line": 25538,
+        "heading_line": 26104,
+        "line": 26112,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -229255,7 +229425,7 @@
         "heading": "SP-610 — bundle.selection_forward_blocked",
         "heading_level": 3,
         "heading_line": 29481,
-        "line": 29493,
+        "line": 29497,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229271,8 +229441,8 @@
       "source_location": {
         "heading": "SP-611 — bundle.selection_sent_to_chat",
         "heading_level": 3,
-        "heading_line": 29617,
-        "line": 29629,
+        "heading_line": 29662,
+        "line": 29678,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229288,8 +229458,8 @@
       "source_location": {
         "heading": "SP-612 — chat.message",
         "heading_level": 3,
-        "heading_line": 29753,
-        "line": 29765,
+        "heading_line": 29843,
+        "line": 29859,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229305,8 +229475,8 @@
       "source_location": {
         "heading": "SP-613 — chat.thread_archived",
         "heading_level": 3,
-        "heading_line": 31664,
-        "line": 31676,
+        "heading_line": 32385,
+        "line": 32401,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229322,8 +229492,8 @@
       "source_location": {
         "heading": "SP-614 — chat.thread_created",
         "heading_level": 3,
-        "heading_line": 29893,
-        "line": 29905,
+        "heading_line": 30028,
+        "line": 30044,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229339,8 +229509,8 @@
       "source_location": {
         "heading": "SP-615 — chat.thread_deleted",
         "heading_level": 3,
-        "heading_line": 30028,
-        "line": 30040,
+        "heading_line": 30209,
+        "line": 30225,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229356,8 +229526,8 @@
       "source_location": {
         "heading": "SP-616 — chat.thread_worktree_bound",
         "heading_level": 3,
-        "heading_line": 30165,
-        "line": 30177,
+        "heading_line": 30391,
+        "line": 30407,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229373,8 +229543,8 @@
       "source_location": {
         "heading": "SP-617 — chat.thread_worktree_create_failed",
         "heading_level": 3,
-        "heading_line": 30301,
-        "line": 30313,
+        "heading_line": 30572,
+        "line": 30588,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229390,8 +229560,8 @@
       "source_location": {
         "heading": "SP-618 — chat.thread_worktree_merge_failed",
         "heading_level": 3,
-        "heading_line": 30437,
-        "line": 30449,
+        "heading_line": 30753,
+        "line": 30769,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229407,8 +229577,8 @@
       "source_location": {
         "heading": "SP-619 — chat.thread_worktree_merged",
         "heading_level": 3,
-        "heading_line": 30573,
-        "line": 30585,
+        "heading_line": 30934,
+        "line": 30950,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229424,8 +229594,8 @@
       "source_location": {
         "heading": "SP-620 — chat.thread_worktree_pr_created",
         "heading_level": 3,
-        "heading_line": 30709,
-        "line": 30721,
+        "heading_line": 31115,
+        "line": 31131,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229441,8 +229611,8 @@
       "source_location": {
         "heading": "SP-621 — chat.thread_worktree_pr_failed",
         "heading_level": 3,
-        "heading_line": 30845,
-        "line": 30857,
+        "heading_line": 31296,
+        "line": 31312,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229458,8 +229628,8 @@
       "source_location": {
         "heading": "SP-622 — chat.thread_worktree_pre_merge_test_failed",
         "heading_level": 3,
-        "heading_line": 30981,
-        "line": 30993,
+        "heading_line": 31477,
+        "line": 31493,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229475,8 +229645,8 @@
       "source_location": {
         "heading": "SP-623 — chat.thread_worktree_pre_merge_test_passed",
         "heading_level": 3,
-        "heading_line": 31118,
-        "line": 31130,
+        "heading_line": 31659,
+        "line": 31675,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229492,8 +229662,8 @@
       "source_location": {
         "heading": "SP-624 — chat.thread_worktree_pre_merge_test_started",
         "heading_level": 3,
-        "heading_line": 31255,
-        "line": 31267,
+        "heading_line": 31841,
+        "line": 31857,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229509,8 +229679,8 @@
       "source_location": {
         "heading": "SP-625 — chat.thread_worktree_renamed",
         "heading_level": 3,
-        "heading_line": 31392,
-        "line": 31404,
+        "heading_line": 32023,
+        "line": 32039,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -229526,8 +229696,8 @@
       "source_location": {
         "heading": "SP-626 — chat.thread_worktree_unbound",
         "heading_level": 3,
-        "heading_line": 31528,
-        "line": 31540,
+        "heading_line": 32204,
+        "line": 32220,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -244840,9 +245010,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18854,
+    "depends_on_edge_count": 18888,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22062,
+    "edge_count": 22096,
     "node_count": 7473,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3208,

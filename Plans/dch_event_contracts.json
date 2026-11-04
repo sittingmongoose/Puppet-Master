@@ -22,7 +22,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.bundle_selection_forward_blocked@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.bundle_selection_forward_blocked.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_bundle_selection_forward_blocked_checkpoint"
+      "domain_checkpoint_family": "dch_bundle_selection_forward_blocked_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "bundle.selection_sent_to_chat",
@@ -45,7 +46,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.bundle_selection_sent_to_chat@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.bundle_selection_sent_to_chat.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_bundle_selection_sent_to_chat_checkpoint"
+      "domain_checkpoint_family": "dch_bundle_selection_sent_to_chat_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.message",
@@ -69,7 +71,8 @@
       "domain_projector": "projector.chat.chat_message@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_message.v1:{storage_instance_id}:{scope_partition}",
       "domain_checkpoint_family": "dch_chat_message_checkpoint",
-      "retention_class_binding": "Case L-3 Chat content: thread lifetime; 250,000/thread linked successor; policy object assignment pending RT"
+      "retention_class_binding": "Case L-3 Chat content: thread lifetime; 250,000/thread linked successor; policy object assignment pending RT",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_archived",
@@ -101,7 +104,8 @@
         "Plans/assistant-chat-design.md#ACD-074",
         "Plans/assistant-chat-design.md#ACD-508",
         "Plans/UI_Command_Catalog.md:730"
-      ]
+      ],
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_created",
@@ -124,7 +128,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_created@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_created.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_created_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_created_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_deleted",
@@ -147,7 +152,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_deleted@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_deleted.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_deleted_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_deleted_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_bound",
@@ -170,7 +176,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_bound@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_bound.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_bound_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_bound_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_create_failed",
@@ -193,7 +200,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_create_failed@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_create_failed.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_create_failed_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_create_failed_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_merge_failed",
@@ -216,7 +224,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_merge_failed@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_merge_failed.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_merge_failed_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_merge_failed_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_merged",
@@ -239,7 +248,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_merged@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_merged.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_merged_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_merged_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_pr_created",
@@ -262,7 +272,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_pr_created@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_pr_created.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_pr_created_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_pr_created_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_pr_failed",
@@ -285,7 +296,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_pr_failed@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_pr_failed.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_pr_failed_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_pr_failed_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_pre_merge_test_failed",
@@ -308,7 +320,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_pre_merge_test_failed@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_failed.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_pre_merge_test_failed_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_pre_merge_test_failed_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_pre_merge_test_passed",
@@ -331,7 +344,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_pre_merge_test_passed@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_passed.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_pre_merge_test_passed_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_pre_merge_test_passed_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_pre_merge_test_started",
@@ -354,7 +368,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_pre_merge_test_started@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_pre_merge_test_started.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_pre_merge_test_started_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_pre_merge_test_started_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_renamed",
@@ -377,7 +392,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_renamed@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_renamed.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_renamed_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_renamed_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     },
     {
       "event_type": "chat.thread_worktree_unbound",
@@ -400,7 +416,8 @@
       "native_execution": "NOT_RUN",
       "domain_projector": "projector.chat.chat_thread_worktree_unbound@1.0.0",
       "domain_checkpoint_key": "projector.checkpoint.dch.chat_thread_worktree_unbound.v1:{storage_instance_id}:{scope_partition}",
-      "domain_checkpoint_family": "dch_chat_thread_worktree_unbound_checkpoint"
+      "domain_checkpoint_family": "dch_chat_thread_worktree_unbound_checkpoint",
+      "append_policy": "dedupe_by_idempotency_key"
     }
   ]
 }
