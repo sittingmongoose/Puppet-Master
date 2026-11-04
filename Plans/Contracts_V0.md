@@ -1468,7 +1468,7 @@ Batch web operations preserve one parent audit event for the batch and child aud
 
 #### Runtime snapshot and tool/chat payloads
 
-Tool payloads consumed by storage, tools, and chat carry `runtime_snapshot`, `task_id`, `subagent_type`, `resumed`, `chat.plan_todo_updated`, `/turn`, `/todo`, and `/tokens` when those fields participate in runtime or chat projection. Subagent lifecycle payloads use the canonical `subagent.*` event family without a `chat.` prefix: legacy `chat.subagent_*`, `chat.subagent_`, and `chat.subagent_spawned` references are retired aliases and normalize to `subagent.*`. Producer-specific request/completion names such as `subagent.spawn_requested` and `subagent.spawn_completed` preserve the same PM lineage envelope as `subagent.spawned` and `subagent.completed` instead of creating a parallel chat namespace. The PM lineage envelope includes `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, and requested/effective runtime descriptors when they differ. Runtime snapshot fields remain cross-cutting payload extensions rather than local tool-result decorations.
+Tool payloads consumed by storage, tools, and chat carry `runtime_snapshot`, `task_id`, `subagent_type`, `resumed`, `chat.plan_todo_updated`, `/turn`, `/todo`, and `/tokens` when those fields participate in runtime or chat projection. Subagent lifecycle payloads use the canonical `subagent.*` event family without a `chat.` prefix: legacy `chat.subagent_*`, `chat.subagent_`, and `chat.subagent_spawned` references are retired aliases and normalize to `subagent.*`. Puppet Master does not record a request to start a subagent separately from the subagent it creates (DL-088): a start that has to wait is a child in the `queued` state, and a start refused for budget before any child exists keeps its existing outcome reason in the orchestrator. The PM lineage envelope includes `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, and requested/effective runtime descriptors when they differ. Runtime snapshot fields remain cross-cutting payload extensions rather than local tool-result decorations.
 
 The historical `chat.plan_todo_updated` payload shape is `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }` for durable TODO mutations. These historical fields remain readable under TDR-012; future structural changes use its individually mapped events only after admission. The legacy shape does not authorize new appends or supply current revision/work evidence.
 
@@ -2987,7 +2987,7 @@ For every `subagent.*` event below, the payload MUST preserve the PM lineage env
 - `parent_thread_id?`
 - requested and effective runtime descriptors when they differ
 
-The same lineage envelope applies to `subagent.spawn_requested` and `subagent.spawn_completed` when a dispatcher distinguishes request lifecycle from child-run creation and terminal completion. These names remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
+No start-request lifecycle shares this envelope: a start that has to wait is already a child in the `queued` state, so no request is recorded apart from the child (DL-088). Subagent events remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
@@ -9009,8 +9009,10 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Subagent lifecycle payloads use the canonical subagent.* event family without
-  a chat. prefix, and request/completion variants preserve the same PM lineage
-  envelope instead of creating a parallel chat namespace.
+  a chat. prefix instead of creating a parallel chat namespace, and carry the PM
+  lineage envelope. Amended 2026-11-04 (DL-088): no separate request or
+  completion variant is recorded for starting a subagent; a start that has to
+  wait is a child in the queued state.
 gui_related: false
 gui_classification_reason: This unit defines runtime event namespace compatibility for subagents.
 split_recommended: true
@@ -9019,7 +9021,6 @@ unblocks: []
 acceptance_criteria:
   - subagent.* remains the canonical subagent lifecycle event family.
   - Legacy chat.subagent_* aliases normalize to subagent.*.
-  - subagent.spawn_requested and subagent.spawn_completed preserve the same PM lineage envelope as subagent.spawned and subagent.completed.
   - PM lineage envelope fields include run_id, thread_id, agent_id, parent_run_id?, child_run_id?, parent_thread_id?, and requested/effective runtime descriptors.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -9036,13 +9037,12 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0042
+  - Plans/Decision_Log.md#DL-088 (amendment of 2026-11-04, Jared's answer of 2026-09-25)
 preserved_exact_tokens:
   - "`subagent.*`"
   - "`chat.subagent_*`"
   - "`chat.subagent_`"
   - "`chat.subagent_spawned`"
-  - "`subagent.spawn_requested`"
-  - "`subagent.spawn_completed`"
   - "`run_id`"
   - "`agent_id`"
   - "`parent_run_id?`"
@@ -9051,6 +9051,9 @@ compatibility_only_notes:
   - "legacy chat.subagent_* aliases normalize to subagent.*."
 negative_constraints:
   - "Subagent lifecycle payloads must not create a parallel chat namespace."
+  - "Do not record a request to start a subagent apart from the child it creates (DL-088)."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-088): the two start-request names and their criterion are removed; a start that has to wait is a queued child, and a start refused for budget before any child exists keeps its orchestrator outcome reason."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -16570,9 +16573,9 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Stable subagent.* event families preserve the PM lineage envelope with run,
   thread, agent, parent, child, parent-thread, and requested/effective runtime
-  descriptor fields; subagent.spawn_requested and subagent.spawn_completed
-  remain under subagent.*, while chat.subagent_* and chat.subagent_spawned are
-  legacy source aliases only.
+  descriptor fields, while chat.subagent_* and chat.subagent_spawned are legacy
+  source aliases only. Amended 2026-11-04 (DL-088): no start-request lifecycle
+  shares the envelope; a start that has to wait is a child in the queued state.
 gui_related: false
 gui_classification_reason: This unit defines runtime lineage and event alias boundaries.
 split_recommended: false
@@ -16580,7 +16583,6 @@ depends_on: [CV-256]
 unblocks: [CV-267, CV-268, CV-269]
 acceptance_criteria:
   - "Every subagent.* event preserves the PM lineage envelope."
-  - "subagent.spawn_requested and subagent.spawn_completed remain under subagent.*."
   - "chat.subagent_* and chat.subagent_spawned remain legacy source aliases only."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -16599,6 +16601,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+  - Plans/Decision_Log.md#DL-088 (amendment of 2026-11-04, Jared's answer of 2026-09-25)
 preserved_exact_tokens:
   - "`subagent.*`"
   - "`run_id`"
@@ -16607,8 +16610,6 @@ preserved_exact_tokens:
   - "`parent_run_id?`"
   - "`child_run_id?`"
   - "`parent_thread_id?`"
-  - "`subagent.spawn_requested`"
-  - "`subagent.spawn_completed`"
   - "`chat.subagent_*`"
   - "`chat.subagent_spawned`"
   - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md"
@@ -16617,6 +16618,8 @@ compatibility_only_notes:
   - "chat.subagent_* and chat.subagent_spawned are legacy source aliases only."
 negative_constraints:
   - "Child identity and lineage are not optional metadata for subagent.* events."
+stale_retired_dispositions:
+  - "Amended 2026-11-04 (DL-088): the two start-request names, their clause in the canonical text and their criterion are removed; the lineage envelope sentence keeps its chat.subagent_* alias clause."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/orchestrator-subagent-integration.md
