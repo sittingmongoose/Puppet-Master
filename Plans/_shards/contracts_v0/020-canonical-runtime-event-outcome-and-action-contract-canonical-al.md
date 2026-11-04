@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L2919-L3209
 
-Source SHA256: `0e5b925b5beacbeae1805619caf39052177625b206f726f53409e6f41fefed08`
+Source SHA256: `008b36653188d779e89eb19911a2f244f48746a6def1d3f323858773f1399a71`
 
 ---
 
@@ -79,7 +79,7 @@ For every `subagent.*` event below, the payload MUST preserve the PM lineage env
 - `parent_thread_id?`
 - requested and effective runtime descriptors when they differ
 
-The same lineage envelope applies to `subagent.spawn_requested` and `subagent.spawn_completed` when a dispatcher distinguishes request lifecycle from child-run creation and terminal completion. These names remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
+No start-request lifecycle shares this envelope: a start that has to wait is already a child in the `queued` state, so no request is recorded apart from the child (DL-088). Subagent events remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
