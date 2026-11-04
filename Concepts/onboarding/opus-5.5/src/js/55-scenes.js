@@ -177,7 +177,9 @@
        drive) start from the opening line again, as the step's own check does (FO-41) */
     'nas-smb': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-smb'); return st && st.state === 'done' ? 'done' : st && st.state === 'running' ? 'checking' : 'enter'; } },
     'nas-nfs': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-nfs'); return st && st.state === 'done' ? 'done' : 'enter'; } },
-    'nas-mounted': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-mounted'); return st && st.state === 'done' ? 'done' : st && st.state === 'running' ? 'checking' : 'enter'; } }
+    /* The drive was picked on nas-find. This screen starts its check after the first scene render, so its initial
+       line also describes checking: queuing the picker question here would leave it typing over the running check. */
+    'nas-mounted': { props: nasWith('folder'), state: (S) => { const st = shareCheck(S, 'nas-mounted'); return st && st.state === 'done' ? 'done' : 'checking'; } }
   };
 
   /* The spec for the screen on show. hover: the control the pointer rests on (after the dwell) or keyboard focus;
