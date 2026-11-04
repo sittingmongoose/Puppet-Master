@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L4332-L4336
+Source lines: L4376-L4380
 
-Source SHA256: `d7716252b1aadc504abd008c1f414b400acbe9a33602333ff1839b7d4adf71cd`
+Source SHA256: `6c1601b14e0c488b12761894edd1615fa910b230e45d6e1199334eef1b705208`
 
 ---
 
