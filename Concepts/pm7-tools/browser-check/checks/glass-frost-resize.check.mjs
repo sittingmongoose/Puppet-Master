@@ -4,17 +4,19 @@
 // through the veil and the window for 17 frames on Nas1 (BD6 glass-dark-stage-860, frames 8695-8711), between the old frost
 // stretched to the new size and the new one.
 // Glass Light and Dark, the onboarding window on Name, the app beneath drawn (no solid backdrop, as on a computer that
-// composites it), the window 860x768, then 1920x900, 1390x900, 860x768, 740x768, 1280x500 and 1920x900 again:
+// composites it), the window 860x768, then 1920x900, 1390x900, 860x768, 740x768, 1280x500, then 1920x900, 1390x900 and
+// 860x768 again:
 //  - every frost the page writes (--lg-frost-heavy and --lg-frost-light) is already loaded when it is written: a fresh
 //    image of it is complete at once, from the memory cache (written straight after its bake, it never was);
-//  - each size the page has not had before gets its own frost (so the check above is not vacuous; a size it had before
-//    keeps the last frost made, stretched, until a sheet is baked again: reported separately, not asserted here);
+//  - every size gets its own frost, a size the page has had before as well (back at one, every rim was in the ring cache,
+//    no bake ran and the last frost made, another size's, stayed on stretched until something baked again: FO-38 too);
+//    this also keeps the check above from passing on no writes;
 //  - once it has, the scrim beside the window reads as frost, not as the app: its painted pixels are smooth (mean step
 //    between neighbours under 4 levels; the sharp app reads 9-11).
 // Both surfaces (a normal page and T3's sandbox) unless --set sandbox picks one. Headless: it resizes the window.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/glass-frost-resize.check.mjs --set page=<build>
 
-const SIZES = [[1920, 900], [1390, 900], [860, 768], [740, 768], [1280, 500], [1920, 900]];
+const SIZES = [[1920, 900], [1390, 900], [860, 768], [740, 768], [1280, 500], [1920, 900], [1390, 900], [860, 768]];
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
 // mean absolute step between neighbouring pixels (luma), over a decoded PNG
@@ -50,17 +52,14 @@ async function frost(t, mode) {
 			};
 		});
 		await f.waitForTimeout(1500);
-		const seen = new Set(['860x768']);
 		for (const [w, h] of SIZES) {
 			const tag = `glass-${scheme} ${mode} ${w}x${h}`;
 			const mark = await f.evaluate(() => window.__fo38.length);
 			await t.viewport(w, h);
-			const first = !seen.has(`${w}x${h}`); seen.add(`${w}x${h}`);
-			if (first) await t.until(`${tag}: a frost for the new size`, ([n, W, H]) => window.__fo38.slice(n).some((x) => x.vw === W && x.vh === H && x.name === '--lg-frost-heavy'), [mark, w, h], { timeout: 15000 });
-			else await f.waitForTimeout(3000);
+			await t.until(`${tag}: a frost for this size`, ([n, W, H]) => window.__fo38.slice(n).some((x) => x.vw === W && x.vh === H && x.name === '--lg-frost-heavy'), [mark, w, h], { timeout: 15000 });
 			const writes = await f.evaluate((n) => window.__fo38.slice(n), mark);
 			const early = writes.filter((x) => x.loaded !== true);
-			await t.check(`${tag}: every frost was loaded when it was written`, (writes.length > 0 || !first) && early.length === 0, `${writes.length} writes, ${early.length} before their image loaded: ${early.map((x) => `${x.name} at ${x.vw}x${x.vh}`).join(', ')}`);
+			await t.check(`${tag}: every frost was loaded when it was written`, writes.length > 0 && early.length === 0, `${writes.length} writes, ${early.length} before their image loaded: ${early.map((x) => `${x.name} at ${x.vw}x${x.vh}`).join(', ')}`);
 			await f.waitForTimeout(400);
 			// the scrim beside the window, where the window leaves room
 			const box = await f.evaluate(() => { const r = document.querySelector('#pm-o55-onboarding .o55-win').getBoundingClientRect(); return { left: r.left, top: r.top, bottom: r.bottom }; });

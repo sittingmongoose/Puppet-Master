@@ -1016,6 +1016,17 @@
     root.classList.remove('lg-drag-flat');
   }
   function scheduleBakes() { if (!bakeT && !bakeFlight && bakeQ.size && isGlass()) bakeT = setTimeout(flushBakes, 60); }
+  /* The frost is drawn for one window size, and the flight that bakes the sheets' rims is what makes it. Back at a size the
+     page has had before, every rim is in the ring cache, so no flight ran and the last frost made (another size's) stayed
+     on, stretched, until something baked again, and then changed at that later moment (FO-38). After each sync, a frost
+     that is not this size's is asked for here unless a flight is on its way: the kept pair goes on once decoded, or a new
+     one is baked, by makeFrosts as a flight would. */
+  function ensureFrost() {
+    if (!isGlass() || bakeFlight || bakeT || bakeQ.size || dragHeld()) return;
+    var u = currentWallUrl();
+    if (!u || frostKey === u + ':' + innerWidth + 'x' + innerHeight) return;
+    withWall(function (im) { if (im && im.__lgWallUrl === currentWallUrl() && isGlass() && !bakeFlight) makeFrosts(im, function () {}); });
+  }
   function flushBakes() {
     bakeT = 0; if (!isGlass() || !bakeQ.size || bakeFlight) return;
     if (dragHeld()) { bakeHeld(); return; }
@@ -2639,7 +2650,7 @@
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
     if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
-    else syncSurfaces(scopes, sheets);
+    else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
       var found = cfg.many ? scopedNodes(cfg.sel, scopes) : [document.querySelector(cfg.sel)].filter(function (s) {
